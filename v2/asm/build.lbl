@@ -1,0 +1,392 @@
+			rem changes from asm900827 to c64list3.03:
+			rem - change "dup" to "area"
+
+' in assembler, cmp #"{up}" does not work - see bug #73 on bughost
+' lda #'a' (single quotes only) works
+			
+			revision = 1
+			version$ = "06/07/91 03:42p"
+			serial = 3 + (asc("A")and 15)*4096
+			
+			print "{clear}Image BBS 2.0 ML "version$
+			
+			
+			{include "equates-2_0.lbl"}
+			; {asm}
+			; bsnpre = $02fd - already included in equates-2_0.lbl
+			; bsnval = $02fe - already included in equates-2_0.lbl
+			; {endasm}
+			
+			for pass=1 to 3:print "{up} pass:"pass
+			org $6c00,-(pass=3),8,"@:ml 2.0"
+			
+			if pass < 3 then area 0,$a000-*:goto {:1000}
+			rem $0c00 - wedge
+			prg "ml.wedge",8
+			if *<$7000 then area 0,$7000-*
+			rem
+			rem $d000 - editor
+			prg "ml.editor",8
+			if *<$8000 then area 0,$8000-*
+			;
+			; $e000 - garbage collect
+			prg "ml.gc",8
+			if *<$8400 then area 0,$8400-*
+			;
+			; $e400 - e.c.s. checker
+			prg "ml.ecs",8
+			if *<$8e00 then area 0,$8e00-*
+			;
+			; $ee00 - struct
+			prg "ml.struct",8
+			if *<$9400 then area 0,$9400-*
+			;
+			; $f400 - swap1
+			prg "ml.swap1",8
+			if *<$9800 then area 0,$9800-*
+			;
+			; $f800 - swap2
+			prg "ml.swap2",8
+			if *<$9c00 then area 0,$9c00-*
+			;
+			; $fc00 - swap3
+			prg "ml.swap3",8
+			if *<$a000 then area 0,$a000-*
+			;
+			rem if *>$a000 then print "error in extra modules.":end
+			if *>$a000 then print "extra modules exceed $a000.":end ' by pina
+			f$="jmptb.s":gosub 61000
+			f$="strio.s":gosub 61000
+			f$="mcicm.s":gosub 61000
+			f$="chrio.s":gosub 61000
+			f$="dskio.s":gosub 61000
+			f$="irqhn.s":gosub 61000
+			f$="setup.s":gosub 61000
+			f$="varbl.s":gosub 61000
+			f$="miscl.s":gosub 61000
+			f$="shdlr.s":gosub 61000
+			f$="modem.s":gosub 61000
+			f$="calls.s":gosub 61000
+			;
+			; put intro program in
+			;
+			:print" free under rom:     ....." ($c000-*)
+			:if *<$c000 then area 0,$c000-*
+			;
+			f$="intro.s":gosub 61000
+			;
+			:print" free proto ram:     ....." ($ca80-*)
+			;
+			;* skip rest of proto area *
+			;
+			:if *>$cb00 then print "error":end
+			:if *<$cb00 then area 0,$cb00-*
+			;
+{asm}
+swapper:	sta swappg1 ; source page #
+			sty swappg2 ; target page #
+			stx swapsiz ; # of pages to swap
+swapagn:	lda #"s"
+			sta tdisp+31
+			jsr rsdisab
+			sei
+			lda 1
+			pha
+			lda #$34
+			sta 1
+swappg1:	lda #$00
+			sta $6a
+swappg2:	lda #$00
+			sta $6c
+swapsiz:	lda #$00
+			sta $6d
+			ldy #0
+			sty $69
+			sty $6b
+swapr1:		lda ($69),y
+			tax
+			lda ($6b),y
+			sta ($69),y
+			txa			sta ($6b),y
+			iny			bne swapr1
+			inc $6a			inc $6c
+			dec $6d			bne swapr1
+			pla			sta 1			cli
+			jsr rsinabl
+			lda #$a0			sta tdisp+31			rts
+			;
+getversn:	lda #15			sta var
+			lda #<version			sta var+1
+			lda #>version			sta var+2
+			ldx #1			jsr putvar ;a$
+			ldy #4
+loop:		lda versnum,y			sta var,y
+			dey			bpl loop
+			ldx #15			jsr putvar ;lp
+			jsr zero
+			lda rvisnum			sta var+1
+			lda rvisnum+1			sta var
+			ldx #30			jmp putvar ;a%
+			;
+scrnset:	sta blnkflag			sta $d030
+			stx $d011			rts
+			;
+			; find a basic variable
+			;
+findvar1:	lda 1			pha			lda #$37			sta 1
+			jsr ptrget1			jmp exitint
+			;
+			; relink basic program lines
+			;
+relink:		lda 1			pha			lda #$37			sta 1
+			jsr linkprg			jmp exitint
+			;
+fpout:		lda 1			pha			lda #$37			sta 1
+			jsr $bddd
+			jmp exitint
+			;
+			; make a dynamic string
+			;
+makeroom:	tax
+			lda 1			pha			lda #$37			sta 1
+			txa			jsr makerm1
+exitint:	pla			sta 1			rts
+			;
+mlgosub:	lda $7b			pha			lda $7a			pha
+			lda $3a			pha			lda $39			pha
+			lda #$8d			pha
+mlresume:	lda #$37			sta 1
+mljump:		jsr mlgoto			jmp $a7ae
+			;
+mlgoto:		lda 1			pha			lda #$37			sta 1
+			stx $14			sty $15
+			jsr $a8a3			pla			sta 1			rts
+			;
+			;* output a$
+outspace:	txa			beq outspac2
+outspac1:	lda #" "			jsr xchrout
+			dex			bne outspac1
+outspac2:	rts
+			;
+outcomma:	lda #0
+outcomm1:	clc			adc #10			bcs outastr0
+			cmp modclm			bcc outcomm1
+			sec			sbc modclm			tax
+			jsr outspace
+outastr0:	jsr chrget			beq outastr2
+outastr1:	cmp #";"			beq outastr0
+			cmp #","			beq outcomma
+			jsr getstr
+			stx var+1			sty var+2
+			sta var			jsr outstr
+			jsr chrgot			bne outastr1
+outastr2:	rts
+outastr:	jsr chrgot			bne outastr1
+			ldx #1			jmp prtvar
+			;
+getstr:		lda 1			pha
+			lda #$37			sta 1
+			jsr frmevl ; $ad9e
+			bit $0d			bpl getval
+			jsr $b6a3			tax			jmp getstr1
+getval:		jsr $bddd
+			lda #<$100			sta $22
+			lda #>$100			sta $23
+			ldx #0
+getval1:	lda $100,x			beq getstr1
+			inx			bne getval1
+getstr1:	pla			sta 1
+			txa			ldx $22			ldy $23			rts
+			;
+fnvar:		lda 1			pha			lda #$37			sta 1
+			jsr chkcom			jsr $b08b
+			ldx $47			ldy $48
+			pla			sta 1			rts
+fnvar1:		jsr fnvar			stx $14			sty $15
+			rts
+			;
+evalstr:	lda 1			sta rom0
+			lda #$37			sta 1
+			jsr chkcom
+			jsr frmevl ; $ad9e - added by pina			jsr $b6a3
+			pha			lda rom0			sta 1			pla
+			ldx $22			ldy $23			rts
+			;
+evalbyt:	lda 1			sta rom0
+			lda #$e7			sta 1
+			jsr chkcom
+			jsr $0079			jsr $b79e
+			lda rom0			sta 1			rts
+			;
+spchars:	byte ",:",34,"*?=",13,"^"
+{endasm}
+			rem
+			: print " interrupt page:" tab(30) (*-$cb00)
+			rem
+			:if *>$cd00 then print "error":end
+			:if *<$cd00 then area 0,$cd00-*
+			rem
+			rem interface page
+			rem
+{asm}
+hcd00: jmp outastr
+hcd03: jmp usetbl1
+hcd06: jmp swapper
+hcd09: jmp swapagn
+hcd0c: jmp trace
+hcd0f: jmp chkspcl
+hcd12: jmp convchr
+			;
+convchr: jsr chkspcl
+			cmp #0			bmi convchr1
+			cmp #64			bcc convchr1
+			eor #64
+convchr1:and #127			rts
+			;
+chkspcl: cmp #$85			bcc chkspcl1
+			cmp #$8d			bcs chkspcl1
+			stx cxsav			sec			sbc #$85
+			tax			lda spchars,x
+			ldx cxsav
+chkspcl1:	cmp #0			rts
+			;
+usetbl1:	sta 780			stx 781			sty 782
+			asl			tax
+			lda 1			pha			lda #$36			sta 1
+			php			sei			lda jmptbl,x			tay
+			lda jmptbl+1,x			tax			plp
+			lda #<caller			sta jump+1
+			lda #>caller			sta jump+2
+			cpx #$e0			bcs jump
+			sty jump+1			stx jump+2
+			ldx 781			ldy 782
+jump:		jsr $ffff
+			sta 780			pla			sta 1			lda 780
+nothing:	rts
+			;
+			; new system chrout routine
+			;
+newout:		sta $9e
+			lda 1			pha			lda #$36			sta 1
+			lda $9e			jsr out			sta $9e
+			pla			sta 1			lda $9e			rts
+oldout:		jmp $ffff
+			;
+			; raster interrupt routine
+			;
+raster:		lda #$00			bne rast1
+			lda scnmode			bne rast0
+			lda #23			sta $d018
+rast0:		lda #106			sta $d012
+			lda #1			sta $d019
+			inc raster+1
+			jmp $febc
+			;
+rast1:		nop
+			lda mupcase			and #1			asl
+			eor #23			sta $d018
+			lda #234			sta $d012
+			lda #1			sta $d019
+			dec raster+1
+			inc jiffy
+			;
+newirq:		lda 1			pha
+			lda #$36			sta 1
+irqt:		lda #$00			beq newirq0
+			dec irqt+1			bne newirq1
+newirq0:	jsr irq
+			lda irqcount			sta irqt+1
+newirq1:	pla			sta 1
+			jmp $ea81
+			;
+			; far call to the error handler
+			;
+farerr:		lda #$37			sta 1			jmp error
+{endasm}
+			rem
+			print " interface page:" tab(30) (*-$cd00)
+			rem
+			if *>$ce00 then print "error":end
+			if *<$ce00 then area 0,$ce00-*
+			rem
+			rem buffer page
+			rem
+{asm}
+d1str:		byte "           "
+			byte "Tue Jan  1, 1988 12:00 PM   "
+buf2:		area 32,80
+buffer:		area 32,80
+			;
+			; date in 6 byte bcd format
+			;
+bootdate:
+dateday:	byte $01
+datemon:	byte $12
+datedate:	byte $09
+dateyear:	byte $90
+			byte $20
+			byte $00
+			;
+			; storage for conversion routines
+			;
+binary:		area 4
+			;
+			; days in each month
+			;
+ha560:		byte $31
+			byte $28
+			byte $31
+			byte $30
+			byte $31
+			byte $30
+			byte $31
+			byte $31
+			byte $30
+			byte $00
+decchr:		byte $30
+			byte $30
+			byte $30
+			byte $30
+			byte $30
+			byte $31
+			byte $30
+			byte $31
+			;
+			; storage for rom bank values
+			;
+rom0:		byte 0
+rom1:		byte 0
+			;
+			; the revision number of this ml
+			;
+rvisnum:	word revision
+			;
+			; the date this ml was made
+			;
+version:	byte version$
+			;
+			; version 1.3
+			;
+versnum:	byte $81,$26,$66,$66,$66
+{endasm}
+			:print " buffer page:" ;tab(30);*-$ce00
+			next pass:close 8:print
+			open 2,8,2,"ml revisions,s,a":print#2,version$,revision:close 2
+			rem open 2,8,2,"@:ml.serialinfo,s,w":print#2,version$:print#2,"rev#"revision
+			rem print#2,serial1a
+			rem print#2,serial1b
+			rem print#2,serial2a
+			rem print#2,serial2b
+			rem print#2,serial3a
+			rem print#2,serial3b
+			rem print#2,serial4a
+			rem print#2,serial4b
+			rem close 2
+			rem 
+			print"total size:" ;*-$6c00
+			end
+{:61000}
+			print f$ tab(38) "{back arrow}{up}":print tab(10);
+			include f$,8
+			print "{up}"tab(30) (*-label) tab(38) " "
+			return

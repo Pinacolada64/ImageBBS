@@ -1,0 +1,488 @@
+
+			rem "12/13/90 03:31p"
+{asm}
+
+; TODO: Fix 14 "loop:" labels
+; FIXED: 3 "l1:" labels -> "l[1-3]:"
+			;
+			devnum = 186
+			;
+			; intro is a proto
+			jmp intro
+			jmp setup
+			byte $ff ;intro
+			;
+			;
+			;* intro program
+			;
+intro:
+			; fake rs232 driver
+			lda #$60
+			ldy #0
+loop1:		sta rs232,y
+			dey
+			bne loop1
+	; move editor
+			lda #$70
+			ldy #$d0
+			ldx #48
+			jsr swapper
+	;move wedge
+			lda #$6c
+			ldy #$0c
+			ldx #4
+			jsr swapper
+	;load "im"
+			ldx #<prgstart
+			ldy #>prgstart
+			stx $2b
+			sty $2c
+			ldx #<prgstart+2
+			ldy #>prgstart+2
+			stx $2d
+			sty $2e
+			stx $2f
+			sty $30
+			stx $31
+			sty $32
+			lda #0
+			sta prgstart-1
+			sta prgstart
+			sta prgstart+1
+			lda #1
+			ldx devnum
+			ldy #0
+			jsr setlfs	; $ffba
+			lda file2
+			ldx #<file2+1
+			ldy #>file2+1
+			jsr setnam	; $ffbd
+			jsr loadprg
+	;restore screen
+			lda #11
+			sta $d011
+			lda #$17
+			sta $d018
+			lda #"{clear}"
+			jsr $e716
+			lda #27
+			sta $d011
+	;fake lightbar table
+			lda #0
+			ldy #0
+loop:		sta chktbl,y
+			iny
+			cpy #16
+			bne loop
+			lda #32
+			ldy #0
+loop:		sta bartbl,y
+			iny
+			cpy #192
+			bne loop
+			;run program
+			lda #0
+			jsr $a871
+			jmp $a7ae
+			;
+			;* filenames
+file2:		byte 2,"im"
+			;
+			;* setup routines *
+			;
+			;* main setup routine
+			setup: lda #0
+			tay
+loop2:		sta cassbuff,y
+			iny
+			cpy #1024-cassbuff
+			bne loop2
+			ldy #0
+loop3:		lda date2,y
+			sta date1,y
+			iny
+			cpy #28
+			bne loop3
+			lda #80
+			sta ptrclmn
+			lda #40
+			sta modclmn
+			lda #1
+			sta local
+			ldy #0
+loop4:		lda #32
+			sta tempscn+$00,y
+			sta tempscn+$a0,y
+			lda #1
+			sta tempcol+$00,y
+			sta tempcol+$a0,y
+			iny
+			cpy #$a0
+			bne loop4
+			ldy #11
+loop5:		lda daysofm0,y
+			sta daysofm,y
+			dey
+			bpl loop5
+			jsr copytran
+			ldy #15
+			lda #16
+loop6:		sta pmodetbl,y
+			dey
+			bpl loop6
+			lda #255
+			sta pmodetbl+16
+			lda #0
+			sta pmodetbl+17
+			ldy #0
+loop7:		lda #1
+			sta alarmtb,y
+			lda #0
+			sta alarmtb+1,y
+			iny
+			bpl loop7
+			ldy #12*3-1
+loop8:		lda montbl0,y
+			sta montbl,y
+			dey
+			bpl loop8
+			ldy #8*3-1
+loop9:		lda daytbl0,y
+			sta daytbl,y
+			dey
+			bpl loop9
+			ldy #31
+loop10:		lda date1fmt,y
+			sta date1,y
+			dey
+			bpl loop10
+			ldy #64
+loop11:		lda sndtbl0,y
+			sta sndtbl,y
+			dey
+			bpl loop11
+			ldy #0
+			ldx #0
+loop12:		lda screentb,y
+			iny
+			sta lobytes,x
+			lda screentb,y
+			iny
+			sta hibytes,x
+			lda screentb,y
+			iny
+			sta lobytec,x
+			lda screentb,y
+			iny
+			sta hibytec,x
+			inx
+			cpx #25
+			bne loop12
+			;
+			lda #0
+			sta passmode
+			lda #"X"
+			sta mask
+			lda #2
+			sta bar
+			lda #0
+			sta readmode
+			sta scnmode
+			sta scnlock
+			sta interm
+			sta inchat
+			jsr iosetup
+			jsr setptrs
+			jsr setirq
+			jsr trapoff
+			lda #$36
+			sta $01
+			jsr setscrn
+			ldx #3
+			jsr comq
+			jsr startmsg
+			lda #$37
+			sta $01
+			rts
+			;
+			;* setup i/o windows
+			;
+iosetup:	lda $0326
+			sta oldout+1
+			lda $0327
+			sta oldout+2
+			lda #<newout
+			sta $0326
+			lda #>newout
+			sta $0327
+			rts
+			;
+			;* setup irq vector
+			;
+setirq:		lda #127
+			sta 56333
+			lda #<raster
+			sta 788
+			lda #>raster
+			sta 789
+			lda #$81
+			sta $d01a
+			lda #$00
+			sta $d012
+			lda #$1b
+			sta $d011
+			lda #0
+			sta irqcount
+			rts
+			;* initial setup of screen
+			;* colors/ clear/ etc
+setscrn:	lda #$00
+			sta $d020
+			lda #$00
+			sta $d021
+			lda #$0e
+			jsr chrout
+			lda #$08
+			jsr chrout
+			lda #$05
+			jsr chrout
+			jsr makdate
+			jmp dispdate
+			;
+			;* find basic variable
+getvarp:	txa
+			asl
+			tay
+			lda varlist+1,y
+			tax
+			lda varlist,y
+			sta $45
+			stx $46
+			jmp findvar1
+			
+			;********************************
+			;* variables used by ml *
+			;********************************
+			:
+varlist:	byte "aN" ;an$ 0
+			byte "a",$80 ;a$ 1
+			byte "b",$80 ;b$ 2
+			byte "tR" ;tr$ 3
+			byte "d",$b1 ;d1$ 4
+			byte "d",$b2 ;d2$ 5
+			byte "d",$b3 ;d3$ 6
+			byte "d",$b4 ;d4$ 7
+			byte "d",$b5 ;d5$ 8
+			byte "lD" ;ld$ 9
+			byte "tT" ;tt$ 10
+			byte "nA" ;na$ 11
+			byte "rN" ;rn$ 12
+			byte "pH" ;ph$ 13
+			byte "aK" ;ak$ 14
+			byte "lp" ;lp 15
+			byte "pl" ;pl 16
+			byte "rc" ;rc 17
+			byte "sh" ;sh 18
+			byte "mw" ;mw 19
+			byte "nl" ;nl 20
+			byte "ul" ;ul 21
+			byte "qe" ;qe 22
+			byte "rq" ;rq 23
+			byte "AC" ;ac% 24
+			byte "ef" ;ef 25
+			byte "lf" ;lf 26
+			byte "w",$80 ;w$ 27
+			byte "p",$80 ;p$ 28
+			byte "TR" ;tr% 29
+			byte "A",$80 ;a% 30
+			byte "B",$80 ;b% 31
+			byte "DV" ;dv% 32
+			byte "dR" ;dr$ 33
+			byte "c",$b1 ;c1$ 34
+			byte "c",$b2 ;c2$ 35
+			byte "cO" ;co$ 36
+			byte "cH" ;ch$ 37
+			byte "KP" ;kp% 38
+			byte "c",$b3 ;c3$ 39
+			byte "f",$b1 ;f1$ 40
+			byte "f",$b2 ;f2$ 41
+			byte "f",$b3 ;f3$ 42
+			byte "f",$b4 ;f4$ 43
+			byte "f",$b5 ;f5$ 44
+			byte "f",$b6 ;f6$ 45
+			byte "f",$b7 ;f7$ 46
+			byte "f",$b8 ;f8$ 47
+			byte "mP" ;48-mp$
+			byte "MN" ;49-mn%
+			;
+			;find all vars used by ml,
+			;get their pointers
+			;
+setptrs:	lda #49
+			sta tmp1
+setp1:		ldx tmp1
+			jsr getvarp
+			lda tmp1
+			asl
+			tay
+			sec
+			lda $47
+			sbc $2d
+			sta vars,y
+			lda $48
+			sbc $2e
+			sta vars+1,y
+			dec tmp1
+			bpl setp1
+			rts
+			;
+date2:		byte "Wed Feb 14, 1990 12:25 PM   "
+			;
+copytran:	ldy #0
+l1:			lda tr1,y
+			sta tblatc,y
+			iny
+			cpy #128
+			bcc l2
+			ldy #0
+l2:			lda tr2,y
+			sta tblcta,y
+			iny
+			bne l1
+			ldy #0
+l3:			lda tr3,y
+			sta tblcta1,y
+			lda tr4,y
+			sta tblcta2,y
+			lda tr5,y
+			sta tblcta3,y
+			iny
+			cpy #32
+			bcc l3
+			rts
+			;
+			; tblatc
+tr1:		byte 0,0,".",0,".",0,0,0,20,".",0,0,".",13,""
+			byte 0,"",0,".",20,".....",0,".",0,0,0,0
+			byte " !",34,"#$%&'()*+,-./"
+			byte "0123456789:;<=>?"
+			byte "@ABCDEFGHIJKLMNO"
+			byte "PQRSTUVWXYZ[\]^_"
+			byte 0,"abcdefghijklmno"
+			byte "pqrstuvwxyz",0,0,0,0,20
+			;
+			; tblcta
+tr2:		byte 0,"........"..",$0d,0,""
+			byte "............"
+			byte " !",34,"#$%&'()*+,-./"
+			byte "0123456789:;<=>?"
+			byte "@",97,98,99,100,101,102,103,104,105,106,107,108,109,110,111
+			byte 112,113,114,115,116,117,118,119,120,121,122,"[\]^_"
+			byte "-abcdefghijklmno"
+			byte "pqrstuvwxyz*-!**"
+			byte 0,".",0,0,0,0,0,0,0,0,0,0,0,$d,0,0
+			byte 0,"","",12,0,"..........."
+			BYTE " !---!*!-*!****-"
+			BYTE "****!!!---******"
+			BYTE "-ABCDEFGHIJKLMNO"
+			BYTE "PQRSTUVWXYZ*!!**"
+			BYTE " !---!*!-*!****-"
+			BYTE "****!!!---******"
+			;
+			; TBLCTA1
+TR3:		BYTE 032,221,220,196,095,179,178,179
+			BYTE 220,047,222,195,201,192,191,220
+			BYTE 218,193,194,180,221,221,222,223
+			BYTE 223,220,217,187,200,217,188,176
+			;
+			; TBLCTA2
+TR4:		BYTE 196,065,066,067,068,069,070,071
+			BYTE 072,073,074,075,076,077,078,079
+			BYTE 080,081,082,083,084,085,086,087
+			BYTE 088,089,090,197,221,179,178,092
+			;
+			; TBLCTA3
+TR5:		BYTE 196,042,179,196,196,196,196,179
+			BYTE 179,191,192,217,192,092,047,218
+			BYTE 191,254,196,042,179,218,042,254
+			BYTE 042,179,042,197,221,179,227,092
+			;
+			;* MONTHS AND DAYS
+montbl0:	byte "JanFebMarAprMayJun"
+			byte "JulAugSepOctNovDec"
+daytbl0:	byte "???SunMonTueWedThu"
+			byte "FriSat"
+daysofm0:	byte 31,28,31,30,31,30
+			byte 31,31,30,31,30,31
+			;
+DATE1FMT:	BYTE "Sat Dec  9, 1990"
+			BYTE " 12:00 AM EST   "
+			;
+SNDTBL0:
+			;(0) BEEP
+			BYTE $00,$40,$10,$F0,$11
+			BYTE $00,$00,$00,$00,$00
+			BYTE $00,$00,$00,$00,$00
+			BYTE $10
+			;(1) DING
+			BYTE $44,$40,$0B,$00,$15
+			BYTE $00,$00,$00,$00,$00
+			BYTE $D8,$2A,$00,$00,$00
+			BYTE $50
+			;(2) BELL
+			BYTE $00,$60,$09,$00,$11
+			BYTE $00,$60,$09,$00,$11
+			BYTE $00,$60,$09,$00,$11
+			BYTE $20
+			;(3) BONG
+			BYTE $44,$10,$0D,$00,$15
+			BYTE $30,$08,$0B,$00,$15
+			BYTE $1C,$04,$0D,$00,$15
+			BYTE $E0
+			;
+STARTMSG:	LDA #1
+			STA LOCAL
+			LDX #0
+			JSR SETMODE
+			LDA #5
+			JSR USETBL1
+			LDA #VERSLEN
+			STA VAR
+			LDA #<BOOTVERS
+			STA VAR+1
+			LDA #>BOOTVERS
+			STA VAR+2
+			LDX #0
+			JSR PUTVAR ;AN$
+			LDX #0
+			JMP PRTVAR0 ;AN$
+			;
+BOOTVERS:	BYTE "{clear} Image BBS v2.0 Rev {pound}%a: {pound}$a{f6}"
+			VERSLEN = *-BOOTVERS
+			;
+SCREENTB:	WORD $400+000,$D800+000
+			WORD $400+040,$D800+040
+			WORD $400+080,$D800+080
+			WORD $400+120,$D800+120
+			WORD $400+160,$D800+160
+			WORD $400+200,$D800+200
+			WORD $400+240,$D800+240
+			WORD $400+280,$D800+280
+			WORD $400+320,$D800+320
+			WORD $400+360,$D800+360
+			WORD $400+400,$D800+400
+			WORD $400+440,$D800+440
+			WORD $400+480,$D800+480
+			WORD $400+520,$D800+520
+			WORD $400+560,$D800+560
+			WORD $400+600,$D800+600
+			WORD TEMPSCN0,TEMPCOL0
+			WORD TEMPSCN1,TEMPCOL1
+			WORD TEMPSCN2,TEMPCOL2
+			WORD TEMPSCN3,TEMPCOL3
+			WORD TEMPSCN4,TEMPCOL4
+			WORD TEMPSCN5,TEMPCOL5
+			WORD TEMPSCN6,TEMPCOL6
+			WORD TEMPSCN7,TEMPCOL7
+			WORD $400+960,$D800+960
+			;

@@ -1,0 +1,728 @@
+	on peek(829)goto{:3000},{:4000}
+	goto{:1811}
+{:1001}
+	gosub{:1002}:&,22,1
+{:1002}
+	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
+	&,53,a:im=2+a:goto{:2426}
+{:1004}
+	a=val(mid$(fl$,a,1)):return
+	pl=.:goto{:1028}
+{:1006}
+	an$=uu$:on-(an$<>"") gosub {:1260}:on -(an$<>"") goto {:1264}:pl=1:&,1:goto {:1260}
+{:1007}
+	&"{pound}g1":a$=an$:return
+	&"{f6}{$c4}evice,{$c4}rive: {pound}i1":an$="  "+an$:return
+{:1009}
+	dv%(.)=d1%:dr%(.)=d2%:dv%=dv%(dr):dr$=mid$(str$(dr%(dr)),2)+":":d3%=dr%(dr):return
+{:1010}
+	close 15:gosub{:1009}:open 15,dv%,15:return
+{:1011}
+	close 2:gosub{:1010}:open 2,dv%,2,dr$+a$
+{:1012}
+	input# 15,e%,e$,t%,s%:a$="{f6}{$d3}tatus:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+{:1013}
+	dr=5
+{:1014}
+	cm$=a$+"":gosub{:1360}:gosub{:1010}:if a$=pr$then e%=.:return
+	a$=dr$+"+."+a$:load a$,dv%:pr$=cm$:lm$="":goto{:1012}
+{:1016}
+	gosub{:1013}:goto{:3000}
+{:1019}
+	a=int(mn%/60):pt%=-(a>=p2%and a<p3%)*sgn(p1%):return
+{:1023}
+	gosub{:1024}:a$=a$+",s,w":goto{:1011}
+{:1024}
+	gosub{:1010}:print# 15,"s"dr$a$:return
+{:1025}
+	gosub{:1001}:input# 2,st(x):st(x)=st(x)+i
+{:1026}
+	gosub{:1001}:print# 2,st(x):return
+{:1027}
+	dr=3:a$="e."+b$+",s,"+a$:goto{:1011}
+{:1028}
+	poke 53249,pl:lp=.:&,1:return
+	&:return
+{:1030}
+	sh=.:rc=.:poke 2038,.:poke 2024,-(qe=.and rq=1)*255
+	&,3,sr:s=st
+	poke 144,s and 255:a=rc:gosub{:1914}:rc=a:return
+	im=7:goto{:2400}
+	im=1:goto{:2403}
+	im=2:goto{:2403}
+{:1038}
+	im=8:goto{:2400}
+	im=1:goto{:2401}
+	im=9:goto{:2400}
+	im=2:goto{:2401}
+	im=3:goto{:2401}
+{:1045}
+	im=11:goto{:2400}
+	im=10:goto{:2400}
+	im=13:goto{:2400}
+	pr$="":im$="":lm$="":return
+	im=1:goto{:2412}
+	im=1:goto{:2414}
+{:1060}
+	dr=3:a$="e.stats":goto{:1011}
+{:1061}
+	dr=3:a$="e.access":goto{:1011}
+{:1062}
+	dr=2:a$="m."+left$(tt$,14)+",s,"+a$:goto{:1011}
+{:1063}
+	dr=3:a$="e.data":goto{:1011}
+{:1064}
+	b$="log"+left$(lt$,am):goto{:1027}
+{:1065}
+	dr=6:a$="u.config":goto{:1011}
+	cm$=a$:gosub{:1360}:gosub{:1014}:f1=sgn(e%):goto{:3000}
+	a$="a":gosub{:1027}:if e%then a$="w":gosub{:1027}
+	print# 2,na$r$id;r$d1$r$ac%r$ph$r$rn$r$co$r$ad$:return
+	im=1:goto{:2400}
+	im=2:gosub{:2400}
+{:1072}
+	&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,.:return
+	im=1:goto{:2426}
+	&,14,2,kk-1:print# 2,"{up arrow}":close 2:goto{:1081}
+{:1075}
+	&"{clear}"
+	gosub{:1010}:close 5:open 5,dv%,5,dr$+a$+",s,r":c$=b$:gosub{:1012}:b$=c$:&"{f6}"
+	if e%=.then sr=5:gosub{:1030}:sr=2
+	close 5:return
+{:1079}
+	if dr<7 then if bf(dr)>-1 then gosub{:1009}:a=bf(dr):bf=a:return
+{:1081}
+	gosub{:1010}:on-(dv%<>lk%)goto{:1083}:a$=dr$:if dr$="10:"then a$="a"
+	a=2:print# 15,"lg"left$(a$,1):input# 15,e%,a$,a$,a$,a$,a$:goto{:1084}
+{:1083}
+	a=1:close 2:open 2,dv%,.,"$"+dr$+"{black}":get#2,a$,a$:&,8,2,1:&,8,2,1:close 2
+{:1084}
+	a=val(a$)*a:bf=a:goto{:1400}
+	a$="{black},u,w":gosub{:1011}:close 2
+	a$="{black}":gosub{:1024}:a=-sgn(e%):return
+	im=5:goto{:2404}
+	gosub{:1470}:on a goto{:1995}:&"{f6}{$d0}attern: ":gosub{:1499}
+	close 1:open 1,dv%,.,"$"+dr$+an$:&"{f6}":&,8,1:close 1:return
+{:1093}
+	for i=1 to 4:&,11,i:next
+	&,11,.:return
+	on i%goto{:1603}:gosub{:1490}
+{:1096}
+	a=a%:&,52,13,3:b=a%:a%=a:on b+1 goto{:1603}:open 16,4,15:close 16:if st then return
+	print# 4,a$:return
+{:1098}
+	cm$=p$:gosub{:1360}:gosub{:1100}
+	cm$=left$(p$,11)+":"+left$(an$,4):gosub{:1360}:cm$=p$:return
+{:1100}
+	s=.:sh=.:gosub{:1914}:poke 53252,38:gosub{:1908}:&"{f6:2}":goto{:1006}
+{:1196}
+	if dv%=lk%then print# 15,"l800"
+	return
+	im=4:goto{:2428}
+{:1200}
+	dr$=mid$(str$(dr%(5)),2)+":":dv%=dv%(5):pr$="":load dr$+"image",dv%
+{:1260}
+	on-(an$="{f8}{f2}")goto{:1265}
+	if left$(an$,1)="{f8}"then an$=hs$(10-val(mid$(an$,2,1))):goto{:1264}
+	&,15,6,140:uu$=an$:an$=a$
+	for ct=1 to 9:hs$(ct)=hs$(ct+1):next:hs$(10)=an$:return
+{:1264}
+	&p$+": {pound}v7{f6}":return
+{:1265}
+	for ct=1 to 10:a%=10-ct:a$=hs$(ct):&"{f8}{pound}%a: {pound}$a{f6}":next:an$="":uu$="":return
+{:1300}
+	a$=z$:y$=pr$:gosub{:1016}:a$=y$:on-(lc<>1)goto{:1013}:return
+{:1301}
+	a$=z$:goto{:1016}
+	im=3:goto{:2404}
+	br=.:mm=.:a=9:gosub{:1004}:on-(a<>.)goto{:1301}:x=4:gosub{:1980}:goto{:1812}
+{:1320}
+	&,52,14,3:if a%then x=1:gosub{:1980}:goto{:1812}
+	gosub{:1019}:a=5:gosub{:1004}:b=a:a=15:gosub{:1004}
+	&,52,15,3:if b=.or(pt%and a=.)or(a%<>.and qb<1200)then x=4:gosub{:1980}:goto{:1812}
+{:1323}
+	f1=.:a$=z$+str$(nl):gosub{:1350}:a$=z$:goto{:1301}
+	im=7:goto{:2404}
+	im=8:goto{:2404}
+	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}":return
+	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
+	on-(z$="{$d5}{$c4}"or z$="{$d5}{$d8}")goto{:1320}:goto{:1323}
+{:1345}
+	gosub{:1351}:goto{:1812}
+	a$="new user":goto{:1350}
+	a$="config"
+{:1350}
+	a$="s."+a$:dr=1:goto{:1075}
+{:1351}
+	im=1:goto{:2430}
+	im=2:goto{:2404}
+	dr=1:a$="s.menu 3":goto{:1075}
+	im=4:goto{:2404}
+{:1360}
+	&,69,4,21,left$(" "+cm$+"               ",16),1
+	return
+{:1370}
+	&,69,c,22,right$(str$(a+1e5),b),$81:return
+	&,40
+	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
+	a=ca:b=5:c=2:gosub{:1370}:a=cn:b=3:c=10:goto{:1370}
+	a$=co$(co%):co$=a$
+{:1376}
+	an$=a$:&,9:return
+	a$="                ":goto{:1376}
+{:1400}
+	for a=1 to 6:if dv%(a)=dv%and dr%(a)=val(dr$)then bf(a)=bf
+	next:a=bf:return
+	gosub{:1470}:on a goto{:1995}:&"{f6}{$c4}isk {$c3}ommand?: ":poke 53252,58
+	gosub{:1499}:z$=an$:if z$=""or z$="@"then gosub{:1010}:gosub{:1012}:&:return
+	b$=left$(z$,1):if b$="n"or b$="s"then gosub{:1901}:if a=.then return
+	gosub{:1010}:print# 15,z$:gosub{:1012}:&:return
+	im=1:goto{:2404}
+{:1470}
+	a=int(val(mid$(an$,3,2))):if a>.then if a<7 then dr=a:goto{:1474}
+	if a<7 or a>15 then a=8
+	&,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
+{:1474}
+	gosub{:1010}:close 15:a=-(st<>.):return
+{:1490}
+	c$=a$:a$="a":gosub{:1064}:if e%=.then print# 2,c$
+	close 2:a$=c$:an$=c$:return
+{:1499}
+	&"{pound}i0":if an$=""then return
+	&,15,2:return
+{:1520}
+	a=mn%:return
+	&,25,.,x:return
+{:1603}
+	return
+	im=1:goto{:2402}
+	im=2:goto{:2402}
+{:1630}
+	f1=.:gosub{:1920}:goto{:1812}
+{:1634}
+	gosub{:1061}:x=ac%+1:gosub{:1001}:&,2,2:ag$=a$:&,2,2:close 2
+	if len(fl$)<len(a$)then fl$=fl$+mid$(a$,len(fl$)+1)
+	if len(fl$)>len(a$)then fl$=a$
+	if ac%<>ao%then fl$=a$:ao%=ac%
+	a=6:gosub{:1004}:le=(a+1)*10:a=16:gosub{:1004}:poke 830,a:a=20:gosub{:1004}:da%=a
+	return
+	im=4:goto{:2400}
+	im=1:goto{:2408}
+	im=2:goto{:2408}
+	im=3:goto{:2408}
+	im=4:goto{:2408}
+	im=1:goto{:2410}
+	im=2:goto{:2410}
+	im=3:goto{:2410}
+	im=5:goto{:2400}
+	&"{f6}{$c5}dit ({$c9})nfo or ({$d0})arameters? {pound}g1{pound}v7{f6}":a=-(an$="{$d0}")-2*(an$="{$c9}")
+	im=1:on a goto{:2406},{:2428}:return
+	im=2:goto{:2406}
+	im=2:goto{:2428}
+	im=4:goto{:2406}
+	im=5:goto{:2406}
+	im$="":pr$="":lm$="":return
+	im=6:goto{:2404}
+{number:1678}
+	b=.:o$="{$c6}eedback":&"{f6}{$cc}eave {pound}$o?: ":gosub{:1902}:if a=.then return
+	dr=3:gosub{:1079}:if a<35 then{:1978}
+	im=1:goto{:2422}
+{:1690}
+	f4=.:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub{:1907}:if a=.then return
+	f4=1.3:return
+{:1694}
+	a=1:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub{:1907}
+	if a=.then f1=-3*(x=2):on x goto{:1630},{:3000},{:3000}
+{:1696}
+	cd%=.:if mid$(z$,2,1)<>"%"then ld$=lt$
+	if right$(an$,1)="!"then f1=2:goto{:1700}
+{:1698}
+	f1=1:if tr%<1 then b$="{$d4}ime":gosub{:1985}:f1=2
+{:1700}
+	a$="lo":goto{:1016}
+	rem ifa=prthen1740
+	pr=a:dr=5:gosub{:1009}
+	a$=dr$+"++"+str$(a):&,7,dv%,2
+	d4$=mid$("{$d0}unter {$d8}-{$cd}odem{$c3}opier {$d3}low {$d0} {$c9}ndexer{$c3}lock  ",1+pr*7,7):return
+	if a$<>ml$then ml$=a$:dr=5:gosub{:1009}:a$=dr$+"++ "+a$:&,7,dv%,2
+	an$=a$:&,15,1:d4$=an$:return
+{:1800}
+	f4=.:gosub{:1805}:on ec goto{:1801},{:1802},{:1803},{:1804}:x=5:goto{:1980}
+{:1801}
+	z$=ef$:f4=1.1:&,28,1:return
+{:1802}
+	f4=1.2:&,28,1:return
+{:1803}
+	z$=ef$:goto{:1300}
+{:1804}
+	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+{:1805}
+	on-(ec%=.)goto{:1806}:b%=ec%:if ec%>cr then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":ec=.:return
+{:1806}
+	if ep$=""or id=1 then return
+	cr=cr-ec%:&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$=ep$then return
+	&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":ec=.:return
+{:1810}
+	return
+{:1811}
+	gosub{:1093}:lc=1
+{:1812}
+	&,28,1:on tr%+1 goto{:1698}:gosub{:1072}:if lc<>1 then lc=1:gosub{:1093}:sy$=""
+	&,52,$19,3:on a%gosub{:1810}:if pf then a$="{$c7}{$c6}":goto{:1016}
+{:1814}
+	&,28,1:gosub{:1930}:p$=po$:gosub{:1098}:on tr%+1 goto{:1698}:if an$=""then{:1345}
+	gosub{:1850}:on f4 goto{:1842}:on rs goto{:1812}
+	if zz and an$="{$d2}"then gosub{:2100}:goto{:1900}
+	if an$="{$d4}{$c5}{$d3}{$d4}"then{:1200}
+	x=1:on-(a$="{$d1}")-(a$="{f2}")*2 goto{:1694},{:1345}
+{:1842}
+	if f4 then gosub{:2100}:on-(f4=1.1)-2*(f4=1.2)-3*(f4=1.3)goto{:1301},{:1804},{:1696}
+	if rc or val(an$)=.then{:1848}
+	a%=val(an$):if a%<1 or a%>4 then an$="":goto{:1848}
+	dr=3:a$="e.macs":gosub{:1011}:on e%goto{:1848}:x=id*4-4+a%:gosub{:1001}:&,2,2:an$=a$
+	if a$<>"{up arrow}"then uu$=a$:goto{:1814}
+{:1848}
+	close 2:gosub{:1989}:goto{:1811}
+{:1850}
+	on-(ac%<>ao%)gosub{:1634}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
+	&,52,20,3:em=a%:&,52,5,3:zz=a%
+	x=1:rq=.:rs=1
+	f4=.:a%=zz:b%=2^ac%:&,42:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto{:1800}
+	if a$="{$cf}"then{:1690}
+	rs=.:return
+{:1870}
+	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b {$cd}ode: {$cf}{pound}v7{f6}":return
+{:1871}
+	a=val(mid$(uf$,b,1)):gosub{:1870}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1)
+	return
+	a=em:b$="{$c5}xpert":gosub{:1870}:em=a:&,52,20,2:return
+	a=pm:b$="{$d0}rompt":gosub{:1870}:pm=a:return
+	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub{:1871}:&,52,34,a:return
+	b=3:b$="{$cd}enu":gosub{:1871}:&,52,44,a:return
+	b=4:b$="{$d5}ndefined":gosub{:1871}:&,52,44,a:return
+	poke 970,mp%:&"{f6}":return
+{:1900}
+	poke 53252,14:&"{f6:2}{$d2}un: +.{pound}i0":a$=an$:on-(a$="")goto{:1812}:goto{:1016}
+{:1901}
+	&"{f6}{$c1}re {$d9}ou {$d3}ure?: "
+{:1902}
+	&"{lt. green}[{gray3}{$ce}o{lt. green}]":gosub{:1007}:&"{pound}h4"
+	a=-(a$="{$d9}")
+{:1904}
+	a$="{$ce}o":if a then a$="{$d9}es"
+	&:&"{f6}{pound}q0":return
+	pr$="":&:goto{:1812}
+{:1907}
+	&"{lt. green}[{gray3}{$d9}es{lt. green}]":gosub{:1007}:a=(a$="{$ce}")+1:&"{pound}h5":goto{:1904}
+{:1908}
+	poke 970,.:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
+	goto{:1915}
+	dr=3:a$="e.say":gosub{:1011}:on sgn(e%)goto{:1603}:x=1:gosub{:1001}:input# 2,x
+	a=rnd(-ti):&"{f6}":x=int(rnd(1)*x)+2:gosub{:1001}
+	input# 2,b$,c$,d$,f$:gosub{:2912}:lp=1:&"{pound}$q{white} {pound}$b{f6}{pound}$q{cyan} {pound}$c{f6}{pound}$q{yellow} {pound}$d{f6}{pound}$q{orange} {pound}$f{f6}{pound}q0":close 2:return
+{:1914}
+	poke 53253,.:lp=.:poke 2024,.:poke 2031,.:poke 53260,.:&"{pound}u0{pound}q"+chr$(df%+48):return
+{:1915}
+	&"{f6:2} - {pound}$b{$cd}":a%=tr%:if a%<100 then:&" - {pound}%a {$cd}in. {$cc}eft":return
+	if zz then a%=usr(.):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
+	return
+{:1920}
+	&"{f6} {$c1}borted!{f6}":return
+{:1930}
+	&,52,30,3:on a%gosub{:1931}:return
+{:1931}
+	dr=3:a$="e.macros":gosub{:1011}
+	if e%=.then:&,2,2:a=val(a$):&"{f6:2}":x=int(rnd(1)*a)+2:gosub{:1001}:&,3,2
+	close 2:return
+{:1978}
+	x=2
+{:1980}
+	&"{f6}":dr=3:a$="e.text":gosub{:1011}:gosub{:1001}:&,2,2:&:close 2:&"{f6}":return
+	b$="{$c4}isk {$c4}irectory"
+{:1985}
+	&"{f6}{$d3}orry, {pound}$b {$cc}imit {$c5}xceeded.{f6}":return
+{:1989}
+	&"{f6:2}{$d5}nknown {$c3}ommand. {$c5}nter {f5}?{f5} {$c6}or {$c8}elp":return
+	ni=val(an$):n1$=cc$+mid$(str$(ni),2):b$="-"+n1$:n2$=""
+	if left$(an$,1)="!"then ni=-1:n1$=mid$(an$,2,3):b$=" @ "+n1$
+	an$=mid$(an$,5):&,15,6,94:if an$<>""and ni=-1 then n2$=an$:b$=b$+"/"+n2$
+	an$=a$:n0$=a$:&,15,1:an$=an$+b$:return
+{:1995}
+	x=6:goto{:1980}
+	poke 22,25:for i=2 to peek(152):close peek(603):next:poke 2031,.
+	x=peek(780):y=peek(781)+peek(782)*256
+	&,11:&,28,1:poke 53248,.
+	dr$=mid$(str$(dr%(5)),2)+":":dv%=dv%(5):load dr$+"im",dv%,2
+{:2100}
+	&,28,1:gosub{:2110}:&,27:return
+	goto{:2110}
+	im=4:goto{:2426}
+	im=5:goto{:2426}
+{:2110}
+	dim bb$(31),dt$(61),ed$(61),nn$(61)
+	dim a%(61),c%(61),d%(61),e%(31),f%(61),ac%(31),so%(31):return
+{:2400}
+	a$="misc":goto{:2500}
+{:2401}
+	a$="misc2":goto{:2500}
+{:2402}
+	a$="editor":goto{:2500}
+{:2403}
+	a$="nodes":goto{:2500}
+{:2404}
+	a$="local":goto{:2500}
+{:2406}
+	a$="params":goto{:2500}
+{:2408}
+	a$="comm1":goto{:2500}
+{:2410}
+	a$="comm2":goto{:2500}
+{:2412}
+	a$="stats":goto{:2500}
+{:2414}
+	a$="bar":goto{:2500}
+	a$="screens":goto{:2500}
+{:2422}
+	a$="feedback":goto{:2500}
+	a$="trans":goto{:2500}
+{:2426}
+	a$="disp":goto{:2500}
+{:2428}
+	a$="info":goto{:2500}
+{:2430}
+	a$="menus":goto{:2500}
+{:2500}
+	gosub{:2510}:is=is+1:im$(is)=im$
+	gosub 60000:new 60000:is=is-1:if is then a$=im$(is):gosub{:2510}
+	return
+{:2510}
+	dr=5:gosub{:1009}:im$=a$:a$=dr$+"im."+im$:load a$,dv%
+	return
+	gosub{:2610}:gosub{:4000}:new 4000:return
+{:2610}
+	lm$=left$(pr$,2)+"."+a$:dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
+	gosub{:2630}:gosub{:4000}:new 4000:return
+{:2630}
+	lm$=a$+"":dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
+{:2900}
+	a=45:b=43:a$="{$d0}rogram":gosub{:2910}
+	a=47:b=45:a$="{$d6}ariables":gosub{:2910}
+	a=49:b=47:a$="{$c1}rrays":gosub{:2910}
+	a=51:b=49:a$="{$c6}ree {$d2}{$c1}{$cd}":gosub{:2910}
+	a=55:b=51:a$="{$d3}trings":gosub{:2910}
+	poke 53252,16:&"{f6}{$cc}oad: {pound}i0{f6}":if an$=""then return
+	dr=5:gosub{:1010}:a$=dr$+an$:load a$,dv%:goto{:2900}
+{:2910}
+	c=peek(a)-peek(b)+(peek(a+1)-peek(b+1))*256:&"{pound}$a:{pound}{back arrow}10{pound}!c{f6}":return
+{:2912}
+	q$="":on-(ll%<42)goto{:1603}:for r=1 to int((ll%-42)/2):q$=q$+" ":next:return
+	copr. 1994 new image 9/21/94
+{:3000}
+	poke 828,peek(186):clr:print"{clear}{$08}{white}{$0e}":poke 53280,.:poke 53281,.
+	open 131,2,134,chr$(6):poke 248,203:poke 250,204:poke 56,160:poke 52,160
+	dim a$,a%,ac%,am,ag$,ak$,am$,an$,ao%
+	dim b$,b%,bd,bn$,bu
+	dim c$,c%,c1$,c2$,c3$,ca,cc,cc$,cd%,ch$,cm$,cn,co$,co%,cr,ct,ct%
+	dim d$,d%,d1$,d1%,d2$,d2%,d3%,d3$,d4$,d5$,d6$,da%,db%,dc,dc%,dd$,dr,dr$,dv%
+	dim df%
+	dim e$,e%,el,em,ef$,ep$,ec,ec%
+	dim f$,f%,f1,f2,f3,f4,ff$,fl,fl$,f1$,f2$,f3$,f4$,f5$,f6$,f7$,f8$
+	dim g$,g%
+	dim h$,h%,hx$
+	dim i$,i%,id,im$,im,is
+	dim j$,j%,jn$
+	dim k$,k%,kk,kp%
+	dim l$,l%,l1,l1$,l2,l2$,l3,l3$,lc,ld$,le,lf,lk%,ll$,ll%,lm$,lp,lt$
+	dim m$,m%,mc,mf,ml$,mp$,mt$,mw,mp%,mn%
+	dim n$,n%,na$,nc,nf,nl,nl$,nm,nm$
+	dim o$,o%
+	dim p$,p%,p1%,p2%,p3%,pf,ph$,pl,pm,po$,pp$,pr,pr$,ps,pw$
+	dim q$,q%,qb,qe,qt$
+	dim r$,r%,rc,rn$,rp,rq
+	dim s$,s%,sa%,sh,sg
+	dim t$,t%,t1,tc%,tf,tk$,tr%,tt,tt$,tz$
+	dim u$,u%,uc,uh,ul,ur,uf$,uu$
+	dim v$,v%
+	dim w$,w%
+	dim x$,x%
+	dim y$,y%
+	dim z$,z%,zz
+	ac%=16:x=rnd(-ti):hx$="0123456789{$c1}{$c2}{$c3}{$c4}{$c5}{$c6}"+""
+	c3$="{f6}{$d2}eturning {$d4}o {$d4}he {$c5}ditor"+"{f6:2}"
+	ak$=" {$c0:39}"+"{f6}":lk%=8
+	r$=chr$(13):nl$=chr$(.):qt$=chr$(34)
+	open 4,4,7:poke 836,1:poke 650,128
+	poke 56328,.:poke 56579,peek(56579)or 38:poke 56577,peek(56577)or 36
+	dim tt$(254),dv%(36),dr%(36),co$(9),hs$(10),bf(6),st(38),im$(5),pf$(10)
+	dim ec%(19,24),es%(3,49),ei%(50):restore:for i=1 to 9:read a$:co$(i)=a$+"":next
+	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
+	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
+	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
+{:3080}
+	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$="1"+"9012098600"
+	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,.
+{:3084}
+	dv%=z%:&"{f6}{cyan}{$d2}eading {$c3}onfig {$c4}ata...":close 2:close 15:open 15,dv%,15
+	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub{:1012}:if e%then close 2:gosub{:3192}:goto{:3084}
+	input# 2,dv%(3),dr%(3),po$:close 2:lk%=8:restore:if po$=""then po$="{$cd}ain: "
+{:3090}
+	read a$:if a$<>"*"then{:3090}
+	gosub{:1196}:gosub{:1063}:for i=1 to 6:x=i+51:gosub{:1001}:&,2,2:dv%(i)=val(a$)
+	&,2,2:dr%(i)=val(a$):next:close 2
+{:3096}
+	&"{f6}{$d2}eading {$d3}ystem {$c9}nfo..."
+	gosub{:1065}:if e%then close 2:gosub{:3192}:goto{:3096}
+	x=1:gosub{:1001}:&,2,2:bs$=a$:close 2
+	gosub{:1045}:uh=a%:&"{pound}%a {$d5}sers{f6}":rem
+	dr=3:gosub{:1010}
+	&"{f6}{$c5}{$c3}{$d3} {$c4}efs: ":a$=dr$+"e.ecs.main":&,42,4:gosub{:1012}:&"{$c4}one...{f6}"
+	&"{$d0}rint {$cd}ode {$c4}efs: ":a$=dr$+"e.printmodes":&,7,dv%,7:gosub{:1012}:&"{$c4}one...{f6}"
+	&"{$cc}ight{$c2}ar {$c4}efs: ":a$=dr$+"e.lightbar":&,7,dv%,8:gosub{:1012}:&"{$c4}one...{f6}"
+	&"{$c1}larm {$d4}able: ":a$=dr$+"e.alarms":&,7,dv%,9:gosub{:1012}:&"{$c4}one...{f6}"
+	dr=2:gosub{:1010}
+	&"{$ce}etwork {$c1}larm {$d4}able: ":a$=dr$+"nm.times":&,7,dv%,12:gosub{:1012}:&"{$c4}one...{f6}"
+	&"{$d2}eading {$c6}-{$cb}eys: "
+	dr=3:a$="e.fkeys,s,r":gosub{:1011}:if e%then close 2:goto{:3128}
+	for i=1 to 8:&,2,2:if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
+	tt$(i)=a$:next:close 2:f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
+	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8):&"{$c4}one...{f6}"
+{:3128}
+	gosub{:1063}:if e%then close 2:gosub{:3192}:goto{:3128}
+	x=1:gosub{:1001}:&,2,2:ca=val(a$):x=12:gosub{:1001}:&,2,2:ur=val(a$)-1
+	x=17:gosub{:1001}:&,2,2:d3$=a$:x=18:gosub{:1001}:&,2,2:pp$=a$
+	x=19:gosub{:1001}:&,2,2:z$=a$:x=20:gosub{:1001}:input# 2,p1%,p2%,p3%
+	x=35:gosub{:1001}:&,2,2:am$=a$:x=36:gosub{:1001}:&,2,2:mc=val(a$)
+	x=37:gosub{:1001}:y%=val(an$):x=38:gosub{:1001}:&,2,2:lk%=val(a$)
+	df%=3:x=40:gosub{:1001}:&,2,2:a=val(a$):if a>.and a<16 then df%=a
+	x=41:gosub{:1001}:&,2,2:a=val(a$):if a$<>""then close 4:open 4,4,a
+	x=42:gosub{:1001}:&,2,2:a=val(a$):if a then poke 17136,a
+	x=35:gosub{:1001}:&,2,2:an$=a$:&,15:d6$=an$+"{$cd}":x=45:gosub{:1001}:&,2,2:tz$=a$
+	x=47:gosub{:1001}:&,2,2:bn$=a$
+	x=48:gosub{:1001}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}":x=49:gosub{:1001}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
+	x=51:gosub{:1001}:&,2,2:cc$=a$
+	x=58:gosub{:1001}:&,2,2:nc=val(a$)
+	on y%gosub{:3348},{:3358},{:3366}:gosub{:3170}
+	poke 970,.:poke 971,23:mp$=" ...{$cd}ore? ({$d9}/n) "+"":im=5:gosub{:2428}:gosub{:3200}
+	gosub{:1060}:for x=1 to 38:gosub{:1001}:&,2,2:st(x)=val(a$):next:close 2
+	an$=am$:lt$=am$:tk$=left$(am$,1):gosub{:3210}
+	close 2:gosub{:3186}:&,37:poke 53258,16-(peek(56577)and 16)
+	a$=z$:gosub{:1520}:t1=a:an$=z$:&,15:d2$=an$+"{$cd}":for i=54272 to i+24:poke i,.:next
+	f1=3:&,27,1:a$="lo":goto{:1016}
+{:3170}
+	a=val(mid$(z$,1,1)):gosub{:3184}:poke 52935,a
+	a=val(mid$(z$,2,2)):gosub{:3184}:poke 52938,a
+	a=val(mid$(z$,4,2)):gosub{:3184}:poke 52936,a
+	a=val(mid$(z$,6,2)):gosub{:3184}:poke 52937,a
+	b=val(mid$(z$,8,2))                                                   
+	c=val(mid$(z$,10,2))
+	&,62,b,c:b=b+80*((b=92)-(b=12))+12*((b=93)or(b=13)):&,58,b,.:return
+{:3184}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:3186}
+	for q=.to 6:bf(q)=-1:next
+	&"{f6}{$d2}eading {$c2}locks {$c6}ree...{f6}":for q=1 to 6:dr=q:gosub{:1079}
+	read b$:&"{f6}{rvrs off} {pound}$b {$c4}isk{pound}{back arrow}30:":&str$(a):next:q=.:return
+{:3192}
+	&"{f6:3}{yellow}{$c9}nsert {$c1}ll {$d3}ystem {$c4}isks {$c9}n {$c3}orrect      {$c4}rives, {$c1}nd {$d0}ress {rvrs on} {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {rvrs off}"
+	&" {$cf}r, {f6:2}{$d0}ress (1) {$d4}o {$c3}onfigure {$c1} {$ce}ew {$c2}oard"
+	&"  {$cf}r, {f6}{$d0}ress (2) {$d4}o {$c3}onvert {$c6}rom 1.2/1.2a{f6:2}[> ":gosub{:1007}
+	&"{f6:2}":on-(an$="1")-(an$="2")*2 goto{:3220},{:3368}:return
+{:3200}
+	&"{$d3}etting default checks: "
+	dr=3:a$="e.lightdefs,s,r":gosub{:1011}:if e%then close 2:goto{:3208}
+	for x=.to 7:&,2,2:if len(a$)<>16 then{:3208}
+	for i=1 to 16:b$=mid$(a$,i,1):&,52,(x)*16+i-1,val(b$):next
+{:3208}
+	next:close 2:&"{$c4}one...{f6}"
+{:3210}
+	dr=3:a$="e.log"+left$(lt$,1):gosub{:1011}:if e%=.then return
+	dr=3:a$="e.log"+left$(lt$,1):gosub{:1023}:an$=d1$:&,15:d6$=an$
+	a$=" {$cc}{$cf}{$c7} {$d3}{$d4}{$c1}{$d2}{$d4}: "+d6$:print# 2,a$:gosub{:1096}
+	a$=" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}"+"{f6}":print# 2,a$:gosub{:1096}:gosub{:1063}:x=44:gosub{:1001}:print# 2,d6$
+	close 2:gosub{:1060}:for x=12 to 22:st(x)=.:gosub{:1026}:next:st(20)=.:goto{:1026}
+{:3220}
+	&"{clear}{f6}{white} {$d0}art {$c9}: {$d3}ysop {$c9}nformation{f6:2}":d1$="14112071201"
+	poke 53252,20:w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3}":b$=w$:pl=1:p$="{$d3}ysop {$c8}andle":&,1,32
+	if an$=""then an$=b$
+	tt$(1)=an$:&"{f6}":w$="{$d2}{$d5}{$d3}{$c8}":b$=w$:p$="{$d3}ysop {$c6}irst {$ce}ame":&,1,32
+	if an$=""then an$=b$
+	tt$(3)=an$:&"{f6}":w$="{$cc}{$c9}{$cd}{$c2}{$c1}{$d5}{$c7}{$c8}":b$=w$:p$="{$d3}ysop {$cc}ast {$ce}ame":&,1,32
+	if an$=""then an$=b$
+	tt$(4)=an$:&"{f6}":w$="[801] 423-2209":b$=w$:p$="{$d3}ysop {$d0}hone":&,1,32
+	if an$=""then an$=b$
+	tt$(5)=an$:&"{f6}":w$="{$c4}{$c9}{$d4:2}{$cf}":b$=w$:p$="{$d3}ysop {$d0}assword":&,1,32
+	if an$=""then an$=b$
+	tt$(2)=an$:tt$=tt$(1)+r$+tt$(2)+r$+tt$(3)+r$+tt$(4)+r$+tt$(5)+r$+d1$+r$
+	tt$=tt$+"9"+r$:for i=1 to 14:tt$=tt$+"0"+r$:next:tt$=tt$+d1$+r$
+	tt$=tt$+"1411191111111119000090000"
+	&"{clear}{f6} {$d0}art {$c9:2}: {$c4}evice,{$a0}{$c4}rive {$c3}onfiguration{f6:2}":restore:gosub{:3438}
+{:3250}
+	a=.:read a$:if a$<>"*"then{:3250}
+	for i=1 to 6:poke 53252,3:pl=1:read b$
+	w$="8":p$=b$+" {$c4}evice":&,1,32:a=val(an$):if a<7 or a>15 then a=8
+	dv%(i)=a:w$="0":p$=b$+" {$c4}rive":&,1,32:a=val(an$):if a<.or a>254 then a=.
+	dr%(i)=a:&"{f6}":next
+	&"{clear}{f6} {$d0}art {$c9:3}: {$c2:2}{$d3} {$c9}nformation{f6:2}":poke 53252,30:pl=.
+	w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$d6}2.0!":b$=w$:p$="{$c2:2}{$d3} {$ce}ame":&"{f6}":&,1,32
+	if an$=""then an$=b$
+	bn$=an$:w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$cd}{$c1}{$c9}{$ce}":b$=w$:p$="{$cd}ain {$d0}rompt":&"{f6}":&,1,32
+	if an$=""then an$=b$
+	po$=an$:w$="* {$c5}ntering {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat {$c5}ntry":&"{f6}":&,1,32
+	if an$=""then an$=b$
+	c1$=an$:w$="* {$c5}xiting {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat {$c5}xit":&"{f6}":&,1,32
+	if an$=""then an$=b$
+	c2$=an$:w$="100":b$=w$:p$="{$ce}ew {$d5}ser {$c3}redits":&"{f6}":&,1,32:if an$=""then an$=b$
+	nc=val(an$):&"{f6}{$c3}reating {f5}bd.data{f5}...."
+	a$=bd$+"bd.data,s,w":open 2,dv%,2,a$:print# 2,dv%(3);r$;dr%(3):print# 2,po$
+	print# 2,"2.0 {$c9}mage {$d6}2.0 {$c3}opyright 1994 {$ce}ew {$c9}mage {$d3}oftware":close 2:close 15
+	&"{$c4}one!{f6:2}{$c3}reating {f5}u.config{f5}...."
+	dr=6:a$="u.config,l,"+chr$(254):gosub{:1011}
+	x=1:gosub{:1001}:print# 2,tt$:x=2:gosub{:1001}:print# 2,"{up arrow}":ur=1:close 2:&"{$c4}one!{f6}"
+	&"{f6}{$c3}reating {f5}u.index{f5}....":an$=tt$(1):gosub{:1038}:&"{$c4}one!{f6}"
+	close 2:&"{f6}{$c3}reating {f5}e.stats{f5}...."
+	dr=3:a$="e.stats,l,"+chr$(10):gosub{:1011}
+	for x=1 to 40:gosub{:1001}:print# 2,"0":next:close 2:&"{$c4}one!{f6}"
+	&"{f6}{$c3}reating {f5}e.data{f5}...."
+	dr=3:a$="e.data,l,"+chr$(31):gosub{:1011}:x=1:gosub{:1001}:print# 2,"0"
+	for x=2 to 11:print# 2,"{up arrow}":next:print# 2,"2"
+	for x=13 to 16:print# 2,"{up arrow}":next:print# 2,"{$ce}{$cf}{$c2}{$cf}{$c4}{$d9}"
+	print# 2,"{$d0}{$c1}{$d3:2}":print# 2,d1$
+	print# 2," 0 , 0 , 0":for x=21 to 30:print# 2,"{up arrow}":next
+	print# 2,"2"
+	for x=32 to 34:print# 2,"{up arrow}":next:print# 2,d1$
+	print# 2,"0":print# 2,y%
+	print# 2,"0":for x=39 to 42:print# 2,"{up arrow}":next
+	print# 2,"{$d8}":for x=44 to 46:print# 2,"{up arrow}":next
+	print# 2,bn$:print# 2,c1$
+	print# 2,c2$:b$="0":x=50:gosub{:1001}:&,2,2
+	if asc(a$+nl$)<>32 then b$=a$
+	gosub{:1001}:print# 2,b$:print# 2,cc$
+	for i=1 to 6:x=51+i:print# 2,dv%(i);r$;dr%(i):next
+	print# 2,nc:close 2:&"{$c4}one!{f6}"
+	&"{f6}{$c3}reating {f5}e.access{f5}....":dr=3:a$="e.access,l,"+chr$(127):gosub{:1011}
+	for i=.to 9:x=i+1:gosub{:1001}
+	print# 2,"{$c7}roup"+str$(i)+r$+"01001100000000021151":next
+	close 2:&"{$c4}one!{f6:2}{$d3}tarting {$c4}aily {$cc}og....":gosub{:3210}:&"{$c4}one!{f6}"
+	lp=1:&"{f6}{$c2}e sure to {$c5}nter '{$c9}{$cd}' {$cf}nce {$cf}nline to {$c3}omplete the {$d3}etup of {$d9}our {$c2:2}{$d3}"
+	lp=1:&"{$cd}essage {$c2}ases and {$d5}/{$c4}{$a0}{$cc}ibraries {$c3}an {$c2}e {$c3}onfigured {$c2}y using {$d4}he "
+	lp=1:&"{f5}+.reledit{f5} {$d5}tility.  {f5}{$d2}{$c5}{f5} {$c3}ommand.{f6:2}  {$ce}{$c5}{$d7} {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$d3}{$cf}{$c6}{$d4}{$d7}{$c1}{$d2}{$c5}{f6:2}":return
+{:3348}
+	print# 15,"t-ra":&,2,15
+	z$=left$(a$,2):a=-(z$="su")-2*(z$="mo")-3*(z$="tu")-4*(z$="we")-5*(z$="th")
+	a=a-6*(z$="fr")-7*(z$="sa"):z$=mid$(str$(a),2,1)+mid$(a$,12,2)+mid$(a$,6,2)
+	a=-80*(mid$(a$,24,1)="p")+val(mid$(a$,15,2))
+	z$=z$+mid$(a$,9,2)+right$("0"+mid$(str$(a),2),2)+mid$(a$,18,2):poke 1010,1:return
+{:3358}
+	gosub{:3364}:sys 49155:goto{:3362}
+	rem:gosub1063:x=35:gosub1001:&,2,2:d1$=a$:close2:poke1010,1:return
+{:3362}
+	z$="":for a=49159 to 49169:z$=z$+chr$(peek(a)):next:poke 1010,1:return
+{:3364}
+	dr=5:gosub{:1010}:a$=dr$+"swr.ml":&,7,dv%,2:return
+{:3366}
+	gosub{:3364}:sys 49152:sys 49155:goto{:3362}
+{:3368}
+	close 15:open 15,dv%,15,"r"+bd$+"d.data=bd.data"
+	fl=.:&"{f6:2}{$d2}eading {f5}d.data{f5}...":close 2:open 2,dv%,2,bd$+"d.data,s,r":gosub{:1012}
+	if e%then close 2:&"{f6:2}{f5}d.data{f5} not found!! [{$c3}{$cf}{$ce}{$c6}{$c9}{$c7}{$d5}{$d2}{$c5}] ({$cb}ey) {pound}g1":return
+	for i=1 to 6:input# 2,dv%(i),dr%(i):next
+	&,2,2:cc$=a$:&,2,2:nc=val(a$):&,2,2:&,2,2:&,2,2:bn$=a$:&,2,2:po$=a$:close 2
+	&"{f6:2}":gosub{:3438}:&"{f6:2}{$c3}onverting...":for qq=1 to 4:gosub{:3380}:next:return
+{:3380}
+	on qq goto{:3382},{:3406},{:3418},{:3426}
+{:3382}
+	&"{f6}{$c3}onverting {$c1}ccess {$c4}ata...":gosub{:1063}
+	for x=2 to 11:gosub{:1001}:&,2,2:tt$(x)=a$:next
+	for x=21 to 30:gosub{:1001}:&,2,2:tt$(x)=a$:next
+	for i=.to 9:a$=tt$(i+2):tt$(i+2)=mid$(a$,5)
+	a=asc(a$):b=asc(mid$(a$,2,1)):c=asc(mid$(a$,3,1)):d=asc(mid$(a$,4,1))
+	if a>100 then a=.
+	if b>100 then b=.
+	if c>100 then c=.
+	if d>100 then d=.
+	tt$(i+21)=tt$(i+21)+chr$(48+c)+chr$(48+b)+right$(str$(100+a),2)+chr$(48+d)
+	next:close 2
+	for i=.to 9:fl$(i)=tt$(i+21):next:&"{f6}{$c3}ontinuing!{f6}":return
+{:3406}
+	&"{$d5}pdating {f5}e.data{f5}...":gosub{:1063}
+	x=35:gosub{:1001}:print# 2,d1$:print# 2,.:print# 2,y%
+	print# 2,.:print# 2,.:print# 2,"3"
+	print# 2,"7"
+	for i=1 to 6:x=51+i:gosub{:1001}:print# 2,dv%(i);r$;dr%(i):next:close 2
+	&"{f6}{$c3}ontinuing!{f6}":return
+{:3418}
+	&"{$c3}reating {f5}e.access{f5}..."
+	close 2:dr=3:a$="e.access,l,"+chr$(127):gosub{:1011}
+	print# 2,tt$(x+20):next:close 2
+	&"{f6}{$c4}one {$d7}ith {f5}e.data{f5}{f6}":return
+{:3426}
+	&"{$d7}riting new {f5}bd,data{f5}{f6}"
+	open 2,dv%,2,bd$+"bd.data,s,w":gosub{:1012}:if e%then close 2:gosub{:3192}:goto{:3080}
+	if po$=""then po$="{$cd}ain: "
+	print# 2,dv%(3);r$;dr%(3);r$;po$;r$
+	print# 2,"2.0 {$c9}mage {$d6}2.0 {$c3}opyright 1994 {$ce}ew {$c9}mage {$d3}oftware":close 2:close 15
+	&"{f6}{$c3}onversion {$c3}omplete!!":return
+{:3438}
+	&"{$c3}lock {$d3}etting:{f6:2} 1. {$cd}anually{f6} 2. {$c3}{$cd}{$c4} {$c2}oot {$c4}evice{f6} 3. {$cc}t{$cb} {$d0}ort 1{f6}"
+	&" 4. {$cc}t{$cb} {$d0}ort 2{f6:2}[> {pound}i1{f6:2}":y%=val(an$)-1:if y%<.or y%>3 then y%=.
+	return
+	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
+	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
+	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
+	copr. 1994 new image 9/21/94
+{:4000}
+	&,38:el=y:cm$=cm$+"":p$=p$+"":pr$=pr$+"":im$=im$+"":if x<128 then{:4006}
+	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	&,38:&,61,.,8:print"&,37:goto1812:":end
+{:4006}
+	restore
+{:4008}
+	read a$:if a$<>"errors"then{:4008}
+	&,40:d$="{$c7}{$d5}{$d2}{$d5}":if x>.and x<30 then for k=1 to x:read d$:next
+	a%=x:&"{f6}{lt. red} {$d3}{$d9}{$d3}{$d4}{$c5}{$cd} {$c5}{$d2:2}{$cf}{$d2} #{pound}%a {white}({pound}$d {$c5}{$d2:2}{$cf}{$d2}){f6}":r$=chr$(13)
+	a$="im":if el=>3000 then a$="+."+pr$:if el=>60000 then a$="im."+im$
+	a=el:&"{lt. blue} {$c9}n {$cc}ine:{gray3}{pound}!a {lt. blue}{$cf}f {gray3}{pound}$a{f6}"
+	&"{f6}{lt. red}{$d2}ecording {$c5}rror, {$d0}lease {$d7}ait...":d$=str$(x)+" ("+d$+" {$c5}{$d2:2}{$cf}{$d2})"
+	dr=3:a$="e.errlog,s,a":gosub{:1011}:if e%=.then{:4024}
+	a$="e.errlog,s,w":gosub{:1011}
+{:4024}
+	print# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)r$"{$c5}rror {$cc}og"r$
+	print# 2,"{$c5}rror :"d$r$"{$cc}ine  :"el;r$"{$c1}rea  : "cm$r$"{$d0}rompt: "p$
+	print# 2,"{$d0}rogram: +."pr$:print# 2,"{$cd}odule: +/"lm$:print# 2,"{$c9}{$cd} {$cd}odule: im."im$
+	print# 2,"{$cd}{$cc} {$c6}ile: ++ "ml$" ("d4$")"
+	for i=1 to 10:a$=chr$(58-i):if hs$(i)<>""then print# 2," {f8}"a$": "hs$(i)
+	next:print# 2,"{up arrow}":close 2
+	a$="{$d5}ser  : "+na$+r$+"{$c5}rror :"+d$+r$+"{$cc}ine  :"+str$(b)+r$+"{$d4}ime  : {$04}"+d1$+r$
+	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":gosub{:1096}
+	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
+	im$="":is=.:lm$="":pr$="":ml$="":pr=-1:pf=.
+	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=.then{:4050}
+	a$="lo":f1=2:goto{:1016}
+	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+{:4050}
+	&,52,4,3:if(a%=1)or i%or id=1 then{:4068}
+	gosub{:4092}:kk=.:a$="s.errmail,s,r":dr=1:gosub{:1011}:if e%then close 2:goto{:4068}
+{:4054}
+	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=.then{:4054}
+	close 2:tt$=na$:a$="a":gosub{:1062}:if e%then a$="w":gosub{:1062}
+	a$="[{$d3}ystem {$c5}rror ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
+	for x=1 to kk:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2:close 15
+	gosub{:1060}:i=1:x=14:gosub{:1025}:x=25:gosub{:1025}:x=32:gosub{:1025}:close 2
+	&"{pound}h9{pound}h9{pound}h7ed!{f6:2}{white}{$07}{$d9}ou {$c8}ave {$ce}ew {$c5}-{$cd}ail {$d7}aiting:{f6:2}{green}{$d2}ead {$ce}ow? ":gosub{:1902}
+	if a then a$="{$c5}"+"{$cd}":goto{:1016}
+{:4068}
+	pr$="":goto{:1811}
+	data"errors"
+	data "{$d4}{$cf:2} {$cd}{$c1}{$ce}{$d9} {$c6}{$c9}{$cc}{$c5}{$d3}","{$c6}{$c9}{$cc}{$c5} {$cf}{$d0}{$c5}{$ce}","{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$cf}{$d0}{$c5}{$ce}"
+	data "{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$c6}{$cf}{$d5}{$ce}{$c4}","{$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$cf}{$d4} {$d0}{$d2}{$c5}{$d3}{$c5}{$ce}{$d4}","{$ce}{$cf}{$d4} {$c9}{$ce}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}"
+	data "{$ce}{$cf}{$d4} {$cf}{$d5}{$d4}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}","{$cd}{$c9}{$d3:2}{$c9}{$ce}{$c7} {$c6}{$c9}{$cc}{$c5} {$ce}{$c1}{$cd}{$c5}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$d5}{$cd}{$c2}{$c5}{$d2}"
+	data "{$ce}{$c5}{$d8}{$d4} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c6}{$cf}{$d2}","{$d3}{$d9}{$ce}{$d4}{$c1}{$d8}","{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c7}{$cf}{$d3}{$d5}{$c2}"
+	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$c4}{$c1}{$d4}{$c1}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$d1}{$d5}{$c1}{$ce}{$d4}{$c9}{$d4}{$d9}","{$cf}{$d6}{$c5}{$d2}{$c6}{$cc}{$cf}{$d7}"
+	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$cd}{$c5}{$cd}{$cf}{$d2}{$d9}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$d3}{$d4}{$c1}{$d4}{$c5}{$cd}{$c5}{$ce}{$d4}","{$c2}{$c1}{$c4} {$d3}{$d5}{$c2}{$d3}{$c3}{$d2}{$c9}{$d0}{$d4}"
+	data "{$d2}{$c5}{$c4}{$c9}{$cd}'{$c4} {$c1}{$d2:2}{$c1}{$d9}","{$c4}{$c9}{$d6}{$c9}{$d3}{$c9}{$cf}{$ce} {$c2}{$d9} {$da}{$c5}{$d2}{$cf}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c9}{$d2}{$c5}{$c3}{$d4}"
+	data "{$d4}{$d9}{$d0}{$c5} {$cd}{$c9}{$d3}{$cd}{$c1}{$d4}{$c3}{$c8}","{$d3}{$d4}{$d2}{$c9}{$ce}{$c7} {$d4}{$cf:2} {$cc}{$cf}{$ce}{$c7}","{$c6}{$c9}{$cc}{$c5} {$c4}{$c1}{$d4}{$c1}"
+	data "{$c6}{$cf}{$d2}{$cd}{$d5}{$cc}{$c1} {$d4}{$cf:2} {$c3}{$cf}{$cd}{$d0}{$cc}{$c5}{$d8}","{$c3}{$c1}{$ce}'{$d4} {$c3}{$cf}{$ce}{$d4}{$c9}{$ce}{$d5}{$c5}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$c6}{$d5}{$ce}{$c3}{$d4}{$c9}{$cf}{$ce}"
+	data "{$d6}{$c5}{$d2}{$c9}{$c6}{$d9}","{$cc}{$cf}{$c1}{$c4}","{$c2}{$d2}{$c5}{$c1}{$cb} "
+{:4092}
+	gosub{:1065}:x=1:gosub{:1001}:&,2,2:i1$=a$:close 2:return
+	copr. 1994 new image 9/21/94

@@ -1,0 +1,12 @@
+Asm keyboard shortcuts
+discovered 8/3/2013
+
+Ctrl-E	Erase from cursor to end of line
+Ctrl-I	Tab
+Ctrl-N	End of line
+
+print $d000
+53248
+
+print %01001
+9

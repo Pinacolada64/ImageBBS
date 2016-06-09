@@ -1,0 +1,156 @@
+ready.
+
+10 print"12/27/90 04:10p"
+100 bsnpre = $02fd
+110 bsnval = $02fe
+1000 ;
+1010 ;********************************
+1020 ;* variable handling routines *
+1030 ;********************************
+1040 :
+1050 ;* get descriptor for tt$(.x)
+1060 getarr:jsr findarr
+1070  ldy #2:jmp usevar1
+1080 ;
+1090 ;* get and copy memory to buffer
+1100 getln:jsr getarr
+1110  ldy var:sty index
+1120 getln0:dey
+1130  cpy #$ff:beq getln1
+1140  cpy #80:bcs getln0
+1150  lda (var+1),y
+1160  sta buffer,y
+1170  jmp getln0
+1180 getln1:rts
+1190 ;
+1200 ;* print tt$(.a)
+1210 prtln: jsr getarr:jmp outstr
+1220 ;
+1230 ;* put descriptor for tt$(.x) and
+1240 ;* store buffer in memory
+1250 putarr:jsr findarr
+1260  ldy #2:jmp putvar1
+1270 ;
+1280 ;* put and store string
+1290 putln: txa:pha
+1300  lda index:jsr makeroom
+1310  ldy index:beq putln2
+1320  dey
+1330 putln1:lda buffer,y
+1340  sta (var+1),y
+1350  dey:bpl putln1
+1360 putln2: pla:tax:jmp putarr
+1370 ;
+1380 ;* find descriptor for tt$(.x)
+1390 findarr:stx $47
+1400  lda #0
+1410  asl $47:rol:sta $48
+1420  txa:clc:adc $47:sta $47
+1430  lda #0:adc $48:sta $48
+1440  clc
+1450  lda $2f:adc $47:sta $47
+1460  lda $30:adc $48:sta $48
+1470  clc
+1480  lda #7:adc $47:sta $47
+1490  lda #0:adc $48:sta $48
+1500  rts
+1510 ;
+1520 ;* find basic variable
+1530 gvarptr: txa:asl:tay:clc
+1540  lda vars,y:adc $2d:tax
+1550  lda vars+1,y:adc $2e:tay
+1560  rts
+1570 varnam: jsr gvarptr
+1580  stx $47:sty $48:rts
+1590 findvar: sta $45:stx $46
+1600  jmp findvar1
+1610 ;
+1620 ;* print string variable
+1630 prtvar: jsr usevar:jmp outstr
+1640 ;
+1650 ;* print string variable w/mci
+1660 prtvar0: lda mci:pha
+1670  lda #0:sta mci
+1680  jsr prtvar
+1690  pla:sta mci
+1700  rts
+1710 ;
+1720 ;* get variable descriptor
+1730 usevar: jsr varnam:jmp usevar2
+1740 usevar0: jsr findvar
+1750 usevar2: ldy #4
+1760 usevar1: lda ($47),y:sta var,y
+1770  dey:bpl usevar1
+1780  rts
+1790 ;
+1800 ;* put variable descriptor
+1810 putvar: jsr varnam:jmp putvar2
+1820 putvar0: jsr findvar
+1830 putvar2: ldy #4
+1840 putvar1: lda var,y:sta ($47),y
+1850  dey:bpl putvar1
+1860  rts
+1870 ;
+1880 zero: lda #0:ldy #4
+1890 zero1: sta var,y:dey:bpl zero1
+1900  rts
+1910 minusone:jsr zero
+1920  lda #$81:sta var
+1930  rts
+1940 :
+1950 ;********************************
+1960 ;* variables used by ml *
+1970 ;********************************
+1980 :
+1990 vars:
+2000  byte "aN" ;0-an$
+2010  byte "a",$80 ;1-a$
+2020  byte "b",$80 ;2-b$
+2030  byte "tR" ;3-tr$
+2040  byte "d",$b1 ;4-d1$
+2050  byte "d",$b2 ;5-d2$
+2060  byte "d",$b3 ;6-d3$
+2070  byte "d",$b4 ;7-d4$
+2080  byte "d",$b5 ;8-d5$
+2090  byte "lD" ;9-ld$
+2100  byte "tT" ;10-tt$
+2110  byte "nA" ;11-na$
+2120  byte "rN" ;12-rn$
+2130  byte "pH" ;13-ph$
+2140  byte "aK" ;14-ak$
+2150  byte "lp" ;15-lp
+2160  byte "pl" ;16-pl
+2170  byte "rc" ;17-rc
+2180  byte "sh" ;18-sh
+2190  byte "mw" ;19-mw
+2200  byte "nl" ;20-nl
+2210  byte "ul" ;21-ul
+2220  byte "qe" ;22-qe
+2230  byte "rq" ;23-rq
+2240  byte "AC" ;24-ac%
+2250  byte "ef" ;25-ef
+2260  byte "lf" ;26-lf
+2270  byte "w",$80 ;27-w$
+2280  byte "p",$80 ;28-p$
+2290  byte "TR" ;29-tr%
+2300  byte "A",$80 ;30-a%
+2310  byte "B",$80 ;31-b%
+2320  byte "DV" ;32-dv%
+2330  byte "dR" ;33-dr$
+2340  byte "c",$b1 ;34-c1$
+2350  byte "c",$b2 ;35-c2$
+2360  byte "cO" ;36-co$
+2370  byte "cH" ;37-ch$
+2380  byte "KP" ;38-kp%
+2390  byte "c",$b3 ;39-c3$
+2400  byte "f",$b1 ;40-f1$
+2410  byte "f",$b2 ;41-f2$
+2420  byte "f",$b3 ;42-f3$
+2430  byte "f",$b4 ;43-f4$
+2440  byte "f",$b5 ;44-f5$
+2450  byte "f",$b6 ;45-f6$
+2460  byte "f",$b7 ;46-f7$
+2470  byte "f",$b8 ;47-f8$
+2480  byte "mP" ;48-mp$
+2490  byte "MN" ;49-mn%
+ready.
