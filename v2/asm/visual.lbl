@@ -1,48 +1,53 @@
-rem open 15,8,15,"s:ml.visual":close 15
-rem include "equat.s",8
-rem for pass=1 to 3:org $c000,-(pass=3),8,"ml.visual":print"Pass:"pass
+orig $c000
 {asm}
+{include:\Documents and Settings\User\My Documents\C64\Image BBS\v2\equates-2_0.lbl}
+
+; assemble with casm 4.0
+
+; rem open 15,8,15,"s:ml.visual":close 15
+; for pass=1 to 3:org $c000,-(pass=3),8,"ml.visual":print"Pass:"pass
+
+
 ;
 ;*********************
 ;* visual editor
 ;*********************
 ;
-usetbl1 = $cd03
-buffer = $ce77
-buf2 = $ce27
+; usetbl1 = $cd03
+; buffer = $ce77
+; buf2 = $ce27
 ;
 numx = $14
 numy = $15
 
-	
-modes = $03ff
-lines = $03fe
-cline = $03fb
-flags = $03fa
-comm = $03f9
-mline = $03f8
-temp3 = $03f7
-case1 = $03f4
-flag1 = $03f3
+; modes = $03ff
+; lines = $03fe
+; cline = $03fb
+; flags = $03fa
+; comm = $03f9
+; mline = $03f8
+; temp3 = $03f7
+; case1 = $03f4
+; flag1 = $03f3
 ;
-colors = $e8da
+; colors = $e8da
 ;
 jmp visual
 	; jsr visual31
-		jmp visual2
+	; jmp visual2
 ;
 visual:
 	lda #1
 	sta editor
 	ldy #0
 visual0:
-	lda #""
+	lda #'{rvrs off}'
 	sta buf2,y
 	iny
-	lda #"."
+	lda #'{white}'
 	sta buf2,y
 	iny
-	lda #" "
+	lda #' '
 	sta buf2,y
 	iny
 	cpy #3*39
@@ -61,12 +66,12 @@ visual1:
 	sta crsry
 	lda #0
 	sta crsrr
-	lda #"."
+	lda #'{clear}'
 	jsr xchrout
 	jmp visual4
 
 visual2:
-	lda #"."
+	lda #'{clear}'
 	jsr xchrout
 	ldx #1
 	stx numx
@@ -135,12 +140,12 @@ visual8:
 	sta crsry
 	lda #0
 	sta crsrr
-	lda #"."
+	lda #'{home}'
 	jsr xchrout
 	jmp visual4
 ;
 visual9:
-	cmp #""
+	cmp #'{up}'
 	bne visual10
 	ldx crsry
 	cpx #1
@@ -148,7 +153,7 @@ visual9:
 	dec crsry
 	jmp visual23
 visual10:
-	cmp #""
+	cmp #'{down}'
 	bne visual11
 	ldx crsry
 	cpx #23
@@ -157,7 +162,7 @@ visual10:
 	jmp visual23
 
 visual11:
-	cmp #"."
+	cmp #'{right}'
 	bne visual12
 	ldx crsrx
 	cpx #39
@@ -165,7 +170,7 @@ visual11:
 	inc crsrx
 	jmp visual23
 visual12:
-	cmp #"."
+	cmp #'{left}'
 	bne visual13
 	ldx crsrx
 	cpx #1
@@ -174,7 +179,7 @@ visual12:
 	jmp visual23
 
 visual13:
-	cmp #"."
+	cmp #'{clear}'
 	bne visual14
 	jmp visual
 visual14:
@@ -182,20 +187,20 @@ visual14:
 	bne visual15
 	jmp visual7
 visual15:
-	cmp #"."
+	cmp #'{022}' ; ctrl-v
 	bne visual16
 	jmp visual2
 visual16:
-	cmp #"."
+	cmp #'{024}' ; ctrl-x
 	bne visual17
 	jmp visual25
 visual17:
-	cmp #""
+	cmp #'{rvrs on}'
 	bne visual18
 	ldx #1
 	jmp visual24
 visual18:
-	cmp #""
+	cmp #'{rvrs off}'
 	bne visual19
 	ldx #0
 	jmp visual24
@@ -232,7 +237,7 @@ visual26:
 	jsr getdes
 	ldy #0
 	ldx #0
-	lda #""
+	lda #'{rvrs off}'
 	sta crsrr
 visual27:
 	lda (var+1),y
@@ -298,16 +303,16 @@ xchrout:
 	rts
 ;
 revers:
-	byte ""
+	byte 18+128,18 ; {rvrs off},{rvrs on}
 ;
 crsrpos:
-	 lda #"."
+	lda #'{home}'
 	jsr xchrout
 	ldx crsry
 	cpx #1
 	beq crsrpos2
 crsrpos1:
-	lda #""
+	lda #'{down}'
 	jsr xchrout
 	dex
 	cpx #1
@@ -317,7 +322,7 @@ crsrpos2:
 	cpx #1
 	beq crsrpos4
 crsrpos3:
-	lda #"."
+	lda #'{right}'
 	jsr xchrout
 	dex
 	cpx #1

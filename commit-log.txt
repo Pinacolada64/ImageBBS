@@ -1,0 +1,68 @@
+git-commit-log
+
+im:
++ 2904: make MM command RETURN instead of continuing into "Run" code.
+
++.CP:
++ temporarily ignore &,59,1,a (set input line length? crashes), use POKE 53252,<line length> instead.
++ more robust "?device not present" checks
++ fixed "Yes No Start Abort" response output
+
+	i.CP
+INFO	* should load proper screen mask (im=5, goto 443)
+CHANGE	* added screen mask load, although in the wrong spot for now
+	  Not sure if I want to keep it that way
+FIXED	* added <CR> after copy option yes/no/start/abort/etc
+BUG	* CP command doesn't output a CR after selecting "No" in file list
+FIXED	* changed source/dest drives to be first device defined in system drive 
+	  list	
+
+INFO	3024	start of copy routine
+        	a9$=""
+        	s1=0
+        	c1=0
+        	s8=0
+        	c8=0
+        	d$	Source
+        	b%=10
+        	f	source device
+        	f$	source drive
+        	g	target device
+        	g$	target drive
+        	d1%=g
+        	d2%=val(g$)
+        	dr=0
+        	dv%=f
+        		gosub 61
+        		  gosub 63
+        		    gosub 3
+        		      gosub 2
+        		        dv%=dv%(dr):dr$=mid$(str$(dr%(dr)),2)+":":
+        		        d3%=dr%(dr):open15,dv%,15
+			      open2,dv%,2
+		
+		3134	get device #
+			b% device #
+			d$ source/target
+			an$ value
+		
+		3216	sets input length
+                          Target Device<tab15>(10)
+                          Target Drive -- move (0) right 1 space
+                          Blocks Free<tab15>a$
+                           Pattern<tab16>(*): []
+		check for device not present after entering dev#
+		in [D]irectory, if RETURN hit, or * typed, does not select * pattern
+
+NEW	* now checks for device not present errors when entering device #'s and 
+	  lets you re-enter
+	* colorization, added credit
+
+asm docs.txt:
++ added keyboard shortcuts
+
+13/Jun/2016 13:48
+++ visual builds, wrote "+.visual test" which reads "s.visual" (which is a bunch of spaces?) and jumps to the editor. Ctrl-V shows color and text for each character typed, Ctrl-X exits. Lines do not display using traditional KK variable, maybe loaded into tt$(x) though.
+- added .gitignore file
+- added some source code
+- added +.CP-modded (needs some work)
