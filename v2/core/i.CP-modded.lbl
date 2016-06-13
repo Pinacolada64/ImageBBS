@@ -1,0 +1,179 @@
+	&"{clear}{f6}{cyan} *{$c9}{$cd}{$c1}{$c7}{$c5} {$c3}opy-{$c1}ll 2.0*{f6:2} {$d3}pecial {$d4}hanks {$d4}o {$ca}im {$c2}utterfield!"
+	rem "i.{$c3}{$d0}-modded
+	&"{f6} {$cd}ods by {blue}{$d7}a{lt. blue}nd{cyan}er{white}er and {$d0}{lt. green}i{green}n{lt. green}a{white}c{lt. green}o{green}l{lt. green}a{white}d{lt. green}a{f6}":a$="copier":gosub 28
+	&,5:v=1.2
+{:3004}
+	gosub{:3118}:&"{f6:2} {white}[{$c3}]{cyan}opy {$c6}iles{f6} {white}[{$c4}]{cyan}irectory"
+	&"{f6} {white}[{$cd}]{cyan}ulti-{$d3}cratch{f6} {white}[{$d3}]{cyan}end {$c4}isk {$c3}ommand{f6} {white}[{$d1}]{cyan}uit{f6:2}"
+	p$="{$c3}opy":gosub 6:on-(an$="{$c3}")-(an$="{$c4}")*2-(an$="{$d3}")*3 goto{:3024},{:3012},{:3120}
+	on-(an$="{$cd}")-(an$="{$d1}"or an$="")*2 goto{:3140},{:3500}:goto{:3004}
+{:3012}
+	f=dv%(1):d$="":b%=dv%(1):gosub{:3300}:f=b%
+{:3014}
+	gosub{:3400}:f$=an$
+	a=f:gosub{:3132}:if a then{:3014}
+	gosub{:3138}:&,15,2:if an$=""then an$="*"
+	&"{f6}":open 2,f,0,"$"+f$+an$:&,8,2:close 2
+{:3022}
+	&"{f6}{pound}{back arrow}12{rvrs on} {$d0}ress a key: {rvrs off} {pound}g1":goto{:3004}
+{:3024}
+	a9$="":s1=.:c1=.:s8=.:c8=.:d$="{$d3}ource ":b%=dv%(1):gosub{:3300}:f=b%
+	a=f:gosub{:3132}:if a then{:3024}
+	gosub{:3400}:f$=an$
+{:3028}
+	d$="{$d4}arget ":b%=dv%(1):gosub{:3300}:g=b%:a=g:gosub{:3132}:if a then{:3028}
+	gosub{:3400}:g$=an$:d1%=g:d2%=val(g$):dr=.:dv%(.)=g:dr%(.)=val(g$)
+	rem ^ set source device/drive
+	gosub 61:lp=1:&"{f6}{$c2}locks free{pound}{back arrow}19:"+str$(a):kk=a
+	if a<3 then gosub 92:goto{:3004}
+	gosub{:3138}:&,15,2:if an$=""then an$="*"
+	t$=an$:if tr%<1 then 200
+{:3040}
+	t=.
+{:3042}
+	&"{f6}{cyan}{$d2}eading directory...{f6:2} [{$d9}]es [{$ce}]o [{$d3}]tart [{$c1}]bort":tz=2
+	&"{f6} [1] {$d3}kip 143 files
+	&"{f6} [8] {$d3}kip  8  files{f6} [{$d2}]emaining files same as last{f6:2}"
+	open 1,f,0,"$"+f$+t$:get#1,a$,a$:&,8,1,1:lp=1:&
+{:3050}
+	&"{f6}":&,8,1,1:s=st:if mid$(a$,7,1)="b"then b$=a$:&"{f6}{pound}$b{f6}":goto{:3090}
+	a=val(a$):c$=mid$(a$,8):a$=mid$(a$,26,1)
+	for i=2 to 17:if mid$(c$,i,1)=qt$then c$=left$(c$,i-1)
+	next:tt$=c$+","+a$:b$=a$:if s then{:3090}
+	if s8 then c8=c8+1:if c8<>8 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto{:3050}
+	if s1 then c1=c1+1:if c1<>143 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto{:3050}
+	s1=.:c1=.:c8=.:s8=.:a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25"
+	if tz+a>kk then:&"{$d4}oo big!{f6}":goto{:3086}
+	if b$="r"then:&"({$d2}{$c5}{$cc} file){f6}":goto{:3086}
+	if a9$="{$d2}"then x=x9:goto{:3072}
+	&"?: {pound}g1":x=-(an$="{$d9}")-(an$="{$ce}")*2-(an$="{$d3}")*3-(an$="{$c1}")*4-(an$="8")*5:gosub{:3188}
+{:3072}
+	if x=.then x=2
+	lp=1:&mid$("{$d9}es  {$ce}o   {$d3}tart{$c1}bort{$d3}kip {$d3}kip ",(x-1)*5+1,5)+"{f6}"
+	if x=1 then t=t+1:tz=tz+a%:tt$(t)=tt$:if t>143 then:&"{$cc}imit {$d2}eached!{f6}":x=3:goto{:3090}
+	if x=3 then{:3090}
+	if x=4 then t=.:goto{:3090}
+	if kk-tz<3 then:&"{$ce}o more room!{f6}":goto{:3090}
+	if x=5 then s1=1:x9=.
+{:3086}
+	if x=6 then s8=1:x9=.
+	if s=.then{:3050}
+{:3090}
+	close 1:a9$="":if t=.then gosub 92:goto{:3004}
+	&"{f6}":a=f:gosub{:3132}:on a+1 goto{:3004}:a=g:gosub{:3132}:on-(a<>.)goto{:3004}
+{:3094}
+	gosub{:3202}
+{:3096}
+	&"{f6}[{$c3}]opy  [{$c1}]bort  [{$d2}]e-select{f6}[{$d3}]elect more files{f6}[{$c4}]elete some files :"
+	&"{pound}g1{pound}v7":on-(an$="{$c3}")-(an$="{$c1}")*2-(an$="{$d2}")*3 goto{:3100},{:3184},{:3186}:goto{:3192}
+{:3100}
+	close 15:open 15,f,15:open 14,g,15:rem im=5:gosub443:rem load screen mask
+	for i=1 to t:c$=tt$(i):if c$="[{$c4}eleted]"then{:3112}
+	&"{f6}{$c3}opying:{f5}{pound}$c{f5}..."
+	open 3,f,3,f$+c$+",r":input# 15,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto{:3112}
+{:3108}
+	open 2,g,2,g$+c$+",w":input# 14,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto{:3114}
+	sys 49152:input# 14,a$,b$:&"{pound}{back arrow}32{pound}$b!"
+{:3112}
+	close 2:close 3:next:&"{f6:2}{$c4}one!":goto{:3004}
+{:3114}
+	on-(a$<>"63")goto{:3112}:close 2:&"{f6}[{$d3}]kip [{$d2}]eplace [{$c1}]bort :{pound}g1":goto{:3180}
+	rem new name also
+{:3116}
+	&"{lt. red}{$c5}rror: {$c4}evice not present!{f6}":return
+{:3118}
+	close 1:close 2:close 3:close 14:close 15:return
+{:3120}
+	f=8:d$="":b%=8:gosub{:3300}:f=b%
+	a=f:gosub{:3132}:if a then{:3116}
+	&"{f6:2}{$c4}isk command: ":gosub{:3220}:c$=an$:a$=left$(c$,1):if a$=""then{:3004}
+	if a$="n"or a$="s"then gosub 93:if a=.then{:3004}
+	close 15:open 15,f,15:print# 15,c$:gosub 5
+	close 15:&:&"{f6} ({$c8}it {$c1} {$cb}ey) {pound}g1":goto{:3004}
+{:3132}
+	close 15:open 15,a,15:poke 781,15:sys 65481:sys 65484:close 15:a=st:if a then{:3116}
+	return
+	&"<3134>":return
+	&"<3136>":return
+{:3138}
+	&"{f6}{cyan}{$d0}attern{white}{pound}{back arrow}15(*) : {pound}i0":return
+{:3140}
+	gosub 349:gosub 350:on tr%+1 goto 300:f%=.:l=.:gosub 3:close 15:if st then{:3004}
+	&"{lt. blue}{f6}{$d0}attern: ":gosub{:3220}:b$="*"
+	for i=1 to len(an$):if mid$(an$,i,1)="*"then b$=""
+	next:an$=an$+b$
+	close 1:open 1,dv%,0,"$"+dr$+an$:get#1,a$,a$
+	&"{f6}{yellow} [{$d9}]es [{$ce}]o [{$d3}]tart [{$c1}]bort{pound}q0{f6}{pound}vj"
+	&,8,1,1:lp=1:&a$+"{f6}"
+{:3154}
+	&,8,1,1:s=st:if mid$(a$,7,1)="b"then b$=a$:&"{f6}{pound}$b{f6}":goto{:3168}
+	b%=val(a$):f$=mid$(a$,8):t$=mid$(a$,26,1):g$=t$
+	for i=2 to 17:if mid$(f$,i,1)=qt$then f$=left$(f$,i-1)
+	next:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
+	x=-(a$="{$d9}")-2*(a$="{$d3}")-3*(a$="{$c1}"):lp=1:&mid$("{$ce}o   {$d9}es  {$d3}tart{$c1}bort",x*5+1,5)
+	on x+1 goto{:3170},{:3166},{:3168},{:3168}
+{:3166}
+	f%=f%+1:a%(f%)=b%:tt$(f%)=f$:a%(f%)=b%:l=l+b%:goto{:3170}
+{:3168}
+	s=1:if x=3 then f%=.:gosub 92
+{:3170}
+	on-(s=.and f%<100)goto{:3154}:close 1:on-(f%=.)goto{:3004}
+	for i=1 to f%:b$=tt$(i):b%=i:&"{lt. blue}{f6}{pound}#2{pound}# {pound}%b-{pound}$b":next
+	&"{f6:2}{$c3}orrect?: ":gosub 96:on a+1 goto{:3004}:for i=1 to f%:b$=tt$(i):close 15
+	&"{f6}{$d3}cratching {f5}{pound}$b{f5}...":close 15:open 15,dv%,15,"s"+dr$+b$:gosub 5:&
+	next:&"{f6}":goto{:3022}
+{:3180}
+	on-(an$="{$d3}")-(an$="{$c1}")*2 goto{:3112},{:3182}:goto{:3214}
+{:3182}
+	i=t:goto{:3112}
+{:3184}
+	&"{f6}{lt. red}{$c3}opying aborted.":goto{:3004}
+{:3186}
+	gosub{:3118}:goto{:3040}
+{:3188}
+	a9$=an$:if an$<>"{$d2}"then x9=x:return
+	x=x9:return
+{:3192}
+	if an$="{$d3}"then{:3208}
+	if an$<>"{$c4}"then{:3100}
+	&"{f6}{$c4}elete {$d7}hich {$ce}umber: {pound}i1"
+	zq=val(an$):if zq<1 or zq>t then{:3096}
+	tt$(zq)="[{$c4}eleted]":goto{:3094}
+{:3202}
+	for i=1 to t:&"{f6}"+str$(i)+":"+tt$(i)
+	if i/20=int(i/20)then:&"{f6}{$d0}ress a key: {pound}g1"
+	next:return
+{:3208}
+	gosub{:3138}:&,15,2:if an$=""then an$="*"
+	t$=an$:if tr%<1 then 200
+	goto{:3042}
+{:3214}
+	print# 14,"s"g$c$:goto{:3108}
+{:3216}
+	if v>1.2 then:&,59,1,a:return
+	poke 53252,a:return
+{:3220}
+	&"{pound}i0":on-(an$="")goto 999:&,15,2:return
+{:3300}
+	rem get device #
+	a=2:gosub{:3216}
+{:3310}
+	an$="":&"{f6}{cyan}{pound}$d{$c4}evice{pound}{back arrow}15{white}({pound}#2{pound}# {pound}%b){cyan}: {pound}i1":if an$=""then an$=str$(b%)
+	if val(an$)<6 or val(an$)>33 then:&"{lt. red}{$c9}nvalid device number (6-33).":goto{:3310}
+	b%=val(an$):rem&"b%={pound}%b,an$={pound}v7{f6}
+{:3320}
+	a=38:goto{:3216}
+{:3400}
+	rem get drive #
+	a=4:gosub{:3216}
+{:3410}
+	an$="":&"{f6}{cyan}{pound}$d{$c4}rive{pound}{back arrow}15{white}(0){cyan} : {pound}i1":if an$=""then an$="0:":goto{:3420}
+	if val(an$)<-1 or val(an$)>255 then:&"{lt. red}{$c9}nvalid drive number (0-255).":goto{:3410}
+{:3420}
+	an$=an$+":":rem&"an$={pound}v7{f6}"
+	goto{:3320}
+{:3500}
+	rem quit
+	rem im=1:gosub443:rem load screen mask
+	goto 300
+	copr.1995 new image 01/05/95

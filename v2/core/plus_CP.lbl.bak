@@ -1,10 +1,7 @@
-{alpha:upper}
 {number:3000}
-	rem "+.{$c3}{$d0}-mod
 	&"{clear}{f6}{cyan} *{$c9}{$cd}{$c1}{$c7}{$c5} {$c3}opy-{$c1}ll 2.0*{f6:2} {$d3}pecial {$d4}hanks {$d4}o {$ca}im {$c2}utterfield!"
-	&"{f6} {$cd}ods by {blue}{$d7}a{lt. blue}nd{cyan}er{white}er {cyan}and {white}{$d0}{lt. green}i{green}n{lt. green}a{white}c{lt. green}o{green}l{lt. green}a{white}d{lt. green}a{f6}"
-' load copier protocol:
-	a=2:gosub 1736
+	rem "+.{$c3}{$d0}-modded
+	&"{f6} {$cd}ods by {blue}{$d7}a{lt. blue}nd{cyan}er{white}er and {green}{$d0}{lt. green}i{green}n{lt. green}a{white}c{lt. green}o{green}l{lt. green}a{white}d{lt. green}a{f6}"
 {:3004}
 	gosub {:3118}:&"{f6:2} {white}[{$c3}]{cyan}opy {$c6}iles{f6} {white}[{$c4}]{cyan}irectory"
 	&"{f6} {white}[{$cd}]{cyan}ulti-{$d3}cratch{f6} {white}[{$d3}]{cyan}end {$c4}isk {$c3}ommand{f6} {white}[{$d1}]{cyan}uit{f6:2}"
@@ -19,14 +16,13 @@
 {:3022}
 	&"{f6}{pound}{back arrow}12{rvrs on} {$d0}ress {$c1} {$cb}ey: {rvrs off}{pound}g1":goto{:3004}
 {:3024}
-' copy files:
 	a9$="":s1=.:c1=.:s8=.:c8=.:d$="{$d3}ource":b%=8:f=8:gosub{:3134}:if b%>6 and b%<33 then f=b%
-	f$="0:":gosub{:3136}:a=val(an$):if a>. then f$=mid$(str$(a),2)+":"
-	d$="{$d4}arget":b%=8-(f=8):g=b%:gosub {:3134}:if b%>6 and b%<33 then g=b%
+	f$="0:":gosub{:3136}:a=val(an$):if a>.then f$=mid$(str$(a),2)+":"
+	d$="{$d4}arget":b%=8-(f=8):g=b%:gosub{:3134}:if b%>6 and b%<33 then g=b%
 	g$="0:":gosub{:3136}:a=val(an$):if a>.then g$=mid$(str$(a),2)+":"
-	d1%=g:d2%=val(g$):dr=.:gosub 1079:lp=1:&"{f6}{$c2}locks {$c6}ree: {pound}!a":kk=a
+	d1%=g:d2%=val(g$):dr=.:gosub 1079:lp=1:&"{f6}{$c2}locks {$c6}ree: "+str$(a):kk=a
 	if a<3 then gosub 1920:goto {:3004}
-	gosub {:3138}:gosub 1500:if an$="" then an$="*"
+	gosub {:3138}:gosub 1500:if an$=""then an$="*"
 	t$=an$:if tr%<1 then {:quit}
 {:3040}
 	t=.
@@ -49,7 +45,7 @@
 	&"?: {pound}g1":x=-(an$="{$d9}")-(an$="{$ce}")*2-(an$="{$d3}")*3-(an$="{$c1}")*4-(an$="8")*5:gosub{:3188}
 {:3072}
 	if x=. then x=2
-	lp=1:&mid$("{$d9}es  {$ce}o   {$d3}tart{$c1}bort{$d3}kip {$d3}kip ",(x-1)*5+1,5) '+"{f6}"
+	lp=1:&mid$("{$d9}es  {$ce}o   {$d3}tart{$c1}bort{$d3}kip {$d3}kip ",(x-1)*5+1,5)+"{f6}"
 	if x=1 then t=t+1:tz=tz+a%:tt$(t)=tt$:if t>143 then:&"{$cc}imit {$d2}eached!{f6}":x=3 ':goto {:3090}
 	if x=3 then {:3090}
 	if x=4 then t=.:goto{:3090}
@@ -68,16 +64,15 @@
 	&"{pound}g1{pound}v7":on -(an$="{$c3}")-(an$="{$c1}")*2-(an$="{$d2}")*3 goto {:3100},{:3184},{:3186}:goto {:3192}
 {:3100}
 	close 15:open 15,f,15:open 14,g,15
-	for i=1 to t:c$=tt$(i):if c$="[{$c4}eleted]" then {:3112}
-' load "im.disp" screen mask, display "copying":
-	a=2:im=5:an$=c$:gosub 2426
+	a=2:im=5:gosub 2426:rem load "im.disp" screen mask, display "copying"
+	for i=1 to t:c$=tt$(i):if c$="[{$c4}eleted]"then{:3112}
 	&"{f6}{$c3}opying:{f5}{pound}$c{f5}..."
-	open 3,f,3,f$+c$+",r":input# 15,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto {:3112}
+	open 3,f,3,f$+c$+",r":input# 15,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto{:3112}
 {:3108}
-	open 2,g,2,g$+c$+",w":input# 14,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto {:3114}
+	open 2,g,2,g$+c$+",w":input# 14,a$,b$:if a$<>"00"then:&"{pound}{back arrow}32{pound}$b!":goto{:3114}
 	sys 49152:input# 14,a$,b$:&"{pound}{back arrow}32{pound}$b!"
 {:3112}
-	close 2:close 3:next:&"{f6:2}{$c4}one!":goto {:3004}
+	close 2:close 3:next:&"{f6:2}{$c4}one!":goto{:3004}
 {:3114}
 	on -(a$<>"63") goto {:3112}:close 2:&"{f6}[{$d3}]kip [{$d2}]eplace [{$c1}]bort :{pound}g1":goto{:3180}
 	' todo: change target name
@@ -86,8 +81,6 @@
 {:3118}
 	close 1:close 2:close 3:close 14:close 15:return
 {:3120}
-' disk command:
-' 1450 in "im" uses lfn#15 to send DOS commands
 	f=8:d$="":b%=8:gosub {:3134}:if b%>6 and b%<16 then f=b%
 	a=f:gosub {:3132}:if a then {:3116}
 	&"{f6:2}{$c4}isk {$c3}ommand: ":gosub 1499:c$=an$:a$=left$(c$,1):if a$=""then {:3004}
@@ -159,26 +152,6 @@
 	rem if v>1.2 then:&,59,1,a:return
 ' this works:
 	poke 53252,a:return
-
-{:3300}
-	rem get device #
-	a=2:gosub {:sub.input_length}
-{:3310}
-	an$="":&"{f6}{cyan}{pound}$d{$c4}evice{pound}{back arrow}15{white}({pound}#2{pound}# {pound}%b){cyan}: {pound}i1":if an$=""then an$=str$(b%)
-	if val(an$)<6 or val(an$)>33 then:&"{lt. red}{$c9}nvalid device number (6-33).":goto {:3310}
-	b%=val(an$) ' &"b%={pound}%b,an$={pound}v7{f6}
-{:3320}
-	a=38:goto {:sub.input_length}
-{:3400}
-	rem get drive #
-	a=4:gosub {:sub.input_length}
-{:3410}
-	an$="":&"{f6}{cyan}{pound}$d{$c4}rive{pound}{back arrow}15{white}(0){cyan} : {pound}i1":if an$=""then an$="0:":goto{:3420}
-	if val(an$)<-1 or val(an$)>255 then:&"{lt. red}{$c9}nvalid drive number (0-255).":goto{:3410}
-{:3420}
-	an$=an$+":" ' &"an$={pound}v7{f6}"
-	goto{:3320}
-
 {:quit}
 ' restore screen mask to user online state:
 	im=3:gosub 2426

@@ -1,0 +1,8 @@
+# exclude EditPad Pro __history folder:
+__history/
+
+# exclude disk images:
+*.[dD](64|71|81)
+
+# exclude *.prg:
+*.prg

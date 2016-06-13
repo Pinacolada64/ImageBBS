@@ -1,4 +1,6 @@
+{number:0}
 	on peek(829)goto{:3000},{:4000}
+{number:1000}
 	goto{:1811}
 {:1001}
 	gosub{:1002}:&,22,1
@@ -159,7 +161,9 @@
 	dr=1:a$="s.menu 3":goto{:1075}
 	im=4:goto{:2404}
 {:1360}
-	&,69,4,21,left$(" "+cm$+"               ",16),1
+' fixme: strings can be up to 22 chars now
+' new: clear cm$ area, specify color of title in c
+	if peek(17139)=. then:&,69,4,21,"{space:23}",$85:if cm$<>"" then:&,69,4,21,cm$,$80+c
 	return
 {:1370}
 	&,69,c,22,right$(str$(a+1e5),b),$81:return
@@ -240,10 +244,18 @@
 	f1=1:if tr%<1 then b$="{$d4}ime":gosub{:1985}:f1=2
 {:1700}
 	a$="lo":goto{:1016}
+{number:1736}
+{:1736}
 	rem ifa=prthen1740
+{number:1738}
+{:1738}
 	pr=a:dr=5:gosub{:1009}
 	a$=dr$+"++"+str$(a):&,7,dv%,2
+{number:1740}
+{:1740}
 	d4$=mid$("{$d0}unter {$d8}-{$cd}odem{$c3}opier {$d3}low {$d0} {$c9}ndexer{$c3}lock  ",1+pr*7,7):return
+{number:1750}
+{:1750}
 	if a$<>ml$then ml$=a$:dr=5:gosub{:1009}:a$=dr$+"++ "+a$:&,7,dv%,2
 	an$=a$:&,15,1:d4$=an$:return
 {:1800}
@@ -404,19 +416,30 @@
 	gosub{:2630}:gosub{:4000}:new 4000:return
 {:2630}
 	lm$=a$+"":dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
+{number:2900}
 {:2900}
 	a=45:b=43:a$="{$d0}rogram":gosub{:2910}
+{number:2901}
 	a=47:b=45:a$="{$d6}ariables":gosub{:2910}
+{number:2902}
 	a=49:b=47:a$="{$c1}rrays":gosub{:2910}
+{number:2903}
 	a=51:b=49:a$="{$c6}ree {$d2}{$c1}{$cd}":gosub{:2910}
-	a=55:b=51:a$="{$d3}trings":gosub{:2910}
+{number:2904}
+	a=55:b=51:a$="{$d3}trings":goto{:2910}
+{number:2905}
 	poke 53252,16:&"{f6}{$cc}oad: {pound}i0{f6}":if an$=""then return
+{number:2906}
 	dr=5:gosub{:1010}:a$=dr$+an$:load a$,dv%:goto{:2900}
+{number:2910}
 {:2910}
 	c=peek(a)-peek(b)+(peek(a+1)-peek(b+1))*256:&"{pound}$a:{pound}{back arrow}10{pound}!c{f6}":return
+{number:2912}
 {:2912}
 	q$="":on-(ll%<42)goto{:1603}:for r=1 to int((ll%-42)/2):q$=q$+" ":next:return
+{number:2999}
 	copr. 1994 new image 9/21/94
+{number:3000}
 {:3000}
 	poke 828,peek(186):clr:print"{clear}{$08}{white}{$0e}":poke 53280,.:poke 53281,.
 	open 131,2,134,chr$(6):poke 248,203:poke 250,204:poke 56,160:poke 52,160

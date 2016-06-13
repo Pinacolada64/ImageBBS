@@ -1,0 +1,53 @@
+{alpha:upper}
+{quoter:$20="space"}
+{quoter:$c1="A"}
+{quoter:$c2="B"}
+{quoter:$c3="C"}
+{quoter:$c4="D"}
+{quoter:$c5="E"}
+{quoter:$c6="F"}
+{quoter:$c7="G"}
+{quoter:$c8="H"}
+{quoter:$c9="I"}
+{quoter:$ca="J"}
+{quoter:$cb="K"}
+{quoter:$cc="L"}
+{quoter:$cd="M"}
+{quoter:$ce="N"}
+{quoter:$cf="O"}
+{quoter:$d0="P"}
+{quoter:$d1="Q"}
+{quoter:$d2="R"}
+{quoter:$d3="S"}
+{quoter:$d4="T"}
+{quoter:$d5="U"}
+{quoter:$d6="V"}
+{quoter:$d7="W"}
+{quoter:$d8="X"}
+{quoter:$d9="Y"}
+{quoter:$da="Z"}
+' other ranges of uppercase characters will display wrong with &,69
+{number:3000}
+	rem +.area test
+	a=peek(17139):&"{S}creen mask (17139)={pound}!a{f6}"
+	&"{C}lear area display":cm$="":gosub {:sub.update_area}
+	cm$=" {S}ystem {A}uto{M}aint ":c=5
+	&"{D}isplay {f5}"+cm$+"{f5} in reverse green":gosub {:sub.update_area}
+	goto 1811
+	
+{nice:10}
+{:sub.update_area}
+' fixme: "area" strings can be " <21 chars> " now, in idle or online modes
+' new: clear cm$ area in med. gray, specify color of title in c
+' new: to clear cm$, set cm$=""
+' {pound}o prints literally - need {space:21}
+' $81=rvs white $82=rvs red $85=rvs green
+' question: is ,<color> optional?
+	if peek(17139)=. then:&,69,4,21,"{space:23}",$8c:if cm$<>"" then:&,69,5,21,left$(cm$,21),$80+c
+
+{nice:10}
+{:sub.get_key}
+	&"{f6}{K}ey: {pound}g1{f6}":return
+
+{number:3999}
+	rem by pinacolada

@@ -1,3 +1,74 @@
+ASM v900728 Quick Reference
+
+ AUTO [(step)]
+  Turns auto line-numbering on or off. If the step value is 0, or missing, then
+  it turns it off.
+
+ BAS
+  Exits the assembler without turning the function keys off.
+
+ BYTE (string or numeric)[,...]
+  This stores bytes at the current program counter.
+
+ DMP
+  Dumps the symbol table to the current output device.
+ 
+ DUP (byte),(number)[,...]
+  Stores (number) duplications of the (byte).
+
+ ENC (byte)
+  This set the current encryption byte. This byte is XOR'd with every byte 
+  that is written with the assembler. Setting a value of 0 means no encryption.
+  Note that the ORG command automatically sets the encrypt value to 0.
+
+ INCLUDE (filename),(device)
+  Includes a file as though it were in memory. Any errors that occur will
+  print as the line number in the include file rather than the main file, but
+  will NOT tell you that the error was in an include. Be careful of this.
+
+ KLL
+  JMP 64736.
+
+ LSYM (filename),(device)
+  Loads a symbol table.
+
+ OLD
+  Un-NEW.
+
+ ORG (addr)[,(mode),(device),(filename)]
+  Sets the Start Address. (mode) is the flag for the last pass. If (device)
+  and (filename) are included, then assembly writes to disk. This also sets 
+  the encrypt byte to 0. (See ENC)
+
+ PRG (filename),(device)
+  This includes data from a PRG file directly into the assembly. The load
+  address is stripped off.
+
+ RNM [(destline)]
+  Renumbers the program by 10's all lines from 1000-59999. If (destline) is
+  included, then it starts with that line for the new line numbers. Line
+  references are NOT updated.
+
+ SCR (string or numeric)[,...]
+  This is a BYTE command that converts ASCII to Screen codes.
+
+ SEQ (filename),(device)
+  Includes a SEQ file from disk.
+
+ SEND (string)
+  Tokenizes a line of basic which will be included in the code you are
+  assembling. Like: "1990 sys2062"
+
+ SSYM (filename),(device)
+  Saves the symbol table.
+
+ UNSEND
+  Writes three Zero's for the end of the basic section of the code.
+
+ WORD (string or numeric)[,...]
+  Stores words in the lo/hi format. String data is still stored as bytes.
+
+
 Asm keyboard shortcuts
 discovered 8/3/2013
 
