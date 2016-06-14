@@ -1,0 +1,247 @@
+{number:800}
+	rem +.emp6.combat
+	{uses:.\includes.lbl}
+' moved jousting option to +.emp6.tourney
+	goto {:combat_start}
+
+{:sub.total_acres}
+' pina added this
+	&"{green}You now have {lt. green}":x=la:gosub {:sub.comma_value}:& "{green} acres.{f6}":return
+
+{:combat_start}
+{nice:10}
+	&"{f6:2}{white}(0=Nobody  ?=List  Y=Your Stats{pound}$l  L=Lord Randall){f6}{cyan}Attack whom? >> {lt. blue}{pound}i1"
+	bn=0:if tr%<1 then {:save_stats_quit}
+	if an$="0"or an$=""then:&"{f6}{red}No attack!{f6}":goto {:182}
+	if an$="L"then {:625}
+	if an$="{f2}"then gosub {:sub.other_rulers}:goto {:combat_start}
+	gosub {:sub.request_your_status}
+	g1=int(val(an$)):if g1<1 or g1>25 then {:combat_start}
+' get enemy name:
+	gosub {:sub.open_playerlog}:x=g1:gosub 1001:input# 2,en$
+	if left$(en$,5)="empty"or en$="0"then:&"{red}Invalid #!":close 2:goto {:combat_start}
+	input# 2,ez,ew,ef,en,eg,et,ep,e1,e2,e3,e4,e5,e6,e7,e8,og:close 2
+'	if ez=. then {:550}
+{:550}
+	if ez=. then:&"{f6}{white}"+en$+" has no land!{f6}":goto {:combat_start}
+	if ew=. then:&"{f6}{white}"+en$+" has no soldiers!{f6}":goto {:combat_start}
+
+	&"{lt. green}{f6}The Enemy {lt. blue}-->{white}"+en$+"{lt. blue}<--{f6}{white}Land{lt. blue}-->{lt. green}"+str$(ez)
+' New: call IM routine here:
+	&"{lt. blue}{f6:2}":gosub 1901:if a=. then {:combat_start}
+'	&"{lt. blue}{f6:2}Are you sure?{white} ":gosub 1902:if an$<>"Y"then {:combat_start}
+	if ez>200000 and (la-50000)>ez then {:625}
+	i=1:if peek(901)=. then {:28}
+{:24}
+	a=peek(901+i):on-(a=x)goto {:26}:i=i+1:on-(i>peek(901))goto {:28}:goto {:24}
+{:26}
+	&"{f6}{yellow}{pound}s1You already did!{pound}s0{pound}w1{lt. blue} Try someone else!{f6}":goto {:combat_start}
+{:28}
+	poke 901,peek(901)+1:poke 901+peek(901),x ':goto {:30}
+{:30}
+	if g1=g3 then:&"{f6:2}{lt. red}Attack YOURSELF?{pound}$l{red}Bad mistake!{f6}{lt. blue}"
+	la=la-fn r(la/2):goto {:182}
+{:34}
+	if af=1 or wa<1 then:&"{f6:2}{yellow}Your army is immobilized!":goto {:182}
+	sd=0:nj=.
+{:36}
+	&"{f6:2}{cyan}Battle command [1-6] {lt. green}>>{lt. blue}{pound}i1":
+	if tr%<1 then {:save_stats_quit}
+	cm=val(an$):if an$=""or an$="{f2}"then gosub {:378}:goto {:36}
+	on cm goto {:60},{:combat_110},{:144},{:combat_164},{:42},{:124},{:600}:goto {:36}
+{:42}
+	if f%(6)<1 then:&"{f6:2}{yellow}You have no Diplomats!{f6:2}":goto {:36}
+	&"{f6}{purple}Your Diplomat rides to the enemy camp...{f6}"
+{:44}
+	if ew<wa*2 then {:48}
+	goto {:52}
+{:48}
+' He returns with good news! To avoid
+' attack you have been given xxxxx
+' acres of land!
+	lt=int(ez/15):la=int(la+lt):ez=int(ez-lt)
+	&"{f6}{green}He returns with good news! To avoid{pound}$l"
+	&"attack, you have been given {lt. green}":x=lt:gosub {:sub.comma_value}
+	&"{f6}{green}acres of land!{f6:2}"
+	gosub {:sub.total_acres}:ff=1:sd=1:goto {:102}
+{:52}
+' The enemy BEHEADS your diplomat and
+' tosses his corpse into the moat!
+	f%(6)=f%(6)-1:&"{f6}{orange}"+en$+" {rvrs on}{red}BEHEADS{rvrs off} {orange}your Diplomat, and{pound}$ltosses his corpse into the moat!{f6}":sd=0:goto {:36}
+
+{:60}
+	gosub {:160}:on ae goto {:34}:gosub {:610}:a=(wa+la)/(ew+ez)
+' todo: consider repeating this heading every 23 lines?
+	&"{f6:2}{white}Your Army     {yellow}Enemy Army{f6}"
+	ff=1:pv=.:sr=ew:sg=wa:a=0:a2=20:b2=20
+{:76}
+' TODO: ability to abort combat here:
+	if sh or rc then:&"Retreat from battle? ":gosub 1902:if a then {:retreat}
+	if a=5 then a=0:gosub {:combat_700}
+	a=a+1:wz=(wa*.08): ed=(ew*.08): if (rnd(1)*wz)+(rnd(1)*(300+z9*5)) > (rnd(1)*ed)+(rnd(1)*(300+og*5)) then {:combat_90}
+	wa=wa-1:a2=a2-1:b2=20:if wa>.and a2>.then {:76}
+	wa=0:pv=1:ew=int(ew+rnd(1)*(sr-ew)):goto {:106}
+{:combat_90}
+	ew=ew-1:b2=b2-1:a2=20:if ew>.and b2>.then {:76}
+	bn=1:if wa>fn r(ez) then:&"{f6:2}You conquered his land!":lt=ez:goto {:100}
+	ew=0:&"{f6:2}{lt. green}Your forces were victorious!{f6:2}"
+	&"Your ":x=wa:gosub {:sub.comma_value}:& " remaining soldiers managed to capture":z9=z9+1:if z9>100 then z9=100
+	lt=abs(int(wa*.7+200+rnd(1)*300+rnd(1)*200+ez*.01)):if lt>ez then lt=ez
+{:98}
+	x=lt:gosub {:sub.comma_value}:& " acres...":if wa then ew=int(en*20/2+rnd(1)*(en*20/2))
+	if bn=1 then gosub {:705}:bn=.
+{:100}
+	ez=int(ez-lt):la=int(la+lt):gosub {:sub.total_acres}
+{:102}
+	if ez<1 then:&"{f6:2}{lt. green}You also killed "+en$+"!{f6}":w$="empty"+r$+"0":goto {:170}
+	&"{f6:2}"+en$+" has"+str$(ez)+" acres left.":ew=int(ew):goto {:combat_164}
+{:106}
+' Your forces were defeated, but you
+' managed to seize ...
+	bn=.:&"{f6:2}{lt. green}Your forces were defeated, but you{pound}$lmanaged to seize"
+	z9=z9-1:if z9<-25 then z9=-25
+	lt=abs(sr-ew):lt=abs(int(lt*rnd(1)*4)+100):if en$="RANDALL"then lt=10
+	goto {:98}
+{:combat_110}
+	if e1<1 then:&"{f6:2}They have no palaces!":goto {:36}
+	&"{f6:2}{lt. blue}You attack an enemy palace...":gosub {:160}:if ae then {:34}
+	if rnd(1)*wa<rnd(1)*ew*3 then {:combat_156}
+' TODO: if more than one, proper grammar:
+	&"{f6}You destroyed one of their palaces!{f6}":sl=fn r((wa*.5))+1
+	e1=e1+(e1>.):en=en+(en>.):if ew>en*20 then ew=en*20
+{:120}
+	&"{f6}{lt. green}--> You lost"+str$(sl)+" soldiers in the process..."
+{:122}
+	wa=wa-sl:goto {:34}
+{:124}
+' load tourney module:
+' todo: should make it just once per play
+	a$="tourney":gosub {:sub.load_lmp}:goto {:combat_start}
+
+{:144}
+	&"{f6:2}{lt. blue}You sneak up on a noble...":gosub {:160}:if ae then {:34}
+	if rnd(1)*wa<rnd(1)*ew*1.7 then {:combat_156}
+	if en<2 then:&"{f6:2}You can't find any nobles!":goto {:36}
+	if nb>int(la/1000)then:&"{f6:2}{yellow}Your Nobles threaten to strike!{f6}":goto {:36}
+' fixed: clarified action (dragging over to your side):
+	&"{f6}{lt. green}You punch him out and drag his twitching carcass over to your side!{f6}"
+	nb=nb+1:en=en-1:sl=fn r(wa*.4)+1:goto {:120}
+{:combat_156}
+	&"{f6}{lt. blue}Guards appear and halt your attempts!{f6}":sl=fn r(wa*.3)+2
+	&"{f6:2}{white}-->{lt. blue}The guards kill"+str$(sl)+" of your men!{f6}":goto {:122}
+{:160}
+	ae=.:if wa<1 then:&"{f6:2}{red}You have no soldiers!":ae=1:wa=.
+	return
+
+{:combat_164}
+' write enemy stats
+	w$=en$+r$+str$(ez)+r$+str$(ew)+r$+str$(ef)+r$+str$(en)
+	w$=w$+r$+str$(eg)+r$+str$(et)+r$+str$(ep)+r$+str$(e1)+r$+str$(e2)+r$
+	w$=w$+str$(e3)+r$+str$(e4)+r$+str$(e5)+r$+str$(e6)+r$+str$(e7)+r$+str$(e8)
+	w$=w$+r$+str$(og)
+{:170}
+' z8: flag to not write enemy stats?
+' used to get reset start of each turn in wallwriter
+	on -(z8=1) goto {:180}:gosub {:sub.open_playerlog}:x=g1:gosub 1001:print# 2,w$:close 2
+	if ez<1 then gr=gr+eg:pn=pn+ep:sf=sf+ef:f%(4)=f%(4)+e4:f%(3)=f%(3)+e3:goto {:combat_176}
+	goto {:180}
+{:combat_176}
+	&"{f6}{lt. blue}Your army seizes ":x=eg:gosub {:sub.comma_value}
+	& " bushels of{pound}$lgrain and $":x=ep:gosub {:sub.comma_value}
+	&".{f6}":x=ef:gosub {:sub.comma_value}:& "of "+en$+"'s serfs declare{pound}$lloyalty to you.{f6}"
+{:180}
+	gosub {:sub.save_your_stats}
+{:182}
+	if ff=0 then return
+	&"{f6:2}{white}Spreading the news...{lt. blue}{f6}"
+{:185}
+' log stuff:
+	gosub {:sub.rank} ' in main module
+	x=1:tt$="{gray1}"+d2$+"{lt. blue}"+na$+"{white} defeats {lt. blue}"+en$
+	if pv=1 then tt$="{lt. blue}"+en$+"{white} resists {gray1}"+d2$+"{lt. blue}"+na$
+	if ez<1 then tt$="{gray1}"+d2$+"{lt. blue}"+na$+"{white} executes {lt. blue}"+en$
+'	gosub {:468}:a$="":gosub 1029
+	gosub {:sub.log_event}
+
+{:468}
+	if nj=1 then tt$="{gray1}"+d2$+"{lt. blue}"+na$+"{white} wins joust - {lt. blue}"+en$+"{white} is shamed."
+	if sd=1 then tt$="{lt. blue}"+en$+"{white} forfeits {gray1}"+d2$+"{lt. blue}"+na$+"'s {white}attack."
+
+' this subroutine has been replaced by {:sub.log_event} in +.empire6:
+
+'	b$="empnews6":a$="a":dr=3
+'	gosub 1027:gosub 1012:a$="":if e%>19 then {:442}
+'	print# 2,"{lt. green}{white}{$04}"+d1$:print# 2,tt$:close 2
+
+	gosub {:sub.log_event}:return
+
+{:378}
+	&"{pound}f1{red}{f6:2}Fight Menu{f6}{white}{$af:12}{f6:2}"
+	&"{cyan}{rvrs on}[1]{rvrs off} {yellow}Attack Army{f6}"
+	&"{cyan}{rvrs on}[2]{rvrs off} {yellow}Attack Palace{f6}"
+	&"{cyan}{rvrs on}[3]{rvrs off} {yellow}Attack Nobles{f6}"
+	&"{cyan}{rvrs on}[4]{rvrs off} {yellow}Cease Fighting{f6}"
+	&"{cyan}{rvrs on}[5]{rvrs off} {yellow}Send Diplomat{f6}"
+	&"{cyan}{rvrs on}[6]{rvrs off} {yellow}Joust{f6}"
+	&"{cyan}{rvrs on}[7]{rvrs off} {yellow}Donate To Him{f6}":return
+
+{:600}
+	rem donate
+	&"{pound}f1{f6:2}{white}{rvrs on}<<< Cyclone's Natural Disaster Bank >>>{pound}q0{f6:2}"
+	&"Money --> ":x=pn:gosub {:sub.comma_value}
+	&"{f6:2}Give him how much money --> {pound}i1":if tr%<1 then {:combat_164}
+	gosub {:sub.normalize}:if an=. then {:36}
+{:607}
+	if an>pn or an<1 then:&"{f6:2}Get lost!":goto {:36}
+	pn=pn-an:ep=ep+an:&"{f6:2}Done!{f6:2}"
+' new: log this
+	tt$="{green}"+na$+" donated {lt. green}$"+an$+"{green} to "+en$+"!":gosub {:sub.log_event}
+	goto {:combat_164}
+{:610}
+	&"{pound}f1{f6}{white}  Naval Battle{f6:2}     Your Navy    Opponent Navy{f6:2}"
+{:612}
+' NEW: add "/" retreat option:
+	if sh or rc then:&"Retreat from battle? ":gosub 1902:if a then {:retreat}
+
+	if yc<1 or e7<1 then {:622}
+	a=fn r(100)+1:if a>55 then {:618}
+	e7=e7-1:goto {:620}
+{:618}
+	yc=yc-1
+{:620}
+	&"{pound}{back arrow}09"+str$(yc)+"{pound}{back arrow}24"+str$(e7)+"{f6}":goto {:612}
+{:622}
+'	on -(yc<1) goto {:624} ew=ew-(yc*fn r(7)):return
+'{:624}
+'	wa=wa-(e7*fn r(7)):return
+	if yc>1 then wa=wa-(e7*fn r(7)):return
+	ew=ew-(yc*fn r(7)):return
+{:625}
+	&"{pound}f1{purple}{f6:2}Lord Randall is furious at you! Watch{pound}$lout!{f6:2}"
+	z8=1:ez=fn r(50000)+100000:ew=fn r(wa/2)+wa:en=100
+	en$="RANDALL":ef=10000:e1=10:e2=1000:e3=1000:e4=1000:e5=1000:og=30
+	e7=fn r(yc/2)+yc:goto {:60}
+{:combat_700}
+' yours & enemy's army's soldiers:
+	&"{white}   "+str$(wa)+"{pound}{back arrow}17"+str$(ew)+"{f6}":return
+{:705}
+	&"{f6:2}On your new land you find:{f6}":j=1
+	x=fn r(e5/ 6):&"{f6}Shipyards: ":gosub {:sub.comma_value}:f%(5)=f%(5)+x:e5=e5-x
+	x=fn r(e4/ 6):&"{f6}Foundries: ":gosub {:sub.comma_value}:f%(4)=f%(4)+x:e4=e4-x
+	x=fn r(e3/ 6):&"{f6}Mills    : ":gosub {:sub.comma_value}:f%(3)=f%(3)+x:e3=e3-x
+	x=fn r(e2/ 6):&"{f6}Markets  : ":gosub {:sub.comma_value}:f%(2)=f%(2)+x:e2=e2-x
+	x=fn r(ef/10):&"{f6}Serfs    : ":gosub {:sub.comma_value}:sf=sf+x:ef=ef-x
+	j=0:return
+{:800}
+	if(f%(1)*100000)+100000>la then return
+	&"{f6:2}{white}You don't have enough palaces for your land!{f6:2}"
+	la=f%(1)*100000+fn r(100000):return
+
+{:retreat}
+' TODO: finish this - log retreat, give enemy some bonus
+	tt$="{lt. red}"+na$+" FLED {white}"+en$+"'s{lt. red} attack!":gosub {:sub.log_event}
+	return
+' {:164) saves enemy/your stats
+	
+'{number:999}
+	rem +.emp6.combat

@@ -1,0 +1,101 @@
+{number:800}
+	rem +.emp6.tourney - written by pinacolada
+	rem adapted from "empire deluxe" on centipede 128
+	{uses:.\includes.lbl}
+
+' todo: check for horse
+	&"{f6:2}{lt. blue}Your Noble mounts his mighty steed and{pound}$laims his lance...{f6}":goto {:combat_140}
+{:126}
+	if en*2<nb then {:combat_132}
+	if en<2 then:&"{f6}Your opponent has no nobles.{f6}":return
+	goto {:136}
+{:combat_132}
+' Your noble's lance knocks his opponent
+' to the ground. He gets up and swears{f6}
+' loyalty to you!
+	
+'	nb=nb+1:en=en-1:&"{f6}{lt. green}Your noble's lance knocks his opponent{pound}$l"
+'	&"to the ground. He gets up and swears{f6}loyalty to you!{f6}":ff=1:nj=1
+	goto {:random_outcome}
+{:136}
+	nb=nb-1:en=en+1:&"{f6}{lt. blue}Your opponent's lance pierces armor.{pound}$l"
+	&"Your noble, badly injured, joins your{f6}opponent's army!{f6}":nj=0:return ' goto {:36}
+{:combat_140}
+' Not enough serfs attend. The Joust
+' is cancelled!
+	if sf<900 then:&"{f6:2}{lt. blue}Not enough serfs attend. The Joust{pound}$lis cancelled!{f6:2}":return
+'	goto {:126}
+
+	if nb=0 then:&"You haven't a noble to challenge anyone with!":return
+
+{:random_outcome}
+	x=fn r(10):a$="emp6.tourney"+str$(x):gosub 1075
+	on x goto {:tourney1}, {:tourney2}, {:tourney3}, {:tourney4}, {:tourney5}, {:tourney6}, {:tourney7}, {:tourney8}, {:tourney9}, {:tourney10}
+
+{:tourney1}
+'Tourney  1: Win  100 acres
+	la=la+100:goto {:acres}
+
+{:tourney2}
+'Tourney  2: Lose 100 acres
+	la=la-100:if la<0 then:&"(You lost your last ":x=abs(la):gosub {:sub.comma_value}:&" acres.){f6}":la=0
+{:acres}
+	if la>0 then:&"(You have  ":x=la:gosub {:sub.comma_value}:&" acres now.){f6}"
+	return
+	
+{:tourney3}
+'Tourney  3: Win  1,000 gold
+	pn=pn+1000:goto {:new_gold}
+	
+{:tourney4}
+'Tourney  4: Lose 1,000 gold
+	pn=pn-100:if pn<0 then:&"(You lost your last $":x=abs(pn):gosub {:sub.comma_value}:&".){f6}":pn=0
+{:new_gold}
+	if pn>0 then:&"(You now have $":x=pn:gosub {:sub.comma_value}:&".){f6}"
+	return
+	
+{:tourney5}
+'Tourney  5: Win  1 noble
+	nb=nb+1
+{:nobles}	
+	&"(You now have ":x=nb:gosub {:sub.comma_value}:&" nobles.){f6}":return
+	
+{:tourney6}
+'Tourney  6: Lose 1 noble
+	nb=nb-1:if nb=0 then:&"(There goes your last noble!){f6}":return
+	goto {:nobles}
+
+{:tourney7}
+'Tourney  7: Win  7,000 bushels of grain
+	gr=gr+7000
+{:grain}
+	&"(You now have ":x=gr:gosub {:sub.comma_value}:&" bushels of grain.){f6}":return
+	
+{:tourney8}
+'Tourney  8: Lose 7,000 bushels of grain
+	gr=gr-7000:if gr<7000 then:&"(You lost your remaining ":x=abs(gr):gosub {:sub.comma_value}:&" bushels.){f6}":gr=0
+	goto {:grain}
+
+{:tourney9}
+'Tourney  9: Win  1 Shipyard and 100 acres
+	f%(5)=f%(5)+1
+{:shipyard}
+	&"(You now have"+str$(f%(5))+"shipyards.)":return
+
+	&"(You lost your last ":x=abs(f%(5)):gosub {:sub.comma_value}:&" shipyard.){f6}":goto {:tourney1}
+	
+{:tourney10}
+'Tourney 10: Lose 1 shipyard and 100 acres
+	if f%(5)<=0 then:&"(You didn't have a shipyard to lose.){f6}":goto {:tourney2}
+	f%(5)=f%(5)-1:if f%(5)=. then:&"(You lost your last ":x=abs(la):gosub {:sub.comma_value}:&" shipyard.){f6}"
+	goto {:tourney2}
+
+{:tourney11}
+'Tourney 11: Win  2 tons of timber
+
+{:tourney12}
+'Tourney 12: Lose 2 tons of timber
+
+{number:998}
+	rem +.emp6.tourney - written by pinacolada
+	rem adapted from "empire deluxe" on centipede 128

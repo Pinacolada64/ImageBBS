@@ -1,0 +1,303 @@
+{number:800}
+	rem +.emp6.colony
+'	rem colony trip modded to empire iv (image)  by utopia bbs 702-735-6787
+	{uses:.\includes.lbl}
+	goto {:colony_start}
+
+' "colony_xxx" labels have line numbers which conflict with main module
+{:msg.colony}
+' Colony | Colonies, z$=singular/plural suffix ("Colony produces",
+' "Colonies produce", then later " bushel{pound}$z of grain.")
+	&"Colon":if i8=1 then:&"y":z$="s":return
+	&"ies":z$="":return
+
+{:msg.you_now_have}
+	&"{f6}{gray2}You now have ":return
+
+{:msg.you_only_have}
+	&"{f6}{lt. red}You only have ":return
+
+{:colony_start}
+	&"{f6}{green}King George wishes you a safe and{pound}$lprosperous trip to your ":gosub {:msg.colony}
+	&".{f6}Don't let him down!{f6:2}{purple}Load your ship..."
+	in$(1)="Grain":in$(2)="Serf":in$(3)="Noble":in$(4)="Navigator":x8=0
+{:25}
+	&"{f6:2}{lt. green}Manifest:{f6}[0=continue, ?=list, Y=Colony stats] -=>{white}{pound}i1":an$="":in=0:if tr%<1 then {:save_stats_quit}
+' ? hit
+	if an$="{f2}" then x=1:gosub {:sub.ship_menu}:goto {:25}
+	a%=val(an$):if an$="0"then {:107}
+	on -(an$="Y") gosub {:sub.colony_stats}:if a%<1 or a%>4 then {:25}
+{:40}
+	&"{f6:2}{yellow}Load Ship: {white}"+in$(in)+"{f6:2}{lt. green}Take how many? "
+	if a%=2 then {:50}
+	y7=((i8+1)*100):y7=y7-ys:if y7<1 then y7=0
+	y7=25000-yg:if y7<0 then y7=0
+{:50}
+	&"{white}[MAX:"+str$(y7)+"] {pound}i1":if tr%<1 then {:save_stats_quit}
+	if len(an$)>5 then {:40}
+	bn=int(val(an$)) ':if bn<1 then {:25}
+	on in goto {:79},{:85},{:91},{:95}
+
+{:79}
+' fixme:
+	if bn<0 and abs(gr-bn)<0 
+	if bn>gr then gosub {:msg.you_only_have}:&str$(gr)+" bushels!":goto {:25}
+	y7=25000-yg:goto {:101}
+{:85}
+' fixme: gosub msg.you_only_have
+	if bn>yc*50 then:&"{f6:2}{yellow}You may only take on a maximum of{white}"+str$(yc*50)+"{pound}$l{yellow}serfs on your"+str$(yc)+" ships!":goto {:40}
+
+	if bn+ys>(i8+1)*100 then gosub {:msg.you_only_have}:&+str$((i8+1)*100)+" {yellow}serfs{pound}$lin your"+str$(i8)+" ":gosub {:msg.colony}:&"!":goto {:40}
+
+	if bn>sf then gosub {:msg.you_only_have}:& str$(sf)
+	if bn<=sf then gosub {:msg.you_now_have}:sf=sf-bn:ys=ys+bn:& str$(ys)
+	&+" serfs.":goto {:25}
+{:91}
+	if bn>nb then gosub {:msg.you_only_have}:& str$(nb)
+	if bn<=nb then gosub {:msg.you_now_have}:nb=nb-bn:yw=yw+bn:& str$(yw)
+	&+" nobles.":goto {:25}
+
+{:95}
+	if bn*500>pn then gosub {:msg.you_only_have}:&"$"+str$(pn):goto {:25}
+	gosub {:msg.you_now_have}:x8=x8+bn:pn=pn-(500*bn):&str$(x8)+" navigators.":goto {:25}
+
+{:101}
+	if bn+yg>25000 then:&"{f6}{white}Limit: 25,000 Bushels!":goto {:25}
+	gosub {:msg.you_now_have}:gr=gr-bn:yg=yg+bn:& str$(yg)+" bushels of grain.{f6}":goto {:25}
+
+{:107}
+	za=1:goto {:307}
+{:colony_110}
+	x=int(yg*2*rnd(1)+ys*3*rnd(1)+i8*50*rnd(1)):if x>1e5 then x=1e5
+	if x>(yg+ys)*5 then x=int(yg+ys)*5
+	if x+yg>1e5 then x=1e5-yg
+	&"{f6:2}{green}":gosub {:msg.colony}:&" produce{pound}$z {white}"+str$(x)+" {green}bushels of grain.":yg=yg+x
+	&"{f6:2}{blue}Exports brought back to your empire can{pound}$lbe converted to cash."
+{:128}
+	&"{f6:2}{green}You have{white}"+str$(ye)+" {green}tons of exports.{f6:2}{lt. blue}[A]cquire [S]ell [C]ontinue [Y] Colony stats -=> {pound}i1"
+	on-(an$="A")-(an$="S")*2-(an$="C")*3 goto {:137},{:153},{:174}
+	on-(an$="Y")gosub {:sub.colony_stats}:goto {:128}
+{:137}
+	&"{f6:2}{yellow}Convert grain to exports{pound}$l(1 ton: 2,000 bushels){f6}":gosub {:522}:if tr%<1 then {:save_stats_quit}
+	bl=val(an$):if bl<1 then {:128}
+	if yg<(bl*2000)then gosub {:msg.you_only_have}:&str$(yg)+"tons!":goto {:137}
+	yg=yg-(bl*2000):ye=ye+bl:&"{f6}{green}Converted!":goto {:128}
+{:153}
+	&"{f6:2}{green}Convert Exports To Grain."
+	y7=1e5-yg:&"{f6:2}Max Conversion Allowed:"+str$(y7)+" Bushels."
+	&"{pound}$l1 Ton Yields 1,000 Bushels.":gosub {:522}:if tr%<1 then {:save_stats_quit}
+	bl=val(an$):if bl<1 then {:128}
+	if bl*1000>y7 then:&"{f6:2}{white}You Cannot Convert That Many!":goto {:128}
+	if bl>ye then gosub {:msg.you_only_have}:&str$(ye)+" tons!":goto {:153}
+	ye=ye-bl:yg=yg+(bl*1000):&"{f6}{green}Converted!":goto {:128}
+{:174}
+	if yc<2 then {:216}
+	&"{f6:2}{lt. green}You Have"+str$(yc)+" Ships At Colony"
+	&"{f6:2}{lt. green}[B]each [M]ake [C]ontinue -=> {pound}i1":if tr%<1 then {:save_stats_quit}
+	on-(an$="B")-(an$="M")*2-(an$="C")*3 goto {:186},{:201},{:216}
+	on-(an$="Y")gosub {:sub.colony_stats}:goto {:174}
+{:186}
+	&"{f6:2}{yellow}5 ships beached are converted to build 1 colony."
+	&"{f6:2}{purple}":gosub {:msg.colony}:&" to build => {white}{pound}i1":if tr%<1 then {:save_stats_quit}
+	bl=val(an$):if bl<1 then {:174}
+	if yc<bl*5 then gosub {:msg.you_only_have}:&str$(yc)+" ships!":goto {:186}
+	yc=yc-bl*5:i8=i8+bl:&"{white}Ships dismantled!":goto {:174}
+{:201}
+	&"{f6:2}{cyan}":gosub {:msg.colony}:&" abandoned will{pound}$lproduce {white}2{cyan} ships."
+	&"{f6:2}{purple}":gosub {:msg.colony}:&" To Abandon => {white}{pound}i1":if tr%<1 then {:save_stats_quit} ':return - necessary?
+	bl=val(an$):if bl<1 then {:174}
+	if bl>i8 then gosub {:msg.you_only_have}:&str$(i8)+" ":gosub {:msg.colony}:&"!":goto {:201}
+	i8=i8-bl:yc=yc+(bl*2):&"{f6}{white}Abandoned!":goto {:174}
+{:216}
+	y7=fn r(10)
+{:219}
+	pr=ys*y7:&"{f6:2}{green}Colonists need{white}"+str$(pr)+" {green}bushels.":gp=pr
+	&"{f6}{gray2}Give How Many? {white}{pound}i1":if tr%<1 then {:save_stats_quit}
+	gp=int(val(an$))
+	if gp>yg then gosub {:msg.you_only_have}:&str$(yg)+" bushels!":goto {:219}
+	on -(gp<. or (gp=. and left$(an$,1)<>"0")) goto {:219}:yg=yg-gp
+	if gp<int(pr/2) then:&"{f6:2}{white}":gosub {:msg.colony}:&" starve{pound}$z!":yg=10:ys=.
+	y7=fn r(100)
+{:240}
+	ar=yw*y7:&"{f6:2}{green}Noble(s) need{white}"+str$(ar)+" {green}bushels...":ga=ar
+	&"{f6}{gray2}Give how many? {white}{pound}i1":if tr%<1 then {:save_stats_quit}
+	ga=int(val(an$))
+	if ga>yg then gosub {:msg.you_only_have}:&str$(yg)+"!":goto {:240}
+	on -(ga<. or (ga=. and left$(an$,1)<>"0")) goto {:240}:yg=int(yg-ga)
+	if ga<ar then:&"{f6:2}{white}Noble(s) starve! Bad move...":yw=.
+	if yg<1 then:&"{f6:2}{white}Your ":gosub {:msg.colony}:&" suffer{pound}$z from starvation!"
+	if yg<1 then ye=.:ys=.:x8=.:i8=int(i8/2):if i8<.then i8=.
+	if yg<1 then yg=.:yc=1
+	y7=fn r(200):ar=(i8+1)*y7:y7=fn r(10):if y7>4 then {:273}
+	&"{f6:2}{cyan}Indian peace offering! You receive{white}"+str$(ar)
+	&"{pound}$l{cyan}bushels Of grain!":yg=yg+int(ar):goto {:295}
+{:273}
+	&"{f6:2}{red}Indians {green}want{white}"+str$(ar)+" {green}bushels...":ga=ar
+	&"{f6}{gray2}Give how many? {white}{pound}i1":if tr%<1 then {:save_stats_quit}
+	ga=int(val(an$))
+' return sets max:
+	if an$="" then ga=ar
+	if ga>yg then gosub {:msg.you_only_have}:&str$(yg)+"!":goto {:273}
+	if ga<ar then:&"{f6:2}{red}Indians break out the war paint!":ys=int(ys/2)
+	on-(ga<.or (ga=. and left$(an$,1)<>"0")) goto {:273}:yg=int(yg-ga)
+	if ga<ar then:&"{f6:2}{red}Your ":gosub {:msg.colony}:&" suffer{pound}$z brutal attack!"
+{:295}
+	&"{f6:2}{purple}Your Colony Stats:{f6}":gosub {:sub.colony_stats}:goto {:459}
+{:307}
+	&"{f6:2}{lt. green}You set sail toward the ":gosub {:msg.colony}:&"...":goto {:313}
+{:310}
+	&"{f6}{lt. green}You set sail toward your empire..."
+{:313}
+	y7=fn r(8):on y7 goto {:363},{:colony_316},{:325},{:363},{:331},{:343},{:363},{:colony_351}
+{:colony_316}
+	&"{f6:2}{cyan}Your ship(s) are ravished by {pound}p1pirates!{pound}p0"
+	if yw=>yc then:&"{f6}{yellow}But your noble(s) save them!":goto {:387}
+	y7=yc-yw:goto {:lose_ships}
+{:325}
+	&"{f6:2}{yellow}A {white}":on fn r(5) goto {:573},{:576},{:579},{:582},{:585}
+{:573}
+	&"hurricane":goto {:event}
+{:576}
+	&"typhoon":goto {:event}
+{:579}
+	&"monsoon":goto {:event}
+{:582}
+	&"wind storm":goto {:event}
+{:585}
+	&"killer wave"
+{:event}	
+	&" {yellow}ravishes your fleet!{f6}"
+{:colony_328}
+	y7=fn r(yc):goto {:lose_ships}
+{:331}
+	&"{f6:2}{yellow}Your ship(s) fall off-course!":y7=yc-x8:if y7=. then {:lose_ships}
+	&"{f6:2}{blue}But your navigator":if y7<1 then:&"s"
+	&" recover course!":goto {:387}
+{:343}
+' fixme: can leeches actually do that?
+' Leeches bore holes in your ships! Water crashes in... you try to plug holes!
+	&"{f6:2}{red}Leeches bore holes in your ships!{pound}$l{blue}Water crashes in... You try to plug holes!":goto {:colony_328}
+{:colony_351}
+	&"{f6:2}{pound}p1{purple}Oh no! {pound}p0A mutiny occurs in your fleet!"
+	if yw=>yc then:&"{pound}$l{lt. red}But your noble(s) fight back!":goto {:387}
+	y7=yc-yw
+{:lose_ships}
+	yc=yc-y7:&"{f6:2}{lt. green}Ships Lost >{white}"+str$(y7):if za=0 and y7>1 then ye=fn r(ye)
+	goto {:387}
+{:363}
+	&"{f6:2}{lt. green}The seas are calm...{yellow} your course true..."
+{:387}
+	if za=1 then za=0 ':goto {:372}
+
+{:372}
+	if yc then:&"{f6}{gray2}You arrive at the ":gosub {:msg.colony}:&"...":goto {:colony_110}
+	z$="s":y$=""
+	&"{f6:2}{cyan}You find yourself all alone in the {blue}deep{pound}$lblue sea... {cyan}without a ship!"
+'	&"{f6}{green}You head back towards your empire..."
+{:390}
+	y7=.:if yc<1 then:&"{f6:2}{cyan}You arrive... by {lt. blue}{pound}p1swimming{pound}p0!{pound}$l{white}King George grunts at your skill!":goto {:998}
+' ships arrive / ship arrives
+	y$="s":z$="":if yc>1 then y$="":z$="s"
+	&"{f6:2}{green}Ship{pound}$y arrive{pound}$z...{f6:2}Unloading ship{pound}$y at empire docks..."
+' ship carries / ships carry
+	z$="ies":if yc>1 then z$="y"
+	if ye<1 then ce=.:&"{f6}{yellow}Ship{pound}$y carr{pound}$z no imports.":goto {:453}
+{:408}
+	ga=fn r(10000):&"{f6:2}{green}The market master offers $":x=ga:gosub {:sub.comma_value}:&"/Ton.{f6}"
+{:colony_414}
+' ton / tons
+	z$="":if ye>1 then z$="s"
+	im=1:&"{f6}{green}You have {white}":x=ye:gosub {:sub.comma_value}:&" {green}ton{pound}$z of imports."
+	&"{f6:2}{lt. green}[S]ell [B]arter [H]old [Y]our Status -=> {pound}i1":if tr%<1 then {:save_stats_quit}
+	on-(an$="S")-(an$="B")*2-(an$="H")*3 goto {:423},{:435},{:441}
+	on-(an$="Y") gosub {:sub.colony_stats}:goto {:colony_414}
+{:423}
+	&"{f6}{green}at ${white}":x=ga:gosub {:sub.comma_value}:&"/Ton{green}...{f6:2}{cyan}Sell => {pound}i1":if tr%<1 then {:save_stats_quit}
+	bl=val(an$):if bl<1 then {:423}
+	if bl>ye then gosub {:msg.you_only_have}:x=ye:gosub {:sub.comma_value}:&" tons!":goto {:colony_414}
+	ye=ye-bl:pn=pn+(ga*bl):&"{f6}{cyan}Sold!":goto {:441}
+{:435}
+	if y7>1 then:&"{f6:2}{red}Sorry... The market master closes shop!":goto {:441}
+' # of tries to sell:
+	y7=y7+1:goto {:408}
+{:441}
+	if ye>10 then y7=fn r(ye):ye=ye-y7:&"{f6:2}{green}Spoilage {gray2}consumes"+str$(y7)+" tons Of imports!"
+	gr=gr+(ye*2000)
+'{:450}
+' this message taken care of +.empire6 now:
+'	&"{f6:2}{red}Nobles embark to battlefield..."
+{:453}
+	if yw>0 then nb=nb+yw:yw=0
+{:456}
+	goto {:998}
+
+{:462}
+	IF yc<1 THEN:&"{f6:2}{gray1}With no ships, you must swim back to your empire!":goTO {:489}
+{:465}
+	IF ye<1 THEN:&"{f6:2}You leave with no exports on-board!":goTO {:310}
+{:477}
+	IF ye>bl THEN y7=ye-bl:ye=bl:&"{f6:2}{red}{pound}p1Indians{pound}p0 steal"+STR$(y7)+" tons!"
+
+{:459}
+	&"{green}Loading exports..."
+{:468}
+	&"{f6:2}{cyan}Ships may carry {white}2 {cyan}tons of exports each.":bl=yc*2
+{:471}
+	&"{f6}{cyan}Your{white}"+STR$(yc)+" {cyan}ships can carry a total of{pound}$l"
+' Your xxxxx ships can carry a total of
+'  xxxxx tons back.
+{:474}
+	&"{white}"+STR$(bl)+" {cyan}tons back.{f6:2}{green}Tonnage loaded =>"+STR$(ye)+" tons"
+{:colony_486}
+	goto {:310}
+{:489}
+	bl=0:GOTO {:477}
+
+' colony stats:
+
+{:sub.colony_stats}
+	&"{f6:2}{cyan}"+na$+" (Player #"+STR$(g3)+"):{f6:2}{lt. green}Cash     :{yellow}$"+mid$(STR$(pn),2)
+	&"{f6}{lt. green}Grain    :{yellow}"+STR$(yg)+" bushels{f6}{lt. green}Tax rate :{yellow}"+STR$(tr)+"%"
+	&"{f6}{lt. green}Serfs    :{yellow}"+STR$(ys)+"{f6}{lt. green}Nobles   :{yellow}"+STR$(yw)
+	z$="Im":if im=1 then z$="Ex"
+	&"{lt. green}{pound}$zports  :{yellow}"+STR$(ye)+"{f6}{lt. green}Ships    :{yellow}"+STR$(yc)
+	&"{f6:2}{lt. green}Navigator:{yellow}"+STR$(x8)+"{f6}{lt. green}Colonies :{yellow}"+STR$(i8)+"{f6}":RETURN
+
+{:522}
+	&"{f6:2}{purple}Convert (Tons) => {white}{pound}i1":RETURN
+{:525}
+	&"{f6:2}{purple}":gosub {:msg.colony}:&"{pound}$z to build => {white}{pound}i1":ON tr%<1 GOTO {:save_stats_quit}:RETURN
+{:528}
+	&"{f6:2}{purple}":gosub {:msg.colony}:&"{pound}$z to abandon => {white}{pound}i1":ON tr%<1 GOTO {:save_stats_quit}:RETURN
+
+{:540}
+	&"{f6:2}{lt. blue}[B]each [M]ake [C]ontinue -=> "
+{:541}
+	&"{pound}g1":on tr+1 goto {:save_stats_quit}:if an$<>"B" or an$<>"M" or an$<>"Q" then {:541}:& "{pound}v7{f6}":a$=an$:return ' pina added this
+
+{:543}
+	&"{f6:2}{yellow}You may only take on a max of{white}"+STR$(yc*50)
+{:546}
+	&"{pound}$l{yellow}serfs on your"+STR$(yc)+" ships!":GOTO 40
+
+{:549}
+	&"{f6:2}{yellow}You may only have{white}"+STR$((i8+1)*100)+" {yellow}serfs"
+{:552}
+	&"{pound}$lin your"+STR$(i8)+" colony(s)!":GOTO {:40}
+
+{:561}
+	&"{f6:2}{cyan}Indian peace offering! You receive{white}"+STR$(ar)+"{pound}$l{cyan}bushels of grain!"
+{:567}
+	yg=yg+int(ar):return
+
+{:sub.ship_menu}
+	&"{pound}f1{lt. blue}{f6:2}  Load onto ship{f6} {white}{pound}o{175}":z$="{46:17}" ' 17 .'s
+	&"{f6}{yellow}{rvrs on}[1]{rvrs off}{white} Grain{pound}$z"+str$(yg)+"{f6}{yellow}{rvrs on}[2]{rvrs off}{white} Serf.{pound}$z"+str$(ys)
+	&"{f6}{yellow}{rvrs on}[3]{rvrs off}{white} Noble{pound}$z"+str$(yw)+"{f6}{yellow}{rvrs on}[4]{rvrs off}{white} Navigator ($500/ea)..."+str$(x8)
+	&"{f6}{yellow}{rvrs on}[Y]{rvrs off}{white} Your Status{f6:2}":return
+
+{:998}
+	sf=sf+ys:ys=.:gr=gr+yg:yg=.:ye=.:x8=.:return
+
+{number:999}
+	REM +.emp6.colony

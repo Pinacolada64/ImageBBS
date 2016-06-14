@@ -1,0 +1,241 @@
+{def:debug}
+{number:1}
+' core routines needed here:
+'	* displaying stats
+'	* load stats
+'	* save stats (especially during carrier drop)
+'	* displaying other players
+'	* press a key
+{:1}
+	rem +.empire 6.0
+	{include:build-date_basic.lbl}
+	goto {:init}
+	
+{nice:5}
+{:sub.load_lmp}
+' &,9,1 displays a$ in bottom window
+' load mini-plus file in a$ (should end execution with RETURN statement)
+	dr=5:gosub 1010:a$="+.emp6."+a$:&,9,1:a$=dr$+a$:&,7,dv%,1:gosub 1012:on e%+1 gosub 801:return
+
+{nice:5}
+{:sub.comma_value}
+' this is pinacolada's sorcery, blame him :/
+' uses z$ a j l x y
+	z$=mid$(str$(x),2,9):l=len(z$):a=l:if j then:& left$("           ",9-l+abs(l<4)+abs(l<7))
+	if l<4 then:&"{pound}$z":return
+{:2852}
+	a=a-3:if a>3 then {:2852}
+	& left$(z$,a):for y=a+1 to l step 3:if a<>l then:&","
+	& mid$(z$,y,3):next:return
+
+{nice:5}
+{:sub.normalize}
+	an=abs(int(val(an$))):return
+
+{nice:5}
+{:sub.any_key}
+	&"{f6:2}{white}{rvrs on} (Press any key) {rvrs off} {pound}g1{f6}":on tr%+1 goto {:save_stats_quit}:return
+
+{nice:5}
+{:sub.open_playerlog}
+	a$="e.empire6,l,"+chr$(100):dr=3:goto 1011
+
+{nice:5}
+{:save_stats_quit}
+' call with goto
+	gosub {:sub.save_your_stats}:goto {:quit_game}
+
+{nice:5}
+{:sub.save_your_stats}
+' call with gosub
+	w$=na$+r$+str$(la)+r$+str$(wa)+r$+str$(sf)+r$+str$(nb)
+	w$=w$+r$+str$(gr)+r$+str$(tr)+r$+str$(pn)+r$+str$(f%(1))+r$+str$(f%(2))
+	w$=w$+r$+str$(f%(3))+r$+str$(f%(4))+r$+str$(f%(5))+r$+str$(f%(6))
+	w$=w$+r$+str$(yc)+r$+str$(i8)+r$+str$(z9)
+	gosub {:sub.open_playerlog}:x=g3:gosub 1001:print# 2,w$:close 2:return
+
+{:sub.load_your_stats}
+	g3=x:gosub 1001:input# 2,la,wa,sf,nb,gr,tr,pn,f%(1),f%(2),f%(3),f%(4),f%(5),f%(6),yc,i8,z9
+	close 2:return
+	
+{nice:5}
+{:quit_game}
+' quit game:
+	gosub {:sub.rank}:&"{f6}{lt. green}Goodbye, {pound}v8 {pound}v2...{pound}$l{cyan}Play again soon!"
+{:quit_game_2}
+	close 2:close 15:&,28:goto 1812
+
+{nice:5}
+{:sub.other_rulers}
+	sh=.:&"{f6}{red}{pound}{back arrow}13(Space aborts){f6:2}"
+	&" {cyan}Other rulers:{white}{f6}"
+	&" ##  Name{pound}{back arrow}27Acres{f6}"
+' ##  Name                  Acres
+'  1. PINACOLADA............xxx,xxx,xxx
+ 
+' j is for justifying acres value with {:sub.comma_value}
+	gosub {:sub.open_playerlog}:x=1:j=1
+{:58}
+' get player name (n$), acres (z$):
+' can't use z$ a j l x y since the REL pointer sub uses 'em
+	x%=x:gosub 1001:input# 2,n$,z$:if n$="empty" or n$=na$ or left$(n$,1)="0" then {:64}
+	&"{f6}{lt. blue}{pound}# {pound}#2{pound}%x. {lt. green}"+left$(n$+"......................",22)+"{cyan}"
+' sub uses x:
+' - use temp "an" to hold REL record #, restore afterwards:
+	an=x:x=val(z$):gosub {:sub.comma_value}:x=an
+{:64}
+' sh=47? what does that mean? 'if sh' = 'if spacebar hit'...
+' sh=47: %00101111
+' rc is abort character ("/", I'm guessing)
+	if rc or sh=47 then:&"{f6}{red}(Aborted.){f6}":x=25
+	x=x+1:on -(x<25) goto {:58}:close 2:return
+
+{nice:5}
+{:sub.rank}
+' d2$ can be printed with {pound}v8
+	d2$="LORD ":if tz=1 then d2$="PRINCE "
+	if tz=2 then d2$="KING "
+	if tz=3 then d2$="EMPEROR "
+	return
+{:sub.rank_2}
+	' todo: tz=1: goto {:sub.rank}
+	d2$="PRINCE ":tz=1:return
+{:484}
+	' todo: tz=2: goto {:sub.rank}
+	d2$="KING ":tz=2:return
+{:486}
+	if la<ln then return
+	' todo: tz=3: goto {:sub.rank}
+	d2$="EMPEROR ":tz=3:return
+
+{nice:5}
+{:sub.request_your_status}
+' check for "your status" request:
+	if an$<>"Y" then return
+
+{:sub.your_status}
+' wish: different displays for 40/80 columns?
+' player name and id#
+	&"{f6:2}{cyan}{pound}v2 (#"+str$(g3)+"{f6}{lt. green}":j=.
+	&"{f6}Land     : ":x=la:gosub {:sub.comma_value}:&" acres"
+	&"{f6}Money    :$":x=pn:gosub {:sub.comma_value}
+	&"{f6}Grain    : ":x=gr:gosub {:sub.comma_value}:&" bushels"
+	&"{f6}Tax rate : ":x=tr:gosub {:sub.comma_value}:&"%"
+	&"{f6}Soldiers : ":x=wa:gosub {:sub.comma_value}
+	&"{f6}Serfs    : ":x=sf:gosub {:sub.comma_value}
+	&"{f6}Nobles   : ":x=nb:gosub {:sub.comma_value}
+	&"{cyan}{f6}Palaces  : ":x=f%(1):gosub {:sub.comma_value}
+	&"{f6}Markets  : ":x=f%(2):gosub {:sub.comma_value}
+	&"{f6}Mills    : ":x=f%(3):gosub {:sub.comma_value}
+	&"{f6}Foundries: ":x=f%(4):gosub {:sub.comma_value}
+	&"{f6}Shipyards: ":x=f%(5):gosub {:sub.comma_value}
+	&"{f6}Diplomats: ":x=f%(6):gosub {:sub.comma_value}
+	&"{f6}Ships    : ":x=yc:gosub {:sub.comma_value}
+	&"{f6}Colonies : ":x=i8:gosub {:sub.comma_value}
+	&"{f6}Training : ":x=z9:gosub {:sub.comma_value}
+	goto {:sub.any_key}
+
+{nice:5}
+{:sub.log_event}
+' write to "e.empire 6 news":
+	b$="empire 6 news":a$="a":gosub 1027:if e% then a$="w":gosub 1027
+	print# 2,"{lt. green} As of {$04}"d1$:print#2,tt$:print#2,"{pound}vj":close 2:return
+' {:442}
+'	b$="empnews6":a$="w":dr=3:gosub 1027:
+'	print# 2,"{lt. green} As Of: {$04}"+d1$+"{f6}{pound}vj":close 2:goto {:185}
+'	return
+
+'{number:1027}
+'	dr=3:a$="e."+b$+",s,"+a$:goto {:im.file_open}
+
+{:sub.read_config}
+' {:555}
+' ln=auto-reset land requirement
+' mp=auto-reset emperor status
+' en=bbs credit/money exchange active
+' nn=bbs credit/money exchange rate
+	a$="e.emp6 config,s,r":dr=3:gosub 1011:&,2,2:ln=val(a$)
+	&,2,2:mp=val(a$):&,2,2:en=val(a$):&,2,2:nn=val(a$):close 2:close 15:return
+	
+{nice:100}
+{:init}
+' NEW: f1 controls whether to skip to line 100 (start of module):
+' may not be needed since LMP modules end in RETURN now
+'	if f1 then {:100}
+	cm$="Empire 6 Alpha":gosub 1360
+' check for local maint flag + local mode for sysop options
+	a=3:gosub 1004:e9=a+zz
+
+' enable error trapping: &,37:
+	&"{pound}f1":bn=.:ty=.:z9=.:def fn r(x)=int(rnd(1)*x)+1
+	k$="Return":if co%>2 then k$="Enter"
+
+' this will format things roughly for 40/80 columns, just &"{pound}$l"
+' at the end of every 2nd line of text you think will spill over into
+' 80 columns
+	l$=mid$("{f6} ",ll%/40)
+
+' wall-writer and new player creation moved to +.emp6.startup
+	a$="startup":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}
+	
+{:start_turn}
+	a$="startturn":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}	
+
+	a$="trading":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}	
+
+{:351}
+'	&"{f6:2}{cyan}Colony Trip? (Y/N) >>{white}":gosub 1902:on a goto {:352}:goto {:353}
+' New: check for ships first
+	if yc then:&"{f6:2}{cyan}Colony trip? (Y/N) >> {white}":gosub 1902:if a=. then {:353}
+{:352}
+	&"{f6:2}{lt. red}Heading down to the Shipyards...{f6:2}"
+	a$="colony":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}
+{:353}
+	&"{f6:2}{red}Heading to the Battlegrounds...{f6:2}"
+	a$="combat":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}
+
+' new:
+
+' not ready yet:
+'	a$="quests":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}
+
+	a$="endturn":gosub {:sub.load_lmp}:if tr%<1 then {:save_stats_quit}
+
+	goto {:start_turn}
+
+' these two areas need to be unified somehow:
+{:sub.title}
+'  calculate title:
+	d2$="LORD ":if tz=1 then d2$="PRINCE "
+	if tz=2 then d2$="KING "
+	if tz=3 then d2$="EMPEROR "
+	return
+
+{:412}
+	d2$="PRINCE ":tz=1:return
+{:414}
+	d2$="KING ":tz=2:return
+{:416}
+	if la<ln then return
+	d2$="EMPEROR ":tz=3:return
+
+{:420}
+' load maintenance module:
+	&"{f6:2}{cyan}Saving your stats...":gosub {:sub.save_your_stats}
+{:422}
+	&"{f6}{white}Loading Empire Maintenance...":&,28:a$="maint":gosub {:sub.load_lmp}:goto {:start_turn}
+
+
+{:700}
+	if ln=. and mp=. then bn=.:return
+	bn=1:&"{f6:2}{white}You are a true EMPEROR!{f6:2}"
+' append or write:
+	dr=1:b$="s.Honour,s,":a$=b$+"a":gosub 1011:if e% then a$=b$+"w":gosub 1011
+' {pound}v0 will just print current time, not time of winning:
+'	print# 2,"Emperor "+na$+"  - {pound}v0":print# 2,str$(la)+" Acres."
+	print# 2,"Emperor "+na$+"  - {$04}"d1$:print# 2,str$(la)+" Acres."
+	close 2:close 15:return
+
+{number:798}
+	rem empire iv converted to image by utopia bbs 702-735-6787 24 hours
+	rem hacked mercilessly, lmp-ed, &c. by pinacolada, nov 2012 - oct 2014

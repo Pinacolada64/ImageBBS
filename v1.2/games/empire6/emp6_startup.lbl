@@ -1,0 +1,71 @@
+{quoter:$20=space}
+
+{number:800}
+	rem +.emp6.startup
+	{uses:.\includes.lbl}
+
+' unabortable file read on lfn#3:
+	z8=.:a$="s.Honour,s,r":dr=1:gosub 1011:if e%=. then:&,3,2
+	close 2
+' moved empire wall here:
+{:604}
+	sh=.:&"{pound}q0{pound}f1{f6:2}{yellow}Read Empire wall?: ":gosub 1902
+	on -(tr%<1)-2*(a=.) goto 1811,{:648}
+	b%=.:z$="":m$="{space:40}":a=ll%/2-14
+	if a>.then z$=left$(m$,a)
+' fixme: why not modify ak$ instead of defining a$?
+	a$="{$c0:40}":g$=" "+left$(a$+a$,ll%-2)
+	&"{pound}f1{f6}{pound}$x       {lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}Wall{lt. green}Writer{f6}{pound}$z{cyan}           v1.0{f6}{pound}$x{f6}{orange}{pound}$g{f6:2}"
+	dr=3:a$="e.emp6.wall,s,r":gosub 1011:if e% then:&"{orange}The wall is blank!{f6}":goto {:636}
+	f$="new writings":m$=m$+m$:&"Scanning for {pound}$f...":sh=.
+{:618}
+	input# 2,b$,c$,d$:s=66 and st:a%=-(mid$(c$,2)>mid$(ld$,2))
+	if a%+s=. and tr%then:&".":b%=rc:if b%=. then {:618}
+	if b% then:&"{f6}":goto {:636}
+	if a%=. then:&"{f6:2}{orange}No {pound}$f!{f6}":goto {:636}
+	&"{f6:2}{orange}Here are the {pound}$f:{f6:2}{orange}{pound}$g{f6}"
+{:628}
+	&"{yellow}   {pound}$d{f6}":& left$(m$,ll%-len(b$)-1)
+	& mid$("{white}{red}{cyan}{yellow}{lt. red}{lt. green}{lt. blue}",fn r(7),1)+"{pound}$b{orange} {pound}$g":b%=rc
+	if s or tr%<1 then {:636}
+	if b%=. then input# 2,b$,c$,d$:s=(64 and st):goto {:628}
+{:636}
+	close 2:close 15
+' NEW: fixed check for post/respond capability using IM routine to be a model 
+' of compliance:
+'	if mid$(fl$,4,1)="0" then {:646}
+	a=4:gosub 1004:if a=. then {:646}
+	&"{f6:2}{yellow}Add your words of wisdom?: ":gosub 1902
+	on -(tr%<1)-2*(a=.) goto 1811,{:646}
+	poke 53252,76:&"{f6}{orange}Go ahead and write{lt. blue}{f6}:{pound}i0":if an$="" or tr%<1 then {:646}
+' there is an "append or write" routine in IM (sort of):
+' a$="e.emp6wall,s,a":dr=3:gosub 1011:if e% then a$="e.emp6wall,s,w":gosub 1011
+' 1027 dr=3:a$="e."+b$+",s,"+a$:goto 1011
+' so, open for append - if error, fall back to writing a new file:
+	b$="emp6.wall":a$="a":gosub 1027:if e% then b$="w":gosub 1027
+	print# 2,na$r$d1$r$an$
+{:646}
+	close 2:close 15:&"{pound}q0"
+{:648}
+	x=rnd(-ti):x=.:poke 53252,6:&"{f6:2}{purple}Checking to see if you're alive....":gosub {:sub.open_playerlog}:if e%=. then {:6}
+	on -(e9>.) goto {:422}:&"Sorry, Empire 6.0 isn't set up yet.":goto {:quit_game_2}
+{:6}
+	x=x+1:gosub 1001:&,2,2:on -(a$=na$)-2*(x<25) goto {:found_player},{:6}:&"{f6:2}{red}Aha! A new victim!{f6}":x=.
+{:10}
+'	gosub 1001:&,2,2:g3=x:on-(a$="empty") goto {:14}:x=x+1:on -(x<25) goto {:10}:close 2
+	x=x+1:gosub 1001:&,2,2:on -(a$="empty")-2*(x<25) goto {:14},{:10}
+	close 2:if e9=. then:&"{f6}{green}Sorry, all Empires are being ruled.{pound}$l{cyan}Try again next call.{f6:2}":goto {:quit_game}
+	goto {:422}
+{:14}
+' set up new player:
+	a=fn r(300)+2000:w$=na$+r$+"5000"+r$+"20"+r$+str$(a)+r$+"2"
+	w$=w$+r$+"10000"+r$+"15"+r$+"1000"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"
+	w$=w$+r$+"0"+r$+"0"+r$+"1":x=g3:gosub 1001:print# 2,w$:&"{f6:2}{lt. blue}OK, all set..." ':gosub 1001:&,2,2
+
+{:found_player}
+' return to +.empire6
+	g3=x:return
+{number:997}
+	rem fixes by pinacolada - 8/Sep/2012 12:03
+	rem and more on 12/Aug/2014 10:47
+	rem empire boot mark a. dickenson

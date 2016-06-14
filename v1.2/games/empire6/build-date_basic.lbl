@@ -1,0 +1,4 @@
+' {uses:.\build-date_basic.lbl} 
+{ifdef:debug}			
+print "Wed 10/22/2014 12:26:41.26"	
+{endif}				

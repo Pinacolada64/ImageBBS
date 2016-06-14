@@ -1,0 +1,66 @@
+		Variables:
+
+e9: maintenance flag
+
+f%(1) palace
+f%(2) markets
+f%(3) mills
+f%(4) foundries
+f%(5) shipyards
+f%(6) diplomats
+
+g3: player #
+gr: grain
+
+i8:	colonies
+
+la: land
+
+nb: nobles
+
+pn: cash
+
+sf: serfs
+
+tr: tax rate
+ty:	previous rank
+tz:	current rank
+
+wa: soldiers
+
+x8: navigators
+
+yc: ships
+
+in stats:
+yc	ships
+ye	exports
+ys	serfs
+yw	nobles
+
+z8	0: wall read flag in +.emp6.startup
+	1: 
+	2: max turns taken today?
+
+z9:	maintenance mode flag (0 or 1) [deprecated]
+
+peek(899)	# of plays taken
+
+Player file format:
+na$		handle
+la		land
+wa		soldiers
+sf		serfs
+nb		nobles
+gr		grain
+tr		tax rate
+pn		money
+f%(1)	palaces
+f%(2)	markets
+f%(3)	mills
+f%(4)	foundries
+f%(5)	shipyards
+f%(6)	diplomats
+yc		ships
+i8		colonies
+z9		training

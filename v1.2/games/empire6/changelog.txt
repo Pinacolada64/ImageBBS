@@ -1,0 +1,153 @@
+(Tab width: 4)
+
+		Empire 6.0 enhancements:
+
+		This year's harvest is xxxx bushels, for a total of yyyy bushels.
+	
+REMOVE	"Press Any Key" prompts between "Totals, Receivables, and Payables"
+		and "Nobles and Palaces" in status readouts
+
+FIXED	"Colonys" -> "Colonies"
+		To add: +.empire6 -- print "colon[y|ies]" line
+NEW		
+		Other Rulers listing:
+		## Name			[Acres] <- add Acres listing
+		01 PINACOLADA.............5000	(most folks don't know what this # is)
+	
+		Colonists:
+		Make RETURN key select maximum # of bushels to feed serfs instead of 
+		typing #:
+	
+		Supply how many bushels of grain (RETURN=xxx)
+	
+		Marketplace	Move $ amount left one space
+		Grain Mill	Same
+	
+		During combat, space or / should abort
+	
+		pf^1^12
+		Locked up on line 22 (which module?)
+	
+		Wall scan by date broken? May be picking up on 2096 dates though...
+	
+		On carrier drop, save stats, don't just go to main prompt! :P
+	
+		Common subroutines in +.empire6:
+			Display player statistics
+			Look up player records
+		+	Put routines in Empire6.lbl
+	
+11/Jul/2010 9:53
+		If money negative, skip "You can buy soldiers" prompt.
+	
+FIX		c$ is defined as chr$(13) multiple times: doesn't IM define r$ as 
+		chr$(13)? Yes it does. Changed.
+
+CHANGE	Move Empire WallWriter to +.emp6.startup instead of taking up space in 
+		"+.empire 6"
+
+			-- Nov 13, 2012 21:39 --
+WIP		Create LMP modules
+WISH	Add quests like Centipede 128 - thanks CyberJank for Centipede Empire
+NEW		Add DEF FN R() for generating random numbers (saves lots of space: 79 
+			instances of RND)
+
+INFO	Consider Andrew's bug report about money being siphoned off his account:
+
+		13/Jul/2010 19:29
+		    -- No Responses --
+		
+		I believe I've found a bug in the Empire game here... I thought it was
+		odd that I seemed to be losing money every turn, and at the beginning
+		of each turn, I'd start out with negative dollars.  Well, at the end
+		of my last turn, I paid attention to the breakdown of where the money
+		was going.  When it listed the total receivables and payables, it said
+		there was $2116 in payables.  But after that, when it gives the
+		detailed breakdown in each category, the only payable amount was $216
+		to soldier pay.  So I'm basically being robbed of $1900!  And I
+		believe this is happening every turn.  Can this be fixed?
+		
+		-Balzabaar
+
+FIX		Change GOSUB 1006 to {pound}i1 - although 1006 does take care of
+			command stacking... so may be worth leaving in.
+CHANGE	{pound}Cx -> C64List color codes, {pound}f1 -> {clear}
+NEW		Declare Z$ as all-purpose work string variable.
+CHANGE	Bump game version number up to 6.0
+CHANGE	Remove GO(TO|SUB) 1029 - it just does a &:RETURN
+NEW		Add my comma-delimited number routine
+FIX		Die, Headline Text, Die
+NEW		Declare consistent a% integer variable for calculations (removes need
+			for INT) plus ease of display in MCI strings: rather than
+			&"xyz"+str$(a)+"abc", use &"xyz {pound}%a abc"
+WISH	Empire AutoMaint module to rotate news logs
+
+11/Aug/2014 15:27
+NEW		Use L$ (either {f6} or {space} depending on ll%, for 40/80 displays)
+		(changed L$ to z$ in wall-writer routine)
+
+TODO	emp6_colony:
+			Is in tok64 format or something, not c64list format -- {f6*2}
+			instead of {f6:2}, {reverse on} instead of {rvrs on} -- fix it
+
+12/Aug/2014 10:48
+		Empire6.lbl:
+NEW			When feeding armies, if gr (grain available) < ar (grain for army)
+			set gr=ar for "Return=xxxx" prompt
+
+NEW			{:sub.load_lmp} -- subroutine handles LMP linking & execution:
+			* LMPs must start at line 800, end in RETURN. Pass a$="module" and
+				the module loaded is "+.emp6.module" from the plus-file drive
+
+		emp6_startup:
+CHANGE		Wall-writer filename is now "e.emp6wall" to avoid clobbering
+			an existing wall from Empire 5.1
+		emp6_maint:
+NEW			"modified" flag logic changed, prompts now show old values
+NEW			shows modified status when displaying player stats
+REMOVED		"P"lay Empire option since LMPs need to RETURN to main module
+		empire6:
+NEW			local mode (zz) considered when loading editor, not just access
+				level 9
+REMOVED		"R"eset Empire option from main menu, accessed through
+				"M"aintenance now (it's duplicated there anyway)
+
+		Globally:
+			Standardize "on -(tr%<1) goto {:save_stats_quit}" to "on tr%+1 goto {:save_stats_quit}"
+			("goto {:save_stats_quit}" does a "gosub {:sub.save_your_stats}")
+			(tr%: time remaining on BBS, {:save_stats_quit} - save stats, quit)
+
+13/Aug/2014 15:56
+		Empire Deluxe from Centipede 128 BBS:
+FIXED	Typographical errors and removed about a bazillion extra commas in
+			documentation, island and tournament texts
+
+22/Aug/2014 13:31
+		
+WIP			Ability to remove cargo from ship manifest
+WISH		Separate help files per prompt
+
+29/Sep/2014 14:34
+NEW			Change GOSUB 1002 to GOSUB 1001 (more chances of properly positioning REL pointer)
+REMOVE		{pound}vz isn't a valid Image MCI command
+
+NEW			{:sub.request_your_status} where on -(an$="Y") gosub {:sub.your_status}
+NEW			When in combat and carrier dropped, save yours & enemy stats
+
+30/Sep/2014 22:14
+compile check:
+OK			empire6
+OK			emp6.colony
+OK			emp6.combat
+OK			emp6.endturn
+OK			emp6.maint
+OK			emp6.quests
+OK			emp6.startturn
+OK			emp6.startup
+OK			emp6.tourney
+OK			emp6.town
+OK			emp6.trading (broken off from emp6.startturn)
+
+CHANGE	Changed "e.emperor" to "e.emp6 config"
+NEW			emp6.trading 'cause emp6.startturn is too many blocks, crashes
+NEW			Moved new player creation into +.emp6.startup

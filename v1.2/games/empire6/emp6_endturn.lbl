@@ -1,0 +1,135 @@
+{number:800}
+	rem +.emp6.endturn
+	{uses:.\includes.lbl}
+
+{:196}
+'	gosub {:800}:
+	gosub {:320} ':goto {:226}
+{:226}
+	if la<1 then:&"{f6:2}{lt. green}You've lost all your land!{f6}":goto {:234}
+' todo: use subroutine in +.empire6:
+'	&"{f6:2}{rvrs on}Press any key{rvrs off}{pound}g1"
+	gosub {:sub.any_key}
+	if sf>99 then {:236}
+' You haven't enough serfs to maintain
+' the empire! It's turned over to King
+' George...
+	&"{f6:2}{lt. green}You haven't enough serfs to maintain{pound}$lthe Empire! It's turned over to King{f6}George and you are {red}beheaded{lt. green}.{f6}"
+{:234}
+	w$="empty"+r$+"0":gosub {:sub.save_your_stats}:goto {:284}
+{:236}
+	p2=int(((rnd(1)*75)+sf/100)*f%(2)):p3=int(((rnd(1)*100)+gr/1000)*f%(3))
+	p4=((rnd(1)*175)+wa)*f%(4)/(2-ff):p5=((rnd(1)*200)+la/30)*f%(5)/(2-ff)
+	p4=int(p4-(p4*tr/200)):p5=int(p5-(p5*tr/150))
+	&"{f6:2}{rvrs on}{lt. blue}->Profit & Loss Report<-{f6:2}{white}"
+' changed x to xx here
+	py=(wa*(ff+2))+(tr*f%(1)*10)/40:xx=int(tr*(rnd(0)*nb))*100/4
+	pn=int(pn+p2+p3+p4+p5):tg=int((p2+p3+p4+p5)*tr/100):pn=pn+tg
+'	gosub {:500}
+{:500}
+	pt=int(p2+p3+p4+p5+tg)
+' changed x to xx here so it wouldn't conflict with x for comma_value
+	&"{f6}{lt. green}TOTALS{white}"
+	&"{f6} Receivables = ":x=pt:gosub {:sub.comma_value}
+	&"{f6} Payables    = ":x=py+xx:gosub {:sub.comma_value}
+	if pt>py+xx then:&"{f6} Profit      = ":x=pt-py-xx:gosub {:sub.comma_value}:pt=0:return
+	if pt<py+xx then:&"{f6} Loss        = ":x=py+xx-pt:gosub {:sub.comma_value}
+	if pt<py+xx then pn=pn-(py+xx-pt)
+	pt=0:return ' goto {:sub.any_key}
+
+	if pn>py+x then pn=pn-py-x:goto {:251}
+	py=0:xx=0
+{:251}
+	&"{f6:2}{lt. green}RECEIVABLES{white}"
+	&"{f6:2} Markets:   $":x=p2:gosub {:sub.comma_value}
+	&"{f6} Mills:     $":x=p3:gosub {:sub.comma_value}
+	&"{f6} Foundries: $":x=p4:gosub {:sub.comma_value}
+	&"{f6} Shipyards: $":x=p5:gosub {:sub.comma_value}
+	&"{f6} Taxes:     $":x=tg:gosub {:sub.comma_value}
+'	:lp=1:gosub {:sub.any_key}
+	&"{f6:2}{lt. green}PAYABLES{white}"
+	&"{f6:2} Soldiers Pay:"+str$(wa*(ff+2))+"{f6} Palace Rent :"
+	&str$(tr*f%(1)*10)+"{f6} Nobles Gifts:"+str$(x)
+	lp=1:gosub {:sub.any_key} ':gosub {:298}
+{:298}
+	tz=0
+	i1=f%(1):i2=f%(2):i3=f%(3):i4=f%(4):i5=f%(5):i6=f%(6)
+	if i2>9 and i6>0 and i3>5 and i4>1 and i5>1 and i1>2 and(la/sf>5.1) and nb>15 and sf>3000 then gosub {:sub.rank_2}
+	if i2>15 and i3>9 and i6>2 and i4>6 and i5>4 and i1>6 and(la/sf>10.5)and sf>3500 and nb>30 then gosub {:484}
+	gosub {:sub.read_config}
+
+	if mp=0 and la>ln then gosub {:486} ' part of sub.rank
+	if i2>23 and i3>9 and i4>13 and i5>11 and i6>2 and i1>9 and(la/sf>23.4)and sf>5499 and nb>62 then gosub {:486}
+	if tz=ty then {:310}
+	if tz>0 then {:314}
+{:310}
+	ty=tz:return
+{:314}
+	tt$=tt$="{lt. blue}"+na$+"{white} has been "
+	if tz>ty then tt$=tt$+"crowned {gray1}"+d2$
+	if tz<ty then tt$=tt$+"demoted to {gray1}"+d2$
+{:317}
+'	gosub 1027:gosub 1012:if e%>19 then {:log_1}
+'	print# 2,"{lt. green}{white}{$04}"+d1$:print# 2,tt$:close 2:ty=tz:& tt$+"{pound}b1{pound}w2":return
+	gosub {:sub.log_event}:return
+
+	gosub {:sub.your_status}
+
+' pina added this:
+	if wa=nb*20 then:&"(You have enough soldiers, skipping buying any.){f6}":goto {:280}
+	if pn<1 then:&"(You're broke, skipping buying soldiers.){f6}":goto {:280}
+
+' a=amt of soldiers needed, p=price:
+	a=nb*20-wa:p=fn r(19)+9:j=.
+' You can buy up to xxx,xxx,xxx more
+' soldiers to protect your Empire.
+	&"{f6:2}{cyan}You can buy up to ":x=a:gosub {:sub.comma_value}:&" more{pound}$lsoldiers to protect your Empire."
+	&"{f6}They cost $":x=p:gosub {:sub.comma_value}:&" each."
+	&"{f6}{white}You have $":x=pn:gosub {:sub.comma_value}:&".{f6}"
+{:270}
+	&"{f6:2}{cyan}Buy how many? {lt. blue}{pound}i1":if tr%<1 then {:280}
+	b=int(val(an$)):on -(b<1)-(b*x>pn)*2 goto {:280},{:270}
+	if wa+b>(f%(4)+1)*100 then:&"{f6}You only have"+str$(f%(4))+" foundries!{f6}":goto {:270}
+	if wa+b>nb*20 then:&"{f6}You only have"+str$(nb)+" nobles!{f6}":goto {:270}
+	wa=int(wa+b):pn=int(pn-(b*x))
+{:280}
+' increment turns taken:
+	poke 899,peek(899)+1:&"{f6:2}{lt. blue}Fixing up the Palace, please wait...."
+{:284}
+	gosub {:sub.save_your_stats}:&"{f6:2}{cyan}Play {white}Empire {cyan}again? {lt. blue}":gosub 1902:if tr%<1 then {:quit_game}
+' could conceivably change # of plays here (5):
+'	on -(a=.) goto {:292}:if peek(899)<5 or e9 then z8=2:return
+	if a then if peek(899)<5 or e9 then z8=2:return
+' FIXME
+	' dr=5:a$="empire 6":goto 1067
+	&"{f6}{white}Haven't you had enough yet?{lt. blue} ":gosub 1902:if a then {:294}
+' fix it so the sysop handle is reported here :)
+' i think this will work: I1$ Access level + handle of the sysop. 
+	&"{f6}{yellow}Tough bananas, {pound}v2!{pound}$l{white}Wait til "+mid$(i1$,2)+" hears about this!"
+{:294}
+' return to bbs main prompt:
+	&"{f6:2}":goto {:quit_game}
+
+{:320}
+' subroutine
+' fixme: can c% display over 5 digits?
+	if py<1 and wa>500 then a%=wa/5:wa=wa-a%:&"{f6}{lt. blue}{pound}%a soldiers desert your army.{f6}"
+	if x<1 and nb>67 then a%=nb/5:nb=nb-a%:&"{f6}{lt. blue}{pound}%a of your nobles defect.{f6}":return
+	if f%(5)>400 then a%=f%(5)/1.1:f%(5)=f%(5)-a%:&"{f6}{lt. green}Your kingdom cannot support this many{f6}shipyards! {pound}%a are closed.{f6}"
+	if pn>1e6 then a%=pn/1.5:pn=pn-a%:&"{f6}{lt. blue}You pay {lt. green}${pound}%f {lt. blue}to the monks for this{f6}year's provisions for your subjects' survival.{f6}"
+{:340}
+	if la>2500000 then a%=la/2.5:la=la-a%:&"{f6}{red}You donate {pound}%a acres of land{pound}$lfor the monestary.{f6}"
+{:346}
+	if f%(4)>400 then a%=f%(4)/3:f%(4)=f%(4)-a%:&"{f6:2}{rvrs on}{lt. green}MAJOR EXPLOSION!!!{rvrs off}{f6}{pound}%a foundries are {pound}p4destroyed!{pound}p0{f6:2}"
+{:354}
+	if f%(2)>500 then a%=f%(2)/5:f%(2)=f%(2)-a%:&"{f6:2}{orange}Some market owners retire. {pound}%a markets close.{f6:2}"
+{:360}
+	if f%(3)>500 then a%=f%(3)/4:f%(3)=f%(3)-a%:&"{f6:2}{green}The mills are overworked! {pound}%a mills{f6}have broken millstones and are shut down.{f6:2}"
+{:368}
+	if wa<((nb*20)+1)then return
+	wb=int(wa-nb*20):wa=wa-wb
+' fixed spacing on this message:
+	&"{f6:2}{cyan}Your nobles are too few to support your army! Your excess soldiers are taken by{pound}$lKing George.{f6}":return
+
+{number:999}
+	rem +.emp6.endturn

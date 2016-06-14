@@ -1,0 +1,239 @@
+{number:800}
+{uses:.\includes.lbl}
+	rem +.emp6.trading
+	goto {:begin}
+
+{:sub.you_only_have}
+	&"You only have ":return
+
+{:sub.barbarians_will}
+	&"{green}{f6:2}The Barbarians will ":return
+
+{:sub.so_many_bushels}
+	gosub {:sub.you_only_have}:& str$(gr)+" bushels!":return
+
+{:sub.price_adjust}
+	if f%(1)=0 then in(4)=50000:b$="50000":return
+	in(4)=100000:b$="100000":return
+
+{:begin}
+' fixme: couldn't d2$ be swapped with ty/tz =(something)?
+	&"{f6:2}{lt. blue}It is a new year...{pound}w3{lt. green}{f6:2}":ff=.:a%=fn r(6):if d2$="EMPEROR "then a%=fn r(4)
+	if a%=1 then:&"Poor weather. No rain. Locusts migrate."
+	if a%=2 then:&"Early frosts. Arid conditions."
+	if a%=3 then:&"Flash floods. Too much rain."
+	if a%=4 then:&"Average weather. Good year."
+	if a%=5 then:&"Fine weather. Long summer."
+	if a%=6 then:&"Fantastic weather! Great year!"
+	&"{f6}":on fn r(12) goto {:continue_turn}, {:132}, {:152}, {:156}, {:140}, {:148}:goto {:continue_turn}
+{:132}
+	&"{f6:3}{rvrs on}{red} P L A G U E ! ! ! {pound}$l{gray1}Black Death has struck!{white}{f6:2}"
+	a%=fn r(sf/4):sf=sf-a%:&"{pound}%a serfs died.{f6}"
+	a%=fn r(wa/2):wa=wa-a%:&"{pound}%a soldiers died.{f6}"
+	a%=fn r(nb/3):nb=nb-a%:&"{pound}%a nobles died.{f6}":goto {:continue_turn}
+{:140}
+	&"{f6:3}{rvrs on}{red}Mount Apocalypse has erupted!{rvrs off}{pound}$l Lava wipes out:{lt. blue}{f6}"
+	a%=fn r(f%(2)/3):f%(2)=f%(2)-a%:&"{pound}%a markets.{f6}"
+	a%=fn r(f%(3)/4):f%(3)=f%(3)-a%:&"{pound}%a mills.{f6}"
+	a%=fn r(f%(4)/3):f%(4)=f%(4)-a%:&"{pound}%a foundries.{f6:2}":goto {:continue_turn}
+{:148}
+' TIDAL WAVE! xxx shipyards are under
+' water.
+	a%=fn r(f%(5)/2):f%(5)=f%(5)-a%:&"{f6:3}{pound}s1{blue}TIDAL WAVE!{pound}s0{pound}$l"
+	&"{pound}%a shipyards are under{pound}$lwater!{f6:2}":goto {:continue_turn}
+{:152}
+' Eeek! Rats eat xxx,xxx,xxx bushels of grain.
+	x=fn r(gr/3):gr=gr-x:&"{f6:3}Eeek! {green}Rats eat ":gosub {:sub.comma_value}
+	&" bushels of grain.{f6:2}":goto {:continue_turn}
+{:156}
+' fixme: correct message if last palace destroyed:
+	if fn r(100)<85 and f%(1)=0 and nb=0 then {:continue_turn}
+	f%(1)=f%(1)-1:nb=nb-1:&"{f6:2}{pound}s1{rvrs on}{pound}p4{brown}EARTHQUAKE!{pound}p0{f6}"
+	&"{orange}One of your Palace(s) was destroyed!{pound}$l1 noble was killed."
+
+' orphan line:
+'	&"{orange}10% of your Palace was destroyed!{f6}1 noble was killed.{f6}" ':return
+
+{:continue_turn}
+	&"{f6:2}{green}You have {lt. green}":x=la:gosub {:sub.comma_value}:& " {green}acres of land.":gosub {:276}:if tr%<1 then {:save_stats_quit}
+{:164}
+	wb=wc*3+12:on-(an$="B")-(an$="S")*2-(an$="C")*3 goto {:166}, {:176}, {:188}:gosub {:sub.request_your_status}:goto {:continue_turn}
+{:166}
+	gosub {:sub.barbarians_will}:&"sell their land for{white}"+str$(wb)+" {green}dollars an acre.":gosub {:272}:if tr%<1 then {:save_stats_quit}
+	bl=val(an$):if bl<1 then {:continue_turn}
+	if pn<(bl*wb)then gosub {:sub.you_only_have}:& str$(pn)+" dollars!":goto {:166}
+	pn=pn-(bl*wb):la=la+bl:&"{f6}{yellow}Bought!":goto {:188}
+{:176}
+	wb=int(wb/(int(la/875)+1))
+{:178}
+	gosub {:sub.barbarians_will}:&"buy your land for{white}"+str$(wb)+" {green}dollars"
+	&" an acre.":gosub {:274}:if tr%<1 then {:save_stats_quit}
+	sl=val(an$):if sl<1 then {:continue_turn}
+	if sl>la-1 then gosub {:sub.you_only_have}:& str$(la)+" acres!":goto {:178}
+	la=la-sl:pn=pn+(wb*sl):&"{f6}{yellow}Sold!"
+{:188}
+	&"{f6:2}{green}You have{white}"+str$(gr)+" {green}Bushels of grain.":gosub {:276}:if tr%<1 then {:save_stats_quit}
+	wb=int(6/wc):on-(an$="B")-(an$="S")*2-(an$="C")*3 goto {:192},{:204},{:214}:gosub {:sub.request_your_status}:goto {:188}
+{:192}
+	gosub {:sub.barbarians_will}:&"sell their grain for{white}"+str$(wb)+" {green}dollars a bushel."
+	gosub {:272}:if tr%<1 then {:save_stats_quit}
+	bg=val(an$):if bg<1 then {:188}
+	if pn<bg*wb then gosub {:sub.you_only_have}:& str$(pn)+" dollars!":goto {:164}
+	pn=pn-bg*wb:gr=gr+bg:&"{f6}{purple}Bought!":goto {:214}
+{:204}
+' are barbarinas barbarians who pirouette a lot?
+	wb=(int(1/wc)+1)/2:gosub {:sub.barbarians_will}:&"buy your grain for{white}"+str$(wb)+" {green}dollars a bushel."
+'	wb=(int(1/wc)+1)/2:&"{f6:2}{green}The Barbarinas will buy your grain for{white}"
+'											^^^^^^
+	gosub {:274}:if tr%<1 goto {:save_stats_quit}
+	sg=val(an$):if sg<1 then {:188}
+	if sg>gr then gosub {:sub.you_only_have}:& str$(gr)+" bushels!":goto {:204}
+	gr=gr-sg:pn=int(pn+(sg*wb)):&"{f6}{purple}Sold!"
+{:214}
+	x=int((la*wc+(rnd(1)*sf)*wc+gr*wc)/3):if x>(la+sf)*4 then x=(la+sf)*4
+	&"{f6:2}{lt. blue}This year's harvest is"+str$(x)+" bushels.{lt. blue}{f6}"
+	gr=gr+x:pl=1
+{:220}
+' new: return=max value
+
+' Your people require xxxxx bushels.
+' Give them how many?
+' (Return=50000): []
+	pr=sf*5+1:&"{f6}{lt. green}Your people require"+str$(pr)+" bushels.{f6}"
+	if gr<pr then pr=gr:gosub {:sub.so_many_bushels}
+	&"{f6}{cyan}Give them how many?{pound}$l({pound}$k="+str$(pr)+"){lt. blue}: ":if tr%<1 then {:save_stats_quit}
+' theoretically, return sets this value:
+	if an$="" then an$=str$(pr):&"{f6}(Giving {pound}v7 bushels.){f6}"
+	gp=int(val(an$)):if gp<. then {:220}
+' new: subroutined message
+	if gr<=. then gp=.:ga=.:goto {:no_grain}
+	if gp>gr then gosub {:sub.so_many_bushels}:goto {:220}
+' old: return sets pr:
+'	if gp=. and left$(an$,1)<>"0" then gp=pr
+	gr=gr-gp ' :&"{f6} :"+str$(gp)
+
+{:228}
+' Your army requires xxxxx bushels.
+' Give them how many?
+	ar=wa*10+1:&"{f6:2}{lt. green}Your army requires"+str$(ar)+" bushels.{f6}"
+' new: if you have fewer bushels, adjust accordingly:
+' wish: buy option here?
+	if gr<ar then ar=gr:gosub {:sub.so_many_bushels}
+	&"{f6}{cyan}Give them how many?{pound}$l({pound}$k="+str$(ar)+"){lt. blue}: {pound}i1"
+	if tr%<1 then {:save_stats_quit}
+' theoretically, return sets this value:
+	if an$="" then an$=str$(ar):&"{f6}(Giving {pound}v7 bushels.){f6}"
+	ga=int(val(an$)):if ga<. then {:228}
+	if gr<=. then ga=.:goto {:no_grain}
+	if ga>gr then gosub {:sub.so_many_bushels}:goto {:228}
+' old:
+'	if ga=. and left$(an$,1)<>"0"then ga=ar
+	gr=int(gr-ga):if gr<. then gr=.
+	goto {:236}
+
+{:no_grain}
+	&"{f6}{lt. red}You have no grain left!":goto {:236}
+
+{:236}
+	&"{f6:2}{cyan}Report: -->{white}This year{cyan}<--{f6}":gd=gp/pr:ad=ga/ar:pd=.
+	if gd<1 then pd=int(((pr-gp)/5)-int(rnd(1))*((pr-gp)/5+30))
+	pd=pd*abs(pd>.):on-(gd>.8 or gd>rnd(1))goto {:252}
+	&"{f6}{lt. blue}Your palace was ransacked by a horde of starving serfs!{f6:2}"
+	a=f%(2):gosub {:278}:f%(2)=a:a=f%(3):gosub {:278}:f%(3)=a:a=f%(4):gosub {:278}:f%(4)=a
+	a=f%(5):gosub {:278}:f%(5)=a:wa=.:pn=.
+	gr=.:af=1:nb=int(nb/2):la=int(la/2):sf=int(sf/2)
+'	dr=3:a$="e.empnews6,s,a":gosub 1011
+	gosub {:sub.title}:tt$="{gray1}"+d2$+"{lt. blue}"+na$+"'s {white}Empire was HALVED!"
+{:251}
+'	print#2,"{lt.blue}{white}"+d1$:print#2,a$:close 2:gosub {:sub.save_your_stats}:goto {:280}
+	gosub {:sub.log_event}:gosub {:sub.save_your_stats}:goto {:280}
+{:252}
+'	dn=int(rnd(1)*(sf/10)+20):bb=int(rnd(1)*(sf/12)+10):pi=fn r((sf/15)+20-tr+rnd(1)*(la/1000))
+'	pi=int(rnd(1)*(sf/15)+20-tr+rnd(1)*(la/1000))
+
+	dn=fn r((sf/10)+20):bb=fn r((sf/12)+10):pi=fn r((sf/15)+20-tr+rnd(1)*(la/1000)):j=1:&"Census:{f6:2}"
+'	&"{white}"+str$(pd)+" {lt. red}people starved.{f6}{white}"+str$(bb)+" {lt. red}babies were born.{f6}"
+'	&"{white}"+str$(dn)+" {lt. red}died naturally.{f6}{white}"+str$(pi)+" {lt. red}people immigrated."
+	&"{white}":x=pd:gosub {:sub.comma_value}:& " {lt. red}people starved.{f6}{white}":x=bb:gosub {:sub.comma_value}:& " {lt. red}babies were born.{f6}{white}"
+	x=dn:gosub {:sub.comma_value}:& " {lt. red}died naturally.{f6}{white}":x=pi:gosub {:sub.comma_value}:& " {lt. red}people immigrated.":j=0
+
+' {:256}
+'	tp=bb+pi-pd-dn:zn$="gained":iftp<0thenzn$="lost"
+	tp=bb+pi-pd-dn:z$="{lt. green}gained":if tp<. then z$="{lt. red}lost"
+	&"{f6:2}{cyan}Your empire {pound}$z ":x=abs(tp):gosub {:sub.comma_value}:& "{cyan}citizens.":sf=sf+tp
+	sf=sf*abs(sf>.):&"{f6}{cyan}New population: {white}":x=sf:gosub {:sub.comma_value}:& "{cyan}."
+'	af=.:if ga<ar then af=1
+	af=abs(ga<ar):if af then:&"{f6:2}{lt. blue}Your army is immobilized this year!"
+	goto {:280}
+{:272}
+'	&"{f6:2}{cyan}Buy how many? {lt. blue}":gosub 1006:on tr%+1 goto {:save_stats_quit}:return
+	&"{f6:2}{cyan}Buy how many? {lt. blue}{pound}i1":on tr%+1 goto {:save_stats_quit}:return
+{:274}
+	&"{f6:2}{cyan}Sell how many? {lt. blue}{pound}i1":on tr%+1 goto {:save_stats_quit}:return
+{:276}
+' B)uy  Y)our Stats  S)ell  C)ontinue
+' >> 
+	&"{f6}{cyan} B)uy   Y)our Stats  S)ell  C)ontinue{pound}$l{lt. green}>>{lt. blue}{pound}i1":return
+{:278}
+	a=a-int(rnd(0)*a):return
+{:280}
+	if rnd(1)*tr<25 or rnd(1)>.1 then {:288}
+' On the way back from the bank, you
+' were beaten unconscious by thieves!
+' They took xxx% of your cash...
+	a%=fn r(4)+2:&"{f6:2}{red}On the way back from the bank, you{pound}$l"
+	&"were beaten unconscious by thieves!{f6}"
+	&"They took {pound}%a% of your cash...{f6}":pn=pn-int(pn*(a%/100))
+{:288}
+	in$(1)="Soldier":in$(2)="Market":in$(3)="Mill":in$(4)="Palace":in$(5)="Foundry":in$(6)="Shipyard":in$(7)="Noble":in$(8)="Diplomat"
+	in$(9)="Ship":in(1)=10:in(2)=1000:in(3)=2000:gosub {:sub.price_adjust}:in(5)=7000:in(6)=8000:in(7)=25000:in(8)=50000:in(9)=5000
+{:296}
+	&"{f6:2}{cyan}Which investment?{pound}$l(0=None  ?=List  Y=Your Stats){f6}{lt. green}>>{lt. blue}{pound}i1":if tr%<1 then {:save_stats_quit}
+	gosub {:sub.normalize}:gosub {:sub.request_your_status}:if an$="{f2}" then gosub {:sub.invest_menu}
+	on -(an$="0" or an$="")-2*(an<1 or an>9) goto {:351},{:296}
+
+{:306}
+	&"{f6:2}{lt. blue}Investment: {red}"+in$(in)+".{f6}{lt. blue}Buy how many? {lt. green}{pound}i1":if tr%<1 then {:save_stats_quit}
+	bn=int(val(an$)):if bn<1 then {:296}
+	tc=bn*in(in):if tc>pn then:&"{red}":gosub {:sub.you_only_have}:&" ":x=pn:gosub {:sub.comma_value}:& " dollars!":goto {:306}
+	on in goto {:316},{:324},{:326},{:328},{:334},{:336},{:338},{:342},{:345}
+{:316}
+	if bn+wa>nb*20 then gosub {:sub.you_only_have}:x=nb:gosub {:sub.comma_value}:& " nobles!":goto {:296}
+	if bn+wa>(f%(4)+1)*100 then gosub {:sub.you_only_have}:x=f%(4):gosub {:sub.comma_value}:& " foundries!":goto {:296}
+	if bn+wa>sf/3 then {:388}
+	wa=wa+bn:sf=sf-bn:gosub {:350}:&str$(wa)+" "+in$(in)+"s.":goto {:296}
+{:324}
+	f%(2)=f%(2)+bn:gosub {:350}:&str$(f%(2))+" "+in$(in)+"s.":goto {:296}
+{:326}
+	f%(3)=f%(3)+bn:gosub {:350}:&str$(f%(3))+" "+in$(in)+"s.":goto {:296}
+{:328}
+	f%(1)=f%(1)+bn:gosub {:350}:&str$(f%(1))+" Palace(s),":nb=nb+bn*2
+	&"{f6}and"+str$(nb)+" nobles.":goto {:296}
+{:334}
+	f%(4)=f%(4)+bn:gosub {:350}:&str$(f%(4))+" "+in$(in)+"s.":goto {:296}
+{:336}
+	f%(5)=f%(5)+bn:gosub {:350}:&str$(f%(5))+" "+in$(in)+"s.":goto {:296}
+{:338}
+	if nb+bn<sf/100 then nb=nb+bn:gosub {:350}:&str$(nb)+" "+in$(in)+"s.":goto {:296}
+	&"{f6}{lt. blue}Your serfs are too few to support that{pound}$lmany nobles!":goto {:296}
+{:342}
+	if f%(6)+bn>3 then:&"{f6}{lt. green}You can only have 3 Diplomats at any time!{f6}":goto {:296}
+	f%(6)=f%(6)+bn:gosub {:350}:&str$(f%(6))+" "+in$(in)+"s.":goto {:296}
+{:345}
+	if bn+yc>(f%(5)+1)*50 then gosub {:sub.you_only_have}:& str$(f%(5))+" shipyards!":goto {:296}
+	yc=yc+bn:gosub {:350}:&str$(yc)+" "+in$(in)+"s.":goto {:296}
+'	goto {:351}
+{:350}
+	pn=pn-tc:&"{f6}{yellow}You now have":return
+
+{:388}
+	a%=sf/3-wa:&"{gray2}":gosub {:sub.you_only_have}:&" {pound}%a more male serfs of{pound}$lfighting age!{lt. blue}":goto {:296}
+
+{:sub.invest_menu}
+	&"{lt. green}{pound}f1{f6:2}  Investment Options{f6} {white}{pound}o{$af}{$af}{f6:2}":&"{yellow}{rvrs on}[1]{rvrs off}{white} Soldier{pound}{back arrow}20{green}$10{f6}"
+	&"{yellow}{rvrs on}[2]{rvrs off}{white} Marketplace  {green}$1,000{f6}":&"{yellow}{rvrs on}[3]{rvrs off}{white} Grain Mill   {green}$2,000{f6}":gosub {:sub.price_adjust}
+	&"{yellow}{rvrs on}[4]{rvrs off}{white} Palace{pound}{back arrow}20{green}${pound}v6{f6}":&"{yellow}{rvrs on}[5]{rvrs off}{white} Foundry{pound}{back arrow}20{green}$7,000{f6}"
+	&"{yellow}{rvrs on}[6]{rvrs off}{white} Shipyard{pound}{back arrow}20{green}$8,000{f6}":&"{yellow}{rvrs on}[7]{rvrs off}{white} Noble{pound}{back arrow}20{green}$25,000{f6}"
+	&"{yellow}{rvrs on}[8]{rvrs off}{white} Diplomat{pound}{back arrow}20{green}$50,000{f6}":&"{yellow}{rvrs on}[9]{rvrs off}{white} Ship{pound}{back arrow}20{green}$5,000{f6}":return
+{number:999}
+	rem +.emp6.trading

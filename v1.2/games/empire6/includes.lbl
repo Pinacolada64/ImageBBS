@@ -1,0 +1,68 @@
+-------------------------------------------------------------------------------
+                C64List (v3.03) Copyright 2012 by Jeff Hoag
+-------------------------------------------------------------------------------
+Reading file Empire6.lbl
+Loading C64 BASIC file from lbl formatted file: Empire6.lbl
+Auto line renumbering initiated at {:1}.
+Including BUILD-DATE_BASIC.LBL
+Warning: Line 1010 was referenced but it does not exist
+Warning: Line 1012 was referenced but it does not exist
+Warning: Line 801 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1001 was referenced but it does not exist
+Warning: Line 1001 was referenced but it does not exist
+Warning: Line 1812 was referenced but it does not exist
+Warning: Line 1001 was referenced but it does not exist
+Warning: Line 1027 was referenced but it does not exist
+Warning: Line 1027 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1360 was referenced but it does not exist
+Warning: Line 1004 was referenced but it does not exist
+Warning: Line 1902 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Load successful
+Saving in prg format: Empire6.prg
+File already exists: Empire6.prg ...replacing it
+
+----------line label assignments-----------------
+{assign:1=1}
+{assign:sub.load_lmp=5}
+{assign:sub.comma_value=10}
+{assign:2852=12}
+{assign:sub.normalize=15}
+{assign:sub.any_key=20}
+{assign:sub.open_playerlog=25}
+{assign:save_stats_quit=30}
+{assign:sub.save_your_stats=35}
+{assign:sub.load_your_stats=40}
+{assign:quit_game=45}
+{assign:quit_game_2=46}
+{assign:sub.other_rulers=50}
+{assign:58=54}
+{assign:64=57}
+{assign:sub.rank=60}
+{assign:sub.rank_2=64}
+{assign:484=65}
+{assign:486=66}
+{assign:sub.request_your_status=70}
+{assign:sub.your_status=71}
+{assign:sub.log_event=90}
+{assign:sub.read_config=92}
+{assign:init=100}
+{assign:start_turn=106}
+{assign:351=108}
+{assign:352=109}
+{assign:353=111}
+{assign:sub.title=115}
+{assign:412=119}
+{assign:414=120}
+{assign:416=121}
+{assign:420=123}
+{assign:422=124}
+{assign:700=125}
+-------------------------------------------------
+35 found label assignments
+
+Encountered: 0 Errors; 16 Warnings
+C64List finished.

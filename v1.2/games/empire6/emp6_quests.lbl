@@ -1,0 +1,6 @@
+{number:800}
+	+.emp6.quests - written by pinacolada
+	{uses:.\includes.lbl}
+	print "Quests not finished yet.":return
+{number:999}
+	+.emp6.quests - written by pinacolada

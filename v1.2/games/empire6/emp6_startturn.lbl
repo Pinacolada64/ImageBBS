@@ -1,0 +1,67 @@
+{uses:.\includes.lbl}
+{number:800}
+	rem +.emp6.startturn
+	goto {:begin}
+
+{:sub.main_menu}
+	&"{yellow}{pound}f1{f6:2}Empire Menu{f6}{white}{$af:13}{f6:2}"
+	&"{cyan}{rvrs on}[I]{rvrs off} {lt. green}Instructions{f6}"
+	if e9 then:&"{cyan}{rvrs on}[M]{rvrs off} {lt. green}Maintenance{f6}"
+' "Empire Records," perhaps? :)
+	&"{cyan}{rvrs on}[N]{rvrs off} {lt. green}Empire News{f6}"
+	&"{cyan}{rvrs on}[O]{rvrs off} {lt. green}Other Rulers{f6}"
+	&"{cyan}{rvrs on}[P]{rvrs off} {lt. green}Play Empire{f6}"
+	&"{cyan}{rvrs on}[T]{rvrs off} {lt. green}Town Activities{f6}"
+	&"{cyan}{rvrs on}[Y]{rvrs off} {lt. green}Your Stats{f6:2}"
+	&"{cyan}{rvrs on}[Q]{rvrs off} {lt. green}Quit Game{f6}"
+	return
+
+{:begin}	
+	if g3=peek(900) and peek(899)>4 and e9<1 then {:90}
+	if g3<>peek(900) then poke 900,g3:poke 901,.:poke 899,.
+{:402}
+	tz=0:i1=f%(1):i2=f%(2):i3=f%(3):i4=f%(4):i5=f%(5):i6=f%(6)
+	if i2>9 and i6>0 and i3>5 and i4>1 and i5>1 and i1>2 and(la/sf>5.1)and nb>15 and sf>3000 then tz=1
+	if i2>15 and i3>9 and i6>2 and i4>6 and i5>4 and i1>6 and(la/sf>10.5)and sf>3500 and nb>30 then tz=2
+{:650}
+	gosub {:sub.read_config}:if mp=0 and la>ln then gosub {:416}
+'	a$="e.emp6 config,s,r":dr=3:gosub 1011
+'	input# 2,ln$:input# 2,mp$:ln=val(ln$):mp=val(mp$)
+'	close 2:close 15
+	
+	if i2>23 and i3>9 and i6>2 and i4>13 and i5>11 and i1>9 and(la/sf>23.4)and sf>5499 and b>62 then gosub {:416}
+	gosub {:sub.title}:ty=tz:return
+'	on -(tz=3) gosub {:700}:on -(bn=1) goto {:41}:ff=.:vg=.:if z8=. or z8=2 then {:town}
+
+{:main_prompt}
+	z8=.:ff=.:vg=.:gosub {:sub.title}:&"{f6:2}{lt. green}Your command, {gray1}{pound}v8{lt. blue}{pound}v2?{lt. green}>>{lt. blue}{pound}i1":if tr%<1 then {:save_stats_quit}
+	gosub {:sub.request_your_status}
+' q)uit, c)ontinue / p)lay, t)own
+	on -(an$="Q")-2*(an$="C" or an$="P")-3*(an$="T") goto {:save_stats_quit},{:110},{:town}
+'	on -(an$="T")-2*(an$="M") goto {:38},{:108},{:420}
+' o)ther rulers, n)ews, i)nstructions, ? (help)
+	on -(an$="O")-2*(an$="N")-3*(an$="I")-4*(an$="{f2}") gosub {:sub.other_rulers},{:92},{:104},{:sub.main_menu}
+' new: r)eset empire is in m)aintenance now
+' e9: maintenance flag
+	if e9 then if an$="M" then {:420} 'a$="maint":gosub {:sub.load_lmp}
+	goto {:main_prompt}
+
+{:town}
+	&"{f6:2}Go to town? ":gosub 1902:if a=. then {:main_prompt}
+{:108}
+' load mini-module:
+	&"{f6:2}{purple}Heading to the town...":a$="town":gosub {:sub.load_lmp}:goto {:main_prompt}
+
+{:90}
+	&"{f6:2}{red}The other rulers unite their forces{pound}$lagainst you for hogging the game!{pound}w3":goto {:quit_game}
+{:92}
+	&"{f6:2}{white}Fight News -->{f6:2}":a$="e.empnews6":dr=3:gosub 1076:&"{cyan}--> More updates later.{f6}":return
+
+{:104}
+' read empire help file:
+	dr=1:a$="s.empdocs6":gosub 1075
+
+{:110}
+	return
+{number:999}
+	rem +.emp6.startturn

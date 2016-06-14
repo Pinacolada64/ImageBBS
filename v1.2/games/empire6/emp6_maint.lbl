@@ -1,0 +1,160 @@
+{number:800}
+	rem +.emp6.maint
+{:512}
+	{uses:.\includes.lbl}
+
+	&"{pound}f1{cyan} Empire 6 Maintenance {f6}{pound}vj"
+'	&" {pound}k1Call Utopia ][ 702-735-6787 24 Hours{pound}k0"
+	&"{purple}Options:{white}{f6:2}"
+	&"(D) Auto-Reset & Credit/Money Exchange{f6}"
+	&"(E)dit Player's Profile{f6}"
+	&"(L)ist Players{f6}"
+'	&"(P)lay Empire{f6}"
+	&"(R)eset Empire{f6}"
+	&"(S)cratch News{f6:2}"
+	&"(Q)uit{f6:2}"
+{:prompt}
+	&"{lt. red}Choice? {pound}i1":if tr%<1 then 1811
+	on-(an$="E")-2*(an$="R")-3*(an$="S")-4*(an$="D") goto {:530},{:730}, {:875}, {:600}
+	if an$="Q" then return ' returns back to main module
+	if an$="L" then gosub {:sub.other_rulers}
+	goto {:prompt}
+{:530}
+	x=.:gosub {:sub.open_playerlog}
+	gosub 1012:&"{f6}Type lowercase {f5}empty[f5} to ADD player,{pound}$lotherwise type name in CAPITALS.{f6:2}Player's Name? {pound}i0":if tr%<1 then 1811
+	nn$=an$:j=0:if an$=""then {:512}
+{:535}
+	x=x+1:gosub 1001:&".":&,2,2:on -(a$=nn$)-2*(x<24) goto {:550},{:535}
+	&"{f6}Player not found.{pound}w2":goto {:512}
+{:550}
+	g3=x:j=j+1:on -(j>16) goto {:551}:input# 2,dt$(j):goto {:550}
+{:551}
+	close 2:kk=.
+{:572}
+	&"{pound}f1 Profile of #"+str$(x):if kk then:&" (Modified)"
+	&"{f6:2} 0) Name     : "+nn$
+	&"{f6} 1) Land     : "+dt$(1)
+	&"{f6} 2) Soldiers : "+dt$(2)
+	&"{f6} 3) Serfs    : "+dt$(3)
+	&"{f6} 4) Nobles   : "+dt$(4)
+	&"{f6} 5) Grain    : "+dt$(5)
+	&"{f6} 6) Tax Rate : "+dt$(6)
+	&"{f6} 7) Dollars  : "+dt$(7)
+	&"{f6} 8) Palace   : "+dt$(8)
+	&"{f6} 9) Markets  : "+dt$(9)
+	&"{f6}10) Mills    : "+dt$(10)
+	&"{f6}11) Foundries: "+dt$(11)
+	&"{f6}12) Shipyards: "+dt$(12)
+	&"{f6}13) Diplomats: "+dt$(13)
+	&"{f6}14) Ships    : "+dt$(14)
+	&"{f6}15) Colonies : "+dt$(15)
+	&"{f6}16) Training : "+dt$(16)
+{:585}
+' kk=modified flag
+	&"{f6:2}Edit which #? {pound}i1":on -(tr%<1)-2*(an$<>"") goto 1811:if an$="" and kk=0 then {:512}
+' improving editor a bit:
+	if an$="" then:&"{f6}Save changes? ":gosub 1902:on -(tr%<1)-2*(a=.)-3*(a=1) goto 1811,{:512},{:716}
+	r=val(an$):if r>16 then {:585}
+	if r=. {:593}
+'	kk=1:&"{f6}Enter new value for "+an$+":":gosub 1006:on tr%<1 goto 1811:dt$(r)=an$:goto {:572}
+' new: see previous value
+' new: only set kk if value actually changed:
+
+' w$=na$:p$="handle":&,1,32:if an$<>"" then na$=an$
+
+	w$=dt$(an):p$="New value":&,1,32:on tr%+1 goto 1811:if an$<>"" then dt$(r)=an$:kk=1
+	goto {:572}
+{:593}
+' fix modification status, check for duplicate:
+	&"{f6}Type 'empty' lowercase and zero stats{f6}to DELETE player, otherwise use shift{f6}key.{f6:2}"
+	w$=nn$:p$="Name":&,1,32:on tr%+1 goto 1811:if an$<>"" then nn$=an$:kk=1
+	goto {:572}
+
+{:600}
+	&"{pound}f1{f6:2}Set both to {f5}No{f5} to disable auto-reset."
+' new: change to yes/no
+	&"{f6:2}Emperor status? ":gosub 1902:if tr%<1 then 1811
+	mp$=str$(a):if a=. then ln$="0":goto {:609}
+	&"{f6}How many acres? {pound}i1":gosub {:sub.normalize}:if tr%<1 then 1811
+	ln$=str$(an)' :gosub {:609}
+
+{:609}
+' new: change to yes/no
+	&"{f6:2}Allow BBS credit/money exchange? ":gosub 1902:if tr%<1 then 1811
+	en$=str$(a):if a=. then nn$="0":goto {:maint_700}
+{:credit}
+	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.normalize}:on -(an<1 or an>100) goto {:credit}:nn$=str$(an)
+'	return
+{:maint_700}
+' ln$ - auto-reset acres requirement:
+'	0=disabled
+'	x=# of acres
+' mp$ - auto-reset if emperor:
+'	0=no, 1=yes
+' en$ - credit/money exchange enabled:
+'	0=no, 1=yes
+' nn$ - if credit/money exchange enabled:
+'	1-100: credits per dollar
+
+	a$="e.emp6 config":dr=3:gosub 1023
+	print# 2,ln$+r$+mp$+r$+en$+r$+nn$
+	close 2:close 15:goto {:512}
+
+{:716}
+' write player account:
+'	c$=chr$(13): r$ is defined in IM already
+	w$=nn$+r$+dt$(1)+r$+dt$(2)+r$+dt$(3)+r$+dt$(4)
+	w$=w$+r$+dt$(5)+r$+dt$(6)+r$+dt$(7)+r$+dt$(8)+r$+dt$(9)
+	w$=w$+r$+dt$(10)+r$+dt$(11)+r$+dt$(12)+r$+dt$(13)+r$+dt$(14)+r$+dt$(15)
+	w$=w$+r$+dt$(16)
+	x=1:gosub {:sub.open_playerlog}:x=g3:gosub 1001:print# 2,w$:close 2:goto {:512}
+
+'{:724}
+'	&"{pound}f1(Space=abort){f6}Players/Acres{f6:2}":x=1:gosub {:sub.open_playerlog}:x=1
+'{:725}
+'	gosub 1001:input# 2,c$,b$:if c$="empty"then {:727}
+'	&"{f6}#"+right$(" "+str$(x),2)+" "+c$+"/"+b$+"{f6}"
+'{:727}
+'	mw=1:a$="":&:if rc then&"{f6}(Aborted.){f6}":x=25
+'	x=x+1:on-(x<24)goto {:725}:close 2:&"{f6}Hit a Key.{pound}g1":goto {:512}
+
+{:730}
+	&"{f6:2}{yellow}Reset Empire, ":gosub 1901:on tr%<1 goto 1811:if a=. then {:512}
+{:732}
+	gosub {:sub.open_playerlog}:if e% then:&:goto {:512}
+{:900}
+	gosub 1012:if e% then:&
+	lp=1:return
+
+	for x=1 to 24:x%=x:&"{pound}#3{pound}%x":gosub 1001
+	print# 2,"empty"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"
+	&"{pound}h3":next:close 2:&"Done.":goto {:512}
+
+' from Empire6.lbl (reset empire)
+' {:38}
+' check for sysop access:
+' why not load +.emp6.maint instead?
+'	&"{f6:2}{yellow}Reset game?: ":gosub 1902:if a=0 then {:106}
+' ask are you sure:
+'	gosub 1901:if a=0 then {:106}
+'{:41}
+'	w$="empty"+r$+"0"
+' todo: log to e.errlog:
+' todo: check if it exists first:
+'	a$="e.empire6,l,"+chr$(100):dr=3:gosub 1011:if e% then close 2:&"Disk status: "+a$:lp=1:goto 1812
+'{:46}
+'	for x=1 to 24:gosub 1001:print# 2,w$:next:close 2:goto 1812
+
+'{:800}
+'	a$="e.empire6,l,"+chr$(100)
+'{:850}
+'	dr=3:goto 1011
+{:875}
+	dr=3:a$="e.empnews6":gosub 1023:close 2:goto {:512}
+
+' this probably won't work anymore since LMPs have to RETURN
+' {:880}
+'	&"{f6:2}{cyan}Heading to the Empire....":&,28:dr=5:a$="emp6.startup":goto 1067
+
+{number:999}
+	rem empire 6 maintenance module - mercilessly hacked by pinacolada
