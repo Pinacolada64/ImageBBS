@@ -1,0 +1,29 @@
+Image BBS 2.0
+IM line number translation:
+
+
+5/6/1996  9/21/1994
+  jlf	  new image software
+   :      :
+1	1001	Position REL pointer
+2		Get device/drive of system drive 'dr'
+4	1011	Open file 'a$'
+5	1012
+6	1006	input uppercase an$
+7	1007	get uppercase an$
+8		remove
+9	1360	display 'an$' in Area window
+10	1002	position REL pointer
+11	1004	Get user flag 'a' in fl$
+19		Scratch a$
+20-27		remove
+28-29		Load protocol 'a'
+35	1065
+	109
+370	1870	"b$: O[ff|n]"
+	1871	Get user flag 'b', gosub 1870, toggle flag 'b'
+	1900	Prompt for +.file to load, run if found
+	1901	"Are you sure? "
+	1902	Display "Yes" or "No"
+12	1904	Reset output defaults
+	1915	Display time left
