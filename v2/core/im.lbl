@@ -37,6 +37,7 @@
 {:1024}
 	gosub{:1010}:print# 15,"s"dr$a$:return
 {:1025}
+' x-tec removed "gosub 1001" here - lets SB/WF/VF save now
 	gosub{:1001}:input# 2,st(x):st(x)=st(x)+i
 {:1026}
 	gosub{:1001}:print# 2,st(x):return

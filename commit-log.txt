@@ -66,3 +66,10 @@ asm docs.txt:
 - added .gitignore file
 - added some source code
 - added +.CP-modded (needs some work)
+
+19/Jun/2016 10:43
+Renumbered +/GF-maint, fixed IM call
+
+Renumbered from 3000- to 4000-, changed "gosub 3" to "gosub 1902" (for yes/no questions)
+- turn MN mode (graphic menu) on, alter access level from lightbar, change to a=9, then /z appears in GF
+- load +/GF-maint OK, crashes with ?bad subscript in 4415 when selecting "Prompt"

@@ -6,24 +6,47 @@ IM line number translation:
   jlf	  new image software
    :      :
 1	1001	Position REL pointer
-2		Get device/drive of system drive 'dr'
-4	1011	Open file 'a$'
-5	1012
+2	1010	Get device/drive of system drive 'dr'
+3		Close/reopen command channel
+4	1011	Open file 'a$' on logical file# 2
+5	1012	check error channel
 6	1006	input uppercase an$
 7	1007	get uppercase an$
 8		remove
 9	1360	display 'an$' in Area window
 10	1002	position REL pointer
 11	1004	Get user flag 'a' in fl$
+12		Reset MCI defaults?
+13	1075	Clear screen...
+14	1076	...and read file in a$
+15		close logical file #2
+16	1025	read/increment Board Activity Register stat #i
+17		write stat #i back to e.stats
+18		scratch and rewrite SEQ file a$
 19		Scratch a$
-20-27		remove
-28-29		Load protocol 'a'
-35	1065
-	109
+20-27	---	remove
+28-29	---	Load protocol '++ a$'
+30		Open "e.stats"
+31		Open "e.access"
+32		Open mail file, handle in a$
+33		open "e.data"
+34		&,52,$2e,3 Automaintenance active/logging related
+35	1065	open "u.config"
+36		Append or write "e."+b$
+37		Append or write "e."+b$
+38		Write user data to lfn#2
+
+40-47	---	Redirect to 440-447
+50		Check if instant logon used
 370	1870	"b$: O[ff|n]"
 	1871	Get user flag 'b', gosub 1870, toggle flag 'b'
 	1900	Prompt for +.file to load, run if found
-	1901	"Are you sure? "
-	1902	Display "Yes" or "No"
+95	1901	"Are you sure? "
+96	1902	Display "Yes" or "No"
 12	1904	Reset output defaults
 	1915	Display time left
+
+440		Load editor
+
+Al's "+/GF-maint":
+3	1902	Yes/no questions

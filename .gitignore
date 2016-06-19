@@ -1,8 +1,11 @@
 # exclude EditPad Pro __history folder:
-__history/
+__history/*
 
 # exclude disk images:
 *.[dD](64|71|81)
 
-# exclude *.prg:
+# exclude C64 binaries:
 *.prg
+
+# exclude backup files:
+*.bak
