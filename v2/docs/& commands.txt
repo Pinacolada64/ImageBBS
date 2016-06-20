@@ -1,0 +1,224 @@
+& commands
+----------
+most explained in jmptb.s / calls.s
+Last updated 25/Dec/2008 16:43
+5/Jun/2015 14:08
+
+&[,0]	out a$
+&,1	inline
+&,2,x	disk file input (x=channel #)
+&,3,x	read file from disk, x=logical file #
+&,4	get byte from modem
+&,5	get version
+&,6	password input
+
+&,7,<device>[,segment] - load file
+	dskio.s has segment info:
+		 0: 0		Undefined?
+		 1: 0		"        "
+		 2: protosta	"++ menu 2"
+		 3: 0		Undefined?
+		 4: 0		"        "
+		 5: imstart
+		 6: imstart
+		 7: pmodetbl	e.printmodes
+		 8: bartbl	e.lightbar
+		 9: alarmtb	e.alarms
+		10: tblatc	(ascii -> c=?)
+		11: tblcta	(c= -> ascii?)
+		12: netalrm
+		13: wedgemem
+
+&,8,x,y	disk directory
+	open2,10,2,"0:$"
+	&,8,2,y (x=lfn 2,y=flag: 0=entire directory, 1=single line [assuming similar to Image 1.2])
+	puts result in a$
+
+&,9,x
+&,9[,0]	print an$ to status window
+&,9,1	print a$  to status window
+&,9,2   print b$  to status window
+&,9,4	looks like d1$
+	(x seems to follow the variable table definitions of Image 1.2)
+
+&,10	terminal program (CTRL + C= gets out)
+&,11,x	clear array
+&,12	newuser (nonabortable file read?)
+&,13	inchr
+&,14,x,y	dumparray (x=array #, y=# of elements: im#39)
+
+&,15[,0]:&an$ displays verbose date
+&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
+	Changes all uppercase to mixed case
+&,15,2	converts encoded f-key characters into readable characters
+
+&,15,6,140 [line 312 of im, unsure of purpose]
+
+&,16	sys49152
+&,17	sys49155
+&,18	setmode (screen mask)
+&,19	get version
+&,20	get version
+&,21	get version
+&,22,x	tenwait [x=tenths of a second]
+&,23	xgetin
+&,24	xchrout1
+
+&,25,x,y
+	[y=# of times to repeat]
+&,25,0  beep
+&,25,1	ding
+&,25,2	higher pitched ding
+&,25,3	gong sound from ccgms!
+
+&,26	callmod
+&,27,x	save variable pointers		(x=level, see "Image 2.0
+&,28,x	restore variable pointers	Facts vs. Fiction")
+&,29	usevar
+&,30	putvar
+&,31	zero
+&,32	minusone
+&,33	getarr
+&,34	putarr
+&,35	getln
+&,36	putln
+&,37	trapon
+&,38	trapoff
+&,39	prtln
+&,40	forcegc
+&,41	setbaud
+
+&,42	ecs
+&,42,1	apparently kills ECS defs in memory (through experience)
+&,42,4	seen in line 3106 of IM
+
+&,43	chatchk
+&,44	trace
+&,45	prtvar	[MCI on?]
+&,46	prtvar0 [MCI off?]
+&,47	carchk
+&,48	getkbd
+&,49	getmod
+&,50	outscn
+&,51	outmod
+&,52,x,y	(&,52,$hex,y allowed)
+	chkflags
+&,53	logoff
+&,54	useeditr
+&,55	output
+&,56	chatmode
+&,57	relread
+	Reads until EOF! Nice.
+
+&,58,x,y
+	setalarm
+&,59	farerr
+&,59,1,a	i.CP
+&,60	struct
+
+	PutStruc: put string into structure
+	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+	Example:&,60,0,11,lm%(2,x),a$
+		&,60,0,16,lm%(8,x),b$
+	
+	GetStruc: get string from structure
+	Usage:	&,60,1,<#_of_bytes>,array(a,b),string$
+	Example:
+	
+	LoadStruc: load structure from disk
+	Usage:	&,60,2,0,array(a,b),"<filename>",<device>
+	Example:&,60,2,.,lm%(.,.),dr$+"e.loginmods",dv%:gosub5
+	
+	SaveStruc: save structure
+	Usage:	&,60,3,0,array(a,b),<bytes>,"<filename>",<device>
+	Example:&,60,3,.,lm%(.,.),1271,a$,dv%
+		&,60,3,.,fb%(.,.),960,a$,dv%
+	
+	PutDate: put date string into structure (BCD)
+	Usage:	&,60,4,array(a,b),<string>
+	
+	GetDate: get date string from structure (BCD)
+	Usage:	&,60,5,array(a,b),<string>
+	
+	DoScan: Scan structures (yikes)
+	Usage:	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
+	<number>	# of structures to scan
+	<command>
+			0	2 byte AND, <>0
+			1	2 byte AND, ==0
+			2	2 byte CMP, <
+			3	2 byte CMP, >=
+			4	date   CMP, <
+			5	date   CMP, >=
+	<a(a,b)>	starting flags element
+	<b(a,b)>	starting object element
+	<l>		unknown
+	<bits>		the bits to set if true
+	<test>		the object to test for
+		ilen	1	$61
+		istr	2	$62
+
+		from i.UD:
+	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	
+	sort
+		(assuming &,60,7 at least)
+		no syntax info that I can see
+	
+	scannums
+	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
+	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:ifa%=.thenreturn
+		(sub.menus)
+	
+	scansum
+	Usage:	&,60,9,num,siz,a(a,b)
+	
+	cpystruc
+	Usage:	&,60,10,size,a1(a,b),a2(a,b)
+	
+	scanstr
+	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
+	
+	gamescan
+	Usage:	&,60,13,count,size,a$,a%(a,b),b$
+
+
+&,61,x,y
+	poscrsr
+&,62,b,c
+	settim
+&,63	inline1
+&,64	convstr
+&,65	convert
+&,66	calcgoto
+&,67	copyrite
+&,68	struct
+&,69	dispstr
+
+	&,69,<column>,<row>,<text>,$8c or 1 ($8x = reverse color x)
+	&,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
+	sub.display is a good example of this
+	a$="display":gosub74
+	im=1-5:gosub60000
+
+&,70	cursposn
+	&,70,.,n/2+8.5:&"{white}"
+
+&,71	cursmenu
+
+"menu.s" is source for ++ 2 (cursor menu)
+	(from source:)
+; 0 - # entries
+; 1 - item type character
+;2,3- item value
+;4,5- credits to charge
+;6,7- access
+;8-39 - text
+	(must refer to bytes in struct)
+
+	(from i.IM)
+&,16,.,34,m%(.,1),"A","","*Macros Editor"
+
+&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.
+
+lm=a%+1 [return value?]

@@ -1,0 +1,83 @@
+LIGHTBAR.TXT
+
+Last updated 25/Dec/2008 16:58
+5/Jun/2015 13:19
+
+e.lightbar,p - loads directly into screen memory regardless of start address, contains text of lightbar options
+(offset 8)
+
+&,52,<position>,<mode>
+
+<mode>:
+1=set
+2=clear
+3=read, return status in a%: 0=off, 1=on
+4=move like in 1.2a? 1-
+
+f2 2 mhz mode on 128 in 64 mode
+	(JiffyDOS must be disabled first)
+f4 page backward through lightbar pages
+f6 page forward through lightbar pages
+8 pages
+
+			Page 1
+
+00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
+ Sys   Acs   Loc   Tsr   Cht   New   Prt   U/D
+
+(Going from 1.2 lightbar)
+Sysop available          0 Sys 1    Trace mode on
+Change access            2 Acs 3    Block 300 baud users
+Local logon              4 Loc 5    Pseudo-local mode
+Alter time               6 Tsr 7    Toggle prime time
+Enter chat               8 Cht 9    Toggle local bells
+Private system          10 New 11   Disable screen blanking
+Print output            12 Prt 13   Print log entries
+Close U/Ds              14 U/D 15   No 300 baud callers
+
+&,52,4,3	im: check for true local mode (at console)
+&,52,5,3    im:220 check pseudo-local mode
+&,52,7		prime time enabled
+&,52,13,3   im:52 print log entry
+ 
+			Page 2
+
+16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
+ Asc   Ans   Exp   Unv   Trc   Bel   Net   Mac
+
+v1.2(a):
+ASCII translation on    16 Asc 17   Linefeeds on
+ANSI graphics on        18 Ans 19   IBM graphics on
+Expert mode on          20 Exp 21   Main prompt macros on
+Credit when
+  file validated        22 Fn5 23   Log off after file transfer complete
+Undefined in stock BBS  24 Fn4 25   Undefined in stock BBS
+Undefined in stock BBS  26 Fn3 27   Undefined in stock BBS
+Undefined in stock BBS  28 Fn2 29   MCI off
+Undefined in stock BBS  30 Fn1 31   Undefined in stock system
+
+&,52,17,lf  im:200 Linefeeds
+&,52,20,em	expert mode
+&,52,21,3	set=no back to back calls allowed
+&,52,30		macro sayings on
+
+v2.0:
+x Trc	engages trace mode
+x Bel	engages local bells	
+x Mac	reads e.macros file
+
+Page 3
+
+32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+ $20   $22   $24   $26   $28   $2a   $2c   $2e
+
+x $20   im: Mail check at login allowed
+x $22   More prompt		
+  $24 x	i.lo:3052 checks nl & this checkmark, if set, adds + to end of filename
+x $27   i.GF: temporarily close an area
+x $2c   Graphic Menu available
+  $2c x Graphic Menu enabled
+
+x $2e
+i.lo    Express login allowed?	
+im:34   AutoMaintenance related
