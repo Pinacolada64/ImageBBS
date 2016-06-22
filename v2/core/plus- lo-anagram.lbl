@@ -1,0 +1,48 @@
+	POKE 53252,30:&"{f6:2}{gray3}{$d0}LAY {$c1}NAGRAMS? ":GOSUB 1907:ON A+1 GOTO 1603
+	C%=25:D%=C%+5:IF CR<D%THEN:&"{f6:2}{$d9}OU HAVE INSUFFICIENT CREDITS TO PLAY."
+	IF CR<D%THEN:&"{f6}{$d9}OU MUST HAVE {pound}%D CREDITS.{pound}W2":RETURN
+	GOSUB{:4052}:J=LEN(Z$)
+	FOR I=1 TO J:TT$(I)=MID$(Z$,I,1):NEXT
+{:4010}
+	FOR I=1 TO J:D%(I)=.:C%(I)=.:NEXT:FOR I=1 TO J
+{:4012}
+	K=INT(RND(1)*J)+1:IF C%(K)<>.THEN{:4012}
+	IF D%(I)=.THEN D%(I)=K:C%(K)=1
+	NEXT:T$="":FOR I=1 TO J:T$=T$+TT$(D%(I)):NEXT:IF T$=Z$THEN{:4010}
+	GOSUB 2040
+	&"{clear}{f6:2}{pound}$Q{gray3}    {rvrs on}{$c1}NAGRAMS      {f6}{pound}$Q{white}{$c2}Y: {gray3}{rvrs on}{$d0}ORT {$c3}OMMODORE{f6}{pound}$Q    {rvrs on}(801-423-2734)"
+	DR=1:A$="S.ANAGRAM":GOSUB 1076
+	&"{f6:2}{pound}$Q{$d3}OLVE? ":GOSUB 1907:IF A=.THEN RETURN
+	T=.:N%=N%+1
+{:4028}
+	&"{f6}{pound}$Q{yellow}{rvrs on}":FOR I=1 TO J:&TT$(D%(I)):&" ":NEXT
+	&"{f6:2}{pound}$Q{lt. green}{$d3}OLUTION? {pound}I1":ON TR%+1 GOTO{:4042}:IF AN$=Z$THEN{:4044}
+	IF T THEN:&"{f6:2}{pound}$Q{$d3}ORRY, BETTER LUCK NEXT TIME":GOTO{:4042}
+	IF AN$="{f2}"THEN{:4040}
+	IF AN$=""OR AN$="{$d1}"THEN{:4042}
+	&"{f6:2}{pound}$Q{$d3}ORRY, TRY AGAIN? ":GOSUB 1902:ON A+1 GOTO{:4042}:T=1:GOTO{:4028}
+{:4040}
+	&"{f6:2}{pound}$Q":&Z$:CR=CR-D%:GOTO{:4060}
+{:4042}
+	CR=CR-C%:GOTO{:4060}
+{:4044}
+	M%=100:IF T THEN:M%=25:W%=W%+1
+	IF T<1 THEN R%=R%+1
+	&"{f6:2}{pound}$Q{$c3}ONGRATULATIONS, YOU WIN {pound}%M CREDITS!":CR=CR+M%
+	A$=" {yellow}{$c1}NAGRAM WINNER {pound}%M CREDITS{lt. green}":GOSUB 1095:GOTO{:4060}
+{:4052}
+	A$="E.ANAGRAM":DR=3:GOSUB 1011:IF E%THEN{:4064}
+{:4054}
+	X=1:GOSUB 1001:&,2,2:A=VAL(A$):X=INT(RND(1)*A)+2:FD=X
+	GOSUB 1001:INPUT# 2,Z$,N%,R%,W%:IF LEN(Z$)<2 THEN{:4054}
+	CLOSE 2:RETURN
+{:4060}
+	W$="":W$=Z$+R$+STR$(N%)+R$+STR$(R%)+R$+STR$(W%)
+	A$="E.ANAGRAM":DR=3:GOSUB 1011:X=FD:GOSUB 1001:PRINT# 2,W$:CLOSE 2:RETURN
+{:4064}
+	A=10
+	TT$(1)="{$c3}{$c8}{$c1}{$cc:2}{$c5}{$ce}{$c7}{$c5}{$d2}":TT$(2)="{$c8}{$c5}{$d2}{$c3}{$d5}{$cc}{$c5}{$d3}":TT$(3)="{$c3}{$d2}{$cf}{$c1}{$d4}{$c9}{$c1}"
+	TT$(4)="{$d4}{$c5}{$cc}{$c5}{$d0}{$c8}{$cf}{$ce}{$c5}":TT$(5)="{$c4}{$c9}{$d3}{$c3}{$cf}{$d6}{$c5}{$d2}{$d9}":TT$(6)="{$c5}{$cc}{$c5}{$d0}{$c8}{$c1}{$ce}{$d4}":TT$(7)="{$c4}{$c9}{$c3}{$d4}{$c9}{$cf}{$ce}{$c1}{$d2}{$d9}"
+	TT$(8)="{$c3}{$d2}{$cf}{$c9}{$d3}{$c1}{$ce}{$d4}":TT$(9)="{$c5}{$ce}{$d4}{$c5}{$d2}{$d0}{$d2}{$c9}{$d3}{$c5}":TT$(10)="{$c2}{$c1}{$d4:2}{$cc}{$c5}{$d3}{$c8}{$c9}{$d0}"
+	I=INT(RND(1)*A)+1:Z$=TT$(I):RETURN
+	REM ON.ANAGRAM BY PORT COMMODORE

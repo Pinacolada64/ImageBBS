@@ -174,6 +174,7 @@
 	&,40
 	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
 	a=ca:b=5:c=2:gosub{:1370}:a=cn:b=3:c=10:goto{:1370}
+{number:1375}
 	a$=co$(co%):co$=a$
 {:1376}
 	an$=a$:&,9:return

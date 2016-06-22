@@ -1,0 +1,15 @@
+	&,28,1:DIM A%(99):GOSUB{:4002}:&,28,1:GOTO 300
+{:4002}
+	POKE 53252,3:&"{f6}{$ce}ETSUB #: {pound}I1":IF AN$=""THEN RETURN
+	N=ABS(INT(VAL(AN$))):DR=2:GOSUB 3:O$=DR$+"NM.NETSUB"+STR$(N)
+	&,60,2,0,A%(0),O$,DV%:GOSUB 5:IF E%THEN:&:GOTO{:4002}
+	TZ=1:&,60,1,30,A%(0),B$:&,60,1,48,A%(15),C$
+{:4010}
+	&"{clear}{$ce}ETSUB {pound}!N: {pound}$B{f6:2}":FOR I=0 TO 15:A$=MID$(C$,I*3+1,3)
+	D$=CHR$(193+I):&"{pound}$D) {pound}$A  ":NEXT:&"{f6:2}{$cf}PTION? {pound}G1{pound}V7{f6}"
+	IF AN$>="{$c1}"AND AN$<="{$d0}"THEN GOSUB{:4018}:GOTO{:4010}
+	ON TZ GOTO{:4002}:PRINT# 15,"S"O$:&,60,3,0,A%(0),198,O$,DV%:GOSUB 5:&:GOTO{:4002}
+{:4018}
+	A=ASC(AN$)-193:IF A<0 OR A>15 THEN RETURN
+	W$=MID$(C$,A*3+1,3):P$="{$cc}INK TO":POKE 53252,3:&,1,32:IF LEN(AN$)<>3 THEN RETURN
+	C$=LEFT$(C$,A*3)+AN$+MID$(C$,A*3+4):&,60,0,48,A%(15),C$:TZ=0:RETURN

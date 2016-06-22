@@ -1,0 +1,19 @@
+	REM - NEWS MODULE  11-26-94
+	CM$="{$ce}EWS":GOSUB 1360:KK=.:B=.:T=.:DR=4:A$="D.N.{$cd}AIN,S,R":GOSUB 1011
+	ON SGN(E%)GOTO{:4026}:INPUT# 2,B:IF B<1 THEN{:4026}
+	T=.:FOR X=1 TO B:INPUT# 2,ED$(X),NN$(X),D%(X):D%(X)=D%(X)*-((D%(X)AND 2^AC%)<>.)
+	IF D%(X)THEN T=T+1:ED$(T)=ED$(X):NN$(T)=NN$(X):C%(T)=D%(X)
+	NEXT:CLOSE 2:IF T=.THEN{:4026}
+	FOR I=1 TO T:SH=.:C$="{$ce}EW {$ce}EWS":F2=-(MID$(NN$(I),2)<MID$(D5$,2))*-(TC%>1)
+	IF F2 THEN C$="{$d2}EMINDER":IF LEFT$(ED$(I),1)<>"$"THEN{:4024}
+	B$=ED$(I):IF LEFT$(B$,1)="$"THEN B$=MID$(B$,2)
+	&"{f6} {lt. blue}{pound}$C:{white} {pound}$B{pound}{back arrow}39  {cyan}{$c4}ATE: ({gray3}{$04}"+NN$(I):&"{cyan}){f6}{blue}{pound}VJ{pound}Q0{f6:2}":KK=1:DR=1:B$=A$
+	A$="N."+LEFT$(ED$(I),14)+",S,R":GOSUB 1011:ON-(E%<>.)GOTO{:4022}:&,3-9*(F2=.),2
+{:4022}
+	CLOSE 2:GOSUB 1914:IF TR%<1 THEN I=T
+{:4024}
+	NEXT:RETURN
+{:4026}
+	CLOSE 2:IF KK=.THEN:&"{f6}{$ce}O {$ce}EW {$ce}EWS.{f6}"
+	RETURN
+	COPR 1994 NEW IMAGE

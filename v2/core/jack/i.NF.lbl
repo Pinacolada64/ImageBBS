@@ -1,0 +1,90 @@
+	GOTO{:3026}
+{:3002}
+	DR=4:A$="D.N.{$cd}AIN,S,"+A$:GOTO 4
+{:3004}
+	AN$=MID$(AN$,2)
+{:3006}
+	RN=INT(VAL(AN$)):D=-(RN<1 OR RN>BR):RETURN
+{:3008}
+	TT$="N."+LEFT$(ED$(C),14):RETURN
+{:3010}
+	P$=B$:W$=AN$:PL=.:&,1,32:RETURN
+{:3012}
+	&"{f6:2}{pound}$B{$c6}ILING:{f6}{f5}{pound}V7{f5}{f6}":RETURN
+{:3014}
+	DR=1:A$=TT$+",S,"+A$:GOTO 4
+{:3016}
+	A$="D.N.{$cd}AIN":DR=4:GOSUB 19:IF BR=.THEN RETURN
+	A$="W":GOSUB{:3002}:PRINT# 2,BR
+	FOR X=1 TO BR:PRINT# 2,ED$(X)R$NN$(X)R$C%(X):NEXT:CLOSE 2:GOTO 62
+{:3022}
+	A$=TT$:DR=1:GOTO 19
+{:3024}
+	B=.:FOR I=.TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 96:B=B+2^I*A:NEXT:A=B:RETURN
+{:3026}
+	Q=.:&"{clear}{f6}{purple}{$ce}EWS {$d3}UBSYSTEM:{f6}":A=13:GOSUB 11:B=A:A=8:GOSUB 11:IF A+B THEN Q=1
+	M$=LEFT$("-{$cd}AINT",Q*6)
+	BR=.:T=.:A$="R":GOSUB{:3002}:ON SGN(E%)GOTO{:3040}:INPUT# 2,BR
+	ON BR+1 GOTO{:3040}:FOR X=1 TO BR:INPUT# 2,ED$(X),NN$(X),D%(X):ON Q GOTO{:3036}
+	D%(X)=D%(X)*-((D%(X)AND 2^AC%)<>.)
+{:3036}
+	IF D%(X)THEN T=T+1:ED$(T)=ED$(X):NN$(T)=NN$(X):C%(T)=D%(X)
+	NEXT:BR=T
+{:3040}
+	CLOSE 2
+{:3042}
+	IF BR=.THEN:&"{f6}{$c3}URRENTLY {$ce}O {$d3}YSTEM {$ce}EWS {$c6}ILES.{f6}":GOTO{:3058}
+	V=INT(VAL(MID$(AN$,2))):IF V<1 OR V>BR THEN V=1
+	SH=.:FOR X=V TO BR:B$=ED$(X):ON Q GOTO{:3050}
+	A$=LEFT$(B$,1):IF A$="{f7}"OR A$="$"THEN B$=MID$(B$,2)
+{:3050}
+	A%=X:&"{f6:2}{white}#{pound}# {pound}#2{pound}%A {$d3}UBJ: {pound}$B{f6}{cyan}    {$c4}ATE: {$04}"+NN$(X)
+	IF Q THEN S=RC:A%=C%(X):&"{f6}{yellow}    {$c1}CCS: {pound}%A"
+	IF S+RC THEN SH=.:X=BR
+	NEXT
+{:3058}
+	&"{f6:2}":LC=7:P$="{$ce}EWS"+M$:CM$=P$:GOSUB 6:ON TR%+1 GOTO 300:REM GOSUB1850
+	REM ONF4GOTO1842:ONRSGOTO3058:GOSUB3006:ON-(D=.)GOTO3066
+	GOSUB{:3006}:ON-(D=.)GOTO{:3066}
+	ON Q+1 GOTO{:3064}:ON-(A$="{$c1}")-(A$="{$cb}")*2-(A$="{$c5}")*3 GOTO{:3068},{:3112},{:3086}
+{:3064}
+	X=3:ON-(A$="{$cc}")-(A$="{$d1}")*2-(A$="{f2}")*3-(A$="{$cf}")*4 GOTO{:3042},300,{:3120},1694:GOTO{:3058}
+{:3066}
+	C=RN:GOSUB{:3008}:A$=TT$:DR=1:GOSUB 13:GOTO{:3058}
+{:3068}
+	DR=1:GOSUB 61:IF A<35 THEN X=2:GOSUB 390:GOTO{:3058}
+	&"{f6}":B$="{$d4}ITLE ":AN$="":PL=.:GOSUB{:3010}:IF AN$=""THEN{:3058}
+	BR=BR+1:ED$(BR)=AN$:C=BR:GOSUB{:3008}:NN$(BR)=D1$
+{:3074}
+	B$="{$c1}CCESS":AN$="":PL=1:GOSUB{:3010}:A=VAL(AN$):IF TR%<1 THEN 300
+	ON-(AN$="{f2}")GOSUB{:3024}:IF A=.THEN A=1023
+	ON-(A>1023)GOTO{:3074}:C%(BR)=A:IM=1:GOSUB 440:IF KK=.THEN BR=BR-1:GOTO{:3058}
+	AN$=ED$(BR):B$="":GOSUB{:3012}:A$="W":GOSUB{:3014}
+{:3082}
+	FOR I=1 TO KK-1:PRINT# 2,TT$(I):&".":NEXT:PRINT# 2,"{up arrow}":CLOSE 2:&,11,.:GOSUB 62
+	GOSUB{:3016}:GOTO{:3058}
+{:3086}
+	GOSUB{:3004}:ON D GOTO{:3058}:B$=ED$(RN):&"{f6}{$cc}OADING {f5}{pound}$B{f5}..."
+	C=RN:GOSUB{:3008}:A$="R":GOSUB{:3014}:KK=1
+{:3090}
+	&,2,2:IF A$<>"{up arrow}"AND KK<101 THEN TT$(KK)=A$:KK=KK+1:GOTO{:3090}
+	CLOSE 2:&"{f6:2}({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$cb}EEP {$cf}RIGINAL {$d6}ALUES){f6:2}"
+	B$="{$d4}ITLE ":AN$=ED$(RN):PL=.:GOSUB{:3010}:IF AN$<>""THEN ED$(RN)=AN$
+{:3096}
+	&"{f6}":AN$=MID$(STR$(C%(RN)),2)
+	B$="{$c1}CCESS":PL=1:GOSUB{:3010}:A=VAL(AN$):IF TR%<1 THEN 300
+	ON-(AN$="{f2}")GOSUB{:3024}:IF A=.THEN{:3104}
+	ON-(A>1023)GOTO{:3096}:C%(RN)=A
+{:3104}
+	IM=2:GOSUB 440:IF KK=.THEN{:3058}
+	&"{f6:2}{$d5}P-{$c4}ATE {$c4}ATE {$cf}F {$ce}EWS?: ":GOSUB 96:IF A THEN NN$(RN)=D1$
+	AN$=ED$(RN):B$="{$d2}E-":GOSUB{:3012}:GOSUB{:3022}
+	A$="N."+LEFT$(AN$,14)+",S,W":DR=1:GOSUB 4:GOTO{:3082}
+{:3112}
+	GOSUB{:3004}:ON D GOTO{:3058}:C=RN:GOSUB{:3008}:AN$=MID$(TT$,3)
+	&"{f6}{$d2}EMOVING {f5}{pound}V7{f5} {$ce}EWS...{f6:2}":GOSUB{:3022}
+	FOR X=RN TO BR:ED$(X)=ED$(X+1):NN$(X)=NN$(X+1):C%(X)=C%(X+1):NEXT
+	BR=BR-1:GOSUB{:3016}:GOTO{:3058}
+{:3120}
+	GOSUB 250:GOTO{:3058}
+	COPR.1989 NEW IMAGE 3/24/89

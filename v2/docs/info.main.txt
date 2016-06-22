@@ -1,0 +1,112 @@
+``````````````````````````````````````````````````````````````````````````````
+Program Information: "main"
+``````````````````````````````````````````````````````````````````````````````
+CM%(49,50) File="e.menu.DIR-NAME"
+
+Header:
+  CM%( 0,0)= Number of items
+  CM%( 1,0)= Directory Flags
+  CM%( 2,0)= Post Access
+  CM%( 3,0)= Respond Access
+  CM%( 4,0)= View Message Access
+  CM%( 5,0)= Upload Access
+  CM%( 6,0)= View Upload Access
+  CM%( 7,0)= Device
+  CM%( 8,0)= Drive
+  CM%( 9,0)= Drive String (String:16)
+  CM%(17,0)= Date last Entered
+  CM%(20,0)= Dir Name (String:8)
+  CM%(24,0)= Prompt (String:20)
+  CM%(34,0)= Password (String:16)
+  CM%(42,0)= Subop #1 (ID)
+  CM%(43,0)= Subop #1 (Flags)
+  CM%(44,0)= Subop #2 (ID)
+  CM%(45,0)= Subop #2 (Flags)
+  CM%(46,0)= Subop #3 (ID)
+  CM%(47,0)= Subop #3 (Flags)
+  CM%(48,0)= Subop #4 (ID)
+  CM%(49,0)= Subop #4 (Flags)
+Records:
+  CM%( 0,x)= Flags
+  CM%( 1,x)= View Item Access
+  CM%( 2,x)= Use Item Access
+  CM%( 3,x)= Item Type
+  CM%( 4,x)= Credits to charge
+  CM%( 5,x)= Device
+  CM%( 6,x)= Drive
+  CM%( 7,x)= Drive String (String:16)
+  CM%(15,x)= Creation Date
+  CM%(18,x)= Last Access Date
+  CM%(21,x)= # times accessed (downloads/reads)
+  CM%(22,x)= Dir: Unused
+             U/D: File Size (blocks)
+             Sub: Number of Responses
+  CM%(23,x)= Dir: Unused
+             U/D: Computer Type
+             Sub: NetSub ID
+  CM%(24,x)= Dir: Unused
+             U/D: Cross Link #
+             Sub: Cross Link #
+  CM%(25,x)= Unused
+  CM%(26,x)= Title/User Handle (String:28)
+  CM%(40,x)= File/Post Title (String:20)
+``````````````````````````````````````````````````````````````````````````````
+Subop Flags Word:
+  Bit  SubOp Type
+   0   Messages (Subs)
+   1   Uploads/Downloads (U/Ds)
+   2   Text
+   3   Movies
+   4   RLE
+   5   Voting Booth
+``````````````````````````````````````````````````````````````````````````````
+Item Flags:
+  Bit  Meaning
+   0
+   1
+   2
+   3
+   4
+   5
+   6
+   7
+``````````````````````````````````````````````````````````````````````````````
+Item Types:
+   0   COMmand
+   1   DIRectory
+   2   PRoGram
+   3   MODule
+   4   TeXT
+   5   MOVie
+   6   RLE
+   7   U/X Configuration File
+   8   U/D (File)
+   9   SUB (Post)
+  10   Voting Booth
+``````````````````````````````````````````````````````````````````````````````
+Cross Links:
+
+The "Link" is a number that references a relative file record containing a 
+list of the directory files where the same entry is duplicated.  For example, 
+a post could be linked to other directories, and this number will allow the 
+routines that update the number of responses/last response date to also 
+update the other directories where the post can be viewed.
+``````````````````````````````````````````````````````````````````````````````
+Defaults:
+
+The device, drive, and subdirectory/user/partition information in record 0 is 
+copied to the entry automatically when a new post is made or a file is 
+uploaded. This means that mixed Subs and U/Ds in a single directory will end 
+up in the same location (except where someone with local mode on changes 
+them).
+
+The credits charged for an item will default to 0 on all items EXCEPT U/D 
+files, which will default to the number of blocks the file has.
+``````````````````````````````````````````````````````````````````````````````
+Maintenance:
+
+Local mode is required to add U/X Config files, programs or modules, or to 
+change the default device, drive, or subdirectory/user/partition.
+
+The scope of a SubOp's access is determined by his flags.
+``````````````````````````````````````````````````````````````````````````````

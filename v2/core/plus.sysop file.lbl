@@ -1,0 +1,121 @@
+	&"{clear} {lt. green}{$d3}YSOP {$c6}ILE {$cd}AINTENANCE":GOSUB{:3176}:GOTO{:3012}
+{:3002}
+	DR=3:A$="E.SYSOP,L,"+CHR$(250):GOTO 1011
+{:3004}
+	A=ABS(INT(VAL(AN$))):RETURN
+{:3006}
+	DR=3:A$="E.SYSOP":GOTO 1011
+{:3008}
+	&"{f6:2}{$c5}RROR {$cf}PENING {$d3}YSOP {$c6}ILE"
+{:3010}
+	CLOSE 2:&"{f6:2}{white}{rvrs on}{$c1}NY {$cb}EY:{rvrs off} {pound}G1"
+{:3012}
+	P$="":&"{f6:2}{$cf}PTIONS:{f6}1. {$c3}REATE {$d3}YSOP {$c6}ILE{f6}2. {$c5}DIT {$d3}YSOP {$d2}ECORD{f6}3. {$c4}ELETE {$d3}YSOP"
+	&"{f6}4. {$c3}HANGE {$c6}ILE TO {f5}N{f5}{f6}5. {$c1}DD {$d3}YSOP{f6}6. {$d1}UIT{f6:2}{$c3}HOICE? {pound}G1{pound}V7{f6}"
+	A=VAL(AN$):IF A<1 OR A>6 THEN 1811
+	ON A GOTO{:3020},{:3030},{:3092},{:3168},{:3102},1811:GOTO{:3012}
+{:3020}
+	&"{clear}{$c3}REATE {$c6}ILE{f6:2}{$c3}ONTINUE? ":GOSUB 1907:IF A=.THEN{:3012}
+	&"{f6:2}{$c3}REATING...":GOSUB{:3002}:IF E%THEN:&"{f6:2}{$c5}RROR {$c3}REATING {$c6}ILE.":GOTO{:3010}
+	&"{pound}H6ED...{f6:2}{$c6}ILLING: ":FOR X=1 TO UR
+	&MID$("{white}{cyan}{purple}{green}{yellow}{lt. red}{lt. green}{lt. blue}{gray3}",INT(RND(1)*9)+1,1)+MID$("{up arrow}*+{pound}=[]$#",INT(RND(1)*9)+1,1)
+	GOSUB 1001:PRINT# 2,"{up arrow}":NEXT:&"{f6:2}{lt. green}{$c6}INISHED!!":GOTO{:3010}
+{:3030}
+	&"{clear}{$c5}DIT {$d3}YSOP {$d2}ECORD:"
+{:3032}
+	&"{f6:2}{$c5}NTER {$d4}HE {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} {$cf}R {$c9}{$c4}# {$cf}F {$d4}HE {$d3}YSOP:{f6:2}"
+	NN$="":POKE 53252,20:GOSUB 1006:GOSUB{:3004}:IF AN$=""THEN{:3012}
+	IF A=.THEN NN$=AN$:GOTO{:3048}
+	IF A>UR THEN:&"{f6:2}{$cf}UT {$cf}F {$d2}ANGE. ":GOTO{:3032}
+	I=A:GOSUB 1065:X=A
+	GOSUB 1001:&,2,2:ON-(A$="{up arrow}")GOTO{:3052}:NN$=A$
+	B$=NN$:&"{f6}{$c9}S {f5}{pound}$B{f5} {$c3}ORRECT?: ":GOSUB 1907:IF A=.THEN{:3032}
+	CLOSE 2:POKE 53252,30:GOTO{:3054}
+{:3048}
+	GOSUB 1046:IF I=.THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND{f6}{$c9}N {$d5}SER {$c6}ILE.{f6}":GOTO{:3032}
+	NN$=AN$:X=I:GOTO{:3054}
+{:3052}
+	&"{f6}":&NN$:&" {$c4}OESN'T {$c5}XIST.{f6}":GOTO{:3032}
+{:3054}
+	GOSUB{:3006}:ON-(E%<>.)GOTO{:3008}:GOSUB 1001:&,2,2
+	IF A$="N"OR A$="{up arrow}"THEN:&"{f6:2}{$ce}O {$c4}ATA.  {$d3}ELECT {$c1}DD {$d3}YSOP.":GOTO{:3010}
+	GOSUB 1001:FOR I=.TO 13:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
+	TT$(I)=A$:NEXT
+{:3062}
+	&"{f6:2}{$c5}DIT...":FOR I=1 TO 13
+	&"{f6}{pound}!I{pound}{back arrow}04":&ED$(I):&"{pound}{back arrow}20:":&TT$(I):NEXT:&"{f6:2}{$d7}HICH {$c6}IELD? {pound}I1"
+	ON TR%+1 GOTO 1811:IF AN$=""THEN{:3012}
+	I=VAL(AN$):IF I<1 OR I>13 THEN:&"{f6:2}{$cf}UT OF {$d2}ANGE!{pound}W2":GOTO{:3062}
+	&"{f6:2}{$c3}HANGE ":&TT$(I):&" ?":GOSUB 1907:IF A=.THEN{:3062}
+	IF I<=3 OR I=8 OR I=13 THEN:&"{f6:2}{$ce}EW {$c4}ATA {$c6}OR :":&TT$(I):&"{f6:2}[> {pound}I1":GOTO{:3076}
+	&"{f6:2}{$ce}EW {$c4}ATA {$c6}OR :":&TT$(I):&"{f6:2}[> {pound}I0"
+{:3076}
+	ON TR%+1 GOTO 1811:ON-(AN$="")GOTO{:3090}:TT$=AN$:&"{f6:2}{$c9}S ":&TT$:&" {$c3}ORRECT? "
+	GOSUB 1907:IF A=.THEN{:3090}
+	TT$(I)=TT$:&"{f6:2}{$cf}THER {$c3}HANGES? ":GOSUB 1907:ON A GOTO{:3062}:TT$(.)=D1$
+	IF TT$(12)=""THEN TT$(12)="{$ce}ONE"
+	IF TT$(13)=""THEN TT$(13)="{$ce}/{$c1}"
+	W$="":FOR I=.TO 13:W$=W$+TT$(I)+R$:NEXT:GOSUB 1001:PRINT# 2,W$
+	&"{f6:2}{$c3}HANGES {$c3}OMPLETE...":GOTO{:3010}
+{:3090}
+	&"{f6:2}{$c1}BORTED! {$d4}RY {$c1}GAIN? ":GOSUB 1907:ON A GOTO{:3062}:GOTO{:3010}
+{:3092}
+	&"{clear}{$c4}ELETE {$c1} {$d3}YSOP.{f6:2}{$c9}{$c4} {$ce}UMBER {$d4}O {$c4}ELETE? {pound}I1":X=VAL(AN$)
+	ON TR%+1 GOTO 1811:ON-(AN$="")GOTO{:3012}:IF X<1 OR X>UR THEN{:3092}
+	GOSUB{:3006}:GOSUB 1001:&,2,2:IF A$="N"OR A$="{up arrow}"THEN:&"{f6:2}{$c4}ELETED!{pound}W2":GOTO{:3092}
+	&,2,2:&"{f6:2}{$c4}ELETE {pound}$A? ":GOSUB 1907:IF A=.THEN{:3092}
+	GOSUB 1001:PRINT# 2,"N":&"{f6:2}{$d3}YSOP {$c4}ELETED.  {$c1}NOTHER? ":GOSUB 1902
+{:3102}
+	ON A GOTO{:3092}:GOTO{:3010}
+	&"{clear}{$c1}DD {$c1} {$d3}YSOP.{f6:2}{$d4}HE {$c6}OLLOWING {$c9}NFORMATION {$c9}S {$d2}EQUIRED."
+{:3106}
+	&"{f6:2}{$c5}NTER {$d4}HE {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} {$cf}R {$c9}{$c4}# {$cf}F {$d4}HE {$d3}YSOP:{f6:2}"
+	NN$="":POKE 53252,20:GOSUB 1006:GOSUB{:3004}:IF AN$=""THEN{:3012}
+	IF A>UR THEN:&"{f6:2}{$cf}UT {$cf}F {$d2}ANGE. ":GOTO{:3106}
+	ON-(A=.)GOTO{:3120}:I=A:GOSUB 1065:X=A
+	GOSUB 1001:&,2,2:ON-(A$="{up arrow}")GOTO{:3126}:B$=A$
+	&"{f6}{$c9}S {f5}{pound}$B{f5} {$c3}ORRECT?: ":GOSUB 1907:IF A=.THEN{:3106}
+	FL=1:NN$=B$:CLOSE 2:GOTO{:3126}
+{:3120}
+	GOSUB 1046:IF I=.THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND{f6}{$c9}N {$d5}SER {$c6}ILE.{f6}":GOTO{:3106}
+	NN$=AN$:X=I:FL=1:GOTO{:3126}
+	&"{f6}":&NN$:&" {$c4}OESN'T {$c5}XIST.{f6}":GOTO{:3106}
+{:3126}
+	TT$(.)=D1$:IF FL THEN TT$(1)=NN$:FOR I=2 TO 3:GOTO{:3130}
+	FOR I=1 TO 3
+{:3130}
+	&"{white}":&ED$(I):&"{pound}{back arrow}13: {pound}I1":ON-(AN$="")GOTO{:3012}:TT$(I)=AN$:NEXT
+	POKE 53252,30:FOR I=4 TO 13
+	IF I<>8 OR I<>13 THEN:&ED$(I):&"{pound}{back arrow}13: {pound}I0":GOTO{:3138}
+	IF I=8 OR I=13 THEN:&ED$(I):&"{pound}{back arrow}13: {pound}I1"
+{:3138}
+	ON-(AN$="")GOTO{:3140}:TT$(I)=AN$
+{:3140}
+	NEXT
+{:3142}
+	&"{f6:2}{$d9}OUR {$c9}NPUT: ":FOR I=1 TO 13
+	&"{f6}{pound}!I{pound}{back arrow}05:":&TT$(I):NEXT
+	&"{f6:2}{$c3}ORRECT? ":GOSUB 1907:ON A GOTO{:3160}
+	&"{f6:2}{$d7}HICH {$ce}UMBER {$c9}S {$ce}OT {$c3}ORRECT? {pound}I1":ON-(AN$="")GOTO{:3160}:I=VAL(AN$)
+	&"{f6}":&ED$(I):&"{pound}{back arrow}13:":&TT$(I)
+	IF I<=3 OR I=8 OR I=13 THEN:&"{$ce}EW :":&ED$:&"{f6}]> {pound}I1":TT$=AN$:ON TR%+1 GOTO 1811:GOTO{:3156}
+	&"{f6}{$ce}EW :":&ED$(I):&"{f6}]> {pound}I0":ON TR%+1 GOTO 1811:TT$=AN$
+{:3156}
+	ON-(AN$="")GOTO{:3142}:&"{f6:2}{$c9}S ":&AN$:" {$c3}ORRECT? ":GOSUB 1907:IF A=.THEN{:3142}
+	TT$(I)=TT$:GOTO{:3142}
+{:3160}
+	&"{f6:2}{$d7}RITING {$c4}ATA...":TT$(.)=D1$:IF TT$(12)=""THEN TT$(12)="{$ce}ONE"
+	IF TT$(13)=""THEN TT$(13)="{$ce}/{$c1}"
+	W$="":FOR I=.TO 13:W$=W$+TT$(I)+R$:NEXT
+	GOSUB{:3006}:GOSUB 1001:PRINT# 2,W$:&"{f6:2}{$c1}DDED!":GOTO{:3010}
+{:3168}
+	&"{f6}{$c3}HANGE FILE TO {f5}N{f5}"
+	&"{f6:2}{$c9}{$c4} {$ce}UMBER: {pound}I1":IF AN$=""THEN{:3010}
+	ON TR%+1 GOTO 1811:X=VAL(AN$):IF X<1 OR X>UR THEN:&"{f6:2}{$cf}UT OF RANGE.":GOTO{:3010}
+	GOSUB{:3006}:GOSUB 1001:PRINT# 2,"N":&"{f6}{$c4}ONE!":GOTO{:3010}
+{:3176}
+	ED$(1)="{$c8}ANDLE":ED$(2)="{$c6}IRST {$ce}AME":ED$(3)="{$cc}AST {$ce}AME"
+	ED$(4)="{$c1}DDRESS":ED$(5)="{$c3}ITY":ED$(6)="{$d3}TATE":ED$(7)="{$da}IPCODE"
+	ED$(8)="{$d3}ERIAL {$ce}UMBER":ED$(9)="{$c2}OARD {$ce}AME":ED$(10)="{$d6}OICE {$ce}UMBER"
+	ED$(11)="{$c2}OARD {$ce}UMBER":ED$(12)="{$ce}ETWORK":ED$(13)="{$ce}ODE {$c9}{$c4}":RETURN
+	COPR. 1994 NEW IMAGE 10/10/94

@@ -1,0 +1,120 @@
+	R=INT(VAL(MID$(AN$,3,3)))
+	RESTORE:FOR I=1 TO 23:READ ED$(I):NEXT:FOR I=1 TO 20:READ DT$(I):NEXT
+	GOSUB 1061:FOR I=0 TO 9:X=I+1:GOSUB 1001:&,2,2:&,2,2:BB$(I)=A$:NEXT:CLOSE 2
+	IF R THEN AN$="":X=R:GOTO{:3114}
+{:3108}
+	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}SER {$c1}CCOUNT {$c5}DITOR {f6}{cyan}":P$="{$d5}SER {$c5}DIT"
+	A%=UR:&"{f6} {$d5}SERS: {pound}%A{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}DIT.{f6:2}":GOSUB 1006
+	ON-(AN$="")GOTO 1811:X=ABS(INT(VAL(LEFT$(AN$,4))))
+{:3114}
+	TZ=1:P=0:IF(X<=UR)AND X>.THEN{:3118}
+	I=0:ON-(AN$<>"")GOSUB 1046:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":GOTO{:3108}
+{:3118}
+	GOSUB 1065:GOSUB 1001:FOR I=1 TO 24:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
+	TT$(I)=A$:NEXT:TT$=TT$(1)
+	A=VAL(LEFT$(TT$(7),1)):A$=TT$(23)
+	IF LEN(A$)<LEN(BB$(A))THEN TT$(23)=A$+MID$(BB$(A),LEN(A$)):TZ=0
+{:3126}
+	CLOSE 2:A%=X:&"{clear}{f6} {pound}VN#{pound}%A    ({$d4}YPE {f5}{$ce}{f5} {$c6}OR {$ce}EXT {$d0}AGE) {cyan}{f6:2}"
+	IF L1=X THEN:&" ({$d4}HIS IS THE LOWEST DELETED ACCOUNT.){f6:2}"
+	FOR I=1 TO 23:A%=I:B$=ED$(I):C$=TT$(I):A$="{pound}#2{pound}# {pound}%A>-{pound}$B{pound}{back arrow}16: {pound}$C{f6}"
+	IF I=2 AND ID<>1 THEN C$="{$ce}OT {$c1}VAILABLE"
+	IF I=10 THEN C$=CO$(VAL(TT$(I)))
+	IF(P=1 AND(I>9 AND I<22))OR(P=.AND(I<10 OR I>21))THEN:&
+	NEXT:&"{f6} # {$d4}O {$c3}HANGE?: {pound}I1{f6}":ON TR%+1 GOTO 1811:A=ABS(INT(VAL(AN$)))
+	IF AN$="{$ce}"THEN P=1-P:GOTO{:3126}
+	IF A=2 AND ID<>1 THEN X=3:GOSUB 1980:&"{f6}{pound}W2":GOTO{:3126}
+	IF A=10 THEN GOSUB{:3162}:GOTO{:3126}
+	ON-(A<1 OR A>23)GOTO{:3152}:IF A=23 THEN Q$=TT$(23):GOSUB{:3196}:TT$(23)=Q$:TZ=0:GOTO{:3126}
+	P$=ED$(A):W$=TT$(A):&,1,32:IF AN$=""OR AN$=TT$(A)THEN{:3126}
+	TT$(A)=AN$:TZ=.:ON-(A=1)-(A=7)*2 GOTO{:3168},{:3172}:GOTO{:3126}
+{:3152}
+	ON TZ GOTO{:3108}:&"{f6}{$d3}AVE {$c3}HANGES?: ":GOSUB 1902:ON-(A=.)GOTO{:3108}
+	&"{clear}{f6}{$d7}RITING {$d4}O {$d5}SER {$c4}ATA {$c6}ILES..."
+	IF TT$(1)<>"{up arrow}"AND TT$(1)<>"{$d2}{$c5}{$d3}"AND TT$(1)<>TT$THEN GOSUB{:3242}:GOSUB{:3174}:GOTO{:3108}
+	GOSUB{:3174}:IF TT$(1)="{$d2}{$c5}{$d3}"AND TT$<>"{up arrow}"AND TT$<>"{$d2}{$c5}{$d3}"THEN{:3186}
+	GOTO{:3108}
+{:3162}
+	&"{f6:2}":FOR T=1 TO 9:B$=CO$(T):A%=T:&"{pound}%A>-{pound}$B{f6}":NEXT
+	&"{f6}{$c3}OMPUTER {$d4}YPE?: {pound}G1{pound}V7{f6}":A=VAL(AN$):IF TR%<1 THEN RETURN
+	ON A+1 GOTO{:3162}:TT$(10)=STR$(A):TZ=.:RETURN
+{:3168}
+	ON-(AN$="{f8}")-(AN$="{$d2}{$c5}{$d3}")*2 GOTO{:3178},{:3192}:G=X:GOSUB 1046:X=G
+	ON I+1 GOTO{:3126}:A%=I:&"{f6:2}{$c8}ANDLE {$c1}LREADY {$d5}SED {$c2}Y {pound}VN{pound}%A{f6}{pound}W2":TT$(1)=TT$:GOTO{:3126}
+{:3172}
+	TT$(23)=BB$(VAL(TT$(7))):GOTO{:3126}
+{:3174}
+	GOSUB 1065:A$="":FOR I=1 TO 24:A$=A$+TT$(I)+R$:NEXT:GOSUB 1001
+	PRINT# 2,A$;:CLOSE 2:RETURN
+{:3178}
+	B$=TT$:&"{f6:2}{$c4}ELETE {f5}{pound}$B{f5}{f6}{$c1}RE {$d9}OU {$d3}URE?: ":GOSUB 1902:IF A=.THEN{:3108}
+	AN$=TT$:GOSUB 1034
+	TT$(1)="{up arrow}":TT$(2)="D":FOR I=3 TO 24:TT$(I)="0":NEXT:GOSUB{:3174}
+	IF X<L1 THEN L1=X:X=31:GOSUB 1063:GOSUB 1001:PRINT# 2,L1:CLOSE 2
+{:3186}
+	REM
+	A$="R":GOSUB 1062:CLOSE 2:IF E%=.THEN GOSUB 1060:I=-1:X=25:GOSUB 1025:CLOSE 2
+	DR=2:B$=LEFT$(TT$,13):A$="F."+B$:GOSUB 1024:A$="M."+B$:GOSUB 1024:GOTO{:3108}
+{:3192}
+	&"{f6}{$d0}ASSWORD?: {pound}I1":IF AN$=""THEN AN$="{$d0}{$c1}{$d3:2}"
+	FOR I=3 TO 24:TT$(I)="0":NEXT:TT$(2)=AN$:GOTO{:3126}
+{:3196}
+	&"{clear}":POKE 53252,38:FOR I=1 TO 20:B$=MID$(Q$,I,1)
+	IF I=2 THEN B$=B$+" TO 1":GOTO{:3212}
+	IF I=16 OR I=17 OR I=20 THEN{:3212}
+	IF I=6 THEN B$=MID$(STR$((VAL(B$)+1)*10),2):GOTO{:3212}
+	IF I=18 THEN B$=MID$(Q$,I,2):GOTO{:3212}
+	IF I=19 THEN{:3214}
+	IF B$="1"THEN B$="{$d9}ES"
+	IF B$="0"THEN B$="{$ce}O"
+{:3212}
+	A%=I:C$=DT$(I):&"{pound}#2{pound}# {pound}%A--{pound}$C{pound}{back arrow}20: {pound}$B{f6}"
+{:3214}
+	NEXT:&"{$c3}HANGE?: {pound}I1"
+	A=VAL(AN$):IF TR%<1 OR A<1 OR A>20 THEN RETURN
+	ON-(A=16 OR A=17 OR A=20)-2*(A=18)-3*(A=19)GOTO{:3232},{:3236},{:3196}
+	ON-(A=2 OR A=6)GOTO{:3222}:B$=MID$(STR$(1-VAL(MID$(Q$,A,1))),2):GOTO{:3230}
+{:3222}
+	IF A=2 THEN B$=MID$(Q$,2,1)+"/1"
+	IF A=6 THEN B$=MID$(STR$((VAL(MID$(Q$,6,1))+1)*10),2)
+	P$=DT$(A):W$=B$:&,1,32:IF AN$=""THEN{:3196}
+	B$=LEFT$(AN$,1):IF A=6 THEN B$=MID$(STR$(INT(VAL(AN$)/10)-1),2,1)
+{:3230}
+	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+1):&"{f6}":GOTO{:3196}
+{:3232}
+	P$=DT$(A):B$=MID$(Q$,A,1):W$=B$:POKE 53252,1:PL=1:&,1,32:IF AN$<>""THEN B$=AN$
+	GOTO{:3230}
+{:3236}
+	P$=DT$(A):B$=MID$(Q$,A,2):W$=B$:POKE 53252,2:PL=1:&,1,32:IF AN$<>""THEN B$=AN$
+	IF LEN(B$)=1 THEN B$="0"+B$
+	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+2):&"{f6}":GOTO{:3196}
+{:3242}
+	DR=2:GOSUB 1010:A$="F.":FOR I=1 TO 2
+	PRINT# 15,"R"DR$A$LEFT$(TT$(1),13)"="A$LEFT$(TT$,13):A$="M.":NEXT
+	GOSUB 1012:AN$=TT$:KK=ID:ID=X:GOSUB 1034:AN$=TT$(1):GOSUB{:3250}
+	AN$=TT$(1):ON-(AN$<>"{f8}"AND AN$<>"{$d2}{$c5}{$d3}")GOSUB 1038:ID=KK:RETURN
+{:3250}
+	A=4:GOSUB 1736:DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":&,16,1
+	GOSUB 1012:IF E%THEN RETURN
+{:3254}
+	A%=ID:&,16,8:IF A%THEN:&,16,5:GOTO{:3254}
+	A$=DR$+"U.WEEDINFO":PRINT# 15,"S"A$:&,16,2:RETURN
+	DATA"{$c8}ANDLE","{$d0}ASSWORD"
+	DATA"{$c6}IRST {$ce}AME","{$cc}AST {$ce}AME"
+	DATA"{$d0}HONE {$ce}UMBER","{$cc}AST {$c4}ATE"
+	DATA"{$c1}CCESS {$c7}ROUP","{$c3}ALLS {$d4}ODAY"
+	DATA"{$d4}OTAL {$c3}ALLS","{$c3}OMPUTER"
+	DATA"{$cc}INE {$cc}ENGTH","{$d5}PPER/{$cc}OWER"
+	DATA"{$cc}INEFEEDS","{$c5}XPERT {$cd}ODE"
+	DATA"{$c4}OWNLOADS","{$d5}PLOADS"
+	DATA"{$c2}LKS {$c4}NLD","{$c2}LKS {$d5}PLD"
+	DATA"{$c3}REDIT {$d0}TS","{$d0}OSTS"
+	DATA"{$d2}ESPONSES","{$cc}AST {$c3}ALL"
+	DATA"{$c6}LAGS"
+	DATA"{$ce}ON-{$d7}EED {$d3}TATUS","{$c3}REDIT {$d2}ATIO","{$cc}OCAL {$cd}AINT"
+	DATA"{$d0}OST/{$d2}ESPOND","{$d5}/{$c4} {$c1}CCESS","{$cd}AX.{$c5}DITOR {$cc}INES"
+	DATA"{$d5}NLIMITED {$c4}/{$cc}S","{$d2}EMOTE {$cd}AINT","{$c5}{$cd}AIL"
+	DATA"{$d5}SER {$cc}IST","{$c2}.{$c1}.{$d2}./{$cc}OG {$d6}IEW","{$d3}UBMAINT"
+	DATA"{$c6}ILES {$cd}AINT","{$cd}{$c3}{$c9} {$c1}CCESS","{$d5}{$c4}S {$c1}T {$d0}RIMETIME"
+	DATA"{$cd}AX {$c9}DLE {$d4}IME","{$c3}ALLS/{$c4}AY","{$d4}IME/{$c3}ALL"
+	DATA"{$d4}IME/{$c3}ALL","{$c4}OWNLOADS/{$c3}ALL"

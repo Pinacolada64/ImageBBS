@@ -1,0 +1,241 @@
+	ZZ%=8:PR$="":LM$="":&,52,44,3:GM=A%:&,52,45,3:GM=GM AND A%:FL=.
+{:3002}
+	DR=5:GOSUB 3:A$=DR$+"++ MENU2":&,7,DV%,2:IF FL THEN RETURN
+	GOSUB{:3006}:GOTO 300
+{:3006}
+	&,28,1:N=15:DIM M%(16,N),DT$(60),ED$(60),A%(60):IF TR%<1 THEN RETURN
+	&,16,.,34,M%(.,1),"{$c1}","","*{$cd}ACROS {$c5}DITOR"
+	&,16,.,34,M%(.,2),"{$c2}","","{$c3}OMMAND {$d3}ET"
+	&,16,.,34,M%(.,3),"{$c3}","","{$d0}AYROLL {$c5}DITOR"
+	&,16,.,34,M%(.,4),"{$c4}","","{$cc}OGON {$c5}DITOR"
+	&,16,.,34,M%(.,5),"{$c5}","","{$c1}CCESS {$c7}ROUPS"
+	&,16,.,34,M%(.,6),"{$c6}","","*{$c6}ILE {$cc}ISTS"
+	&,16,.,34,M%(.,7),"{$c7}","","*{$c6}UNCTION {$cb}EYS"
+	&,16,.,34,M%(.,8),"{$c8}","","{$cc}IGHTBAR/{$c1}LARMS"
+	&,16,.,34,M%(.,9),"{$c9}","","{$cd}ISC. {$c6}EATURES"
+	&,16,.,34,M%(.,10),"{$ca}","","{$cd}ODEM {$c3}ONFIG"
+	&,16,.,34,M%(.,11),"{$cb}","","{$d3}ET {$d4}IME"
+	&,16,.,34,M%(.,12),"{$cc}","","{$d3}YSTEM {$c4}RIVES"
+	&,16,.,34,M%(.,13),"{$cd}","","*{$ce}ETMAIL {$c3}ONFIG"
+	&,16,.,34,M%(.,14),"{$ce}","","{$c2}ASE {$c5}DITORS"
+	&,16,.,34,M%(.,15),"{$d1}","","{$d1}UIT"
+	GOSUB{:3348}:IF TR%<1 OR LM=N OR LM=.THEN RETURN
+	ON LM GOTO{:3204},{:3187},{:3208},{:3068},{:3189},{:3190},{:3206},{:3084},{:3128},{:3188}
+	ON LM-10 GOTO{:3282},{:3104},{:3044},{:3192}
+	RETURN
+{:3044}
+	&,28,1:N=8:DIM M%(16,N)
+	&,16,.,34,M%(.,1),"{$c1}","","{$cc}OCAL {$c9}NFO"
+	&,16,.,34,M%(.,2),"{$c2}","","{$cd}ODEM {$d3}PECS"
+	&,16,.,34,M%(.,3),"{$c3}","","{$c3}ALLING {$c8}OURS"
+	&,16,.,34,M%(.,4),"{$c4}","","{$c3}ONNECTIONS"
+	&,16,.,34,M%(.,5),"{$c5}","","{$cd}AIL {$c6}ORWARDS"
+	&,16,.,34,M%(.,6),"{$c6}","","{$ce}ET{$d3}UBS"
+	&,16,.,34,M%(.,7),"{$c7}","","{$ce}ETWALL/{$c7}RF"
+	&,16,.,34,M%(.,8),"{$c8}","","{$d1}UIT"
+{:3062}
+	N=8:GOSUB{:3348}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
+	ON LM GOTO,,,,,XXXX,
+	&"{lt. red}{$d4}HAT FUNCTION IS NOT YET SUPPORTED.{pound}W1":GOTO{:3062}
+	A$="NETMAIL":GOSUB{:3198}:GOTO{:3062}
+{:3068}
+	&,28,1:N=5:DIM M%(16,N),FB%(29,15),A%(60):IF TR%<1 THEN{:3006}
+	&,16,.,34,M%(.,1),"{$c1}","","{$cc}OGIN {$cd}ODS"
+	&,16,.,34,M%(.,2),"{$c2}","","{$cd}AINT {$cd}ODS"
+	&,16,.,34,M%(.,3),"{$c3}","","{$d7}ALL {$c1}DS"
+	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UICKLIST"
+	&,16,.,34,M%(.,5),"{$c5}","","{$d1}UIT"
+{:3080}
+	N=5:GOSUB{:3348}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
+	A$="LOGON":GOSUB{:3198}:FL=1:GOSUB{:3002}:FL=.:GOTO{:3080}
+{:3084}
+	&,28,1:N=4:ZZ%=8:DIM AM%(3,15),M%(16,N),B$(ZZ%*16-1),C$(60),A%(60)
+	&"{f6}{$d2}EADING {$c3}HECKMARK {$c4}EFINITIONS...":IF TR%<1 THEN{:3006}
+	DR=1:A$="S.LIGHTDEFS,S,R":GOSUB 4:X=.:IF E%THEN CLOSE 2:&:GOTO{:3092}
+	FOR X=.TO 16*ZZ%-1:&,2,2:B$(X)=A$:NEXT:CLOSE 2:&"{$c4}ONE{f6}"
+{:3092}
+	&,16,.,34,M%(.,1),"{$c1}","","{$cc}IGHT{$c2}AR {$c4}EFS"
+	&,16,.,34,M%(.,2),"{$c2}","","{$c1}LARMS"
+	&,16,.,34,M%(.,3),"{$c3}","","{$ce}ET{$cd}AIL {$c1}LARMS"
+	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UIT"
+{:3100}
+	N=4:GOSUB{:3348}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
+	A$="LIGHTBAR":GOSUB{:3198}:GOTO{:3100}
+{:3104}
+	&,28,1:N=7:ZZ%=6:DIM M%(20,N)
+	A=1:A$="{$d3}YSTEM":GOSUB{:3124}
+	A=2:A$="{$c5}-{$cd}AIL":GOSUB{:3124}
+	A=3:A$="{$c5}TCETERA":GOSUB{:3124}
+	A=4:A$="{$c4}IRECTORY":GOSUB{:3124}
+	A=5:A$="{$d0}ROGRAM":GOSUB{:3124}
+	A=6:A$="{$d5}SER":GOSUB{:3124}
+	&,16,.,42,M%(.,7),"{$c7}","","{$d1}UIT"
+	N=7:GOSUB{:3354}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
+	GOSUB{:3268}:GOTO{:3104}
+{:3124}
+	B$=RIGHT$("   "+STR$(DV%(A)),3)+","+MID$(STR$(DR%(A)),2)
+	&,16,.,42,M%(.,A),CHR$(192+A),"",LEFT$(A$+" {$c4}ISK:     ",15)+B$:RETURN
+{:3128}
+	&,28,1:N=13:DIM M%(22,N):GOSUB 33
+	X=38:GOSUB 1:&,2,2:LK%=VAL(A$)
+	X=39:GOSUB 1:&,2,2:A%(2)=VAL(A$)
+	X=40:GOSUB 1:&,2,2:A%(3)=VAL(A$)
+	X=41:GOSUB 1:&,2,2:A%(4)=VAL(A$)
+	X=42:GOSUB 1:&,2,2:A%(5)=VAL(A$)
+	X=43:GOSUB 1:&,2,2:MM$=A$
+	X=45:GOSUB 1:&,2,2:TZ$=A$
+	X=46:GOSUB 1:&,2,2:PO$=A$:X=58:GOSUB 1:&,2,2:NC=VAL(A$)
+	X=47:GOSUB 1:&,2,2:BN$=A$:X=51:GOSUB 1:&,2,2:CC$=A$:CLOSE 2
+	RESTORE:FOR I=1 TO 15:READ TT$(I):NEXT:TT$(.)=TT$(3)
+{:3150}
+	&,16,.,46,M%(.,1),"{$c1}","","{$cc}T. {$cb}ERNAL {$c4}EVICE: "+STR$(LK%)
+	&,16,.,46,M%(.,2),"{$c2}","","{$c1}UTOWEED {$c3}UTOFF:   "+STR$(A%(2))
+	&,16,.,46,M%(.,3),"{$c3}","","{$c4}EFAULT {$c3}OLOR:      "+TT$(A%(3))
+	&,16,.,46,M%(.,4),"{$c4}","","{$d0}RINTER {$c1}DDRESS:   "+STR$(A%(4))
+	A$=MID$("{$d9}ES{$ce}O",-3*(A%(5)<>10)+1,3)
+	&,16,.,46,M%(.,5),"{$c4}","","{$d0}RINTER {$cc}INEFEEDS:  "+A$
+	&,16,.,46,M%(.,6),"{$c5}","","{$d0}ASSWORD {$cd}ASKS:     "+MM$
+	&,16,.,46,M%(.,7),"{$c6}","","{$d4}IME {$da}ONE:          "+LEFT$(TZ$,3):A$=PO$
+	&,16,.,46,M%(.,8),"{$c7}","","{$cd}AIN {$d0}ROMPT:        "+LEFT$(PO$,15)
+	&,16,.,46,M%(.,9),"{$c8}","","{$c2:2}{$d3} {$ce}AME:           "+LEFT$(BN$,15)
+	&,16,.,46,M%(.,10),"{$c9}","","{$d3}YSTEM {$c9}{$c4}           "+CC$
+	&,16,.,46,M%(.,11),"{$ca}","","{$ce}EW {$d5}SER {$c3}REDITS:  "+STR$(NC)
+	&,16,.,46,M%(.,12),"{$cb}","","{$c3}HAT {$cd}ESSAGES"
+	&,16,.,46,M%(.,13),"{$cc}","","{$d1}UIT"
+	N=13:GOSUB{:3360}:A=LM:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
+	A$="MISC":GOSUB{:3198}:GOTO{:3150}
+	DATA"{$d7}HITE","{$d2}ED","{$c3}YAN","{$d0}URPLE","{$c7}REEN","{$c2}LUE","{$d9}ELLOW","{$cf}RANGE","{$c2}ROWN"
+	DATA"{$cc}IGHT {$d2}ED","{$c4}ARK {$c7}RAY","{$cd}EDIUM {$c7}RAY","{$cc}IGHT {$c7}REEN","{$cc}IGHT {$c2}LUE"
+	DATA"{$cc}IGHT {$c7}RAY"
+{:3187}
+	A$="ECS":GOSUB{:3198}:GOTO{:3006}
+{:3188}
+	A$="MODEM":GOSUB{:3198}:GOTO{:3006}
+{:3189}
+	A$="ACCESS":GOSUB{:3198}:GOTO{:3006}
+{:3190}
+	A$="FILELIST":GOSUB{:3198}:GOTO{:3006}
+{:3191}
+	A$="MACROS":GOSUB{:3198}:GOTO{:3006}
+{:3192}
+	A$="REDIT2":GOSUB{:3198}:GOTO{:3006}
+	A$="{$ce}ET{$d3}UB{$c5}DIT":GOSUB{:3198}:GOTO{:3044}
+{:3198}
+	&"{f6}{$cc}OADING {pound}$A MODULE.."
+	IF LM$<>"{$c9}{$cd}."+A$THEN DR=5:GOSUB 3:LM$="{$c9}{$cd}."+A$:A$=DR$+"I/"+LM$:LOAD A$,DV%
+	&"{f6}":GOTO 4000
+{:3204}
+	LM=1:GOTO{:3191}
+{:3206}
+	LM=2:GOTO{:3191}
+{:3208}
+	DR=6:A$="U.PAYROLL,S,R":N=.:GOSUB 4:IF E%THEN{:3212}
+{:3210}
+	N=N+1:&,2,2:TT$(N)=A$:IF ST=.THEN{:3210}
+{:3212}
+	CLOSE 2:CF=.
+{:3214}
+	&"{clear}{f6}{gray3}{$d0}AYROLL {$c5}DITOR{f6}{white}{pound}VJ":POKE 53252,38
+	IF N=.THEN:&"{yellow}{$ce}O {$c5}NTRIES.{f6}":GOTO{:3222}
+	FOR I=1 TO N:A%=I:B%=VAL(LEFT$(TT$(I),3)):C%=VAL(MID$(TT$(I),5))
+	&"{lt. green}{pound}#2{pound}# {pound}%A{blue}) {lt. green}{$c9}{$c4}{white}{pound}#0{pound}%B{pound}{back arrow}17{pound}#4{pound}# {pound}%C {lt. green}{$c3}REDITS{f6}":I=I+RC*N:NEXT
+{:3222}
+	&"{white}{pound}VJ{$c1}{green}DD{blue}/{white}{$c4}{green}ELETE{blue}/{white}{$c5}{green}DIT{blue}/{white}{$d1}{green}UIT{blue}: {white}{pound}G1"
+	ON-(AN$="{$c1}")-2*(AN$="{$c4}")-3*(AN$="{$c5}")GOTO{:3236},{:3246},{:3254}
+	&"{$d1}UIT{f6}":IF CF=.THEN{:3234}
+	&"{f6}{white}{$d3}AVE {$c3}HANGES? ":GOSUB 96:IF A=.THEN{:3234}
+	DR=6:A$="U.PAYROLL":GOSUB 18
+	FOR I=1 TO N:PRINT# 2,TT$(I):NEXT:CLOSE 2
+{:3234}
+	GOTO{:3006}
+{:3236}
+	&"{$c1}DD{f6:2}"
+	POKE 53252,4:&"{$c9}{$c4}: {pound}I1":B%=VAL(AN$):IF B%<1 OR B%>UR THEN{:3214}
+	POKE 53252,5:&"{$c3}REDITS: {pound}I1":C%=VAL(AN$):IF C%<1 THEN{:3214}
+	N=N+1:TT$(N)=RIGHT$(STR$(1000+B%),3)+STR$(C%):CF=1
+	GOTO{:3214}
+{:3246}
+	&"{$c4}ELETE{f6:2}"
+	&"{$d7}HICH #? {pound}I1":A=VAL(AN$):IF A<1 OR A>N THEN{:3214}
+	CF=1:N=N-1:IF A=N+1 THEN{:3214}
+	FOR I=A TO N:TT$(I)=TT$(I+1):NEXT:GOTO{:3214}
+{:3254}
+	&"{$c5}DIT{f6:2}"
+	&"{$d7}HICH #? {pound}I1":A=VAL(AN$):IF A<1 OR A>N THEN 3938
+	B$=(LEFT$(TT$(A),3)):C$=MID$(TT$(A),5)
+	POKE 53252,4:W$=B$:P$="{$c9}{$c4}":PL=1:&,1,32:IF AN$<>""THEN B$=AN$
+	POKE 53252,5:W$=C$:P$="{$c3}REDITS":PL=.:&,1,32:IF AN$<>""THEN C$=AN$
+	B%=VAL(B$):C%=VAL(C$)
+	TT$(A)=RIGHT$(STR$(1000+B%),3)+STR$(C%):CF=1:GOTO{:3214}
+{:3268}
+	COPR. 1994 NEW IMAGE 10/5/94
+	P$="{gray3}{$c4}EVICE{white}":W$=MID$(STR$(DV%(LM)),2):&,1,32:A=VAL(AN$)
+	IF AN$<>""AND A<>DV%(LM)AND A>6 AND A<32 THEN TF=1:DV%(LM)=A
+	P$="{gray3}{$c4}RIVE/{$cc}{$d5}{white}":W$=MID$(STR$(DR%(LM)),2):&,1,32:A=VAL(AN$)
+	IF AN$<>""AND A<>DR%(LM)AND A=>.AND A<255 THEN TF=1:DR%(LM)=A
+	IF TF THEN GOSUB 33:X=LM+51:GOSUB 1:PRINT# 2,DV%(LM);R$;DR%(LM):CLOSE 2
+	RETURN
+{:3282}
+	&"{f6:2}{purple}{pound}VJ{cyan}   {$d2}EMOTE {$d4}IME {$c5}DITOR V2.0{f6}{purple}{pound}VJ{cyan}":GOTO{:3286}
+	A$=D1$:GOSUB 1520:T1=A:RETURN
+{:3286}
+	&"{f6}{pound}{back arrow}10{cyan}{$c3}URRENT {$c4}ATE/{$d4}IME IS{f6}{pound}{back arrow}07{pound}V0{f6:3}":D$=D1$:TZ=.
+{:3288}
+	P$=" {$c4}AY   ":W$=LEFT$(D$,1):A=1:GOSUB{:3328}:IF A<1 OR A>7 THEN{:3288}
+	DW$=MID$(STR$(VAL(AN$)),2,1)
+{:3292}
+	P$=" {$cd}ONTH ":W$=MID$(D$,4,2):A=2:GOSUB{:3328}:IF A<1 OR A>12 THEN{:3292}
+	GOSUB{:3334}:MO$=AN$
+{:3296}
+	P$=" {$c4}ATE  ":W$=MID$(D$,6,2):A=2:GOSUB{:3328}:IF A<1 OR A>31 THEN{:3296}
+	GOSUB{:3334}:DT$=AN$
+{:3300}
+	P$=" {$d9}EAR  ":W$=MID$(D$,2,2):A=2:GOSUB{:3328}:IF A<1 OR A>99 THEN{:3300}
+	GOSUB{:3334}:YR$=AN$
+	C$="{$c1}":E%=VAL(MID$(D$,8,2)):IF E%>79 THEN E%=E%-80:C$="{$d0}"
+{:3306}
+	P$=" {$c8}OUR  ":AN$=MID$(STR$(E%),2):GOSUB{:3334}:W$=AN$:A=2:GOSUB{:3328}:IF A<1 OR A>12 THEN{:3306}
+	GOSUB{:3326}:B=A:GOSUB{:3334}:HR$=AN$
+{:3310}
+	P$=" {$cd}IN.  ":W$=RIGHT$(D$,2):A=2:GOSUB{:3328}:IF A<.OR A>59 THEN{:3310}
+	A=A-SGN(A):GOSUB{:3326}:C=A:MN$=AN$:W$=C$
+{:3314}
+	P$=" {$c1}/{$d0}   ":A=1:GOSUB{:3328}:ON-(AN$<>"{$c1}"AND AN$<>"{$d0}")GOTO{:3314}:IF AN$<>V$THEN TZ=1
+	IF(AN$="{$d0}"AND B<>18)OR(AN$="{$c1}"AND B=18)THEN B=B OR 128:GOSUB{:3336}
+	ON TZ+1 GOTO{:3346}:GOSUB{:3338}:&"{cyan}{pound}{back arrow}10{$d3}ETTING {$c4}ATE/{$d4}IME TO{f6}{pound}{back arrow}07{$04}"+A$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
+	GOSUB 96:ON A+1 GOTO{:3344}:GOSUB{:3340}:POKE 56331,B:POKE 56330,C:POKE 56329,89
+	POKE 56328,.:POKE 1010,1
+	GOSUB 33:X=19:GOSUB 1:PRINT# 2,D1$:CLOSE 2:GOTO{:3344}
+{:3326}
+	A=16*INT(A/10)+A-INT(A/10)*10:RETURN
+{:3328}
+	V$=W$:P$="{cyan}"+P$+"{gray3}":POKE 53252,A:PL=1:&,1,32:ON-(AN$="")GOTO{:3332}:&"{f6}"
+	A=VAL(AN$):TZ=(TZ OR-(A<>VAL(V$))):RETURN
+{:3332}
+	&"{f6}":AN$=V$:A=VAL(AN$):RETURN
+{:3334}
+	AN$=RIGHT$("0"+MID$(STR$(VAL(AN$)),2,2),2):RETURN
+{:3336}
+	HR$=RIGHT$("0"+MID$(STR$(-80*(AN$="{$d0}")+VAL(HR$)),2,2),2):RETURN
+{:3338}
+	A$=DW$+YR$+MO$+DT$+HR$+MN$:RETURN
+{:3340}
+	A=VAL(DW$):GOSUB{:3326}:POKE 52935,A:A=VAL(MO$):GOSUB{:3326}:POKE 52936,A
+	A=VAL(DT$):GOSUB{:3326}:POKE 52937,A:A=VAL(YR$):GOSUB{:3326}:POKE 52938,A
+{:3344}
+	RETURN
+{:3346}
+	&"{f6}{$ce}O {$c3}HANGES {$cd}ADE - {$c1}BORTED!{f6:2}":RETURN
+{:3348}
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,34,M%(.,1),N,17,2,N/2+.5,2,6,.:LM=A%+1:&,70,.,N/2+8.5:&"{white}":RETURN
+{:3354}
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,42,M%(.,1),N,36,1,N,2,6,.:LM=A%+1:&,70,.,N+8:&"{white}":RETURN
+{:3360}
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,46,M%(.,1),N,36,1,N,2,6,.:LM=A%+1:&,70,.,N+8:&"{white}":RETURN
+	COPR. 1994 NEW IMAGE 9/18/94

@@ -1,0 +1,45 @@
+	REM AUTOWEED
+	GOSUB 1063:X=39:GOSUB 1001:&,2,2:W=VAL(A$):CLOSE 2:IF W=0 THEN{:4072}
+	A%=W:&"{f6}{$c1}UTOWEED: {pound}%A {$cd}ONTHS {$c2}ACK{f6}"
+	C$=MID$(D1$,2,6):A=VAL(MID$(C$,3,2))-W:B=VAL(LEFT$(C$,2))
+{:4008}
+	IF A<1 THEN A=A+12:B=B-1:GOTO{:4008}
+	C$=RIGHT$(STR$(100+B),2)+RIGHT$(STR$(100+A),2)+MID$(C$,5)
+	A=4:GOSUB 1736:DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":&,16,1:GOSUB 1012
+	IF E%THEN CLOSE 2:&"{$c5}RROR!{f6}":GOTO{:4072}
+	&"{pound}%A {$d5}SERS IN WEEDINFO FILE{f6:2}":B%=0:N=A%
+	GOSUB 1065:Q=0:&"{$c3}UTOFF={pound}$C{f6}"
+{:4020}
+	&,16,6:ON-(A%=0)GOTO{:4034}
+	X=A%:GOSUB 1001:FOR I=1 TO 24:&,2,2:TT$(I)=A$:NEXT:A$=TT$(1)
+	B$=MID$(TT$(22),2,6):A=VAL(LEFT$(TT$(23),1)):B=-(B$<C$):D$=MID$(" *",A+1,1)
+	&"{lt. blue} {pound}#3{pound}# {pound}%A{pound}$D{pound}$A{pound}{back arrow}28{pound}$B":IF RC THEN{:4034}
+	A=VAL(LEFT$(TT$(23),1)):B=-(B$<C$)
+	IF B=1 AND A=0 THEN Q=Q+1:A%(Q)=A%:ED$(Q)=TT$(1):&" {back arrow}{$c0}"
+	&"{f6}":IF Q<30 AND B=1 THEN{:4020}
+{:4034}
+	CLOSE 2:ON-(Q=0)GOTO{:4070}
+	DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":&,16,1
+	B$="LOG":A$="W":GOSUB 1027:IF E%THEN A$="A":GOSUB 1027
+	PRINT# 2,"  {lt. blue}{$c1}UTO {$d5}SER {$d7}EED"R$
+	FOR I=1 TO Q:PRINT# 2," {lt. blue}>{white} "RIGHT$(STR$(1000+A%(I)),3)" "ED$(I)
+{:4044}
+	A%=A%(I):&,16,8:IF A%THEN:&,16,5:GOTO{:4044}
+	NEXT:PRINT# 2," {pound}Q0{pound}O{$c0}{pound}O{$c0}":CLOSE 2:&"{f6:2}{$d2}EMOVING {$d5}SERS:{f6}"
+	DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":PRINT# 15,"S"A$:&,16,2:GOSUB 1012:&
+	DR=6:GOSUB 1010:A$=DR$+"U.INDEX":&,16,1
+	FOR Z=1 TO Q:A%=A%(Z):TT$=ED$(Z):A$=TT$:&" {pound}#3{pound}%A  {pound}$A{f6}"
+{:4054}
+	A%=A%(Z):&,16,8:IF A%THEN:&,16,5:GOTO{:4054}
+	GOSUB 1065:A$="{up arrow}"+R$+"DEL"+R$
+	FOR I=3 TO 23:A$=A$+"0"+R$:NEXT:X=A%(Z):GOSUB 1001:PRINT# 2,A$:CLOSE 2
+	IF X<L1 THEN L1=X:X=31:GOSUB 1063:GOSUB 1001:PRINT# 2,L1:CLOSE 2
+	A$="R":GOSUB 1062:CLOSE 2:IF E%=.THEN GOSUB 1060:I=-1:X=25:GOSUB 1025:CLOSE 2
+	DR=2:B$=LEFT$(TT$,13):A$="M."+B$:GOSUB 1024:A$="F."+B$:GOSUB 1024
+	NEXT:GOSUB 1081
+	DR=6:GOSUB 1010:A$=DR$+"U.INDEX":PRINT# 15,"S"A$:&,16,2
+{:4070}
+	A%=Q:&"{f6} {pound}%A {$d5}SERS {$d7}EEDED!{f6}"
+{:4072}
+	RETURN
+	COPR. 1990 NEW IMAGE 12-26-90

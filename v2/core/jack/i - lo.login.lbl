@@ -1,0 +1,79 @@
+	REM"** I.LO.LOGIN **  6/08/95 {$ca}{$cc}{$c6}           {$d5}SER {$cc}OGIN {$d2}OUTINE           "
+	REM I/LO.LOGIN
+	GOTO{:4100}
+{:4004}
+	DR=5:B$="I/LO!"+A$:A$=B$:GOSUB 4:CLOSE 2:IF E%THEN:&"{f6}{white}[{$cd}ODULE {pound}$B {$c6}AILED]{f6}":RETURN
+	NEW 4500:P2$="":LOAD DR$+B$,DV%:GOSUB 4500:GOTO{:4200}:REM WAS JUST GOTO4500
+{:4010}
+	P$="{$c6}{$c9}{$d2}{$d3}{$d4} {$ce}AME":T$=FF$:RETURN
+{:4012}
+	P$="{$cc}{$c1}{$d3}{$d4} {$ce}AME":T$=LL$:RETURN
+{:4014}
+	P$="{$c4}{$c9}{$c1}{$cc}{$c9}{$ce}{$c7} {$d0}{$d2}{$c5}{$c6}{$c9}{$d8} [XXX] {rvrs on}???{rvrs off}-XXXX":T$=MID$(PH$,7,3):P=1:RETURN
+{:4016}
+	P$="{$cc}{$c1}{$d3}{$d4} {$c6}{$cf}{$d5}{$d2} {$c4}{$c9}{$c7}{$c9}{$d4}{$d3} [XXX] XXX-{rvrs on}????{rvrs off}":T$=RIGHT$(PH$,4):P=1:RETURN
+{:4020}
+	MM=.:F1=3:GOTO 3000
+{:4022}
+	IM=2:GOSUB 445:A=-(AN$="{$d2}{$c5}{$d3}"OR AN$="{up arrow}"):ON A GOTO 999:A$="                  "
+	&,69,.,17,"{$d5}SER",$8F:AN$=NA$:&,15,1:&,69,5,17,LEFT$(AN$+A$,22),$8C
+	&,69,.,18,"{$ce}AME",$8F
+	AN$=LEFT$(FF$+" "+LL$+A$,22):&,15,1:&,69,5,18,AN$,$8C
+	&,69,.,19,"{$d0}HN#",$8F:&,69,5,19,LEFT$(PH$+A$,22),$8C:RETURN
+{:4030}
+	&"{$cc}OGOFF!{f6:2}":TR%=.:RETURN
+{:4032}
+	&"{$c1}{$d3}{$c3}{$c9:2} {$d2}E-{$c4}ETECT{f6:2}":C=2:RETURN
+{:4034}
+	&"{$d8}PRESS {$cc}OGIN{f6}":X%=1:RETURN
+{:4040}
+	&"{$cd}AIL-{$c3}HECK{f6:2}{gray3}  {$c5}NTER THE {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} OF THE USER YOU WANT TO CHECK FOR.{f6:2}"
+	C=1:&"{white}> {pound}I1":ON-(TR%<1 OR AN$="")GOTO 999:A$="R":TT$=AN$:GOSUB 32:CLOSE 2
+	A$=MID$(" NO",3*-(E%=.)+1,3):&"{f6} {cyan}{pound}V7 {lt. blue}HAS{pound}$A MAIL.{f6}":RETURN
+{:4050}
+	&,52,10,3:IF A%=.THEN{:4056}
+{:4052}
+	&"{f6:2} {$d3}ORRY, NO NEW USERS ARE BEING ACCEPTED AT THIS TIME.{f6:2}":GOTO{:4102}
+{:4056}
+	A$="LO."+"NEW":GOTO 72
+{:4060}
+	A$="HELP":GOTO{:4004}
+{:4100}
+	PW$="":K=.
+{:4102}
+	POKE 53252,20:AC%=16:ID=.:X%=.:I%=.:K%=.:&,52,32,3
+	&"{f6:2} {lt. blue}{$d0}RESS {lt. green}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{lt. blue}/{lt. blue}{$c5}{$ce}{$d4}{$c5}{$d2} TO {$cc}OGIN;{f6} {$d0}RESS {lt. green}{f5}!{f5} {lt. blue}TO {$cc}OGOFF;{f6}"
+	&" {$d0}RESS {lt. green}{f5}*{f5} {lt. blue}TO {$c3}HANGE {$c1}{$d3}{$c3}{$c9:2} {$d4}RANSLATION":IF A%=.THEN{:4110}
+	&";{f6} {$d0}RESS {lt. green}{f5}{$cd}{f5} {lt. blue}{$c6}OR {$cd}AIL-{$c3}HECK"
+{:4110}
+	&,52,46,3:IF A%THEN:&";{f6} {$d0}RESS {lt. green}{f5}{$d8}{f5} {lt. blue}{$c6}OR {$d8}PRESS {$cc}OGIN"
+	&":{f6:2}{yellow}{$cc}OGIN{white}: {pound}G1":ON-(TR%<1)GOTO{:4020}:A$=AN$
+	X=-(A$="!")-2*(A$="{f7}")-3*(A$="{$d8}")-4*(A$="{$cd}"):IF A$="{$c9}"THEN MM=11:GOTO 3000
+	C=.:ON X GOSUB{:4030},{:4032},{:4034},{:4040}:ON-(TR%<1)GOTO{:4020}:MM=12:ON C GOTO{:4102},3000
+	IF X=.THEN:&"{$c3}ONTINUE {$cc}OGIN{f6:2}"
+	&"{f6}{$c5}NTER YOUR {$c8}ANDLE OR {$cc}OGIN {$c9}{$c4}#{f6:2}{pound}B1: {pound}I1":ON-(TR%<1)GOTO{:4020}:DD$=AN$
+	A=-(LEFT$(DD$,3)="{$d2}{$c5}{$d3}")-2*(DD$="{$ce}{$c5}{$d7}")-3*(DD$="{$c8}{$c5}{$cc}{$d0}"OR DD$="{f2}")
+	ON A GOTO{:4056},{:4050},{:4060}:IF VAL(AN$)THEN DD$=CC$+AN$:GOTO{:4180}
+	IF LEFT$(DD$,LEN(CC$))=CC$AND VAL(MID$(DD$,LEN(CC$)+1))>.THEN{:4180}
+	I=LEN(DD$):B$=LEFT$(DD$,1):IF I<4 OR I>20 OR B$<"{$c1}"OR B$>"{$da}"THEN ID=.:GOTO{:4194}
+	IM=1:GOSUB 441
+	IF I THEN ID=I:LP=1:&"{f6}{lt. blue} {$d9}OUR {$c9}{$c4}# IS {white}{pound}!I.  {lt. blue}{$d5}SE IT FOR A FASTER LOGON.{f6}":GOTO{:4182}
+	&"{f6:2} {f5}{pound}V7{f5} NOT FOUND!{f6:2}":&,52,10,3:IF A%THEN{:4052}
+	LP=1:&" {$d7}OULD YOU LIKE TO APPLY FOR AN ACCOUNT USING THAT HANDLE?: "
+	GOSUB 94:IF A THEN F1=1:G$=DD$:DD$="{$ce}{$c5}"+"{$d7}":GOTO{:4056}
+{:4170}
+	AC%=16:K=K+1:ON-(K>4)GOTO{:4020}:LP=1:&"{f6:2}{$c5}NTER {f5}{$ce}{$c5}{$d7}{f5} IF YOU HAVE NO {$cc}OGIN"
+	LP=1:&" {$c9}{$c4}, OR {f5}{$c8}{$c5}{$cc}{$d0}{f5} IF YOU ARE HAVING TROUBLE LOGGING ON.{f6}":GOTO{:4102}
+{:4180}
+	ID=VAL(MID$(DD$,LEN(CC$)+1)):IF ID<.OR ID>UR THEN ID=.:GOTO{:4194}
+{:4182}
+	GOSUB{:4022}:IF A THEN:&"{f6:2}{$d4}HAT ACCOUNT HAS BEEN DELETED.{f6}":GOTO{:4170}
+	&"{f6}{$d0}LEASE ENTER YOUR PASSWORD.{f6:2}{pound}B1: ":&,6:ON-(TR%<1)GOTO{:4020}
+	Z$=AN$:IF Z$=""THEN ID=.:GOTO{:4194}
+	&"{f6}{$c1}DDITIONAL {$c9}NFORMATION:":A=INT(RND(1)*4)+1:P=.:ON A GOSUB{:4010},{:4012},{:4014},{:4016}
+	IF P THEN LP=1:&" ({$cf}NLY FILL IN THE ?'S)"
+	&"{f6:2}":GOSUB 6:C$=AN$:IF PW$=Z$AND T$=C$AND C$<>""AND Z$<>""THEN{:4200}
+{:4194}
+	&"{f6:2}{$cc}OGIN IS NOT VALID.":A$="TELECHECK":GOSUB{:4004}:GOTO{:4170}
+{:4200}
+	&"{f6}{$cc}OGIN SUCCESSFUL.{f6:2}":MM=10:GOTO 3000

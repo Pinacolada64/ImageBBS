@@ -1,0 +1,83 @@
+	ON IM GOTO{:60002},{:60100},{:60200},{:60300}:RETURN
+{:60002}
+	NR=1:&"{f6}{cyan}{$cc}AST {$c3}ALL: {$04}"+LD$+"{f6:2}{$c1}DD {$cf}R {$d3}UBTRACT {$c8}OW {$cd}ANY {$c4}AYS? {f6:2}{$cc}AST: {pound}I1"
+	IF LEFT$(AN$,1)="@"THEN GOSUB{:60052}:GOTO{:60002}
+	A=INT(VAL(AN$)):IF TR%<1 THEN RETURN
+	ON-(A=.)GOTO{:60034}:IF A<-999 OR A>999 THEN:&"{f6}{$cf}UT {$cf}F {$d2}ANGE!{f6}":GOTO{:60002}
+	B=VAL(LEFT$(LD$,1))+A:C=VAL(MID$(LD$,2,2)):D=VAL(MID$(LD$,4,2))
+	E=VAL(MID$(LD$,6,2))+A:A$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
+{:60014}
+	IF E<=ASC(MID$(A$,D))THEN{:60020}
+	E=E-ASC(MID$(A$,D)):D=D+1:IF D<13 THEN{:60014}
+	D=1:C=C+1:GOTO{:60014}
+{:60020}
+	IF E>.THEN{:60026}
+	D=D-1:E=E+ASC(MID$(A$,D-12*(D=.))):IF D>.THEN{:60020}
+	D=12:C=C-1:GOTO{:60020}
+{:60026}
+	IF B>7 THEN B=B-7:GOTO{:60026}
+{:60028}
+	IF B<1 THEN B=B+7:GOTO{:60028}
+	A$=RIGHT$("0"+MID$(STR$(C),2),2)+RIGHT$("0"+MID$(STR$(D),2),2)
+	LD$=CHR$(48+B)+A$+RIGHT$("0"+MID$(STR$(E),2),2)+RIGHT$(LD$,4)
+{:60034}
+	&"{f6}{$c3}HANGE {$d4}IME?: ":GOSUB 1902:ON A GOSUB{:60038}
+	&"{f6}{$cc}AST {$c4}ATE: {$04}"+LD$:&"{f6:2}":RETURN
+{:60038}
+	&"{f6}{$c5}NTER {$d4}IME {$c9}N {$d4}HIS {$c6}ORMAT:{f6:2}{$c5}XAMPLE:  9:20 {$c1}{$cd}--920{$c1}{f6}"
+	&"{pound}{back arrow}0911:23 {$d0}{$cd}--1123{$d0}{f6:2}{$cc}AST: {pound}I1"
+	A$=RIGHT$(AN$,1):IF AN$=""THEN RETURN
+	AN$=LEFT$(AN$,LEN(AN$)-1):IF(A$<>"{$c1}"AND A$<>"{$d0}")OR VAL(RIGHT$(AN$,2))>59 THEN{:60038}
+	IF VAL(AN$)>1259 OR VAL(AN$)<100 THEN{:60038}
+	T=-(A$="{$d0}")*8000
+	LD$=LEFT$(LD$,7)+RIGHT$("0"+MID$(STR$(VAL(AN$)+T),2),4):RETURN
+{:60052}
+	IF LEN(AN$)<>7 THEN RETURN
+	A=VAL(MID$(AN$,2,2))
+	B=VAL(MID$(AN$,4,2)):IF B<1 OR B>12 THEN RETURN
+	C=VAL(MID$(AN$,6,2)):IF C<1 OR C>31 THEN RETURN
+	C=C+A*365:IF B>1 THEN FOR I=1 TO B-1:C=C+ASC(MID$("{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}",I,1)):NEXT
+	IF A>0 THEN L=INT(A/4):IF(INT(A/4)=A/4)AND B<3 THEN L=L-1
+	C=C+L:C=.5+7*(C/7-INT(C/7)):LD$=CHR$(49+C)+MID$(AN$,2)+MID$(LD$,8):RETURN
+{:60100}
+	A=11:GOSUB 1004:IF A=.THEN RETURN
+	D=VAL(LEFT$(LT$,1))
+	DIM DT$(14):DT$(1)="{$d3}UNDAY":DT$(2)="{$cd}ONDAY":DT$(3)="{$d4}UESDAY"
+	DT$(4)="{$d7}EDNESDAY":DT$(5)="{$d4}HURSDAY":DT$(6)="{$c6}RIDAY":DT$(7)="{$d3}ATURDAY"
+	DT$(8)="{$d3}UNDAY":DT$(9)="{$cd}ONDAY":DT$(10)="{$d4}UESDAY"
+	DT$(11)="{$d7}EDNESDAY":DT$(12)="{$d4}HURSDAY":DT$(13)="{$c6}RIDAY":DT$(14)="{$d3}ATURDAY"
+{:60112}
+	FOR I=.TO 6:A%=I+1:&"{f6} [{pound}#1{pound}%A] ":&DT$(7-I+D):NEXT:&"{f6} [{$d1}]UIT{f6:2}{$d7}HICH {$cc}OG? "
+	GOSUB 1007:&:ON-(TR%=.OR A$="{$d1}")GOTO{:60134}:IF A$<>R$AND(A$<"1"OR A$>"7")THEN{:60130}
+	C=VAL(A$):IF A$=R$THEN C=1
+{:60118}
+	B=D+1-C:IF C>D THEN B=D+8-C
+	A$="R":B$="LOG"+MID$(STR$(B),2):GOSUB 1027:ON SGN(E%)GOTO{:60136}:SH=.:A$="{f6}"
+{:60122}
+	LP=1:&:ON RC GOTO{:60130}:&,2,2:B$=MID$(A$,2,1):IF B$="{$c0}"THEN B$=A$:A$="{pound}Q0{pound}$B{yellow}"
+	IF B$="{$d5}"THEN B$=A$:A$="{white}{pound}$B{yellow}"
+	ON-(ST=.)GOTO{:60122}:&:A$=DT$(B):&"{f6:2}{pound}Q0{$c5}ND {$cf}F {pound}$A'S {$cc}OG{f6}":IF C=7 THEN{:60132}
+	&"{f6:2}{$cd}ORE? {pound}G1":A=-(AN$="{$d9}"OR AN$=R$):GOSUB 1904:ON A+1 GOTO{:60132}:C=C+1:GOTO{:60118}
+{:60130}
+	&"{f6}{$c1}BORTED.{f6}"
+{:60132}
+	ON-(SH=47)GOTO{:60134}:&"{f6}{$c1}NOTHER {$cc}OG? ":GOSUB 1902:ON A GOTO{:60112}
+{:60134}
+	CLOSE 2:RETURN
+{:60136}
+	&"{f6}{$ce}O {$cc}OG {$c6}OR ":&DT$(B):&"{f6}":GOTO{:60132}
+{:60200}
+	T%=60:&"{clear}":IF TR%>T%OR(PT%AND TR%>P1%)THEN{:60216}
+{:60202}
+	A%=TR%:B$=STR$(CR):&"{f6:2}{rvrs on} ** {$c3}REDIT {$c5}XCHANGE ** {rvrs off}{f6:2} {$c3}URRENT {$d2}ATE {$cf}F {$c5}XCHANGE:"
+	&"{f6} 5 {$c3}REDIT {$d0}TS = 1 {$cd}INUTE{f6:2}{$cd}INUTES {$cc}EFT  : {pound}%A{f6}{$c3}REDIT {$d0}OINTS :{pound}$B"
+	A%=T%-TR%:&"{f6:2}{$c8}OW {$cd}UCH {$d4}IME {$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$c2}UY?{f6}({$d5}P {$d4}O {pound}%A {$cd}ORE {$cd}INUTES)"
+	&"{f6}({$c5}NTER {f5}{$d1}{f5} {$d4}O {$d1}UIT){f6:2}{$c5}XCG: {pound}I1":A=INT(VAL(AN$)):IF A<1 THEN RETURN
+	IF A+TR%>T%THEN GOSUB{:60216}:GOTO{:60202}
+	IF A*5>CR THEN:&"{f6:2}{$ce}OT {$c5}NOUGH {$c3}REDITS.":GOTO{:60202}
+	CR=CR-A*5:TR%=TR%+A:GOTO{:60202}
+{:60216}
+	IF PT%THEN T%=P1%
+	&"{f6}{$d3}ORRY, {$d9}OU {$c3}ANNOT {$c8}AVE {$cd}ORE{f6}{$d4}HAN {pound}%T {$cd}INUTES {$d4}OTAL.{f6:2}":RETURN
+{:60300}
+	RETURN

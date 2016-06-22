@@ -1,0 +1,59 @@
+	DR=3:A$="E.SYSOP":GOSUB 4:X=ID:GOSUB 1
+	REM I/LO-SYSOP.QUEST
+	&,2,2:ON-(A$="N")GOTO{:4508}:IF A$="{up arrow}"THEN GOSUB{:4510}:GOTO{:4552}
+	IF AC%<=3 THEN{:4508}
+	IF MID$(D1$,4,2)<>MID$(A$,4,2)THEN GOSUB{:4510}:GOTO{:4518}
+{:4508}
+	CLOSE 2:RETURN
+{:4510}
+	DIM ED$(12)
+	ED$(1)="{$c8}ANDLE":ED$(2)="{$c6}IRST":ED$(3)="{$cc}AST":ED$(4)="{$c1}DDRESS"
+	ED$(5)="{$c3}ITY":ED$(6)="{$d3}TATE":ED$(7)="{$da}IP {$c3}ODE":ED$(8)="{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}#"
+	ED$(9)="{$c2}OARD {$ce}AME":ED$(10)="{$d6}OICE {$ce}O.":ED$(11)="{$c2}OARD {$ce}O."
+	ED$(12)="{$ce}ODE {$c9}{$c4}.":RETURN
+{:4518}
+	&"{f6:2}{$c7}ETTING {$d9}OUR {$c3}URRENT {$c9}NFO..."
+	X=ID:GOSUB 1:FD=.
+	&,2,2:IF A$="{up arrow}"THEN{:4552}
+	GOSUB 1:FOR I=.TO 12:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
+	TT$(I)=A$:NEXT:FD=.
+{:4528}
+	&"{f6:2}{$d0}LEASE {$d6}ERIFY {$d4}HE {$c6}OLLOWING {$c9}NFORMATION: "
+{:4530}
+	&"{f6:2}{$ce}O.{pound}{back arrow}03:{$c9}NFO:{pound}{back arrow}17{$c3}URRENT {$d6}ALUE"
+	FOR I=1 TO 12:B%=I
+	&"{f6}{pound}%B{pound}{back arrow}03:":&ED$(I):&"{pound}{back arrow}17:":&TT$(I)
+	NEXT:&"{f6:2}{$c9}S {$d4}HIS {$c3}ORRECT? ":GOSUB 96:IF FD THEN{:4564}
+	ON A GOTO{:4566}
+	FD=.:&"{f6:2}{$d7}HICH {$ce}O. {$c9}S {$d7}RONG? {pound}I1":I=VAL(AN$):IF AN$=""THEN RETURN
+	&"{f6:2}{$c9}NPUT {$ce}EW ":&ED$(I):IF I<4 OR I=8 THEN{:4546}
+	&"{f6}[> {pound}I0":ON TR%+1 GOTO 999:GOTO{:4548}
+{:4546}
+	&"{f6}[> {pound}I1":ON TR%+1 GOTO 999
+{:4548}
+	TT$=AN$:&"{f6:2}{$c9}S :":&TT$:&" {$c3}ORRECT? ":GOSUB 96:IF A=.THEN{:4528}
+	TT$(I)=TT$:FD=1:GOTO{:4528}
+{:4552}
+	&"{f6:2}{$d0}LEASE {$d0}ROVIDE {$d4}HE {$c6}OLLOWING {$c9}NFORMATION: ":POKE 53252,30
+	TT$(1)=NA$:TT$(2)=FF$:TT$(3)=LL$:FOR I=4 TO 12
+	IF I=8 THEN:&ED$(I):&"{pound}{back arrow}13: {pound}I1":TT$(I)=AN$:ON TR%+1 GOTO{:4560}:GOTO{:4560}
+	&ED$(I):&"{pound}{back arrow}13: {pound}I0":TT$(I)=AN$:ON TR%+1 GOTO{:4560}
+{:4560}
+	NEXT:ON TR%+1 GOTO 999:FOR I=1 TO 12:&"{f6}":&ED$(I):&"{pound}{back arrow}17:":&TT$(I):NEXT
+	&"{f6:2}{$c9}S {$d4}HIS {$c3}ORRECT? :":GOSUB 96:FD=1:ON A+1 GOTO{:4530}
+{:4564}
+	&"{f6:2}{$d7}RITING {$c4}ATA..."
+{:4566}
+	TT$(.)=D1$:W$="":FOR I=.TO 12:W$=W$+TT$(I)+R$:NEXT
+	X=ID:GOSUB 1:PRINT# 2,W$:CLOSE 2:IF FD=.THEN RETURN
+	B$="FBACK":GOSUB 37
+	PRINT# 2,NA$R$ID;R$D1$R$AC%;R$PH$R$RN$R$CO$(CO%)
+	PRINT# 2,AK$+R$+"{$c3}HANGED {$d3}YSOP {$c4}ATA"+R$R$
+	PRINT# 2,"{$c8}ANDLE: "+TT$(1)+R$+"{$c6}IRST:  "+TT$(2)+R$+"{$cc}AST:   "+TT$(3)+R$
+	PRINT# 2,"{$c1}DDRESS:{pound}{back arrow}17"+TT$(4)+R$+"{$c3}ITY, {$d3}TATE {$da}IP: "+TT$(5)+", "+TT$(6)+" ";
+	PRINT# 2,TT$(7)+R$+"{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}#:{pound}{back arrow}17"+TT$(8)+R$+"{$c2}OARD {$ce}AME:{pound}{back arrow}17"+TT$(9)
+	PRINT# 2,"{$d6}OICE {$ce}O.:{pound}{back arrow}17"+TT$(10)+R$+"{$c2}OARD {$ce}O.:{pound}{back arrow}17"+TT$(11)
+	PRINT# 2,"{$ce}ODE {$c9}{$c4} :{pound}{back arrow}17"+TT$(12)+R$:PRINT# 2,"{up arrow}"
+	CLOSE 2:GOSUB 30:I=1:X=1:GOSUB 16:X=12:GOSUB 16:X=23:GOSUB 16
+	X=30:GOSUB 16:CLOSE 2:RETURN
+	COPR. 1994 NEW IMAGE 9/6/94

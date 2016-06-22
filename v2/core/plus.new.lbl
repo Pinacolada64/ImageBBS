@@ -1,0 +1,211 @@
+	CLOSE 2:DR=3:GOSUB 1079:IF A>20 THEN{:3008}
+	&"{f6:2}{$d3}ORRY, {$d4}HERE {$c9}S {$ce}OT {$c5}NOUGH {$c4}ISK {$d3}PACE{f6}{$c6}OR {$d9}OU {$d4}O {$cc}OGON {$c1}T {$d4}HIS {$d4}IME."
+	&"{f6}{$d0}LEASE {$d4}RY {$c1}GAIN {$cc}ATER!{f6:2}":GOTO{:3088}
+	RETURN
+{:3008}
+	IF L1=.THEN GOSUB 1063:X=31:GOSUB 1001:&,2,2:L1=VAL(A$):CLOSE 2
+	TR%=10:&"{f6}":DR=5:A=1:GOSUB 1003
+	&,25,.,4:AN$=DD$+" {$d5}SER {$cc}OGIN":&,15,1:CM$=AN$:GOSUB 1360
+	DR=1:GOSUB 1010:OPEN 5,DV%,5,DR$+"S.NEW USER,S,R":&,12,5:CLOSE 5:GOSUB 1914
+	JN$="":L=L1:AC%=.:ID=.:CR=NC:F$=CC$:LD$="1"+"8001011201":P$=""
+	GOSUB 1061:&,2,2:AG$=A$:&,2,2:FL$=A$:CLOSE 2
+	ON-(DD$<>"{$d2}{$c5}{$d3}")GOTO{:3034}:E=1:&,25,.,2:B=.
+{:3022}
+	B=B+1:IF B=5 THEN{:3088}
+	CLOSE 2:&"{f6:2}{$d0}LEASE {$c5}NTER {$d9}OUR{f6}{$d2}{$c5}{$d3} {$c1}CCOUNT {$ce}UMBER: {pound}I1":ON TR%+1 GOTO{:3088}
+	ID=INT(ABS(VAL(AN$))):IF ID<1 OR ID>UR THEN{:3022}
+	GOSUB 1071:IF NA$<>"{$d2}{$c5}{$d3}"THEN{:3022}
+	&"{f6:2}{$d0}LEASE {$c5}NTER {$d9}OUR{f6}{$d2}{$c5}{$d3} {$d0}ASSWORD : ":&,6:IF TR%<1 OR B>4 THEN{:3088}
+	IF AN$<>PW$THEN:&"{f6}{$c9}NCORRECT {$d0}ASSWORD.{f6}":GOTO{:3022}
+{:3034}
+	NA$="":RN$="":CT%=.:TC%=.:LL%=40:LF=1:EM=.:UL=.:CO%=1:FF$="":LL$="":D5$=LT$
+	TR%=30:GOSUB{:3090}:ON TR%+1 GOTO{:3088}
+	IF PW$=""THEN ID=.:&"{f6}":AO%=AC%:GOSUB 1634:GOTO{:3064}
+	GOSUB 1073:IF ID<>.THEN{:3054}
+	GOSUB 1065:&"{f6:2}{$d5}PDATING ACCOUNT INFO...":ID=L1
+	L=L1+1:IF L1>UR THEN E=.:GOTO{:3052}
+	E=1:ON-(L1=UR)GOTO{:3052}:FOR X=L TO UR:IF X/3=INT(X/3)THEN:&"."
+	GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN L=X:X=UR:NEXT:GOTO{:3052}
+	NEXT:L=X
+{:3052}
+	CLOSE 2
+{:3054}
+	A%=ID:&"{clear}{f6}{pound}VJ {$d9}OUR {$cc}OGIN {$c9}{$c4} --> {pound}$F{pound}%A"
+	B$=PW$:&"{f6} {$d9}OUR {$d0}ASSWORD --> {f5}{pound}$B{f5}{f6}{pound}VJ"
+	&"{f6}{rvrs on} {$d7}RITE {$d4}HESE {$c4}OWN! "
+	&"{f6:2}{$d9}OU {$d7}ILL {$ce}EED {$d4}HEM {$d4}O {$d3}IGN {$c2}ACK {$cf}NTO{f6}{$d4}HE {$d3}YSTEM.{f6}"
+	&"{f6}{$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$c3}ONTINUE.{f6:2}: {$07}{pound}I1"
+{:3064}
+	GOSUB{:3188}:ON TR%+1 GOTO{:3088}
+	IF PW$=""THEN{:3086}
+	GOSUB{:3202}:ON TR%+1 GOTO{:3088}
+	GOSUB{:3236}:ON TR%+1 GOTO{:3088}
+	GOSUB{:3264}:ON TR%+1 GOTO{:3088}
+	GOTO{:3276}
+{:3076}
+	DC=.:UC=.:BD=.:BU=.:PS=.:RP=.:CT%=.:TC%=.:GOSUB 1070
+	GOSUB 1063:X=31:GOSUB 1001:PRINT# 2,L:L1=L:ON E GOTO{:3084}
+	GOSUB 1063:X=12:GOSUB 1001:PRINT# 2,UR+2:CLOSE 2:UR=UR+1:GOSUB 1374
+	GOSUB 1065:X=ID+6:GOSUB 1001:PRINT# 2,"0"
+{:3084}
+	CLOSE 2:ON TR%+1 GOTO{:3088}:RETURN
+{:3086}
+	UF$="01000":&,52,1,4:E%=.:F1=4:A$="LO":GOTO 1016
+{:3088}
+	E%=1:F1=4:A$="LO":GOTO 1016
+{:3090}
+	&"{f6}{$d0}ART {$c9}: {$c7}ENERAL {$c9}NFORMATION:{f6}"
+	FOR T=1 TO 5:ON T GOSUB{:3106},{:3150},{:3126},{:3140},{:3142}:T=T-5*(TR%<1):NEXT
+	IF TR%<1 THEN RETURN
+{:3096}
+	B$=PW$:&"{clear}{f6}{$c7}ENERAL {$c9}NFORMATION:{f6:2}1) {$c8}ANDLE    : {pound}V2{f6}2) {$d0}ASSWORD  : {f5}{pound}$B{f5}"
+	B$=FF$:C$=LL$:&"{f6}3) {$d0}HONE #   : {pound}V4{f6}4) {$c6}IRST {$ce}AME: {pound}$B{f6}5) {$cc}AST {$ce}AME : {pound}$C"
+	&"{f6:2}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$c3}HANGE, {$cf}R{f6}{$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$c3}ONTINUE:{f6:2}> {pound}G1"
+	A=VAL(AN$):IF A THEN ON A GOSUB{:3106},{:3150},{:3126},{:3140},{:3142}:GOTO{:3096}
+	RETURN
+{:3106}
+	POKE 53252,20:IF F1 THEN F1=.:NA$=G$:RETURN
+	&"{f6}{$c5}NTER {$d4}HE {$c8}ANDLE {$d4}HAT {$d9}OU {$d7}ISH{f6}{$d4}O {$d5}SE {$cf}N {$d4}HIS {$d3}YSTEM:{f6:2}: {pound}I1"
+	IF TR%<1 THEN NA$="":RETURN
+	A=LEN(AN$):IF A<5 OR A>20 THEN{:3122}
+	IF LEFT$(AN$,1)<"{$c1}"THEN{:3122}
+	&"{f6}{$c3}HECKING {$d4}O {$d3}EE {$c9}F {$c1}NYBODY {$c9}S {$c1}LREADY{f6}{$d5}SING {$d4}HAT {$c8}ANDLE..."
+	GOSUB 1046:IF I=.THEN NA$=AN$:RETURN
+	A%=I:&"{f6:2}{$d4}HAT HANDLE IS NOW USED BY {pound}$F{pound}%A.{f6}":GOTO{:3106}
+{:3122}
+	&"{f6}{$d9}OUR HANDLE MUST BE AT LEAST 5 BUT NO{f6}MORE THAN 20 CHARACTERS LONG AND"
+	&"BEGIN{f6}WITH AN ALPHABETIC CHARACTER.{f6}":GOTO{:3106}
+{:3126}
+	POKE 53252,12:&"{f6}{$c5}NTER {$d9}OUR {$d0}HONE {$ce}UMBER {$c9}N {$d4}HE {$c6}ORM{f6}801-423-2734:{f6:2}: {pound}I1"
+	IF TR%<1 THEN PH$="[{$d8:3}] {$d8:3}-{$d8:4}":RETURN
+	IF AN$=""THEN{:3126}
+	AN$=LEFT$(AN$,3)+MID$(AN$,5,3)+RIGHT$(AN$,4):IF LEN(AN$)<>10 THEN{:3138}
+	G=.:FOR X=1 TO 10:B$=MID$(AN$,X,1):G=-(B$<"0"OR B$>"9")OR G:NEXT:ON G GOTO{:3138}
+	PH$="["+LEFT$(AN$,3)+"] "+MID$(AN$,4,3)+"-"+RIGHT$(AN$,4):RETURN
+{:3138}
+	&"{f6}{$c9}NCORRECT {$cf}R {$cd}ISSING {$d0}HONE {$ce}UMBER.{f6}{$d0}LEASE {$d2}E-{$c5}NTER.{f6}":GOTO{:3126}
+{:3140}
+	A$="{$c6}IRST":GOSUB{:3144}:FF$=AN$:RN$=FF$+" "+LL$:RETURN
+{:3142}
+	A$="{$cc}AST":GOSUB{:3144}:LL$=AN$:RN$=FF$+" "+LL$:RETURN
+{:3144}
+	&"{f6}{$c5}NTER {$d9}OUR {pound}$A {$ce}AME:{f6:2}: {pound}I1":IF TR%=.THEN RETURN
+	IF(LEFT$(AN$,1)>="{$c1}"AND RIGHT$(AN$,1)>="{$c1}")THEN RETURN
+	&"{f6}{$ce}ON-{$c1}CCEPTABLE {$c5}NTRY.{f6}":GOTO{:3140}
+{:3150}
+	&"{f6:2}{$d7}OULD YOU LIKE TO:{f6:2} ({$c1}) {$c5}NTER A PASSWORD{f6}
+	&" ({$c2}) {$c7}ENERATE A {$d2}ANDOM {$d0}ASSWORD{f6} ({$c3}) {$c8}AVE NO PASSWORD, AND HAVE ONLY A{f6}"
+	&"     {$d4}{$c5}{$cd}{$d0}{$cf}{$d2}{$c1}{$d2}{$d9} ACCOUNT ON THIS {$c2:2}{$d3}{f6:2}> {pound}G1"
+	IF TR%>.THEN ON-(AN$="{$c1}")-2*(AN$="{$c2}")-3*(AN$="{$c3}")GOTO{:3162},{:3172},{:3158}:GOTO{:3150}
+{:3158}
+	&"{$c3}{f6:2}"
+{:3160}
+	PW$="":RETURN
+{:3162}
+	POKE 53252,14:&"{$c1}{f6:2}{$d0}LEASE {$c5}NTER {$c1} {$d0}ASSWORD {$d4}O {$d5}SE{f6}"
+	&"FOR YOUR ACCOUNT ON THIS {$c2:2}{$d3}.{f6:2}: {pound}I1":ON TR%+1 GOTO{:3160}:IF AN$=""THEN{:3150}
+	IF TR%<1 THEN{:3170}
+	IF NA$=AN$THEN:&"{f6}{$d0}LEASE {$c4}O {$ce}OT {$d5}SE {$d9}OUR {$c8}ANDLE{f6}{$c1}S {$c1} {$d0}ASSWORD.{f6}":GOTO{:3162}
+{:3170}
+	PW$=AN$:RETURN
+{:3172}
+	&"{$c2}{f6:2}":GOSUB{:3178}:&"{$d9}OUR RANDOM PASSWORD IS {f5}{pound}$B{f5}{f6:2}{$c9}S THIS {$cf}K? ":GOSUB 1907
+	IF A THEN PW$=B$:RETURN
+	GOTO{:3150}
+{:3178}
+	B$="":V$="{$c1}{$c5}{$c9}{$cf}{$d5}":C$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":N$="{$ce}{$d4}{$d2}{$d3}{$c2}"
+	GOSUB{:3184}:GOSUB{:3186}:GOSUB{:3184}:GOSUB{:3186}:GOSUB{:3184}:GOSUB{:3186}
+	B$=B$+MID$(N$,INT(RND(1)*LEN(N$))+1,1):RETURN
+{:3184}
+	B$=B$+MID$(C$,INT(RND(1)*(LEN(C$)/2))*2+1,2):RETURN
+{:3186}
+	B$=B$+MID$(V$,INT(RND(1)*LEN(V$))+1,1):RETURN
+{:3188}
+	&"{f6}{$d0}ART {$c9:2}: {$d4}ERMINAL {$d0}ARAMETERS:{f6:2}"
+{:3190}
+	CO%=1:&"{f6}":FOR X=1 TO 9:A%=X:B$=CO$(X):&"{pound}%A> {pound}$B{f6}":NEXT
+	&"{f6}{$d7}HICH TYPE OF COMPUTER ARE YOU USING?{f6:2}> {pound}G1":IF TR%<1 THEN RETURN
+	CO%=VAL(AN$):ON-(CO%=.)GOTO{:3190}:AN$=CO$(CO%):&"{pound}V7{f6:2}":&,9
+	A$=MID$("402400802400802421402421802421802421802421802421402421",CO%*6-5,6)
+	LL%=VAL(LEFT$(A$,2)):MP%=VAL(MID$(A$,3,2)):UL=VAL(MID$(A$,5,1))
+	LF=VAL(MID$(A$,6,1)):A=1:GOSUB 1661:GOTO 1073
+{:3202}
+	&"{f6:2}{$d0}ART {$c9:3}: {$cd}ISCELLANEOUS {$d1}UESTIONS:{f6:2}"
+	&"{white}{f6}   {$d9}OUR {$c1}NSWERS {$d4}O {$d4}HE {$c6}OLLOWING{f6}{$d1}UESTIONS {$d7}ILL {$c2}E {$cb}EPT {$d3}TRICTLY{f6}"
+	&"{$c3}ONFIDENTIAL {$c1}ND {$c1}RE {$c6}OR {$d4}HE {$d3}YSOP'S{f6}{$d2}ECORDS {$cf}NLY.{f6}{cyan}":B=6
+	P$="":FOR I=1 TO B:GOSUB{:3210}:GOSUB{:3224}:NEXT:GOTO{:3226}
+{:3210}
+	POKE 53252,38:ON I GOTO{:3212},{:3214},{:3216},{:3218},{:3220},{:3222}
+{:3212}
+	A$="{$d3}TREET {$c1}DDRESS":RETURN
+{:3214}
+	A$="{$c3}ITY":RETURN
+{:3216}
+	A$="{$d3}TATE":RETURN
+{:3218}
+	A$="{$da}{$c9}{$d0} OR {$d0}OSTAL {$c3}ODE":RETURN
+{:3220}
+	A$="{$c2}IRTHDATE":RETURN
+{:3222}
+	A$="{$cf}CCUPATION":RETURN
+{:3224}
+	&"{f6}{$d9}OUR {pound}$A?{f6}":GOSUB 1006:&,15,1:ED$(I)=AN$:RETURN
+{:3226}
+	&"{clear}{f6}{$cd}ISCELLANEOUS {$d1}UESTIONS:{f6:2}"
+	FOR I=1 TO B:GOSUB{:3210}:B$=ED$(I):A%=I:&"{cyan}{pound}%A> {pound}$A:{f6} {white}{pound}$B{f6}":NEXT
+	&"{cyan}{f6}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$d2}E-{$c5}NTER {$cf}R {$d0}RESS{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}F {$c3}ORRECT: {pound}G1{pound}V7{f6}"
+	IF TR%>.THEN A=VAL(AN$):IF A>.AND A<=B THEN I=A:GOSUB{:3210}:GOSUB{:3224}:GOTO{:3226}
+	RETURN
+{:3236}
+	Q=.:&"{f6:2}{$c1}RE {$d9}OU {$c1}N {$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$cf}WNER? ":GOSUB 1902:Q=A:IF A=.THEN{:3262}
+	B=5:P$="":FOR I=1 TO B:GOSUB{:3240}:GOSUB{:3252}:NEXT:GOTO{:3254}
+{:3240}
+	POKE 53252,38:ON I GOTO{:3242},{:3244},{:3246},{:3248},{:3250}
+{:3242}
+	A$="{$c2:2}{$d3} {$ce}AME":RETURN
+{:3244}
+	A$="{$c2:2}{$d3} {$d0}HONE":RETURN
+{:3246}
+	A$="{$d3}ERIAL #":RETURN
+{:3248}
+	A$="{$ce}ETWORK":RETURN
+{:3250}
+	A$="{$ce}ODE {$c9}{$c4}":RETURN
+{:3252}
+	&"{f6}{$d9}OUR {pound}$A?{f6}":GOSUB 1006:&,15,1:DT$(I)=AN$:RETURN
+{:3254}
+	&"{clear}{f6}{$c9}MAGE {$d3}YSOP {$d1}UESTIONNAIRE:{f6:2}"
+	FOR I=1 TO B:GOSUB{:3240}:B$=DT$(I):&"{cyan}{pound}!I> {pound}$A:{f6} {white}{pound}$B{f6}":NEXT
+	&"{cyan}{f6}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$d2}E-{$c5}NTER {$cf}R {$d0}RESS{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}F {$c3}ORRECT: {pound}G1{pound}V7{f6}"
+	IF TR%>.THEN A=VAL(AN$):IF A>.AND A<=B THEN I=A:GOSUB{:3240}:GOSUB{:3252}:GOTO{:3254}
+{:3262}
+	RETURN
+{:3264}
+	&"{f6:2}{$d0}ART {$c9}{$d6}: {$d0}ERSONAL {$d3}TATEMENT:{f6}"
+	&"{f6}   {$c7}IVE {$d5}S {$d3}OME {$c9}NFO {$c1}BOUT {$d9}OURSELF.{f6}{$c1}NYTHING {$c9}NTERESTING, {$c1}ND {$d0}LEASE{f6}"
+	&"{$d4}ELL {$d5}S {$d7}HERE {$d9}OU {$c7}OT {$cf}UR {$ce}UMBER.{f6:2}{rvrs on}{yellow} {$ce}{$cf}{$d4}{$c5}: {rvrs off}{lt. red} {$c1}BORTING {$d4}HIS {$d7}ILL "
+	&"{$d2}ESULT {$c9}N {$c1}N{f6} {$c1}UTOMATIC {$cc}OGOFF!{f6}"
+	LE=10*(VAL(MID$(FL$,6,1))+1):GOSUB 1604:IF KK=.THEN TR%=.
+	RETURN
+{:3276}
+	TR%=5:&"{f6:2}  {$c6}ILING {$ce}EW {$d5}SER {$c9}NFORMATION.{f6}  {$d0}LEASE {$c2}E {$d0}ATIENT {$c8}ERE!"
+	GOSUB{:3076}:B$="NEW":AD$="{$ce}EW {$d5}SER {$d2}EGISTRATION":GOSUB 1068
+	PRINT# 2,"{$ce}{$c5}{$d7} {$d5}{$d3}{$c5}{$d2}:"R$R$RN$R$ED$(1)R$ED$(2)", "ED$(3)" "ED$(4)
+	PRINT# 2,"{$c2}IRTHDATE : "ED$(5)R$"{$cf}CCUPATION: "ED$(6)R$"{$c2}AUD {$d2}ATE:"STR$(QB)R$
+	IF Q=.THEN{:3290}
+	PRINT# 2,R$"{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}"R$R$"{$c2}OARD {$ce}AME:  "DT$(1)R$"{$c2}OARD {$d0}HONE: "DT$(2)
+	PRINT# 2,"{$d3}ERIAL #:    "DT$(3)R$"{$ce}ETWORK:     "DT$(4)R$"{$ce}ODE {$c9}{$c4}:      "DT$(5)R$
+{:3290}
+	&"{f6}":GOSUB 1074:&"{f6:2}"
+	DR=3:A$="E.SYSOP":GOSUB 1011:X=ID:GOSUB 1001
+	W$="":W$=W$+D1$+R$+NA$+R$+FF$+R$+LL$+R$
+	W$=W$+ED$(1)+R$+ED$(2)+R$+ED$(3)+R$+ED$(4)+R$+DT$(3)+R$+DT$(1)+R$+PH$+R$
+	W$=W$+DT$(2)+R$+DT$(4)+R$+DT$(5)+R$
+	IF Q=.THEN W$="N"
+	GOSUB 1001:PRINT# 2,W$:CLOSE 2
+	B$="NEW TEMP":A$="A":GOSUB 1027:IF E%THEN A$="W":GOSUB 1027
+	PRINT# 2,NA$+R$+ED$(2)+R$+ED$(3)
+	CLOSE 2:AN$=NA$:GOSUB 1038:GOSUB 1060:I=1:X=19:GOSUB 1025:X=29:GOSUB 1025:CLOSE 2
+	A$="E.MACS":DR=3:GOSUB 1011:IF E%THEN{:3088}
+	FOR X=ID*4-4 TO ID*4:GOSUB 1001:PRINT# 2,"{up arrow}":NEXT:CLOSE 2:GOTO{:3086}
+	COPR. 1995 NEW IMAGE 02/08/95

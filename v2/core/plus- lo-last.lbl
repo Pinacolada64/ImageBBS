@@ -1,0 +1,22 @@
+	REM LAST FIVE CALLERS
+	CLOSE 2:A$="E.LAST,S,R":DR=3:GOSUB 1011:FOR I=0 TO 5:&,2,2:TT$(I)=A$:NEXT:CLOSE 2
+	A=LL%/2-16:L$="":IF A>0 THEN L$=LEFT$("                        ",A)
+	&"{f6}{pound}$L{lt. blue}{pound}O{$a4:14}{f6}{pound}$L{rvrs on}      {$cc}AST   {$c6}IVE  {$c3}ALLERS      {f6}"
+	&"{pound}$L{pound}O{$a3:14}{f6}"
+	GOSUB{:4014}:FOR I=1 TO 5:A$=LEFT$(TT$(I),11):B$=MID$(TT$(I),12):A%=I
+	&"{pound}$L{white}{pound}%A. {yellow}{pound}$B{f6}{pound}$L{white}{$cf}N {lt. blue}{$04}"+A$+"{f6}":NEXT
+{:4014}
+	ON NL GOTO{:4016},{:4022}:RETURN
+{:4016}
+	A$="{lt. blue} {$b9}{purple} {$b9}{yellow} {$b9}":&"{pound}$L{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{f6}"
+	A$="{lt. blue}{$b4}{yellow}{$b4}{purple}{$b4}":&"{pound}$L{rvrs on}{purple} {pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{f6}"
+	A$="{yellow} {$b7}{lt. blue} {$b7}{purple} {$b7}":&"{pound}$L{purple}{$b7}{pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{f6}":RETURN
+{:4022}
+	A$="{lt. blue}{$a2:2}{purple}{$a2:2}{yellow}{$a2:2}"
+	B$="{lt. blue}{$a1}{$b6}{purple}{$a1}{$b6}{yellow}{$a1}{$b6}"
+	C$="{lt. blue}{$b8:2}{purple}{$b8:2}{yellow}{$b8:2}"
+	REM PRINTA$A$A$:PRINTB$B$B$:PRINTC$C$C$:END
+	&"{pound}$L {pound}$A{pound}$A{pound}$A{pound}$A{pound}$A{f6}"
+	&"{pound}$L {pound}$B{pound}$B{pound}$B{pound}$B{pound}$B{f6}"
+	&"{pound}$L {pound}$C{pound}$C{pound}$C{pound}$C{pound}$C{f6}"
+	RETURN

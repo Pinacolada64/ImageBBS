@@ -1,0 +1,38 @@
+	REM MENU DEMO/EXAMPLE PROGRAM
+	&,52,44,3:MM=A%:&,52,45,3:MM=MM AND A%: REM CHECK LITEBAR VERIFY BOTH =1
+	DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2: REM LOAD IN PROTOCOL
+{:3006}
+	&,28,1: REM CLEAR VARIABLES
+	N=4: REM NUMBER OF OPTIONS
+	DIM M%(16,N):REM 16 IS # OF CHARACTERS FOR OPTIONS
+	REM NEXT LINES SETUP MENU INFORMATION
+	&,16,.,34,M%(.,1),"{$c1}","","{$cf}PTION {$c1}"
+	&,16,.,34,M%(.,2),"{$c2}","","{$cf}PTION {$c2}"
+	&,16,.,34,M%(.,3),"{$c3}","","{$cf}PTION {$c3}"
+	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UIT"
+	REM SETUP HEADER
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$cd}ENU {$c5}XAMPLE {$d0}ROGRAM{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	REM ENABLE MENU
+	&,16,2,34,M%(.,1),N,17,2,N/2+.5,2,6,.:LM=A%+1:&,70,.,N/2+8.5:&"{white}"
+	REM
+	IF TR%<1 OR LM=N OR LM=.THEN 1811:REM CHECK FOR CARRIER DROP OR FOR
+	REM NULL STRING, OR FOR QUIT OPTION WHICH MUST BE LAST ON LIST
+	ON LM GOTO {:3040},{:3048},{:3056}
+	GOTO 1811: REM NO OPTION/RETURN TO MAIN
+{:3040}
+	REM OPTION A
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c1} {$c5}XECUTED *{rvrs off}":
+	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
+	GOTO {:3006}
+{:3048}
+	REM OPTION B
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c2} {$c5}XECUTED *{rvrs off}":
+	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
+	GOTO{:3006}
+{:3056}
+	REM OPTION C
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c3} {$c5}XECUTED *{rvrs off}"
+	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
+	GOTO{:3006}
+	COPR. 1994 NEW IMAGE 10/25/94

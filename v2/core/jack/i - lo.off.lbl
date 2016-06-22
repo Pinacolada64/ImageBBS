@@ -1,0 +1,29 @@
+	REM"I.LO.OFF
+	GOTO{:4100}
+{:4010}
+	D$=B$+"{white}, "+C$+R$:IF B$=""AND C$=""THEN D$="":GOTO{:4016}
+	IF B$=""THEN D$=C$+R$:GOTO{:4016}
+	D$=B$+R$
+{:4016}
+	B$="":C$="":RETURN
+{:4100}
+	IM=5:GOSUB 447:O$=D1$:O%=MN%:GOSUB 30:FOR X=1 TO 11:GOSUB 17:NEXT:CLOSE 2
+	&,27,3:DIM L%(30,9):DR=3:GOSUB 3:&,60,2,.,L%(.,.),DR$+"E.LAST",DV%
+	L%(7,.)=O%-L%(7,.):&,60,4,.,L%(4,.),O$:F=L%(.,.)
+	B$="":C$="":D$=""
+	A=ST(4):IF A THEN B$="{white}"+STR$(A)+" {lt. green}{$d0}OST":F=(F)OR 2:IF A<>1 THEN B$=B$+"S"
+	A=ST(5):IF A THEN C$="{white}"+STR$(A)+" {green}{$d2}ESPONSE":F=(F)OR 2:IF A<>1 THEN C$=C$+"S"
+	GOSUB{:4010}:A$=D$
+	A=ST(6):IF A THEN B$="{white}"+STR$(A)+" {lt. green}{$d5}PLOAD":F=(F)OR 4:IF A<>1 THEN B$=B$+"S"
+	A=ST(7):IF A THEN C$="{white}"+STR$(A)+" {green}{$c4}OWNLOAD":F=(F)OR 8:IF A<>1 THEN C$=C$+"S"
+	GOSUB{:4010}:A$=A$+D$
+	A=ST(3):IF A THEN B$="{white}"+STR$(A)+" {lt. green}{$cd}AIL":F=(F)OR 16
+	A=ST(1):IF A THEN C$="{white}"+STR$(A)+" {green}{$c6}EEDBACK":F=(F)OR 32
+	GOSUB{:4010}:A$=A$+D$
+	A$=A$+" {lt. blue}{$cc}OGOFF{white}: {$04}"+O$+R$+" {yellow}{$d3}TATS {white}:"+STR$(CR)+" {gray3}{$c3}REDITS"+R$
+	A$=A$+LEFT$(AK$,24):GOSUB 50
+	DR=3:GOSUB 3:&,60,3,.,L%(.,.),610,DR$+"E.LAST",DV%
+	&,25,.,2:IM=1:GOSUB 445:CLOSE 2:D3$=NA$
+	GOSUB 33:X=1:GOSUB 1:PRINT# 2,CA+1:X=17:GOSUB 1:PRINT# 2,D3$
+	X=19:GOSUB 1:PRINT# 2,O$:CLOSE 2:CLOSE 15
+	&,28,3:RETURN

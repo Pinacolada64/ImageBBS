@@ -1,0 +1,8 @@
+	REM BLOCKS FREE
+	&"{f6}{$d5}PDATING {$c2}LOCKS {$c6}REE.{f6}"
+	FOR DR=1 TO 6:GOSUB 1081:TT$(DR)=STR$(BF):NEXT:A$="  {lt. green}{$c2}LOCKS {$c6}REE:"+R$
+	GOSUB 1095:FOR I=1 TO 6
+	A$=" {lt. green}"+MID$("{$d3}YS{$c5}-{$cd}{$c5}TC{$c4}IR{$d0}RG{$d5}SR",I*3-2,3)+" {$c4}ISK:{white}"+TT$(I)
+	GOSUB 1095:NEXT:A$=" {pound}Q0{yellow}{pound}O{$c0}{pound}O{$c0}":GOSUB 1095:CLOSE 2:RETURN
+	CLOSE 2:RETURN
+	COPR. 1994 NEW IMAGE 9/17/94

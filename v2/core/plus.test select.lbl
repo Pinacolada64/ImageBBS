@@ -1,0 +1,3 @@
+	&,28,1:DIM S%(39,60)
+	DR=4:GOSUB 1010:&,60,2,0,S%(0,0),DR$+"D.{$c7}{$c6}.{$c7}AMES",DV%
+	IM=1:A$="SELECT":GOSUB 2500:GOTO 1812

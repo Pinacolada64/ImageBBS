@@ -1,0 +1,26 @@
+	&,27,2:FD=10:BL=10:DIM S%(8+BL,FD):TZ=0:GOSUB{:4002}:&,28,2:RETURN
+{:4002}
+	DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN:&"{f6}{$c5}RROR OPENING {$d5}{$c4} FILE{f6:2}{pound}W1":RETURN
+	&,2,2:BZ=VAL(A$):FOR X=2 TO BZ+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:TT$(X-1)=A$:NEXT
+	CLOSE 2:TT$(0)="{$ce}ONE":A$=DR$+"E.FILELISTS":&,60,2,0,S%(0,0),A$,DV%:GOSUB 1012
+	S$="                                        "
+	FOR I=1 TO FD:&,60,1,16,S%(1,I),B$:IF S%(0,I)=0 OR B$=""THEN{:4038}
+	DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:X=S%(0,I)+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:&,2,2
+	&,2,2:D1%=VAL(A$):&,2,2:D2%=VAL(A$):CLOSE 2
+	DR=0:GOSUB 1010:PRINT# 15,"S"DR$B$:A$=B$+",S,W":GOSUB 1011
+	PRINT# 2,"{white}{$c6}ILE LIST: {cyan}{$04}"D1$:DR=4:GOSUB 1009:CLOSE 16:OPEN 16,DV%,15
+	FOR J=1 TO BL:A=S%(8+J,I):IF A=0 THEN{:4036}
+	PRINT# 2,"{lt. blue}"TT$(A)R$
+	CLOSE 3:OPEN 3,DV%,3,DR$+"D.U/D"+STR$(A)+",S,R":INPUT# 16,E%
+	K=1:ON-(E%<>0)GOTO{:4034}:&"{$d5}{$c4}{pound}!A"
+	&,2,3:A=VAL(A$):ON-(A=0)GOTO{:4034}:FOR K=1 TO A:&,2,3:B=VAL(A$):&,2,3:&,2,3
+	D$=MID$(A$,4,2)+"/"+MID$(A$,6,2)+"/"+MID$(A$,2,2):F$=MID$(A$,23)
+	F$=LEFT$(F$,LEN(F$)-2)+","+RIGHT$(F$,1):&,2,3:B$=A$:&,2,3:&,2,3:N=VAL(A$)
+	PRINT# 2,"{white}"RIGHT$(S$+STR$(B),4);" {cyan}";LEFT$(F$+S$,20);" {white}"D$:REM PRINT#2,B$
+	&".":NEXT:&"{f6}"
+{:4034}
+	PRINT# 2,R$;"{white}"K-1"{$c6}ILES"R$:CLOSE 3
+{:4036}
+	NEXT:CLOSE 2
+{:4038}
+	NEXT:RETURN

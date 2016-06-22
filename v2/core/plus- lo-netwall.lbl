@@ -1,0 +1,130 @@
+	REM "+.LO.NETWALL" 01-29-95
+	&"{f6}{lt. blue}{$d6}IEW {lt. green}{$ce}ETWALL? ":GOSUB 1902:IF A=.THEN RETURN
+	&,5:V=LP:ON ZZ GOTO{:4058}
+{:4006}
+	DR=2:A$="NM.CONFIG":GOSUB 1011:IF E%THEN NN=0:GOTO{:4020}
+	INPUT# 2,NN,A%:Q=SGN(A%AND 2^AC%):IF NN<1 THEN{:4034}
+	X=4:GOSUB 1001:&,2,2:KK$="{$c9}N "+A$:&,2,2:KK$=KK$+"{f1} "+A$:CLOSE 2
+	DR=2:A$="NM.WALL HEADER,S,R":GOSUB 1011:H$="":IF E%THEN{:4016}
+{:4014}
+	&,2,2:IF LEN(A$)+LEN(H$)<254 THEN H$=H$+A$+R$:ON-(ST=0)GOTO{:4014}
+{:4016}
+	DR=2:A$="NM.NODES":GOSUB 1011:ON SGN(E%)GOTO{:4034}:&,2,2:A=VAL(A$):IF NN>A THEN{:4034}
+	X=NN+1:GOSUB 1001:&,2,2:NN$=A$:&,2,2:&,2,2:BB$=A$:CLOSE 2
+{:4020}
+	GOSUB 2912:LP=1:&"{clear}{f6}{blue}{pound}VJ{pound}$Q{pound}{back arrow}09 {cyan}{$ce}ETWORK {$c7}RAFFITI {$d6}2.0{pound}{back arrow}39 {blue}{pound}VJ{pound}Q0{f6:2}":GOTO{:4036}
+{:4022}
+	POKE 2024,255:&,3,2:RETURN
+{:4024}
+	IF H$<>""THEN PRINT# 2,H$:PRINT# 2,"{lt. blue}{$c2}Y{white} "NA$"{blue} @ {white}"NN$:GOTO{:4028}
+	PRINT# 2,"{lt. blue}{$c2}Y{white} "NA$"{blue} @ {white}"NN$:IF NN THEN PRINT# 2,"{lt. blue}{$c1}T {white}"BB$R$KK$
+{:4028}
+	PRINT# 2,"{pound}Q0":FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+{:4030}
+	DR=2:A$=O$+",S,W":GOSUB 1011:IF E%THEN A$=O$+",S,A":GOSUB 1011
+	RETURN
+{:4034}
+	CLOSE 2:RETURN
+{:4036}
+	DR=2:A$="NM.WALL,S,R":GOSUB 1011:IF E%THEN:&"{f6}{pound}VJ{$c9}T'S {$c5}MPTY!{f6}":GOTO{:4044}
+	&"{lt. blue}{$d3}CANNING {$c6}OR {lt. green}{$ce}EW {$cd}ESSAGES{yellow}...{pound}Q0"
+{:4038}
+	SH=0:&,2,2:IF MID$(A$,2,6)<MID$(LD$,2,6)THEN:&"{yellow}.{pound}Q0":GOSUB{:4022}:GOTO{:4042}
+	LP=1:&"{f6}{pound}VJ{f6}{$04}"+A$:&,3,2:IF RC AND A$<>"{up arrow}"THEN GOSUB{:4022}
+{:4042}
+	GOSUB 1914:IF ST=.AND SH=0 THEN{:4038}
+{:4044}
+	CLOSE 2:&"{f6}{pound}VJ":IF Q THEN:&"{f6:2} {$c1}DD YOUR COMMENTS? ":GOSUB 1902:ON A GOSUB{:4048}
+	GOTO{:4034}
+{:4048}
+	GOSUB{:4122}:IF KK<1 THEN RETURN
+	&"{$c6}ILING..."
+	O$="NM.WALL":GOSUB{:4030}:PRINT# 2,D1$:GOSUB{:4024}
+	IF NN THEN O$="NM.{$c7}.TEMP":GOSUB{:4030}:GOSUB{:4024}
+	&"{pound}H6ED {$ce}ET{$c7}RAFFITI.{f6}":RETURN
+{:4058}
+	&"{f6:2} ({$c5})DIT ({$cb})ILL ({$d6})IEW ({$d7})EED: {pound}G1{pound}V7{f6}":IF TR%<1 OR AN$=CHR$(13)THEN RETURN
+	ON-(AN$="{$d6}")-2*(AN$="{$c5}")-3*(AN$="{$cb}")-4*(AN$="{$d7}")GOSUB{:4006},{:4092},{:4062},{:4066}:GOTO{:4058}
+{:4062}
+	&"{f6}{$c1}RE {$d9}OU {$d3}URE? ":GOSUB 1902:IF A THEN DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.WALL"
+	RETURN
+{:4066}
+	&"{$c8}OW {$cd}ANY {$c4}AYS {$c2}ACK? {pound}I1":A=VAL(AN$):A$=D1$:IF A<1 OR A>99 THEN RETURN
+	A=VAL(MID$(A$,6,2))-A:B=VAL(MID$(A$,4,2)):C=VAL(MID$(A$,2,2))
+	IF A<1 THEN A=A+ASC(MID$("{blue:2}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}",B,1)):B=B-1:IF B<1 THEN B=12:C=C-1
+	TT$=RIGHT$(STR$(100+C),2)+RIGHT$(STR$(100+B),2)+RIGHT$(STR$(100+A),2)
+	A$=TT$:&"{$d7}EED WRITINGS OLDER THAN {pound}$A? ":GOSUB 1902:IF A=0 THEN RETURN
+	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.TEMP"
+	CLOSE 2:OPEN 2,DV%,2,DR$+"NM.WALL,S,R":CLOSE 3:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W"
+{:4080}
+	&,2,2:S=ST:&"{$04}"+A$:IF MID$(A$,2,6)<TT$THEN:&" {$cb}ILL{f6}":GOTO{:4086}
+	&" {$cb}EEP{f6}"
+{:4084}
+	PRINT# 3,A$:&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:4084}:PRINT# 3,"{up arrow}":GOTO{:4088}
+{:4086}
+	&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:4086}
+{:4088}
+	ON-(S=0)GOTO{:4080}:CLOSE 2:CLOSE 3
+	PRINT# 15,"S"DR$"NM.WALL":PRINT# 15,"R"DR$"NM.WALL=NM.TEMP":RETURN
+{:4092}
+	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.TEMP"
+	CLOSE 2:OPEN 2,DV%,2,DR$+"NM.WALL,S,R":CLOSE 3:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W"
+	A%=0:B%=0:S=0
+{:4098}
+	&"{clear}":ON-(S<>0)GOTO{:4116}:N=0:A%=A%+1
+{:4100}
+	&,2,2:S=ST:N=N+1:TT$(N)=A$:IF A$<>"{up arrow}"AND S=0 THEN{:4100}
+	LP=1:&"{pound}VJ{f6}{$04}"+TT$(1):FOR I=2 TO N-1:LP=1:&TT$(I):NEXT:&"{f6}{pound}VJ"
+{:4104}
+	&"{f6:2}#{pound}%A ({pound}%B {$cb}EPT) {$c4}ELETE {$cb}EEP {$c1}BORT -->"
+{:4106}
+	&"{pound}G1":IF TR%<1 THEN AN$="{$c1}"
+	IF AN$="{$cb}"THEN:&"{$cb}EEP{f6:2}":FOR I=1 TO N:PRINT# 3,TT$(I):NEXT:B%=B%+1:GOTO{:4098}
+	IF AN$="{$c1}"THEN:&"{$c1}BORT{f6:2}":CLOSE 2:CLOSE 3:PRINT# 15,"S"DR$"NM.TEMP":GOTO{:4120}
+	IF AN$<>"{$c4}"THEN{:4106}
+	&"{$c4}ELETE{f6:2} {$c1}RE YOU SURE? ":GOSUB 1902:ON A GOTO{:4098}:GOTO{:4104}
+{:4116}
+	CLOSE 2:CLOSE 3
+	PRINT# 15,"S"DR$"NM.WALL":PRINT# 15,"R"DR$"NM.WALL=NM.TEMP"
+{:4120}
+	RETURN
+{:4122}
+	KK=1:GOSUB{:4140}:DR=1:A$="S.EDITOR":GOSUB 1076:B%=.:GOSUB{:4166}:A=0
+{:4124}
+	&,54,A:A=PEEK(781):AN$=CHR$(PEEK(780)OR 128):REM IFV<>1.3THEN966
+{:4126}
+	KK=PEEK(1016):ON A GOTO{:4128},{:4134},{:4132}:&"{f6:2}":B%=KK-1:KK=.:RETURN
+{:4128}
+	POKE 2031,0:B%=KK-1:&"{f6}{pound}%B {$cc}INES {$d5}SED.{f6}":IF KK=1 THEN A=0:GOTO{:4126}
+	B%=KK:RETURN
+{:4132}
+	POKE 2031,0:GOSUB{:4138}:GOTO{:4124}
+{:4134}
+	B%=KK-1:A=2:GOTO{:4124}
+	B%=KK-1:GOSUB{:4140}:GOSUB{:4166}:POKE 2031,1:A=1:GOTO{:4124}
+{:4138}
+	DR=1:A$="S.MENU 3":GOTO 1075
+{:4140}
+	REM IFV<>1.3THEN963
+	POKE 53249,0:POKE 1016,KK:POKE 1018,4:POKE 1019,KK:POKE 1023,87
+	PL=.:POKE 1022,11:POKE 53252,LL%-2
+	RETURN
+	POKE 53249,0:POKE 1016,KK:POKE 1018,4:POKE 1019,KK:POKE 1023,87
+	PL=.:POKE 1022,11:POKE 53252,LL%-2
+	RETURN
+{:4154}
+	KK=PEEK(1016):ON A GOTO{:4156},{:4162},{:4160}:&"{f6:2}":B%=KK-1:KK=.:RETURN
+{:4156}
+	POKE 2031,0:B%=KK-1:&"{f6}{pound}%B {$cc}INES {$d5}SED.{f6}":IF KK=1 THEN A=0:GOTO{:4154}
+	B%=KK:RETURN
+{:4160}
+	POKE 2031,0:GOSUB{:4138}:GOTO{:4124}
+{:4162}
+	B%=KK-1:A=2:GOTO{:4124}
+	B%=KK-1:GOSUB{:4168}:GOSUB{:4166}:POKE 2031,1:A=1:GOTO{:4124}
+{:4166}
+	A%=PEEK(1022)-1:C%=A%-B%:&"{pound}Q0{f6:2}{$d4}OTAL {$cc}INES:{f6}{$c1}VAILABLE  : {pound}%A"
+{:4168}
+	&"{f6}{$c9}N {$cd}EMORY  : {pound}%B{f6}{$d2}EMAINING  : {pound}%C":IF ZZ THEN:&"{f6}{$c6}REE {$cd}EMORY: {pound}%Z"
+	&"{f6:2}":RETURN
+	COPR. 1990 NEW IMAGE 01-29-95

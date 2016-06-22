@@ -1,0 +1,21 @@
+	REM" ** I/LO-LAST ** 95{$ca}{$d5}{$ce}04  {$ca}{$cc}{$c6}            {$cc}AST 10 {$c3}ALLER {$c4}ISPLAY      "
+	ON-(LL%>77)GOTO{:4700}:GOTO{:4600}
+{:4600}
+	FOR X=1 TO 5:TT$(X)="":&,60,1,20,L%(8,X),A$:&,60,1,25,L%(18,X),B$
+	TT$(X)=" {purple}{$dd}{cyan}"+A$+" {gray3}("+LEFT$(B$,33-LEN(A$))+"{gray3}){pound}{back arrow}38{purple}{$dd}{f6} {$dd}{yellow}{$cf}N "
+	&,60,5,0,L%(1,X),AN$:TT$(X)=TT$(X)+MID$(AN$,4,2)+"/"+MID$(AN$,6,2)+" @"
+	&,15:TT$(X)=TT$(X)+MID$(AN$,13,6)+CHR$(ASC(MID$(AN$,20,1))-128)+"M-"
+	&,60,5,0,L%(4,X),AN$:&,15:B$="{$d5}L{$c4}L{$c5}M{$c6}B{$d0}F{$d4}F"
+	TT$(X)=TT$(X)+MID$(AN$,14,5)+CHR$(ASC(MID$(AN$,20,1))-128)+"M {white}("
+	TT$(X)=TT$(X)+MID$(STR$(L%(7,X)),2,3)+" {$cd}IN){pound}{back arrow}38{purple}{$dd}{f6} {$dd}{red}{$c1}CTIVITY{orange}:{lt. red}"
+	IF L%(.,X)=.THEN TT$(X)=TT$(X)+" {$ce}ONE":GOTO{:4618}
+	IF L%(.,X)AND 2 THEN TT$(X)=TT$(X)+" {$cd}SG"
+	FOR I=2 TO 7:IF L%(.,X)AND 2^I THEN TT$(X)=TT$(X)+" "+MID$(B$,((I-2)*2)+1,2)
+	NEXT
+{:4618}
+	TT$(X)=TT$(X)+"{pound}{back arrow}38{purple}{$dd}{f6}":NEXT:A$="{pound}O{$c0:18}"
+	&" {purple}{$b0}"+A$+"{$ae}{f6} {$dd}{lt. blue}{$cc}AST {$c6}IVE {$c3}ALLERS & {$c1}CTIVITY {$cc}ISTING{purple}{$dd}{f6}"
+	FOR X=1 TO 5:&" {purple}{$ab}"+A$+"{$b3}{f6}"+TT$(X):NEXT:&" {purple}{$ad}"+A$+"{$bd}{f6}":REM"{lt. green}({green}{$d0}RESS A {$cb}EY{white}){pound}G1{pound}HN"
+	RETURN
+{:4700}
+	GOTO{:4600}

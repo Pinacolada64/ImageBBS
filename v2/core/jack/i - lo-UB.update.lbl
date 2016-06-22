@@ -1,0 +1,26 @@
+	REM ADD BIOGRAPHIES
+	IF AC%<1 THEN{:4540}
+	DR=6:A$="U.BIOGRAPHIES":GOSUB 4:IF E%THEN{:4540}
+	X=ID:GOSUB 1:&,2,2:IF A$=NA$THEN{:4540}
+	&"{f6}{purple}       {$b0}{$c0:20}{$ae}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on}  {$cf}UR {$c4}ATABASE DOES {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} NOT HOLD YOUR BIO- {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} GRAPHY. {$d0}LEASE ADD {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} YOUR CITY{f1} STATE   {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} AND{f1} A SHORT QUOTE {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} OR SAYING ABOUT    {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} YOURSELF FOR OUR   {purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$dd}{cyan}{rvrs on} OTHER USERS TO SEE.{purple}{rvrs off}{$dd}"
+	&"{f6}{purple}       {$ad}{$c0:20}{$bd}{f6}"
+{:4528}
+	POKE 53252,20:&"{f6}{cyan}{$c5}NTER {$d9}OUR {$c3}ITY:{lt. green} {pound}I1":ON TR%+1 GOTO{:4540}:ON-(AN$="")GOTO{:4528}:B$=AN$+R$
+{:4530}
+	POKE 53252,2:&"{f6}{cyan}{$c5}NTER {$d9}OUR {$d3}TATE {white}({$d4}WO {$cc}ETTERS):{lt. green} {pound}I1":ON TR%+1 GOTO{:4540}
+	ON-(AN$="")GOTO{:4530}:B$=B$+AN$+R$
+{:4534}
+	POKE 53252,79:PL=.:&"{f6}{cyan}{$c5}NTER {$d9}OUR {$c2}IOGRAPHY {white}(80 {$c3}HARS {$cd}AX){lt. green}{f6}":P$="":&,1,9
+	ON TR%+1 GOTO{:4540}:ON-(AN$="")GOTO{:4534}:B$=NA$+R$+B$+AN$
+	DR=6:A$="U.BIOGRAPHIES":GOSUB 4:X=ID:GOSUB 1:PRINT# 2,B$:CLOSE 2:GOTO{:4540}
+{:4540}
+	GOTO 12
+	COPR. 1994 NEW IMAGE 9/14/94

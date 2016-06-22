@@ -1,0 +1,42 @@
+	ON IM GOTO{:60002}:RETURN
+{:60002}
+	GOSUB 320:&"{clear}{f6}{cyan}{rvrs on} {$c3}URRENT {$d3}TATUS: {f6}"
+	AN$=NA$:&,15,1: &"{f6}{white}{rvrs on} {$ce}AME       :{rvrs off}{yellow} {pound}V7"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$d0}HONE#     :{rvrs off}{lt. green} {pound}V4"
+	AN$=RN$:&,15,1:&"{f6}{white}{rvrs on} {$d2}EAL {$ce}AME  :{rvrs off}{yellow} {pound}V7"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$cc}AST {$c3}ALL  :{rvrs off}{lt. green} {pound}V1"
+	B$=DD$:IF ID=.THEN B$="{$ce}ONE."
+	&"{f6}{white}{rvrs on} {$cc}OGIN {$c9}{$c4}   :{rvrs off}{yellow} {pound}$B"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$c1}CCESS     :{rvrs off}{lt. green} {pound}VM"
+	A%=LE:&"{f6}{white}{rvrs on} {$c5}DITOR {$cc}NS :{rvrs off}{yellow} {pound}%A"
+	A%=CT%:&"{pound}{back arrow}39 {white}{rvrs on} {$c3}ALLS {$d4}ODAY:{rvrs off}{lt. green} {pound}%A"
+	A%=TC%:&"{f6}{white}{rvrs on} {$d4}OTAL {$c3}ALLS:{rvrs off}{yellow} {pound}%A"
+	A$=STR$(CA):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}ALLER#    :{rvrs off}{lt. green}{pound}$A":GOSUB{:60076}:IF A=.THEN{:60074}
+	A%=DA%:&"{f6}{white}{rvrs on} {$c4}{$cc}'S {$c1}LLOWED:{rvrs off}{yellow} {pound}%A {lt. red}(0)={$d5}NLIMITED"
+	A%=DC:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}OTAL {$c4}{$cc}'S  :{rvrs off}{lt. green} {pound}%A"
+	A%=UC:&"{f6}{white}{rvrs on} {$d4}OTAL {$d5}{$cc}'S  :{rvrs off}{yellow} {pound}%A"
+	AN$=STR$(BD):&"{pound}{back arrow}39 {white}{rvrs on} {$d4}TL {$c2}LKS {$c4}{$cc} :{rvrs off}{lt. green}{pound}V7"
+	AN$=STR$(BU):&"{f6}{white}{rvrs on} {$d4}TL {$c2}LKS {$d5}{$cc} :{rvrs off}{yellow}{pound}V7"
+	AN$=STR$(CR):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}REDIT {$d0}TS  :{rvrs off}{lt. green}{pound}V7"
+	A=2:GOSUB 11:A%=A:&"{f6}{white}{rvrs on} {$c3}REDIT {$d2}ATIO:{rvrs off}{yellow} {pound}%A {$d4}O 1"
+	A%=PS:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}OTAL {$d0}OSTS :{rvrs off}{lt. green} {pound}%A"
+	A%=RP:&"{f6}{white}{rvrs on} {$d4}OTAL {$d2}ESP. :{rvrs off}{yellow} {pound}%A{f6}":GOSUB{:60076}:IF A=.THEN{:60074}
+	&"{f6}{lt. red}{rvrs on}{$d9}OU {$c8}AVE:{f6}":F=0
+	A=1:GOSUB 11:IF A THEN:&"{f6}{yellow}{$ce}ON-{$d7}EED {$d3}TATUS":F=1
+	A=3:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$c6}ULL {$cd}AINTENANCE":F=1
+	A=4:GOSUB 11:IF A THEN:&"{f6}{yellow}{$d0}OST/{$d2}ESPOND {$c3}APABILITY":F=1
+	A=5:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$ce}ORMAL {$d5}/{$c4} {$c1}CCESS":F=1
+	A=7:GOSUB 11:IF A THEN:&"{f6}{yellow}{$d5}NLIMITED {$c3}REDITS":F=1
+	A=8:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$d2}EMOTE {$cd}AINTENANCE {$c1}CCESS":F=1
+	A=9:GOSUB 11:IF A THEN:&"{f6}{yellow}{$c5}-{$cd}AIL {$c1}CCESS":F=1
+	A=10:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$d5}SER {$cc}IST {$c1}CCESS":F=1
+	A=11:GOSUB 11:IF A THEN:&"{f6}{yellow}{$c2}.{$c1}.{$d2}. {$c1}ND {$cc}OG {$c1}CCESS":F=1
+	A=12:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$d3}UB {$cd}AINTENANCE {$c1}CCESS":F=1
+	A=13:GOSUB 11:IF A THEN:&"{f6}{yellow}{$c6}ILE {$cd}AINTENANCE {$c1}CCESS":F=1
+	A=14:GOSUB 11:IF A THEN:&"{f6}{lt. green}{$cd}{$c3}{$c9} {$c1}CCESS":F=1
+	A=15:GOSUB 11:IF A THEN:&"{f6}{yellow}{$d0}RIME {$d4}IME {$c4}OWNLOAD {$c3}APABILITY":F=1
+	IF F=0 THEN:&"{f6}{white}{$cd}INIMAL {$c1}CCESS"
+{:60074}
+	&"{f6}":RETURN
+{:60076}
+	&"{f6:2}{white} {$cd}ORE?: ":GOSUB 96:&"{clear}{cyan}":RETURN

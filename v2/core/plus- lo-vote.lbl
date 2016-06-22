@@ -1,0 +1,56 @@
+	REM VOTE ON NEW
+	DR=4:A$="D.VOTES,S,R":GOSUB 1011:RN=.:IF E%THEN CLOSE 2:RETURN
+{:4004}
+	INPUT# 2,A$,B$,A%:IF MID$(D5$,2,6)>=MID$(B$,2,6)THEN A%=0
+	IF A%AND(2^AC%)THEN RN=RN+1:NN$(RN)=A$
+	ON-(ST=.)GOTO{:4004}:CLOSE 2:IF RN=0 THEN RETURN
+	&"{f6}{lt. blue}{$d4}HERE {$c1}RE {white}{$ce}EW {lt. blue}{$d6}OTE {$d4}OPICS.{f6}{$d6}OTE {$ce}OW{blue}?{white} ":GOSUB 1902:IF A=0 THEN RETURN
+	FOR B=1 TO RN:GOSUB{:4036}:NEXT:RETURN
+{:4014}
+	DR=3:O$="V.T."+LEFT$(NN$(B),12):RETURN
+{:4016}
+	DR=3:O$="V.R."+LEFT$(NN$(B),12):RETURN
+	GOSUB{:4032}:CLOSE 2
+{:4020}
+	X=0:GOSUB{:4016}:A$=O$+",S,R":GOSUB 1011
+	IF E%THEN:&"{$ce}O {$d6}OTE {$d2}EASONS {$cf}N {$c6}ILE.{f6:2}":GOTO{:4030}
+	&"{f6}{$d2}EAD {$d2}EASON {$c6}ILE? ":GOSUB 1902:IF A=0 THEN CLOSE 2:RETURN
+{:4026}
+	RC=0:GOSUB 1914:X=X+1:&,2,2:A%=X:&"{f6:2}{$d2}EASON #{pound}%A:{pound}$A{f6:2}":&,3,2
+	IF(ST=0)AND(RC=0)THEN{:4026}
+{:4030}
+	CLOSE 2:RETURN
+{:4032}
+	A$=NN$(B):&"{f6}{lt. blue}{$d6}OTE {$d4}OPIC: {white}{pound}$A{f6:2}":GOSUB 1914
+	GOSUB{:4014}:A$=O$+",S,R":GOSUB 1011:&,12,2:RETURN
+{:4036}
+	GOSUB{:4032}:&"{f6}":X=0:F=0:Z=0
+{:4038}
+	&,2,2:IF A$<>"{up arrow}"THEN X=X+1:TT$(X)=A$:F%(X)=0:GOTO{:4038}
+	ON-(ST<>0)GOTO{:4044}
+{:4042}
+	INPUT# 2,A,I,A$:F%(A)=F%(A)+1:Z=Z+1:F=F-(I=ID AND A$=NA$):ON-(ST=0)GOTO{:4042}
+{:4044}
+	CLOSE 2:&"{$d0}RESS A KEY FOR TOPICS ... {pound}G1{f6}":ON F GOTO{:4054}:&"{f6}"
+	FOR I=1 TO X:A$=TT$(I):A%=I:&"{pound}%A {pound}$A{f6}":NEXT:&"{f6}{$c3}HOICE -> {pound}G1":C=VAL(AN$)
+	IF C<1 OR C>X THEN:&"{$c1}BORTED!{f6}":RETURN
+	A$=TT$(C):&"{pound}$A{f6:2} {$c3}ORRECT? ":GOSUB 1902:IF A=0 THEN RETURN
+	F%(C)=F%(C)+1:Z=Z+1:DR=3:A$=O$+",S,A":GOSUB 1011:PRINT# 2,C;R$ID;R$NA$:CLOSE 2
+{:4054}
+	IF Z=0 THEN:&"{f6}{$ce}O {$d6}OTES SO FAR!{f6:2}":GOTO{:4062}
+	S$="S":IF Z=1 THEN S$=""
+	A%=Z:&"{f6}{$d2}ESULTS {$c6}ROM {pound}%A {$d6}OTE{pound}$S:{f6:2}"
+	FOR I=1 TO X:A$=TT$(I):A%=100*F%(I)/Z+.5:&"{pound}#3{pound}# {pound}%A% {pound}$A{f6}":NEXT
+{:4062}
+	ON F GOTO{:4076}:&"{f6}{$d7}OULD YOU LIKE TO LEAVE AN {$c1}NONYMOUS{f6}REASON? ":GOSUB 1902
+	IF A=0 THEN{:4076}
+	TT$(0)=CHR$(48+C)+TT$(C):GOSUB 1604:IF KK=.THEN{:4076}
+	A=B:GOSUB{:4016}:A$=O$+",S,W":GOSUB 1011:IF E%THEN A$=O$+",S,A":GOSUB 1011
+	IF E%THEN{:4074}
+	PRINT# 2,MID$(TT$(0),2):FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}"
+{:4074}
+	CLOSE 2
+{:4076}
+	GOSUB{:4020}
+	RETURN
+	COPR. 1990 NEW IMAGE 12-26-90

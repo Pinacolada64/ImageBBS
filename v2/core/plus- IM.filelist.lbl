@@ -1,0 +1,41 @@
+	&,27,2:FD=10:BL=10:DIM S%(8+BL,FD):TZ=0:GOSUB{:4002}:&,28,2:RETURN
+{:4002}
+	DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN:&"{f6}{$c5}RROR OPENING {$d5}{$c4} FILE{f6:2}{pound}W1":RETURN
+	&,2,2:BZ=VAL(A$):FOR X=2 TO BZ+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:TT$(X-1)=A$:NEXT
+	CLOSE 2:TT$(0)="{$ce}ONE":A$=DR$+"E.FILELISTS":&,60,2,0,S%(0,0),A$,DV%:GOSUB 1012
+{:4008}
+	&"{clear}{$c6}ILELISTS{f6}{pound}O{$c0}{pound}O{$c0}{f6}"
+	FOR I=1 TO FD:&,60,1,16,S%(1,I),A$:B$=TT$(S%(0,I)):&"{pound}!I{pound}{back arrow}03{pound}$A{pound}{back arrow}20{pound}$B{f6}":NEXT
+	&"{pound}O{$c0}{pound}O{$c0}{f6}"
+	POKE 53252,2:&"#: {pound}I1":IF TR%<1 THEN RETURN
+	X=VAL(AN$):IF X<1 OR X>FD THEN{:4020}
+	GOSUB{:4100}:GOTO{:4008}
+{:4020}
+	IF TZ THEN:&"{$d3}AVE {$c3}HANGES? ":GOSUB 1902:ON A GOSUB{:4024}
+	RETURN
+{:4024}
+	DR=3:GOSUB 1010:A$=DR$+"E.FILELISTS":PRINT# 15,"S"A$
+	&,60,3,0,S%(0,0),2*(9+BL)*(FD+1),A$,DV%:GOSUB 1012:&:RETURN
+{:4100}
+	&"{clear}#{pound}!X:{f6}":&,60,1,16,S%(1,X),A$
+	&"1. {$c6}ILENAME: {f5}{pound}$A{f5}{f6}":A$=TT$(S%(0,X))
+	&"2. {$c4}ESTINATION {$d5}{$c4}: {pound}$A{f6}"
+	&"3. {$c5}DIT {$d5}{$c4} {$cc}IST{f6}"
+	&"{f6}> {pound}G1{pound}V7{f6:2}":ON VAL(AN$)GOTO{:4110},{:4116},{:4124}:RETURN
+{:4110}
+	P$="{$c6}ILENAME":&,60,1,16,S%(1,X),W$:POKE 53252,16:PL=0:&,1,32
+	IF AN$<>""THEN TZ=1:&,60,0,16,S%(1,X),AN$
+	GOTO{:4100}
+{:4116}
+	POKE 53252,3:&"{$d5}{$c4} # (?={$cc}IST): {pound}I1":A=VAL(AN$)
+	IF AN$="{f2}"THEN FOR I=1 TO BZ:A$=TT$(I):&"{pound}!I{pound}{back arrow}04{pound}$A{f6}":NEXT:GOTO{:4116}
+	IF A>0 AND A<=FD THEN TZ=1:S%(0,X)=A
+	GOTO{:4100}
+{:4124}
+	&"{clear}{pound}O{$c0}{pound}O{$c0}{f6}":FOR I=1 TO BL:A$=TT$(S%(8+I,X)):&"{pound}!I{pound}{back arrow}04{pound}$A{f6}":NEXT:&"{pound}O{$c0}{pound}O{$c0}{f6}"
+	POKE 53252,2:&"#: {pound}I1":A=VAL(AN$):IF A<1 OR A>BL THEN{:4100}
+{:4128}
+	POKE 53252,3:&"{$d5}{$c4} # (?={$cc}IST): {pound}I1":B=VAL(AN$)
+	IF AN$="{f2}"THEN FOR I=1 TO BZ:A$=TT$(I):&"{pound}!I{pound}{back arrow}04{pound}$A{f6}":NEXT:GOTO{:4128}
+	IF B>0 AND B<=FD THEN TZ=1:S%(A+8,X)=B
+	GOTO{:4124}

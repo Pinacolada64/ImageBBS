@@ -1,0 +1,15 @@
+	&"{$d4}EST #1:{$d7}RAP {$cf}N{f6}":GOSUB{:3100}:&"{$cb}EY {pound}G1{f6}"
+	&"{$d4}EST #2:{$d7}RAP {$cf}FF{f6}":GOSUB{:3200}:&"{$cb}EY {pound}G1{f6}"
+	PR$="":GOTO 1812
+{:3100}
+	M=56584:&"{clear}":POKE M+3,0:POKE M+2,0:POKE M+1,0:POKE M,0
+	FOR I=1 TO 50:LP=1:&"----------++++++++++----------+++++++++ ":NEXT
+	D%=PEEK(M):C%=PEEK(M+1):C%=(C%AND 15)+INT(C%/16)*10:A=2000/(C%+D%/10)
+	A%=A:B%=(A-A%)*10:&"{pound}%C.{pound}%D {$d3}ECONDS / {pound}%A.{pound}%B {$c3}{$d0}{$d3}{f6}"
+	RETURN
+{:3200}
+	M=56584:&"{clear}":POKE M+3,0:POKE M+2,0:POKE M+1,0:POKE M,0
+	FOR I=1 TO 50:LP=0:&"----------++++++++++----------+++++++++ ":NEXT
+	D%=PEEK(M):C%=PEEK(M+1):C%=(C%AND 15)+INT(C%/16)*10:A=2000/(C%+D%/10)
+	A%=A:B%=(A-A%)*10:&"{pound}%C.{pound}%D {$d3}ECONDS / {pound}%A.{pound}%B {$c3}{$d0}{$d3}{f6}"
+	RETURN

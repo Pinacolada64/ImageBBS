@@ -1,0 +1,22 @@
+	REM LOGOFF
+	GOSUB 1060:FOR X=1 TO 11:GOSUB 1026:NEXT:CLOSE 2
+	GOSUB{:4034}:A=ST(4):IF A THEN B$="{white}"+STR$(A)+" {lt. blue}{$d0}OST":IF A<>1 THEN B$=B$+"S"
+	A=ST(5):IF A THEN C$="{white}"+STR$(A)+" {lt. blue}{$d2}ESPONSE":IF A<>1 THEN C$=C$+"S"
+	GOSUB{:4034}:A$=D$
+	A=ST(3):IF A THEN B$="{white}"+STR$(A)+" {lt. blue}{$cd}AIL"
+	A=ST(1):IF A THEN C$="{white}"+STR$(A)+" {lt. blue}{$c6}EEDBACK"
+	GOSUB{:4034}
+	A$=A$+D$+" {lt. blue}{$cc}OGOFF {white}{$04}"+D1$+R$
+	A$=A$+" {pound}Q0{pound}O{$c0}{pound}O{$c0}":GOSUB 1095
+	X=2:GOSUB 1530:GOSUB 1070:CLOSE 2
+	D3$=NA$
+	GOSUB 1063:X=1:GOSUB 1001:PRINT# 2,CA+1:X=17:GOSUB 1001:PRINT# 2,D3$
+	X=19:GOSUB 1001:PRINT# 2,D1$:CLOSE 2
+	RETURN
+{:4034}
+	D$=B$+"{blue}, "+C$+R$:IF B$=""AND C$=""THEN D$="":GOTO{:4040}
+	IF B$=""THEN D$=C$+R$:GOTO{:4040}
+	D$=B$+R$
+{:4040}
+	B$="":C$="":RETURN
+	REM

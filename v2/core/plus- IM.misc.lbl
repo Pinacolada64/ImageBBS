@@ -1,0 +1,69 @@
+	ON LM GOTO{:4010},{:4004},{:4016},{:4030},{:4036},{:4040},{:4002},{:4046},{:4054},{:4082},{:4090},{:4062}:RETURN
+{:4002}
+	IM=3:GOSUB 2428:TZ$=AN$:RETURN
+{:4004}
+	&"{f6}{$c1}UTOWEED {$c3}UTOFF: {pound}I1":N=VAL(AN$):IF AN$=""THEN RETURN
+	IF N<.OR N>48 THEN:&"{f6}0 TO 48 {$d0}LEASE. {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT.{f6}":GOTO{:4004}
+	GOSUB 1063:X=39:GOSUB 1001:PRINT# 2,N:A%(2)=N:CLOSE 2:RETURN
+{:4010}
+	&"{f6}{$cc}T. {$cb}ERNAL {$c4}EVICE (0 {$c9}F {$ce}ONE): {pound}I1":N=VAL(AN$):IF AN$=""THEN RETURN
+	IF N AND(N<7 OR N>32)THEN:&"{f6}7 TO 32 {$d0}LEASE. {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT.{f6}":GOTO{:4010}
+	GOSUB 1063:X=38:GOSUB 1001:PRINT# 2,N:CLOSE 2:LK%=N:RETURN
+{:4016}
+	&"{f6}":FOR I=1 TO 15:A%=I:A$=TT$(I):&"{white}{pound}#2{pound}# {pound}%A{pound}C"+CHR$(48+I)+" {pound}$A"
+	IF I AND 1 THEN:&"{pound}{back arrow}20"
+	IF(I AND 1)=.THEN:&"{f6}"
+	NEXT:&"{white}"
+{:4024}
+	&"{$c4}EFAULT {$c3}OLOR: {pound}I1":N=VAL(AN$):IF AN$=""THEN RETURN
+	IF N<1 OR N>15 THEN:&"1 TO 15 {$d0}LEASE. {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT.{f6}":GOTO{:4024}
+	GOSUB 1063:X=40:GOSUB 1001:PRINT# 2,N:A%(3)=N:CLOSE 2:DF%=N:RETURN
+{:4030}
+	&"{f6}{$d0}RINTER {$d3}ECONDARY {$c1}DDRESS: {pound}I1":N=VAL(AN$):IF AN$=""THEN RETURN
+	IF(N<.OR N>32)THEN:&"{f6}0 TO 32 {$d0}LEASE. {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT.{f6}":GOTO{:4030}
+	GOSUB 1063:X=41:GOSUB 1001:PRINT# 2,N:A%(4)=N:CLOSE 2:CLOSE 4:OPEN 4,4,N:RETURN
+{:4036}
+	&"{f6}{$d3}END {$cc}INEFEEDS TO THE PRINTER? ":GOSUB 1902:N=.:IF A THEN N=10
+	GOSUB 1063:X=42:GOSUB 1001:PRINT# 2,N:A%(5)=N:CLOSE 2:POKE 17136,N:RETURN
+{:4040}
+	&"{f6}":POKE 53252,30:PL=.:P$="{gray3}{$cd}ASK{white}":W$=MM$:&,1,41
+	IF AN$=""OR AN$=W$OR AN$=R$OR TR%<1 THEN:&"{$ce}O {$c3}HANGE":RETURN
+	&,15,2:GOSUB 1063:X=43:GOSUB 1001:PRINT# 2,AN$:CLOSE 2:MM$=AN$:RETURN
+{:4046}
+	POKE 53252,20:PL=.:W$=PO$:P$="{$cd}AIN":&"{f6}":&,1,41:ON TR%+1 GOTO{:4052}:IF AN$=W$THEN{:4062}
+	PO$=AN$:DR=5:A$="BD.DATA,S,R":GOSUB 1011:FOR I=1 TO 4:&,2,2:TT$(I)=A$:NEXT
+	TT$(3)=PO$:DR=5:A$="BD.DATA":GOSUB 1023:FOR I=1 TO 4:PRINT# 2,TT$(I):NEXT:CLOSE 2
+{:4052}
+	RETURN
+{:4054}
+	POKE 53252,30:PL=.:W$=BN$:P$="{$c2}OARD {$ce}AME":&"{f6}":&,1,32
+	IF TR%<1 OR AN$=BN$THEN{:4062}
+	BN$=AN$:GOSUB 1063:X=47:GOSUB 1001:PRINT# 2,BN$:CLOSE 2
+	RETURN
+{:4062}
+	&"{clear}{f6} {lt. green}{$c3}HAT {$cd}ESSAGE {$c5}DITOR{f6}{white}{pound}VJ 1) {gray3}{$c5}NTRY {$cd}ESSAGE{f6} {white}2) {gray3}{$c5}XIT {$cd}ESSAGE{f6}{white}{pound}VJ"
+	POKE 53252,30:&" {green}{$d7}HICH? {pound}G1{f6}":A=VAL(AN$):ON TR%+1 GOTO{:4080}
+	ON A GOTO{:4068},{:4074}:GOTO{:4080}
+{:4068}
+	PL=.:W$=MID$(C1$,4,LEN(C1$)-5):P$="{gray3}{$c5}NTRY{white}":&"{f6}":&,1,32
+	IF AN$=W$OR TR%<1 THEN{:4062}
+	GOSUB 1063:X=48:GOSUB 1001:PRINT# 2,AN$:C1$="{clear}{f6}{$07}"+AN$+"{f6:2}":CLOSE 2:GOTO{:4062}
+{:4074}
+	PL=.:W$=MID$(C2$,3,LEN(C2$)-4):P$="{gray3}{$c5}XIT{white}":&"{f6}":&,1,32
+	IF AN$=W$OR TR%<1 THEN{:4062}
+	GOSUB 1063:X=49:GOSUB 1001:PRINT# 2,AN$:C2$="{f6:2}"+AN$+"{f6:2}":CLOSE 2:GOTO{:4062}
+{:4080}
+	RETURN
+{:4082}
+	POKE 53252,2:PL=1:W$=CC$:P$="{yellow}{$d3}YSTEM {$c9}{$c4}{white}":&"{f6}":&,1,32
+	IF TR%<1 OR AN$=CC$THEN{:4088}
+	CC$=AN$:GOSUB 1063:X=51:GOSUB 1001:PRINT# 2,CC$:CLOSE 2
+{:4088}
+	RETURN
+{:4090}
+	POKE 53252,5:PL=1:W$=MID$(STR$(NC),2):P$="{cyan}{$ce}EW {$c3}REDITS":&"{f6}":&,1,32
+	ON TR%+1 GOTO{:4096}
+	IF AN$<>""THEN NC=VAL(AN$):GOSUB 1063:X=58:GOSUB 1001:PRINT# 2,NC:CLOSE 2
+{:4096}
+	RETURN
+	COPR. 1994 NEW IMAGE 9/18/94

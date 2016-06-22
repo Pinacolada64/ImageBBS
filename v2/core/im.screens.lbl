@@ -1,0 +1,16 @@
+	ON IM GOTO{:60022},{:60024}
+	RETURN
+{:60004}
+	A=PEEK(53248):POKE 53248,1:&,18,0
+	X$="{$d3}END":IF X>1 THEN X$="{$d2}ECEIV":IF X>2 THEN X$="{$c3}OPY":IF X>3 THEN X$="{$d3}CANN"
+	&"{clear} {cyan}{$a2:37}{f6}"
+	&" {rvrs on} {pound}$XING{pound}{back arrow}11: {f5}{pound}V7{f5}{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}EVICE   : {pound}%A{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}RIVE    : {pound}%B{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$d0}ROTOCOL : {pound}VL{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {yellow}{$bc}{rvrs on}{$a2:36}{rvrs off}{$be}{f6}{lt. blue}"
+	&" {$c7}OOD: 00000  {$c2}AD: 00000  {$c2}YTES: 000000{f6}":POKE 53248,A:RETURN
+{:60022}
+	A%=DV%(BN+6):B%=DR%(BN+6):GOTO{:60004}
+{:60024}
+	A%=D1%:B%=D2%:GOTO{:60004}

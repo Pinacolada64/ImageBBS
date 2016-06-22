@@ -1,0 +1,119 @@
+	LC=0:Q=0:IF ZZ THEN Q=1
+	BR=0:DR=4:A$="D.VOTES,S,R":GOSUB 4:IF E%THEN CLOSE 2:GOTO{:3028}
+{:3004}
+	BR=BR+1:&,2,2:NN$(BR)=A$:&,2,2:DT$(BR)=A$:&,2,2:A%(BR)=VAL(A$):IF ST=0 THEN{:3004}
+	CLOSE 2:GOSUB{:3024}:GOTO{:3032}
+{:3008}
+	DR=3:O$="V.T."+LEFT$(NN$(B),12):RETURN
+{:3010}
+	DR=3:O$="V.R."+LEFT$(NN$(B),12):RETURN
+{:3012}
+	DR=4:GOSUB 3:PRINT# 15,"S"DR$"D.VOTES"
+	A$="D.VOTES,S,W":GOSUB 4:FOR I=1 TO BR:PRINT# 2,NN$(I)R$DT$(I)R$A%(I):NEXT
+	CLOSE 2:RETURN
+{:3018}
+	&"{clear}{f6}{white} {$c0:19} {cyan}    {$d7}RITTEN {$c6}OR{f6}"
+	&"{lt. blue} {rvrs on} {$d4}HE {$d6}OTING {$c2}OOTH! {rvrs off} {cyan}     {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$c2:2}{$d3}{f6}"
+	&"{white} {$c0:19} {cyan}    {$d6}ERSION 1.3{f6}":RETURN
+{:3024}
+	FOR B=1 TO BR:GOSUB{:3010}:D%(B)=0:A$=O$+",S,R":GOSUB 4:IF E%=0 THEN D%(B)=1
+	CLOSE 2:NEXT:RETURN
+{:3028}
+	&"{$ce}O {$d4}OPICS!":IF Q THEN{:3032}
+{:3030}
+	GOTO 300
+{:3032}
+	GOSUB{:3018}
+{:3034}
+	A%=BR:S$="S":IF A%=1 THEN S$=""
+	&"{f6}{white} {pound}%A {$d4}OPIC{pound}$S. {$c5}NTER {f5}{$cc}{f5} {$d4}O {$cc}IST.{f6}"
+{:3038}
+	P$="{$d6}OTE!":GOSUB 6:ON-(TR%<1)GOTO{:3030}:REM GOSUB1850:ONF4GOTO1842:IFRSTHEN3038
+	B=ABS(INT(VAL(AN$))):IF B=>1 AND B<=BR THEN GOSUB{:3100}:GOTO{:3038}
+	A$=LEFT$(AN$,1):B=ABS(INT(VAL(MID$(AN$,2)))):IF B<1 OR B>BR THEN B=1
+	IF BR THEN ON-(A$="{$cc}")-2*(A$="{$d2}")-3*(A$="{$d6}")GOSUB{:3052},{:3064},{:3100}
+	IF Q THEN ON-(A$="{$c1}")-2*(A$="{$c4}")GOSUB{:3144},{:3170}
+	IF A$="{f2}"THEN GOSUB{:3082}:GOTO{:3034}
+	ON-(A$="{$d1}")GOTO 300:GOTO{:3038}
+{:3052}
+	&"{f6}{white}  {$d4}OPIC{pound}{back arrow}22{$c4}ATE":IF Q THEN:&"{pound}{back arrow}35{$c1}CCS"
+	&"{f6}{pound}VJ":FOR I=B TO BR:A$=LEFT$(NN$(I),18):A%=I:AN$=DT$(I):&,15:B$=LEFT$(AN$,12)
+	C$="":IF Q THEN C$=RIGHT$("    "+STR$(A%(I)),4)
+	D$=" ":IF D%(I)THEN D$="*"
+	&"{lt. blue}{pound}$D{pound}#2{pound}# {pound}%A {white}{pound}$A{pound}{back arrow}22{lt. blue}{pound}$B {pound}$C{f6}":IF RC THEN I=BR
+	NEXT:&"{white}{pound}VJ":RETURN
+{:3064}
+	GOSUB{:3078}:CLOSE 2
+{:3066}
+	X=0:DR=3:GOSUB{:3010}:A$=O$+",S,R":GOSUB 4
+	IF E%THEN:&"{$ce}O {$d2}EASONS ON {$c6}ILE.{f6:2}":GOTO{:3076}
+	&"{f6}{$d2}EAD {$d2}EASON {$c6}ILE? ":GOSUB 96:IF A=0 THEN CLOSE 2:RETURN
+{:3072}
+	RC=0:GOSUB 12:X=X+1:&,2,2:A%=X:&"{f6:2}{$d2}EASON #{pound}%A:{pound}$A{f6:2}":&,3,2
+	IF(ST=0)AND(RC=0)THEN{:3072}
+{:3076}
+	CLOSE 2:RETURN
+{:3078}
+	A$=NN$(B):&"{f6}{lt. blue}{$d6}OTE {$d4}OPIC: {white}{pound}$A{f6:2}":GOSUB 12
+	DR=3:GOSUB{:3008}:A$=O$+",S,R":GOSUB 4:&,12,2:RETURN
+{:3082}
+	GOSUB{:3018}:&"{f6}  {$d6}OTING {$c2}OOTH {$c3}OMMANDS:{f6:2}"
+	IF Q THEN:&" {$c1} ... {$c1}DD {$c1} {$d4}OPIC{f6}"
+	IF Q THEN:&" {$c4} ... {$c4}ELETE {$c1} {$d4}OPIC{f6}"
+	&" {$cc}X .. {$cc}IST {$d4}OPICS, {$d3}TART {$c1}T #X{f6}"
+	&" {$d2}X .. {$d2}EAD {$d4}OPIC {$d2}EASONS{f6}"
+	&" {$d6}X .. {$d6}OTE {$cf}N {$d4}OPIC #X{f6}"
+	&" ? ... {$d4}HIS {$cd}ENU{f6}"
+	&" {$d1} ... {$d1}UIT {$d4}HE {$d6}OTING {$c2}OOTH{f6}"
+	RETURN
+{:3100}
+	GOSUB{:3078}:&"{f6}":X=0:F=0:Z=0
+{:3102}
+	&,2,2:IF A$<>"{up arrow}"THEN X=X+1:TT$(X)=A$:F%(X)=0:GOTO{:3102}
+	ON-(ST<>0)GOTO{:3108}
+{:3106}
+	INPUT# 2,A,I,A$:F%(A)=F%(A)+1:Z=Z+1:F=F-(I=ID AND A$=NA$):ON-(ST=0)GOTO{:3106}
+{:3108}
+	CLOSE 2:&"{$d0}RESS A KEY FOR TOPICS ... {pound}G1{f6}":ON F GOTO{:3118}:&"{f6}"
+	FOR I=1 TO X:A$=TT$(I):A%=I:&"{pound}%A {pound}$A{f6}":NEXT:&"{f6}{$c3}HOICE -> {pound}G1":C=VAL(AN$)
+	IF C<1 OR C>X THEN:&"{$c1}BORTED!{f6}":RETURN
+	A$=TT$(C):&"{pound}$A{f6:2} {$c3}ORRECT? ":GOSUB 96:IF A=0 THEN RETURN
+	F%(C)=F%(C)+1:Z=Z+1:DR=3:A$=O$+",S,A":GOSUB 4:PRINT# 2,C;R$ID;R$NA$:CLOSE 2
+{:3118}
+	IF Z=0 THEN:&"{f6}{$ce}O {$d6}OTES SO FAR!{f6:2}":GOTO{:3126}
+	S$="S":IF Z=1 THEN S$=""
+	A%=Z:&"{f6}{$d2}ESULTS {$c6}ROM {pound}%A {$d6}OTE{pound}$S:{f6:2}"
+	FOR I=1 TO X:A$=TT$(I):A%=100*F%(I)/Z+.5:&"{pound}#3{pound}# {pound}%A% {pound}$A{f6}":NEXT
+{:3126}
+	ON F GOTO{:3140}:&"{f6}{$d7}OULD YOU LIKE TO LEAVE AN {$c1}NONYMOUS{f6}REASON? ":GOSUB 96
+	IF A=0 THEN{:3140}
+	TT$(0)=CHR$(48+C)+TT$(C):IM=1:GOSUB 440:IF KK=.THEN{:3140}
+	A=B:GOSUB{:3010}:A$=O$+",S,W":GOSUB 4:IF E%THEN A$=O$+",S,A":GOSUB 4
+	IF E%THEN{:3138}
+	PRINT# 2,MID$(TT$(0),2):FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}"
+{:3138}
+	CLOSE 2:D%(B)=1
+{:3140}
+	GOSUB{:3066}
+	RETURN
+{:3144}
+	POKE 53252,30:&"{f6}{$d4}OPIC : {pound}I1":NN$(BR+1)=AN$:A$=LEFT$(AN$,12):IF AN$=""THEN RETURN
+	IF BR THEN F=0:FOR I=1 TO BR:F=F-(A$=LEFT$(NN$(I),12)):NEXT:IF F THEN RETURN
+	POKE 53252,4:&"{$c1}CCESS: {pound}I1":A=VAL(AN$):IF A<1 OR A>1023 THEN A=1023
+	A%(BR+1)=A:DT$(BR+1)=D1$
+	&"{$c5}NTER THE TEXT FOR THE {$d4}OPIC:{f6}":IM=1:GOSUB 440:X=0:IF KK=.THEN RETURN
+{:3154}
+	POKE 53252,30:X=X+1:A%=X:&"{$c5}NTER {$c3}HOICE #{pound}%A:{f6}: {pound}I0":ED$(X)=AN$
+	ON-(AN$<>""AND X<9)GOTO{:3154}:IF X=1 THEN RETURN
+	IF AN$=""THEN X=X-1
+	DR=3:B=BR+1:GOSUB{:3008}:A$=O$+",S,W":GOSUB 4:IF E%THEN CLOSE 2:RETURN
+	FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}"
+	FOR I=1 TO X:PRINT# 2,ED$(I):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	BR=BR+1:DR=4:A$="D.VOTES,S,W":GOSUB 4:IF E%THEN A$="D.VOTES,S,A":GOSUB 4
+	PRINT# 2,NN$(BR)R$DT$(BR)R$A%(BR):CLOSE 2:RETURN
+{:3170}
+	A$=NN$(B):&"{$c4}ELETE {f5}{pound}$A{f5}? ":GOSUB 94:IF A=0 THEN RETURN
+	DR=3:GOSUB 3:GOSUB{:3008}:PRINT# 15,"S"DR$O$:GOSUB{:3010}:PRINT# 15,"S"DR$O$:BR=BR-1
+	IF B<>BR+1 THEN FOR I=B TO BR:NN$(I)=NN$(I+1):DT$(I)=DT$(I+1):A%(I)=A%(I+1):NEXT
+	GOTO{:3012}
+	COPR. 1996 NEW IMAGE  5/3/96 - JLF

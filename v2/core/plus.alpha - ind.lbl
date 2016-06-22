@@ -1,0 +1,53 @@
+	PR=-1:A=4:GOSUB 1736:POKE 53252,20
+{:3002}
+	&"{clear}{f6:2}1.{$c3}LEAR{f6}2.{$cc}OAD{f6}3.{$d3}EARCH{f6}4.{$c9}NSERT{f6}5.{$c4}ELETE{f6}6.{$d3}AVE{f6}7.{$cc}IST{f6}8.{$cd}AKE{f6}9.{$cb}ILL{f6}"
+	&"{f6}0.{$d1}UIT{f6:2} =>{pound}G1{pound}V7{f6}":A=VAL(AN$):IF A THEN ON A GOSUB{:3012},{:3014},{:3018},{:3024},{:3034},{:3016},{:3044},{:3058},{:3068}:GOTO{:3002}
+	PR$="":PR=-1:CLOSE 2:GOTO 1812
+{:3008}
+	DR=6:A$="U.CONFIG":GOTO 1011
+	REM 3/24/89
+{:3012}
+	&"{$c3}LEARED...{f6}":&,16,3:RETURN
+{:3014}
+	&"{$cc}OADING...":DR=6:GOSUB 1010:A$=DR$+"U.INDEX":&,16,1:&"{pound}%A {$d5}SERS.{pound}W1{f6}":RETURN
+{:3016}
+	&"{$d3}AVING...":DR=6:GOSUB 1010:A$=DR$+"U.INDEX":PRINT# 15,"S"A$:&,16,2:RETURN
+{:3018}
+	GOSUB{:3008}
+{:3020}
+	&"{$c8}{$c1}{$ce}{$c4}{$cc}{$c5}:{pound}I1":IF AN$=""THEN CLOSE 2:RETURN
+	&,16:&"{f6}A%={pound}%A,B%={pound}%B{f6}":GOTO{:3020}
+{:3024}
+	GOSUB{:3008}
+{:3026}
+	&"{$c9}NSERT:{$c9}{$c4}={pound}I1":A=VAL(AN$):IF A=.THEN CLOSE 2:RETURN
+	X=A:GOSUB 1001:&,2,2:AN$=A$:LP=1:&
+	&,16:&"{f6}A%={pound}%A,B%={pound}%B{f6}":IF A%THEN:&"{$c1}LREADY {$d4}HERE!{f6}":GOTO{:3026}
+	&"{$c1}DDING AT {pound}%B.{f6}":A%=A:&,16,4:GOTO{:3026}
+{:3034}
+	GOSUB{:3008}
+{:3036}
+	&"{$c4}ELETE:{$c9}{$c4}={pound}I1":A=VAL(AN$):IF A=.THEN CLOSE 2:RETURN
+	X=A:GOSUB 1001:&,2,2:AN$=A$:LP=1:&
+	&,16:&"{f6}A%={pound}%A,B%={pound}%B{f6}":IF A%=.THEN:&"{$ce}OT {$d4}HERE!{f6}":GOTO{:3036}
+	&"{$c4}ELETING #{pound}%B.{f6}":A%=A:&,16,5:GOTO{:3036}
+{:3044}
+	GOSUB{:3008}
+	OPEN 3,DV%,3,DR$+"U.INDEX,P,R":GET#3,A$,A$:Z$=CHR$(0)
+	GET#3,A$,B$:N%=ASC(B$+Z$)+ASC(A$+Z$)*256:&"{f6}{pound}%N {$d5}SERS.{f6}":IF N%=.THEN{:3056}
+	FOR I=1 TO N%:GET#3,A$,B$:A%=ASC(B$+Z$)+ASC(A$+Z$)*256
+	X=A%:GOSUB 1001:INPUT# 2,A$:&"{pound}%A - {pound}$A{f6}"
+	I=I+RC*N%:NEXT
+{:3056}
+	CLOSE 3:&"{$d0}RESS {$c1} {$cb}EY {pound}G1{f6}":CLOSE 2:RETURN
+{:3058}
+	GOSUB{:3008}:FOR I=1 TO UR:X=I:GOSUB 1001:INPUT# 2,A$
+	IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3066}
+	A%=I:AN$=A$:&"{pound}#3{pound}# {pound}%A. {pound}$A{pound}{back arrow}30":&,16:IF A%THEN:&"{$c4}UPE={pound}%A{f6}":GOTO{:3066}
+	A%=I:&,16,4:&"{$c1}T {pound}%B{f6}"
+{:3066}
+	NEXT:CLOSE 2:RETURN
+{:3068}
+	&"{$cb}ILL  :{$d0}OS={pound}I1":A=VAL(AN$):IF A=.THEN CLOSE 2:RETURN
+	B%=A:&"{$c4}ELETING #{pound}%B.{f6}":A%=A:&,16,5:GOTO{:3068}
+	REM COPR.1989 NEW IMAGE

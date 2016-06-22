@@ -1,0 +1,32 @@
+	CM$="JERK AWARD":GOSUB 1360:GOTO{:4006}
+{:4002}
+	T=INT((37-LEN(A$))/2):T$=MID$(STR$(T),2):IF T<10 THEN T$="0"+T$
+	RETURN
+{:4006}
+	DR=3:A$="E.JERKS":GOSUB 1011:IF E%THEN RETURN
+	C=.:X=17:GOSUB 1001:&,2,2:D=VAL(A$):X=.
+{:4010}
+	X=X+1:IF X>D THEN{:4016}
+	GOSUB 1001:&,2,2:C%=VAL(A$):IF C%>C THEN C=C%:J=X
+	GOTO{:4010}
+{:4016}
+	X=J:GOSUB 1001:&,2,2:AN$=MID$(A$,4):&,15,1:N$=AN$
+	A$="N.${$ca}ERK {$c1}WARD":DR=1:GOSUB 1023:PRINT# 2,R$"{pound}$Q {$04}"+D1$
+	PRINT# 2,"{pound}$Q{white}{$b0}{pound}O{$c0:18}{$ae}"R$"{pound}$Q{$dd}{pound}{back arrow}37{$dd}"
+	GOSUB{:4002}:A$="{yellow}{$d4}HIS MONTH THE {green}{rvrs on}{$ca}ERK {$c1}WARD{rvrs off}":PRINT# 2,"{$dd}{pound}$Q{pound}{back arrow}"+T$+A$+"{pound}{back arrow}37{white}{$dd}"
+	A$="{yellow}IS PROUDLY PRESENTED TO":GOSUB{:4002}
+	PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}37{$dd}"R$"{pound}$Q{$dd}{pound}{back arrow}"+T$+A$+"{pound}{back arrow}37{white}{$dd}"
+	A$=N$:GOSUB{:4002}
+	PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}37{$dd}"R$"{pound}$Q{$dd}{gray3}{pound}{back arrow}"+T$+"{rvrs on}"+N$+"{rvrs off}{pound}{back arrow}37{white}{$dd}"R$"{pound}$Q{$dd}{pound}{back arrow}37{$dd}"
+	A$="{lt. red}WHO HAS EXHIBITED QUALITIES":GOSUB{:4002}
+	GOSUB{:4002}:PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}"+T$+A$+"{pound}{back arrow}37{white}{$dd}"
+	A$="{lt. red}THAT MAKE HIM THE OVERWHELMING"
+	GOSUB{:4002}:PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}"+T$+A$+"{pound}{back arrow}37{white}{$dd}"
+	A$="{lt. red}CHOICE BY A VOTE OF HIS PEERS."
+	GOSUB{:4002}:PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}"+T$+A$+"{pound}{back arrow}37{white}{$dd}"
+	PRINT# 2,"{pound}$Q{$dd}{pound}{back arrow}37{$dd}"R$"{pound}$Q{$ad}{pound}O{$c0:18}{$bd}"R$"{up arrow}":CLOSE 2
+	DR=3:A$="E.JVOTERS":GOSUB 1023:PRINT# 2,"{$d4}{$c8}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}":CLOSE 2
+	A$="E.JERKS":DR=3:GOSUB 1024:B$=",L,"+CHR$(30):A$=A$+B$:DR=3:GOSUB 1011
+	X=18:GOSUB 1001:PRINT# 2,CHR$(255):X=17:D=1:GOSUB 1001:PRINT# 2,D
+	X=1:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:A$=" {lt. red}{$ca}ERK {$c1}WARD {$d2}ESTARTED"+R$+" {yellow}{pound}O{$c0}{pound}O{$c0}{lt. green}":GOTO 1095
+	COPR. 1994 NEW IMAGE 9/18/94

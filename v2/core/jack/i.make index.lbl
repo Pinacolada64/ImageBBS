@@ -1,0 +1,24 @@
+	&,28,1:DIM A$(UR):&"{f6}{$d2}EADING":GOSUB{:1065}:S$="                    "
+	FOR X=1 TO UR:GOSUB{:1001}:&,2,2
+	IF A$<>"{up arrow}"AND A$<>"{$d2}{$c5}{$d3}"THEN N=N+1:A$(N)=LEFT$(A$+S$,20)+MID$(STR$(X),2):&"."
+	NEXT:DIM A%(N):&"{f6}{$d3}ORTING":&,60,7,0,A$(1),N:&"{f6}{$d7}RITING":DR=6:GOSUB{:1010}
+	A%(0)=N:FOR I=1 TO N:A%(I)=VAL(MID$(A$(I),21)):A$(I)="":NEXT:A$=DR$+"U.INDEX"
+	PRINT# 15,"S"A$:&,60,3,0,A%(0),N*2+2,A$,DV%:&"{f6}{$c4}ONE{f6}"
+	A=0:GOTO{:2004}
+{:1001}
+	REM GOSUB1002:&,22,1
+	PRINT# 15,"P{$02}"CHR$(X AND 255)CHR$(X/256)"{$01}":RETURN
+{:1009}
+	DV%(.)=D1%:DR%(.)=D2%:DV%=DV%(DR):DR$=MID$(STR$(DR%(DR)),2)+":":RETURN
+{:1010}
+	CLOSE 15:GOSUB{:1009}:OPEN 15,DV%,15:RETURN
+{:1011}
+	CLOSE 2:GOSUB{:1010}:OPEN 2,DV%,2,DR$+A$
+	INPUT# 15,E%,E$,T%,S%:A$="{f6}{$d3}TATUS:{pound}#2{pound}%E:{pound}$E:{pound}%T:{pound}%S{f6}":RETURN
+{:1065}
+	DR=6:A$="U.CONFIG":GOTO{:1011}
+	POKE 22,25:FOR I=2 TO PEEK(152):CLOSE PEEK(603):NEXT
+	X=PEEK(780):Y=PEEK(781)+PEEK(782)*256:POKE 53248,0:A=2
+{:2004}
+	&,28,1
+	DR$=MID$(STR$(DR%(5)),2)+":":DV%=DV%(5):PR$="IM":A$=DR$+PR$:LOAD A$,DV%,A

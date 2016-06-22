@@ -1,0 +1,61 @@
+	KK=0:IF IM<1 OR IM>2 THEN RETURN
+{:60001}
+	GOSUB{:60010}
+{:60002}
+	GOSUB{:60030}
+{:60003}
+	&"{f6}{pound}Q0{$d3})CAN {$c3})LEAR {$c4})LOAD {$cb})ILL {$c1})DD {$d1})UIT: {pound}G1{pound}V7{f6}":A$=AN$
+	X=-(A$="{$d3}")-2*(A$="{$d1}")-3*(A$="{$c3}")-4*(A$="{$c4}")-5*(A$="{$c1}")
+	IF TR%>0 THEN ON X GOTO{:60002},{:60006},{:60008},{:60007},{:60001}:GOTO{:60003}
+{:60006}
+	KK=0
+{:60007}
+	RETURN
+{:60008}
+	KK=0:GOTO{:60002}
+{:60010}
+	ON IM GOSUB{:60100},{:60200}:X=KK
+{:60012}
+	ON IM GOSUB{:60110},{:60210}:IF AN$=""THEN RETURN
+	&"{white}: ":IF Y$<>"{$c5}"THEN:&"{pound}G1":Y$=AN$
+	IF Y$="{$c5}"THEN:&"{$c5}VERY{f6}":GOTO{:60026}
+	IF Y$="{$d9}"THEN:&"{$d9}ES{f6}":GOTO{:60026}
+	IF Y$="{$d3}"THEN:&"{$d3}TART{f6}":RETURN
+	IF Y$="{$c1}"THEN:&"{$c1}BORT{f6}":KK=X:RETURN
+	&"{$ce}O{f6}":GOTO{:60012}
+{:60026}
+	GOSUB{:60050}:&"{f6}":ON FL GOTO{:60012}:KK=KK+1:TT$(KK)=MID$(STR$(B%),2)+":"+F$
+	GOTO{:60012}
+{:60030}
+	&"{f6}":IF KK=0 THEN:&"{$ce}O FILES SELECTED.{f6}":RETURN
+	D$="":IF CO%>2 THEN D$="K"
+	T=0:FOR I=1 TO KK:AN$=TT$(I):&,15,6,58:A%=VAL(A$):T=T+A%
+	D$="{$c2}LKS":IF CO%>2 THEN D$="{$cb}":A%=INT(A*254/1024)
+	&"{white}{pound}!I){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%A {pound}$D{pound}{back arrow}15{cyan}{f5}{pound}V7{f5}{f6}":NEXT
+	D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":T=INT(T*254/1024)
+	&"{f6}{yellow}{pound}!T {$d4}OTAL {pound}$D{f6}{pound}Q0":RETURN
+{:60050}
+	FL=1:A=B%*254/QB*10/.95:A%=A:C%=(A-A%)*60:V$="{f6}{$d3}ORRY, YOU "
+	D%=B%:D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":D%=B%*254/1024
+	&"{pound}%D {pound}$D {$d4}OTAL, {$d4}RANSFER {$d4}IME: {pound}#2{pound}%A:{pound}%C{f6}":A=7:GOSUB 1004
+	IF A%>TR%AND TR%<100 THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$d4}IME!":RETURN
+	IF A=0 AND B%>L THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$c3}REDITS!":RETURN
+	IF DC%>=DA%AND DA%<>0 THEN LP=1:&"{pound}$V HAVE DOWNLOADED YOUR LIMIT!":RETURN
+	FL=0:RETURN
+{:60100}
+	DR=7:GOSUB 1010:CLOSE 15:IF ST THEN RETURN
+	&"{f6}{$d0}ATTERN: ":GOSUB 1499:B$="*"
+	FOR I=1 TO LEN(AN$):IF MID$(AN$,I,1)="*"THEN B$=""
+	NEXT:AN$=AN$+B$:&"{f6}":CLOSE 1:OPEN 1,DV%,0,"$"+DR$+AN$
+	GET#1,A$,A$:&,8,1,1:&"{pound}$A{f6:2}":Y$="":RETURN
+{:60110}
+	&,8,1,1:T$=MID$(A$,26,1):AN$=A$:&,15,6,34:B%=VAL(A$):IF AN$=""THEN RETURN
+	A%=B%:D$="":IF CO%>2 THEN A%=A%*254/1024:D$="K"
+	&,15,6,34:F$=A$+","+T$:&"{yellow}{pound}%A{white}{pound}$D{pound}{back arrow}07{cyan}{f5}{pound}$F{f5}{pound}{back arrow}30":RETURN
+{:60200}
+	N=0:RETURN
+{:60210}
+	IF N=>S%(0,0)THEN AN$="":RETURN
+	N=N+1:B%=S%(39,N):&,60,1,16,S%(13,N),F$
+	A%=B%:D$="":IF CO%>2 THEN A%=A%*254/1024:D$="K"
+	&"{yellow}{pound}%A{white}{pound}$D{pound}{back arrow}07{cyan}{f5}{pound}$F{f5}{pound}{back arrow}30":RETURN

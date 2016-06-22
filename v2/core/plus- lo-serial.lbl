@@ -1,0 +1,65 @@
+	REM "+.LO.SERIAL" 05-14-90 10:20 PM
+	D1%=8:D2%=2:MX=999
+	DR=0:A$="OR.SERIAL":GOSUB 1011:X=ID:GOSUB 1001:&,2,2:CLOSE 2
+	VF=1:ON-(LEN(A$)=5)GOTO{:4026}:VF=0:IF LEFT$(A$,1)<>"*"THEN{:4014}
+	LP=1:&"{f6:2}{$d9}OUR SERIAL NUMBER IS {pound}$A. {$d4}HIS HAS NOT YET BEEN VERIFIED BY "
+	LP=1:&"{$ce}EW {$c9}MAGE {$d3}OFTWARE, BUT WILL BE WITHIN 24 HOURS.{f6}"
+	A$=MID$(A$,2):GOTO{:4026}
+{:4014}
+	POKE 53252,5:&"{$c5}NTER YOUR {$c9}MAGE {$c2:2}{$d3} {$d3}ERIAL #: {pound}I1":IF AN$=""OR TR%<1 THEN RETURN
+	Z$=LEFT$(AN$,1):IF Z$<>"{$c7}"AND Z$<>"{$c6}"AND Z$<>"{$c5}"THEN{:4060}
+	A=VAL(MID$(AN$,2)):IF A<1 OR A>999 THEN{:4060}
+	DR=0:F$="OR.SERIAL.ADD,S":A$=F$+",W":GOSUB 1011:A$=F$+",A":GOSUB 1011
+	PRINT# 2,ID:CLOSE 2
+	DR=0:A$="OR.SERIAL":GOSUB 1011:X=ID:GOSUB 1001:PRINT# 2,"*"AN$:CLOSE 2:A$=AN$
+{:4026}
+	&"{f6:2}{$c9}MAGE {$cf}WNER: {pound}$A{f6:2}":SN=VAL(MID$(A$,2))
+	DR=0:A$="OR.ORDERS":GOSUB 1011:X=SN:GOSUB 1001:N=0
+{:4030}
+	&,2,2:IF A$<>"{up arrow}"THEN N=N+1:TT$(N)=A$:ON-(ST=0)GOTO{:4030}:CLOSE 2
+	IF N=0 THEN LP=1:&"{f6}{$d9}OU HAVE NO PRODUCT ORDERS CURRENTLY ON FILE.{f6}":GOTO{:4036}
+	FOR I=1 TO N:A$=TT$(I):GOSUB{:4038}:NEXT
+{:4036}
+	ON VF GOSUB{:4064}:RETURN
+{:4038}
+	AN$="1"+LEFT$(A$,6)+"1200":&,15:B$="{$cf}RDERED "+LEFT$(AN$,12)
+	E$=MID$(A$,7,6):AN$="1"+E$+"1200":&,15:C$="{$ce}OT {$d9}ET {$d3}HIPPED"
+	IF E$<>"000000"THEN C$="{$d3}HIPPED "+LEFT$(AN$,12)
+	D$=MID$(A$,19):E$=MID$(A$,13,1)
+	IF E$="{$c3}"THEN E$="{$c3}.{$cf}.{$c4}."
+	IF E$="{$d0}"THEN E$="{$d0}AID {$c3}HECK/{$cd}{$cf}"
+	IF E$="{$d2}"THEN E$="{$d2}EPLACEMENT"
+	IF E$="{$c4}"THEN E$="{$c4}EALER"
+	IF E$="{$c6}"THEN E$="{$c6}REE"
+	&"{pound}$D [{pound}$E]:{f6} {pound}$B{f6} {pound}$C{f6}"
+	RETURN
+{:4060}
+	LP=1:&"{$d3}ORRY, THAT IS NOT A VALID SERIAL #. {$c5}XAMPLES: {$c7}0001, {$c7}0900, {$c7}0117."
+	GOTO{:4014}
+{:4064}
+	DR=0:A$="OR.OWNERS.FIELDS,S,R":GOSUB 1011:N=0
+{:4066}
+	&,2,2:IF A$<>"{up arrow}"THEN N=N+1:ED$(N)=A$:IF ST=0 THEN{:4066}
+	CLOSE 2:DR=0:A$="OR.OWNERS":GOSUB 1011:X=SN:GOSUB 1001
+	FOR I=1 TO 10:TT$(I)="{f2}":NEXT:I=0:TZ=0
+{:4072}
+	I=I+1:&,2,2:TT$(I)=A$:ON-(ST=0 AND A$<>"{up arrow}")GOTO{:4072}
+{:4074}
+	&"{clear}{f6:2}{$c9}MAGE {$cf}WNERS {$c4}ATABASE:{f6:2}":A$=TT$(1)
+	&"{$d3}ERIAL # {pound}$A{f6}":A$=TT$(3):B$=TT$(2)
+	&"{$ce}AME:    {pound}$A {pound}$B{f6}":A$=TT$(4)
+	&"{$c1}DDRESS: {pound}$A{f6}":A$=TT$(5):B$=TT$(6):C$=TT$(7)
+	&"         {pound}$A, {pound}$B  {pound}$C{f6:2}":A$=TT$(9):B$=TT$(10):C$=TT$(8)
+	&"{$d6}OICE#:  {pound}$A{f6}{$c2:2}{$d3}#:    {pound}$B{f6}{$c2:2}{$d3} {$ce}AME:{pound}$C{f6:3}"
+	&"{$c9}S ALL OF THIS CORRECT? ":GOSUB 1902:ON TR%+1 GOTO{:4096}:IF A THEN{:4096}
+	&"{f6}({$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} IF CORRECT){f6}"
+	FOR I=2 TO N:A$=ED$(I):PL=VAL(LEFT$(A$,1)):P$=MID$(A$,4)
+	POKE 53252,VAL(MID$(A$,2,2)):W$=TT$(I):&,1,32:IF AN$<>""THEN TT$(I)=AN$:TZ=1
+	&"{f6}":NEXT:GOTO{:4074}
+{:4096}
+	IF TZ=0 THEN RETURN
+	DR=0:F$="OR.OWNERS.CHG,S":A$=F$+",W":GOSUB 1011:IF E%THEN A$=F$+",A":GOSUB 1011
+	FOR I=1 TO N:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	LP=1:&"{f6}{$d9}OUR CHANGES HAVE BEEN FILED... THE CHANGES WILL BE ADDED TO THE "
+	LP=1:&"DATABASE WITHIN 24 HOURS.{f6}":RETURN
+	REM

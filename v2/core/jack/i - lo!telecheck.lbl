@@ -1,0 +1,19 @@
+	REM"I/LO!TELECHECK  - {$d2}ASK V2.0 -           {$c4}ATE {$d3}TAMP: 05 {$ca}AN 95 10:22PM
+	REM
+	B$="TELECHECK":GOSUB 37:GOSUB{:4522}
+	PRINT# 2,"{up arrow}":CLOSE 2
+	KK=.:A$="S.TCHKMAIL,S,R":DR=1:GOSUB 4:IF E%THEN CLOSE 2:RETURN
+{:4510}
+	KK=KK+1:&,2,2:S=(64 AND ST):TT$(KK)=A$:IF S=.THEN{:4510}
+	CLOSE 2:TT$=NA$:A$="A":GOSUB 32:IF E%THEN A$="W":GOSUB 32
+	A$="[{$cc}OGIN {$d6}ERIFICATION {$c5}RROR]":A=.:PRINT# 2,"{$c1}UTO-{$cd}ESSAGE"R$0;R$D1$R$A$R$
+	GOSUB{:4522}:PRINT# 2,"{lt. blue}{pound}VJ{pound}Q0":FOR X=1 TO KK:PRINT# 2,TT$(X):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	CLOSE 15:GOSUB 30:I=1:X=14:GOSUB 16:X=25:GOSUB 16:X=32:GOSUB 16
+	IF ID=1 THEN X=2:GOSUB 16:X=13:GOSUB 16:X=24:GOSUB 16:X=31:GOSUB 16
+	RETURN
+{:4522}
+	TT$=PW$:IF ID=1 THEN PW$="{$d0}RIVATE"
+	PRINT# 2,"{lt. green}{$c6}AILED {$d3}ECURITY {$c3}HECK. ({$c1}TTEMPT"STR$(K+1)")"R$
+	IF Z$<>TT$THEN PRINT# 2,"{lt. green}{$d0}ASSWORD:{yellow}"PW$" {cyan}({f5}"Z$"{f5} {$d7}AS {$c5}NTERED)"R$
+	IF C$<>T$THEN PRINT# 2,P$:PRINT# 2,"{lt. green}"T$" {cyan}({f5}"AN$"{f5} {$d7}AS {$c5}NTERED)"R$
+	RETURN

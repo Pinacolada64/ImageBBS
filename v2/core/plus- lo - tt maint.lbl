@@ -1,0 +1,38 @@
+	A$=" {$d2}ESTART {$d4}OP {$d4}EN {$cc}IST":GOSUB 1095:&,27,2:GOSUB{:4002}:&,28,2:RETURN
+{:4002}
+	&,11:N=20:DIM A$(N,8):GOSUB 1065:X=0:P=N:M=MN%
+{:4004}
+	&"{f6}{$d2}EADING    "
+{:4006}
+	X=X+1:X%=X:&"{pound}H3{pound}#3{pound}# {pound}%X":ON-(X>UR)GOTO{:4014}
+	GOSUB 1001:&,2,2:ON-(A$="{$d2}{$c5}{$d3}"OR A$="{up arrow}")GOTO{:4006}:AN$=A$:&,15,1
+	FOR I=2 TO 9:&,2,2:NEXT:I=1:GOSUB{:4030}:FOR I=10 TO 14:&,2,2:NEXT
+	FOR I=2 TO 8:&,2,2:GOSUB{:4030}:NEXT:P=P-1:ON-(P>0)GOTO{:4006}
+{:4014}
+	&" {$d3}ORTING"
+	FOR I=1 TO 8:&".":&,60,7,0,A$(P+1,I),N-P:NEXT:P=N-10
+	ON-(X=<UR)GOTO{:4004}:M=MN%-M:IF M<0 THEN M=M+1440
+	&"{f6}{$c5}LAPSED {$d4}IME: {pound}!M {$cd}INUTES{f6}"
+	&"{f6}{cyan}{$c3}REATING {$d4:2} {$c6}ILE...":A$="E.TOP TEN":DR=3:GOSUB 1023
+	PRINT# 2,"{$d4}OP {$d4}EN {$d5}SERS"R$"{$04}"D1$R$:FOR I=1 TO 8
+	ON I GOSUB{:4101},{:4102},{:4103},{:4104},{:4105},{:4106},{:4107},{:4108}
+	PRINT# 2,"{f6}{$c8}IT {$c1} {$cb}EY > {pound}G1{clear}{f6}{lt. blue} {$d4}OTAL "B$"{f6}  #{pound}{back arrow}09{$d5}SER{f6} {pound}O{$c0}{pound}O{$c0}"
+	FOR J=N TO N-9 STEP-1:PRINT# 2,A$(J,I):NEXT:NEXT:CLOSE 2:RETURN
+{:4030}
+	A$(P,I)=RIGHT$("       "+MID$(STR$(VAL(A$)),2),7)+"{pound}{back arrow}10"+AN$:RETURN
+{:4101}
+	B$="{$c3}ALLS":RETURN
+{:4102}
+	B$="{$c4}OWNLOADS":RETURN
+{:4103}
+	B$="{$d5}PLOADS":RETURN
+{:4104}
+	B$="{$c2}LKS {$c4}/{$cc}OADED":RETURN
+{:4105}
+	B$="{$c2}LKS {$d5}/{$cc}OADED":RETURN
+{:4106}
+	B$="{$c3}REDITS":RETURN
+{:4107}
+	B$="{$d0}OSTS":RETURN
+{:4108}
+	B$="{$d2}ESPONSES":RETURN

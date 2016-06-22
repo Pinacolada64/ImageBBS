@@ -1,0 +1,14 @@
+	PR$="":GOSUB{:3050}:ON-(F1=3)GOTO 200:GOTO
+	&,16,255:IF PR=A%THEN RETURN
+{:3042}
+	ML$="":A$="POST":GOSUB 28:&,16,255:PR=A%:D4$="{$d4}URBO{$d0}OST":RETURN
+{:3048}
+	S$="":LM$="":P1$="":SG=.:OS=.:SB$="":GOTO 300
+{:3050}
+	H$="{$c2}ASE":I$=" {$d3}UB{$cf}P ":J$="{$c2}ULLETIN":K$="{$d2}ESPONSE":L$="{$c1}NONYMOUS":RETURN
+	LM$="":P1$="":R$=CHR$(13):LC=2:ON TR%+1 GOTO{:3048}:A=8:GOSUB 11:Q=A
+	A$="E.{$d3}UB":DR=3:GOSUB 4:&,2,2:&,2,2:IT=VAL(A$):CLOSE 2
+	IF IT THEN A=TR%:TR%=TR%+IT:IT=A
+	GOSUB{:3042}:GOSUB{:3950}
+{:3950}
+	A$="{$cd:2}.LOAD":GOSUB 72

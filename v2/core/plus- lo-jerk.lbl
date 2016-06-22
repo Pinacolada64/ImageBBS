@@ -1,0 +1,68 @@
+	&"{f6}{gray3}{$d6}OTE FOR {$ca}ERK {$c1}WARD? ":GOSUB 1907:ON A+1 GOTO 1603
+	A=8:GOSUB 1004:Q=A:GOSUB 2912:A$="N.${$ca}ERK {$c1}WARD":DR=1:GOSUB 1075
+{:4004}
+	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} {$d0}ORT {$c3}OMMODORE {rvrs off}{f6}{pound}{back arrow}13{green}{$d0}RESENTS....{f6:2}{pound}{back arrow}10{white}{$d4}HE {rvrs on}{purple}{$ca}{$c5}{$d2}{$cb}{green}{rvrs off} {$c1}WARD!!{f6}"
+	A$="E.JERKS":DR=3:GOSUB 1011:IF E%THEN:&"{f6}{$ce}OT CONFIGURED{pound}W2":GOTO{:4100}
+	X=17:GOSUB 1001:&,2,2:D=VAL(A$):X=1:GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN{:4050}
+	IF A$="{$ff}"THEN{:4050}
+	N$=A$:&"{f6:3}{lt. blue}{$d4}HE {white}{$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3}{lt. blue} {$c1}RE: {f6}":C=.
+{:4014}
+	C%=VAL(N$):N$=MID$(N$,4)
+	B%=X:&"{f6}{white}<{gray1}{pound}%B{white}>{green} {pound}$N{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%C{yellow} {$d6}OTE!":IF C%<>1 THEN:&"{pound}H1S"
+	&"!":X=X+1:KK=X:GOSUB 1001:&,2,2:N$=A$:IF MID$(N$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"THEN C=C+1
+	IF N$<>"{up arrow}"THEN{:4014}
+{:4022}
+	&"{f6:2}{gray3}{$d6})OTE, {$c1})DD {$c1} {$ce}EW {$ce}OMINEE {$cf}R {$d1})UIT?{f6}15 {$ce}AME {$cd}AXIMUM.{f6}> {pound}G1{lt. green}{pound}V7{f6}"
+	IF TR%<1 THEN{:4100}
+	ON-(AN$="{$d6}")-(AN$="{$c1}")*2-(AN$="{$d1}")*3 GOTO{:4028},{:4054},{:4100}:GOTO{:4022}
+{:4028}
+	C=1:A$="E.JVOTERS,S,R":DR=3:GOSUB 1011:IF E%THEN{:4100}
+{:4030}
+	ON Q GOTO{:4034}:FOR X=1 TO D:&,2,2:IF NA$=A$THEN X=D:C=.
+	NEXT:ON-(C<>.)GOTO{:4034}:&"{f6:2}{$d3}ORRY, {$d9}OU'VE {$c1}LREADY {$d6}OTED{pound}W2":GOTO{:4100}
+{:4034}
+	&"{f6:2}{yellow}{$d6}OTE {$c6}OR {$d7}HICH {$ce}UMBER?{cyan} {pound}I1":ON-(AN$=""OR AN$="{$d1}")GOTO{:4100}
+	ON TR%+1 GOTO{:4100}:X=INT(VAL(AN$)):IF X<1 OR X>KK THEN{:4030}
+	A$="E.JERKS":DR=3:GOSUB 1011:IF E%THEN{:4100}
+	GOSUB 1001:&,2,2:N$=A$:C%=VAL(N$):N$=MID$(N$,4)
+	C%=C%+1:N$=RIGHT$(STR$(1000+C%),3)+N$
+	GOSUB 1001:PRINT# 2,N$:CLOSE 2:A$="E.JVOTERS,S,A":DR=3:GOSUB 1011:IF E%THEN{:4100}
+	IF Q=.THEN PRINT# 2,NA$:D=D+1:A$="E.JERKS":GOSUB 1011:X=17:GOSUB 1001:PRINT# 2,D
+	&"{f6:2}{$d9}OUR {$d6}OTE {$c8}AS {$c2}EEN {$d2}ECORDED, {$d4}HANKS!{f6}{pound}W2":GOTO{:4100}
+{:4050}
+	&"{f6:2}{cyan}{$d4}HERE {$c1}RE {$ce}{$cf} {$ce}OMINEES, {$d7}OULD {$d9}OU {$cc}IKE {$d4}O{f6}{$ce}OMINATE {$d3}OMEONE? "
+	GOSUB 1902:IF A=.THEN{:4100}
+{:4054}
+	IF KK>15 AND C=.THEN:&"{f6:2}{purple}{$ce}O {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3} {$c2}EING {$c1}CCEPTED {$c1}T {$d4}HIS {$d4}IME!{f6}":GOTO{:4022}
+	&"{f6:2}{cyan}{$c1}ND {rvrs on}{white} {$d7}{$c8}{$cf} {rvrs off}{cyan} {$c9}S {$d9}OUR {$ce}OMINEE?{f6:2}> {pound}I1":A=LEN(AN$):IF TR%<1 THEN{:4100}
+	IF A<5 OR A>20 THEN{:4062}
+	GOSUB 1046:IF I THEN{:4064}
+{:4062}
+	&"{f6:2}{$d3}ORRY, {pound}V7 {$c4}OESN'T {$c5}XIST!{f6}":GOTO{:4068}
+{:4064}
+	IF I=1 THEN:&"{f6:2}{$c9}T'S {$ce}OT {$ce}{$c9}{$c3}{$c5} {$d4}O {$c6}OOL {$d7}ITH {$d4}HE {$d3}YSOP!{pound}W2{f6}":GOTO{:4100}
+	GOTO{:4070}
+{:4068}
+	&"{f6:2}{$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$d4}RY {$c1}GAIN? ":GOSUB 1902:ON A GOTO{:4054}:GOTO{:4100}
+{:4070}
+	NN$=AN$:DR=3:A$="E.JERKS":GOSUB 1011:IF E%THEN{:4100}
+	X=.:TT$=""
+{:4074}
+	X=X+1:GOSUB 1001:&,2,2:TT$=A$:IF MID$(TT$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"THEN{:4082}
+	IF MID$(TT$,4)=NN$THEN:&"{f6:2}{white}{$d4}HAT {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2} {$c1}LREADY {$c5}XISTS!{f6}{pound}W2{lt. green}":GOTO{:4100}
+	IF TT$<>"{up arrow}"THEN{:4074}
+	GOSUB 1001:PRINT# 2,"000"NN$:X=X+1:GOSUB 1001:PRINT# 2,"{up arrow}":GOTO{:4084}
+{:4082}
+	GOSUB 1001:PRINT# 2,"000"NN$
+{:4084}
+	CLOSE 2:&"{f6:2}{orange}{$d9}OUR {$ce}OMINEE {$c8}AS {$c2}EEN {$c1}DDED!{f6}"
+	&"{$ce}OMINEE NOW BEING NOTIFED VIA {$c5}MAIL"
+	W=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":W=.:GOSUB 1062
+	PRINT# 2,"{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}{f6}{$ce}{$cf}{$cd}{$c9}{$ce}{$c1}{$d4}{$c9}{$cf}{$ce}{$a0}{$c3}{$cf}{$cd:2}{$c9}{$d4:2}{$c5:2}"R$"({$d5}{$c9}{$c4}#0)"R$;D1$
+	PRINT# 2,"[{$c3}{$cf}{$ce}{$c7}{$d2}{$c1}{$d4}{$d5}{$cc}{$c1}{$d4}{$c9}{$cf}{$ce}{$d3}]":PRINT# 2,NA$+" {$c8}AS {$ce}OMINATED {$d9}{$cf}{$d5}"
+	PRINT# 2,"FOR THE {white}{rvrs on}{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}":PRINT# 2,"{f6}{lt. green}{$d9}OUR VERY WELL DESERVED NOMINATION"
+	PRINT# 2,"HAS BEEN ACCEPTED!!":PRINT# 2,"{up arrow}":CLOSE 2
+	&"{f6:2}{$d4}IDINGS SENT!{pound}W2":GOTO{:4004}
+{:4100}
+	D=.:X=.:C=.:CLOSE 2:RETURN
+	COPR. 1994 NEW IMAGE 9/18/94

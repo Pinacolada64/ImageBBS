@@ -1,0 +1,55 @@
+	REM MISC. LOGON MODULE
+	POKE 53248,1:&"{clear}{lt. blue}":POKE 53248,0:ON A GOTO{:4050},{:4068}
+{:4004}
+	PRINT"{home}{down:2}  {$c5}NTER {$c3}URRENT {$c4}ATE/{$d4}IME:{down}"
+{:4006}
+	AN$=" {$c4}AY   :"+LEFT$(D1$,1):GOSUB{:4046}:IF A<1 OR A>7 THEN{:4006}
+	GOSUB{:4044}:POKE 52935,A:PRINT
+{:4010}
+	AN$=" {$cd}ONTH :"+MID$(D1$,4,2):GOSUB{:4046}:IF A<1 OR A>12 THEN{:4010}
+	GOSUB{:4044}:POKE 52936,A:PRINT
+{:4014}
+	AN$=" {$c4}ATE  :"+MID$(D1$,6,2):GOSUB{:4046}:IF A<1 OR A>31 THEN{:4014}
+	GOSUB{:4044}:POKE 52937,A:PRINT
+{:4018}
+	AN$=" {$d9}EAR  :"+MID$(D1$,2,2):GOSUB{:4046}:IF A<1 OR A>99 THEN{:4018}
+	GOSUB{:4044}:POKE 52938,A:PRINT
+	B$="A":A=VAL(MID$(D1$,8,2)):IF A>79 THEN A=A-80:B$="P"
+{:4024}
+	AN$=" {$c8}OUR  :"+MID$(STR$(A),2):GOSUB{:4046}:IF A<1 OR A>12 THEN{:4024}
+	B=A:PRINT
+{:4028}
+	AN$=" {$cd}IN.  :"+MID$(STR$(VAL(MID$(D1$,10,2))),2):GOSUB{:4046}:IF A<.OR A>59 THEN{:4028}
+	C=A:PRINT
+{:4032}
+	AN$=" {$c1}/{$d0}   :"+B$:GOSUB{:4046}:IF AN$<>"A"AND AN$<>"P"THEN{:4032}
+	PRINT:IF AN$="P"THEN B=B+80
+	INPUT"{down}  {$cf}{$cb}";AN$:IF LEFT$(AN$,1)<>"Y"THEN{:4004}
+	&,62,B,C:B=B+80*((B=92)-(B=12))+12*((B=93)OR(B=13)):&,58,B,0:POKE 1010,1
+	A$=D1$:GOSUB 1520:T1=A:REM AN$=D1$:&,15:D2$=AN$+"{$cd}"
+	GOSUB 1063:X=19:GOSUB 1001:PRINT# 2,D1$:CLOSE 2:RETURN
+{:4044}
+	A=16*INT(A/10)+A-INT(A/10)*10:RETURN
+{:4046}
+	Z$=MID$(AN$,9):PRINT"{up}"AN$:INPUT"{up}{right:6}";AN$:A=VAL(AN$):IF AN$=""THEN AN$=Z$
+	RETURN
+{:4050}
+	POKE 53248,1:POKE 53252,10
+{:4052}
+	&"{clear}{f6}{$d3}YSTEM {$d0}ASSWORD{f6:2}[{$c1}]LL {$c3}ALLS, [{$cf}]NE {$c3}ALL OR [{$ce}]ONE? {pound}G1"
+	ON-(AN$="{$ce}")-2*(AN$="{$cf}")-3*(AN$="{$c1}")GOTO{:4056},{:4058},{:4060}:RETURN
+{:4056}
+	L2=0:&,52,40,0:&"{$ce}ONE{f6}":GOTO{:4064}
+{:4058}
+	L2=0:&,52,40,1:&"{$cf}NE{f6}":GOTO{:4062}
+{:4060}
+	L2=1:&,52,40,1:&"{$c1}LL{f6}"
+{:4062}
+	&"{f6:2}{$c5}NTER {$d0}ASSWORD: {pound}I1":ON-(AN$="")GOTO{:4052}:L2$=AN$
+{:4064}
+	GOSUB 1063:X=37:GOSUB 1001:PRINT# 2,CHR$(48+L2)L2$:CLOSE 2
+	RETURN
+{:4068}
+	POKE 53248,1:A$="R":GOSUB 1064:SH=.:&"{clear}{f6}":IF E%=0 THEN:&,3,2
+	&"{f6:2}{pound}Q0{$d0}RESS {$c1}NY {$cb}EY {pound}G1":CLOSE 2:RETURN
+	REM

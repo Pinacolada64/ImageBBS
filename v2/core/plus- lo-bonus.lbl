@@ -1,0 +1,26 @@
+	REM ADD BONUS
+	A=.:IF TC%/10=INT(TC%/10)AND TC%>1 THEN A=1
+	IF CA/100=INT(CA/100)AND CA>1 THEN A=A OR 2
+	IF CA/1000=INT(CA/1000)AND CA>1 THEN A=A OR 4
+	ON A GOTO{:4010},{:4014},{:4018},{:4030},{:4032}:RETURN
+{:4010}
+	C%=50:REM TC%  /10
+{:4012}
+	A%=TC%:&"{f6:2}{green}{$d4}HIS IS {$d9}OUR {pound}#0{pound}%ATH {$c3}ALL!":GOTO{:4024}
+{:4014}
+	C%=100:REM CA /100
+	A=CA:&"{f6:2}{green}{$d9}OU ARE THE {pound}!ATH {$c3}ALLER TO THE {$d3}YSTEM!":GOTO{:4024}
+{:4018}
+	C%=200:REM TC%/100 & CA/100
+{:4020}
+	A=CA:A%=TC%:&"{f6:2}{$0f}{green}{rvrs on}{$d9}{$cf}{$d5} {$c8}{$c9}{$d4}{$a0}{$d4}{$c8}{$c5}{$a0}{$ca}{$c1}{$c3}{$cb}{$d0}{$cf}{$d4}!{f6:2}{lt. red}{$d9}OUR {pound}#0{pound}%ATH {$c3}ALL IS ALSO"
+	&" THE {pound}$ATH {$c3}ALL TO THE {$d3}YSTEM!"
+{:4024}
+	CR=CR+C%:A=CR:&"{f6:2}{gray3}{$d9}OU {$d7}IN {white}{pound}#0{pound}%C {gray3}{$c3}REDITS!{f6:2}"
+	&"{lt. green}{$d9}OU {$ce}OW {$c8}AVE{lt. red} {pound}!A {lt. green}{$c3}REDITS {$d4}OTAL!{f6:2}"
+	A$=" {yellow}{$c3}REDIT {$d7}INNER:{white}"+STR$(C%)+"{yellow} {$c3}REDITS":GOTO 1095
+{:4030}
+	C%=250:GOTO{:4012}:REM CA/1000
+{:4032}
+	C%=500:GOTO{:4020}:REM TC%/10 & CA/1000
+	COPR. 1994 NEW IMAGE 9/18/94

@@ -1,0 +1,39 @@
+	PR$="":&,28,1:DIM JM%(29,49),FD%(50):GOSUB{:3100}:&,28,1:GOTO 300
+{:3002}
+	FOR I=0 TO 49:JM%(0,0)=0:NEXT:TZ=0
+	DR=3:GOSUB 3:M$=DR$+"E.MENU"+STR$(M):&,60,2,0,JM%(0,0),M$,DV%:GOTO 5
+{:3006}
+	DR=3:GOSUB 3:PRINT# 15,"S"M$:&,60,3,0,JM%(0,0),3000,M$,DV%:GOTO 5
+{:3008}
+	&"{$c3}HANGES MADE-- {$d3}AVE? ":GOSUB 96:ON A GOSUB{:3006}:RETURN
+{:3100}
+	&"{f6}{$c5}DIT {$d7}HICH {$cd}ENU: {pound}I1":M=VAL(AN$):IF TR%=0 OR M=0 THEN RETURN
+	GOSUB{:3002}
+{:3104}
+	FOR X=0 TO 49:&,60,1,30,JM%(5,X),A$:A%=X:B%=JM%(1,X)AND 32767
+	&"{white}{pound}#2{pound}%A:{pound}#5{pound}%B {pound}$A{f6}":X=X+RC*50:NEXT
+{:3108}
+	&"{f6}{$cf}PTIONS: {$cc}IST {$c5}DIT {$d1}UIT{f6:2}>"
+{:3110}
+	&"{pound}G1":IF TR%=0 THEN RETURN
+	ON-(AN$="{$d1}")-2*(AN$="{$cc}")-3*(AN$="{$c5}")GOTO{:3114},{:3116},{:3120}:GOTO{:3110}
+{:3114}
+	&"{$d1}UIT{f6:2}":ON TZ GOSUB{:3008}:GOTO{:3100}
+{:3116}
+	&"{$cc}IST{f6:2}":GOTO{:3104}
+	&,28,1:GOTO 300
+{:3120}
+	POKE 53252,2:&"{$c5}DIT #{pound}I1{f6}":X=VAL(AN$):IF X<0 OR X>49 THEN{:3108}
+{:3122}
+	&"{clear}{$c9}TEM#{pound}!X:{f6:2}":A%=JM%(1,X)AND 32767
+	&"1. {$c1}CCESS: {pound}%A{f6}":A%=JM%(0,X)AND 255
+	&"2. {$c6}LAGS: {pound}%A{f6}"
+	&"3. {$d4}EXT:{f6}":&,60,1,50,JM%(5,X),A$
+	&:&"{f6}>{pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3134},{:3136},{:3138}:GOTO{:3122}
+	GOTO{:3108}
+{:3134}
+	POKE 53252,5:&"{$c1}CCESS: {pound}I1":JM%(1,X)=VAL(AN$):TZ=1:RETURN
+{:3136}
+	POKE 53252,3:&"{$c6}LAGS: {pound}I1":JM%(0,X)=VAL(AN$):TZ=1:RETURN
+{:3138}
+	POKE 53252,50:P$="{$d4}EXT":PL=0:&,1,9:&,60,0,50,JM%(5,X),AN$:TZ=1:RETURN

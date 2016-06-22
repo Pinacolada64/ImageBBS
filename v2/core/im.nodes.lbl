@@ -1,0 +1,68 @@
+	ON IM GOTO{:60002}:RETURN
+{:60002}
+	&"{clear}{$ce}ODE {$cc}IST/{$ce}ET {$cd}AP"
+	DR=1:A$="S.NETMENU":GOSUB 1076
+	IF ZZ THEN DR=1:A$="S.NETMENUZZ":GOSUB 1076
+{:60008}
+	N=.:B%=.:&"{f6:2}1. {$cc}IST {$c1}LL {$ce}ODES{f6}2. {$cc}IST {$c1}CTIVE {$ce}ODES{f6}3. {$c9}NFORMATION {$cf}N {$ce}ODE"
+	&"{f6}4. {$ce}ETMAP{f6}5. {$ce}ET{$cc}INK {$cd}AP"
+	IF ZZ THEN:&"{f6}6. {$d2}EAD {$d4}RANSFER {$cc}OG{f6}7. {$d2}EAD {$d3}YSOP {$cc}OG"
+	&"{f6}{$d1}. {$d1}UIT{f6:2}{$cf}PT: {pound}G1{pound}V7{f6}":IF AN$="{$d1}"THEN AN$="":RETURN
+	IF AN$=""THEN RETURN
+	ON TR%+1 GOTO 1603:A=VAL(AN$):ON ZZ+1 GOTO{:60020},{:60022}
+{:60020}
+	IF A<1 OR A>5 THEN{:60008}
+{:60022}
+	IF A<1 OR A>7 THEN{:60008}
+	ON A GOTO{:60042},{:60026},{:60052},{:60048},{:60094},{:60070},{:60082}
+{:60026}
+	DR=2:A$="NM.NODES":GOSUB 1011:INPUT# 2,N
+	&"{f6:2}{$d4}HERE {$c1}RE {pound}!N {$ce}ODES{f6}{$cc}IST {$c1})LL {$cf}R {$d3}TART {$c1}T {$ce}UMBER? {pound}I1{f6:2}"
+	ON TR%+1 GOTO 1603:ON-(AN$="{$c1}")GOTO{:60040}:A=VAL(AN$):IF A<1 OR A>N THEN{:60008}
+	FOR I=A TO N
+{:60034}
+	X=I+1:GOSUB 1001:INPUT# 2,A$,B$,B$,C$,B
+	IF(B AND 1)=.THEN:&"{pound}#2{pound}!I:/{pound}$A/{pound}{back arrow}10{pound}$B{f6}"
+	I=I+RC*N:NEXT:CLOSE 2:GOTO{:60008}
+{:60040}
+	FOR I=1 TO N:GOTO{:60034}
+{:60042}
+	&"{f6} {$c1}LL {$ce}ET{$d7}ORK {$ce}ODES:{f6:2}":DR=2:A$="NM.NODES":GOSUB 1011:INPUT# 2,N
+	FOR I=1 TO N:X=I+1:GOSUB 1001:INPUT# 2,A$,B$,B$:&"{pound}#2{pound}!I:/{pound}$A/{pound}{back arrow}10{pound}$B{f6}"
+	I=I+RC*N:NEXT:CLOSE 2:GOTO{:60008}
+{:60048}
+	IF LL%>40 THEN A$="NM.MAP 80":DR=2:GOSUB 1075:ON-(E%<>.)GOTO{:60050}:CLOSE 2:GOTO{:60008}
+{:60050}
+	DR=2:A$="NM.MAP":GOSUB 1075:CLOSE 2:GOTO{:60008}
+{:60052}
+	DR=2:A$="NM.NODES":GOSUB 1011:INPUT# 2,N
+	&"{f6:2}{$d4}HERE {$c1}RE {pound}!N {$ce}ODES{f6}{$c9}NFORMATION {$cf}N {$d7}HICH? {pound}I1{f6:2}":ON TR%+1 GOTO 1603
+{:60056}
+	A=ABS(VAL(AN$)):IF A<1 OR A>N THEN{:60068}
+	X=A+1:GOSUB 1001:INPUT# 2,A$,B$,C$,D$,O%,A%,B%,C%,D%
+	F$="{$c1}CTIVE":IF(O%AND 1)THEN F$="{$c9}NACTIVE"
+	&"{f6}#{pound}#2{pound}!A ({pound}$A) {f5}{pound}$C{f5}{pound}{back arrow}25<{pound}$F>{f6} {$d3}YSOP:{pound}$D{f6} {$d0}HONE:{pound}$B{f6}"
+	&" {$c3}ONNECTED {$d4}O #{pound}%A":IF B%THEN:&",#{pound}%B":IF C%THEN:&",#{pound}%C":IF D%THEN:&",#{pound}%D"
+	&"{f6:2}{$c1}NOTHER? ({$ce}UMBER {$cf}R {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}) {pound}I1":ON TR%+1 GOTO 1603:ON-(AN$="")GOTO{:60008}:GOTO{:60056}
+{:60068}
+	CLOSE 2:&"{$d5}NKNOWN {$ce}ODE #!{f6}":GOTO{:60008}
+{:60070}
+	&"{f6} {$d2}EAD {$d4}HIS {$cd}ONTH'S {$ce}ET{$cc}OG{f6}":DR=2:L$="NM.LOG "+MID$(D1$,4,2):A$=L$+",S,R"
+	GOSUB 1011:A%=.:SH=.:IF E%THEN CLOSE 2:GOTO{:60008}
+{:60074}
+	A%=A%+1:INPUT# 2,A$,B$:&"{f6}#{pound}%A: {pound}$A{f6}    {$04}"+RIGHT$(B$,11)
+	IF LEN(B$)>11 THEN:&"{f6} {$d4}O {$04}"+LEFT$(B$,11)
+	&"{f6}{$c6}ILES {$d4}RANSFERRED:":&,3,2:IF ST=.AND SH=.THEN{:60074}
+	CLOSE 2:&"{f6}{$c4}ELETE?":GOSUB 1907:ON A+1 GOTO{:60008}:A$=L$:GOSUB 1024:CLOSE 2:GOTO{:60008}
+{:60082}
+	&"{f6}{$d2}EAD {$ce}ET {$d3}YSOP {$cc}OG{f6}":DR=2:L$="NM.SYLOG":A$=L$+",S,R":GOSUB 1011:A%=.:SH=.
+	IF E%THEN CLOSE 2:GOTO{:60008}
+{:60086}
+	A%=A%+1:&,2,2:F$=A$:&,2,2:B$=A$:&,2,2:C$=A$:A$=F$:S=ST
+	&"{f6}#{pound}%A: {$d3}ENT {$c2}Y {f5}{pound}$A{f5}{f6} {$cf}N {$04}"+B$:&"{f6} {$c6}ILE:{pound}$C{f6}":IF S+SH=.THEN{:60086}
+	CLOSE 2:&"{f6}{$c4}ELETE?":GOSUB 1907:IF A=.THEN{:60008}
+	A$=L$:GOSUB 1024:CLOSE 2:GOTO{:60008}
+{:60094}
+	A$="NM.MAP LINK":GOSUB 1075:IF E%THEN:&"{f6:2}{$ce}O {$cc}INK {$cd}AP {$c6}OUND."
+	&"{f6}{gray3}[{rvrs on}{$c1}NY {$cb}EY{rvrs off}] {pound}G1{pound}HJ":GOTO{:60008}
+	COPR. 1994 NEW IMAGE 9/27/94

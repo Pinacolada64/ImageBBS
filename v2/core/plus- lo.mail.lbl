@@ -1,0 +1,19 @@
+	A=9:GOSUB 1004:ON-(A=.)GOTO{:4026}:B%=.:A%=.:MM=.
+	A$="R":TT$=NA$:GOSUB 1062:IF E%THEN:&"{f6}{$d3}ORRY, {$ce}O {$cd}AIL {$d4}ODAY.{f6}":GOTO{:4026}
+	IF I%OR K%THEN CLOSE 2:&"{f6:2}{gray3}{$d9}OU HAVE {$cd}AIL":GOTO{:4024}
+{:4006}
+	&".":IF RC THEN CLOSE 2:&"{f6:2}{gray3}{$d9}OU HAVE {$cd}AIL":GOTO{:4024}
+	B%=B%+1:INPUT# 2,A$,A$,A$:IF MID$(A$,2)>MID$(LD$,2)THEN A%=A%+1
+{:4010}
+	&,2,2:S=ST:ON TR%+1 GOTO{:4026}:ON-(A$<>"{up arrow}")GOTO{:4010}:ON-(S=.)GOTO{:4006}:CLOSE 2
+	&"{f6}":A$="S.MAIL":DR=1:GOSUB 1076:B$="":IF B%>1 THEN B$="S"
+	C$="{$c9}T {$c9}S":IF A%>1 THEN C$="{$c1}RE"
+	MM=1:&"{f6}{green}{$d9}OU {$c8}AVE {white}{pound}%B{green} {$d0}IECE{pound}$B {$cf}F {$cd}AIL":IF A%=1 THEN:&"{f1}{green} {pound}$C {$ce}EW":GOTO{:4024}
+	IF B%>1 THEN IF A%=1 THEN:&"{f1}{white}{pound}%A {green}{$c9}S {$ce}EW":GOTO{:4024}
+	IF B%>1 THEN IF A%=B%THEN:&"{f1} {green}{$c1}LL {pound}$C {$ce}EW":GOTO{:4024}
+	&"{f1}{white} {pound}%A {green}{pound}$C {$ce}EW"
+{:4024}
+	&"!{f6:2}{$d2}EAD {$ce}OW?: ":GOTO 1907
+{:4026}
+	CLOSE 2:A=.:RETURN
+	COPR. 1994 NEW IMAGE 11/27/94

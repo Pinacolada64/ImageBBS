@@ -1,4 +1,3 @@
-{number:3000}
 	ON MM GOTO{:3010},{:3004},{:3006}
 {:3002}
 	&,28,1:&,11:LC=1:&,27,1:SY$="":GOTO 200
@@ -16,7 +15,6 @@
 	DR=3:A$="E.MACS":GOSUB 4:A$="{up arrow}":IF E%=0 THEN X=ID*4-4+A%:GOSUB 1:&,2,2
 	CLOSE 2:RETURN
 {:3030}
-' in im 1.3 emulation?
 	&,52,$30,3:ON A%+1 GOTO{:3032}
 	GOSUB 304:POKE 53252,14:&"{f6:2}{$d2}UN: +.{pound}I0":A$=AN$:ON-(A$="")GOTO{:3002}:GOTO 1016
 {:3032}

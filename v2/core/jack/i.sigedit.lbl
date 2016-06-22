@@ -1,0 +1,85 @@
+	&,28,1:DIM X1%(17,60),X3%(60,2):GOSUB{:3100}:&,28,1:GOTO 300
+{:3002}
+	GOTO 3
+{:3004}
+	GOTO 5
+{:3006}
+	GOTO 96
+{:3010}
+	DR=3:GOSUB{:3002}:&,60,2,0,X1%(0,0),DR$+"E.{$d3}IGLIST",DV%:GOTO{:3004}
+{:3012}
+	DR=3:GOSUB{:3002}:&,60,2,0,X3%(0,0),DR$+"E.{$d3}IGLIST"+STR$(X),DV%:GOTO{:3004}
+{:3014}
+	A$="E.{$d3}IGLIST":GOSUB{:3018}:&,60,3,0,X1%(0,0),2196,DR$+A$,DV%:GOTO{:3004}
+{:3016}
+	A$="E.{$d3}IGLIST"+STR$(X):GOSUB{:3018}:&,60,3,0,X3%(0,0),366,DR$+A$,DV%:GOTO{:3004}
+{:3018}
+	DR=3:GOSUB{:3002}:PRINT# 15,"S"DR$A$:RETURN
+{:3020}
+	A%=I:&,60,1,30,X1%(3,I),A$:B%=X1%(1,I):C%=X1%(2,I):A=X1%(0,I)
+	B$=CHR$(48+SGN(A AND 1))+CHR$(48+SGN(A AND 2))+CHR$(48+SGN(A AND 4))
+	&"{pound}#2{pound}# {pound}%A) {pound}$A{f6}    {pound}#5{pound}# {$c1}C:{pound}%B {$cf}P:{pound}%C {$c6}L:{pound}$B{f6}":RETURN
+{:3100}
+	TZ=0:GOSUB{:3010}:IF E%THEN X1%(0,0)=0
+{:3102}
+	A%=X1%(0,0):&"{clear}{$d3}IG{$c5}DIT 2.0: {pound}%A {$d3}IGS {$c4}EFINED.{f6:2}"
+	IF A%THEN FOR I=1 TO A%:GOSUB{:3020}:NEXT
+	&"{f6}{$c5}DIT {$d7}HICH ({$c1}={$c1}DD): {pound}I1":X=ABS(INT(VAL(AN$)))
+	IF AN$="{$c1}"THEN GOSUB{:3200}:GOTO{:3102}
+	IF X>0 AND X<=X1%(0,0)THEN GOSUB{:3204}:GOTO{:3102}
+	IF TZ THEN:&"{$d3}AVE CHANGES? ":GOSUB{:3006}:ON A GOSUB{:3014}
+	RETURN
+{:3200}
+	X=X1%(0,0)+1:X1%(0,0)=X:&,60,0,30,X1%(3,X),"---"
+	X1%(0,X)=7:X1%(1,X)=1023:X1%(2,X)=1
+{:3204}
+	X3%(0,0)=0:X3%(0,1)=0:X3%(0,2)=0:GOSUB{:3012}
+{:3206}
+	&"{clear}{$d3}IG #{pound}!X{f6:2}":&,60,1,30,X1%(3,X),A$:B%=X1%(1,X):C%=X1%(2,X):A=X1%(0,X)
+	&"1. {$ce}AME: {pound}$A{f6}"
+	&"2. {$c1}CCS: {pound}%B{f6}"
+	&"3. {$cf}PER: {pound}%C{f6}"
+	&"4. {$d3}UBS: ";MID$("{$d9}ES{$ce}O ",4-3*SGN(A AND 1),3):A%=X3%(0,0):&" ({pound}%A){f6}"
+	&"5. {$d5}/{$c4}S: ";MID$("{$d9}ES{$ce}O ",4-3*SGN(A AND 2),3):A%=X3%(0,1):&" ({pound}%A){f6}"
+	&"6. {$d5}/{$d8}S: ";MID$("{$d9}ES{$ce}O ",4-3*SGN(A AND 4),3):A%=X3%(0,2):&" ({pound}%A){f6}"
+	&"{f6}{$c3}HANGE WHICH?: {pound}G1{pound}V7{f6}":A=VAL(AN$)
+	IF A THEN ON A GOSUB{:3232},{:3236},{:3242},{:3226},{:3228},{:3230}:GOTO{:3206}
+	RETURN
+{:3226}
+	XX=0:GOTO{:3300}
+{:3228}
+	XX=1:GOTO{:3300}
+{:3230}
+	XX=2:GOTO{:3300}
+{:3232}
+	&,60,1,30,X1%(3,X),W$:POKE 53252,30:P$="{$ce}AME":PL=0:&,1,32:IF AN$=""THEN RETURN
+	&,60,0,30,X1%(3,X),AN$:TZ=1:RETURN
+{:3236}
+	W$=MID$(STR$(X1%(1,X)),2):POKE 53252,5:P$="{$c1}CCS":PL=1:&,1,32
+	IF AN$=""THEN RETURN
+	X1%(1,X)=VAL(AN$):TZ=1:RETURN
+{:3242}
+	W$=MID$(STR$(X1%(2,X)),2):POKE 53252,5:P$="{$cf}PER":PL=1:&,1,32
+	IF AN$=""THEN RETURN
+	X1%(2,X)=VAL(AN$):TZ=1:RETURN
+{:3300}
+	S$=MID$("{$d3}UB{$d5}/{$c4}{$d5}/{$d8}",XX*3+1,3):&"{$c8}AVE {pound}$SS? ":GOSUB{:3006}
+	B=2^XX:IF A=0 THEN X1%(0,X)=X1%(0,X)AND NOT B:TZ=1:RETURN
+	X1%(0,X)=X1%(0,X)OR B
+{:3306}
+	A%=X3%(0,XX):&"{clear}{$d3}IG {pound}!X: {pound}%A {pound}$SS{f6:2}"
+	IF A%THEN FOR I=1 TO A%:B%=X3%(I,XX):&"{pound}#4{pound}# {pound}%B":NEXT:&"{f6:2}"
+	&"{$c1}DD {$c4}ELETE {$c9}NSERT: {pound}G1":A=-(AN$="{$c1}")-2*(AN$="{$c4}")-3*(AN$="{$c9}")
+	IF A THEN ON A GOSUB{:3316},{:3322},{:3330}:GOTO{:3306}
+	GOTO{:3016}
+{:3316}
+	IF X3%(0,XX)=60 THEN RETURN
+	&"{$c1}DD #{pound}I1":A=VAL(AN$):IF A<1 OR A>999 THEN RETURN
+	I=X3%(0,XX)+1:X3%(I,XX)=A:X3%(0,XX)=I:RETURN
+{:3322}
+	IF X3%(0,XX)=0 THEN RETURN
+	&"{$c4}ELETE #{pound}I1":A=VAL(AN$):IF A<1 OR A>999 THEN RETURN
+	J=0:FOR I=1 TO X3%(0,XX):IF X3%(I,XX)<>A THEN J=J+1:X3%(J,XX)=X3%(I,XX)
+	NEXT:X3%(0,XX)=J:RETURN
+{:3330}
+	RETURN

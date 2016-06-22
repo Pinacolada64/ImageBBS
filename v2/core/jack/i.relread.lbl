@@ -1,0 +1,19 @@
+	GOSUB{:3002}:GOTO 300
+{:3002}
+	POKE 53252,16:N=.:&"{f6:2}{$c6}ILENAME: {pound}I0{f6}":F$=AN$:IF AN$=""THEN RETURN
+	IF D1%<7 THEN D1%=8
+	A%=D1%:B%=D2%:&"{$c4}EVICE ({pound}%A,{pound}%B): {pound}I1":DR=VAL(AN$)
+	IF DR>6 THEN D1%=DR:DR=0:&"{$c4}RIVE: {pound}I1":D2%=VAL(AN$)
+	ON-(DR<0)GOTO{:3002}:GOSUB 3:CLOSE 15:A=-(ST<>.):IF A THEN{:3022}
+	CLOSE 15:OPEN 15,DV%,15:CLOSE 2:OPEN 2,DV%,2,DR$+F$:GOSUB 5:IF E%THEN{:3024}
+{:3014}
+	&"{f6}{$d2}ECORD: {pound}I1{f6}":X=VAL(AN$):IF X<1 THEN CLOSE 2:&"{f6}":RETURN
+	GOSUB 1
+{:3018}
+	GET#2,A$:A=ASC(A$+CHR$(0)):IF(A AND 127)<32 THEN A$="{rvrs on}"+CHR$(A+64)+"{rvrs off}"
+	&:ON-(ST=.)GOTO{:3018}:&"{f6}":GOTO{:3014}
+{:3022}
+	A$="{f6}{$c5}RROR: {$c4}EVICE {$ce}OT {$d0}RESENT{f6}"
+{:3024}
+	&:CLOSE 2:RETURN
+	REM

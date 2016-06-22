@@ -1,0 +1,95 @@
+	REM MODEM/RS232 CONFIG
+	GOSUB{:4006}:&,2,2:MT$=A$:CLOSE 2:GOTO{:4014}
+{:4004}
+	GOSUB{:4006}:PRINT# 2,MT$:GOTO 1001
+{:4006}
+	DR=3:A$="E.MODEM":GOSUB 1011:IF E%THEN GOSUB{:4012}
+	P=.:IF LK%THEN P=(PEEK(57092)AND 15)
+	X=P+1:GOTO 1001
+{:4012}
+	DR=3:A$="E.MODEM,L,"+CHR$(32):GOSUB 1011:X=17:GOSUB 1001:PRINT# 2:GOTO 1001
+{:4014}
+	GOSUB{:4118}
+{:4016}
+	&"{clear}{white}{f6}{$cd}ODEM {$c3}ONFIG ":IF LK%THEN:&"FOR {$d0}ORT #{pound}!P"
+	&"{f6:2}":F=0:FOR I=1 TO 9:B$=" ":IF MT$=LEFT$(ED$(I),L)THEN B$="*":F=1
+	B%=I:A$=MID$(ED$(I),L+2):&"{pound}$B {pound}%B. {pound}$A{f6}":NEXT:B$="":IF F=0 THEN B$="("+MT$+")"
+	&"{f6}  {$c3}. {$c3}USTOM {pound}$B{f6}  {$d1}. {$d1}UIT{f6}"
+	&"{f6:2} {$cd}ODEM {$d4}YPE ":A$="{$d1}":B$="123456789{$c3}{$d1}":GOSUB{:4110}:IF A$="{$d1}"THEN{:4034}
+	B=VAL(AN$):TT$=LEFT$(ED$(B),L):IF A$="{$c3}"THEN TT$=MT$:GOSUB{:4036}
+	A$=TT$:&"{f6}{$c9}S {f5}{pound}$A{f5} {$cf}K? ":GOSUB 1902:IF A=0 THEN{:4016}
+	&"{clear}{down:3}{yellow}  {$d7}RITING {$cd}ODEM {$c3}ONFIG...{f6}"
+	MT$=TT$:GOSUB{:4004}:&"{f6:2}   {white}{$c4}ONE!"
+{:4034}
+	RETURN
+{:4036}
+	&"{clear}{f6}":GOSUB{:4044}:&"{f6}{$c3}HANGE {$d7}HICH ({$d1}={$d1}UIT)? ":A$="{$d1}":B$="123456789{$c1}{$d1}":GOSUB{:4110}
+	IF A$="{$d1}"THEN RETURN
+	IF A$>"9"THEN A$=STR$(10+ASC(A$)-193)
+	A=VAL(A$):GOSUB{:4084}:GOTO{:4036}
+{:4044}
+	A%=VAL(LEFT$(TT$,1)):A%=300*2^A%+300*(A%<2)
+	&"1. {$c8}IGHEST {$c2}AUD {$d2}ATE:{pound}%A{f6}"
+	A$="{$c4}{$d4}{$d2}":IF MID$(TT$,2,1)="{$c5}"THEN A$="{$c5}{$d3}{$c3} {$c3}ODES"
+	&"2. {$c8}ANGUP {$cd}ETHOD:{pound}$A{f6}"
+	A$="{$c1}UTO ({$c1}{$d4}{$d3}0=1)":IF MID$(TT$,3,1)="{$cd}"THEN A$="{$cd}ANUAL ({$c1}{$d4}{$c1})"
+	&"3. {$c1}NSWER {$cd}ETHOD:{pound}$A{f6}"
+	A$="{$ce}O ":IF MID$(TT$,4,1)="{$c8}"THEN A$=""
+	&"4. {pound}$A{$c1}{$d4}{$c8} AFTER {$c5}{$d3}{$c3} {$c3}ODES{f6}"
+	A$="{$cf}N-{$c8}OOK":IF MID$(TT$,5,1)="{$c8}"THEN A$="{$cf}FF-{$c8}OOK"
+	&"5. {$cc}OCAL {$cd}ODE: {pound}$A{f6}"
+	A$="":IF MID$(TT$,6,1)="0"THEN A$="0"
+	&"6. {$c1}{$d4}{$c8} {$c3}OMMAND:{$c1}{$d4}{$c8}{pound}$A{f6}"
+	A$="{$ce}O":IF MID$(TT$,7,1)="{$c8}"THEN A$="{$d9}ES"
+	&"7. {$c1}{$d4}{$c8} IN {$cd}ODEM {$d2}ESET:{pound}$A{f6}"
+	A$=MID$(TT$,8,1)
+	&"8. {$c1}{$d4}{$d8} {$d6}ALUE: {$c1}{$d4}{$d8}{pound}$A{f6}"
+	A$="{$ce}ORMAL":IF MID$(TT$,9,1)="{$d2}"THEN A$="{$d2}EVERSE"
+	&"9. {$c4}{$d4}{$d2} {$cd}ODE: {pound}$A{f6}":A$="{$c3:2}{$c9}{$d4:2}":IF MID$(TT$,10,1)="1"THEN A$="{$c2}ELL"
+	&"{$c1}. {$c3:2}{$c9}{$d4:2}/{$c2}ELL: {pound}$A{f6}"
+	RETURN
+{:4084}
+	A$=MID$(TT$,A,1):ON A GOSUB{:4088},{:4092},{:4094},{:4096},{:4098},{:4100},{:4102},{:4104},{:4106},{:4108}
+	TT$=LEFT$(TT$,A-1)+A$+MID$(TT$,A+1):RETURN
+{:4088}
+	&"{$cd}AXIMUM {$c2}AUD {$d2}ATE (0={$cf}FF,1=300,2=1200,{f6}3=2400,4=4800,5=9600,6=19200){f6}"
+	B$="0123456":GOTO{:4110}
+{:4092}
+	&"{$c8}ANGUP ({$c5}={$c5}{$d3}{$c3},{$c4}={$c4}{$d4}{$d2}){f6}":B$="{$c5}{$c4}":GOTO{:4110}
+{:4094}
+	&"{$c1}NSWER ({$c1}={$c1}UTO,{$cd}={$cd}ANUAL){f6}":B$="{$c1}{$cd}":GOTO{:4110}
+{:4096}
+	&"{$c1}{$d4}{$c8} AFTER {$c5}{$d3}{$c3} ({$ce}={$ce}O,{$c8}={$d9}ES){f6}":B$="{$ce}{$c8}":GOTO{:4110}
+{:4098}
+	&"{$cc}OCAL ({$ce}={$cf}N {$c8}OOK,{$c8}={$cf}FF {$c8}OOK){f6}":B$="{$ce}{$c8}":GOTO{:4110}
+{:4100}
+	&"{$c1}{$d4}{$c8} (0={$c1}{$d4}{$c8}0,{f5} {f5}={$c1}{$d4}{$c8}){f6}":B$="0 ":GOTO{:4110}
+{:4102}
+	&"{$cd}ODEM {$d2}ESET ({$c8}={$c8}ANGUP,{$ce}={$ce}O {$c8}ANGUP){f6}":B$="{$c8}{$ce}":GOTO{:4110}
+{:4104}
+	&"{$c1}{$d4}{$d8} {$d6}ALUE (1, 2, 3, 4){f6}":B$="1234":GOTO{:4110}
+{:4106}
+	&"{$c4}{$d4}{$d2} {$cd}ODE ({$ce}={$ce}ORMAL,{$d2}={$d2}EVERSE){f6}":B$="{$ce}{$d2}":GOTO{:4110}
+{:4108}
+	&"{$c3:2}{$c9}{$d4:2}/{$c2}ELL (0={$c3:2}{$c9}{$d4:2},1={$c2}ELL){f6}":B$="01":GOTO{:4110}
+{:4110}
+	&">"
+{:4112}
+	&"{pound}G1":IF A$<>""AND AN$=CHR$(13)THEN:&"{pound}$A{f6}":RETURN
+	FOR I=1 TO LEN(B$):IF AN$=MID$(B$,I,1)THEN A$=AN$:&"{pound}$A{f6}":RETURN
+	NEXT:GOTO{:4112}
+{:4118}
+	REM DEFAULT OPTIONS
+	ED$(1)="2{$c5}{$c1}{$ce:2} {$ce}1{$ce}1 1670 ({$cf}LD {$cd}ODEL)"
+	ED$(2)="2{$c5}{$c1}{$c8:2} {$c8}2{$ce}1 1670 ({$ce}EW {$cd}ODEL)"
+	ED$(3)="2{$c5}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}AYES  300 {$ce}O {$c4}{$d4}{$d2}"
+	ED$(4)="2{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}AYES  300 {$c4}{$d4}{$d2}"
+	ED$(5)="2{$c5}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}AYES 1200 {$ce}O {$c4}{$d4}{$d2}"
+	ED$(6)="2{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}AYES 1200 {$c4}{$d4}{$d2}"
+	ED$(7)="3{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}AYES 2400 {$c4}{$d4}{$d2}"
+	ED$(8)="3{$c4}{$cd}{$c8:2}0{$c8}4{$ce}1 {$d3}UPRA 2400"
+	ED$(9)="3{$c5}{$cd}{$c8:2}0{$c8}4{$ce}1 {$c1}PROTEK 2400"
+	ED$(0)="3{$c5}{$cd}{$c8}{$ce}0{$c8}4{$ce}1 {$c3}USTOM":L=10
+	RETURN
+	REM 0,300,1200,2400,4800,9600,19200
+	REM

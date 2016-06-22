@@ -1,0 +1,29 @@
+	ON-(CR<10 OR CT%>1)GOTO{:4006}
+	&"{f6}{green}{$ca}OIN {$d4}HE {$c3}REDIT {$d0}OOL? ":GOSUB 1907:ON-(A=1)GOTO{:4014}:GOTO{:4006}
+{:4004}
+	A$="E.CR.POOL"+STR$(P)+",S,R":DR=3:GOSUB 1011:IF E%THEN GOSUB{:4034}
+{:4006}
+	RETURN
+{:4008}
+	A$="E.CR.POOL 1":DR=3:GOTO 1023
+{:4010}
+	A$="E.CR.POOL 2,S,A":GOSUB 1011:IF E%THEN{:4038}
+	RETURN
+{:4014}
+	A=.:B=.:C=.:D=.:N=.:L=.
+	&"{f6}{gray3}{$c9}NSTRUCTIONS? ":GOSUB 1902:IF A THEN A$="S.POOL":DR=1:GOSUB 1075
+	&"{f6}{cyan}{$d9}OU {$c8}AVE {white}":&STR$(CR):&" {cyan}{$c3}REDITS."
+{:4020}
+	&"{f6}{lt. green}({f5}{$d1}{f5} {$d1}UITS:100 {$cd}AX){f6}{$c8}OW {$cd}ANY {$c3}REDITS? {pound}I1":ON TR%+1 GOTO 1603:IF AN$="{$d1}"THEN RETURN
+	A=INT(VAL(AN$)):IF A<10 OR A>CR OR A>100 THEN:&"{f6}{$d3}ORRY, {$ce}OT {$c1}CCEPTABLE":GOTO{:4020}
+	P=1:GOSUB{:4004}:&,2,2:N=VAL(A$):&,2,2:B=VAL(A$):CLOSE 2
+	&"{f6:2}{$d0}RESENT {$d0}OOL {$d3}TANDS {$c1}T":&STR$(B)
+	A%=A/10:&"{f6}{$d9}OU {$c8}AVE {pound}%A {$c3}HANCES {$d4}O {$d7}IN"
+	C=A+B:&"{f6}{$ce}EW {$d6}ALUE = ":&STR$(C):&"{f6:2}{$c7}OOD {$cc}UCK!!{f6}":CR=CR-A
+	GOSUB{:4008}:PRINT# 2,N+A%:PRINT# 2,C:CLOSE 2:GOSUB{:4010}:FOR I=1 TO A%:PRINT# 2,NA$:NEXT:CLOSE 2:RETURN
+{:4034}
+	DR=3:A$="E.CR.POOL 1":GOSUB 1023:PRINT# 2,0:PRINT# 2,0:A$="E.CR.POOL 1,S,R"
+	GOSUB 1011:RETURN
+{:4038}
+	DR=3:A$="E.CR.POOL 2":GOSUB 1023:RETURN
+	COPR. 1990 FRED DART 12-26-90

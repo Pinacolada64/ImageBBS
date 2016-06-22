@@ -1,0 +1,102 @@
+	&"{f6}{green}{rvrs on}{$cc}OADING {$d0}ARAMETERS{rvrs off}{white}...":F4=.:ON CD%GOSUB{:4150}:CD%=1
+	A$="":FOR A=1 TO LL%-2:A$=A$+"{$c0}":NEXT:AK$=" "+A$+"{f6}"
+	F1=.:AO%=AC%:GOSUB 1634
+	GOSUB 1063:X=1:GOSUB 1001:&,2,2:CA=VAL(A$):CLOSE 2:&,52,20,EM
+	POKE 970,.:&,52,$22,VAL(MID$(UF$,2,1)):&,52,21,3:IF I%THEN QB=2400:GOTO{:4050}
+	&,52,4,3:IF A%THEN QB=2400
+	IF A%=.THEN{:4018}
+	A=3:GOSUB 1004:IF NA$<>D3$OR A<>.THEN{:4018}
+	&"{f6}{$d3}ORRY, {$ce}O {$c2}ACK-{$d4}O-{$c2}ACK {$c3}ALLS!{f6}":AC%=16:F4=1:RETURN
+{:4018}
+	A=17:GOSUB 1004:IF LEFT$(D1$,7)<>LEFT$(D5$,7)THEN CT%=.
+	F2=.:CT%=CT%+1:TC%=TC%+1:IF CT%<A OR A=.THEN{:4026}
+	IF CT%>A THEN:&"{f6}{lt. blue}{$d3}ORRY, {$c3}ALL {$cc}IMIT {$d5}SED {$d4}ODAY!{f6}":F4=1:AC%=16:RETURN
+	&"{f6:2}{white}{$ce}OTE{blue}:{lt. green} {$d4}HIS {$c9}S {$d9}OUR {$cc}AST {$c3}ALL {$d4}ODAY.{f6}"
+{:4026}
+	&"{f6:2}{lt. green}{rvrs on}{$cc}OGGING {$c3}ALL{rvrs off}{white}...":ON SGN(ID)GOSUB{:4142}
+	DR=3:A$="E.LAST,S,R":GOSUB 1011:IF E%=.THEN FOR I=1 TO 10:&,2,2:TT$(I)=A$:NEXT
+	CLOSE 2:DR=3:A$="E.LAST":GOSUB 1023:AN$=NA$:&,15,1:PRINT# 2,D1$AN$
+	FOR I=1 TO 9:PRINT# 2,TT$(I):NEXT:CLOSE 2
+	GOSUB 1060:I=1:X=20:GOSUB 1025:CLOSE 2
+	DD$=CC$+MID$(STR$(ID),2):JN$="":POKE 53252,3:AN$=NA$:&,15,1:N$=AN$
+	A$=" {yellow}{$c3}ALLER{white}"+STR$(CA)+"   {green}"+DD$+":{white} {rvrs on}"+N$+R$+"{cyan}"+STR$(QB)+" {$c2}AUD, "
+	&,52,16,3:B=A%:&,52,18,3:C=A%:B$="{yellow}{$c3}/{$c7}":IF B THEN B$="{gray3}{$c1}{$d3}{$c3}{$c9:2}":IF C THEN B$="{lt. red}{$c1}{$ce}{$d3}{$c9}"
+	A$=A$+B$+" {$cd}ODE"+R$+" {cyan}{$cc}OGON  {white}{$04}"+D1$
+	ON-(TC%>1)GOTO{:4048}:&"{$ce}EW {$d5}SER!{f6}"
+	A$=A$+R$+" {$ce}EW {$d5}SER!":IF ID=.THEN A$=A$+" ({$ca}UST {$cc}OOKING)"
+{:4048}
+	A$=A$+R$+" {lt. red}{$c3}REDIT {white}{rvrs on}"+STR$(CR):GOSUB 1095
+{:4050}
+	F1=.:PT%=.:A=1:GOSUB 1003
+	GOSUB 1019:&,52,7,3:IF A%THEN PT%=1-PT%:IF P1%<1 THEN P1%=30
+	IF PT%=.THEN{:4062}
+	PRINT"{home}{down}{rvrs on}{white}{$d0}":PRINT"{rvrs on}{white}{$d2}":PRINT"{rvrs on}{white}{$c9}":PRINT"{rvrs on}{white}{$cd}":PRINT"{rvrs on}{white}{$c5}":IF G<P1%THEN{:4062}
+	A%=P1%:TR%=A%
+	&"{f6}{$ce}OTE - {$c9}T {$c9}S {$ce}OW {$d0}RIME {$d4}IME -{f6}{$c1}{$cc:2} {$c3}ALLERS {$c1}RE {$cc}IMITED {$d4}O {pound}%A {$cd}INUTES!{f6:2}"
+{:4062}
+	&"{f6}":CN=CN+1:GOSUB 1073
+	A=17:GOSUB 1004:ON A+1 GOTO{:4066}:A%=A-CT%:&"{f6}{lt. green}{$c3}ALLS {$cc}EFT {$d4}ODAY{blue}:{white} {pound}%A{f6}"
+{:4066}
+	A%=VAL(MID$(FL$,18,2)):IF A%>.THEN:&"{f6}{lt. green}{$d4}IME {$c1}LLOWED {$d4}HIS {$c3}ALL{blue}:{white} {pound}%A {$cd}IN.{f6:2}"
+	TR%=A%-101*(A%=.):IF LEN(UF$)<11 THEN IM=4:GOSUB 2428:GOTO{:4072}
+	IM=6:GOSUB 2428
+{:4072}
+	ON-(MP%>.AND MP%<>40 AND MP%<>80)GOTO{:4078}:A$="LINES/SCREEN":GOSUB 1350
+	LP=1:&"{f6:2}{lt. green}{$c8}OW {$cd}ANY {$cc}INES {$cf}F {$d4}EXT {$c3}AN {$d9}OUR {$d3}CREEN {$c4}ISPLAY?: {pound}I1"
+	MP%=ABS(VAL(AN$))-25*(TR%=.):IF MP%<1 OR MP%>255 OR MP%=40 OR MP%=80 THEN MP%=.:GOTO{:4072}
+{:4078}
+	A$=LEFT$("F."+NA$,16)+",S,R":DR=2:GOSUB 1011:ON E%GOTO{:4134}
+{:4080}
+	F4=.:&"{f6}":&,2,2:C$=B$:B$=A$:IF A$="{up arrow}"OR ST<>.THEN{:4088}
+	FL=-(A$="{$c5}{$d2}{$c1}{$d3}{$c5}"OR A$="{$cb}{$c9}{$cc:2}"OR A$="{$cf}{$c6:2}"):ON FL GOTO{:4080}
+	FL=-(LEFT$(A$,1)="!"OR LEFT$(A$,1)="{back arrow}"OR LEFT$(A$,1)="@"):ON FL GOTO{:4080}
+	&:GOTO{:4080}
+{:4088}
+	A$="{$cb}{$c9}{$cc:2}":IF B$=A$OR C$=A$THEN:&"{f6:2}{$d4}ERMINATING {pound}V2...{f6}":GOSUB{:4116}
+	A$="!":IF LEFT$(B$,1)=A$THEN B$=MID$(B$,2):GOSUB{:4108}
+	A$="!":IF LEFT$(C$,1)=A$THEN B$=MID$(C$,2):GOSUB{:4108}
+	A$="{$cf}{$c6:2}":IF B$=A$OR C$=A$THEN F4=1
+	A$="{back arrow}":IF LEFT$(B$,1)=A$THEN AC%=VAL(MID$(B$,2)):FL$=FL$(AC%)
+	A$="{back arrow}":IF LEFT$(C$,1)=A$THEN AC%=VAL(MID$(C$,2)):FL$=FL$(AC%)
+	A$="{$c5}{$d2}{$c1}{$d3}{$c5}":IF B$=A$OR C$=A$THEN GOSUB{:4110}
+	A$="@":IF LEFT$(B$,1)=A$THEN NN$=MID$(B$,2):GOSUB{:4136}
+	A$="@":IF LEFT$(C$,1)=A$THEN NN$=MID$(C$,2):GOSUB{:4136}
+	GOTO{:4134}
+{:4108}
+	IF MID$(D1$,2,6)<MID$(B$,2,6)THEN{:4112}
+{:4110}
+	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"F."LEFT$(NA$,13):GOSUB 1081:GOTO{:4134}
+{:4112}
+	AN$=B$:&,15:B$=MID$(AN$,1,12):&"{f6:2}{lt. red}{$d3}ORRY, {$d9}OUR {$c1}CCOUNT {$c9}S {$d3}USPENDED"
+	&" {$d5}NTIL{f6}{pound}$B...{f6}":A$=" {$c1}CCOUNT {$d3}USPENDED!":GOSUB 1095:GOTO{:4128}
+{:4116}
+	&,52,4,3:ON-(A%=1 OR ID=1)GOTO{:4134}:AN$=NA$:TT$=AN$:GOSUB 1034:TT$(1)="{up arrow}":TT$(2)="D":FOR I=3 TO 24:TT$(I)="0":NEXT
+	GOSUB 1065:A$="":FOR I=1 TO 23:A$=A$+TT$(I)+R$:NEXT:X=ID:GOSUB 1001:PRINT# 2,A$:C
+	IF X<L1 THEN L1=X:X=31:GOSUB 1063:GOSUB 1001:PRINT# 2,L1:CLOSE 2
+	A$="R":GOSUB 1062:CLOSE 2:IF E%=.THEN GOSUB{:4134}:I=-1:X=25:GOSUB 1025:CLOSE 2
+	DR=2:D$=LEFT$(TT$,14):A$="F."+D$:GOSUB 1024:A$="M."+D$:GOSUB 1024:GOSUB 1081
+	A$=" {$d5}SER {$d4}ERMINATED!":GOSUB 1095
+{:4128}
+	AN$=D1$:&,15:A$=A$+" {cyan}{$cc}OGOFF {white}"+AN$+"{$cd}"+R$
+	A$=A$+" {pound}Q0{yellow}{pound}O{$c0}{pound}O{$c0}":GOSUB 1095
+	AC%=16:F4=1
+{:4134}
+	CLOSE 2:RETURN
+{:4136}
+	AN$=NA$:GOSUB 1034:DR=2:GOSUB 1010:PRINT# 15,"R"DR$"F."LEFT$(NN$,14)"=F."LEFT$(NA$,14)
+	PRINT# 15,"R"DR$"M."LEFT$(NN$,14)"=M."LEFT$(NA$,14):AN$=NN$:GOSUB 1038:NA$=NN$
+	GOSUB 1073:GOSUB 1070:GOTO 1081
+{:4142}
+	A=4:GOSUB 1736:DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":&,16,1:GOSUB 1012
+	IF E%THEN:&,16,3:B%=1:GOTO{:4148}
+{:4146}
+	A%=ID:&,16,8:IF A%THEN:&,16,5:GOTO{:4146}
+{:4148}
+	A%=ID:&,16,4:A$=DR$+"U.WEEDINFO":PRINT# 15,"S"A$:&,16,2:RETURN
+{:4150}
+	AN$=D5$:&,15:LP=1:&"{f6:2}{$c1}T THE END OF YOUR LAST CALL, ON {pound}V7{$cd}, YOU "
+	LP=1:&"DIDN'T PROPERLY LOG OFF. {$c4}O YOU WANT YOUR MESSAGE SCAN DATE SET TO "
+	LP=1:&"THAT TIME? ":GOSUB 1907
+	IF A THEN LD$=D5$
+	RETURN
+	COPR. 1994 NEW IMAGE 11/14/94

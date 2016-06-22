@@ -1,0 +1,40 @@
+	&,27,2:DIM FB%(29,15),FF%(15)
+	GOSUB 2912:&"{f6}{blue}{pound}VJ{pound}$Q          {cyan}{$c6}EEDBACK {$d3}UB{$d3}ECTION{f6}{blue}{pound}VJ{f6}"
+	DR=3:GOSUB 1010:A$=DR$+"E.SYSOPLIST":TT=0
+	&,60,2,0,FB%(0,0),A$,DV%:GOSUB 1012:ON-(E%<>0)GOTO{:60026}
+	A%=0:IF FB%(0,0)>0 THEN:&,60,8,FB%(0,0),60,1,FB%(11,1),FF%(1),1
+	IF A%=0 THEN{:60026}
+	IF A%=1 THEN A=1:GOTO{:60024}
+	FOR X=1 TO A%:A=FF%(X):&,60,1,20,FB%(1,A),AN$:&,15,1:&,60,1,36,FB%(12,A),D$
+	X%=X:LP=1:IF LL%>40 THEN:&"{lt. blue}{pound}#2{pound}# {pound}%X{blue}. {white}{pound}V7 {blue}{pound}{back arrow}39    {yellow}{pound}$D":GOTO{:60018}
+	&"{f6}{lt. blue}{pound}#2{pound}# {pound}%X{blue}. {white}{pound}V7 {f6}   {yellow}{pound}$D"
+{:60018}
+	NEXT:GOSUB 2912:&"{f6}{blue}{pound}VJ{f6:2}{pound}Q0{pound}$Q           {$c6}EEDBACK TO {$d7}HOM: {white}{pound}I1"
+	A=VAL(AN$):IF AN$="{$c1}"THEN TT$="{$c1}{$cc:2}":GOTO{:60026}
+	IF A<1 OR A>A%THEN TT=-1:GOTO{:60026}
+{:60024}
+	A=FF%(A):&,60,1,20,FB%(1,A),TT$:TT=FB%(0,A):IF FB%(11,A)AND 2 THEN TT=0
+{:60026}
+	ON-(TT=-1)GOTO{:60056}:GOSUB{:60060}:GOSUB 1604:ON-(KK=0)GOTO{:60056}
+	&"{f6:2}{$c6}ILING {$c6}EEDBACK...{f6:2}":IF TT=0 THEN{:60044}
+	Y=TT:TT$(0)="[{$c6}EEDBACK]":NN$=TT$
+	Z=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":Z=.:GOSUB 1062
+	PRINT# 2,NA$R$ID;R$D1$R$"[{$c6}EEDBACK]":&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
+	GOSUB 1081:GOSUB 1060
+	IF Y=1 THEN X=2:I=1:GOSUB 1025:X=13:GOSUB 1025:X=24:GOSUB 1025:X=31:GOSUB 1025
+	X=3:I=1:GOSUB 1025:X=14:GOSUB 1025:X=32:GOSUB 1025:X=25:ON Z GOSUB 1025
+	GOTO{:60054}
+{:60044}
+	B$="FBACK":A$="A":GOSUB 1027:IF E%THEN A$="W":GOSUB 1027
+	PRINT# 2,NA$R$ID;R$D1$R$AC%R$PH$R$RN$R$CO$R$AD$R$"{$c6}EEDBACK TO "TT$R$
+	&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
+	GOSUB 1081:GOSUB 1060:I=1
+	X=1:GOSUB 1025:X=12:GOSUB 1025:X=23:GOSUB 1025:X=30:GOSUB 1025
+{:60054}
+	CLOSE 2:&,28,2:&,11:RETURN
+{:60056}
+	&"{f6}{$c1}BORTED!":GOTO{:60054}
+{:60060}
+	POKE 53252,25:P$="{f6} {cyan}{$d3}UBJECT{white}":GOSUB 1005:IF AN$=""THEN AN$="{$c6}EEDBACK"
+	AD$=AN$:RETURN
+	COPR. NEW IMAGE 11/26/94

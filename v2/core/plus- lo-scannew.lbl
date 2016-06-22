@@ -1,0 +1,49 @@
+	REM SCAN FOR NEW
+	L$=MID$(LD$,2,6):B=VAL(MID$(LD$,8,4))/100:GOSUB{:4010}:L=B
+	&"{f6:2}{yellow}{$d3}CAN {$c6}OR {$ce}EW {$d0}OSTS/{$d2}ESPONSES?:{rvrs off} ":GOSUB 1902:ON A GOSUB{:4016}
+	&"{f6:2}{yellow}{$d3}CAN {$c6}OR {$ce}EW {$d5}PLOADS?:{rvrs off} ":GOSUB 1902:ON A GOSUB{:4048}
+	RETURN
+{:4010}
+	B=B+68*(B>80):IF INT(B)=12 OR INT(B)=24 THEN B=B-12
+	A=-(B$>L$):IF A=0 THEN A=-(B>L)
+	RETURN
+{:4016}
+	DR=3:A$="E.{$d3}UB":GOSUB 1011:IF E%THEN{:4046}
+	&"{f6} {$d3}UB{pound}{back arrow}25{$d0}OSTS/{$d2}ESPS{f6}{pound}VJ":&,2,2:N=VAL(A$):ON-(N=0)GOTO{:4046}:FOR I=1 TO N
+	X=I+1:GOSUB 1001:&,2,2:&,2,2:A=VAL(A$):&,2,2:IF(A AND 2^AC%)=0 THEN{:4044}
+	IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN A$=MID$(A$,4)
+	IF RIGHT$(A$,1)="{up arrow}"THEN A$=LEFT$(A$,LEN(A$)-1)
+	A$=LEFT$(A$,26):&" {pound}$A{pound}{back arrow}28":IF RC THEN I=N:GOTO{:4044}
+	CLOSE 2:P=0:NP=0:NR=0:DR=4:A$="D.SUB"+STR$(I):GOSUB 1011:IF E%THEN{:4038}
+	&,2,2:P=VAL(A$):FOR J=1 TO P:X=J+1:GOSUB 1001:INPUT# 2,A$,A$,A$
+	B$=MID$(A$,2,6):B=VAL(MID$(A$,8,4))/100:GOSUB{:4010}:NP=NP+A:IF A THEN{:4036}
+	B$=MID$(A$,13,6):B=VAL(MID$(A$,19,4))/100:GOSUB{:4010}:NR=NR+A
+{:4036}
+	NEXT
+{:4038}
+	CLOSE 2:A%=NP:B%=NR:C%=P
+	&"{pound}#2{pound}# {pound}%A/{pound}#2{pound}# {pound}%B {$cf}F {pound}#2{pound}# {pound}%C{f6}":IF RC THEN I=N:GOTO{:4044}
+	IF I<N-1 THEN DR=3:A$="E.{$d3}UB":GOSUB 1011
+{:4044}
+	NEXT:&"{pound}Q0{pound}VJ":CLOSE 2:RETURN
+{:4046}
+	CLOSE 2:&"{f6:2}{$ce}O {$d3}UBS!{f6}":RETURN
+{:4048}
+	DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN{:4074}
+	&"{f6} {$d5}/{$c4}{pound}{back arrow}30{$ce}EW {$c6}ILES{f6}{pound}VJ":&,2,2:N=VAL(A$):ON-(N=0)GOTO{:4074}:FOR I=1 TO N
+	X=I+1:GOSUB 1001:&,2,2:&,2,2:A=VAL(A$):&,2,2:IF(A AND 2^AC%)=0 THEN{:4072}
+	IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN A$=MID$(A$,4)
+	A$=LEFT$(A$,26):&" {pound}$A{pound}{back arrow}28":IF RC THEN I=N:GOTO{:4072}
+	CLOSE 2:U=0:NU=0:DR=4:A$="D.U/D"+STR$(I):GOSUB 1011:IF E%THEN{:4066}
+	&,2,2:U=VAL(A$):IF U=0 THEN{:4066}
+	FOR J=1 TO U:&,2,2:&,2,2:&,2,2:B$=A$:&,2,2:&,2,2:A$=B$
+	B$=MID$(A$,2,6):B=VAL(MID$(A$,8,4))/100:GOSUB{:4010}:NU=NU+A:NEXT
+{:4066}
+	CLOSE 2:A%=NU:B%=U
+	&"{pound}#2{pound}# {pound}%A {$cf}F {pound}#2{pound}# {pound}%B{f6}":IF RC THEN I=N:GOTO{:4072}
+	IF I<N-1 THEN DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011
+{:4072}
+	NEXT:&"{pound}Q0{pound}VJ":CLOSE 2:RETURN
+{:4074}
+	CLOSE 2:&"{f6:2}{$ce}O {$d5}/{$c4}S!{f6}":RETURN
+	COPR. 1990 NEW IMAGE 12-26-90

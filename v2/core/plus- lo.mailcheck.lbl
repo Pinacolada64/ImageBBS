@@ -1,0 +1,5 @@
+	REM +.LO.MAILCHECK
+	&"{$cd}AIL{$c3}HECK{f6:2}{$c5}NTER THE {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} OF THE USER YOU WANT{f6}TO CHECK FOR.{f6:2}"
+	POKE 53252,20:&"> {pound}I1":IF TR%<1 OR AN$=""THEN RETURN
+	A$="R":TT$=AN$:GOSUB 1062:CLOSE 2:IF E%THEN:&"{f6}{pound}V7 HAS NO MAIL.{f6}":RETURN
+	&"{f6}{pound}V7 HAS MAIL.{f6}":RETURN

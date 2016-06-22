@@ -1,0 +1,63 @@
+{:3000}
+	&"{clear}{f6} {$c9}MAGE {$d3}TATS {$c6}IXER{f6:2}"
+	&"1. {$c3}OUNT {$d0}OSTS/{$d2}ESPS{f6}"
+	&"2. {$c3}OUNT {$d5}PLOADS{f6}"
+	&"3. {$c3}OUNT {$cd}AIL{f6}"
+	&"4. {$c3}OUNT {$c6}EEDBACK/{$d3}YSOP/{$ce}EW{f6}"
+	&"5. {$d3}CAN {$d5}SER {$cc}IST FOR {$c6}IRST {$c5}MPTY {$d3}LOT{f6}"
+	&"{$c1}. {$c4}O {$c1}{$cc:2} OF THE ABOVE{f6:2}"
+	&"> {pound}G1":Z=VAL(AN$):IF AN$="{$c1}"THEN FOR Z=1 TO 5:GOSUB{:3018}:NEXT:GOTO{:3000}
+	ON-(Z=0)GOTO{:3020}:GOSUB{:3018}:GOTO{:3000}
+{:3018}
+	ON Z GOTO{:3100},{:3200},{:3300},{:3400},{:3500}:RETURN
+{:3020}
+	&"{f6:2}{$ce}OW TYPE {f5}{$c2}{$c1}{f5} TO CHECK NEW STATS.{f6}":GOTO 1812
+{:3100}
+	P=0:R=0:DR=3:A$="E.{$d3}UB":GOSUB 1011:IF E%THEN:&:RETURN
+	&,2,2:BZ=VAL(A$):CLOSE 2
+	FOR I=1 TO BZ:A%=I:&"{$d3}UB {pound}%A:"
+	DR=4:A$="D.SUB"+STR$(I):GOSUB 1011:IF E%THEN:&"{pound}$E{f6}":GOTO{:3114}
+	&,2,2:RN=VAL(A$):B%=RN:C%=0:IF RN=0 THEN{:3112}
+	FOR X=2 TO RN+1:GOSUB 1001:INPUT# 2,A$,A$,A$,A$,A$:C%=C%+VAL(A$):NEXT
+{:3112}
+	P=P+B%:R=R+C%:&"{pound}%B {$d0}OSTS, {pound}%C {$d2}ESPS{f6}"
+{:3114}
+	CLOSE 2:NEXT
+	A%=P:B%=R:&"{f6}{$d4}OTALS:{pound}%A {$d0}OSTS{f6}       {pound}%B {$d2}ESPONSES{f6}"
+	GOSUB 1060:X=26:ST(X)=P:GOSUB 1026:X=27:ST(X)=R:GOSUB 1026:CLOSE 2:RETURN
+{:3200}
+	U=0:DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN:&:RETURN
+	&,2,2:BZ=VAL(A$):CLOSE 2
+	FOR I=1 TO BZ:A%=I:&"{$d5}/{$c4} {pound}%A:"
+	DR=4:A$="D.U/D"+STR$(I):GOSUB 1011:IF E%THEN:&"{pound}$E{f6}":GOTO{:3210}
+	&,2,2:A%=VAL(A$):U=U+A%:&"{pound}%A {$c6}ILES{f6}"
+{:3210}
+	CLOSE 2:NEXT
+	A%=U:&"{f6}{$d4}OTAL:{pound}%A {$c6}ILES{f6}"
+	GOSUB 1060:X=28:ST(X)=U:GOSUB 1026:CLOSE 2:RETURN
+{:3300}
+	DR=2:GOSUB 1010:OPEN 2,DV%,0,"$"+DR$+"M.*":GET#2,A$,A$:&,8,2,1:N=0
+{:3302}
+	&,8,2,1:S=ST:IF MID$(A$,7,5)="BLOCK"OR S<>.THEN{:3308}
+	IF VAL(MID$(A$,10))=0 THEN N=N+1:A%=N:&"#{pound}%A{pound}{back arrow}05>{pound}$A{f6}"
+	GOTO{:3302}
+{:3308}
+	CLOSE 2:ST(25)=N:GOSUB 1060:X=25:GOSUB 1025:CLOSE 2:RETURN
+{:3400}
+	GOSUB 1065:&,2,2:CLOSE 2:TT$=A$:AN$=A$:&,15,1:&"{pound}$A'S {$cd}AIL: "
+	DR=2:A$=LEFT$("M."+TT$,15)+",S,R":GOSUB{:3410}:ST(24)=N
+	&"{f6}{$c6}EEDBACK: ":DR=3:A$="E.FBACK,S,R":GOSUB{:3410}:ST(23)=N
+	&"{f6}{$ce}EW {$d5}SERS: ":DR=3:A$="E.NEW,S,R":GOSUB{:3410}:ST(29)=N
+	GOSUB 1060:X=23:GOSUB 1026:X=24:GOSUB 1026:X=29:GOSUB 1026:CLOSE 2:RETURN
+{:3410}
+	GOSUB 1011:N=0:IF E%THEN{:3414}
+{:3412}
+	&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:3412}:N=N+1:ON-(S=0)GOTO{:3412}:CLOSE 2
+{:3414}
+	&"{pound}!N{f6}":RETURN
+{:3500}
+	L=UR+1:GOSUB 1065:&"{$d3}CANNING {$d5}SER {$cc}IST"
+	FOR X=1 TO UR:IF X/5=INT(X/5)THEN:&"."
+	GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN L=X:X=UR
+	NEXT:L1=L
+	GOSUB 1063:X=31:GOSUB 1001:PRINT# 2,L1:CLOSE 2:RETURN

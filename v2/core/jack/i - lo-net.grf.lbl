@@ -1,0 +1,87 @@
+	REM "+.LO.GRF" 07-16-90
+	REM&"{f6}{yellow}{$d2}EAD {lt. blue}{rvrs on}{$dd:3}{lt. red}{$d7}ALL{lt. green}{$d7}RITER?:{rvrs off} ":GOSUB1902:IFA=.THENRETURN
+	V=2.0:ON ZZ GOTO{:4566}
+{:4506}
+	GF=1:B%=.:M$="                                        ":M$=M$+M$
+	KK$="{up arrow}":A=LL%/2-7:L$="":IF A>.THEN L$=LEFT$(M$,A)
+	NN=0:ON GF+1 GOTO{:4520}:DR=2:A$="NM.CONFIG":GOSUB 4:IF E%THEN NN=.:GOTO{:4520}
+	INPUT# 2,NN,A%:IF((A%AND 2^AC%)=0)OR NN<1 THEN CLOSE 2:NN=0:GOTO{:4520}
+	X=4:GOSUB 1:&,2,2:KK$=A$:&,2,2:KK$=KK$+"{f1} "+A$
+	A$="NM.NODES":DR=2:GOSUB 4:IF E%THEN NN=0:GOTO{:4520}
+	X=NN+1:GOSUB 1:&,2,2:NN$=A$:CLOSE 2
+{:4520}
+	&"{clear}{f6}{pound}$L{lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}{$d7}ALL{lt. green}{$d7}RITER{f6}{pound}$L   {cyan}V1.2/2.0{f6}{pound}Q0{pound}VZ{f6}"
+	DR=2:A$="NM.GRF,S,R":GOSUB 4:IF E%THEN:&"{orange}{$d4}HE {$d7}ALL {$c9}S {$c2}LANK!{f6}":GOTO{:4546}
+	&"{$d3}CANNING {$c6}OR {$ce}EW {$d7}RITINGS...":SH=.
+{:4526}
+	GOSUB{:4564}:IF MID$(A$,2)=>MID$(LD$,2)THEN{:4530}
+	IF S=.THEN:&".":ON RC+1 GOTO{:4526},{:4546}:&"{f6:2}{orange}{$ce}O {$ce}EW {$d7}RITINGS!{f6}":GOTO{:4546}
+{:4530}
+	&"{f6:2}{$ce}EW {$d7}RITINGS:{f6}"
+{:4532}
+	A$=B$:B$=MID$("{white}{red}{cyan}{yellow}{lt. red}{lt. green}{lt. blue}",INT(RND(1)*7+1),1)+MID$(A$,5,20):GOSUB{:4622}
+	IF LEFT$(A$,1)="!"THEN B$=B$+" @ "+MID$(A$,2,3)
+	IF LEN(B$)<LL%THEN B$=LEFT$(M$,LL%-LEN(B$))+B$
+	C$=LEFT$(C$,25):IF C$="{up arrow}"THEN C$="":GOTO{:4542}
+	C$="{f6}"+LEFT$(M$,LL%-LEN(C$)-1)+MID$("{white}{red}{cyan}{yellow}{lt. red}{lt. green}{lt. blue}",INT(RND(1)*7)+1,1)+C$
+{:4542}
+	LP=1:&"{pound}Q0{pound}VZ{yellow}  {pound}$D{f6}{pound}$B{pound}$C":IF RC=1 OR S<>0 OR TR%<1 THEN:&"{pound}Q0{pound}VZ":GOTO{:4546}
+	GOSUB{:4564}:GOTO{:4532}
+{:4546}
+	CLOSE 2:IF MID$(FL$,4,1)="0"THEN{:4562}
+	&"{f6}{purple}{$c1}DD {$d9}OUR{$a0}{$d7}ORDS{$a0}{$cf}F{$a0}{$d7}ISDOM? ":GOSUB 96:IF A=.THEN{:4562}
+	N=76:GOSUB{:4620}:&"{f6}{orange}{$c7}O {$c1}HEAD {$c1}ND {$d7}RITE{lt. green}{f6}:":PL=.:&,1,5:IF AN$=""OR TR%<1 THEN{:4562}
+	DR=2:A$="NM.GRF,S,A":GOSUB 4:IF E%THEN A$="NM.GRF,S,W":GOSUB 4
+	A$=RIGHT$("0000"+MID$(STR$(ID),2),4)+NA$:PRINT# 2,D1$R$A$R$"{up arrow}"R$AN$
+	IF NN=.THEN{:4562}
+	A$="NM.{$c2}.TEMP,S,A":DR=2:GOSUB 4:IF E%THEN A$="NM.{$c2}.TEMP,S,W":GOSUB 4
+	A$="!"+NN$+NA$:PRINT# 2,A$R$KK$R$AN$
+{:4562}
+	CLOSE 2:CLOSE 15:&"{pound}Q0":RETURN
+{:4564}
+	&,2,2:E$=A$:&,2,2:B$=A$:&,2,2:C$=A$:&,2,2:D$=A$:A$=E$:S=ST:RETURN
+{:4566}
+	CLOSE 2:CLOSE 3:&"{f6:2} ({$c5})DIT ({$cb})ILL ({$d6})IEW ({$d7})EED : {pound}G1{pound}V7{f6}":IF TR%<1 THEN RETURN
+	ON-(AN$="{$c5}")-2*(AN$="{$cb}")-3*(AN$="{$d6}")-4*(AN$="{$d7}")GOTO{:4598},{:4618},{:4616},{:4570}:RETURN
+{:4570}
+	&"{f6:2}{$c8}OW {$cd}ANY {$c4}AYS {$c2}ACK? {pound}I1":A=VAL(AN$):A$=D1$:IF A<1 OR A>99 THEN{:4596}
+	A=VAL(MID$(A$,6,2))-A:B=VAL(MID$(A$,4,2)):C=VAL(MID$(A$,2,2))
+	IF A<1 THEN A=A+ASC(MID$("{blue:2}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}",B,1)):B=B-1:IF B<1 THEN B=12:C=C-1
+	TT$=RIGHT$(STR$(100+C),2)+RIGHT$(STR$(100+B),2)+RIGHT$(STR$(100+A),2)
+	A$=TT$:&"{f6}{$d7}EED WRITINGS OLDER THAN {pound}$A? ":GOSUB 94:IF A=0 THEN{:4596}
+	DR=2:GOSUB 3:PRINT# 15,"S"DR$"NM.TEMP"
+	A$="NM.GRF,S,R":GOSUB 4:IF E%THEN:&:CLOSE 2:GOTO{:4596}
+	CLOSE 3:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W":&"{pound}Q0{pound}VJ"
+{:4586}
+	GOSUB{:4564}
+	LP=1:&"{$04}"+A$+"{f6}{pound}$B{f6}{pound}$C{f6}{pound}$D{f6}":IF MID$(A$,2,6)<TT$THEN:&"<{$cb}ILL>{f6}":GOTO{:4592}
+	&"<{$cb}EEP>{f6}":PRINT# 3,A$R$B$R$C$R$D$
+{:4592}
+	&"{pound}Q0{pound}VJ":ON-(S=0)GOTO{:4586}:CLOSE 2:CLOSE 3
+	PRINT# 15,"S"DR$"NM.GRF":PRINT# 15,"R"DR$"NM.GRF=NM.TEMP"
+{:4596}
+	GOTO{:4566}
+{:4598}
+	&"{f6:2}":A$="NM.GRF,S,R":DR=2:GOSUB 4:IF E%THEN{:4612}
+	DR=2:GOSUB 2:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W"
+{:4602}
+	GOSUB{:4564}:&"{pound}Q0{f6}{$04}"+A$+"{f6}{pound}$B{f6}{pound}$C{f6}{pound}$D{f6:2}{white}{$cb}EEP {$c4}ELETE {$c1}BORT: "
+	GOSUB 7:ON-(AN$="{$c1}")GOTO{:4614}:ON-(AN$="{$cb}")GOTO{:4606}:&"{$c4}ELETE!{f6}":IF S=.THEN{:4602}
+{:4606}
+	&"{$cb}EEP!{f6}":PRINT# 3,A$R$B$R$C$R$D$:ON-(S=.)GOTO{:4602}
+	CLOSE 2:CLOSE 3:GOSUB 2:PRINT# 15,"S"DR$"NM.GRF"
+	PRINT# 15,"R"DR$"NM.GRF=NM.TEMP":CLOSE 15:&"{f6:2} {yellow}{$c4}ONE!{f6:2}":GOTO{:4566}
+{:4612}
+	CLOSE 2:&"{f6:2} {f5}NM.GRF{f5} {$ce}OT {$c6}OUND.{f6:2}":GOTO{:4566}
+{:4614}
+	&"{$c1}BORT!{f6}":DR=2:A$="NM.TEMP":GOSUB 19:GOTO{:4566}
+{:4616}
+	GOSUB{:4506}:GOTO{:4566}
+{:4618}
+	DR=2:A$="NM.GRF":GOSUB 19:&"{f6:2} {$d7}ALLWRITER {$d2}ESTARTED{f6}":GOTO{:4566}
+{:4620}
+	POKE 53252,N:RETURN
+{:4622}
+	IF V=2.0 THEN AN$=B$:&,15,1:B$=AN$:RETURN
+	RETURN
+	COPR. 1990 NEW IMAGE

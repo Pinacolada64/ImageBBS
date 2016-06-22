@@ -1,0 +1,46 @@
+	REM"*I.LO.MISC*  16{$c1}PR95 @10:20PM           {$cd}ISCELLANEOUS {$c9}DLE {$c3}OMMANDS  "
+	POKE 53248,1:&"{clear}{lt. blue}":ON LM GOTO{:4050},{:4100},{:4200}:RETURN
+{:4050}
+	P$="":PL=1:&"{clear}{f6}  {yellow}{$c5}NTER {$c3}URRENT {$c4}ATE/{$d4}IME{white}:{f6}  {lt. blue}({lt. blue}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$cb}EEPS {$d3}AME{lt. blue}){f6:2}"
+{:4052}
+	B$="{$c4}AY":W$=LEFT$(D1$,1):GOSUB{:4082}:ON-(A<1 OR A>7)GOTO{:4052}:GOSUB{:4080}:POKE 52935,A
+{:4054}
+	B$="{$cd}ONTH":W$=MID$(D1$,4,2):GOSUB{:4082}:ON-(A<1 OR A>12)GOTO{:4054}:GOSUB{:4080}:POKE 52936,A
+{:4056}
+	B$="{$c4}ATE":W$=MID$(D1$,6,2):GOSUB{:4082}:ON-(A<1 OR A>31)GOTO{:4056}:GOSUB{:4080}:POKE 52937,A
+{:4058}
+	B$="{$d9}EAR":W$=MID$(D1$,2,2):GOSUB{:4082}:ON-(A<1 OR A>99)GOTO{:4058}:GOSUB{:4080}:POKE 52938,A
+	&"{right:14}{up}{gray3}({gray2}{$c4}ATE {$d3}ET{gray3}){f6}"
+{:4060}
+	B$="{$c8}OUR":C$="{$c1}":A=VAL(MID$(D1$,8,2)):IF A>79 THEN A=A-80:C$="{$d0}"
+	W$=RIGHT$("0"+MID$(STR$(A),2,2),2):GOSUB{:4082}:ON-(A<1 OR A>12)GOTO{:4060}:B=A
+{:4064}
+	B$="{$cd}IN.":W$=MID$(D1$,10,2):GOSUB{:4082}:ON-(A<.OR A>59)GOTO{:4064}:C=A
+{:4066}
+	B$="{$c1}/{$d0}":W$=C$:GOSUB{:4082}:ON-(AN$<>"{$c1}"AND AN$<>"{$d0}")GOTO{:4066}:IF AN$="{$d0}"THEN B=B+80
+	&"{f6} {lt. blue}{$d3}ELECT {lt. green}{$d9}ES{lt. blue} {$d4}O {$d3}TART {$c3}LOCK, OR{f6} {$d3}ELECT {lt. green}{$ce}O{lt. blue} {$d4}O {$c3}HANGE: ":GOSUB 96
+	ON A+1 GOTO{:4050}:&,62,B,C:B=B+80*((B=92)-(B=12))+12*((B=93)OR(B=13)):&,58,B,.
+	POKE 1010,1:T1=MN%:GOSUB 33:X=19:GOSUB 1:PRINT# 2,D1$:CLOSE 2:RETURN
+{:4080}
+	A=16*INT(A/10)+A-INT(A/10)*10:RETURN
+{:4082}
+	Y$=W$:&" {cyan}{pound}$B{pound}{back arrow}08{white}":POKE 53252,LEN(Y$):&,1:IF AN$=""THEN AN$=Y$
+	A=VAL(AN$):&"{up} {lt. blue}{pound}$B{pound}{back arrow}08{gray3}: {pound}V7{pound}{back arrow}15{f6}":RETURN
+{:4100}
+	POKE 53252,10
+{:4102}
+	&"{f6} {cyan}{$d3}YSTEM {$d0}ASSWORD{f6:2}{lt. green}[{$c1}]{green}LL {$c3}ALLS, {lt. green}[{$cf}]{green}NE {$c3}ALL, OR {lt. green}[{$ce}]{green}ONE?{white}:{pound}G1"
+	ON-(AN$="{$ce}")-2*(AN$="{$cf}")-3*(AN$="{$c1}")GOTO{:4106},{:4108},{:4110}:GOTO 92
+{:4106}
+	L2=.:&,52,40,.:&"{$ce}ONE{f6}":GOTO{:4114}
+{:4108}
+	L2=.:&,52,40,1:&"{$cf}NE{f6}":GOTO{:4112}
+{:4110}
+	L2=1:&,52,40,1:&"{$c1}LL{f6}"
+{:4112}
+	&"{f6:2}{lt. blue}{$c5}NTER {$d0}ASSWORD{cyan}: {pound}I1":ON-(AN$="")GOTO{:4102}:L2$=AN$
+{:4114}
+	GOSUB 33:X=21:GOSUB 1:PRINT# 2,CHR$(48+L2)L2$:CLOSE 2:RETURN
+{:4200}
+	A$="R":GOSUB 34:SH=.:IF E%=.THEN:&,3,2
+	CLOSE 2:&"{f6:2}{pound}Q"+CHR$(48+DF%)+"[ >{$d0}RESS {$c1}NY {$cb}EY{up}{f6}{right}{pound}G1":RETURN
