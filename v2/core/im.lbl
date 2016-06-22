@@ -111,6 +111,7 @@
 	&,11,.:return
 	on i%goto{:1603}:gosub{:1490}
 {:1096}
+' is "print log entries" enabled?
 	a=a%:&,52,13,3:b=a%:a%=a:on b+1 goto{:1603}:open 16,4,15:close 16:if st then return
 	print# 4,a$:return
 {:1098}
@@ -140,8 +141,10 @@
 	im=3:goto{:2404}
 	br=.:mm=.:a=9:gosub{:1004}:on-(a<>.)goto{:1301}:x=4:gosub{:1980}:goto{:1812}
 {:1320}
+' is "disable U/D section?" enabled?
 	&,52,14,3:if a%then x=1:gosub{:1980}:goto{:1812}
 	gosub{:1019}:a=5:gosub{:1004}:b=a:a=15:gosub{:1004}
+' is "disallow double calls?" enabled?
 	&,52,15,3:if b=.or(pt%and a=.)or(a%<>.and qb<1200)then x=4:gosub{:1980}:goto{:1812}
 {:1323}
 	f1=.:a$=z$+str$(nl):gosub{:1350}:a$=z$:goto{:1301}
@@ -281,6 +284,7 @@
 	gosub{:1093}:lc=1
 {:1812}
 	&,28,1:on tr%+1 goto{:1698}:gosub{:1072}:if lc<>1 then lc=1:gosub{:1093}:sy$=""
+' $19: is "Trc right side" (undefined) enabled? (does nothing regardless)
 	&,52,$19,3:on a%gosub{:1810}:if pf then a$="{$c7}{$c6}":goto{:1016}
 {:1814}
 	&,28,1:gosub{:1930}:p$=po$:gosub{:1098}:on tr%+1 goto{:1698}:if an$=""then{:1345}
@@ -298,6 +302,8 @@
 	close 2:gosub{:1989}:goto{:1811}
 {:1850}
 	on-(ac%<>ao%)gosub{:1634}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
+' 20: is "expert mode" enabled?
+'  5: is "pseudo-local" mode enabled?
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
 	f4=.:a%=zz:b%=2^ac%:&,42:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto{:1800}
@@ -328,6 +334,7 @@
 {:1907}
 	&"{lt. green}[{gray3}{$d9}es{lt. green}]":gosub{:1007}:a=(a$="{$ce}")+1:&"{pound}h5":goto{:1904}
 {:1908}
+' 30: are main prompt macros enabled? (fixme: seems superflous here)
 	poke 970,.:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
 	goto{:1915}
 	dr=3:a$="e.say":gosub{:1011}:on sgn(e%)goto{:1603}:x=1:gosub{:1001}:input# 2,x
@@ -342,6 +349,7 @@
 {:1920}
 	&"{f6} {$c1}borted!{f6}":return
 {:1930}
+' 30: are main prompt macros enabled?
 	&,52,30,3:on a%gosub{:1931}:return
 {:1931}
 	dr=3:a$="e.macros":gosub{:1011}
@@ -411,6 +419,8 @@
 {:2510}
 	dr=5:gosub{:1009}:im$=a$:a$=dr$+"im."+im$:load a$,dv%
 	return
+{number:2600}
+' load "+/XX.yyy" (XX=module name, yyy=sub-module name)
 	gosub{:2610}:gosub{:4000}:new 4000:return
 {:2610}
 	lm$=left$(pr$,2)+"."+a$:dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
@@ -720,10 +730,12 @@
 	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":gosub{:1096}
 	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
 	im$="":is=.:lm$="":pr$="":ml$="":pr=-1:pf=.
+' 4: is "console mode" enabled? (true local login)
 	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=.then{:4050}
 	a$="lo":f1=2:goto{:1016}
 	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
+' 4: is "console mode" enabled? (true local login)
 	&,52,4,3:if(a%=1)or i%or id=1 then{:4068}
 	gosub{:4092}:kk=.:a$="s.errmail,s,r":dr=1:gosub{:1011}:if e%then close 2:goto{:4068}
 {:4054}

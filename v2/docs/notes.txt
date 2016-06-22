@@ -1,0 +1,7 @@
+Wrong array name used in +/GF-maint
+4201 a%=cm%(42,0)
+
++.GM defines
+s%(39,60),e%(60),m%(3,25),q%(20,25):gosub3010
+
+- changed cm$() array to s%() array

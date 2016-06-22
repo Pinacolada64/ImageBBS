@@ -1,0 +1,223 @@
+	&,28,1:GOSUB{:3003}:LM$="":DIM S%(39,60),E%(60),M%(3,25),Q%(20,25):GOSUB{:3010}
+	DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2
+	CP=1:F%=10:&,52,$27,3:ON A%GOTO{:3234}:GOTO{:3180}
+{:3003}
+	&,52,$2C,3:MM=A%:&,52,$2D,3:MM=MM AND A%AND NL:RETURN
+{:3004}
+	A=ABS(INT(VAL(MID$(AN$,2,4)))):RETURN
+{:3006}
+	A=ABS(INT(VAL(LEFT$(AN$,4)))):RETURN
+{:3008}
+	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="({$cd}) "+P$
+	RETURN
+{:3010}
+	LC=7:H$="{$cc}IBRARY":J$="{$c6}ILE":K$="":L$="":M$=""
+	I$="{$d3}UBOP":R$=CHR$(13):SY$="{$c6}ILES"+"":RETURN
+{:3050}
+	A$="{gray3}???":B$="":ON A GOTO{:3051},{:3052},{:3053},{:3054},{:3055},{:3056},{:3057},{:3058},{:3059}:RETURN
+{:3051}
+	DR=4:A$="{yellow}{$c4}IR":B$="D.{$c7}{$c6}.":RETURN
+{:3052}
+	DR=0:A$="{lt. blue}{$d0}RG":B$="+.":RETURN
+{:3053}
+	DR=0:A$="{lt. blue}{$cd}OD":B$="+/{$c7}{$c6}.":RETURN
+{:3054}
+	DR=0:A$="{lt. green}{$d4}XT":RETURN
+{:3055}
+	DR=0:A$="{lt. green}{$cd}OV":RETURN
+{:3056}
+	DR=0:A$="{lt. green}{$d2}{$cc}{$c5}":RETURN
+{:3057}
+	DR=4:A$="{yellow}{$d5}/{$d8}":B$="D.{$d5}{$d8}.":RETURN
+{:3058}
+	DR=4:A$="{yellow}{$d5}/{$c4}":B$="D.{$d5}{$c4}.":RETURN
+{:3059}
+	DR=0:A$="{yellow}{$d3}UB":B$="D.{$d3}{$c2}.":RETURN
+{:3070}
+	DR=4:GOSUB 1010:A$=DR$+"D."+PF$(PF):RETURN
+{:3072}
+	GOSUB{:3070}:&,60,2,0,S%(0,0),A$,DV%:GOTO 1012
+{:3074}
+	GOSUB{:3070}:PRINT# 15,"S"A$:&,60,3,0,S%(0,0),80+80*S%(0,0),A$,DV%:GOTO 1012
+{:3080}
+	LP=1:&"{f6}{$d3}ORRY, YOU DO NOT HAVE ENOUGH{$a0}CREDITS!":GOTO{:3200}
+{:3082}
+	LP=1:&"{f6}{$d3}ORRY, YOU MUST BE IN COLOR/GRAPHICS MODE TO VIEW MOVIES.":GOTO{:3200}
+	B=0:FOR I=0 TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 1902:B=B+2^I*A:NEXT:A=B:RETURN
+{:3100}
+	ON MM GOTO{:3109}:&"{clear} {blue}{pound}O{$a2}{pound}O{$a2}{f6} {rvrs on}{lt. green} {pound}$H: {pound}V8{pound}{back arrow}39{f6}"
+	ON-(S%(2,0)=0)GOTO{:3104}:AN$=SO$:&,15,1:ON-(S%(2,0)<>ID OR ID=0)GOTO{:3103}
+	&" {rvrs on} ({$d9}OU ARE THE {pound}$I HERE){pound}{back arrow}39{f6}":Q=1:GOTO{:3104}
+{:3103}
+	&" {rvrs on} {pound}$I: {pound}V7{pound}{back arrow}39{f6}"
+{:3104}
+	&" {rvrs on}{blue}{pound}O{$a2}{pound}O{$a2}{f6}{pound}Q0":RETURN
+{:3105}
+	&"{purple} {$b0}{pound}$Y{$ae}{f6} {$dd}{lt. green} {$d4}HIS {pound}$H IS {$c5}MPTY.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
+{:3106}
+	A%=BR:X=E%(BR):A=S%(2,X):GOSUB{:3050}:&,60,1,28,S%(13,X),C$
+	&" {purple}{$dd}{white}{pound}#2{pound}# {pound}%A {pound}$A{lt. blue}: {cyan}{pound}$C{pound}{back arrow}38{purple}{$dd}{f6}":RETURN
+{:3109}
+	RETURN
+{:3110}
+	ON MM GOTO{:3109}:GOSUB{:3100}:IF TP THEN RETURN
+	IF RN=0 THEN{:3105}
+	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=1 TO RN:GOSUB{:3106}:BR=BR+RN*RC:NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
+{:3120}
+	GOSUB{:3100}:IF TP THEN RETURN
+	IF RN=0 THEN{:3105}
+	KK=1:GOSUB{:3004}:IF A>0 AND A<=RN THEN KK=A
+	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=KK TO RN:GOSUB{:3130}:BR=BR+RN*S:IF BR<RN THEN:&"{purple} {$ab}{pound}$Y{$b3}{f6}{pound}Q0"
+	NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
+{:3130}
+	GOSUB{:3106}:S=RC:ON-(Q=0)GOTO{:3138}:A%=S%(1,X):&,60,1,16,S%(27,X),A$
+	&"{purple} {$dd}{cyan}{$c6}ILE:{pound}$B{pound}$A{pound}{back arrow}29{$c1}CCS:{pound}#4{pound}%A{purple}{$dd}{f6}":S=S+RC
+	IF A<>1 THEN B%=S%(3,X):C%=S%(4,X):&"{purple} {$dd}{cyan}{$c4}EV:{pound}#2{pound}%B {$c4}RV:{pound}#3{pound}%C{pound}{back arrow}38{purple}{$dd}{f6}"
+{:3138}
+	A%=S%(5,X):IF A%THEN:&"{purple} {$dd}{cyan}{$c3}REDITS:{pound}%A{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
+	ON A GOTO{:3144}:A%=S%(6,X):&,60,5,0,S%(10,X),AN$
+	IF A%THEN:&,15:&"{purple} {$dd}{cyan}{$d5}SED {pound}%A {$d4}IMES{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}{$cc}AST:{pound}V7{$cd}{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
+{:3144}
+	RETURN
+{:3150}
+	GOSUB{:3074}:GOTO{:3164}
+{:3152}
+	DR=1:A$="S."+PF$(PF)+",S,R":GOSUB 1011:IF E%THEN CLOSE 2:RETURN
+	&"{pound}M<2{pound}M>2{f6}":&,3,2:CLOSE 2:&"{pound}Q0{f6}":RETURN
+{:3160}
+	Y$=MID$(AK$,2,36):Q=0:A=13:GOSUB 1004:B=A:A=8:GOSUB 1004:IF A+B THEN Q=1
+	S%(0,0)=0:S%(1,0)=TP:S%(2,0)=0:S%(3,0)=DV%(4):S%(4,0)=DR%(4)
+	&,60,0,30,S%(25,0),PF$(PF):GOSUB{:3072}:GOSUB{:3008}
+{:3164}
+	TP=S%(1,0):DV%(7)=S%(3,0):DR%(7)=S%(4,0):IF S%(2,0)=ID AND ID<>0 THEN Q=1
+	IF Q THEN A%=S%(0,0):IF A%THEN FOR I=1 TO A%:S%(0,I)=1:NEXT:GOTO{:3168}
+	A%=0:IF S%(0,0)THEN:&,60,6,S%(0,0),0,S%(0,1),S%(1,1),80,1,2^AC%
+{:3168}
+	RN=A%:IF RN THEN:&,60,8,S%(0,0),80,1,S%(0,1),E%(1),1
+	A$="{up arrow}":IF S%(2,0)<>0 THEN X=S%(2,0):GOSUB 1065:GOSUB 1001:&,2,2:CLOSE 2
+	IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A$="{$ce}O {$cf}NE"
+	SO$=A$:IF Q THEN SY$=SY$+"-{$cd}AINT"
+	RETURN
+{:3180}
+	ON-(PF<>0)GOTO{:3182}:PF=0:A$="{$c7}{$c6}.{$cd}AIN"+"":TP=0
+{:3181}
+	PF=PF+1:PF$(PF)=A$
+{:3182}
+	GOSUB{:3160}:IF U$=""THEN GOSUB{:3152}:ON-(TP=0)GOSUB{:3110}
+	GOSUB{:3010}:ON-(S%(1,0)=0)GOTO{:3200}
+	DR=5:GOSUB 1010:A$=DR$+"+/{$c7}{$c6}."+LEFT$(PF$(PF),2):LOAD A$,DV%
+	RK=1:GOSUB 4000:GOTO{:3200}
+{:3198}
+	IF E%THEN:&"{$c5}RROR {$d2}EADING {f5}{pound}$B{f5}.{f6:2}"
+{:3200}
+	GOSUB{:3003}:ON-(MM=1 AND U$="")GOTO{:3220}
+{:3202}
+	GOSUB{:3008}:GOSUB 1098:ON-(TR%<1)GOTO{:quit}:GOSUB 1850:ON F4 GOTO{:3233}:ON RS GOTO{:3200}
+	GOSUB{:3006}:IF A THEN BR=A:GOTO{:3400}
+	IF PF>1 AND(A$="<"OR A$="{$c2}")THEN PF=PF-1:GOTO{:3182}
+	IF PF>1 AND A$="{$cd}"THEN PF=1:GOTO{:3182}
+	IF Q=1 AND A$="{$da}"THEN{:3231}
+	ON-(A$="{$d1}")GOTO{:quit}:GOSUB{:3212}:GOTO{:3200}
+{:3212}
+	ON-(A$="{$cc}")-2*(A$="{$d3}")-4*(A$="{f2}")GOTO{:3110},{:3120},1351
+	ON-(A$="")GOTO{:3110}
+	&"{f6:2}{$d5}NKNOWN {$c3}OMMAND. {$d4}YPE {f5}?{f5} FOR {$c8}ELP.{f6:2}":RETURN
+{:3220}
+	CX=1
+{:3222}
+	GOSUB{:3500}:ON-(TR%<1)GOTO{:quit}:ON-(A$="{$d2}")GOTO{:3222}:ON-(A$="{$d1}")GOTO{:quit}
+	CX=A%:A=VAL(A$):IF A THEN BR=A:GOTO{:3400}
+	ON-(A$="{f2}")-2*(A$="{$cf}")-3*(A$="{$da}"AND Q=1)GOTO{:3232},{:3230},{:3231}
+	IF PF>1 AND A$="{$c2}"THEN PF=PF-1:GOTO{:3182}
+	IF PF>1 AND A$="{$cd}"THEN PF=1:GOTO{:3182}
+	GOTO{:3222}
+{:3230}
+	A$="OTHER":GOTO{:3300}
+{:3231}
+	A$="MAINT":GOTO{:3300}
+{:3232}
+	GOSUB{:3550}:&"{pound}G1":GOTO{:3200}
+{:3233}
+	PF=0:GOTO 1842
+{:3234}
+	X=1:GOSUB 1980
+{number:3235}
+{:quit}
+	PF=0:F1=.:GOTO 1811
+{:3300}
+	IF"{$c7}{$c6}-"+A$<>LM$THEN LM$="{$c7}{$c6}-"+A$:DR=5:GOSUB 1010:A$="+/"+LM$:LOAD A$,DV%
+	CX=1
+{:3304}
+	RK=1:GOSUB 4000
+{:3306}
+	IF MM=0 THEN{:3314}
+	GOSUB{:3350}:ON-(TR%<1)GOTO{:3202}:ON-(A$="{$d2}")GOTO{:3304}:ON-(A$="{$d1}")GOTO{:3200}
+	CX=A%:RK=2:GOSUB 4000:ON TZ GOSUB{:3150}:ON RS GOTO{:3200}:GOTO{:3306}
+{:3314}
+	GOSUB 1098:ON-(TR%<1)GOTO{:quit}:GOSUB 1850:ON F4 GOTO{:3233}:ON RS GOTO{:3304}:GOTO{:3306}
+{:3350}
+	&,52,$22:M%(0,0)=0:M%(1,0)=-1:M%(2,0)=-1:M%(3,0)=ASC("{$d2}")
+	M%(1,1)=N*256+2:M%(1,N)=(N-1)*256+1
+	&,71,CX,N+1,M%(0,0):&,70,0,MP%-1:A$=MID$(STR$(A%),2)
+	IF M%(3,A%)THEN A$=CHR$(M%(3,A%))
+	FD=0:RETURN
+{:3400}
+	ON-(BR<1 OR BR>RN)GOTO{:3200}:X=E%(BR):IF NL=0 AND S%(2,BR)=5 THEN{:3082}
+	A=7:GOSUB 1004:IF Q OR A OR S%(5,X)=0 THEN{:3410}
+	A=S%(5,X):ON-(A>CR)GOTO{:3080}:CR=CR-A:IF CP=0 THEN{:3410}
+	DR=3:A$="E.CR.POOL 1,S,R":GOSUB 1011:INPUT# 2,B:INPUT# 2,C:C=C+A:CLOSE 2
+	A$="E.CR.POOL 1":GOSUB 1023:PRINT# 2,B:PRINT# 2,C:CLOSE 2
+{:3410}
+	S%(6,X)=S%(6,X)+1:&,60,4,0,S%(10,X),D1$:GOSUB{:3074}
+	A=S%(2,X):GOSUB{:3050}:&,60,1,30,S%(13,X),C$:A$=" "+A$+": "+C$
+	ON-(A>1 AND A<7)GOSUB 1095:A=S%(2,X):GOSUB{:3050}
+	D1%=S%(3,X):D2%=S%(4,X):DR=0:IF A=1 THEN DR=4
+	GOSUB 1010:&,60,1,16,S%(27,X),A$:B$=B$+A$
+	ON A GOTO{:3422},{:3440},{:3430},{:3428},{:3424},{:3426},{:3434},{:3436},{:3438}
+{:3422}
+	A$=MID$(B$,3):GOTO{:3181}
+{:3424}
+	GOSUB 1011:ON-(E%<>0)GOTO{:3198}:&"{clear}{pound}U1":&,3,2,F%:&"PRESS A KEY:{pound}G1{f6}{clear}":GOTO{:3198}
+{:3426}
+	&,52,16,3:G%=A%:&,52,16,0:GOSUB 1075:&,52,16,G%:GOTO{:3198}
+{:3428}
+	GOSUB 1075:GOTO{:3198}
+{:3430}
+	IF"{$c7}{$c6}."+A$<>LM$THEN LM$="{$c7}{$c6}."+A$:A$="+/"+LM$:LOAD A$,DV%
+	GOSUB 4000:GOTO{:3200}
+{:3434}
+	TP=1:A$=MID$(B$,3):GOTO{:3181}
+{:3436}
+	TP=2:A$=MID$(B$,3):GOTO{:3181}
+{:3438}
+	TP=3:A$=MID$(B$,3):GOTO{:3181}
+{:3440}
+	Z$=A$:GOSUB 2100:A$=Z$:DR=0:GOTO 1067
+{:3500}
+	S$=LEFT$("                    ",18-LEN(D2$)/2):GOSUB{:3008}
+	&"{rvrs off}{clear}{rvrs on}{blue}{pound}{back arrow}39{f6}"
+	&"{rvrs on}{blue} {gray3}          {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$c2:2}{$d3}{$a0}{$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on}{blue} {gray3}{pound}$S{pound}V8{pound}{back arrow}37{blue}{rvrs off} {rvrs on} {f6}{rvrs on}{blue}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	N=0:IF RN=0 THEN{:3518}
+	CT$="??? {$c4}IR {$d0}RG {$cd}OD {$d4}XT {$cd}OV {$d2}{$cc}{$c5} {$d5}/{$d8} {$d5}/{$c4} {$d3}UB ":M=5
+	&,16,1,42,Q%(0,N),"1",CT$,80,S%(0,1),1,S%(2,1),S%(13,1),28,RN,9,1:N=B%
+{:3518}
+	IF PF>1 THEN:&,16,0,42,Q%(0,N),"/{$c2}","{$cf}P ","{$d2}ETURN TO {$d0}REVIOUS {$cd}ENU":N=N+1
+	IF PF>1 THEN:&,16,0,42,Q%(0,N),"/{$cd}","{$cf}P ","{$d2}ETURN TO {$cd}AIN {$cd}ENU":N=N+1
+	IF Q THEN:&,16,0,42,Q%(0,N),"/{$da}","{$cf}P ","{$cd}AINTENANCE {$cf}PTIONS":N=N+1
+	&,16,0,42,Q%(0,N),"/{$cf}","{$cf}P ","{$cf}THER {$cf}PTIONS":N=N+1
+	&,16,0,42,Q%(0,N),"/{f2}","{$cf}P ","{$c8}ELP":N=N+1
+	&,16,0,42,Q%(0,N),"/{$d1}","{$cf}P ","{$d1}UIT":N=N+1
+	&,16,2,42,Q%(0,0),N,36,1,N,6,6,0:A$=CHR$(Q%(3,A%)AND 255)
+	&,70,0,MP%-1:RETURN
+{:3550}
+	&"{home}{down:4}{yellow}"
+	&"{right:3}{rvrs on}{pound}{back arrow}34{f6}"
+	&"{right:3}{rvrs on} {$c3}URSOR {$cb}EYS {$cd}OVE {$c8}IGHLIGHT    {rvrs off} {f6}"
+	&"{right:3}{rvrs on} {$cb}EYS IN QUOTES ARE '{$c8}OT' {$cb}EYS {rvrs off} {f6}"
+	&"{right:3}{rvrs on} {$d5}SE {$d3}{$d0}{$c1}{$c3}{$c5} TO {$d3}ELECT AN {$c9}TEM   {rvrs off} {f6}"
+	&"{right:3}{rvrs on} {$d0}RESS {f5}{$d2}{f5} TO {$d2}EPRINT THE {$cd}ENU {rvrs off} {f6}"
+	&"{right:3}{rvrs on}{pound}{back arrow}34{rvrs off} {f6}"
+	&"{right:3}{rvrs on} {$d0}RESS ANY KEY TO CONTINUE     {rvrs off} {f6}"
+	&"{right:3}{rvrs on}{pound}{back arrow}34{rvrs off} {f6}"
+	&"{right:4}{pound}{back arrow}35{f6}":FD=3:RETURN

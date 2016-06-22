@@ -1,0 +1,79 @@
+	ON MM GOTO{:3100},{:3200},{:3300}
+{:3002}
+	W$=MID$(STR$(CM%(Y,X)),2):POKE 53252,5:PL=1:&,1,32:IF AN$=""THEN RETURN
+	A=VAL(AN$):IF AN$="{f2}"THEN GOSUB{:3008}
+	CM%(Y,X)=A:TZ=1:RETURN
+{:3008}
+	B=0:FOR I=0 TO 9:&"{$c7}ROUP {pound}!I":GOSUB 3:B=B+A*2^I:NEXT:A=B:RETURN
+{:3010}
+	W$=MID$(STR$(CM%(Y,X)),2,L):POKE 53252,L:PL=1:&,1,32:IF AN$=""THEN RETURN
+	CM%(Y,X)=VAL(AN$):TZ=1:RETURN
+{:3014}
+	&,60,1,L,CM%(Y,X),W$:POKE 53252,L:&,1,32:IF AN$=""THEN RETURN
+	&,60,0,L,CM%(Y,X),AN$:TZ=1:RETURN
+{:3018}
+	&,60,1,L,CM%(Y,X),W$:POKE 53252,L:&,1,32
+	IF AN$=""THEN:&"{$d2}EMOVE {pound}$P":GOSUB 3:AN$="":IF A=0 THEN RETURN
+	&,60,0,L,CM%(Y,X),AN$:TZ=1:RETURN
+{:3030}
+	TZ=0
+{:3032}
+	&"{clear}{$c9}TEM {$c5}DITOR:{f6:2}":&,60,5,0,CM%(15,X),A$
+	&"{$c3}REATION {$c4}ATE:{f6}{$04}"+A$+"{f6}":&,60,5,0,CM%(18,X),A$
+	&"{$cc}AST {$c1}CCESS {$c4}ATE:{f6}{$04}"+A$+"{f6:2}":A%=CM%(1,X):B%=CM%(2,X)
+	&"1. {$c1}CCESS- {$d6}IEW: {pound}#5{pound}# {pound}%A {$d5}SE: {pound}%B{f6}":T=CM%(3,X):GOSUB 100
+	&"2. {$c9}TEM {$d4}YPE: {pound}$A{f6}":A%=CM%(4,X)
+	&"3. {$c3}REDITS: {pound}%A{f6}":A%=CM%(5,X):B%=CM%(6,X):&,60,1,16,CM%(7,X),A$
+	&"4. {$c4}EVICE: {pound}%A/{pound}%B {f5}{pound}$A{f5}{f6}":A%=CM%(21,X)
+	&"5. {$d4}IMES {$d5}SED: {pound}%A{f6}":&,60,1,28,CM%(26,X),A$
+	&"6. {$d4}ITLE: {pound}$A{f6}":&,60,1,20,CM%(40,X),A$
+	&"7. {$c6}ILE: {f5}{pound}$B{pound}$A{f5}{f6}"
+	&"{f6}> {pound}G1":A=VAL(AN$)
+	IF A THEN ON A GOSUB{:3058},{:3060},{:3068},{:3062},{:3070},{:3072},{:3074}:GOTO{:3032}
+	&"{$d1}UIT{f6:2}":RETURN
+{:3058}
+	&"{$c1}CCESS{f6:2}":P$="{$d6}IEW":Y=1:GOSUB{:3002}:P$="{$d5}SE":Y=2:GOTO{:3002}
+{:3060}
+	&"{$d4}YPE{f6:2}":P$="{$d4}YPE":Y=3:L=2:GOTO{:3010}
+{:3062}
+	&"{$c4}EVICE{f6:2}":P$="{$c4}EVICE":Y=5:L=3:GOSUB{:3010}
+	P$="{$c4}RIVE":Y=6:L=3:GOSUB{:3010}
+	P$="{$c4}{$cf}{$d3} {$c3}MD":PL=1:Y=7:L=16:GOSUB{:3018}:RETURN
+{:3068}
+	&"{$c3}REDITS{f6:2}":P$="{$c3}REDITS":Y=4:L=5:GOTO{:3010}
+{:3070}
+	&"{$d4}IMES {$d5}SED{f6:2}":P$="{$d4}IMES {$d5}SED":Y=21:L=5:GOTO{:3010}
+{:3072}
+	&"{$d4}ITLE{f6:2}":P$="{$d4}ITLE":PL=0:Y=26:L=28:GOTO{:3014}
+{:3074}
+	&"{$c6}ILE{f6:2}":T=CM%(3,X):GOSUB 100:P$="{$c6}ILE":PL=0:Y=40:L=16-LEN(B$):GOTO{:3014}
+{:3100}
+	X=CM%(0,0)+1
+	CM%(0,X)=0:CM%(1,X)=CM%(4,0):CM%(2,X)=CM%(1,X):CM%(3,X)=0:CM%(4,X)=0
+	CM%(5,X)=CM%(7,0):CM%(6,X)=CM%(8,0):&,60,1,16,CM%(9,0),A$
+	&,60,0,16,CM%(7,X),A$
+	&,60,4,0,CM%(15,X),D1$:&,60,4,0,CM%(18,X),D1$:CM%(21,X)=0
+	CM%(22,X)=0:CM%(23,X)=0:CM%(24,X)=0:CM%(25,X)=0
+	&,60,0,28,CM%(26,X),"":&,60,0,20,CM%(40,X),""
+	GOSUB{:3030}:IF CM%(3,X)<>0 THEN CM%(0,0)=X:CF=1
+	RETURN
+{:3200}
+	X=VAL(MID$(AN$,2,2)):IF X<0 OR X>CL%(0)THEN RETURN
+	X=CL%(X):GOSUB{:3030}:IF TZ THEN CF=1
+	RETURN
+{:3300}
+	I=VAL(MID$(AN$,2,2)):IF I<0 OR I>CL%(0)THEN RETURN
+	GOSUB 102:X=CL%(I):A%=I:GOSUB 101:GOSUB 103:&,60,5,0,CM%(15,X),A$
+	&"{f6}{white}{$c3}REATED   {$04}"+A$+"{f6}":&,60,5,0,CM%(18,X),A$
+	&"{$cc}AST {$d5}SED {$04}"+A$+"{f6}":A%=CM%(1,X):B%=CM%(2,X)
+	&"{$c1}CCESS:  {$d6}IEW {pound}#5{pound}# {pound}%A {$d5}SE {pound}%B{f6}":A%=CM%(4,X)
+	&"{$c3}REDITS:  {pound}%A{f6}":A%=CM%(5,X):B%=CM%(6,X):&,60,1,16,CM%(7,X),A$
+	&"{$c4}EVICE:  {pound}%A/{pound}%B {f5}{pound}$A{f5}{f6}":A%=CM%(21,X)
+	&"{$d5}SED {pound}%A {$d4}IMES{f6}"
+	&"{f6}{pound}Q0{$cb}ILL {$d4}HIS {$c9}TEM":GOSUB 3:IF A=0 THEN RETURN
+	&"{f6}{$d3}CRATCH {$c6}ILE":GOSUB 3:IF A=0 THEN{:3324}
+	T=CM%(3,X):GOSUB 100:&,60,1,16,CM%(40,X),C$:A$=B$+C$
+	DV%(0)=CM%(6,X):DR%(0)=CM%(7,X):GOSUB 10:PRINT# 15,"S"DR$A$
+{:3324}
+	IF X<>CM%(0,0)THEN FOR A=X TO CM%(0,0)-1:&,60,10,100,CM%(0,A+1),CM%(0,A):NEXT
+	CM%(0,0)=CM%(0,0)-1:CF=1:RETURN

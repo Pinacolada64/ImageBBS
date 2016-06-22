@@ -52,6 +52,9 @@
 {:33}
 	dr=3:a$="e.data":goto{:4}
 {:34}
+' is "left $2e" (undefined) enabled?
+' fixme: something with daily log?
+' fixme: am=0 or 1 depending on litebar status - not sure what lt$ is yet
 	e%=a%:&,52,46,3:am=a%:a%=e%:dr=3:a$="e.log"+left$(lt$,am)+",s,"+a$:goto{:4}
 {:35}
 	dr=6:a$="u.config":goto{:4}
@@ -71,6 +74,7 @@
 	if i%then return
 {:51}
 	c$=a$:a$="a":gosub{:34}:if e%=0 then print# 2,c$
+' is "print log entries" enabled?
 	close 2:a$=c$:an$=c$:a=a%:&,52,13,3:b=a%:a%=a:if b=0 then return
 	open 16,4,15:close 16:if st then return
 	print# 4,a$:return
@@ -85,7 +89,9 @@
 	next:a=bf:return
 {:70}
 	dr=5
+{number:71}
 	on-(pr$<>"i."+a$)gosub{:76}:goto{:3000}
+{number:72}
 {:72}
 	dr=5
 {:73}
@@ -119,8 +125,10 @@
 	&"{pound}q"+chr$(df%+48)+mid$("{$d9}es{$ce}o",4-a*3,3)+"{f6}":return
 {:200}
 	on tr%+1 goto{:240}:&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,0
+' are main prompt macros enabled?
 	&,52,30,3:on a%gosub{:330}
 	s=.:sh=.:gosub{:12}
+' are main prompt macros enabled? (fixme: seems superflous here)
 	poke 970,0:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
 	mm=2:gosub{:3000}:gosub{:9}:&"{f6} - {pound}$b{$cd}":if tr%<100 then a%=tr%:&" - {pound}%a {$cd}in. {$cc}eft"
 	if zz then a%=usr(0):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
@@ -131,6 +139,7 @@
 	on rs goto{:200}:mm=1:goto{:3000}
 {:220}
 	on-(ac%<>ao%)gosub{:320}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
+' is "expert mode" enabled? is "pseudo-local" mode enabled?
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
 	f4=.:a%=zz:b%=2^ac%:&,42,1:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto{:260}
@@ -168,6 +177,7 @@
 	return
 	return
 {:300}
+' is lightbar position $30 enabled? if so, load IM 1.3 shim:
 	&,28,1:&,52,$30,3:on a%gosub{:309}:mm=.:a$="main":goto{:70}
 {:302}
 	&,28,1:&,52,$30,3:on a%gosub{:309}:mm=0:a$="lo":goto{:70}
@@ -211,10 +221,15 @@
 	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{green}{pound}$b {$cd}ode{lt. green}: {white}{$cf}{pound}v7{f6}":return
 {:371}
 	a=val(mid$(uf$,b,1)):gosub{:370}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1):return
+' toggle expert mode:
 	a=em:b$="{$c5}xpert":gosub{:370}:em=a:&,52,20,em:return
+' toggle More prompt:
 	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub{:371}:&,52,34,a:return
+' toggle graphic menu mode:
 	b=3:b$="{$c7}raphic {$cd}enu":gosub{:371}:&,52,44,a:return
+' toggle local mode:
 	a=zz:b$="{$cc}ocal":gosub{:370}:zz=a:&,52,5,a:return
+' toggle main prompt macros (sayings) status:
 	b$="{$d3}ayings":&,52,30,3:a=a%:gosub{:370}:&,52,30,a:return
 {:390}
 	dr=3:a$="e.text":gosub{:4}:gosub{:1}:&,2,2:close 2:&"{f6}{pound}$a{f6}":return
@@ -486,10 +501,12 @@
 	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":rem gosub51
 	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
 	p2$="":is=.:p1$="":pr$="":ml$="":pr=-1:pf=.
+' is "console mode" enabled? (true local login)
 	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=.then{:4050}
 	f1=2:goto{:302}
 	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
+' is "console mode" enabled? (true local login)
 	&,52,4,3:if(a%=1)or i%or id=1 then{:4068}
 	gosub{:4092}:kk=.:a$="s.errmail,s,r":dr=1:gosub{:4}:if e%then close 2:goto{:4068}
 {:4054}

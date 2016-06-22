@@ -1,52 +1,111 @@
 Image BBS 2.0
 IM line number translation:
+(from "im.emul13")
 
+9/21/1994 - New Image Software (nis)
+:
+:	5/6/1996 - Jack L. Followay (jlf)
+:	:
+:	:	1/2/1999 - im.emul13 (emu)
+:	:	:
+1000	1000	1000 -> 2004
+1001	1	1001 -> 1	Position REL pointer (gosub 1002)
+1002	10	1002 -> 10	Position REL pointer
+---	2426	1003 -> 2426	?
+1004	11	1004 -> 11	Get user flag #a in fl$
+1005		1005 -> 1028	Uppercase/lowercase input: an$
+1006	6	1006 -> 6	Uppercase input: an$
+1007	7	1007 -> 7	Get uppercase character: an$
+---	8	1008 -> return	jlf: remove
+				emu: device/drive prompt
+1009	2	1009 -> 2	Get device/drive of system drive 'dr'
+1010	3	1010 -> 3	Close/reopen command channel
+1011	4	1011 -> 4	Open file 'a$' on logical file# 2
+1012	5	1012 -> 5	check error channel
+1013	6->310	1013 -> 1014	jlf: command stacking/input prompt
+				emu: set drive 5 (plus files)
+1014		1014 -> 1015	Display a$ in "area" window, set system drive
+1015	70	1015 -> 1012	Load plus file
+1016	71	1016 -> 3000	*** main entry point to load plus file ***
+				nis: Load "+."+a$ plus-file
+				jlf: Load "i."+a$, goto 3000
+1019	84	1019 -> return	calculate a=minutes left, pt%=prime time?
+		1020 -> 18
+	12			Reset MCI defaults?
+1075	13			Clear screen...
+1076	14			...and read file in a$
+	15			close logical file #2
+1023	18			scratch and rewrite SEQ file a$ (gosub 1024)
+1024	19			Scratch a$
+1025	16			read/increment Board Activity Register stat #i
+1026	17			write stat #x back to e.stats
+---	20-27			jlf: remove
+---	28-29			jlf: Load protocol "++ "+a$
+1060	30			Open "e.stats"
+1061	31			Open "e.access"
+1062	32			Open mail file "m."+tt$+",s,"+a$
+1063	33			open "e.data"
+1064	34			&,52,$2e,3 Automaintenance active/logging related
+1065	35			open "u.config"
+	36			Append or write "e."+b$+",s,"+a$
+	37			Append or write "e."+b$ (gosub 36)
+	38			Write user data to lfn#2
+	39			Dump array tt$() to open lfn#2
+---	40-47			jlf: Redirect to 440-447
+	50			Check if instant logon used: if so, RETURN
+1096	51			log a$ to daily log
+	52			check Prt "print log entries" lightbar enabled
+	53			check if printer online
+	54			print a$ to printer
+	60			check for dir space?
+1089	61			check blocks free on drive 'dr'
+	62			check Lt.Kernal HD blocks free?
+	63			...same...
+	64			blocks free check for other devices
+	65			update bf() array
+	66			return blocks free in 'a'
+	70			set plus file drive
+	71			...load "i."+a$ module, goto 3000
+	72			set plus file drive
+	73			...load "i/"+a$ module, goto 4000
+	74			set plus file drive, load "sub."+a$ module, gosub 60000
+	75			something to do with activity queue
+	76			set up i.* module load
+	77			set up i/* module load
+	78			set up sub.* module load
+	79			display "L:"+a$ in Area window, load module
+	80			load module in z$?
+	82			Clear some arrays
+	83			Clear another array
+1678	85			Leave feedback
 
-5/6/1996  9/21/1994
-  jlf	  new image software
-   :      :
-1	1001	Position REL pointer
-2	1010	Get device/drive of system drive 'dr'
-3		Close/reopen command channel
-4	1011	Open file 'a$' on logical file# 2
-5	1012	check error channel
-6	1006	input uppercase an$
-7	1007	get uppercase an$
-8		remove
-9	1360	display 'an$' in Area window
-10	1002	position REL pointer
-11	1004	Get user flag 'a' in fl$
-12		Reset MCI defaults?
-13	1075	Clear screen...
-14	1076	...and read file in a$
-15		close logical file #2
-16	1025	read/increment Board Activity Register stat #i
-17		write stat #i back to e.stats
-18		scratch and rewrite SEQ file a$
-19		Scratch a$
-20-27	---	remove
-28-29	---	Load protocol '++ a$'
-30		Open "e.stats"
-31		Open "e.access"
-32		Open mail file, handle in a$
-33		open "e.data"
-34		&,52,$2e,3 Automaintenance active/logging related
-35	1065	open "u.config"
-36		Append or write "e."+b$
-37		Append or write "e."+b$
-38		Write user data to lfn#2
+	92			Display ">>Canceled!"
+	93			Display "Are You Sure?: "
+	94			Display "[No]", wait for keypress 
+1901	95			"Are you sure? "
+1902	96			Display "Yes" or "No"
+	97			Display yes/no response chosen
 
-40-47	---	Redirect to 440-447
-50		Check if instant logon used
-370	1870	"b$: O[ff|n]"
-	1871	Get user flag 'b', gosub 1870, toggle flag 'b'
-	1900	Prompt for +.file to load, run if found
-95	1901	"Are you sure? "
-96	1902	Display "Yes" or "No"
-12	1904	Reset output defaults
-	1915	Display time left
+1811	200			Main prompt
 
-440		Load editor
+1360	9	2		nis: display 'an$' in Area window
+1604	440			Load editor
+1870	370			Display b$+": O[ff|n]"
+1871				Get user flag 'b', gosub 1870, toggle flag 'b'
+1900				Prompt for +.file to load, run if found
+1904	12			Reset output defaults
+1915				Display time left
+1920	242			Display "Aborted!"
+
+---	300			jlf: load "i.main"
+	302			jlf: load "i.lo"
+
+2100	304-308			DIMension 1.2 style arrays
+
+		2414 -> 2500	load "im.bar"
+		24xx -> 2500	load "im.screens"
+		2426 -> 43	load "im.display"
+		2428 -> 47	load "im.info"
 
 Al's "+/GF-maint":
-3	1902	Yes/no questions
+1902	3	Yes/no questions

@@ -1,8 +1,12 @@
+{number:4000}
+{step:2}
+'	rem this is i.gf.maint renumbered: "+/GF.maint"
 	ON MM GOTO{:4100},{:4200},{:4300},{:4400}:RETURN
 {:4002}
 	A=ABS(INT(VAL(MID$(AN$,2,4)))):RETURN
 {:4004}
 	MM=5:GOTO 3000
+{number:4100}
 {:4100}
 	IF S%(0,0)=60 THEN:&"{$d4}HIS {pound}$H IS {$c6}ULL{f6}":RETURN
 	BR=S%(0,0)+1:S%(1,BR)=1023:S%(2,BR)=0:S%(3,BR)=DV%(1):S%(4,BR)=DR%(1)
@@ -12,19 +16,22 @@
 	GOSUB{:4500}:&,60,1,16,S%(27,BR),A$:&,60,1,28,S%(13,BR),B$:A=S%(1,BR)
 	IF A<1 OR A$=""OR B$=""THEN RETURN
 	S%(0,0)=S%(0,0)+1:TZ=1:&"{$c1}DDED":RETURN
+{number:4200}
 {:4200}
 	GOSUB{:4002}:IF A>0 AND A<=RN THEN BR=E%(A):TZ=1:GOTO{:4500}
 	RETURN
+{number:4300}
 {:4300}
 	A$="":GOSUB{:4002}:IF A<1 OR A>RN THEN RETURN
-	BR=E%(A):&"{f6}{purple} {$b0}{pound}$Y{$ae}{f6}":MM=4:GOSUB 3000:&"{purple} {$ad}{pound}$Y{$bd}{f6:2}{pound}Q0{$cb}ILL {$d4}HIS? ":GOSUB 94
+	BR=E%(A):&"{f6}{purple} {$b0}{pound}$Y{$ae}{f6}":MM=4:GOSUB 3000:&"{purple} {$ad}{pound}$Y{$bd}{f6:2}{pound}Q0{$cb}ILL {$d4}HIS? ":GOSUB 1902
 	IF A=0 THEN RETURN
-	&"{f6}{$d3}CRATCH {pound}$J? ":GOSUB 94:IF A=0 THEN{:4314}
+	&"{f6}{$d3}CRATCH {pound}$J? ":GOSUB 1902:IF A=0 THEN{:4314}
 	A=S%(2,BR):GOSUB{:4004}:&,60,1,16,S%(13,BR),C$:A$=B$+C$
-	D1%=S%(3,BR):D2%=S%(4,BR):GOSUB 3:PRINT# 15,"S"DR$A$
+	D1%=S%(3,BR):D2%=S%(4,BR):GOSUB 1010:PRINT# 15,"S"DR$A$
 {:4314}
 	IF BR<>S%(0,0)THEN FOR A=BR TO S%(0,0)-1:&,60,10,80,S%(0,A+1),S%(0,A):NEXT
 	S%(0,0)=S%(0,0)-1:TZ=1:RETURN
+{number:4400}
 {:4400}
 	&"{clear}{f6}{pound}Q0{pound}$I {$cf}PTIONS:{f6:2}"
 	&"1. {$c5}DIT {$c5}NTRY {$d4}EXT{f6}":&,60,1,30,S%(25,0),A$
@@ -37,13 +44,15 @@
 	IF A THEN:&"{pound}V7{f6:2}":ON A GOSUB{:4420},{:4432},{:4456},{:4438},{:4444},{:4450}:GOTO{:4400}
 	RETURN
 {:4420}
-	DR=1:O$="S."+PF$(PF):A$=O$+",S,R":GOSUB 4:KK=1:IF E%THEN:&:GOTO{:4426}
+	DR=1:O$="S."+PF$(PF):A$=O$+",S,R":GOSUB 1011:KK=1:IF E%THEN:&:GOTO{:4426}
 	&"{f6}{$cc}OADING {$d4}EXT...{f6:2}"
 {:4424}
 	&,2,2:IF A$<>"{up arrow}"AND KK<101 THEN TT$(KK)=A$:KK=KK+1:&".":GOTO{:4424}
 {:4426}
-	CLOSE 2:IM=2:GOSUB 440:IF KK=0 THEN RETURN
-	&"{f6:2}{$d3}AVING...":DR=1:GOSUB 3:PRINT# 15,"S"DR$O$:A$=O$+",S,W":GOSUB 4
+' load editor:
+'	CLOSE 2:IM=2:GOSUB 440:IF KK=0 THEN RETURN
+	CLOSE 2:GOSUB 2402:IF KK=0 THEN RETURN
+	&"{f6:2}{$d3}AVING...":DR=1:GOSUB 1009:PRINT# 15,"S"DR$O$:A$=O$+",S,W":GOSUB 1011
 	&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2:&,11:RETURN
 {:4432}
 	P$="{$d0}ROMPT":&,60,1,30,S%(25,0),W$:POKE 53252,30:PL=0
@@ -65,6 +74,7 @@
 	P$="{$ce}AME":&,60,1,20,S%(15,0),W$:POKE 53252,20:PL=0
 	&,1,32:IF AN$=""THEN RETURN
 	TZ=1:&,60,0,20,S%(15,0),AN$:RETURN
+{number:4500}
 {:4500}
 	&"{clear}{f6}":&,60,1,28,S%(13,BR),A$
 	&"{blue}({white}1{blue}) {cyan}{$d4}ITLE{blue}:  {white}{pound}$A{f6}":A=S%(2,BR):GOSUB{:4004}

@@ -1,0 +1,68 @@
+	ON RK GOTO{:4002},{:4100}
+{:4002}
+	N=0
+	P$="{$cf}THER {$cf}PTIONS":GOSUB{:4026}
+	A$="{$cd}":B$="{$cd}OVIE {$d3}PEED":GOSUB{:4018}
+	A$="{$d3}":B$="{$d3}END {$cd}AIL":GOSUB{:4018}
+	A$="{$d1}":B$="{$d2}ETURN TO {$cd}ENU":GOSUB{:4018}
+	IF MM THEN:&"{right:9}{rvrs on}{yellow}{pound}{back arrow}32{rvrs off} {f6}"
+	IF MM THEN:&"{right:10}{pound}{back arrow}33{f6}"
+	FD=2:RETURN
+{:4018}
+	N=N+1:M%(3,N)=ASC(A$+CHR$(0)):M%(2,N)=-1:M%(1,N)=(N-1)*256+N+1
+	M%(0,N)=14*256+5+N
+	IF MM THEN:&"{right:9}{rvrs on}{yellow} {f5}{pound}$A{f5} {white}{$a4}{yellow} {pound}$B{pound}{back arrow}32{rvrs off} {f6}":RETURN
+	&"{pound}$A) {pound}$B{f6}":RETURN
+{:4026}
+	IF MM=0 THEN:&"{clear}{pound}$P{f6:2}":RETURN
+	&"{home}{down:4}{right:9}{rvrs on}{yellow} {pound}$P{pound}{back arrow}32{f6}"
+	&"{right:9}{rvrs on}{yellow}     {$a4}{pound}{back arrow}32{rvrs off} {f6}"
+	RETURN
+{:4100}
+	RS=1:TZ=0
+	ON-(A$="{$cd}")-2*(A$="{$d3}")-3*(A$="X")-4*(A$="X")GOTO{:4200},{:4300},{:4400},{:4500}
+	RS=0:RETURN
+{:4200}
+	&"{f6:2}{yellow}{$d0}RESENT {$cd}OVIE {$d3}PEED {$c9}S{lt. green} {pound}%F{f6:2}"
+	&"{yellow}{$c5}NTER {$ce}EW {$d3}PEED {lt. green}(1-{$c6}ASTER TO 20-{$d3}LOWER) :{lt. blue} {pound}I1":IF TR%<1 THEN RETURN
+	A=VAL(AN$):IF A<1 OR A>20 THEN:&"{f6}{yellow}{$d5}NCHANGED{f6}":RETURN
+	F%=A:&"{f6}{yellow}{$d3}PEED {$c3}HANGED {$d4}O:{lt. green} {pound}%F":RETURN
+{:4300}
+	&"{clear}{f6:2}{lt. blue}{pound}V5 {$ce}OTEPAD{f6}"
+{:4302}
+	FL=.:A=9:GOSUB 1004:IF A=.THEN X=4:GOTO 1980
+	X=ABS(VAL(MID$(AN$,3))):IF X THEN:&"{f6:2}":GOTO{:4312}
+{:4306}
+	P$="":&"{f6:2}{lt. red}{$c5}NTER {$d5}SER {$c8}ANDLE {$cf}R {$c9}{$c4}#.{f6:2}":GOSUB 1006:X=ABS(VAL(AN$)):IF X THEN{:4312}
+	ON-(AN$="")GOTO{:4346}:GOSUB 1046:X=I:IF X THEN NN$=AN$:GOTO{:4320}
+	&"{f6:2}{white}{f5}{lt. blue}{pound}V7{white}{f5} {lt. blue}{$ce}OT {$c6}OUND.{f6}":GOTO{:4306}
+{:4312}
+	I=X:IF X<1 OR X>UR THEN{:4316}
+	GOSUB 1065:GOSUB 1001:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"{$d2}{$c5}{$d3}"THEN{:4318}
+{:4316}
+	&"{f6}{yellow}{$c9}NVALID {$c1}CCOUNT {$ce}UMBER.{f6}":X=.:GOTO{:4346}
+{:4318}
+	&"{f6}{lt. green}{$c8}ANDLE: {rvrs on}":&NN$:&"{f6}{yellow}{$c9}S {$d4}HAT {$c3}ORRECT?: ":GOSUB 1902:IF A=.THEN{:4302}
+{:4320}
+	Y=I:DR=2:GOSUB 1079:ON-(A<20)GOTO{:4342}:GOSUB 1085:IF A THEN GOSUB 1980:GOTO{:4346}
+	ON FL GOTO{:4330}
+	POKE 53252,30:&"{f6}":&"{$d3}UBJECT: ":PL=.:&,1,5:IF AN$=""THEN AN$="{$ce}{$c9}{$d3:2}{$c1} {$ce}OTE"
+	&"{up}{$d3}UBJECT: {pound}V7{f6}"
+	TT$(.)="["+AN$+"]":GOSUB 1604:A=1:IF KK=.THEN{:4346}
+{:4330}
+	C$="{$ce}OTE":&"{f6}{$c6}ILING {pound}$C {$c6}OR ":&NN$:&"...{f6}"
+	Z=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":Z=.:GOSUB 1062
+	PRINT# 2,NA$R$ID;R$D1$:FOR X=.TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	IF Y=1 THEN GOSUB 1060:X=2:I=1:GOSUB 1025:X=13:GOSUB 1025:X=24:GOSUB 1025:X=31:GOSUB 1025
+	ON-(Y<>1)GOSUB 1060:X=3:I=1:GOSUB 1025:X=14:GOSUB 1025:X=32:GOSUB 1025
+	X=25:ON Z GOSUB 1025:CLOSE 2:GOSUB 1081:GOTO{:4344}
+{:4342}
+	X=2:GOSUB 1980
+{:4344}
+	&"{f6:2}{$d3}END TO ANOTHER USER? ":GOSUB 1902:IF A THEN FL=1:GOTO{:4306}
+{:4346}
+	RETURN
+{:4400}
+	&"{$d3}ORRY, THAT IS NOT YET SUPPORTED.{pound}W1":RETURN
+{:4500}
+	&"{$d3}ORRY, THAT IS NOT YET SUPPORTED.{pound}W1":RETURN

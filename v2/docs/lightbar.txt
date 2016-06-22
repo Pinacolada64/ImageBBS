@@ -3,8 +3,8 @@ LIGHTBAR.TXT
 Last updated 25/Dec/2008 16:58
 5/Jun/2015 13:19
 
-e.lightbar,p - loads directly into screen memory regardless of start address, contains text of lightbar options
-(offset 8)
+e.lightbar,p - loads directly into screen memory regardless of start address,
+		contains text of lightbar options (offset 8)
 
 &,52,<position>,<mode>
 
@@ -12,7 +12,7 @@ e.lightbar,p - loads directly into screen memory regardless of start address, co
 1=set
 2=clear
 3=read, return status in a%: 0=off, 1=on
-4=move like in 1.2a? 1-
+4=move like in 1.2a?
 
 f2 2 mhz mode on 128 in 64 mode
 	(JiffyDOS must be disabled first)
@@ -20,64 +20,102 @@ f4 page backward through lightbar pages
 f6 page forward through lightbar pages
 8 pages
 
-			Page 1
+				Page 1
 
-00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15
- Sys   Acs   Loc   Tsr   Cht   New   Prt   U/D
+  Title   Sys  |  Acs  |  Loc  |  Tsr  |  Cht  |  New  |  Prt  |  U/D
+Decimal  00 01 | 02 03 | 04 05 | 06 07 | 08 09 | 10 11 | 12 13 | 14 15
+    Hex $00 01 | 02 03 | 04 05 | 06 07 | 08 09 | 0a 0b | 0c 0d | 0e 0f
 
-(Going from 1.2 lightbar)
-Sysop available          0 Sys 1    Trace mode on
-Change access            2 Acs 3    Block 300 baud users
-Local logon              4 Loc 5    Pseudo-local mode
-Alter time               6 Tsr 7    Toggle prime time
-Enter chat               8 Cht 9    Toggle local bells
-Private system          10 New 11   Disable screen blanking
-Print output            12 Prt 13   Print log entries
-Close U/Ds              14 U/D 15   No 300 baud callers
+     Sysop Available to Chat    0 Sys 1    Background Page Enable
+     Edit User's Access         2 Acs 3    Block 300 Baud Callers
+     Local Mode (No Modem IO)   4 Loc 5    ZZ (Pseudo-Local) Mode
+     Edit User's Time Left      6 Tsr 7    Prime Time Enabled
+     Enter/Exit Chat Mode       8 Cht 9    Disable Modem Input
+     Disallow New Users        10 New 11   Enable Screen Blanking
+     Print Spooling            12 Prt 13   Print Log Entries
+     Disable U/D Section       14 U/D 15   300 Baud U/D Lockout
 
 &,52,4,3	im: check for true local mode (at console)
-&,52,5,3    im:220 check pseudo-local mode
-&,52,7		prime time enabled
-&,52,13,3   im:52 print log entry
+&,52,5,3	im: 220 check pseudo-local mode
+&,52,7,3	prime time enabled
+&,52,13,3	im: 52 print log entry
  
-			Page 2
+				Page 2
 
-16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
- Asc   Ans   Exp   Unv   Trc   Bel   Net   Mac
+  Title   Asc  |  Ans  |  Exp  |  Unv  |  Trc  |  Bel  |  Net  |  Mac
+Decimal  16 17 | 18 19 | 20 21 | 22 23 | 24 25 | 26 27 | 28 29 | 30 31
+    Hex $10 11 | 12 13 | 14 15 | 16 17 | 18 19 | 1a 1b | 1c 1d | 1e 1f
 
-v1.2(a):
-ASCII translation on    16 Asc 17   Linefeeds on
-ANSI graphics on        18 Ans 19   IBM graphics on
-Expert mode on          20 Exp 21   Main prompt macros on
-Credit when
-  file validated        22 Fn5 23   Log off after file transfer complete
-Undefined in stock BBS  24 Fn4 25   Undefined in stock BBS
-Undefined in stock BBS  26 Fn3 27   Undefined in stock BBS
-Undefined in stock BBS  28 Fn2 29   MCI off
-Undefined in stock BBS  30 Fn1 31   Undefined in stock system
+     ASCII Translation         16 Asc 17   Line Feed After Return
+     ANSI Color Enable         18 Ans 19   ANSI Graphics Enable
+     Expert Mode Enable        20 Exp 21   Disallow Double Calls
+     No Immediate U/D Credits  22 Unv 23   Allow Auto-Logoff
+     On-Screen Trace Enable    24 Trc 25   Undefined
+     Local Bells Enable        26 Bel 27   Local Beeps Disable
+     NetMail Enable            28 Net 29   NetMail Trigger
+     Macros On/Off             30 Mac 31   MCI Disable in Editor
 
-&,52,17,lf  im:200 Linefeeds
+&,52,17,lf  	im:200 Linefeeds
+&,52,$19,3	Al's IM: GOSUB 1810:RETURN (does nothing)
 &,52,20,em	expert mode
 &,52,21,3	set=no back to back calls allowed
 &,52,30		macro sayings on
 
-v2.0:
-x Trc	engages trace mode
-x Bel	engages local bells	
-x Mac	reads e.macros file
+				Page 3
 
-Page 3
+  Title   Chk  |  Mor  |  Frd  |  Sub  |  Res  |  Mnt  |  Mnu  |  $2e
+Decimal  32 33 | 34 35 | 36 37 | 38 39 | 40 41 | 42 43 | 44 45 | 46 47
+    Hex $20 21 | 22 23 | 24 25 | 26 27 | 28 29 | 2a 2b | 2c 2d | 2e 2f
 
-32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
- $20   $22   $24   $26   $28   $2a   $2c   $2e
+ Enable MailCheck at Logon     32 Chk 33   Excessive Chat Logoff
+ More Prompt On                34 Mor 35   More Prompt Not Available
+ Full-Color Read Disable       36 Frd 37   Undefined
+ Message Bases Closed (SB)     38 Sub 39   Files Section Closed (GF)
+ System Reserved (Default PW)  40 Res 41   Network Reserve
+ Undefined                     42 Mnt 43   Modem Answer Disabled
+ Is User in Menu Mode?         44 Mnu 45   Are Menus Available on BBS?
+ Undefined                     46 $2e 47   Undefined
 
-x $20   im: Mail check at login allowed
-x $22   More prompt		
-  $24 x	i.lo:3052 checks nl & this checkmark, if set, adds + to end of filename
-x $27   i.GF: temporarily close an area
-x $2c   Graphic Menu available
-  $2c x Graphic Menu enabled
+Al's IM:
+{:3050}
+	&,52,$22,.:poke 970,.:poke 971,.:gosub {:3036}:poke 53248,.
+		
+  $24 x	Jack's i.lo: 3052 checks nl & this checkmark, if set, adds + to end of filename
+	(Full Color Read Disable - no idea what this is for)
 
-x $2e
-i.lo    Express login allowed?	
-im:34   AutoMaintenance related
+x $2e	i.lo	Express login allowed?	
+	im:34	AutoMaintenance related
+
+				Page 4
+
+  Title   $30  |  $32  |  $34  |  $36  |  $38  |  $3a  |  $3c  |  $3e
+Decimal  48 49 | 50 51 | 52 53 | 54 55 | 56 57 | 58 59 | 60 61 | 62 63
+    Hex $30 31 | 32 33 | 34 35 | 36 37 | 38 39 | 3a 3b | 3c 3d | 3e 3f
+
+x $30	Jack's im 300, 302: Load "im.emul13"
+  (48)	{:300} &,28,1:&,52,$30,3:on a% gosub {:309}:mm=.:a$="main":goto {:70}
+
+			Pages 5-6 are undefined
+
+  Title   $40  |  $42  |  $44  |  $46  |  $48  |  $4a  |  $4c  |  $4e
+Decimal  64 65 | 66 67 | 68 69 | 70 71 | 72 73 | 74 75 | 76 77 | 78 79
+    Hex $40 41 | 42 43 | 44 45 | 46 47 | 48 49 | 4a 4b | 4c 4d | 4e 4f
+
+  Title   $50  |  $52  |  $54  |  $56  |  $58  |  $5a  |  $5c  |  $5e 
+Decimal  80 81 | 82 83 | 84 85 | 86 87 | 88 89 | 90 91 | 92 93 | 94 95
+    Hex $50 51 | 52 53 | 54 55 | 56 57 | 58 59 | 5a 5b | 5c 5d | 5e 5f
+
+				Page 7
+
+  Title   At1  |  At2  |   At3   |   At4   |   At5   |   At6   |   At7   |   At8
+Decimal  96 97 | 98 99 | 100 101 | 102 103 | 104 105 | 106 107 | 108 109 | 110 111
+    Hex $60 61 | 62 63 | $64 $65 | $66 $67 | $68 $69 | $6a $6b | $6c $6d | $6e $6f
+
+        Default Alarm 1 Enable    96 At1 97   Default Alarm 1 Trigger
+        Default Alarm 2 Enable    98 At2 99   Default Alarm 2 Trigger
+        Default Alarm 3 Enable   100 At3 101  Default Alarm 3 Trigger
+        Default Alarm 4 Enable   102 At4 103  Default Alarm 4 Trigger
+        Default Alarm 5 Enable   104 At5 105  Default Alarm 5 Trigger
+        Default Alarm 6 Enable   106 At6 107  Default Alarm 6 Trigger
+        Default Alarm 7 Enable   108 At7 109  Default Alarm 7 Trigger
+        Default Alarm 8 Enable   110 At8 111  Default Alarm 8 Trigger
