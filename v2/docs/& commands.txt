@@ -51,6 +51,8 @@ Last updated 25/Dec/2008 16:43
 &,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 	Changes all uppercase to mixed case
 &,15,2	converts encoded f-key characters into readable characters
+&,15,3	[The Chief mentions this in a post, unsure of purpose]
+&,15,4	[The Chief mentions this in a post, unsure of purpose]
 
 &,15,6,140 [line 312 of im, unsure of purpose]
 
@@ -114,6 +116,7 @@ Last updated 25/Dec/2008 16:43
 	setalarm
 &,59	farerr
 &,59,1,a	i.CP
+
 &,60	struct
 
 	PutStruc: put string into structure
@@ -167,7 +170,9 @@ Last updated 25/Dec/2008 16:43
 	
 	scannums
 	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
-	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:ifa%=.thenreturn
+	num	number of items in struct
+	siz	
+	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
 		(sub.menus)
 	
 	scansum

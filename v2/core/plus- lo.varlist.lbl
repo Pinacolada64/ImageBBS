@@ -1,4 +1,8 @@
-	REM
+' fixme: displays "a$ = 'a$'"
+' fixme: gets into a loop (space aborts) when displaying integer variables
+
+{number:4000}
+	REM +/lo.varlist
 	POKE 53248,1:GOSUB{:4004}:POKE 53248,0:RETURN
 {:4004}
 	&"{clear}{f6} {$d6}ARIABLE {$cc}IST 4.0{f6:2}":X=PEEK(45)+PEEK(46)*256:Y=X:KK=.

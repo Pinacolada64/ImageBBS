@@ -37,9 +37,12 @@
 {:4140}
 	&,4:A=PEEK(780)AND 127:IF(PEEK(2033)AND 128)<>128 OR TR%<1 THEN{:4012}
 	ON-(A=13)-2*(A=.)GOTO{:4136},{:4140}
+' 28: NetMail Enable
 	&,52,28,3:IF A%THEN ON-(A=1)GOTO{:4050}
 	REM"** {$d2}ESP. {$c4}ETECT {$d0}HASE ][ **  "
+' 16: ASCII Translation
 	ON-(A<>8 AND A<>20 AND A<>127)GOTO{:4136}:NL=-(A=20):&,52,16,1-NL
+' 47: Right $2e - read "s.detect" (from i.lo)
 	&,52,47,3:IF A%THEN A$="S.DETECT":MM=13:GOSUB 3000:GOTO{:4180}
 	B$="{$c1}{$d3}{$c3}{$c9:2}":IF NL THEN B$="{$c3}OMMODORE {$c7}RAPHICS"
 	&"{lt. blue}{pound}$B {$cd}ODE {$c4}ETECTED{cyan}.{pound}Q0{f6:2}":ON-(TR%<1)GOTO{:4012}
@@ -49,6 +52,8 @@
 	&" {lt. blue}{$c9}{$c2}{$cd} {$d3}TYLE {$c7}RAPHICS{cyan}?: ":GOSUB 96:&,52,19,A:NL=-2*(A+B=2)
 {:4190}
 	&" {lt. blue}{$c1}RE {$d9}OU IN 80 {$c3}OLUMNS{cyan}?: ":A=-(NL=1):ON A+1 GOSUB 96,94:LL%=40+(40*A)
+' 41: Network Reserve
+' 40: System Reserved (Default PW)
 	&,52,41,3:ON A%GOTO{:4008}:&,52,40,3:ON 1-A%GOTO{:4060}
 	A=.:B$="":IF L2=.THEN B$="{$d4}EMPORARILY "
 {:4204}

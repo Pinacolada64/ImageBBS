@@ -4,4 +4,27 @@ Wrong array name used in +/GF-maint
 +.GM defines
 s%(39,60),e%(60),m%(3,25),q%(20,25):gosub3010
 
-- changed cm$() array to s%() array
+- changed cm%() array to s%() array
+
+swap1.s: inline	  inline0  password useeditr
+swap2.s: term	  chatmode btmvar   convert  sound
+swap3.s: read0    newuser  relread  convdate copyrite
+
+these aren't called by build.s:
+swap4.s: putstruc getstruc lodstruc savstruc putdate  getdate  doscan
+swap5.s: looks like "u.index" stuff
+swapr.s: pageswap ecschk
+
+info.GF-v2.txt:
+Has multiple subops assigned
+Why are "bytes" 2x the # of "elements" long? They wouldn't fit in the assigned positions otherwise.
+Maybe leaving room for color bytes, like in the visual editor, when Ctrl-V is hit (displays color + character typed)
+
++.convert menu sets some fields in "e.menu x" struct:
+3010 jm%(0,n)=1:jm%(1,n)=1023:jm%(2,n)=-1:n=n+1:on-(s=0andn<50)goto3008
+
++.menuedit:
+jm%(0,n) flags
+jm%(1,n) is access, obviously
+jm%(2,n) ?
+jm%(5,n) menu text

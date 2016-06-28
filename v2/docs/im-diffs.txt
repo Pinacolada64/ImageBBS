@@ -70,10 +70,10 @@ IM line number translation:
 	73			...load "i/"+a$ module, goto 4000
 	74			set plus file drive, load "sub."+a$ module, gosub 60000
 	75			something to do with activity queue
-	76			set up i.* module load
-	77			set up i/* module load
-	78			set up sub.* module load
-	79			display "L:"+a$ in Area window, load module
+	76			jlf: set up i.* module load
+	77			jlf: set up i/* module load
+	78			jlf: set up sub.* module load
+	79			jlf: display "L:"+a$ in Area window, load module
 	80			load module in z$?
 	82			Clear some arrays
 	83			Clear another array
@@ -82,9 +82,11 @@ IM line number translation:
 	92			Display ">>Canceled!"
 	93			Display "Are You Sure?: "
 	94			Display "[No]", wait for keypress 
-1901	95			"Are you sure? "
+1901	95			Display "Are you sure? "
 1902	96			Display "Yes" or "No"
 	97			Display yes/no response chosen
+1264	314			Display p$+an$
+1265	315			Display hs$() array of commands
 
 1811	200			Main prompt
 

@@ -7,7 +7,9 @@
 {:4010}
 	&,18,1:AN$=D3$:&,15,1:&,69,5,17,AN$,$8C:&,69,5,18,D2$,$8C:&,69,5,19,D6$,$8C
 	&,69,5,20,L2$,$8C:IF PT%THEN:&,69,16,20,"*{$d0}{$d2}{$c9}{$cd}{$c5}{$d4}{$c9}{$cd}{$c5}*",$8C
+' 41: Network Reserve
 	&,52,41,3:&,69,31,17," {$d2}ES {$cf}"+MID$("FF N  ",A%*3+1,3),$8C:KK=A%
+' 40: System Reserved (Default PW)
 	&,52,40,3:&,69,31,18," {$d2}ES {$cf}"+MID$("FF N  ",A%*3+1,3),$8C:KK=KK+2*A%
 	IF L2=.AND A%=.THEN:&,69,31,19," {$ce}ONE    ",$8C
 	IF L2=.AND A%=1 THEN:&,69,31,19," {$cf}NE     ",$8C
@@ -16,12 +18,18 @@
 	&,69,31,21,"         ",$8C:&,69,31,21,STR$(UH)+"/"+MID$(STR$(UR),2),$8C
 	&,69,2,22,RIGHT$(STR$(CA+1E5),5),$81:&,69,10,22,RIGHT$(STR$(CN+1E5),3),$81
 	RETURN
+' 2: editing user's access
+' 4: Local Mode (No Modem IO)
+' 6: Edit User's Time Left
 	&,52,2,3:A=A%:&,52,4,3:A=A+A%:&,52,6,3:A=A+A%:RETURN
 {:4040}
 	CM$="{$d3}YSTEM {$c9}DLE":GOSUB 9:&,69,5,21,CM$,$8A:RETURN
 	CM$="{$c3}ONNECTED":GOSUB 9:&,69,5,21,CM$,$85:RETURN
 {:4100}
+' 4: Local Mode (No Modem IO) [clear]
+' 5: ZZ (Pseudo-Local) Mode   [clear]
 	IM=2:GOSUB 443:B$="LOGOFF":X=10:MM=4:GOSUB 3000:&,52,4:&,52,5
+' are there extra idle commands? unimplemented so far, no "e.idle cmds" editor
 	F1=.:&,28,1:DR=3:B$="E.IDLE CMDS":A$=B$:GOSUB 4:IF E%THEN WC=.:CLOSE 2:GOTO{:4106}
 	WC=1:DIM WC%(15,30):&,60,2,0,WC%(0,0),B$,DV%
 {:4106}
@@ -30,8 +38,16 @@
 	GOSUB 33:X=17:GOSUB 1:&,2,2:D3$=A$:X=19:GOSUB 1:&,2,2:CLOSE 2
 	AN$=A$:&,15:D2$=AN$+"{$cd}":UF$="01000"+TZ$:IM=6:GOSUB 447
 	LC=.:EM=.:ZZ=.:GS=.:CF=.:CR=.:LF=1:NL=.:UL=.:LE=.:PM=1:C9=.
+' 2: editing user's access
+' 4: Local Mode (No Modem IO)
+' 6: Edit User's Time Left
+' if none of these are set, move lightbar to Loc
 	&,52,2,3:A=A%:&,52,4,3:A=A+A%:&,52,6,3:A=A+A%:IF A=.THEN:&,52,2,4
 	I%=.:AC%=16:DC%=.:CT%=.:TC%=.:U$="":SY$="":BA$="":NA$="":PH$="":ID=.
+' 16: ASCII Translation      [set]
+' 17: Line Feed After Return [set]
+' 18: ANSI Color Enable      [clear]
+' 19: ANSI Graphics Enable   [clear]
 	POKE 830,3:POKE 53248,.:&,52,16,1:&,52,17,1:&,52,18,.:&,52,19,.
 	GOSUB 82:GOSUB 12:FOR J=217 TO 242:POKE J,PEEK(J)OR 128:NEXT:DR=3:GOSUB 61
 	GOSUB 33:X=21:GOSUB 1:&,2,2:L2=VAL(LEFT$(A$,1)):L2$=MID$(A$,2):CLOSE 2
@@ -47,6 +63,7 @@
 	&,52,4,3:ZZ=A%:IF ZZ THEN IM=4:GOSUB 446:GOTO{:4008}
 	IF PEEK(1010)>.AND MID$(AM$,2,6)<>MID$(D1$,2,6)THEN MM=7:GOTO 3000
 	POKE 646,DF%:&,16:A$="":IF PEEK(198)THEN GET A$
+' checking for additional idle commands:
 	ON-(A$="")GOTO{:4230}:POKE 198,.:ON WC+1 GOTO{:4222}
 	B=.:LM=1:FOR I=1 TO WC%(0,0):IF ASC(A$)=WC%(0,I)THEN B=I:I=WC%(0,0)+1
 	NEXT:ON-(B=.)GOTO{:4224}:&,60,1,16,WC%(8,B),CM$:GOSUB 9:&,60,1,11,WC%(2,B),A$
@@ -83,6 +100,7 @@
 	&"{cyan}{rvrs on}{$a1}{lt. blue}7){$d3}ET {$d0}ASSWORD{pound}{back arrow}208){$d6}IEW {$cc}OGS{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}+){$d3}PEAKER {$cf}N{pound}{back arrow}20-){$d3}PEAKER "
 	&"{$cf}FF{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}{back arrow}){$c9}MAGE-{$d4}ERM{pound}{back arrow}20{$c1}){$c1}UTO-{$cd}AINT{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}{$d2}){$d2}E-{$cc}OAD {$cc}{$cf}{pound}{back arrow}20"
 	&"{$d4}){$c9}NVERT {$c3}ARRIER  {blue}{rvrs off}{$a1}{f6}":IF WC%(.,.)=.THEN{:4290}
+' show extended idle commands:
 	A=.:FOR I=1 TO WC%(.,.):A$=MID$("{cyan}{rvrs on}{$a1}{lt. blue}",A*4+1):E$=MID$("{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{pound}{back arrow}20",(1-A)*8+1,8)
 	ON-(WC%(0,I)=0)GOTO{:4288}:B$=CHR$(WC%(.,I)):&,60,1,16,WC%(8,I),C$
 	&A$+B$+")"+C$+E$:A=1-A

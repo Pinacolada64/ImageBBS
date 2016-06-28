@@ -125,10 +125,10 @@
 	&"{pound}q"+chr$(df%+48)+mid$("{$d9}es{$ce}o",4-a*3,3)+"{f6}":return
 {:200}
 	on tr%+1 goto{:240}:&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,0
-' are main prompt macros enabled?
+' 30: are main prompt macros enabled?
 	&,52,30,3:on a%gosub{:330}
 	s=.:sh=.:gosub{:12}
-' are main prompt macros enabled? (fixme: seems superflous here)
+' 30: are main prompt macros enabled? (fixme: seems superflous here)
 	poke 970,0:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
 	mm=2:gosub{:3000}:gosub{:9}:&"{f6} - {pound}$b{$cd}":if tr%<100 then a%=tr%:&" - {pound}%a {$cd}in. {$cc}eft"
 	if zz then a%=usr(0):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
@@ -139,7 +139,7 @@
 	on rs goto{:200}:mm=1:goto{:3000}
 {:220}
 	on-(ac%<>ao%)gosub{:320}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
-' is "expert mode" enabled? is "pseudo-local" mode enabled?
+' 20: is "expert mode" enabled? is "pseudo-local" mode enabled?
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
 	f4=.:a%=zz:b%=2^ac%:&,42,1:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto{:260}
@@ -177,7 +177,7 @@
 	return
 	return
 {:300}
-' is lightbar position $30 enabled? if so, load IM 1.3 shim:
+' $30: load IM 1.3 shim:
 	&,28,1:&,52,$30,3:on a%gosub{:309}:mm=.:a$="main":goto{:70}
 {:302}
 	&,28,1:&,52,$30,3:on a%gosub{:309}:mm=0:a$="lo":goto{:70}
@@ -501,12 +501,12 @@
 	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":rem gosub51
 	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
 	p2$="":is=.:p1$="":pr$="":ml$="":pr=-1:pf=.
-' is "console mode" enabled? (true local login)
+' 4: is "console mode" enabled? (true local login)
 	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=.then{:4050}
 	f1=2:goto{:302}
 	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
-' is "console mode" enabled? (true local login)
+' 4: is "console mode" enabled? (true local login)
 	&,52,4,3:if(a%=1)or i%or id=1 then{:4068}
 	gosub{:4092}:kk=.:a$="s.errmail,s,r":dr=1:gosub{:4}:if e%then close 2:goto{:4068}
 {:4054}

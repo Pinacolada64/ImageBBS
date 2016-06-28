@@ -1,0 +1,245 @@
+{alpha:invert}
+' an adaptation of "+.menuedit" to:
+' a) learn how structs work
+' b) add additional keys to idle screen
+
+' two-dimensional array wc%(chars_per_struct,items_per_struct) ?
+' dimension the wc%() array, 15 items of 30 chars each:
+
+' wc%(0,x) is (always?) the configuration info
+' wc%(0,0) is the # of commands
+' wc%(8,x) is key which activates command
+
+'	PutString: put string into structure
+'	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+
+' GetString:
+' &,60,1,16,wc%(8,x),a$
+' (8,x) must be offset in each field to start getting data from
+' x is "row" in struct
+' 16 is how many bytes the particular field is
+'	(which makes sense for a filename)
+
+' issue: fd%(50) is DIMensioned, then never used
+' new: define 'mx' as # of "rows"?
+' new: "width" is 9+16 because it's a zero-based array
+{number:3000}
+	rem +.EDIT IDLECMDS, BY PINACOLADA 6/2016
+	&"{pound}{backarrow}07{purple}{pound}o{192}{192:7}{f6}"
+	&"{pound}{backarrow}07{rvrs on}{lt blue} Edit Idle Commands v0.1 {rvrs off}{f6}"
+	&"{pound}{backarrow}07{purple}{pound}o{192}{192:7}{f6:2}"
+	
+	pr$="":&,28,1:dim wc%(15,30),fd%(30)
+	
+	20 printtab(8) "edit idle commands v0.1
+
+ready.
+run
+       ........................
+        edit idle commands v0.1
+       ........................
+
+ready.
+list
+
+10 printtab(7)"..................";"....
+..."
+20 printtab(8) "edit idle commands v0.1
+30 printtab(7)"..................";"....
+..."
+ready.
+run
+       .........................
+        edit idle commands v0.1
+       .........................
+
+ready.
+
+
+
+{:3002}
+' load struct:
+	dr=3:gosub 1010:m$=dr$+"e.idlekeys":&,60,2,0,wc%(0,0),m$,dv%
+' check error channel:
+	gosub 1012:if e%=. then {:3108}
+	&"Initializing new struct..."
+' not sure what this is doing, setting where each field begins?
+
+' issue: I think...
+'	for i=0 to 30:wc%(0,0)=0:next:tz=0
+' ...should actually be...
+'	for i=0 to 30:wc%(0,i)=0:next:tz=0
+	for i=0 to 30:wc%(0,i)=0:next
+' start off with "no changes" flag=0, 10 dummy items for debugging
+	tz=0:wc%(0,0)=10
+
+'{:3104}
+' read a$ from byte 5 [wc%(5,x)] which is 30 bytes wide:
+'	for x=0 to 49:&,60,1,30,wc%(5,x),a$:a%=x:b%=wc%(1,x)and 32767
+'	&"{white}{pound}#2{pound}%a:{pound}#5{pound}%b {pound}$a{f6}":x=x+rc*50:next
+
+{:3108}
+	&"{f6}Options: [L]ist [E]dit [Q]uit{f6:2}>"
+{:3110}
+	&"{pound}g1":if tr%=0 then 1811
+
+' todo:  need [a]dd function which updates wc%(0,0)
+
+' capital letters must be in this range for Image to compare properly:
+'	{$d1} Q   {$cc} L   {$c5} E
+	on -(an$="{$d1}")-2*(an$="{$cc}")-3*(an$="{$c5}") goto {:menu_quit},{:menu_list},{:menu_edit}:goto {:3110}
+{:menu_quit}
+	&"Quit{f6:2}":if tz=. then {:quit}
+
+{:save}
+{:3008}
+	&"Changes made. Save? ":a=1:gosub 1902:if a=. then {:quit}
+{:3006}
+' scratch struct: disregard 62,file not found in the case of a new file:
+	dr=3:gosub 1010:print# 15,"s"m$
+' save struct: 16*31 is # of bytes [accounting for wc%(0,0) also]
+	&,60,3,0,wc%(0,0),16*31,m$,dv%
+	
+{:quit}
+	&,28,1:goto 1811
+
+{:menu_list}
+{:3116}
+' list:
+	&"{$cc}ist{f6:2}"
+' from Jack's IM:
+
+' show extended idle commands:
+{:list_idlekeys}
+	a=.:for i=1 to wc%(.,.):a$=mid$("{cyan}{rvrs on}{$a1}{lt. blue}",a*4+1):e$=mid$("{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{pound}{back arrow}20",(1-a)*8+1,8)
+
+' looks like the resulting filename is "+/lo." + 11 chars
+' (like +/lo-varlist)
+
+' todo: would be nice to check if 1st line is really 4000
+' (get #2,a$,a$ toss load address, line link pointer)
+' $0fa0 = 4000, $a0 $0f on disk)
+
+'	ON-(WC%(0,I)=0)GOTO{:4288}:B$=CHR$(WC%(.,I)):&,60,1,16,WC%(8,I),C$
+'	&A$+B$+")"+C$+E$:A=1-A
+
+' b$=keypress
+' c$=title?
+
+	if wc%(.,i) then b$=chr$(wc%(.,i)):&,60,1,16,wc%(8,i),c$:&a$+b$+")"+c$+e$:a=1-a
+{:4288}
+	next:if a=1 then:&"{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}"
+{:4290}
+	&"{lt. blue}{$bc}{blue}{rvrs on}{pound}o{$a2}{pound}o{$a2}{pound}h1{rvrs off}{$be}{f6}"
+
+	goto {:3108}
+
+{:3120}
+{:menu_edit}
+' edit:
+	poke 53252,2:&"{$c5}dit #{pound}i1{f6}":x=val(an$):if x<0 or x>wc%(0,0) then {:3108}
+{:3122}
+	&"{clear}   Item #{pound}!x:{f6:2}"
+	&"[K]eypress..: ":z=wc%(0,x):if z then:&chr$(z)
+	if z=. then:&"[None]"
+
+'	if wc%(.,i) then b$=chr$(wc%(.,i)):&,60,1,16,wc%(8,i),c$
+	z=wc%(1,x)
+	&"{f6}[L]M Value..: {pound}!z{f6}"
+
+	&,60,1,11,wc%(2,x),a$
+	&"[F]ilename..: +/lo.{pound}$a{f6}"
+	
+	&,60,1,16,wc%(8,x),a$
+	&"[T]itle.....: {pound}$a{f6}"
+	&"[Q]uit{f6}"
+'	{$d1} Q   {$cb} K   {$cc} L   {$c6} F   {$d4} T
+	
+	&"{f6}>{pound}i1":on -(an$="{$cb}")-2*(an$="{$cc}")-3*(an$="{$c6}")-4*(an$="{$d4}") gosub {:edit_keypress},{:edit_lm},{:edit_filename},{:edit_title}
+	on -(an$="{$d1}") goto {:3108}:goto {:3122}
+
+{:edit_keypress}
+' tz chould have separate bits per edited item like in setup, each independent 
+' item changed sets/clears a bit, instead of just setting tz=1, maybe
+
+' PutString:
+' &,60,0,<# bytes>,<starting element of array>,<string>
+
+' a numeric value apparently just needs the wc%( , ) array updated
+
+' stores ok, doesn't display
+	poke 53252,1:p$="Keypress":w$=chr$(wc%(0,x)):&,1,32:wc%(0,x)=asc(an$)
+' fixme:
+'	if an$="" then gosub {:sub.remove}:if a then n=.
+'	if an$<>w$ then n=asc(an ... tz=1
+	tz=1:return
+
+{:3136}
+{:edit_lm}
+' works
+' todo: range is 1-9 I'm assuming? add check
+	poke 53252,1:p$="LM Value":w$=chr$(wc%(1,x)):&,1,32:wc%(1,x)=val(an$)
+'	if an$="" then gosub {:sub.remove}:if a then n=.
+'	if an$<>w$ then n=asc(an ... tz=1
+	tz=1:return
+
+{:edit_filename}
+{:3138}
+	poke 53252,11:p$="Filename +/lo.":pl=0:&,60,1,11,wc%(2,x),w$
+'	PutString: put string into structure
+'	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+' ( 2,row) 11 bytes - [f]ilename ("+/lo-"+a$)
+
+	&,1,32:&,60,0,11,wc%(2,x),an$:tz=1:return
+' todo: get directory
+
+{:edit_title}
+	poke 53252,16:p$="Title":pl=0:&,60,1,16,wc%(8,x),w$
+'	PutString: put string into structure
+'	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+' ( 8,row) 16 bytes - [t]itle to display in menu/Area window
+
+	&,1,32:&,60,0,16,wc%(8,x),an$:tz=1:return
+
+{:sub.remove}
+' fixme: finish this
+	& "Delete: ":goto 1901
+	
+
+' scanning for key hit in struct:
+' i think there's a "scan struct for a string" call, but for now this loop 
+' suffices until I learn more about programming structs:
+'	b=.:lm=1:for i=1 to wc%(0,0):if asc(a$)=wc%(0,i)then b=i:i=wc%(0,0)+1
+
+' b=0 if no match found
+' put filename suffix (11 chars) into a$
+'	next:on -(b=.) goto {:4224}:&,60,1,16,wc%(8,b),cm$:gosub 1360:&,60,1,11,wc%(2,b),a$
+' set lm (sub-task), load "+/"+lm$ module, goto 4000:
+
+' jack's call:
+'	lm=wc%(1,b):mm=8:goto 72
+
+' load "+/lo."+a$
+'	a$="lo."+a$:lm=wc%(1,b):gosub 2620
+
+'{number:2620}
+'{:2620}
+' build string "+/lo."+a$, load module, exec at 4000:
+'	gosub {:2630}:if e%=. then gosub {:4000}:new 4000:return
+' proposed change:
+'	gosub {:2630}:if st=. then gosub {:4000}:new 4000
+'	return
+'{number:2630}
+'{:2630}
+' load module in a$, minus "+/" prefix:
+'	lm$=a$+"":dr=5:gosub {:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
+
+' so looks like the struct layout is thus:
+' ( 0,row) 1  byte  - [k]ey
+' ( 1,row) 1  byte  - [l]m value, sort of a "sub-task" within a multi-function 
+'						module (as far as I can tell)
+' ( 2,row) 11 bytes - [f]ilename ("+/lo-"+a$)
+' ( 8,row) 16 bytes - [t]itle to display in menu/Area window
+
+' 0   1   2        12   13            28
+'[k] [l] [fffffffffff] [tttttttttttttttt] [xx] = not used

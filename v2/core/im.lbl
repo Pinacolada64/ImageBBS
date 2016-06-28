@@ -38,7 +38,7 @@
 	gosub{:1010}:print# 15,"s"dr$a$:return
 {:1025}
 ' x-tec removed "gosub 1001" here - lets SB/WF/VF save now
-	gosub{:1001}:input# 2,st(x):st(x)=st(x)+i
+	input# 2,st(x):st(x)=st(x)+i
 {:1026}
 	gosub{:1001}:print# 2,st(x):return
 {:1027}
@@ -421,12 +421,17 @@
 	dr=5:gosub{:1009}:im$=a$:a$=dr$+"im."+im$:load a$,dv%
 	return
 {number:2600}
-' load "+/XX.yyy" (XX=module name, yyy=sub-module name)
+' load "+/XX.yyy..." (XX=module name [pr$], yyy...=sub-module name [a$])
 	gosub{:2610}:gosub{:4000}:new 4000:return
+{number:2610}
 {:2610}
 	lm$=left$(pr$,2)+"."+a$:dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
+{number:2620}
+{:2620}
 	gosub{:2630}:gosub{:4000}:new 4000:return
+{number:2630}
 {:2630}
+' load module in a$, minus "+/" prefix:
 	lm$=a$+"":dr=5:gosub{:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
 {number:2900}
 {:2900}

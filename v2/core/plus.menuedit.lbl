@@ -1,5 +1,16 @@
+{number:3000}
+' &,60,1,30,JM%(5,X),A$
+' (5,x) must be offset in each field to start getting data from, x is item#
+' since with "e.menu x" files, 
+' issue: fd%(50) is DIMensioned, then never used (it is in +.menuedit)
 	PR$="":&,28,1:DIM JM%(29,49),FD%(50):GOSUB{:3100}:&,28,1:GOTO 1812
 {:3002}
+' not sure what this is doing, setting where each field begins?
+
+' issue: I think...
+'	FOR I=0 TO 49:JM%(0,0)=0:NEXT:TZ=0
+' ...should actually be...
+'	FOR I=0 TO 49:JM%(0,i)=0:NEXT:TZ=0
 	FOR I=0 TO 49:JM%(0,0)=0:NEXT:TZ=0
 	DR=3:GOSUB 1010:M$=DR$+"E.MENU"+STR$(M):&,60,2,0,JM%(0,0),M$,DV%:GOTO 1012
 {:3006}
@@ -10,6 +21,8 @@
 	&"{f6}{$c5}DIT {$d7}HICH {$cd}ENU: {pound}I1":M=VAL(AN$):IF TR%=0 OR M=0 THEN RETURN
 	GOSUB{:3002}
 {:3104}
+' get string from struct: 30 chars, starting from char 5 (?), return in a$
+' b% is access, from char 1
 	FOR X=0 TO 49:&,60,1,30,JM%(5,X),A$:A%=X:B%=JM%(1,X)AND 32767
 	&"{white}{pound}#2{pound}%A:{pound}#5{pound}%B {pound}$A{f6}":X=X+RC*50:NEXT
 {:3108}
@@ -27,6 +40,9 @@
 {:3122}
 	&"{clear}{$c9}TEM#{pound}!X:{f6:2}":A%=JM%(1,X)AND 32767
 	&"1. {$c1}CCESS: {pound}%A{f6}":A%=JM%(0,X)AND 255
+' seemingly not implemented in im.menus, but is in +.convert menu
+' maybe it's a flag for 'is the command active'?
+' todo: display each bit of the byte?
 	&"2. {$c6}LAGS: {pound}%A{f6}"
 	&"3. {$d4}EXT:{f6}":&,60,1,50,JM%(5,X),A$
 	&:&"{f6}>{pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3134},{:3136},{:3138}:GOTO{:3122}

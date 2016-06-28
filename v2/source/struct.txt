@@ -1,0 +1,480 @@
+10  include "equat.s",8
+20 print "Struct: [" ;
+30 for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.struct":print pass;
+99 ;
+100 ;putstruc - put string into struct
+110 ; &,nn,0,num,arry(a,b),string$
+120 ; arry(a,b) = starting element
+130 ; num = # of bytes
+140 ; string$ = the string
+199 ;
+200 ;getstruc - get string from struct
+210 ; &,nn,1,num,arry(a,b),string$
+220 ; arry(a,b) = starting element
+230 ; num = # of bytes
+240 ; string$ = the string
+299 ;
+300 ;lodstruc - load structure
+310 ; &,nn,2,0,arry(a,b),"file",dev
+320 ; arry(a,b) = starting element
+330 ; "file" = filename
+340 ; dev = device #
+399 ;
+400 ;savstruc - save structure
+410 ; &,nn,3,0,arry(a,b),bytes,"file",dev
+420 ; arry(a,b) = starting element
+430 ; bytes = # of bytes
+440 ; "file" = filename
+450 ; dev = device #
+499 ;
+500 ;putdate - put date into struct
+510 ; &,nn,4,0,arry(a,b),string$
+520 ; arry(a,b) = starting element
+530 ; string$ = the date string
+599 ;
+600 ;getdate - get date from struct
+610 ; &,nn,5,0,arry(a,b),string$
+620 ; arry(a,b) = starting element
+630 ; string$ = the string
+699 ;
+700 ;doscan - scan structures
+710 ; &,nn,6,num,com,a(a,b),b(a,b),l,bits,test
+720 ; com = command number
+721 ; com = 0: 2 byte and, <>0
+722 ; com = 1: 2 byte and, ==0
+723 ; com = 2: 2 byte cmp, <
+724 ; com = 3: 2 byte cmp, >=
+725 ; com = 4: date cmp, <
+726 ; com = 5: date cmp, >=
+730 ; num = # of structures to scan
+740 ; a(a,b) = starting flags element
+750 ; b(a,b) = starting object element
+760 ; bits = the bits to set if true
+770 ; test = the object to test for
+799 ;
+800 ilen = $61 ;1
+810 istr = $62 ;2
+820 iptr = $64 ;2
+830 jlen = $69 ;1
+840 jstr = $6a ;2
+850 jptr = $6c ;2
+860 temp = $14 ;2
+899 ;
+900 opandy=57
+901 opcmpy=217
+910 opbne =208
+911 opbcc =144
+912 opbeq =240
+913 opbcs =176
+919 ;
+920 makerm = $b475
+921 chkcom = $aefd
+922 getnxt = $e206
+929 ;
+930 defbase= $c600
+939 ;
+1000 entry1: jmp clrarr
+1010 entry2: sty count
+1020  lda 1:pha:lda #$37:sta 1
+1030  dex:dex:txa:asl:tax
+1040  lda functbl,x
+1050  sta strucjmp+1
+1060  lda functbl+1,x
+1070  sta strucjmp+2
+1080 strucjmp:jsr lodstruc
+1090 pla:sta 1:rts
+1100 ;
+1110 functbl: word lodstruc ;2
+1120  word savstruc ;3
+1130  word putdate ;4
+1140  word getdate ;5
+1150  word doscan ;6
+1160  word sort ;7
+1170  word scannums ;8
+1180  word scansum ;9
+1190  word cpystruc ;10
+1200  word scanstr ;11
+1210  word gamescan ;12
+1220 ;
+1230 putvar: lda #30:jmp usetbl1
+1240 ;
+1250 count:byte 0
+1260 size: byte 0
+1270 scanfor: byte 0,0,0,0,0,0
+1280 bitmask: word 0
+1290 invert: byte 0
+1300 oper: byte 0
+1310 ;
+1320 fnvar: jsr chkcom:jsr $b08b
+1330  ldx $47:ldy $48:rts
+1340 fnvar1: jsr fnvar
+1350  stx $14:sty $15:rts
+1360 ;
+1370 evalbyt: jsr chkcom
+1380  jsr $0079:jmp $b79e
+1390 ;
+1400 evalstr: jsr chkcom:jsr $ad9e
+1410  jmp $b6a3
+1420 ;
+1430 evaldate:jsr evalstr
+1440  stx $62:sty $63
+1450  ldy #1:ldx #0
+1460 evald1: lda ($62),y:iny:and #15
+1470  asl:asl:asl:asl
+1480  sta scanfor,x
+1490  lda ($62),y:iny:and #15
+1500  ora scanfor,x
+1510  sta scanfor,x:inx
+1520  cpx #5:bcc evald1
+1530 evald2: ldy #0:lda ($62),y
+1540  sta scanfor+5
+1550  ldx scanfor+3:txa
+1560  and #$7f
+1570  cmp #$12:bne evald3
+1580  txa:sec:sbc #$12:tax
+1590 evald3: stx scanfor+3:rts
+1600 ;
+1610 getword: jsr $aefd
+1620  jsr $ad8a:jsr $b7f7
+1630 ldx $14:ldy $15:rts
+1640 ;
+1650 lodstruc:jsr fnvar:tya:pha:txa:pha
+1660  jsr $aefd:jsr 57812
+1670  pla:tax:pla:tay:lda #0
+1680  jmp $ffd5
+1690 ;
+1700 savstruc:jsr fnvar:tya:pha:txa:pha
+1710  jsr getword
+1720  jsr $aefd:jsr 57812:clc
+1730  pla:sta $69:adc $14:tax
+1740  pla:sta $6a:adc $15:tay
+1750  lda #$69
+1760  jmp $ffd8
+1770 ;
+1780 putdate: jsr fnvar1:jsr evaldate
+1790  ldy #0
+1800 putd1: lda scanfor,y:sta ($14),y
+1810  iny:cpy #6:bcc putd1
+1820  rts
+1830 ;
+1840 getdate: jsr fnvar1
+1850  ldy #5
+1860 getd1: lda ($14),y:sta scanfor,y
+1870  dey:bpl getd1
+1880  jsr fnvar
+1890  lda #11:jsr makerm
+1900  ldx scanfor+3:txa
+1910  and #$7f:bne getd0
+1920  txa:clc:adc #$12:tax
+1930 getd0: stx scanfor+3
+1940  lda scanfor+5:ldx #0
+1950 ldy #0:sta ($62),y:iny
+1960 getd2: lda scanfor,x:inx:pha
+1970  lsr:lsr:lsr:lsr:ora #$30
+1980  sta ($62),y:iny:pla
+1990  and #15:ora #$30
+2000  sta ($62),y:iny
+2010  cpx #5:bcc getd2
+2020 getd3: ldy #4
+2030 getd4: lda $61,y:sta ($47),y
+2040  dey:bpl getd4:rts
+2050 ;
+2060 opc1: byte opandy,opcmpy
+2070 opc2: byte opbne, opbcc
+2080 opc3: byte opbeq, opbcs
+2090 ;
+2100 scanbits:txa:lsr:tax:and #1:tay
+2110 rts
+2120 ;
+2130 doscan: jsr evalbyt:stx oper
+2140  txa:and #1:sta invert
+2150  jsr scanbits
+2160  lda opc1,y:sta checkc0
+2170  jsr scanbits
+2180  lda opc1,y:sta checkc1
+2190  jsr scanbits
+2200  lda opc2,y:sta checkc2
+2210  lda opc3,y:sta checkc3
+2220  jsr fnvar:txa:pha:tya:pha
+2230  jsr fnvar:txa:pha:tya:pha
+2240  jsr evalbyt:stx size
+2250  jsr getword
+2260  sty bitmask:stx bitmask+1
+2270  lda oper
+2280  and #64:bne doscan1
+2290  jsr getword
+2300  sty scanfor:stx scanfor+1
+2310  lda #2:jmp doscan2
+2320 doscan1: jsr evaldate:lda #6
+2330 doscan2: sta checkc4+2
+2340  pla:sta $6c:pla:sta $6b
+2350  pla:sta $6a:pla:sta $69
+2360  lda #0:sta var:sta var+1
+2370  lda count:beq doscan15
+2380 doscan3: lda oper:bmi doscan6
+2390  ldy #1
+2400 doscan5: lda bitmask,y:eor #255
+2410  and ($69),y:sta ($69),y
+2420  dey:bpl doscan5
+2430 doscan6: ldy #0
+2440 doscan7: lda ($6b),y
+2450 checkc0: cmp scanfor,y
+2460 checkc1: cmp scanfor,y:beq checkc4
+2470 checkc2: bne doscan9
+2480 checkc3: beq doscan8
+2490 checkc4: iny:cpy #2:bcc doscan7
+2500 doscan8: lda invert:bne doscan10
+2510  jmp doscan12
+2520 doscan9: lda invert:bne doscan12
+2530 doscan10:ldy #1
+2540 doscan11:lda bitmask,y
+2550  ora ($69),y:sta ($69),y
+2560  dey:bpl doscan11
+2570  inc var+1
+2580 doscan12:ldx #2
+2590 doscan13:clc:lda size:adc $69,x
+2600  sta $69,x:bcc doscan14
+2610  inc $6a,x
+2620 doscan14:dex:dex:bpl doscan13
+2630  dec count:bne doscan3
+2640 doscan15:ldx #30:jmp putvar ;a%
+2650 ;
+2660 i:word 0
+2670 j: word 0
+2680 n: word 0
+2690 base: word 0
+2700 ;
+2710 calcp: stx temp:sty temp+1
+2720  txa:asl:tax:tya:rol:tay
+2730  clc:txa:adc temp:tax
+2740  tya:adc temp+1:tay
+2750  clc:txa:adc base:tax
+2760  tya:adc base+1:tay
+2770  rts
+2780 calcs: stx temp:sty temp+1
+2790  ldy #0:lda (temp),y:pha
+2800  iny:lda (temp),y:tax
+2810  iny:lda (temp),y:tay
+2820 pla:rts
+2830 ;
+2840 strcmp: ldy #0
+2850 strcmp1: lda (jstr),y:cmp (istr),y
+2860  bne strcmp3:iny
+2870  cpy jlen:bcs strcmp2
+2880  cpy ilen:bcc strcmp1
+2890 strcmp2: ldy jlen:cpy ilen
+2900 strcmp3: rts
+2910 ;
+2920 strptn: ldy #0
+2930 strptn1: lda (jstr),y
+2940  cmp #".":beq strptn2
+2950  cmp #".":beq strptn4
+2960  cmp (istr),y:bne strptn4
+2970 strptn2: iny
+2980  cpy jlen:bcs strptn3
+2990  cpy ilen:bcc strptn1
+3000 strptn3: ldy jlen:cpy ilen
+3010 strptn4: rts
+3020 ;
+3030 sort: jsr fnvar
+3040 stx base:sty base+1
+3050  jsr getword
+3060  cpx #0:bne sort0:dey
+3070 sort0: dex
+3080  stx n:sty n+1
+3090  ldx #0:ldy #0
+3100  stx i:sty i+1
+3110 sort1: jsr calcp
+3120  stx iptr:sty iptr+1
+3130  jsr calcs:sta ilen
+3140  stx istr:sty istr+1
+3150  ldx i:ldy i+1
+3160 sort2: inx:bne sort3:iny
+3170 sort3: stx j:sty j+1
+3180  jsr calcp
+3190  stx jptr:sty jptr+1
+3200  jsr calcs:sta jlen
+3210  stx jstr:sty jstr+1
+3220  jsr strcmp:bcs sort8
+3230  ldy #2
+3240 sort7: lda ilen,y:sta (jptr),y
+3250  lda jlen,y:sta (iptr),y
+3260  sta ilen,y
+3270  dey:bpl sort7
+3280 sort8: ldx j:ldy j+1
+3290  cpx n:bne sort2
+3300  cpy n+1:bne sort2
+3310  ldx i:ldy i+1
+3320  inx:bne sort9:iny
+3330 sort9: stx i:sty i+1
+3340  cpx n:bne sort1
+3350  cpy n+1:bne sort1
+3360  rts
+3370 ;
+3380 ; scan numbers
+3390 ; &,nn,8,num,siz,acs,a(a,b),a%(a),start
+3400 ;
+3410 scannums:jsr evalbyt:stx size
+3420  jsr getword
+3430  stx scanfor+1:sty scanfor
+3440  jsr fnvar:txa:pha:tya:pha
+3450  jsr fnvar:txa:pha:tya:pha
+3460  jsr evalbyt:stx var
+3470  lda #0
+3480  sta var+2:sta var+1
+3490  pla:sta $6a:pla:sta $69
+3500  pla:sta $6c:pla:sta $6b
+3510 scannum1:lda count:beq scannum6
+3520  ldy #0
+3530 scannum2:lda ($6b),y
+3540  and scanfor
+3550  bne scannum3:iny
+3560  lda ($6b),y
+3570  and scanfor+1
+3580  beq scannum4
+3590 scannum3:ldy var+2
+3600  lda #0:sta ($69),y:iny
+3610  lda var:sta ($69),y:iny
+3620  sty var+2:inc var+1
+3630 scannum4:inc var:clc
+3640  lda size:adc $6b:sta $6b
+3650  bcc scannum5:inc $6c
+3660 scannum5:dec count:bne scannum1
+3670 scannum6:lda #0:sta var
+3680  ldx #30:jmp putvar ;a%
+3690 ;
+3700 ; sum
+3710 ; &,nn,9,num,siz,a(a,b)
+3720 ;
+3730 scansum: jsr evalbyt:stx size
+3740  jsr fnvar:stx $6b:sty $6c
+3750  lda #0
+3760  sta var:sta var+1
+3770 scansum1:lda count:beq scansum4
+3780  ldy #1:clc
+3790 scansum2:lda ($6b),y:adc var,y
+3800  sta var,y
+3810  dey:bpl scansum2
+3820  lda size:adc $6b:sta $6b
+3830  bcc scansum3:inc $6c
+3840 scansum3:dec count:bne scansum1
+3850 scansum4:ldx #30:jmp putvar ;a%
+3860 ;
+3870 ; copy
+3880 ; &,nn,10,size,a1(a,b),a2(a,b)
+3890 ;
+3900 cpystruc:jsr fnvar
+3910  stx cpys1+1:sty cpys1+2
+3920  jsr fnvar
+3930  stx cpys2+1:sty cpys2+2
+3940  ldy #0
+3950 cpys1: lda $ffff,y
+3960 cpys2: sta $ffff,y
+3970  iny:cpy count:bcc cpys1
+3980  rts
+3990 ;
+4000 ; scan for string
+4010 ; &,nn,11,num,siz,op,str,a1(a,b),a2(b),start
+4020 ;
+4030 stroplo: byte <strcmp,<strptn
+4040 strophi: byte >strcmp,>strptn
+4050 ;
+4060 scanstr: jsr evalbyt:stx size
+4070  jsr evalbyt
+4080 txa:and #1:tax
+4090  lda stroplo,x
+4100  sta scanstr0+1
+4110  lda strophi,x
+4120  sta scanstr0+2
+4130  jsr evalstr:sta index
+4140  tax:ldy #0
+4150 loop: lda ($22),y:sta buffer,y
+4160 iny:dex:bne loop
+4170  jsr fnvar:txa:pha:tya:pha
+4180  jsr fnvar:txa:pha:tya:pha
+4190  jsr evalbyt:stx iptr
+4200  lda #0:sta iptr+1
+4210  pla:sta jptr+1
+4220  pla:sta jptr
+4230  pla:sta istr+1
+4240  pla:sta istr
+4250  lda #<buffer:sta jstr
+4260  lda #>buffer:sta jstr+1
+4270  lda index:sta jlen
+4280 scanstr1:lda count:beq scanstr5
+4290  ldy #0
+4300 loop: lda (istr),y:beq scanstr2
+4310  iny:bne loop
+4320 scanstr2:sty ilen
+4330 scanstr0:jsr strcmp:bne scanstr3
+4340  ldy iptr+1
+4350  lda #0:sta (jptr),y:iny
+4360  lda iptr:sta (jptr),y:iny
+4370  sty iptr+1
+4380 scanstr3:inc iptr:clc:lda size
+4390  adc istr:sta istr
+4400  bcc scanstr4:inc istr+1
+4410 scanstr4:dec count:bne scanstr1
+4420 scanstr5:lda #0:sta var
+4430  lda iptr+1:lsr:sta var+1
+4440  ldx #30:jmp putvar ;a%
+4450 ;
+4460 arrays1: byte "tbden......."
+4470 arrays2: byte "............"
+4480 ;
+4490 ;* clear an array
+4500 clrarr: cpx #12:bcs clrar7
+4510  lda 47:sta 71
+4520  lda 48:sta 72
+4530 clrar0: ldy #3
+4540  lda (71),y:sta 21:dey
+4550  lda (71),y:sta 20:dey
+4560  lda (71),y:cmp arrays2,x
+4570  bne clrar1:dey
+4580  lda (71),y:cmp arrays1,x
+4590  beq clrar3
+4600 clrar1: clc
+4610  lda 20:adc 71:sta 71
+4620  lda 21:adc 72:sta 72
+4630  lda 71:cmp 49:bne clrar2
+4640  lda 72:cmp 50:beq clrar7
+4650 clrar2: jmp clrar0
+4660 clrar3: clc:lda 71:adc #7:sta 71
+4670  lda 72:adc #0:sta 72
+4680  sec:lda 20:sbc #7:sta 20
+4690  lda 21:sbc #0:sta 21
+4700 clrar4: ldy #0:tya:sta (71),y
+4710  inc 71:bne clrar5:inc 72
+4720 clrar5: lda 20:bne clrar6:dec 21
+4730 clrar6: dec 20:bne clrar4
+4740  lda 21:bne clrar4
+4750 clrar7: rts
+4760 ;
+4770 ; game scan
+4780 ; &,60,13,count,size,a$,a%(a,b),b$
+4790 ;
+4800 gamescan:jsr evalbyt:stx size
+4810 jsr evalstr
+4820  lda $22:sta game2+1
+4830  lda $23:sta game2+2
+4840  jsr fnvar1:jsr fnvar
+4850  lda count:asl:jsr makerm
+4860 ldy #0:sty index
+4870 game1: ldy #1:lda ($14),y
+4880  asl:tax:ldy index
+4890  jsr game2:jsr game2
+4900  sty index:clc
+4910  lda $14:adc size:sta $14
+4920  lda $15:adc #0:sta $15
+4930  dec count:bne game1
+4940  ldy #4
+4950 game3: lda $61,y:sta ($47),y
+4960  dey:bpl game3
+4970  rts
+4980 ;
+4990 game2: lda $ffff,x:sta ($62),y
+5000 inx:iny:rts
+5010 ;
+60000 next pass:close 8:print "]" (*-$c000) "Bytes"
+60020 if (*>=$c600) then print "Too Large!"
+ready.
