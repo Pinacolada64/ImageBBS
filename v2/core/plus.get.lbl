@@ -1,20 +1,21 @@
-	RESTORE:GOSUB 1667:D1%=8:D2%=5:GOSUB{:3002}:GOTO 1812
+{number:3000}
+	restore:gosub 1667:d1%=8:d2%=5:gosub {:3002}:goto 1812
 {:3002}
-	READ F$:IF F$=""THEN RETURN
-	T$="S":&"{pound}$F,{pound}$T: [{$d9}/{$ce}/{$d1}] {pound}G1":IF AN$="{$d1}"THEN:&"{$d1}UIT{f6}":RETURN
-	IF AN$<>"{$d9}"THEN:&"{$ce}O{f6}":GOTO{:3002}
-	&"{$d9}ES{f6}":POKE 2043,1-(T$="S"):AN$=F$:A$=F$+","+T$+",R":DR=0:GOSUB 1011
-	X=1:AN$=F$+","+T$:GOSUB 2103:&,16,0:CLOSE 2
-	IF RC=.THEN:&"{f6}{$a0}{$c1}BORTED!{f6}"
-	&,22,10:GOTO{:3002}
-	DATA"XMODEM.LST"
-	DATA"COPIER.LST","EDITOR.LST","INDEXR.LST","CHKSUM.LST","KWLOAD.LST"
-	DATA"SERIAL.LST","REMOTE.LST","RANDOM.LST","B1.RS232.LST","VISUAL.LST"
-	DATA"PUNTER.LST","++PILOT.LST","STRUCT.LST"
-	DATA"INTOUT.LST","BIGBANG.LST","T1.RS232.LST","RS232-1.2.LST"
-	DATA"CHKSUM+.LST","TAGSCAN.LST","RSPATCH.LST","PUNTER2.LST","WXMODEM.LST"
-	DATA"CONVERT.LST","CHATMODE.LST","IBASMATH.LST","EDITOR.LD.LST"
-	DATA"CURSMENU.LST","RS232-1.2SL.LST","XMODEMCRC.LST","RS232-USER.LST"
-	DATA"COPYRIGHT.LST"
-	DATA"ML-PATCHER.LST","LOADEDITOR.LST","RS232-SWIFT.LST"
-	DATA""
+	read f$:if f$=""then return
+	t$="s":&"{pound}$f,{pound}$t: [{$d9}/{$ce}/{$d1}] {pound}g1":if an$="{$d1}"then:&"{$d1}uit{f6}":return
+	if an$<>"{$d9}"then:&"{$ce}o{f6}":goto {:3002}
+	&"{$d9}es{f6}":poke 2043,1-(t$="s"):an$=f$:a$=f$+","+t$+",r":dr=0:gosub 1011
+	x=1:an$=f$+","+t$:gosub 2103:&,16,0:close 2
+	if rc=.then:&"{f6}{$a0}{$c1}borted!{f6}"
+	&,22,10:goto {:3002}
+	data"xmodem.lst"
+	data"copier.lst","editor.lst","indexr.lst","chksum.lst","kwload.lst"
+	data"serial.lst","remote.lst","random.lst","b1.rs232.lst","visual.lst"
+	data"punter.lst","++pilot.lst","struct.lst"
+	data"intout.lst","bigbang.lst","t1.rs232.lst","rs232-1.2.lst"
+	data"chksum+.lst","tagscan.lst","rspatch.lst","punter2.lst","wxmodem.lst"
+	data"convert.lst","chatmode.lst","ibasmath.lst","editor.ld.lst"
+	data"cursmenu.lst","rs232-1.2sl.lst","xmodemcrc.lst","rs232-user.lst"
+	data"copyright.lst"
+	data"ml-patcher.lst","loadeditor.lst","rs232-swift.lst"
+	data""

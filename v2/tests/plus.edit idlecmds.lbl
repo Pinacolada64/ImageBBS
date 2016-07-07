@@ -33,36 +33,27 @@
 	
 	20 printtab(8) "edit idle commands v0.1
 
-ready.
-run
-       ........................
-        edit idle commands v0.1
-       ........................
-
-ready.
-list
-
-10 printtab(7)"..................";"....
-..."
-20 printtab(8) "edit idle commands v0.1
-30 printtab(7)"..................";"....
-..."
-ready.
-run
-       .........................
-        edit idle commands v0.1
-       .........................
-
-ready.
+' 19 chars; 7 chars
+'10 printtab(7)"------------------";"-------"
+'20 printtab(8) "edit idle commands v0.1
+'30 printtab(7)"------------------";"-------"
+'ready.
+'run
+'       -------------------------
+'        edit idle commands v0.1
+'       -------------------------
+'
+'ready.
 
 
 
 {:3002}
 ' load struct:
+	&"Loading {f5}e.idlekeys{f5}..."
 	dr=3:gosub 1010:m$=dr$+"e.idlekeys":&,60,2,0,wc%(0,0),m$,dv%
 ' check error channel:
-	gosub 1012:if e%=. then {:3108}
-	&"Initializing new struct..."
+	gosub 1012:if e%=. then:&" Ok{f6}":goto {:3108}
+	&"{f6}Initializing new struct..."
 ' not sure what this is doing, setting where each field begins?
 
 ' issue: I think...
@@ -120,7 +111,7 @@ ready.
 ' (get #2,a$,a$ toss load address, line link pointer)
 ' $0fa0 = 4000, $a0 $0f on disk)
 
-'	ON-(WC%(0,I)=0)GOTO{:4288}:B$=CHR$(WC%(.,I)):&,60,1,16,WC%(8,I),C$
+'	ON-(WC%(0,I)=0)goTO {:4288}:B$=CHR$(WC%(.,I)):&,60,1,16,WC%(8,I),C$
 '	&A$+B$+")"+C$+E$:A=1-A
 
 ' b$=keypress

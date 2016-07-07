@@ -1,91 +1,92 @@
-	ON IM GOTO{:60004},{:60056},{:60002},{:60094},{:60096}
+{number:60000}
+	on im goto {:60004},{:60056},{:60002},{:60094},{:60096}
 {:60002}
-	RETURN
+	return
 {:60004}
-	B$=CO$(CO%):GOSUB 1072
-	GOSUB{:60068}:&,52,17,3:A=A%:GOSUB{:60046}:Y$=AN$:A%=EM:GOSUB{:60046}:X$=AN$
-	GOSUB{:60120}:GOSUB{:60104}:D$=A$
-	A%=VAL(MID$(UF$,3,1)):GOSUB{:60046}:V$=AN$:A%=LL%:B%=MP%:T$=MID$(UF$,6,3)
-	A$="M.PARAMS":GOSUB 1350:POKE 53252,2:&"{white}  > {pound}I1":A=VAL(AN$)
-	IF A THEN GOSUB{:60018}:GOTO{:60004}
+	b$=co$(co%):gosub 1072
+	gosub {:60068}:&,52,17,3:a=a%:gosub {:60046}:y$=an$:a%=em:gosub {:60046}:x$=an$
+	gosub {:60120}:gosub {:60104}:d$=a$
+	a%=val(mid$(uf$,3,1)):gosub {:60046}:v$=an$:a%=ll%:b%=mp%:t$=mid$(uf$,6,3)
+	a$="m.params":gosub 1350:poke 53252,2:&"{white}  > {pound}i1":a=val(an$)
+	if a then gosub {:60018}:goto {:60004}
 {:60018}
-	ON A GOTO{:60028},{:60060},{:60034},{:60042},{:60024},{:60026},{:60082},{:60114},1883
-	C$="{left:4}"
-	&,69,31,19,STR$(LL%)+"X"+MID$(STR$(MP%),2),$8C:RETURN
+	on a goto {:60028},{:60060},{:60034},{:60042},{:60024},{:60026},{:60082},{:60114},1883
+	c$="{left:4}"
+	&,69,31,19,str$(ll%)+"x"+mid$(str$(mp%),2),$8c:return
 {:60024}
-	&,52,17,2:&,52,17,3:LF=A%:UF$=MID$(STR$(A%),2,1)+MID$(UF$,2):RETURN
+	&,52,17,2:&,52,17,3:lf=a%:uf$=mid$(str$(a%),2,1)+mid$(uf$,2):return
 {:60026}
-	POKE 1023,2:&,52,20,3:EM=A%:RETURN
+	poke 1023,2:&,52,20,3:em=a%:return
 {:60028}
-	&"{f6:2}":FOR X=1 TO 9:B$=CO$(X):A%=X:&"{pound}%A>-{pound}$B{f6}":NEXT
-	&"{f6}{$c3}OMPUTER {$d4}YPE?: {pound}G1{pound}V7{f6}":IF TR%<1 THEN RETURN
-	ON-(VAL(AN$)<1)GOTO{:60028}:CO%=VAL(AN$):GOTO 1375
+	&"{f6:2}":for x=1 to 9:b$=co$(x):a%=x:&"{pound}%a>-{pound}$b{f6}":next
+	&"{f6}{$c3}omputer {$d4}ype?: {pound}g1{pound}v7{f6}":if tr%<1 then return
+	on-(val(an$)<1)goto {:60028}:co%=val(an$):goto 1375
 {:60034}
-	LP=1:&"{f6}{$c8}OW {$cd}ANY {$c3}HARACTERS/{$cc}INE?{f6:2}: {pound}I1"
-	X=INT(VAL(AN$)):IF TR%<1 THEN RETURN
-	IF X<22 OR X>80 THEN:&"{f6}{$cd}UST {$c2}E {$c2}ETWEEN 22 {$c1}ND 80.{f6}":GOTO{:60034}
-	LL%=X:A$="":FOR A=1 TO LL%-2:A$=A$+"{$c0}":NEXT:AK$=" "+A$+"{f6}":RETURN
+	lp=1:&"{f6}{$c8}ow {$cd}any {$c3}haracters/{$cc}ine?{f6:2}: {pound}i1"
+	x=int(val(an$)):if tr%<1 then return
+	if x<22 or x>80 then:&"{f6}{$cd}ust {$c2}e {$c2}etween 22 {$c1}nd 80.{f6}":goto {:60034}
+	ll%=x:a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}":return
 {:60042}
-	POKE 53252,3:LP=1:&"{f6}{$c8}OW {$cd}ANY {$cc}INES/{$d3}CREEN?{f6:2}: {pound}I1"
-	MP%=ABS(VAL(AN$)):ON-(MP%<1 OR MP%>255)GOTO{:60050}:POKE 971,MP%:RETURN
+	poke 53252,3:lp=1:&"{f6}{$c8}ow {$cd}any {$cc}ines/{$d3}creen?{f6:2}: {pound}i1"
+	mp%=abs(val(an$)):on-(mp%<1 or mp%>255)goto {:60050}:poke 971,mp%:return
 {:60046}
-	AN$="{$cf}FF":IF A%THEN AN$="{$cf}N"
-	RETURN
+	an$="{$cf}ff":if a%then an$="{$cf}n"
+	return
 {:60050}
-	LP=1:&"{f6}{$cd}UST {$c2}E {$c2}ETWEEN 1 AND 255":GOTO{:60042}
-	&,52,34,2:&,52,34,3:UF$=LEFT$(UF$,1)+MID$(STR$(A%),2,1)+MID$(UF$,3)
-	RETURN
+	lp=1:&"{f6}{$cd}ust {$c2}e {$c2}etween 1 and 255":goto {:60042}
+	&,52,34,2:&,52,34,3:uf$=left$(uf$,1)+mid$(str$(a%),2,1)+mid$(uf$,3)
+	return
 {:60056}
-	C$=MID$(AN$,3,1):A=ABS(VAL(C$)):IF A THEN{:60062}
-	IF C$="+"OR C$="-"THEN A=A-(C$="+")+(C$="-"):GOTO{:60062}
+	c$=mid$(an$,3,1):a=abs(val(c$)):if a then{:60062}
+	if c$="+"or c$="-"then a=a-(c$="+")+(c$="-"):goto {:60062}
 {:60060}
-	A$="M.MODES":GOSUB 1350:&"{white} > {pound}G1":A=VAL(AN$)
+	a$="m.modes":gosub 1350:&"{white} > {pound}g1":a=val(an$)
 {:60062}
-	A=(A-2*(A>1))AND 7
-	&,52,16,SGN(A AND 4):&,52,18,SGN(A AND 2):&,52,19,A AND 1:NL=-(A=7 OR A<4):IF A=7 THEN NL=2
-	GOSUB{:60068}:&:RETURN
+	a=(a-2*(a>1))and 7
+	&,52,16,sgn(a and 4):&,52,18,sgn(a and 2):&,52,19,a and 1:nl=-(a=7 or a<4):if a=7 then nl=2
+	gosub {:60068}:&:return
 {:60068}
-	&,52,16,3:A=A%*4:&,52,18,3:A=A+A%*2:&,52,19,3:A=A+A%
-	LP=1:IF A>3 THEN ON A-3 GOTO{:60074},{:60076},{:60078},{:60080}
-	Z$="{$c3}{$c2}{$cd} {$c3}/{$c7}":RETURN
+	&,52,16,3:a=a%*4:&,52,18,3:a=a+a%*2:&,52,19,3:a=a+a%
+	lp=1:if a>3 then on a-3 goto {:60074},{:60076},{:60078},{:60080}
+	z$="{$c3}{$c2}{$cd} {$c3}/{$c7}":return
 {:60074}
-	Z$="{$c1}{$d3}{$c3}{$c9:2}":RETURN
+	z$="{$c1}{$d3}{$c3}{$c9:2}":return
 {:60076}
-	Z$="{$c1}{$d3}{$c3}{$c9:2} & {$c9}{$c2}{$cd} {$c7}RAPHICS":RETURN
+	z$="{$c1}{$d3}{$c3}{$c9:2} & {$c9}{$c2}{$cd} {$c7}raphics":return
 {:60078}
-	Z$="{$c1}{$d3}{$c3}{$c9:2} & {$c1}{$ce}{$d3}{$c9} {$c3}OLOR":RETURN
+	z$="{$c1}{$d3}{$c3}{$c9:2} & {$c1}{$ce}{$d3}{$c9} {$c3}olor":return
 {:60080}
-	Z$="{$c1}{$ce}{$d3}{$c9} {$c3}/{$c7}":RETURN
+	z$="{$c1}{$ce}{$d3}{$c9} {$c3}/{$c7}":return
 {:60082}
-	GOSUB{:60106}:ON X+1 GOTO 1603:A=VAL(MID$(AN$,3,3)):IF A>.THEN{:60088}
+	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>.then{:60088}
 {:60084}
-	&"{f6}{$c1}VAILABLE {$d0}ROTOCOLS:{f6:2}":FOR I=1 TO X:A%=I:A$=MID$(TT$(I),10)
-	LP=1:&"{pound}%A) {pound}$A{pound}{back arrow}39 ":NEXT:&"{f6:2}--> {pound}G1":A=VAL(AN$)
+	&"{f6}{$c1}vailable {$d0}rotocols:{f6:2}":for i=1 to x:a%=i:a$=mid$(tt$(i),10)
+	lp=1:&"{pound}%a) {pound}$a{pound}{back arrow}39 ":next:&"{f6:2}--> {pound}g1":a=val(an$)
 {:60088}
-	IF A>.AND A<=X THEN LP=1:&MID$(TT$(A),10):IF A<X OR B%=.THEN UL=A-1
-	IF AN$="{f2}"THEN A$="PROTOS":GOSUB 1350:GOTO{:60084}
-	A=-A*(A>.):RETURN
+	if a>.and a<=x then lp=1:&mid$(tt$(a),10):if a<x or b%=.then ul=a-1
+	if an$="{f2}"then a$="protos":gosub 1350:goto {:60084}
+	a=-a*(a>.):return
 {:60094}
-	&,52,4,3:ON A%GOTO 1603:GOSUB{:60082}:GOTO{:60098}
+	&,52,4,3:on a%goto 1603:gosub {:60082}:goto {:60098}
 {:60096}
-	GOSUB{:60106}:A=UL+1:IF A%THEN A=X
+	gosub {:60106}:a=ul+1:if a%then a=x
 {:60098}
-	ON A+1 GOTO 1603:IF B%=1 AND A=X THEN A=2:GOTO 1738
-	A$=TT$(A):F=VAL(MID$(A$,7,1)):NB=VAL(MID$(A$,8,1)):D4$=MID$(A$,10):PR=-1
-	DR=5:GOSUB 1010:A$=DR$+"++ "+LEFT$(A$,6):&,7,DV%,2:&,16,4,F:RETURN
+	on a+1 goto 1603:if b%=1 and a=x then a=2:goto 1738
+	a$=tt$(a):f=val(mid$(a$,7,1)):nb=val(mid$(a$,8,1)):d4$=mid$(a$,10):pr=-1
+	dr=5:gosub 1010:a$=dr$+"++ "+left$(a$,6):&,7,dv%,2:&,16,4,f:return
 {:60104}
-	GOSUB{:60106}:A$=MID$(TT$(UL+1),10):&,11:RETURN
+	gosub {:60106}:a$=mid$(tt$(ul+1),10):&,11:return
 {:60106}
-	&,11:B%=.:DR=1:A$="S.M.PROTOS,S,R":GOSUB 1011:X=.:IF E%THEN:&:RETURN
+	&,11:b%=.:dr=1:a$="s.m.protos,s,r":gosub 1011:x=.:if e%then:&:return
 {:60108}
-	&,2,2:IF A$<>"{up arrow}"AND X<253 THEN X=X+1:TT$(X)=A$:IF ST=.THEN{:60108}
-	&,52,4,3:IF ZZ=1 OR A%=1 THEN X=X+1:TT$(X)="COPIER00 {$c3}OPIER":B%=1
-	CLOSE 2:RETURN
+	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=.then{:60108}
+	&,52,4,3:if zz=1 or a%=1 then x=x+1:tt$(x)="copier00 {$c3}opier":b%=1
+	close 2:return
 {:60114}
-	&"{clear}{f6}{$cd}ORE {$d0}ROMPT {$cf}PTIONS:{f6:2}{white} 1 {lt. blue}{$cf}FF{f6}{white} 2 {lt. blue}{$cf}N{f6}{white} 3 {lt. blue}{$cd}ESSAGES {$cf}NLY{f6:2}{white}  > {pound}G1"
-	A=VAL(AN$):IF A>.AND A<4 THEN UF$=LEFT$(UF$,1)+CHR$(A+47)+MID$(UF$,3)
-	GOSUB{:60120}:&"{pound}$W{f6}":RETURN
+	&"{clear}{f6}{$cd}ore {$d0}rompt {$cf}ptions:{f6:2}{white} 1 {lt. blue}{$cf}ff{f6}{white} 2 {lt. blue}{$cf}n{f6}{white} 3 {lt. blue}{$cd}essages {$cf}nly{f6:2}{white}  > {pound}g1"
+	a=val(an$):if a>.and a<4 then uf$=left$(uf$,1)+chr$(a+47)+mid$(uf$,3)
+	gosub {:60120}:&"{pound}$w{f6}":return
 {:60120}
-	A=VAL(MID$(UF$,2,1)):W$="{$cf}FF":IF A THEN W$="{$cf}N":IF A>1 THEN W$="{$cd}ESSAGES {$cf}NLY"
-	RETURN
-	COPR. 1994 NEW IMAGE 9/8/94
+	a=val(mid$(uf$,2,1)):w$="{$cf}ff":if a then w$="{$cf}n":if a>1 then w$="{$cd}essages {$cf}nly"
+	return
+	copr. 1994 new image 9/8/94

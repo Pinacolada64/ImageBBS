@@ -1,24 +1,25 @@
-	ON IM GOTO{:60002},{:60008},{:60006},{:60012}:RETURN
+{number:60000}
+	on im goto {:60002},{:60008},{:60006},{:60012}:return
 {:60002}
-	D$="{$d3}YSTEM":GOSUB{:60018}:IF A=.THEN RETURN
-	TZ$=AN$:GOSUB 1063:X=45:GOSUB 1001:PRINT# 2,TZ$:CLOSE 2
+	d$="{$d3}ystem":gosub {:60018}:if a=.then return
+	tz$=an$:gosub 1063:x=45:gosub 1001:print# 2,tz$:close 2
 {:60006}
-	AN$=TZ$:GOSUB{:60016}:POKE 866,X:POKE 867,Y:RETURN
+	an$=tz$:gosub {:60016}:poke 866,x:poke 867,y:return
 {:60008}
-	D$="{$d9}OUR":GOSUB{:60018}:IF A=.THEN RETURN
-	UF$=LEFT$(UF$,5)+AN$
+	d$="{$d9}our":gosub {:60018}:if a=.then return
+	uf$=left$(uf$,5)+an$
 {:60012}
-	AN$=MID$(UF$,6):GOSUB{:60016}:POKE 868,X:POKE 869,Y
-	FOR I=.TO 2:POKE 5882+I,ASC(MID$(AN$+"   ",I+1,1)):NEXT:POKE 5885,0:RETURN
+	an$=mid$(uf$,6):gosub {:60016}:poke 868,x:poke 869,y
+	for i=.to 2:poke 5882+i,asc(mid$(an$+"   ",i+1,1)):next:poke 5885,0:return
 {:60016}
-	X=VAL(MID$(AN$,4,2)):Y=VAL(MID$(AN$,6,2)):A$=LEFT$(AN$+"   ",3):RETURN
+	x=val(mid$(an$,4,2)):y=val(mid$(an$,6,2)):a$=left$(an$+"   ",3):return
 {:60018}
-	DR=1:A$="S.TIMEZONES,S,R":GOSUB 1011:N=.:IF E%THEN CLOSE 2:RETURN
+	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e%then close 2:return
 {:60020}
-	&,2,2:IF A$<>"{up arrow}"THEN N=N+1:TT$(N)=A$:ON-(ST=.)GOTO{:60020}
-	CLOSE 2:&"{f6}{$d3}ELECT {pound}$D {$d4}IME {$da}ONE:{f6:2}"
-	FOR I=1 TO N:B$=LEFT$(TT$(I),3):C$=MID$(TT$(I),8):A%=I:&"{pound}%A) ({pound}$B) {pound}$C{f6}":NEXT
-	POKE 53252,2:&"{f6}{$d7}HICH {$cf}NE? {pound}I1"
-	A=VAL(AN$):IF AN$=""OR A<1 OR A>N THEN A=.:RETURN
-	C$=MID$(TT$(A),8):AN$=LEFT$(TT$(A),7):RETURN
-	COPR. 1994 NEW IMAGE 9/18/94
+	&,2,2:if a$<>"{up arrow}"then n=n+1:tt$(n)=a$:on-(st=.)goto {:60020}
+	close 2:&"{f6}{$d3}elect {pound}$d {$d4}ime {$da}one:{f6:2}"
+	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
+	poke 53252,2:&"{f6}{$d7}hich {$cf}ne? {pound}i1"
+	a=val(an$):if an$=""or a<1 or a>n then a=.:return
+	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
+	copr. 1994 new image 9/18/94

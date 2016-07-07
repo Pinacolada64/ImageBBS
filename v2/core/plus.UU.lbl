@@ -1,114 +1,116 @@
-	R=INT(VAL(MID$(AN$,3,3))):DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2
-	&,28,1:DIM M%(22,25,6),U$(50,3),AC$(15,1),YN$(1):PR$=""
-	YN$(0)="{$ce}O":YN$(1)="{$d9}ES":GOSUB 1061
-	FOR I=0 TO 9:X=I+1:GOSUB 1001:&,2,2:AC$(I,0)=A$:&,2,2:AC$(I,1)=A$:NEXT
-	CLOSE 2:IF R THEN AN$="":X=R:GOTO{:3016}
+{number:3000}
+	r=int(val(mid$(an$,3,3))):dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2
+	&,28,1:dim m%(22,25,6),u$(50,3),ac$(15,1),yn$(1):pr$=""
+	yn$(0)="{$ce}o":yn$(1)="{$d9}es":gosub 1061
+	for i=0 to 9:x=i+1:gosub 1001:&,2,2:ac$(i,0)=a$:&,2,2:ac$(i,1)=a$:next
+	close 2:if r then an$="":x=r:goto {:3016}
 {:3010}
-	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}SER {$c1}CCOUNT {$c5}DITOR {f6}{cyan}":P$="{$d5}SER {$c5}DIT"
-	A%=UR:&"{f6} {$d5}SERS: {pound}%A{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}DIT.{f6:2}":GOSUB 1006
-	ON-(AN$="")GOTO 1811:X=ABS(INT(VAL(LEFT$(AN$,4))))
+	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}ser {$c1}ccount {$c5}ditor {f6}{cyan}":p$="{$d5}ser {$c5}dit"
+	a%=ur:&"{f6} {$d5}sers: {pound}%a{f6:2}{$c5}nter {$c8}andle {$cf}r {$c9}{$c4}# {$cf}f {$d5}ser {$d4}o {$c5}dit.{f6:2}":gosub 1006
+	on-(an$="")goto 1811:x=abs(int(val(left$(an$,4))))
 {:3016}
-	IF(X<=UR)AND X>.THEN{:3020}
-	I=0:ON-(AN$<>"")GOSUB 1046:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":GOTO{:3010}
+	if(x<=ur)and x>.then{:3020}
+	i=0:on-(an$<>"")gosub 1046:x=i:if i=0 then:&"{f6}{f5}{pound}v7{f5} {$ce}ot {$c6}ound.{f6}{pound}w2":goto {:3010}
 {:3020}
-	GOSUB 1065:GOSUB 1001:FOR I=1 TO 24:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
-	U$(I,0)=A$:NEXT:A$=U$(13,0):U$(13,0)=LEFT$(A$,1)
-	FOR I=2 TO 5:U$(22+I,0)=MID$(A$,I,1):NEXT:U$(28,0)=MID$(A$,6)
-	A=VAL(U$(11,0)):U$(30,0)=MID$(STR$(INT(A/256)),2)
-	U$(29,0)=MID$(STR$(INT(A AND 255)),2)
-	A$=U$(23,0):FOR I=1 TO 20:U$(30+I,0)=MID$(A$,I,1):NEXT:U$(48,0)=MID$(A$,18,2)
-	RESTORE:FOR I=1 TO 50:READ T,P,X,U$(I,3):U$(I,1)=U$(I,0):U$(I,2)=" "
-	A$=CHR$(192+X):ON T GOSUB{:3040},{:3042},{:3044},{:3046}:IF M%(0,0,P)<X THEN M%(0,0,P)=X
-	NEXT:PG=1:GOSUB{:3100}:GOTO{:3010}
+	gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
+	u$(i,0)=a$:next:a$=u$(13,0):u$(13,0)=left$(a$,1)
+	for i=2 to 5:u$(22+i,0)=mid$(a$,i,1):next:u$(28,0)=mid$(a$,6)
+	a=val(u$(11,0)):u$(30,0)=mid$(str$(int(a/256)),2)
+	u$(29,0)=mid$(str$(int(a and 255)),2)
+	a$=u$(23,0):for i=1 to 20:u$(30+i,0)=mid$(a$,i,1):next:u$(48,0)=mid$(a$,18,2)
+	restore:for i=1 to 50:read t,p,x,u$(i,3):u$(i,1)=u$(i,0):u$(i,2)=" "
+	a$=chr$(192+x):on t gosub {:3040},{:3042},{:3044},{:3046}:if m%(0,0,p)<x then m%(0,0,p)=x
+	next:pg=1:gosub {:3100}:goto {:3010}
 {:3040}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+U$(I,0):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+u$(i,0):return
 {:3042}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+AC$(VAL(LEFT$(U$(I,0),1)),0):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+ac$(val(left$(u$(i,0),1)),0):return
 {:3044}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+CO$(VAL(U$(I,0))):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+co$(val(u$(i,0))):return
 {:3046}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+YN$(VAL(U$(I,0))):RETURN
-	DATA1,1,1,"{$c8}ANDLE:       "
-	DATA1,1,2,"{$d0}ASSWORD:     "
-	DATA1,1,3,"{$c6}IRST {$ce}AME:   "
-	DATA1,1,4,"{$cc}AST {$ce}AME:    "
-	DATA1,1,5,"{$d0}HONE {$ce}UMBER: "
-	DATA1,1,7,"{$cd}ESSAGE {$c4}ATE: "
-	DATA2,1,6,"{$c1}CCESS {$c7}ROUP: "
-	DATA1,2,8,"{$c3}ALLS {$d4}ODAY:  "
-	DATA1,2,9,"{$d4}OTAL {$c3}ALLS:  "
-	DATA3,3,1,"{$c3}OMPUTER:     "
-	DATA0,0,0,"{$cc}INELEN/{$d3}CREEN"
-	DATA0,0,0,"{$d5}PPER/{$cc}OWER   "
-	DATA0,0,0,"USERFLAGS     "
-	DATA1,3,6,"{$c5}XPERT {$cd}ODE:  "
-	DATA1,2,1,"{$c4}OWNLOADS:    "
-	DATA1,2,2,"{$d5}PLOADS:      "
-	DATA1,2,3,"{$c2}LOCKS {$c4}{$cc}'ED: "
-	DATA1,2,4,"{$c2}LOCKS {$d5}{$cc}'ED: "
-	DATA1,2,7,"{$c3}REDITS:      "
-	DATA1,2,5,"{$d0}OSTS:        "
-	DATA1,2,6,"{$d2}ESPONSES:    "
-	DATA1,1,8,"{$cc}AST {$c3}ALL:    "
-	DATA0,0,0,"ACCESSFLAGS   "
-	DATA1,3,4,"{$cd}ORE {$d0}ROMPT:  "
-	DATA1,3,5,"{$c3}URSOR {$cd}ENUS: "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA1,3,7,"{$d4}IME {$da}ONE:    "
-	DATA1,3,2,"{$cc}INE {$cc}ENGTH:  "
-	DATA1,3,3,"{$d3}CREEN {$cc}INES: "
-	DATA4,5,1,"{$ce}ON-{$d7}EED:       "
-	DATA1,4,10,"{$c3}REDIT {$d2}ATIO:   "
-	DATA4,5,2,"{$cc}OCAL {$cd}AINT:    "
-	DATA4,4,1,"{$d0}OST/{$d2}ESPOND:   "
-	DATA4,4,2,"{$d5}/{$c4} {$c1}CCESS:     "
-	DATA1,4,5,"{$c5}DITOR {$cc}INES:   "
-	DATA4,5,3,"{$d5}NLIMITED {$c4}{$cc}'S: "
-	DATA4,5,4,"{$d2}EMOTE {$cd}AINT:   "
-	DATA4,4,3,"{$c5}-{$cd}AIL:         "
-	DATA4,4,4,"{$d5}SER {$cc}IST:      "
-	DATA4,5,8,"{$c2}{$c1}{$d2}/{$cc}OG {$d6}IEW:   "
-	DATA4,5,5,"{$d3}UBMAINT:       "
-	DATA4,5,6,"{$c6}ILES {$cd}AINT:    "
-	DATA4,5,8,"{$cd}{$c3}{$c9} {$c1}CCESS:     "
-	DATA4,5,7,"{$d0}RIMETIME {$d5}{$c4}S:  "
-	DATA1,4,6,"{$cd}AX {$c9}DLE {$d4}IME:  "
-	DATA1,4,7,"{$c3}ALLS/{$c4}AY:      "
-	DATA1,4,8,"{$d4}IME/{$c3}ALL:      "
-	DATA0,0,0,"TIME/CALL"
-	DATA1,4,9,"{$c4}{$cc}'S/{$c3}ALL:      "
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+yn$(val(u$(i,0))):return
+	data1,1,1,"{$c8}andle:       "
+	data1,1,2,"{$d0}assword:     "
+	data1,1,3,"{$c6}irst {$ce}ame:   "
+	data1,1,4,"{$cc}ast {$ce}ame:    "
+	data1,1,5,"{$d0}hone {$ce}umber: "
+	data1,1,7,"{$cd}essage {$c4}ate: "
+	data2,1,6,"{$c1}ccess {$c7}roup: "
+	data1,2,8,"{$c3}alls {$d4}oday:  "
+	data1,2,9,"{$d4}otal {$c3}alls:  "
+	data3,3,1,"{$c3}omputer:     "
+	data0,0,0,"{$cc}inelen/{$d3}creen"
+	data0,0,0,"{$d5}pper/{$cc}ower   "
+	data0,0,0,"userflags     "
+	data1,3,6,"{$c5}xpert {$cd}ode:  "
+	data1,2,1,"{$c4}ownloads:    "
+	data1,2,2,"{$d5}ploads:      "
+	data1,2,3,"{$c2}locks {$c4}{$cc}'ed: "
+	data1,2,4,"{$c2}locks {$d5}{$cc}'ed: "
+	data1,2,7,"{$c3}redits:      "
+	data1,2,5,"{$d0}osts:        "
+	data1,2,6,"{$d2}esponses:    "
+	data1,1,8,"{$cc}ast {$c3}all:    "
+	data0,0,0,"accessflags   "
+	data1,3,4,"{$cd}ore {$d0}rompt:  "
+	data1,3,5,"{$c3}ursor {$cd}enus: "
+	data0,0,0,"{$d3}ome {$c6}lag     "
+	data0,0,0,"{$d3}ome {$c6}lag     "
+	data1,3,7,"{$d4}ime {$da}one:    "
+	data1,3,2,"{$cc}ine {$cc}ength:  "
+	data1,3,3,"{$d3}creen {$cc}ines: "
+	data4,5,1,"{$ce}on-{$d7}eed:       "
+	data1,4,10,"{$c3}redit {$d2}atio:   "
+	data4,5,2,"{$cc}ocal {$cd}aint:    "
+	data4,4,1,"{$d0}ost/{$d2}espond:   "
+	data4,4,2,"{$d5}/{$c4} {$c1}ccess:     "
+	data1,4,5,"{$c5}ditor {$cc}ines:   "
+	data4,5,3,"{$d5}nlimited {$c4}{$cc}'s: "
+	data4,5,4,"{$d2}emote {$cd}aint:   "
+	data4,4,3,"{$c5}-{$cd}ail:         "
+	data4,4,4,"{$d5}ser {$cc}ist:      "
+	data4,5,8,"{$c2}{$c1}{$d2}/{$cc}og {$d6}iew:   "
+	data4,5,5,"{$d3}ubmaint:       "
+	data4,5,6,"{$c6}iles {$cd}aint:    "
+	data4,5,8,"{$cd}{$c3}{$c9} {$c1}ccess:     "
+	data4,5,7,"{$d0}rimetime {$d5}{$c4}s:  "
+	data1,4,6,"{$cd}ax {$c9}dle {$d4}ime:  "
+	data1,4,7,"{$c3}alls/{$c4}ay:      "
+	data1,4,8,"{$d4}ime/{$c3}all:      "
+	data0,0,0,"time/call"
+	data1,4,9,"{$c4}{$cc}'s/{$c3}all:      "
 {:3100}
-	IF TR%<1 THEN RETURN
-	LM=0:GOSUB{:3150}:KK=M%(0,0,PG):N=KK
-	IF PG<>1 THEN B$="/{$c9}":A$="{$c5}DIT {$d5}SER {$c9}NFORMATION":GOSUB{:3152}
-	IF PG<>2 THEN B$="/{$d3}":A$="{$c5}DIT {$d5}SER {$d3}TATS":GOSUB{:3152}
-	IF PG<>3 THEN B$="/{$d4}":A$="{$c5}DIT {$d4}ERMINAL {$d0}ARAMETERS":GOSUB{:3152}
-	IF PG<>4 THEN B$="/{$c6}":A$="{$c5}DIT {$d5}SER {$c6}LAGS":GOSUB{:3152}
-	IF PG<>5 THEN B$="/{$cd}":A$="{$c5}DIT {$d5}SER {$cd}AINT {$c6}LAGS":GOSUB{:3152}
-	B$="/{$d1}":A$="{$d1}UIT":GOSUB{:3152}
-	&,16,2,46,M%(0,1,PG),N,36,1,N,3,5,0:LM=A%+1:&,70,0,23
-	IF TR%<1 OR LM=N OR LM=0 THEN RETURN
-	IF LM>KK THEN A=LM-KK:PG=A-(A>=PG):GOTO{:3100}
-	GOSUB{:3150}:GOTO{:3100}
+	if tr%<1 then return
+	lm=0:gosub {:3150}:kk=m%(0,0,pg):n=kk
+	if pg<>1 then b$="/{$c9}":a$="{$c5}dit {$d5}ser {$c9}nformation":gosub {:3152}
+	if pg<>2 then b$="/{$d3}":a$="{$c5}dit {$d5}ser {$d3}tats":gosub {:3152}
+	if pg<>3 then b$="/{$d4}":a$="{$c5}dit {$d4}erminal {$d0}arameters":gosub {:3152}
+	if pg<>4 then b$="/{$c6}":a$="{$c5}dit {$d5}ser {$c6}lags":gosub {:3152}
+	if pg<>5 then b$="/{$cd}":a$="{$c5}dit {$d5}ser {$cd}aint {$c6}lags":gosub {:3152}
+	b$="/{$d1}":a$="{$d1}uit":gosub {:3152}
+	&,16,2,46,m%(0,1,pg),n,36,1,n,3,5,0:lm=a%+1:&,70,0,23
+	if tr%<1 or lm=n or lm=0 then return
+	if lm>kk then a=lm-kk:pg=a-(a>=pg):goto {:3100}
+	gosub {:3150}:goto {:3100}
 {:3124}
-	RETURN
+	return
 {:3150}
-	ON PG GOTO{:3154},{:3158},{:3162},{:3166},{:3170}:RETURN
+	on pg goto {:3154},{:3158},{:3162},{:3166},{:3170}:return
 {:3152}
-	N=N+1:&,16,0,46,M%(0,N,PG),B$,"",A$:RETURN
+	n=n+1:&,16,0,46,m%(0,n,pg),b$,"",a$:return
 {:3154}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c9}NFORMATION{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}ser {$c9}nformation{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	on lm goto {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:return
 {:3158}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          {$d5}SER {$d3}TATISTICS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          {$d5}ser {$d3}tatistics{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	on lm goto {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:return
 {:3162}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        {$d4}ERMINAL {$d0}ARAMETERS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        {$d4}erminal {$d0}arameters{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	on lm goto {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:return
 {:3166}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}ser {$c6}lags{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	on lm goto {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:return
 {:3170}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      {$d5}SER {$cd}AINT {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      {$d5}ser {$cd}aint {$c6}lags{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	on lm goto {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:return
+	rem +.uu

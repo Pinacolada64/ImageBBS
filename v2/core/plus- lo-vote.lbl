@@ -1,56 +1,57 @@
-	REM VOTE ON NEW
-	DR=4:A$="D.VOTES,S,R":GOSUB 1011:RN=.:IF E%THEN CLOSE 2:RETURN
+{number:4000}
+	rem vote on new
+	dr=4:a$="d.votes,s,r":gosub 1011:rn=.:if e%then close 2:return
 {:4004}
-	INPUT# 2,A$,B$,A%:IF MID$(D5$,2,6)>=MID$(B$,2,6)THEN A%=0
-	IF A%AND(2^AC%)THEN RN=RN+1:NN$(RN)=A$
-	ON-(ST=.)GOTO{:4004}:CLOSE 2:IF RN=0 THEN RETURN
-	&"{f6}{lt. blue}{$d4}HERE {$c1}RE {white}{$ce}EW {lt. blue}{$d6}OTE {$d4}OPICS.{f6}{$d6}OTE {$ce}OW{blue}?{white} ":GOSUB 1902:IF A=0 THEN RETURN
-	FOR B=1 TO RN:GOSUB{:4036}:NEXT:RETURN
+	input# 2,a$,b$,a%:if mid$(d5$,2,6)>=mid$(b$,2,6)then a%=0
+	if a%and(2^ac%)then rn=rn+1:nn$(rn)=a$
+	on-(st=.)goto {:4004}:close 2:if rn=0 then return
+	&"{f6}{lt. blue}{$d4}here {$c1}re {white}{$ce}ew {lt. blue}{$d6}ote {$d4}opics.{f6}{$d6}ote {$ce}ow{blue}?{white} ":gosub 1902:if a=0 then return
+	for b=1 to rn:gosub {:4036}:next:return
 {:4014}
-	DR=3:O$="V.T."+LEFT$(NN$(B),12):RETURN
+	dr=3:o$="v.t."+left$(nn$(b),12):return
 {:4016}
-	DR=3:O$="V.R."+LEFT$(NN$(B),12):RETURN
-	GOSUB{:4032}:CLOSE 2
+	dr=3:o$="v.r."+left$(nn$(b),12):return
+	gosub {:4032}:close 2
 {:4020}
-	X=0:GOSUB{:4016}:A$=O$+",S,R":GOSUB 1011
-	IF E%THEN:&"{$ce}O {$d6}OTE {$d2}EASONS {$cf}N {$c6}ILE.{f6:2}":GOTO{:4030}
-	&"{f6}{$d2}EAD {$d2}EASON {$c6}ILE? ":GOSUB 1902:IF A=0 THEN CLOSE 2:RETURN
+	x=0:gosub {:4016}:a$=o$+",s,r":gosub 1011
+	if e%then:&"{$ce}o {$d6}ote {$d2}easons {$cf}n {$c6}ile.{f6:2}":goto {:4030}
+	&"{f6}{$d2}ead {$d2}eason {$c6}ile? ":gosub 1902:if a=0 then close 2:return
 {:4026}
-	RC=0:GOSUB 1914:X=X+1:&,2,2:A%=X:&"{f6:2}{$d2}EASON #{pound}%A:{pound}$A{f6:2}":&,3,2
-	IF(ST=0)AND(RC=0)THEN{:4026}
+	rc=0:gosub 1914:x=x+1:&,2,2:a%=x:&"{f6:2}{$d2}eason #{pound}%a:{pound}$a{f6:2}":&,3,2
+	if(st=0)and(rc=0)then{:4026}
 {:4030}
-	CLOSE 2:RETURN
+	close 2:return
 {:4032}
-	A$=NN$(B):&"{f6}{lt. blue}{$d6}OTE {$d4}OPIC: {white}{pound}$A{f6:2}":GOSUB 1914
-	GOSUB{:4014}:A$=O$+",S,R":GOSUB 1011:&,12,2:RETURN
+	a$=nn$(b):&"{f6}{lt. blue}{$d6}ote {$d4}opic: {white}{pound}$a{f6:2}":gosub 1914
+	gosub {:4014}:a$=o$+",s,r":gosub 1011:&,12,2:return
 {:4036}
-	GOSUB{:4032}:&"{f6}":X=0:F=0:Z=0
+	gosub {:4032}:&"{f6}":x=0:f=0:z=0
 {:4038}
-	&,2,2:IF A$<>"{up arrow}"THEN X=X+1:TT$(X)=A$:F%(X)=0:GOTO{:4038}
-	ON-(ST<>0)GOTO{:4044}
+	&,2,2:if a$<>"{up arrow}"then x=x+1:tt$(x)=a$:f%(x)=0:goto {:4038}
+	on-(st<>0)goto {:4044}
 {:4042}
-	INPUT# 2,A,I,A$:F%(A)=F%(A)+1:Z=Z+1:F=F-(I=ID AND A$=NA$):ON-(ST=0)GOTO{:4042}
+	input# 2,a,i,a$:f%(a)=f%(a)+1:z=z+1:f=f-(i=id and a$=na$):on-(st=0)goto {:4042}
 {:4044}
-	CLOSE 2:&"{$d0}RESS A KEY FOR TOPICS ... {pound}G1{f6}":ON F GOTO{:4054}:&"{f6}"
-	FOR I=1 TO X:A$=TT$(I):A%=I:&"{pound}%A {pound}$A{f6}":NEXT:&"{f6}{$c3}HOICE -> {pound}G1":C=VAL(AN$)
-	IF C<1 OR C>X THEN:&"{$c1}BORTED!{f6}":RETURN
-	A$=TT$(C):&"{pound}$A{f6:2} {$c3}ORRECT? ":GOSUB 1902:IF A=0 THEN RETURN
-	F%(C)=F%(C)+1:Z=Z+1:DR=3:A$=O$+",S,A":GOSUB 1011:PRINT# 2,C;R$ID;R$NA$:CLOSE 2
+	close 2:&"{$d0}ress a key for topics ... {pound}g1{f6}":on f goto {:4054}:&"{f6}"
+	for i=1 to x:a$=tt$(i):a%=i:&"{pound}%a {pound}$a{f6}":next:&"{f6}{$c3}hoice -> {pound}g1":c=val(an$)
+	if c<1 or c>x then:&"{$c1}borted!{f6}":return
+	a$=tt$(c):&"{pound}$a{f6:2} {$c3}orrect? ":gosub 1902:if a=0 then return
+	f%(c)=f%(c)+1:z=z+1:dr=3:a$=o$+",s,a":gosub 1011:print# 2,c;r$id;r$na$:close 2
 {:4054}
-	IF Z=0 THEN:&"{f6}{$ce}O {$d6}OTES SO FAR!{f6:2}":GOTO{:4062}
-	S$="S":IF Z=1 THEN S$=""
-	A%=Z:&"{f6}{$d2}ESULTS {$c6}ROM {pound}%A {$d6}OTE{pound}$S:{f6:2}"
-	FOR I=1 TO X:A$=TT$(I):A%=100*F%(I)/Z+.5:&"{pound}#3{pound}# {pound}%A% {pound}$A{f6}":NEXT
+	if z=0 then:&"{f6}{$ce}o {$d6}otes so far!{f6:2}":goto {:4062}
+	s$="s":if z=1 then s$=""
+	a%=z:&"{f6}{$d2}esults {$c6}rom {pound}%a {$d6}ote{pound}$s:{f6:2}"
+	for i=1 to x:a$=tt$(i):a%=100*f%(i)/z+.5:&"{pound}#3{pound}# {pound}%a% {pound}$a{f6}":next
 {:4062}
-	ON F GOTO{:4076}:&"{f6}{$d7}OULD YOU LIKE TO LEAVE AN {$c1}NONYMOUS{f6}REASON? ":GOSUB 1902
-	IF A=0 THEN{:4076}
-	TT$(0)=CHR$(48+C)+TT$(C):GOSUB 1604:IF KK=.THEN{:4076}
-	A=B:GOSUB{:4016}:A$=O$+",S,W":GOSUB 1011:IF E%THEN A$=O$+",S,A":GOSUB 1011
-	IF E%THEN{:4074}
-	PRINT# 2,MID$(TT$(0),2):FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}"
+	on f goto {:4076}:&"{f6}{$d7}ould you like to leave an {$c1}nonymous{f6}reason? ":gosub 1902
+	if a=0 then{:4076}
+	tt$(0)=chr$(48+c)+tt$(c):gosub 1604:if kk=.then{:4076}
+	a=b:gosub {:4016}:a$=o$+",s,w":gosub 1011:if e%then a$=o$+",s,a":gosub 1011
+	if e%then{:4074}
+	print# 2,mid$(tt$(0),2):for i=1 to kk-1:print# 2,tt$(i):next:print# 2,"{up arrow}"
 {:4074}
-	CLOSE 2
+	close 2
 {:4076}
-	GOSUB{:4020}
-	RETURN
-	COPR. 1990 NEW IMAGE 12-26-90
+	gosub {:4020}
+	return
+	copr. 1990 new image 12-26-90

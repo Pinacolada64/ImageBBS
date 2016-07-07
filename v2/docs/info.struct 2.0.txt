@@ -1,0 +1,177 @@
+```````````````````````````````````````````````````````````````````````````````
+New Virtual Structure Routines:
+```````````````````````````````````````````````````````````````````````````````
+OVERVIEW:
+
+These routines allow a program to access a database that can have up to 65535 
+records. It does this by storing the records in pages, and loading and saving 
+pages when necessary. A record can be as large as 255 bytes, and as many as 
+255 records can be in a page. Usually the actual sizes will be much smaller, 
+due to memory limitations.
+
+If at any time an uninitialized structure is accessed, or if an attempt to 
+access past the last record, the result will be a bad subscript error.
+
+```````````````````````````````````````````````````````````````````````````````
+FILE STRUCTURE:
+
+This is the organization of the array that is used to store the FDBs, the data 
+header, and the records.
+
+  Virtual Information Header
+  Data Header
+  Page List
+  Page Header
+  Data Records
+```````````````````````````````````````````````````````````````````````````````
+VIRTUAL INFORMATION HEADER:
+
+Bytes:
+  0-  1 Signature word ("IM")
+  2-  3 Page Array Size
+  4     Offset to page number in filename
+  5- 20 Filename (16 bytes)
+ 21     Highest Field in Data Header
+ 22     Data Header Size (bytes) *calculated*
+ 23     Highest Field in Data Record
+ 24     Data Record Size (bytes) *calculated*
+ 25-??? Data Header FDB
+???-??? Data Record FDB
+```````````````````````````````````````````````````````````````````````````````
+FIELD DEFINITION BLOCKS (FDB'S):
+
+Bytes
+  0-255 sizes of fields
+
+A Field Definition Block can range from 1 to 256 bytes long. Each byte is the 
+size of a field.
+```````````````````````````````````````````````````````````````````````````````
+PAGE LIST:
+
+Byte 0-255: Number of items in each page
+```````````````````````````````````````````````````````````````````````````````
+PAGE HEADER:
+
+Bytes:
+  0     Page Number
+  1     Valid Records on this page
+  2     Page Dirty Flag
+
+Page 0 is saved starting at the virtual header. Pages 1-255 are saved from the 
+start of the Page header. In either case the save goes up to the last valid 
+record in the page. An empty page is saves just the Page Header.
+```````````````````````````````````````````````````````````````````````````````
+DECLARING AN ARRAY:
+
+DeclareArray: &,16,0,Arrayname
+
+Before using an array, you must specify the array name to be used for the 
+structure operations. The array must be a single dimension integer array. 
+DeclareArray will determine the size of the array, and store the array name 
+for later usage. This function is also used to switch between structures that 
+are in memory at the same time.
+```````````````````````````````````````````````````````````````````````````````
+SETTING THE FILE NAME:
+
+SetFile: &,16,1,0,FileName,Device,Drive,DosCmd
+
+Setting the filename will cause the first page to be loaded. Note that you 
+must have "??" somewhere in your filename to allow the page number to be 
+inserted.
+```````````````````````````````````````````````````````````````````````````````
+BUILDING A STRUCTURE:
+
+DefineHeader: &,16,2,Highest Field Number
+DefineHedFld: &,16,3,Field,Len
+
+To define the fields for the Data Header, first set the number of fields, then 
+loop through setting the field lengths.
+
+DefineRecord: &,16,4,Highest Field Number
+DefineRecFld: &,16,5,Field,Len
+
+To define the fields for the Data Record, first set the number of fields, then 
+loop through setting the field lengths.
+```````````````````````````````````````````````````````````````````````````````
+SCANNING:
+
+ScanSet: &,16,6,FlagField
+ScanAdd: &,16,7,ScanField,Op,FlagBits,Type,VarName
+ScanGo:  &,16,8
+
+Call ScanSet first, to set the flag field, and clear the scan queue. Then call 
+ScanAdd to add each scan to the queue. Up to 16 scans may be queued. Note 
+that the scan value MUST be passed as a variable because it stores only the 
+address of the variable. When you are done adding scans, call ScanGo to 
+perform the scan.
+
+Op Table for Scans:
+
+ 0 Data= Test             1 Data<>Test
+ 2 Data< Test             3 Data> Test
+ 4 Data<=Test             5 Data>=Test
+ 6                        7
+ 8 (Data AND Test)= 0     9 (Data AND Test)<>0
+10 (Data AND Test)= Test 11 (Data AND Test)<>Text
+12                       13
+14                       15
+```````````````````````````````````````````````````````````````````````````````
+INDEXING:
+
+Index: &,16,9,ScanField,Op,Test,Rec,Num,Index()
+
+This will use the previously built flags to build an index of record numbers 
+in an integer array. You must supply the starting record number, and the 
+maximum number of records that you want to find.
+
+Op Table for Indexing:
+
+ 0 Data= Test             1 Data<>Test
+ 2 Data< Test             3 Data> Test
+ 4 Data<=Test             5 Data>=Test
+ 6                        7
+ 8 (Data AND Test)= 0     9 (Data AND Test)<>0
+10 (Data AND Test)= Test 11 (Data AND Test)<>Text
+12                       13
+14                       15
+```````````````````````````````````````````````````````````````````````````````
+ACCESSING DATA:
+
+Accessing record 0 will access the Data Header, using the Data Header FDB.
+Accessing records 1 to 65535 will access the Data Records, using the Data 
+Record FDB.
+
+GetByte:  &,16,10,Field,Rec,IntVar
+GetWord:  &,16,11,Field,Rec,IntVar
+GetStr:   &,16,12,Field,Rec,StrVar
+GetDate:  &,16,13,Field,Rec,StrVar
+GetFloat: &,16,14,Field,Rec,FloatVar
+
+PutByte:  &,16,15,Field,Rec,IntVar
+PutWord:  &,16,16,Field,Rec,IntVar
+PutStr:   &,16,17,Field,Rec,StrVar
+PutDate:  &,16,18,Field,Rec,StrVar
+PutFloat: &,16,19,Field,Rec,FloatVar
+```````````````````````````````````````````````````````````````````````````````
+DELETING RECORDS
+
+Delete:       &,16,20,0,Record
+DeleteMarked: &,16,21,FlagField,Bits
+
+Deleting records moves them down within their page. They can be consolidated 
+at a later time by another program. Note that after deleting records it is a 
+good idea to re-scan any indexes you might have. The FlagField will still be 
+intact, but the record numbers will have changed.
+```````````````````````````````````````````````````````````````````````````````
+ADDING RECORDS
+
+Add: &,16,22,0,IntVar
+
+Returns the record number of the new record in IntVar.
+```````````````````````````````````````````````````````````````````````````````
+RECORD INFO
+
+Info: &,16,23,0,IntVar
+
+Returns the record number of the highest record number in IntVar.
+```````````````````````````````````````````````````````````````````````````````

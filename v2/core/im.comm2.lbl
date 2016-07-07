@@ -1,20 +1,21 @@
-	ON IM GOTO{:60002}:RETURN
+{number:60000}
+	on im goto {:60002}:return
 {:60002}
-	&,18,0:GOSUB 1914:IF PEEK(1063)<>250 THEN PRINT# 131,"ATE1V1M1"
+	&,18,0:gosub 1914:if peek(1063)<>250 then print# 131,"ate1v1m1"
 {:60004}
-	&,52,16,3:A$="{$c3}/{$c7}":IF A%THEN A$="{$c1}{$d3}{$c3}{$c9:2}"
-	A%=QB:&"{f6:2}{white}{$c9}MAGE {$cd}INI-{$d4}ERM, {white}{pound}%A {lt. blue}{$c2}{$d0}{$d3}, {white}{pound}$A {lt. blue}{$cd}ODE{f6}"
-	&"{white}{$c2}{lt. blue}AUD{blue}, {white}{$d4}{lt. blue}ERM{blue}, {white}{$cd}{lt. blue}ODE{blue}, {white}{$d1}{lt. blue}UIT{blue}: {white}"
+	&,52,16,3:a$="{$c3}/{$c7}":if a%then a$="{$c1}{$d3}{$c3}{$c9:2}"
+	a%=qb:&"{f6:2}{white}{$c9}mage {$cd}ini-{$d4}erm, {white}{pound}%a {lt. blue}{$c2}{$d0}{$d3}, {white}{pound}$a {lt. blue}{$cd}ode{f6}"
+	&"{white}{$c2}{lt. blue}aud{blue}, {white}{$d4}{lt. blue}erm{blue}, {white}{$cd}{lt. blue}ode{blue}, {white}{$d1}{lt. blue}uit{blue}: {white}"
 {:60010}
-	&"{pound}G1":IF TR%<1 OR AN$="{$d1}"THEN:&"{$d1}UIT{f6:2}":A$="E0V0":GOTO{:60026}
-	IF AN$="{$d4}"THEN:&"{$d4}ERM{f6:2}({$d0}RESS {f5}{$c3}= {$c3}{$d4}{$d2}{$cc}{f5} TO {$c5}XIT){f6:2}":&,10:GOTO{:60004}
-	IF AN$="{$cd}"THEN:&"{$cd}ODE{f6}":&,52,16,2:GOTO{:60004}
-	IF AN$="{$c2}"THEN:&"{$c2}AUD{f6}":GOSUB{:60020}:GOTO{:60004}
-	GOTO{:60010}
+	&"{pound}g1":if tr%<1 or an$="{$d1}"then:&"{$d1}uit{f6:2}":a$="e0v0":goto {:60026}
+	if an$="{$d4}"then:&"{$d4}erm{f6:2}({$d0}ress {f5}{$c3}= {$c3}{$d4}{$d2}{$cc}{f5} to {$c5}xit){f6:2}":&,10:goto {:60004}
+	if an$="{$cd}"then:&"{$cd}ode{f6}":&,52,16,2:goto {:60004}
+	if an$="{$c2}"then:&"{$c2}aud{f6}":gosub {:60020}:goto {:60004}
+	goto {:60010}
 {:60020}
-	LP=1:&"1-300 2-600 3-1200 4-2400 5-4800 6-9600 7-19200 8-38400: "
-	&"{pound}G1":A=VAL(AN$)-1:IF A<0 OR A>7 THEN RETURN
-	QB=300*2^A:&,41,A:A=QB:&"{pound}V7-{pound}!A{f6}"
+	lp=1:&"1-300 2-600 3-1200 4-2400 5-4800 6-9600 7-19200 8-38400: "
+	&"{pound}g1":a=val(an$)-1:if a<0 or a>7 then return
+	qb=300*2^a:&,41,a:a=qb:&"{pound}v7-{pound}!a{f6}"
 {:60026}
-	IF PEEK(1063)<>250 THEN PRINT# 131,"AT"
-	RETURN
+	if peek(1063)<>250 then print# 131,"at"
+	return

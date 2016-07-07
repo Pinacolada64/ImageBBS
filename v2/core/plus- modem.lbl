@@ -1,110 +1,112 @@
-	ON X GOTO{:4002},{:4018},{:4026},{:4036},{:4050},{:4102},{:4090},{:4156},{:4176},{:4024}
+{number:4000}
+	on x goto {:4002},{:4018},{:4026},{:4036},{:4050},{:4102},{:4090},{:4156},{:4176},{:4024}
 {:4002}
-	IF VAL(MT$)=0 THEN RETURN
+	if val(mt$)=0 then return
 {:4004}
-	GET#131,A$:GOSUB{:4024}:GOSUB{:4176}:M$="Z":T=50:GOSUB{:4156}
-	M$="E0V0":IF MID$(MT$,7,1)="{$c8}"THEN M$=M$+"H":IF MID$(MT$,6,1)="0"THEN M$=M$+"0"
-	M$=M$+"X"+MID$(MT$,8,1)+"M"+CHR$(MF+48)+"B"+MID$(MT$,10,1)
-	GOSUB{:4014}:ON-(T=0)GOTO{:4004}:&,52,43,3:A=49:IF A%OR MID$(MT$,3,1)<>"{$c1}"THEN A=48
-	M$="S0="+CHR$(A)+"S2=27S7=25":GOSUB{:4014}:ON-(T=0)GOTO{:4004}:&,22,10:GOTO{:4176}
+	get#131,a$:gosub {:4024}:gosub {:4176}:m$="z":t=50:gosub {:4156}
+	m$="e0v0":if mid$(mt$,7,1)="{$c8}"then m$=m$+"h":if mid$(mt$,6,1)="0"then m$=m$+"0"
+	m$=m$+"x"+mid$(mt$,8,1)+"m"+chr$(mf+48)+"b"+mid$(mt$,10,1)
+	gosub {:4014}:on-(t=0)goto {:4004}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"{$c1}"then a=48
+	m$="s0="+chr$(a)+"s2=27s7=25":gosub {:4014}:on-(t=0)goto {:4004}:&,22,10:goto {:4176}
 {:4014}
-	X=5
+	x=5
 {:4016}
-	A$=M$:T=50:&,22,10:GOSUB{:4156}:X=X-1:ON-(A<>0 AND X>0)GOTO{:4016}:RETURN
+	a$=m$:t=50:&,22,10:gosub {:4156}:x=x-1:on-(a<>0 and x>0)goto {:4016}:return
 {:4018}
-	Z=VAL(MT$):GOSUB{:4026}:GOSUB{:4100}:IF A=.THEN{:4024}
-	FOR Y=1 TO Z:ON Y GOSUB{:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:GOSUB{:4026}:GOSUB{:4100}:IF A=.THEN Y=Z
+	z=val(mt$):gosub {:4026}:gosub {:4100}:if a=.then{:4024}
+	for y=1 to z:on y gosub {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:gosub {:4026}:gosub {:4100}:if a=.then y=z
 {:4022}
-	NEXT
+	next
 {:4024}
-	ON VAL(MT$)GOTO{:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:RETURN
+	on val(mt$)goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:return
 {:4026}
-	IF MID$(MT$,2,1)="{$c4}"THEN{:4144}
-	&,22,15:FOR X=1 TO 3:PRINT# 131,CHR$(27);:&,22,5:NEXT:&,22,10
-	IF MID$(MT$,6,1)="0"THEN A$="H0":GOSUB{:4156}:GOTO{:4034}
-	IF MID$(MT$,4,1)="{$c8}"THEN A$="H":GOSUB{:4156}
+	if mid$(mt$,2,1)="{$c4}"then{:4144}
+	&,22,15:for x=1 to 3:print# 131,chr$(27);:&,22,5:next:&,22,10
+	if mid$(mt$,6,1)="0"then a$="h0":gosub {:4156}:goto {:4034}
+	if mid$(mt$,4,1)="{$c8}"then a$="h":gosub {:4156}
 {:4034}
-	&,22,5:GOTO{:4176}
+	&,22,5:goto {:4176}
 {:4036}
-	IF LEFT$(MT$,1)<>"0"AND MID$(MT$,5,1)="{$c8}"THEN A$="H1":GOSUB{:4156}
-	RETURN
+	if left$(mt$,1)<>"0"and mid$(mt$,5,1)="{$c8}"then a$="h1":gosub {:4156}
+	return
 {:4050}
-	T=0:A$="":&,4:A=PEEK(780)AND 127:IF A=0 THEN RETURN
+	t=0:a$="":&,4:a=peek(780)and 127:if a=0 then return
 {:4052}
-	A$=RIGHT$(A$+CHR$(A),3):T=0:IF A=13 THEN B=VAL(A$):GOTO{:4056}
+	a$=right$(a$+chr$(a),3):t=0:if a=13 then b=val(a$):goto {:4056}
 {:4054}
-	&,4:A=PEEK(780)AND 127:ON-(A<>0)GOTO{:4052}:T=T+1:ON-(T<100)GOTO{:4054}:RETURN
+	&,4:a=peek(780)and 127:on-(a<>0)goto {:4052}:t=t+1:on-(t<100)goto {:4054}:return
 {:4056}
-	A=1:ON B+1 GOTO{:4060},{:4166},{:4058},{:4062},{:4060},{:4168},{:4060},{:4060},{:4060},{:4060},{:4170}
+	a=1:on b+1 goto {:4060},{:4166},{:4058},{:4062},{:4060},{:4168},{:4060},{:4060},{:4060},{:4060},{:4170}
 {:4058}
-	&,52,43,3:ON-(MID$(MT$,3,1)="{$cd}"AND A%=0)GOSUB{:4090}:A=2:RETURN
+	&,52,43,3:on-(mid$(mt$,3,1)="{$cd}"and a%=0)gosub {:4090}:a=2:return
 {:4060}
-	A=0:RETURN
+	a=0:return
 {:4062}
-	A=3:RETURN
+	a=3:return
 {:4090}
-	PRINT# 131,"ATA":RETURN
+	print# 131,"ata":return
 {:4100}
-	A=SGN(PEEK(2033)AND 128):RETURN
+	a=sgn(peek(2033)and 128):return
 {:4102}
-	&,52,16,1:X=B:GOSUB{:4180}:&"{f6}{lt. blue}{$c4}IALING {pound}$B: {pound}$C{f6}":A$="DT"+C$:GOSUB{:4156}
+	&,52,16,1:x=b:gosub {:4180}:&"{f6}{lt. blue}{$c4}ialing {pound}$b: {pound}$c{f6}":a$="dt"+c$:gosub {:4156}
 {:4104}
-	IF PEEK(653)AND 2 THEN{:4128}
-	ON A GOTO{:4122}:X=-(B=1)-2*(B=5)-3*(B=10):IF X THEN{:4124}
-	ON B GOTO{:4022},{:4112},{:4114},{:4116},{:4120},{:4118},{:4120},{:4116},{:4116},{:4126},{:4112},{:4112}
+	if peek(653)and 2 then{:4128}
+	on a goto {:4122}:x=-(b=1)-2*(b=5)-3*(b=10):if x then{:4124}
+	on b goto {:4022},{:4112},{:4114},{:4116},{:4120},{:4118},{:4120},{:4116},{:4116},{:4126},{:4112},{:4112}
 {:4110}
-	GOSUB{:4158}:GOTO{:4104}
+	gosub {:4158}:goto {:4104}
 {:4112}
-	&"{$d2}ING...":GOTO{:4110}
+	&"{$d2}ing...":goto {:4110}
 {:4114}
-	&"{$ce}O {$c3}ARRIER{f6}":GOTO{:4126}
+	&"{$ce}o {$c3}arrier{f6}":goto {:4126}
 {:4116}
-	&"{$c5}RROR{f6}":GOTO{:4126}
+	&"{$c5}rror{f6}":goto {:4126}
 {:4118}
-	&"{$ce}O {$c4}IAL{$d4}ONE{f6}":&,22,100:GOTO{:4126}
+	&"{$ce}o {$c4}ial{$d4}one{f6}":&,22,100:goto {:4126}
 {:4120}
-	&"{$c2}USY{f6}":GOTO{:4126}
+	&"{$c2}usy{f6}":goto {:4126}
 {:4122}
-	&"{$ce}O {$c3}ONNECTION{f6}":GOTO{:4126}
+	&"{$ce}o {$c3}onnection{f6}":goto {:4126}
 {:4124}
-	&,22,10:GOSUB{:4180}:Q%=QB:&"{$c3}ONNECT {pound}%Q{f6}":&,22,10:A=1:RETURN
+	&,22,10:gosub {:4180}:q%=qb:&"{$c3}onnect {pound}%q{f6}":&,22,10:a=1:return
 {:4126}
-	GOSUB{:4026}:&,22,30:A=0:RETURN
+	gosub {:4026}:&,22,30:a=0:return
 {:4128}
-	&"{$c1}BORTED{f6}":A=2:RETURN
+	&"{$c1}borted{f6}":a=2:return
 {:4144}
-	A=254:B=255:IF MID$(MT$,9,1)="{$d2}"THEN A=255:B=254
-	&,41,A:&,22,7:&,41,B:&,22,3:GOTO{:4176}
+	a=254:b=255:if mid$(mt$,9,1)="{$d2}"then a=255:b=254
+	&,41,a:&,22,7:&,41,b:&,22,3:goto {:4176}
 {:4148}
-	IF(PEEK(2033)AND 128)=0 THEN PRINT# 131,"AT"
-	&,69,31,20,STR$(QB),$8C
-	&,22,5:GOTO{:4176}
+	if(peek(2033)and 128)=0 then print# 131,"at"
+	&,69,31,20,str$(qb),$8c
+	&,22,5:goto {:4176}
 {:4154}
-	RETURN:Z=PEEK(53248):POKE 53248,1:&"{pound}$C: {pound}$A{f6}":POKE 53248,Z:RETURN
+	return:z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
 {:4156}
-	POKE 667,.:POKE 668,.:C$="{$d3}ENT":A$="AT"+A$:PRINT# 131,A$:GOSUB{:4154}
+	poke 667,.:poke 668,.:c$="{$d3}ent":a$="at"+a$:print# 131,a$:gosub {:4154}
 {:4158}
-	A$="":T=250
+	a$="":t=250
 {:4160}
-	&,4:A=PEEK(780)AND 127:IF A THEN T=200:A$=RIGHT$(A$+CHR$(A),32)
-	IF PEEK(653)=2 THEN{:4164}
-	T=T-1:ON-(T<1 AND A$="")GOTO{:4164}:ON-(A<>13 AND T>0)GOTO{:4160}:B=VAL(A$):A=0:RETURN
+	&,4:a=peek(780)and 127:if a then t=200:a$=right$(a$+chr$(a),32)
+	if peek(653)=2 then{:4164}
+	t=t-1:on-(t<1 and a$="")goto {:4164}:on-(a<>13 and t>0)goto {:4160}:b=val(a$):a=0:return
 {:4164}
-	B=0:A=1:RETURN
+	b=0:a=1:return
 {:4166}
-	QB=300:&,41,0:GOTO{:4148}
+	qb=300:&,41,0:goto {:4148}
 {:4168}
-	QB=1200:&,41,2:GOTO{:4148}
+	qb=1200:&,41,2:goto {:4148}
 {:4170}
-	QB=2400:&,41,3:GOTO{:4148}
+	qb=2400:&,41,3:goto {:4148}
 {:4172}
-	QB=4800:&,41,4:GOTO{:4148}
+	qb=4800:&,41,4:goto {:4148}
 {:4174}
-	QB=9600:&,41,5:GOTO{:4148}
+	qb=9600:&,41,5:goto {:4148}
 {:4176}
-	&,4:ON-(PEEK(668)<>PEEK(667))GOTO{:4176}:A$="":RETURN
+	&,4:on-(peek(668)<>peek(667))goto {:4176}:a$="":return
 {:4178}
-	QB=19200:&,41,6:GOTO{:4148}
+	qb=19200:&,41,6:goto {:4148}
 {:4180}
-	ON X GOTO{:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:GOTO{:4166}
-	REM COPYRIGHT 1991 NEW IMAGE 1/7/91
+	on x goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:goto {:4166}
+	rem +/modem
+	rem copyright 1991 new image 1/7/91

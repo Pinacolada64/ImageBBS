@@ -1,26 +1,27 @@
-	REM ADD BONUS
-	A=.:IF TC%/10=INT(TC%/10)AND TC%>1 THEN A=1
-	IF CA/100=INT(CA/100)AND CA>1 THEN A=A OR 2
-	IF CA/1000=INT(CA/1000)AND CA>1 THEN A=A OR 4
-	ON A GOTO{:4010},{:4014},{:4018},{:4030},{:4032}:RETURN
+{number:4000}
+	rem +.lo.bonus - add bonus credits
+	a=.:if tc%/10=int(tc%/10)and tc%>1 then a=1
+	if ca/100=int(ca/100)and ca>1 then a=a or 2
+	if ca/1000=int(ca/1000)and ca>1 then a=a or 4
+	on a goto {:4010},{:4014},{:4018},{:4030},{:4032}:return
 {:4010}
-	C%=50:REM TC%  /10
+	c%=50:rem tc%  /10
 {:4012}
-	A%=TC%:&"{f6:2}{green}{$d4}HIS IS {$d9}OUR {pound}#0{pound}%ATH {$c3}ALL!":GOTO{:4024}
+	a%=tc%:&"{f6:2}{green}{$d4}his is {$d9}our {pound}#0{pound}%ath {$c3}all!":goto {:4024}
 {:4014}
-	C%=100:REM CA /100
-	A=CA:&"{f6:2}{green}{$d9}OU ARE THE {pound}!ATH {$c3}ALLER TO THE {$d3}YSTEM!":GOTO{:4024}
+	c%=100:rem ca /100
+	a=ca:&"{f6:2}{green}{$d9}ou are the {pound}!ath {$c3}aller to the {$d3}ystem!":goto {:4024}
 {:4018}
-	C%=200:REM TC%/100 & CA/100
+	c%=200:rem tc%/100 & ca/100
 {:4020}
-	A=CA:A%=TC%:&"{f6:2}{$0f}{green}{rvrs on}{$d9}{$cf}{$d5} {$c8}{$c9}{$d4}{$a0}{$d4}{$c8}{$c5}{$a0}{$ca}{$c1}{$c3}{$cb}{$d0}{$cf}{$d4}!{f6:2}{lt. red}{$d9}OUR {pound}#0{pound}%ATH {$c3}ALL IS ALSO"
-	&" THE {pound}$ATH {$c3}ALL TO THE {$d3}YSTEM!"
+	a=ca:a%=tc%:&"{f6:2}{$0f}{green}{rvrs on}{$d9}{$cf}{$d5} {$c8}{$c9}{$d4}{$a0}{$d4}{$c8}{$c5}{$a0}{$ca}{$c1}{$c3}{$cb}{$d0}{$cf}{$d4}!{f6:2}{lt. red}{$d9}our {pound}#0{pound}%ath {$c3}all is also"
+	&" the {pound}$ath {$c3}all to the {$d3}ystem!"
 {:4024}
-	CR=CR+C%:A=CR:&"{f6:2}{gray3}{$d9}OU {$d7}IN {white}{pound}#0{pound}%C {gray3}{$c3}REDITS!{f6:2}"
-	&"{lt. green}{$d9}OU {$ce}OW {$c8}AVE{lt. red} {pound}!A {lt. green}{$c3}REDITS {$d4}OTAL!{f6:2}"
-	A$=" {yellow}{$c3}REDIT {$d7}INNER:{white}"+STR$(C%)+"{yellow} {$c3}REDITS":GOTO 1095
+	cr=cr+c%:a=cr:&"{f6:2}{gray3}{$d9}ou {$d7}in {white}{pound}#0{pound}%c {gray3}{$c3}redits!{f6:2}"
+	&"{lt. green}{$d9}ou {$ce}ow {$c8}ave{lt. red} {pound}!a {lt. green}{$c3}redits {$d4}otal!{f6:2}"
+	a$=" {yellow}{$c3}redit {$d7}inner:{white}"+str$(c%)+"{yellow} {$c3}redits":goto 1095
 {:4030}
-	C%=250:GOTO{:4012}:REM CA/1000
+	c%=250:goto {:4012}:rem ca/1000
 {:4032}
-	C%=500:GOTO{:4020}:REM TC%/10 & CA/1000
-	COPR. 1994 NEW IMAGE 9/18/94
+	c%=500:goto {:4020}:rem tc%/10 & ca/1000
+	copr. 1994 new image 9/18/94

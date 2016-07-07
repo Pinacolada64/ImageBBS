@@ -1,44 +1,45 @@
-	I=1:ON IM GOSUB{:60100},{:60200},{:60300},{:60400},{:60500},{:60500}
-	&"{f6:2}{$c5}ND OF {$d4}RANSFER.{f6:2}":RETURN
+{number:60000}
+	i=1:on im gosub {:60100},{:60200},{:60300},{:60400},{:60500},{:60500}
+	&"{f6:2}{$c5}nd of {$d4}ransfer.{f6:2}":return
 {:60002}
-	A=PEEK(53248):POKE 53248,1:&,18,0:A%=DV%:B%=VAL(DR$)
+	a=peek(53248):poke 53248,1:&,18,0:a%=dv%:b%=val(dr$)
 	&"{clear} {cyan}{$a2:37}{f6}"
-	&" {rvrs on} {pound}$X{pound}{back arrow}11: {f5}{pound}$F{f5}{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}EVICE   : {pound}%A{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}RIVE    : {pound}%B{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$d0}ROTOCOL : {pound}VL{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on} {pound}$x{pound}{back arrow}11: {f5}{pound}$f{f5}{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}evice   : {pound}%a{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}rive    : {pound}%b{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$d0}rotocol : {pound}vl{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
 	&" {gray3}{$bc}{rvrs on}{$a2:36}{rvrs off}{$be}{f6}"
-	&"{lt. red} {$c7}OOD: {white}00000  {lt. red}{$c2}AD: {white}00000  {lt. red}{$c2}YTES: {white}000000{f6}"
-	AN$=F$:&,16,X:&"{clear}":&,18,1:POKE 53248,A:B=-(RC<>.)*INT(RC/254+.999):RETURN
+	&"{lt. red} {$c7}ood: {white}00000  {lt. red}{$c2}ad: {white}00000  {lt. red}{$c2}ytes: {white}000000{f6}"
+	an$=f$:&,16,x:&"{clear}":&,18,1:poke 53248,a:b=-(rc<>.)*int(rc/254+.999):return
 {:60020}
-	AN$=TT$(I):GOSUB{:60022}:GOTO{:60024}
+	an$=tt$(i):gosub {:60022}:goto {:60024}
 {:60022}
-	&,15,6,58:DV%=VAL(A$):&,15,6,58:DR$=A$+":":&,15,6,13:F$=A$:RETURN
+	&,15,6,58:dv%=val(a$):&,15,6,58:dr$=a$+":":&,15,6,13:f$=a$:return
 {:60024}
-	CLOSE 15:CLOSE 2:OPEN 15,DV%,15:OPEN 2,DV%,2,DR$+F$+B$:GOSUB 1012
-	IF E%THEN CLOSE 2
-	RETURN
+	close 15:close 2:open 15,dv%,15:open 2,dv%,2,dr$+f$+b$:gosub 1012
+	if e%then close 2
+	return
 {:60100}
-	B$=",R":GOSUB{:60020}:IF E%THEN RETURN
+	b$=",r":gosub {:60020}:if e%then return
 {:60102}
-	X$="{$d3}ENDING":X=0:POKE 2036,-(RIGHT$(F$,1)="P"):GOSUB{:60002}:CLOSE 2
-	RETURN
+	x$="{$d3}ending":x=0:poke 2036,-(right$(f$,1)="p"):gosub {:60002}:close 2
+	return
 {:60200}
-	B$=",W":GOSUB{:60020}:IF E%=.THEN X$="{$d2}ECEIVING":X=1:GOSUB{:60002}:CLOSE 2
-	RETURN
+	b$=",w":gosub {:60020}:if e%=.then x$="{$d2}eceiving":x=1:gosub {:60002}:close 2
+	return
 {:60300}
-	FOR I=1 TO N:A=.:B$=",R":GOSUB{:60020}
-	IF E%=.THEN X$="{$d3}ENDING":X=2:GOSUB{:60002}:GOSUB{:60102}:IF B=.THEN{:60304}
-	TT$(I)=MID$(STR$(B),2)+":"+F$:NEXT
+	for i=1 to n:a=.:b$=",r":gosub {:60020}
+	if e%=.then x$="{$d3}ending":x=2:gosub {:60002}:gosub {:60102}:if b=.then{:60304}
+	tt$(i)=mid$(str$(b),2)+":"+f$:next
 {:60304}
-	N=I-1:RETURN
+	n=i-1:return
 {:60400}
-	DV%=D1%:DR$=MID$(STR$(D1%),2)+":":N=.
+	dv%=d1%:dr$=mid$(str$(d1%),2)+":":n=.
 {:60402}
-	F$="":X=3:GOSUB{:60002}:IF AN$=""THEN RETURN
-	F$=AN$:B$=",W":GOSUB{:60024}:IF E%THEN RETURN
-	X$="{$d2}ECEIVING":X=1:GOSUB{:60002}:CLOSE 2:IF B=.THEN RETURN
-	N=N+1:TT$(N)=MID$(STR$(B),2)+":"+F$:ON-(N<60)GOTO{:60402}
+	f$="":x=3:gosub {:60002}:if an$=""then return
+	f$=an$:b$=",w":gosub {:60024}:if e%then return
+	x$="{$d2}eceiving":x=1:gosub {:60002}:close 2:if b=.then return
+	n=n+1:tt$(n)=mid$(str$(b),2)+":"+f$:on-(n<60)goto {:60402}
 {:60500}
-	RETURN
-	COPR. 1994 NEW IMAGE 9/8/94
+	return
+	copr. 1994 new image 9/8/94

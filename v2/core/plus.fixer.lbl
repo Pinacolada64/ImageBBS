@@ -1,63 +1,64 @@
+{number:3000}
 {:3000}
-	&"{clear}{f6} {$c9}MAGE {$d3}TATS {$c6}IXER{f6:2}"
-	&"1. {$c3}OUNT {$d0}OSTS/{$d2}ESPS{f6}"
-	&"2. {$c3}OUNT {$d5}PLOADS{f6}"
-	&"3. {$c3}OUNT {$cd}AIL{f6}"
-	&"4. {$c3}OUNT {$c6}EEDBACK/{$d3}YSOP/{$ce}EW{f6}"
-	&"5. {$d3}CAN {$d5}SER {$cc}IST FOR {$c6}IRST {$c5}MPTY {$d3}LOT{f6}"
-	&"{$c1}. {$c4}O {$c1}{$cc:2} OF THE ABOVE{f6:2}"
-	&"> {pound}G1":Z=VAL(AN$):IF AN$="{$c1}"THEN FOR Z=1 TO 5:GOSUB{:3018}:NEXT:GOTO{:3000}
-	ON-(Z=0)GOTO{:3020}:GOSUB{:3018}:GOTO{:3000}
+	&"{clear}{f6} {$c9}mage {$d3}tats {$c6}ixer{f6:2}"
+	&"1. {$c3}ount {$d0}osts/{$d2}esps{f6}"
+	&"2. {$c3}ount {$d5}ploads{f6}"
+	&"3. {$c3}ount {$cd}ail{f6}"
+	&"4. {$c3}ount {$c6}eedback/{$d3}ysop/{$ce}ew{f6}"
+	&"5. {$d3}can {$d5}ser {$cc}ist for {$c6}irst {$c5}mpty {$d3}lot{f6}"
+	&"{$c1}. {$c4}o {$c1}{$cc:2} of the above{f6:2}"
+	&"> {pound}g1":z=val(an$):if an$="{$c1}"then for z=1 to 5:gosub {:3018}:next:goto {:3000}
+	on-(z=0)goto {:3020}:gosub {:3018}:goto {:3000}
 {:3018}
-	ON Z GOTO{:3100},{:3200},{:3300},{:3400},{:3500}:RETURN
+	on z goto {:3100},{:3200},{:3300},{:3400},{:3500}:return
 {:3020}
-	&"{f6:2}{$ce}OW TYPE {f5}{$c2}{$c1}{f5} TO CHECK NEW STATS.{f6}":GOTO 1812
+	&"{f6:2}{$ce}ow type {f5}{$c2}{$c1}{f5} to check new stats.{f6}":goto 1812
 {:3100}
-	P=0:R=0:DR=3:A$="E.{$d3}UB":GOSUB 1011:IF E%THEN:&:RETURN
-	&,2,2:BZ=VAL(A$):CLOSE 2
-	FOR I=1 TO BZ:A%=I:&"{$d3}UB {pound}%A:"
-	DR=4:A$="D.SUB"+STR$(I):GOSUB 1011:IF E%THEN:&"{pound}$E{f6}":GOTO{:3114}
-	&,2,2:RN=VAL(A$):B%=RN:C%=0:IF RN=0 THEN{:3112}
-	FOR X=2 TO RN+1:GOSUB 1001:INPUT# 2,A$,A$,A$,A$,A$:C%=C%+VAL(A$):NEXT
+	p=0:r=0:dr=3:a$="e.{$d3}ub":gosub 1011:if e%then:&:return
+	&,2,2:bz=val(a$):close 2
+	for i=1 to bz:a%=i:&"{$d3}ub {pound}%a:"
+	dr=4:a$="d.sub"+str$(i):gosub 1011:if e%then:&"{pound}$e{f6}":goto {:3114}
+	&,2,2:rn=val(a$):b%=rn:c%=0:if rn=0 then{:3112}
+	for x=2 to rn+1:gosub 1001:input# 2,a$,a$,a$,a$,a$:c%=c%+val(a$):next
 {:3112}
-	P=P+B%:R=R+C%:&"{pound}%B {$d0}OSTS, {pound}%C {$d2}ESPS{f6}"
+	p=p+b%:r=r+c%:&"{pound}%b {$d0}osts, {pound}%c {$d2}esps{f6}"
 {:3114}
-	CLOSE 2:NEXT
-	A%=P:B%=R:&"{f6}{$d4}OTALS:{pound}%A {$d0}OSTS{f6}       {pound}%B {$d2}ESPONSES{f6}"
-	GOSUB 1060:X=26:ST(X)=P:GOSUB 1026:X=27:ST(X)=R:GOSUB 1026:CLOSE 2:RETURN
+	close 2:next
+	a%=p:b%=r:&"{f6}{$d4}otals:{pound}%a {$d0}osts{f6}       {pound}%b {$d2}esponses{f6}"
+	gosub 1060:x=26:st(x)=p:gosub 1026:x=27:st(x)=r:gosub 1026:close 2:return
 {:3200}
-	U=0:DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN:&:RETURN
-	&,2,2:BZ=VAL(A$):CLOSE 2
-	FOR I=1 TO BZ:A%=I:&"{$d5}/{$c4} {pound}%A:"
-	DR=4:A$="D.U/D"+STR$(I):GOSUB 1011:IF E%THEN:&"{pound}$E{f6}":GOTO{:3210}
-	&,2,2:A%=VAL(A$):U=U+A%:&"{pound}%A {$c6}ILES{f6}"
+	u=0:dr=3:a$="e.{$d5}/{$c4}":gosub 1011:if e%then:&:return
+	&,2,2:bz=val(a$):close 2
+	for i=1 to bz:a%=i:&"{$d5}/{$c4} {pound}%a:"
+	dr=4:a$="d.u/d"+str$(i):gosub 1011:if e%then:&"{pound}$e{f6}":goto {:3210}
+	&,2,2:a%=val(a$):u=u+a%:&"{pound}%a {$c6}iles{f6}"
 {:3210}
-	CLOSE 2:NEXT
-	A%=U:&"{f6}{$d4}OTAL:{pound}%A {$c6}ILES{f6}"
-	GOSUB 1060:X=28:ST(X)=U:GOSUB 1026:CLOSE 2:RETURN
+	close 2:next
+	a%=u:&"{f6}{$d4}otal:{pound}%a {$c6}iles{f6}"
+	gosub 1060:x=28:st(x)=u:gosub 1026:close 2:return
 {:3300}
-	DR=2:GOSUB 1010:OPEN 2,DV%,0,"$"+DR$+"M.*":GET#2,A$,A$:&,8,2,1:N=0
+	dr=2:gosub 1010:open 2,dv%,0,"$"+dr$+"m.*":get#2,a$,a$:&,8,2,1:n=0
 {:3302}
-	&,8,2,1:S=ST:IF MID$(A$,7,5)="BLOCK"OR S<>.THEN{:3308}
-	IF VAL(MID$(A$,10))=0 THEN N=N+1:A%=N:&"#{pound}%A{pound}{back arrow}05>{pound}$A{f6}"
-	GOTO{:3302}
+	&,8,2,1:s=st:if mid$(a$,7,5)="block"or s<>.then{:3308}
+	if val(mid$(a$,10))=0 then n=n+1:a%=n:&"#{pound}%a{pound}{back arrow}05>{pound}$a{f6}"
+	goto {:3302}
 {:3308}
-	CLOSE 2:ST(25)=N:GOSUB 1060:X=25:GOSUB 1025:CLOSE 2:RETURN
+	close 2:st(25)=n:gosub 1060:x=25:gosub 1025:close 2:return
 {:3400}
-	GOSUB 1065:&,2,2:CLOSE 2:TT$=A$:AN$=A$:&,15,1:&"{pound}$A'S {$cd}AIL: "
-	DR=2:A$=LEFT$("M."+TT$,15)+",S,R":GOSUB{:3410}:ST(24)=N
-	&"{f6}{$c6}EEDBACK: ":DR=3:A$="E.FBACK,S,R":GOSUB{:3410}:ST(23)=N
-	&"{f6}{$ce}EW {$d5}SERS: ":DR=3:A$="E.NEW,S,R":GOSUB{:3410}:ST(29)=N
-	GOSUB 1060:X=23:GOSUB 1026:X=24:GOSUB 1026:X=29:GOSUB 1026:CLOSE 2:RETURN
+	gosub 1065:&,2,2:close 2:tt$=a$:an$=a$:&,15,1:&"{pound}$a's {$cd}ail: "
+	dr=2:a$=left$("m."+tt$,15)+",s,r":gosub {:3410}:st(24)=n
+	&"{f6}{$c6}eedback: ":dr=3:a$="e.fback,s,r":gosub {:3410}:st(23)=n
+	&"{f6}{$ce}ew {$d5}sers: ":dr=3:a$="e.new,s,r":gosub {:3410}:st(29)=n
+	gosub 1060:x=23:gosub 1026:x=24:gosub 1026:x=29:gosub 1026:close 2:return
 {:3410}
-	GOSUB 1011:N=0:IF E%THEN{:3414}
+	gosub 1011:n=0:if e%then{:3414}
 {:3412}
-	&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:3412}:N=N+1:ON-(S=0)GOTO{:3412}:CLOSE 2
+	&,2,2:s=st:on-(a$<>"{up arrow}"and s=0)goto {:3412}:n=n+1:on-(s=0)goto {:3412}:close 2
 {:3414}
-	&"{pound}!N{f6}":RETURN
+	&"{pound}!n{f6}":return
 {:3500}
-	L=UR+1:GOSUB 1065:&"{$d3}CANNING {$d5}SER {$cc}IST"
-	FOR X=1 TO UR:IF X/5=INT(X/5)THEN:&"."
-	GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN L=X:X=UR
-	NEXT:L1=L
-	GOSUB 1063:X=31:GOSUB 1001:PRINT# 2,L1:CLOSE 2:RETURN
+	l=ur+1:gosub 1065:&"{$d3}canning {$d5}ser {$cc}ist"
+	for x=1 to ur:if x/5=int(x/5)then:&"."
+	gosub 1001:&,2,2:if a$="{up arrow}"then l=x:x=ur
+	next:l1=l
+	gosub 1063:x=31:gosub 1001:print# 2,l1:close 2:return

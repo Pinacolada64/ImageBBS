@@ -1,13 +1,15 @@
-	&,28,1:DIM JM%(29,49)
+{number:3000}
+	&,28,1:dim jm%(29,49)
 {:3002}
-	&"{$cd}ENU #: {pound}I1":M=VAL(AN$):IF M<>0 THEN GOSUB{:3006}:GOTO{:3002}
-	&,28,1:GOTO 1812
+	&"{$cd}enu #: {pound}i1":m=val(an$):if m<>0 then gosub {:3006}:goto {:3002}
+	&,28,1:goto 1812
 {:3006}
-	N=0:DR=1:A$="S.MENU"+STR$(M)+",S,R":GOSUB 1011:IF E%THEN CLOSE 2:&:RETURN
+	n=0:dr=1:a$="s.menu"+str$(m)+",s,r":gosub 1011:if e%then close 2:&:return
 {:3008}
-	&,2,2:S=ST:ON-(A$="{up arrow}")GOTO{:3012}:LP=1:&:&,60,0,50,JM%(5,N),A$
-	JM%(0,N)=1:JM%(1,N)=1023:JM%(2,N)=-1:N=N+1:ON-(S=0 AND N<50)GOTO{:3008}
+	&,2,2:s=st:on-(a$="{up arrow}")goto {:3012}:lp=1:&:&,60,0,50,jm%(5,n),a$
+	jm%(0,n)=1:jm%(1,n)=1023:jm%(2,n)=-1:n=n+1:on-(s=0 and n<50)goto {:3008}
 {:3012}
-	IF N<50 THEN JM%(0,N)=0:JM%(1,N)=0:N=N+1:GOTO{:3012}
-	CLOSE 2:DR=3:GOSUB 1010:A$=DR$+"E.MENU"+STR$(M)
-	PRINT# 15,"S"A$:&,60,3,0,JM%(0,0),3000,A$,DV%:GOSUB 1012:&:RETURN
+	if n<50 then jm%(0,n)=0:jm%(1,n)=0:n=n+1:goto {:3012}
+	close 2:dr=3:gosub 1010:a$=dr$+"e.menu"+str$(m)
+	print# 15,"s"a$:&,60,3,0,jm%(0,0),3000,a$,dv%:gosub 1012:&:return
+	rem +.convert menu

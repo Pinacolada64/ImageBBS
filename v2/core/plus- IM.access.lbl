@@ -1,69 +1,70 @@
-	REM ACCESS MODULE
-	&"{clear}{white}{f6:2}{$cc}OADING {$c1}CCESS {$c7}ROUP {$c4}ATA...":GOSUB{:4072}
-	DR=3:A$="E.ACCESS":GOSUB 1011:FOR I=0 TO 9:X=I+1:GOSUB 1001:&,2,2:TT$(I)=A$
-	&,2,2:TT$(I+10)=A$:NEXT
+{number:4000}
+	rem access module
+	&"{clear}{white}{f6:2}{$cc}oading {$c1}ccess {$c7}roup {$c4}ata...":gosub {:4072}
+	dr=3:a$="e.access":gosub 1011:for i=0 to 9:x=i+1:gosub 1001:&,2,2:tt$(i)=a$
+	&,2,2:tt$(i+10)=a$:next
 {:4008}
-	&"{clear}{f6}#  {$c7}ROUP {$ce}AME{pound}{back arrow}19{$c6}LAGS{f6}{pound}VJ":FOR I=0 TO 9:A$=TT$(I):B$=TT$(I+10):A%=I
-	&"{pound}%A> {pound}$A{pound}{back arrow}19{pound}$B{f6}":IF RC THEN I=9
-	NEXT:&"{white}{pound}VJ{cyan}{f6} {$c5}DIT (0-9): {pound}G1{pound}V7{f6}":IF TR%<1 THEN{:4024}
-	ON-(AN$="{$cc}")GOTO{:4008}:ON-(AN$<"0"OR AN$>"9")GOTO{:4020}:T=VAL(AN$):&"{f6}"
-	POKE 53252,20:W$=TT$(T):P$="{$c7}ROUP {$ce}AME":PL=.:&,1,32:IF AN$<>""THEN TT$(T)=AN$
-	Q$=TT$(T+10):F$=Q$:GOSUB{:4026}:TT$(T+10)=Q$:GOTO{:4008}
+	&"{clear}{f6}#  {$c7}roup {$ce}ame{pound}{back arrow}19{$c6}lags{f6}{pound}vj":for i=0 to 9:a$=tt$(i):b$=tt$(i+10):a%=i
+	&"{pound}%a> {pound}$a{pound}{back arrow}19{pound}$b{f6}":if rc then i=9
+	next:&"{white}{pound}vj{cyan}{f6} {$c5}dit (0-9): {pound}g1{pound}v7{f6}":if tr%<1 then{:4024}
+	on-(an$="{$cc}")goto {:4008}:on-(an$<"0"or an$>"9")goto {:4020}:t=val(an$):&"{f6}"
+	poke 53252,20:w$=tt$(t):p$="{$c7}roup {$ce}ame":pl=.:&,1,32:if an$<>""then tt$(t)=an$
+	q$=tt$(t+10):f$=q$:gosub {:4026}:tt$(t+10)=q$:goto {:4008}
 {:4020}
-	&" {$d3}AVE {$c3}HANGES?: ":GOSUB 1902:IF A=.THEN{:4024}
-	&"{f6}{$d3}AVING...":FOR I=.TO 9:X=I+1:GOSUB 1001:PRINT# 2,TT$(I)R$TT$(I+10):NEXT
+	&" {$d3}ave {$c3}hanges?: ":gosub 1902:if a=.then{:4024}
+	&"{f6}{$d3}aving...":for i=.to 9:x=i+1:gosub 1001:print# 2,tt$(i)r$tt$(i+10):next
 {:4024}
-	CLOSE 2:RETURN
+	close 2:return
 {:4026}
-	&"{clear}":POKE 53252,38:FOR I=1 TO 20:B$=MID$(Q$,I,1)
-	IF I=2 THEN B$=B$+" TO 1":GOTO{:4042}
-	IF I=16 OR I=17 OR I=20 THEN{:4042}
-	IF I=6 THEN B$=MID$(STR$((VAL(B$)+1)*10),2):GOTO{:4042}
-	IF I=18 THEN B$=MID$(Q$,I,2):GOTO{:4042}
-	IF I=19 THEN{:4044}
-	IF B$="1"THEN B$="{$d9}ES"
-	IF B$="0"THEN B$="{$ce}O"
+	&"{clear}":poke 53252,38:for i=1 to 20:b$=mid$(q$,i,1)
+	if i=2 then b$=b$+" to 1":goto {:4042}
+	if i=16 or i=17 or i=20 then{:4042}
+	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:4042}
+	if i=18 then b$=mid$(q$,i,2):goto {:4042}
+	if i=19 then{:4044}
+	if b$="1"then b$="{$d9}es"
+	if b$="0"then b$="{$ce}o"
 {:4042}
-	A%=I:C$=DT$(I):&"{pound}#2{pound}# {pound}%A--{pound}$C{pound}{back arrow}20: {pound}$B{f6}"
+	a%=i:c$=dt$(i):&"{pound}#2{pound}# {pound}%a--{pound}$c{pound}{back arrow}20: {pound}$b{f6}"
 {:4044}
-	NEXT:&"{$c3}HANGE?: {pound}I1"
-	A=VAL(AN$):IF TR%<1 OR A<1 OR A>20 THEN RETURN
-	ON-(A=16 OR A=17 OR A=20)-2*(A=18)-3*(A=19)GOTO{:4062},{:4066},{:4026}
-	ON-(A=2 OR A=6)GOTO{:4052}:B$=MID$(STR$(1-VAL(MID$(Q$,A,1))),2):GOTO{:4060}
+	next:&"{$c3}hange?: {pound}i1"
+	a=val(an$):if tr%<1 or a<1 or a>20 then return
+	on-(a=16 or a=17 or a=20)-2*(a=18)-3*(a=19)goto {:4062},{:4066},{:4026}
+	on-(a=2 or a=6)goto {:4052}:b$=mid$(str$(1-val(mid$(q$,a,1))),2):goto {:4060}
 {:4052}
-	IF A=2 THEN B$=MID$(Q$,2,1)+"/1"
-	IF A=6 THEN B$=MID$(STR$((VAL(MID$(Q$,6,1))+1)*10),2)
-	P$=DT$(A):W$=B$:&,1,32:IF AN$=""THEN{:4026}
-	B$=LEFT$(AN$,1):IF A=6 THEN B$=MID$(STR$(INT(VAL(AN$)/10)-1),2,1)
+	if a=2 then b$=mid$(q$,2,1)+"/1"
+	if a=6 then b$=mid$(str$((val(mid$(q$,6,1))+1)*10),2)
+	p$=dt$(a):w$=b$:&,1,32:if an$=""then{:4026}
+	b$=left$(an$,1):if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
 {:4060}
-	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+1):&"{f6}":GOTO{:4026}
+	q$=left$(q$,a-1)+b$+mid$(q$,a+1):&"{f6}":goto {:4026}
 {:4062}
-	P$=DT$(A):B$=MID$(Q$,A,1):W$=B$:POKE 53252,1:PL=1:&,1,32:IF AN$<>""THEN B$=AN$
-	GOTO{:4060}
+	p$=dt$(a):b$=mid$(q$,a,1):w$=b$:poke 53252,1:pl=1:&,1,32:if an$<>""then b$=an$
+	goto {:4060}
 {:4066}
-	P$=DT$(A):B$=MID$(Q$,A,2):W$=B$:POKE 53252,2:PL=1:&,1,32:IF AN$<>""THEN B$=AN$
-	IF LEN(B$)=1 THEN B$="0"+B$
-	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+2):&"{f6}":GOTO{:4026}
+	p$=dt$(a):b$=mid$(q$,a,2):w$=b$:poke 53252,2:pl=1:&,1,32:if an$<>""then b$=an$
+	if len(b$)=1 then b$="0"+b$
+	q$=left$(q$,a-1)+b$+mid$(q$,a+2):&"{f6}":goto {:4026}
 {:4072}
-	DT$(1)="{$ce}ON-{$d7}EED {$d3}TATUS"
-	DT$(2)="{$c3}REDIT {$d2}ATIO"
-	DT$(3)="{$cc}OCAL {$cd}AINT"
-	DT$(4)="{$d0}OST/{$d2}ESPOND"
-	DT$(5)="{$d5}/{$c4} {$c1}CCESS"
-	DT$(6)="{$cd}AX.{$c5}DITOR {$cc}INES"
-	DT$(7)="{$d5}NLIMITED {$c4}/{$cc}S"
-	DT$(8)="{$d2}EMOTE {$cd}AINT"
-	DT$(9)="{$c5}{$cd}AIL"
-	DT$(10)="{$d5}SER {$cc}IST"
-	DT$(11)="{$c2}.{$c1}.{$d2}./{$cc}OG {$d6}IEW"
-	DT$(12)="{$d3}UBMAINT"
-	DT$(13)="{$c6}ILES {$cd}AINT"
-	DT$(14)="{$cd}{$c3}{$c9} {$c1}CCESS"
-	DT$(15)="{$d5}{$c4}S {$c1}T {$d0}RIMETIME"
-	DT$(16)="{$cd}AX {$c9}DLE {$d4}IME"
-	DT$(17)="{$c3}ALLS/{$c4}AY"
-	DT$(18)="{$d4}IME/{$c3}ALL"
-	DT$(19)="{$d4}IME/{$c3}ALL"
-	DT$(20)="{$c4}OWNLOADS/{$c3}ALL"
-	RETURN
-	COPR.1988 NEW IMAGE
+	dt$(1)="{$ce}on-{$d7}eed {$d3}tatus"
+	dt$(2)="{$c3}redit {$d2}atio"
+	dt$(3)="{$cc}ocal {$cd}aint"
+	dt$(4)="{$d0}ost/{$d2}espond"
+	dt$(5)="{$d5}/{$c4} {$c1}ccess"
+	dt$(6)="{$cd}ax.{$c5}ditor {$cc}ines"
+	dt$(7)="{$d5}nlimited {$c4}/{$cc}s"
+	dt$(8)="{$d2}emote {$cd}aint"
+	dt$(9)="{$c5}{$cd}ail"
+	dt$(10)="{$d5}ser {$cc}ist"
+	dt$(11)="{$c2}.{$c1}.{$d2}./{$cc}og {$d6}iew"
+	dt$(12)="{$d3}ubmaint"
+	dt$(13)="{$c6}iles {$cd}aint"
+	dt$(14)="{$cd}{$c3}{$c9} {$c1}ccess"
+	dt$(15)="{$d5}{$c4}s {$c1}t {$d0}rimetime"
+	dt$(16)="{$cd}ax {$c9}dle {$d4}ime"
+	dt$(17)="{$c3}alls/{$c4}ay"
+	dt$(18)="{$d4}ime/{$c3}all"
+	dt$(19)="{$d4}ime/{$c3}all"
+	dt$(20)="{$c4}ownloads/{$c3}all"
+	return
+	copr.1988 new image

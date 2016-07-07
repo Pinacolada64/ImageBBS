@@ -1,15 +1,16 @@
-	REM
-	POKE 53248,1:&"{clear}{$c3}HECKING {$ce}ET {$c6}ILES{f6:2}":GOSUB{:4004}:&"{f6:2}{$cb}EY: {pound}G1{f6:2}":POKE 53248,0:RETURN
+{number:4000}
+	rem +/lo.checknet
+	poke 53248,1:&"{clear}{$c3}hecking {$ce}et {$c6}iles{f6:2}":gosub {:4004}:&"{f6:2}{$cb}ey: {pound}g1{f6:2}":poke 53248,0:return
 {:4004}
-	DR=2:GOSUB 1010:CLOSE 1:OPEN 1,8,0,"$"+DR$+"NM.L.*,P,R"
-	GET#1,A$,A$:&,8,1,1:N=0
+	dr=2:gosub 1010:close 1:open 1,8,0,"$"+dr$+"nm.l.*,p,r"
+	get#1,a$,a$:&,8,1,1:n=0
 {:4008}
-	&,8,1,1:IF MID$(A$,8,5)="NM.L."THEN N=N+1:TT$(N)=A$:GOTO{:4008}
-	CLOSE 2:IF N=0 THEN:&" {$ce}O {$ce}ETWORK {$c6}ILES WAITING...":RETURN
-	FOR I=1 TO N:A$=MID$(TT$(I),8,8)+",S,R":GOSUB 1011:A%=0:IF E%THEN{:4016}
+	&,8,1,1:if mid$(a$,8,5)="nm.l."then n=n+1:tt$(n)=a$:goto {:4008}
+	close 2:if n=0 then:&" {$ce}o {$ce}etwork {$c6}iles waiting...":return
+	for i=1 to n:a$=mid$(tt$(i),8,8)+",s,r":gosub 1011:a%=0:if e%then{:4016}
 {:4014}
-	A%=A%+1:&,2,2:ON-(ST=0)GOTO{:4014}
+	a%=a%+1:&,2,2:on-(st=0)goto {:4014}
 {:4016}
-	CLOSE 2:A$=MID$(TT$(I),13,3):&" >{pound}$A -- {pound}%A {$c6}ILES{f6}":NEXT
-	RETURN
-	REM
+	close 2:a$=mid$(tt$(i),13,3):&" >{pound}$a -- {pound}%a {$c6}iles{f6}":next
+	return
+	rem

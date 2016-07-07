@@ -1,15 +1,15 @@
 {number:3000}
 ' this is i.GF, renumbered: "+.GF"
-	GOSUB{:3024}:ON MM GOTO{:3100},{:3016},{:3015},{:3332},{:3028},{:3058}
+	goSUB {:3024}:ON MM goTO {:3100},{:3016},{:3015},{:3332},{:3028},{:3058}
 	&,28,1:CP=1:F%=10:LM$="":DIM S%(39,60),E%(60)
 ' $27: Files Section Closed (GF)
-	&,52,$27,3:ON A%GOTO{:3020}
-	ON-(PF<>0)GOTO{:3010}:PF=0:A$="{$c7}{$c6}.{$cd}AIN"+"":TP=0
+	&,52,$27,3:ON A%goTO {:3020}
+	ON-(PF<>0)goTO {:3010}:PF=0:A$="{$c7}{$c6}.{$cd}AIN"+"":TP=0
 {:3008}
 	PF=PF+1:PF$(PF)=A$
 {:3010}
-	GOSUB{:3350}:IF U$=""THEN GOSUB{:3346}:ON-(TP=0)GOSUB{:3316}
-	GOSUB{:3024}
+	goSUB {:3350}:IF U$=""THEN goSUB {:3346}:ON-(TP=0)goSUB {:3316}
+	goSUB {:3024}
 {:3014}
 	GOTO 1811
 {:3015}
@@ -25,7 +25,7 @@
 	LC=7:H$="{$cc}IBRARY":J$="{$c6}ILE":K$="":L$="":M$=""
 	I$="{$d3}UBOP":R$=CHR$(13):SY$="{$c6}ILES"+"":RETURN
 {:3028}
-	A$="{gray3}???":B$="":ON A GOTO{:3030},{:3032},{:3034},{:3036},{:3038},{:3040},{:3042},{:3044},{:3046}:RETURN
+	A$="{gray3}???":B$="":ON A goTO {:3030},{:3032},{:3034},{:3036},{:3038},{:3040},{:3042},{:3044},{:3046}:RETURN
 {:3030}
 	DR=4:A$="{yellow}{$c4}IR":B$="D.{$c7}{$c6}.":RETURN
 {:3032}
@@ -47,76 +47,76 @@
 {:3048}
 	DR=4:GOSUB 1010:A$=DR$+"D."+PF$(PF):RETURN
 {:3050}
-	GOSUB{:3048}:&,60,2,0,S%(0,0),A$,DV%:GOTO 1012
+	goSUB {:3048}:&,60,2,0,S%(0,0),A$,DV%:GOTO 1012
 {:3052}
-	GOSUB{:3048}:PRINT# 15,"S"A$:&,60,3,0,S%(0,0),80+80*S%(0,0),A$,DV%:GOTO 1012
+	goSUB {:3048}:PRINT# 15,"S"A$:&,60,3,0,S%(0,0),80+80*S%(0,0),A$,DV%:GOTO 1012
 {:3054}
-	LP=1:&"{f6}{$d3}ORRY, YOU DO NOT HAVE ENOUGH{$a0}CREDITS!":GOTO{:3014}
+	LP=1:&"{f6}{$d3}ORRY, YOU DO NOT HAVE ENOUGH{$a0}CREDITS!":goTO {:3014}
 {:3056}
-	LP=1:&"{f6}{$d3}ORRY, YOU MUST BE IN COLOR/GRAPHICS MODE TO VIEW MOVIES.":GOTO{:3014}
+	LP=1:&"{f6}{$d3}ORRY, YOU MUST BE IN COLOR/GRAPHICS MODE TO VIEW MOVIES.":goTO {:3014}
 {:3058}
 	B=0:FOR I=0 TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 1902:B=B+2^I*A:NEXT:A=B:RETURN
 {:3060}
 	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="({$cd}) "+P$
 	RETURN
 {:3064}
-	GOSUB{:3052}:GOTO{:3356}
+	goSUB {:3052}:goTO {:3356}
 {:3100}
-	A=ABS(INT(VAL(LEFT$(AN$,4)))):IF A THEN BR=A:GOTO{:3200}
-	IF PF>1 AND(A$="<"OR A$="{$c2}")THEN PF=PF-1:GOTO{:3010}
-	IF PF>1 AND A$="{$cd}"THEN PF=1:GOTO{:3010}
-	ON-(A$="{$d1}")GOTO{:3022}:GOSUB{:3108}:GOTO{:3014}
+	A=ABS(INT(VAL(LEFT$(AN$,4)))):IF A THEN BR=A:goTO {:3200}
+	IF PF>1 AND(A$="<"OR A$="{$c2}")THEN PF=PF-1:goTO {:3010}
+	IF PF>1 AND A$="{$cd}"THEN PF=1:goTO {:3010}
+	ON-(A$="{$d1}")goTO {:3022}:goSUB {:3108}:goTO {:3014}
 {:3108}
-	ON-(A$="{$cc}")-2*(A$="{$d3}")GOTO{:3316},{:3322}
+	ON-(A$="{$cc}")-2*(A$="{$d3}")goTO {:3316},{:3322}
 	IF Q THEN MM=-(A$="{$c1}")-2*(A$="{$c5}")-3*(A$="{$cb}")-4*(A$="{$da}"):IF MM THEN{:3120}
-	ON-(A$="")GOTO{:3316}
+	ON-(A$="")goTO {:3316}
 	&"{f6:2}{$d5}NKNOWN {$c3}OMMAND. {$d4}YPE {f5}?{f5} FOR {$c8}ELP.{f6:2}":RETURN
 {number:3120}
 {:3120}
 ' load "+/GF.maint": 2620 was 72
-	A$="{$c7}{$c6}.MAINT":GOSUB 2620:ON TZ GOSUB{:3064}:RETURN
+	A$="{$c7}{$c6}.MAINT":GOSUB 2620:ON TZ goSUB {:3064}:RETURN
 {number:3200}
 {:3200}
-	ON-(BR<1 OR BR>RN)GOTO{:3014}:X=E%(BR):IF NL=0 AND S%(2,BR)=5 THEN{:3056}
+	ON-(BR<1 OR BR>RN)goTO {:3014}:X=E%(BR):IF NL=0 AND S%(2,BR)=5 THEN{:3056}
 	A=7:GOSUB 1004:IF Q OR A OR S%(5,X)=0 THEN{:3210}
-	A=S%(5,X):ON-(A>CR)GOTO{:3054}:CR=CR-A:IF CP=0 THEN{:3210}
+	A=S%(5,X):ON-(A>CR)goTO {:3054}:CR=CR-A:IF CP=0 THEN{:3210}
 	B$="E.CR.POOL 1":DR=3:A$=B$+",S,R":GOSUB 1011:INPUT# 2,B:INPUT# 2,C:C=C+A:CLOSE 2
 	PRINT# 15,"S"DR$B$:A$=B$+",S,W":GOSUB 1011:PRINT# 2,B:PRINT# 2,C:CLOSE 2
 {:3210}
-	S%(6,X)=S%(6,X)+1:&,60,4,0,S%(10,X),D1$:GOSUB{:3052}
-	A=S%(2,X):GOSUB{:3028}:&,60,1,30,S%(13,X),C$:A$=" "+A$+": "+C$
-	A=S%(2,X):GOSUB{:3028}
+	S%(6,X)=S%(6,X)+1:&,60,4,0,S%(10,X),D1$:goSUB {:3052}
+	A=S%(2,X):goSUB {:3028}:&,60,1,30,S%(13,X),C$:A$=" "+A$+": "+C$
+	A=S%(2,X):goSUB {:3028}
 	DV%(0)=S%(3,X):DR%(0)=S%(4,X):DR=0:IF A=1 THEN DR=4
 	GOSUB 1010:&,60,1,16,S%(27,X),A$:B$=B$+A$
 	ON A GOTO {:3222},{:3240},{:3230},{:3228},{:3224},{:3226},{:3234},{:3236},{:3238}
 {:3222}
-	A$=MID$(B$,3):GOTO{:3008}
+	A$=MID$(B$,3):goTO {:3008}
 {:3224}
 ' read movie file:
-	GOSUB 1011:ON-(E%<>0)GOTO{:3020}:&"{clear}{pound}U1":&,3,2,F%
+	GOSUB 1011:ON-(E%<>0)goTO {:3020}:&"{clear}{pound}U1":&,3,2,F%
 {:3225}
-	&"{f6:2}PRESS A KEY:{pound}G1{pound}U0{clear}":GOTO{:3010}
+	&"{f6:2}PRESS A KEY:{pound}G1{pound}U0{clear}":goTO {:3010}
 {:3226}
 ' 16: ASCII Translation
-	&,52,16,3:G%=A%:&,52,16,0:GOSUB 1075:&,52,16,G%:GOTO{:3020}
+	&,52,16,3:G%=A%:&,52,16,0:GOSUB 1075:&,52,16,G%:goTO {:3020}
 {:3228}
 ' read text file:
-	GOSUB 1075:GOTO{:3225}
+	GOSUB 1075:goTO {:3225}
 {:3230}
 ' load "+/GF.<module>": 2620 was 72
-	A$="{$c7}{$c6}."+A$:GOSUB 2620:GOTO{:3014}
+	A$="{$c7}{$c6}."+A$:GOSUB 2620:goTO {:3014}
 {:3234}
-	TP=1:A$=MID$(B$,3):GOTO{:3008}
+	TP=1:A$=MID$(B$,3):goTO {:3008}
 {:3236}
-	TP=2:A$=MID$(B$,3):GOTO{:3008}
+	TP=2:A$=MID$(B$,3):goTO {:3008}
 {:3238}
-	TP=3:A$=MID$(B$,3):GOTO{:3008}
+	TP=3:A$=MID$(B$,3):goTO {:3008}
 {:3240}
 	Z$=A$:GOSUB 2100:A$=Z$:DR=0:GOTO 71
 {:3300}
 	&"{clear} {blue}{pound}O{$a2}{pound}O{$a2}{f6} {rvrs on}{lt. green} {pound}$H: {pound}V8{pound}{back arrow}39{f6}"
-	ON-(S%(2,0)=0)GOTO{:3308}:AN$=SO$:&,15,1:ON-(S%(2,0)<>ID OR ID=0)GOTO{:3306}
-	&" {rvrs on} ({$d9}OU ARE THE {pound}$I HERE){pound}{back arrow}39{f6}":Q=1:GOTO{:3308}
+	ON-(S%(2,0)=0)goTO {:3308}:AN$=SO$:&,15,1:ON-(S%(2,0)<>ID OR ID=0)goTO {:3306}
+	&" {rvrs on} ({$d9}OU ARE THE {pound}$I HERE){pound}{back arrow}39{f6}":Q=1:goTO {:3308}
 {:3306}
 	&" {rvrs on} {pound}$I: {pound}V7{pound}{back arrow}39{f6}"
 {:3308}
@@ -124,25 +124,25 @@
 {:3310}
 	&"{purple} {$b0}{pound}$Y{$ae}{f6} {$dd}{lt. green} {$d4}HIS {pound}$H IS {$c5}MPTY.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
 {:3312}
-	A%=BR:X=E%(BR):A=S%(2,X):GOSUB{:3028}:&,60,1,28,S%(13,X),C$
+	A%=BR:X=E%(BR):A=S%(2,X):goSUB {:3028}:&,60,1,28,S%(13,X),C$
 	&" {purple}{$dd}{white}{pound}#2{pound}# {pound}%A {pound}$A{lt. blue}: {cyan}{pound}$C{pound}{back arrow}38{purple}{$dd}{f6}":RETURN
 {:3316}
-	GOSUB{:3300}:IF TP THEN RETURN
+	goSUB {:3300}:IF TP THEN RETURN
 	IF RN=0 THEN{:3310}
-	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=1 TO RN:GOSUB{:3312}:BR=BR+RN*RC:NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
+	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=1 TO RN:goSUB {:3312}:BR=BR+RN*RC:NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
 {:3322}
-	GOSUB{:3300}:IF TP THEN RETURN
+	goSUB {:3300}:IF TP THEN RETURN
 	IF RN=0 THEN{:3310}
 	KK=1:A=ABS(INT(VAL(MID$(AN$,2,4)))):IF A>0 AND A<=RN THEN KK=A
-	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=KK TO RN:GOSUB{:3332}:BR=BR+RN*S:IF BR<RN THEN:&"{purple} {$ab}{pound}$Y{$b3}{f6}{pound}Q0"
+	&"{purple} {$b0}{pound}$Y{$ae}{f6}{lt. green}":FOR BR=KK TO RN:goSUB {:3332}:BR=BR+RN*S:IF BR<RN THEN:&"{purple} {$ab}{pound}$Y{$b3}{f6}{pound}Q0"
 	NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
 {:3332}
-	GOSUB{:3312}:S=RC:ON-(Q=0)GOTO{:3338}:A%=S%(1,X):&,60,1,16,S%(27,X),A$
+	goSUB {:3312}:S=RC:ON-(Q=0)goTO {:3338}:A%=S%(1,X):&,60,1,16,S%(27,X),A$
 	&"{purple} {$dd}{cyan}{$c6}ILE:{pound}$B{pound}$A{pound}{back arrow}29{$c1}CCS:{pound}#4{pound}%A{purple}{$dd}{f6}":S=S+RC
 	IF A<>1 THEN B%=S%(3,X):C%=S%(4,X):&"{purple} {$dd}{cyan}{$c4}EV:{pound}#2{pound}%B {$c4}RV:{pound}#3{pound}%C{pound}{back arrow}38{purple}{$dd}{f6}"
 {:3338}
 	A%=S%(5,X):IF A%THEN:&"{purple} {$dd}{cyan}{$c3}REDITS:{pound}%A{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
-	ON A GOTO{:3344}:A%=S%(6,X):&,60,5,0,S%(10,X),AN$
+	ON A goTO {:3344}:A%=S%(6,X):&,60,5,0,S%(10,X),AN$
 	IF A%THEN:&,15:&"{purple} {$dd}{cyan}{$d5}SED {pound}%A {$d4}IMES{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}{$cc}AST:{pound}V7{$cd}{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
 {:3344}
 	RETURN
@@ -152,14 +152,14 @@
 {:3350}
 	Y$=MID$(AK$,2,36):Q=0:A=13:GOSUB 1004:B=A:A=8:GOSUB 1004:IF A+B THEN Q=1
 	S%(0,0)=0:S%(1,0)=TP:S%(2,0)=0:S%(3,0)=DV%(4):S%(4,0)=DR%(4)
-	&,60,0,30,S%(25,0),PF$(PF):GOSUB{:3050}:GOSUB{:3060}
+	&,60,0,30,S%(25,0),PF$(PF):goSUB {:3050}:goSUB {:3060}
 {:3356}
 	TP=S%(1,0):DV%(7)=S%(3,0):DR%(7)=S%(4,0):IF S%(2,0)=ID AND ID<>0 THEN Q=1
-	IF Q THEN A%=S%(0,0):IF A%THEN FOR I=1 TO A%:S%(0,I)=1:NEXT:GOTO{:3362}
+	IF Q THEN A%=S%(0,0):IF A%THEN FOR I=1 TO A%:S%(0,I)=1:NEXT:goTO {:3362}
 	A%=0:IF S%(0,0)THEN:&,60,6,S%(0,0),0,S%(0,1),S%(1,1),80,1,2^AC%
 {:3362}
 	RN=A%:IF RN THEN:&,60,8,S%(0,0),80,1,S%(0,1),E%(1),1
-	X=S%(2,0):GOSUB{:3370}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A$="{$ce}O {$cf}NE"
+	X=S%(2,0):goSUB {:3370}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A$="{$ce}O {$cf}NE"
 	SO$=A$:IF Q THEN SY$=SY$+"-{$cd}AINT"
 	RETURN
 {:3370}

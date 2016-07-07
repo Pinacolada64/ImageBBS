@@ -1,42 +1,43 @@
-	ON IM GOTO{:60002}:RETURN
+{number:60000}
+	on im goto {:60002}:return
 {:60002}
-	GOSUB 1634:&"{clear}{f6}{cyan}{rvrs on} {$c3}URRENT {$d3}TATUS: {f6}"
-	AN$=NA$:&,15,1: &"{f6}{white}{rvrs on} {$ce}AME       :{rvrs off}{yellow} {pound}V7"
-	&"{pound}{back arrow}39 {white}{rvrs on} {$d0}HONE#     :{rvrs off}{lt. green} {pound}V4"
-	AN$=RN$:&,15,1:&"{f6}{white}{rvrs on} {$d2}EAL {$ce}AME  :{rvrs off}{yellow} {pound}V7"
-	&"{pound}{back arrow}39 {white}{rvrs on} {$cc}AST {$c3}ALL  :{rvrs off}{lt. green} {pound}V1"
-	B$=DD$:IF ID=.THEN B$="{$ce}ONE."
-	&"{f6}{white}{rvrs on} {$cc}OGIN {$c9}{$c4}   :{rvrs off}{yellow} {pound}$B"
-	&"{pound}{back arrow}39 {white}{rvrs on} {$c1}CCESS     :{rvrs off}{lt. green} {pound}VM"
-	A%=LE:&"{f6}{white}{rvrs on} {$c5}DITOR {$cc}NS :{rvrs off}{yellow} {pound}%A"
-	A%=CT%:&"{pound}{back arrow}39 {white}{rvrs on} {$c3}ALLS {$d4}ODAY:{rvrs off}{lt. green} {pound}%A"
-	A%=TC%:&"{f6}{white}{rvrs on} {$d4}OTAL {$c3}ALLS:{rvrs off}{yellow} {pound}%A"
-	A$=STR$(CA):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}ALLER#    :{rvrs off}{lt. green}{pound}$A":GOSUB{:60076}:IF A=.THEN{:60074}
-	A%=DA%:&"{f6}{white}{rvrs on} {$c4}{$cc}'S {$c1}LLOWED:{rvrs off}{yellow} {pound}%A {lt. red}(0)={$d5}NLIMITED"
-	A%=DC:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}OTAL {$c4}{$cc}'S  :{rvrs off}{lt. green} {pound}%A"
-	A%=UC:&"{f6}{white}{rvrs on} {$d4}OTAL {$d5}{$cc}'S  :{rvrs off}{yellow} {pound}%A"
-	AN$=STR$(BD):&"{pound}{back arrow}39 {white}{rvrs on} {$d4}TL {$c2}LKS {$c4}{$cc} :{rvrs off}{lt. green}{pound}V7"
-	AN$=STR$(BU):&"{f6}{white}{rvrs on} {$d4}TL {$c2}LKS {$d5}{$cc} :{rvrs off}{yellow}{pound}V7"
-	AN$=STR$(CR):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}REDIT {$d0}TS  :{rvrs off}{lt. green}{pound}V7"
-	A=2:GOSUB 1004:A%=A:&"{f6}{white}{rvrs on} {$c3}REDIT {$d2}ATIO:{rvrs off}{yellow} {pound}%A {$d4}O 1"
-	A%=PS:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}OTAL {$d0}OSTS :{rvrs off}{lt. green} {pound}%A"
-	A%=RP:&"{f6}{white}{rvrs on} {$d4}OTAL {$d2}ESP. :{rvrs off}{yellow} {pound}%A{f6}":GOSUB{:60076}:IF A=.THEN{:60074}
-	&"{f6}{lt. red}{rvrs on}{$d9}OU {$c8}AVE:{f6}":F=0
-	A=1:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$ce}ON-{$d7}EED {$d3}TATUS":F=1
-	A=3:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$c6}ULL {$cd}AINTENANCE":F=1
-	A=4:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$d0}OST/{$d2}ESPOND {$c3}APABILITY":F=1
-	A=5:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$ce}ORMAL {$d5}/{$c4} {$c1}CCESS":F=1
-	A=7:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$d5}NLIMITED {$c3}REDITS":F=1
-	A=8:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$d2}EMOTE {$cd}AINTENANCE {$c1}CCESS":F=1
-	A=9:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$c5}-{$cd}AIL {$c1}CCESS":F=1
-	A=10:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$d5}SER {$cc}IST {$c1}CCESS":F=1
-	A=11:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$c2}.{$c1}.{$d2}. {$c1}ND {$cc}OG {$c1}CCESS":F=1
-	A=12:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$d3}UB {$cd}AINTENANCE {$c1}CCESS":F=1
-	A=13:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$c6}ILE {$cd}AINTENANCE {$c1}CCESS":F=1
-	A=14:GOSUB 1004:IF A THEN:&"{f6}{lt. green}{$cd}{$c3}{$c9} {$c1}CCESS":F=1
-	A=15:GOSUB 1004:IF A THEN:&"{f6}{yellow}{$d0}RIME {$d4}IME {$c4}OWNLOAD {$c3}APABILITY":F=1
-	IF F=0 THEN:&"{f6}{white}{$cd}INIMAL {$c1}CCESS"
+	gosub 1634:&"{clear}{f6}{cyan}{rvrs on} {$c3}urrent {$d3}tatus: {f6}"
+	an$=na$:&,15,1: &"{f6}{white}{rvrs on} {$ce}ame       :{rvrs off}{yellow} {pound}v7"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$d0}hone#     :{rvrs off}{lt. green} {pound}v4"
+	an$=rn$:&,15,1:&"{f6}{white}{rvrs on} {$d2}eal {$ce}ame  :{rvrs off}{yellow} {pound}v7"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$cc}ast {$c3}all  :{rvrs off}{lt. green} {pound}v1"
+	b$=dd$:if id=.then b$="{$ce}one."
+	&"{f6}{white}{rvrs on} {$cc}ogin {$c9}{$c4}   :{rvrs off}{yellow} {pound}$b"
+	&"{pound}{back arrow}39 {white}{rvrs on} {$c1}ccess     :{rvrs off}{lt. green} {pound}vm"
+	a%=le:&"{f6}{white}{rvrs on} {$c5}ditor {$cc}ns :{rvrs off}{yellow} {pound}%a"
+	a%=ct%:&"{pound}{back arrow}39 {white}{rvrs on} {$c3}alls {$d4}oday:{rvrs off}{lt. green} {pound}%a"
+	a%=tc%:&"{f6}{white}{rvrs on} {$d4}otal {$c3}alls:{rvrs off}{yellow} {pound}%a"
+	a$=str$(ca):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}aller#    :{rvrs off}{lt. green}{pound}$a":gosub {:60076}:if a=.then{:60074}
+	a%=da%:&"{f6}{white}{rvrs on} {$c4}{$cc}'s {$c1}llowed:{rvrs off}{yellow} {pound}%a {lt. red}(0)={$d5}nlimited"
+	a%=dc:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}otal {$c4}{$cc}'s  :{rvrs off}{lt. green} {pound}%a"
+	a%=uc:&"{f6}{white}{rvrs on} {$d4}otal {$d5}{$cc}'s  :{rvrs off}{yellow} {pound}%a"
+	an$=str$(bd):&"{pound}{back arrow}39 {white}{rvrs on} {$d4}tl {$c2}lks {$c4}{$cc} :{rvrs off}{lt. green}{pound}v7"
+	an$=str$(bu):&"{f6}{white}{rvrs on} {$d4}tl {$c2}lks {$d5}{$cc} :{rvrs off}{yellow}{pound}v7"
+	an$=str$(cr):&"{pound}{back arrow}39 {white}{rvrs on} {$c3}redit {$d0}ts  :{rvrs off}{lt. green}{pound}v7"
+	a=2:gosub 1004:a%=a:&"{f6}{white}{rvrs on} {$c3}redit {$d2}atio:{rvrs off}{yellow} {pound}%a {$d4}o 1"
+	a%=ps:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}otal {$d0}osts :{rvrs off}{lt. green} {pound}%a"
+	a%=rp:&"{f6}{white}{rvrs on} {$d4}otal {$d2}esp. :{rvrs off}{yellow} {pound}%a{f6}":gosub {:60076}:if a=.then{:60074}
+	&"{f6}{lt. red}{rvrs on}{$d9}ou {$c8}ave:{f6}":f=0
+	a=1:gosub 1004:if a then:&"{f6}{yellow}{$ce}on-{$d7}eed {$d3}tatus":f=1
+	a=3:gosub 1004:if a then:&"{f6}{lt. green}{$c6}ull {$cd}aintenance":f=1
+	a=4:gosub 1004:if a then:&"{f6}{yellow}{$d0}ost/{$d2}espond {$c3}apability":f=1
+	a=5:gosub 1004:if a then:&"{f6}{lt. green}{$ce}ormal {$d5}/{$c4} {$c1}ccess":f=1
+	a=7:gosub 1004:if a then:&"{f6}{yellow}{$d5}nlimited {$c3}redits":f=1
+	a=8:gosub 1004:if a then:&"{f6}{lt. green}{$d2}emote {$cd}aintenance {$c1}ccess":f=1
+	a=9:gosub 1004:if a then:&"{f6}{yellow}{$c5}-{$cd}ail {$c1}ccess":f=1
+	a=10:gosub 1004:if a then:&"{f6}{lt. green}{$d5}ser {$cc}ist {$c1}ccess":f=1
+	a=11:gosub 1004:if a then:&"{f6}{yellow}{$c2}.{$c1}.{$d2}. {$c1}nd {$cc}og {$c1}ccess":f=1
+	a=12:gosub 1004:if a then:&"{f6}{lt. green}{$d3}ub {$cd}aintenance {$c1}ccess":f=1
+	a=13:gosub 1004:if a then:&"{f6}{yellow}{$c6}ile {$cd}aintenance {$c1}ccess":f=1
+	a=14:gosub 1004:if a then:&"{f6}{lt. green}{$cd}{$c3}{$c9} {$c1}ccess":f=1
+	a=15:gosub 1004:if a then:&"{f6}{yellow}{$d0}rime {$d4}ime {$c4}ownload {$c3}apability":f=1
+	if f=0 then:&"{f6}{white}{$cd}inimal {$c1}ccess"
 {:60074}
-	&"{f6}":RETURN
+	&"{f6}":return
 {:60076}
-	&"{f6:2}{white} {$cd}ORE?: ":GOSUB 1902:&"{clear}{cyan}":RETURN
+	&"{f6:2}{white} {$cd}ore?: ":gosub 1902:&"{clear}{cyan}":return

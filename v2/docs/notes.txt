@@ -28,3 +28,25 @@ jm%(0,n) flags
 jm%(1,n) is access, obviously
 jm%(2,n) ?
 jm%(5,n) menu text
+
+4/Jul/2016 16:23
+When adding a sysop to the QuickList:
+Editing the sysop name to BUCKO:
+
+   (N) Feedback Shadow
+   (N) Remote Instant Logon
+   (N) Console Instant Logon
+   (N) Flag #6
+   (N) Flag #7
+   (N) Flag #8
+3. Description : none
+
+Edit (1-3): 1
+
+Handle: PINACOLADA
+Handle: BUCKO
+
+ SYSTEM ERROR #16 (OUT OF MEMORY ERROR)
+ In Line:2512 Of im
+
+Image 2.0: Turn MN mode on, then go into GF files, then Z for maint

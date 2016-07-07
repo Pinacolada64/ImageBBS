@@ -1,211 +1,213 @@
-	CLOSE 2:DR=3:GOSUB 1079:IF A>20 THEN{:3008}
-	&"{f6:2}{$d3}ORRY, {$d4}HERE {$c9}S {$ce}OT {$c5}NOUGH {$c4}ISK {$d3}PACE{f6}{$c6}OR {$d9}OU {$d4}O {$cc}OGON {$c1}T {$d4}HIS {$d4}IME."
-	&"{f6}{$d0}LEASE {$d4}RY {$c1}GAIN {$cc}ATER!{f6:2}":GOTO{:3088}
-	RETURN
+{number:3000}
+	close 2:dr=3:gosub 1079:if a>20 then{:3008}
+	&"{f6:2}{$d3}orry, {$d4}here {$c9}s {$ce}ot {$c5}nough {$c4}isk {$d3}pace{f6}{$c6}or {$d9}ou {$d4}o {$cc}ogon {$c1}t {$d4}his {$d4}ime."
+	&"{f6}{$d0}lease {$d4}ry {$c1}gain {$cc}ater!{f6:2}":goto {:3088}
+	return
 {:3008}
-	IF L1=.THEN GOSUB 1063:X=31:GOSUB 1001:&,2,2:L1=VAL(A$):CLOSE 2
-	TR%=10:&"{f6}":DR=5:A=1:GOSUB 1003
-	&,25,.,4:AN$=DD$+" {$d5}SER {$cc}OGIN":&,15,1:CM$=AN$:GOSUB 1360
-	DR=1:GOSUB 1010:OPEN 5,DV%,5,DR$+"S.NEW USER,S,R":&,12,5:CLOSE 5:GOSUB 1914
-	JN$="":L=L1:AC%=.:ID=.:CR=NC:F$=CC$:LD$="1"+"8001011201":P$=""
-	GOSUB 1061:&,2,2:AG$=A$:&,2,2:FL$=A$:CLOSE 2
-	ON-(DD$<>"{$d2}{$c5}{$d3}")GOTO{:3034}:E=1:&,25,.,2:B=.
+	if l1=.then gosub 1063:x=31:gosub 1001:&,2,2:l1=val(a$):close 2
+	tr%=10:&"{f6}":dr=5:a=1:gosub 1003
+	&,25,.,4:an$=dd$+" {$d5}ser {$cc}ogin":&,15,1:cm$=an$:gosub 1360
+	dr=1:gosub 1010:open 5,dv%,5,dr$+"s.new user,s,r":&,12,5:close 5:gosub 1914
+	jn$="":l=l1:ac%=.:id=.:cr=nc:f$=cc$:ld$="1"+"8001011201":p$=""
+	gosub 1061:&,2,2:ag$=a$:&,2,2:fl$=a$:close 2
+	on-(dd$<>"{$d2}{$c5}{$d3}")goto {:3034}:e=1:&,25,.,2:b=.
 {:3022}
-	B=B+1:IF B=5 THEN{:3088}
-	CLOSE 2:&"{f6:2}{$d0}LEASE {$c5}NTER {$d9}OUR{f6}{$d2}{$c5}{$d3} {$c1}CCOUNT {$ce}UMBER: {pound}I1":ON TR%+1 GOTO{:3088}
-	ID=INT(ABS(VAL(AN$))):IF ID<1 OR ID>UR THEN{:3022}
-	GOSUB 1071:IF NA$<>"{$d2}{$c5}{$d3}"THEN{:3022}
-	&"{f6:2}{$d0}LEASE {$c5}NTER {$d9}OUR{f6}{$d2}{$c5}{$d3} {$d0}ASSWORD : ":&,6:IF TR%<1 OR B>4 THEN{:3088}
-	IF AN$<>PW$THEN:&"{f6}{$c9}NCORRECT {$d0}ASSWORD.{f6}":GOTO{:3022}
+	b=b+1:if b=5 then{:3088}
+	close 2:&"{f6:2}{$d0}lease {$c5}nter {$d9}our{f6}{$d2}{$c5}{$d3} {$c1}ccount {$ce}umber: {pound}i1":on tr%+1 goto {:3088}
+	id=int(abs(val(an$))):if id<1 or id>ur then{:3022}
+	gosub 1071:if na$<>"{$d2}{$c5}{$d3}"then{:3022}
+	&"{f6:2}{$d0}lease {$c5}nter {$d9}our{f6}{$d2}{$c5}{$d3} {$d0}assword : ":&,6:if tr%<1 or b>4 then{:3088}
+	if an$<>pw$then:&"{f6}{$c9}ncorrect {$d0}assword.{f6}":goto {:3022}
 {:3034}
-	NA$="":RN$="":CT%=.:TC%=.:LL%=40:LF=1:EM=.:UL=.:CO%=1:FF$="":LL$="":D5$=LT$
-	TR%=30:GOSUB{:3090}:ON TR%+1 GOTO{:3088}
-	IF PW$=""THEN ID=.:&"{f6}":AO%=AC%:GOSUB 1634:GOTO{:3064}
-	GOSUB 1073:IF ID<>.THEN{:3054}
-	GOSUB 1065:&"{f6:2}{$d5}PDATING ACCOUNT INFO...":ID=L1
-	L=L1+1:IF L1>UR THEN E=.:GOTO{:3052}
-	E=1:ON-(L1=UR)GOTO{:3052}:FOR X=L TO UR:IF X/3=INT(X/3)THEN:&"."
-	GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN L=X:X=UR:NEXT:GOTO{:3052}
-	NEXT:L=X
+	na$="":rn$="":ct%=.:tc%=.:ll%=40:lf=1:em=.:ul=.:co%=1:ff$="":ll$="":d5$=lt$
+	tr%=30:gosub {:3090}:on tr%+1 goto {:3088}
+	if pw$=""then id=.:&"{f6}":ao%=ac%:gosub 1634:goto {:3064}
+	gosub 1073:if id<>.then{:3054}
+	gosub 1065:&"{f6:2}{$d5}pdating account info...":id=l1
+	l=l1+1:if l1>ur then e=.:goto {:3052}
+	e=1:on-(l1=ur)goto {:3052}:for x=l to ur:if x/3=int(x/3)then:&"."
+	gosub 1001:&,2,2:if a$="{up arrow}"then l=x:x=ur:next:goto {:3052}
+	next:l=x
 {:3052}
-	CLOSE 2
+	close 2
 {:3054}
-	A%=ID:&"{clear}{f6}{pound}VJ {$d9}OUR {$cc}OGIN {$c9}{$c4} --> {pound}$F{pound}%A"
-	B$=PW$:&"{f6} {$d9}OUR {$d0}ASSWORD --> {f5}{pound}$B{f5}{f6}{pound}VJ"
-	&"{f6}{rvrs on} {$d7}RITE {$d4}HESE {$c4}OWN! "
-	&"{f6:2}{$d9}OU {$d7}ILL {$ce}EED {$d4}HEM {$d4}O {$d3}IGN {$c2}ACK {$cf}NTO{f6}{$d4}HE {$d3}YSTEM.{f6}"
-	&"{f6}{$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$c3}ONTINUE.{f6:2}: {$07}{pound}I1"
+	a%=id:&"{clear}{f6}{pound}vj {$d9}our {$cc}ogin {$c9}{$c4} --> {pound}$f{pound}%a"
+	b$=pw$:&"{f6} {$d9}our {$d0}assword --> {f5}{pound}$b{f5}{f6}{pound}vj"
+	&"{f6}{rvrs on} {$d7}rite {$d4}hese {$c4}own! "
+	&"{f6:2}{$d9}ou {$d7}ill {$ce}eed {$d4}hem {$d4}o {$d3}ign {$c2}ack {$cf}nto{f6}{$d4}he {$d3}ystem.{f6}"
+	&"{f6}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$c3}ontinue.{f6:2}: {$07}{pound}i1"
 {:3064}
-	GOSUB{:3188}:ON TR%+1 GOTO{:3088}
-	IF PW$=""THEN{:3086}
-	GOSUB{:3202}:ON TR%+1 GOTO{:3088}
-	GOSUB{:3236}:ON TR%+1 GOTO{:3088}
-	GOSUB{:3264}:ON TR%+1 GOTO{:3088}
-	GOTO{:3276}
+	gosub {:3188}:on tr%+1 goto {:3088}
+	if pw$=""then{:3086}
+	gosub {:3202}:on tr%+1 goto {:3088}
+	gosub {:3236}:on tr%+1 goto {:3088}
+	gosub {:3264}:on tr%+1 goto {:3088}
+	goto {:3276}
 {:3076}
-	DC=.:UC=.:BD=.:BU=.:PS=.:RP=.:CT%=.:TC%=.:GOSUB 1070
-	GOSUB 1063:X=31:GOSUB 1001:PRINT# 2,L:L1=L:ON E GOTO{:3084}
-	GOSUB 1063:X=12:GOSUB 1001:PRINT# 2,UR+2:CLOSE 2:UR=UR+1:GOSUB 1374
-	GOSUB 1065:X=ID+6:GOSUB 1001:PRINT# 2,"0"
+	dc=.:uc=.:bd=.:bu=.:ps=.:rp=.:ct%=.:tc%=.:gosub 1070
+	gosub 1063:x=31:gosub 1001:print# 2,l:l1=l:on e goto {:3084}
+	gosub 1063:x=12:gosub 1001:print# 2,ur+2:close 2:ur=ur+1:gosub 1374
+	gosub 1065:x=id+6:gosub 1001:print# 2,"0"
 {:3084}
-	CLOSE 2:ON TR%+1 GOTO{:3088}:RETURN
+	close 2:on tr%+1 goto {:3088}:return
 {:3086}
-	UF$="01000":&,52,1,4:E%=.:F1=4:A$="LO":GOTO 1016
+	uf$="01000":&,52,1,4:e%=.:f1=4:a$="lo":goto 1016
 {:3088}
-	E%=1:F1=4:A$="LO":GOTO 1016
+	e%=1:f1=4:a$="lo":goto 1016
 {:3090}
-	&"{f6}{$d0}ART {$c9}: {$c7}ENERAL {$c9}NFORMATION:{f6}"
-	FOR T=1 TO 5:ON T GOSUB{:3106},{:3150},{:3126},{:3140},{:3142}:T=T-5*(TR%<1):NEXT
-	IF TR%<1 THEN RETURN
+	&"{f6}{$d0}art {$c9}: {$c7}eneral {$c9}nformation:{f6}"
+	for t=1 to 5:on t gosub {:3106},{:3150},{:3126},{:3140},{:3142}:t=t-5*(tr%<1):next
+	if tr%<1 then return
 {:3096}
-	B$=PW$:&"{clear}{f6}{$c7}ENERAL {$c9}NFORMATION:{f6:2}1) {$c8}ANDLE    : {pound}V2{f6}2) {$d0}ASSWORD  : {f5}{pound}$B{f5}"
-	B$=FF$:C$=LL$:&"{f6}3) {$d0}HONE #   : {pound}V4{f6}4) {$c6}IRST {$ce}AME: {pound}$B{f6}5) {$cc}AST {$ce}AME : {pound}$C"
-	&"{f6:2}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$c3}HANGE, {$cf}R{f6}{$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$c3}ONTINUE:{f6:2}> {pound}G1"
-	A=VAL(AN$):IF A THEN ON A GOSUB{:3106},{:3150},{:3126},{:3140},{:3142}:GOTO{:3096}
-	RETURN
+	b$=pw$:&"{clear}{f6}{$c7}eneral {$c9}nformation:{f6:2}1) {$c8}andle    : {pound}v2{f6}2) {$d0}assword  : {f5}{pound}$b{f5}"
+	b$=ff$:c$=ll$:&"{f6}3) {$d0}hone #   : {pound}v4{f6}4) {$c6}irst {$ce}ame: {pound}$b{f6}5) {$cc}ast {$ce}ame : {pound}$c"
+	&"{f6:2}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$c3}hange, {$cf}r{f6}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$c3}ontinue:{f6:2}> {pound}g1"
+	a=val(an$):if a then on a gosub {:3106},{:3150},{:3126},{:3140},{:3142}:goto {:3096}
+	return
 {:3106}
-	POKE 53252,20:IF F1 THEN F1=.:NA$=G$:RETURN
-	&"{f6}{$c5}NTER {$d4}HE {$c8}ANDLE {$d4}HAT {$d9}OU {$d7}ISH{f6}{$d4}O {$d5}SE {$cf}N {$d4}HIS {$d3}YSTEM:{f6:2}: {pound}I1"
-	IF TR%<1 THEN NA$="":RETURN
-	A=LEN(AN$):IF A<5 OR A>20 THEN{:3122}
-	IF LEFT$(AN$,1)<"{$c1}"THEN{:3122}
-	&"{f6}{$c3}HECKING {$d4}O {$d3}EE {$c9}F {$c1}NYBODY {$c9}S {$c1}LREADY{f6}{$d5}SING {$d4}HAT {$c8}ANDLE..."
-	GOSUB 1046:IF I=.THEN NA$=AN$:RETURN
-	A%=I:&"{f6:2}{$d4}HAT HANDLE IS NOW USED BY {pound}$F{pound}%A.{f6}":GOTO{:3106}
+	poke 53252,20:if f1 then f1=.:na$=g$:return
+	&"{f6}{$c5}nter {$d4}he {$c8}andle {$d4}hat {$d9}ou {$d7}ish{f6}{$d4}o {$d5}se {$cf}n {$d4}his {$d3}ystem:{f6:2}: {pound}i1"
+	if tr%<1 then na$="":return
+	a=len(an$):if a<5 or a>20 then{:3122}
+	if left$(an$,1)<"{$c1}"then{:3122}
+	&"{f6}{$c3}hecking {$d4}o {$d3}ee {$c9}f {$c1}nybody {$c9}s {$c1}lready{f6}{$d5}sing {$d4}hat {$c8}andle..."
+	gosub 1046:if i=.then na$=an$:return
+	a%=i:&"{f6:2}{$d4}hat handle is now used by {pound}$f{pound}%a.{f6}":goto {:3106}
 {:3122}
-	&"{f6}{$d9}OUR HANDLE MUST BE AT LEAST 5 BUT NO{f6}MORE THAN 20 CHARACTERS LONG AND"
-	&"BEGIN{f6}WITH AN ALPHABETIC CHARACTER.{f6}":GOTO{:3106}
+	&"{f6}{$d9}our handle must be at least 5 but no{f6}more than 20 characters long and"
+	&"begin{f6}with an alphabetic character.{f6}":goto {:3106}
 {:3126}
-	POKE 53252,12:&"{f6}{$c5}NTER {$d9}OUR {$d0}HONE {$ce}UMBER {$c9}N {$d4}HE {$c6}ORM{f6}801-423-2734:{f6:2}: {pound}I1"
-	IF TR%<1 THEN PH$="[{$d8:3}] {$d8:3}-{$d8:4}":RETURN
-	IF AN$=""THEN{:3126}
-	AN$=LEFT$(AN$,3)+MID$(AN$,5,3)+RIGHT$(AN$,4):IF LEN(AN$)<>10 THEN{:3138}
-	G=.:FOR X=1 TO 10:B$=MID$(AN$,X,1):G=-(B$<"0"OR B$>"9")OR G:NEXT:ON G GOTO{:3138}
-	PH$="["+LEFT$(AN$,3)+"] "+MID$(AN$,4,3)+"-"+RIGHT$(AN$,4):RETURN
+	poke 53252,12:&"{f6}{$c5}nter {$d9}our {$d0}hone {$ce}umber {$c9}n {$d4}he {$c6}orm{f6}801-423-2734:{f6:2}: {pound}i1"
+	if tr%<1 then ph$="[{$d8:3}] {$d8:3}-{$d8:4}":return
+	if an$=""then{:3126}
+	an$=left$(an$,3)+mid$(an$,5,3)+right$(an$,4):if len(an$)<>10 then{:3138}
+	g=.:for x=1 to 10:b$=mid$(an$,x,1):g=-(b$<"0"or b$>"9")or g:next:on g goto {:3138}
+	ph$="["+left$(an$,3)+"] "+mid$(an$,4,3)+"-"+right$(an$,4):return
 {:3138}
-	&"{f6}{$c9}NCORRECT {$cf}R {$cd}ISSING {$d0}HONE {$ce}UMBER.{f6}{$d0}LEASE {$d2}E-{$c5}NTER.{f6}":GOTO{:3126}
+	&"{f6}{$c9}ncorrect {$cf}r {$cd}issing {$d0}hone {$ce}umber.{f6}{$d0}lease {$d2}e-{$c5}nter.{f6}":goto {:3126}
 {:3140}
-	A$="{$c6}IRST":GOSUB{:3144}:FF$=AN$:RN$=FF$+" "+LL$:RETURN
+	a$="{$c6}irst":gosub {:3144}:ff$=an$:rn$=ff$+" "+ll$:return
 {:3142}
-	A$="{$cc}AST":GOSUB{:3144}:LL$=AN$:RN$=FF$+" "+LL$:RETURN
+	a$="{$cc}ast":gosub {:3144}:ll$=an$:rn$=ff$+" "+ll$:return
 {:3144}
-	&"{f6}{$c5}NTER {$d9}OUR {pound}$A {$ce}AME:{f6:2}: {pound}I1":IF TR%=.THEN RETURN
-	IF(LEFT$(AN$,1)>="{$c1}"AND RIGHT$(AN$,1)>="{$c1}")THEN RETURN
-	&"{f6}{$ce}ON-{$c1}CCEPTABLE {$c5}NTRY.{f6}":GOTO{:3140}
+	&"{f6}{$c5}nter {$d9}our {pound}$a {$ce}ame:{f6:2}: {pound}i1":if tr%=.then return
+	if(left$(an$,1)>="{$c1}"and right$(an$,1)>="{$c1}")then return
+	&"{f6}{$ce}on-{$c1}cceptable {$c5}ntry.{f6}":goto {:3140}
 {:3150}
-	&"{f6:2}{$d7}OULD YOU LIKE TO:{f6:2} ({$c1}) {$c5}NTER A PASSWORD{f6}
-	&" ({$c2}) {$c7}ENERATE A {$d2}ANDOM {$d0}ASSWORD{f6} ({$c3}) {$c8}AVE NO PASSWORD, AND HAVE ONLY A{f6}"
-	&"     {$d4}{$c5}{$cd}{$d0}{$cf}{$d2}{$c1}{$d2}{$d9} ACCOUNT ON THIS {$c2:2}{$d3}{f6:2}> {pound}G1"
-	IF TR%>.THEN ON-(AN$="{$c1}")-2*(AN$="{$c2}")-3*(AN$="{$c3}")GOTO{:3162},{:3172},{:3158}:GOTO{:3150}
+	&"{f6:2}{$d7}ould you like to:{f6:2} ({$c1}) {$c5}nter a password{f6}
+	&" ({$c2}) {$c7}enerate a {$d2}andom {$d0}assword{f6} ({$c3}) {$c8}ave no password, and have only a{f6}"
+	&"     {$d4}{$c5}{$cd}{$d0}{$cf}{$d2}{$c1}{$d2}{$d9} account on this {$c2:2}{$d3}{f6:2}> {pound}g1"
+	if tr%>.then on-(an$="{$c1}")-2*(an$="{$c2}")-3*(an$="{$c3}")goto {:3162},{:3172},{:3158}:goto {:3150}
 {:3158}
 	&"{$c3}{f6:2}"
 {:3160}
-	PW$="":RETURN
+	pw$="":return
 {:3162}
-	POKE 53252,14:&"{$c1}{f6:2}{$d0}LEASE {$c5}NTER {$c1} {$d0}ASSWORD {$d4}O {$d5}SE{f6}"
-	&"FOR YOUR ACCOUNT ON THIS {$c2:2}{$d3}.{f6:2}: {pound}I1":ON TR%+1 GOTO{:3160}:IF AN$=""THEN{:3150}
-	IF TR%<1 THEN{:3170}
-	IF NA$=AN$THEN:&"{f6}{$d0}LEASE {$c4}O {$ce}OT {$d5}SE {$d9}OUR {$c8}ANDLE{f6}{$c1}S {$c1} {$d0}ASSWORD.{f6}":GOTO{:3162}
+	poke 53252,14:&"{$c1}{f6:2}{$d0}lease {$c5}nter {$c1} {$d0}assword {$d4}o {$d5}se{f6}"
+	&"for your account on this {$c2:2}{$d3}.{f6:2}: {pound}i1":on tr%+1 goto {:3160}:if an$=""then{:3150}
+	if tr%<1 then{:3170}
+	if na$=an$then:&"{f6}{$d0}lease {$c4}o {$ce}ot {$d5}se {$d9}our {$c8}andle{f6}{$c1}s {$c1} {$d0}assword.{f6}":goto {:3162}
 {:3170}
-	PW$=AN$:RETURN
+	pw$=an$:return
 {:3172}
-	&"{$c2}{f6:2}":GOSUB{:3178}:&"{$d9}OUR RANDOM PASSWORD IS {f5}{pound}$B{f5}{f6:2}{$c9}S THIS {$cf}K? ":GOSUB 1907
-	IF A THEN PW$=B$:RETURN
-	GOTO{:3150}
+	&"{$c2}{f6:2}":gosub {:3178}:&"{$d9}our random password is {f5}{pound}$b{f5}{f6:2}{$c9}s this {$cf}k? ":gosub 1907
+	if a then pw$=b$:return
+	goto {:3150}
 {:3178}
-	B$="":V$="{$c1}{$c5}{$c9}{$cf}{$d5}":C$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":N$="{$ce}{$d4}{$d2}{$d3}{$c2}"
-	GOSUB{:3184}:GOSUB{:3186}:GOSUB{:3184}:GOSUB{:3186}:GOSUB{:3184}:GOSUB{:3186}
-	B$=B$+MID$(N$,INT(RND(1)*LEN(N$))+1,1):RETURN
+	b$="":v$="{$c1}{$c5}{$c9}{$cf}{$d5}":c$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":n$="{$ce}{$d4}{$d2}{$d3}{$c2}"
+	gosub {:3184}:gosub {:3186}:gosub {:3184}:gosub {:3186}:gosub {:3184}:gosub {:3186}
+	b$=b$+mid$(n$,int(rnd(1)*len(n$))+1,1):return
 {:3184}
-	B$=B$+MID$(C$,INT(RND(1)*(LEN(C$)/2))*2+1,2):RETURN
+	b$=b$+mid$(c$,int(rnd(1)*(len(c$)/2))*2+1,2):return
 {:3186}
-	B$=B$+MID$(V$,INT(RND(1)*LEN(V$))+1,1):RETURN
+	b$=b$+mid$(v$,int(rnd(1)*len(v$))+1,1):return
 {:3188}
-	&"{f6}{$d0}ART {$c9:2}: {$d4}ERMINAL {$d0}ARAMETERS:{f6:2}"
+	&"{f6}{$d0}art {$c9:2}: {$d4}erminal {$d0}arameters:{f6:2}"
 {:3190}
-	CO%=1:&"{f6}":FOR X=1 TO 9:A%=X:B$=CO$(X):&"{pound}%A> {pound}$B{f6}":NEXT
-	&"{f6}{$d7}HICH TYPE OF COMPUTER ARE YOU USING?{f6:2}> {pound}G1":IF TR%<1 THEN RETURN
-	CO%=VAL(AN$):ON-(CO%=.)GOTO{:3190}:AN$=CO$(CO%):&"{pound}V7{f6:2}":&,9
-	A$=MID$("402400802400802421402421802421802421802421802421402421",CO%*6-5,6)
-	LL%=VAL(LEFT$(A$,2)):MP%=VAL(MID$(A$,3,2)):UL=VAL(MID$(A$,5,1))
-	LF=VAL(MID$(A$,6,1)):A=1:GOSUB 1661:GOTO 1073
+	co%=1:&"{f6}":for x=1 to 9:a%=x:b$=co$(x):&"{pound}%a> {pound}$b{f6}":next
+	&"{f6}{$d7}hich type of computer are you using?{f6:2}> {pound}g1":if tr%<1 then return
+	co%=val(an$):on-(co%=.)goto {:3190}:an$=co$(co%):&"{pound}v7{f6:2}":&,9
+	a$=mid$("402400802400802421402421802421802421802421802421402421",co%*6-5,6)
+	ll%=val(left$(a$,2)):mp%=val(mid$(a$,3,2)):ul=val(mid$(a$,5,1))
+	lf=val(mid$(a$,6,1)):a=1:gosub 1661:goto 1073
 {:3202}
-	&"{f6:2}{$d0}ART {$c9:3}: {$cd}ISCELLANEOUS {$d1}UESTIONS:{f6:2}"
-	&"{white}{f6}   {$d9}OUR {$c1}NSWERS {$d4}O {$d4}HE {$c6}OLLOWING{f6}{$d1}UESTIONS {$d7}ILL {$c2}E {$cb}EPT {$d3}TRICTLY{f6}"
-	&"{$c3}ONFIDENTIAL {$c1}ND {$c1}RE {$c6}OR {$d4}HE {$d3}YSOP'S{f6}{$d2}ECORDS {$cf}NLY.{f6}{cyan}":B=6
-	P$="":FOR I=1 TO B:GOSUB{:3210}:GOSUB{:3224}:NEXT:GOTO{:3226}
+	&"{f6:2}{$d0}art {$c9:3}: {$cd}iscellaneous {$d1}uestions:{f6:2}"
+	&"{white}{f6}   {$d9}our {$c1}nswers {$d4}o {$d4}he {$c6}ollowing{f6}{$d1}uestions {$d7}ill {$c2}e {$cb}ept {$d3}trictly{f6}"
+	&"{$c3}onfidential {$c1}nd {$c1}re {$c6}or {$d4}he {$d3}ysop's{f6}{$d2}ecords {$cf}nly.{f6}{cyan}":b=6
+	p$="":for i=1 to b:gosub {:3210}:gosub {:3224}:next:goto {:3226}
 {:3210}
-	POKE 53252,38:ON I GOTO{:3212},{:3214},{:3216},{:3218},{:3220},{:3222}
+	poke 53252,38:on i goto {:3212},{:3214},{:3216},{:3218},{:3220},{:3222}
 {:3212}
-	A$="{$d3}TREET {$c1}DDRESS":RETURN
+	a$="{$d3}treet {$c1}ddress":return
 {:3214}
-	A$="{$c3}ITY":RETURN
+	a$="{$c3}ity":return
 {:3216}
-	A$="{$d3}TATE":RETURN
+	a$="{$d3}tate":return
 {:3218}
-	A$="{$da}{$c9}{$d0} OR {$d0}OSTAL {$c3}ODE":RETURN
+	a$="{$da}{$c9}{$d0} or {$d0}ostal {$c3}ode":return
 {:3220}
-	A$="{$c2}IRTHDATE":RETURN
+	a$="{$c2}irthdate":return
 {:3222}
-	A$="{$cf}CCUPATION":RETURN
+	a$="{$cf}ccupation":return
 {:3224}
-	&"{f6}{$d9}OUR {pound}$A?{f6}":GOSUB 1006:&,15,1:ED$(I)=AN$:RETURN
+	&"{f6}{$d9}our {pound}$a?{f6}":gosub 1006:&,15,1:ed$(i)=an$:return
 {:3226}
-	&"{clear}{f6}{$cd}ISCELLANEOUS {$d1}UESTIONS:{f6:2}"
-	FOR I=1 TO B:GOSUB{:3210}:B$=ED$(I):A%=I:&"{cyan}{pound}%A> {pound}$A:{f6} {white}{pound}$B{f6}":NEXT
-	&"{cyan}{f6}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$d2}E-{$c5}NTER {$cf}R {$d0}RESS{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}F {$c3}ORRECT: {pound}G1{pound}V7{f6}"
-	IF TR%>.THEN A=VAL(AN$):IF A>.AND A<=B THEN I=A:GOSUB{:3210}:GOSUB{:3224}:GOTO{:3226}
-	RETURN
+	&"{clear}{f6}{$cd}iscellaneous {$d1}uestions:{f6:2}"
+	for i=1 to b:gosub {:3210}:b$=ed$(i):a%=i:&"{cyan}{pound}%a> {pound}$a:{f6} {white}{pound}$b{f6}":next
+	&"{cyan}{f6}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$d2}e-{$c5}nter {$cf}r {$d0}ress{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}f {$c3}orrect: {pound}g1{pound}v7{f6}"
+	if tr%>.then a=val(an$):if a>.and a<=b then i=a:gosub {:3210}:gosub {:3224}:goto {:3226}
+	return
 {:3236}
-	Q=.:&"{f6:2}{$c1}RE {$d9}OU {$c1}N {$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$cf}WNER? ":GOSUB 1902:Q=A:IF A=.THEN{:3262}
-	B=5:P$="":FOR I=1 TO B:GOSUB{:3240}:GOSUB{:3252}:NEXT:GOTO{:3254}
+	q=.:&"{f6:2}{$c1}re {$d9}ou {$c1}n {$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$cf}wner? ":gosub 1902:q=a:if a=.then{:3262}
+	b=5:p$="":for i=1 to b:gosub {:3240}:gosub {:3252}:next:goto {:3254}
 {:3240}
-	POKE 53252,38:ON I GOTO{:3242},{:3244},{:3246},{:3248},{:3250}
+	poke 53252,38:on i goto {:3242},{:3244},{:3246},{:3248},{:3250}
 {:3242}
-	A$="{$c2:2}{$d3} {$ce}AME":RETURN
+	a$="{$c2:2}{$d3} {$ce}ame":return
 {:3244}
-	A$="{$c2:2}{$d3} {$d0}HONE":RETURN
+	a$="{$c2:2}{$d3} {$d0}hone":return
 {:3246}
-	A$="{$d3}ERIAL #":RETURN
+	a$="{$d3}erial #":return
 {:3248}
-	A$="{$ce}ETWORK":RETURN
+	a$="{$ce}etwork":return
 {:3250}
-	A$="{$ce}ODE {$c9}{$c4}":RETURN
+	a$="{$ce}ode {$c9}{$c4}":return
 {:3252}
-	&"{f6}{$d9}OUR {pound}$A?{f6}":GOSUB 1006:&,15,1:DT$(I)=AN$:RETURN
+	&"{f6}{$d9}our {pound}$a?{f6}":gosub 1006:&,15,1:dt$(i)=an$:return
 {:3254}
-	&"{clear}{f6}{$c9}MAGE {$d3}YSOP {$d1}UESTIONNAIRE:{f6:2}"
-	FOR I=1 TO B:GOSUB{:3240}:B$=DT$(I):&"{cyan}{pound}!I> {pound}$A:{f6} {white}{pound}$B{f6}":NEXT
-	&"{cyan}{f6}{$c5}NTER # {$cf}F {$c9}TEM {$d4}O {$d2}E-{$c5}NTER {$cf}R {$d0}RESS{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}F {$c3}ORRECT: {pound}G1{pound}V7{f6}"
-	IF TR%>.THEN A=VAL(AN$):IF A>.AND A<=B THEN I=A:GOSUB{:3240}:GOSUB{:3252}:GOTO{:3254}
+	&"{clear}{f6}{$c9}mage {$d3}ysop {$d1}uestionnaire:{f6:2}"
+	for i=1 to b:gosub {:3240}:b$=dt$(i):&"{cyan}{pound}!i> {pound}$a:{f6} {white}{pound}$b{f6}":next
+	&"{cyan}{f6}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$d2}e-{$c5}nter {$cf}r {$d0}ress{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}f {$c3}orrect: {pound}g1{pound}v7{f6}"
+	if tr%>.then a=val(an$):if a>.and a<=b then i=a:gosub {:3240}:gosub {:3252}:goto {:3254}
 {:3262}
-	RETURN
+	return
 {:3264}
-	&"{f6:2}{$d0}ART {$c9}{$d6}: {$d0}ERSONAL {$d3}TATEMENT:{f6}"
-	&"{f6}   {$c7}IVE {$d5}S {$d3}OME {$c9}NFO {$c1}BOUT {$d9}OURSELF.{f6}{$c1}NYTHING {$c9}NTERESTING, {$c1}ND {$d0}LEASE{f6}"
-	&"{$d4}ELL {$d5}S {$d7}HERE {$d9}OU {$c7}OT {$cf}UR {$ce}UMBER.{f6:2}{rvrs on}{yellow} {$ce}{$cf}{$d4}{$c5}: {rvrs off}{lt. red} {$c1}BORTING {$d4}HIS {$d7}ILL "
-	&"{$d2}ESULT {$c9}N {$c1}N{f6} {$c1}UTOMATIC {$cc}OGOFF!{f6}"
-	LE=10*(VAL(MID$(FL$,6,1))+1):GOSUB 1604:IF KK=.THEN TR%=.
-	RETURN
+	&"{f6:2}{$d0}art {$c9}{$d6}: {$d0}ersonal {$d3}tatement:{f6}"
+	&"{f6}   {$c7}ive {$d5}s {$d3}ome {$c9}nfo {$c1}bout {$d9}ourself.{f6}{$c1}nything {$c9}nteresting, {$c1}nd {$d0}lease{f6}"
+	&"{$d4}ell {$d5}s {$d7}here {$d9}ou {$c7}ot {$cf}ur {$ce}umber.{f6:2}{rvrs on}{yellow} {$ce}{$cf}{$d4}{$c5}: {rvrs off}{lt. red} {$c1}borting {$d4}his {$d7}ill "
+	&"{$d2}esult {$c9}n {$c1}n{f6} {$c1}utomatic {$cc}ogoff!{f6}"
+	le=10*(val(mid$(fl$,6,1))+1):gosub 1604:if kk=.then tr%=.
+	return
 {:3276}
-	TR%=5:&"{f6:2}  {$c6}ILING {$ce}EW {$d5}SER {$c9}NFORMATION.{f6}  {$d0}LEASE {$c2}E {$d0}ATIENT {$c8}ERE!"
-	GOSUB{:3076}:B$="NEW":AD$="{$ce}EW {$d5}SER {$d2}EGISTRATION":GOSUB 1068
-	PRINT# 2,"{$ce}{$c5}{$d7} {$d5}{$d3}{$c5}{$d2}:"R$R$RN$R$ED$(1)R$ED$(2)", "ED$(3)" "ED$(4)
-	PRINT# 2,"{$c2}IRTHDATE : "ED$(5)R$"{$cf}CCUPATION: "ED$(6)R$"{$c2}AUD {$d2}ATE:"STR$(QB)R$
-	IF Q=.THEN{:3290}
-	PRINT# 2,R$"{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}"R$R$"{$c2}OARD {$ce}AME:  "DT$(1)R$"{$c2}OARD {$d0}HONE: "DT$(2)
-	PRINT# 2,"{$d3}ERIAL #:    "DT$(3)R$"{$ce}ETWORK:     "DT$(4)R$"{$ce}ODE {$c9}{$c4}:      "DT$(5)R$
+	tr%=5:&"{f6:2}  {$c6}iling {$ce}ew {$d5}ser {$c9}nformation.{f6}  {$d0}lease {$c2}e {$d0}atient {$c8}ere!"
+	gosub {:3076}:b$="new":ad$="{$ce}ew {$d5}ser {$d2}egistration":gosub 1068
+	print# 2,"{$ce}{$c5}{$d7} {$d5}{$d3}{$c5}{$d2}:"r$r$rn$r$ed$(1)r$ed$(2)", "ed$(3)" "ed$(4)
+	print# 2,"{$c2}irthdate : "ed$(5)r$"{$cf}ccupation: "ed$(6)r$"{$c2}aud {$d2}ate:"str$(qb)r$
+	if q=.then{:3290}
+	print# 2,r$"{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}"r$r$"{$c2}oard {$ce}ame:  "dt$(1)r$"{$c2}oard {$d0}hone: "dt$(2)
+	print# 2,"{$d3}erial #:    "dt$(3)r$"{$ce}etwork:     "dt$(4)r$"{$ce}ode {$c9}{$c4}:      "dt$(5)r$
 {:3290}
-	&"{f6}":GOSUB 1074:&"{f6:2}"
-	DR=3:A$="E.SYSOP":GOSUB 1011:X=ID:GOSUB 1001
-	W$="":W$=W$+D1$+R$+NA$+R$+FF$+R$+LL$+R$
-	W$=W$+ED$(1)+R$+ED$(2)+R$+ED$(3)+R$+ED$(4)+R$+DT$(3)+R$+DT$(1)+R$+PH$+R$
-	W$=W$+DT$(2)+R$+DT$(4)+R$+DT$(5)+R$
-	IF Q=.THEN W$="N"
-	GOSUB 1001:PRINT# 2,W$:CLOSE 2
-	B$="NEW TEMP":A$="A":GOSUB 1027:IF E%THEN A$="W":GOSUB 1027
-	PRINT# 2,NA$+R$+ED$(2)+R$+ED$(3)
-	CLOSE 2:AN$=NA$:GOSUB 1038:GOSUB 1060:I=1:X=19:GOSUB 1025:X=29:GOSUB 1025:CLOSE 2
-	A$="E.MACS":DR=3:GOSUB 1011:IF E%THEN{:3088}
-	FOR X=ID*4-4 TO ID*4:GOSUB 1001:PRINT# 2,"{up arrow}":NEXT:CLOSE 2:GOTO{:3086}
-	COPR. 1995 NEW IMAGE 02/08/95
+	&"{f6}":gosub 1074:&"{f6:2}"
+	dr=3:a$="e.sysop":gosub 1011:x=id:gosub 1001
+	w$="":w$=w$+d1$+r$+na$+r$+ff$+r$+ll$+r$
+	w$=w$+ed$(1)+r$+ed$(2)+r$+ed$(3)+r$+ed$(4)+r$+dt$(3)+r$+dt$(1)+r$+ph$+r$
+	w$=w$+dt$(2)+r$+dt$(4)+r$+dt$(5)+r$
+	if q=.then w$="n"
+	gosub 1001:print# 2,w$:close 2
+	b$="new temp":a$="a":gosub 1027:if e%then a$="w":gosub 1027
+	print# 2,na$+r$+ed$(2)+r$+ed$(3)
+	close 2:an$=na$:gosub 1038:gosub 1060:i=1:x=19:gosub 1025:x=29:gosub 1025:close 2
+	a$="e.macs":dr=3:gosub 1011:if e%then{:3088}
+	for x=id*4-4 to id*4:gosub 1001:print# 2,"{up arrow}":next:close 2:goto {:3086}
+	rem +.new
+	copr. 1995 new image 02/08/95

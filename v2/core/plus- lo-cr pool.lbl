@@ -1,29 +1,31 @@
-	ON-(CR<10 OR CT%>1)GOTO{:4006}
-	&"{f6}{green}{$ca}OIN {$d4}HE {$c3}REDIT {$d0}OOL? ":GOSUB 1907:ON-(A=1)GOTO{:4014}:GOTO{:4006}
+{number:4000}
+	rem +.lo.cr pool - credit pool
+	on-(cr<10 or ct%>1)goto {:4006}
+	&"{f6}{green}{$ca}oin {$d4}he {$c3}redit {$d0}ool? ":gosub 1907:on-(a=1)goto {:4014}:goto {:4006}
 {:4004}
-	A$="E.CR.POOL"+STR$(P)+",S,R":DR=3:GOSUB 1011:IF E%THEN GOSUB{:4034}
+	a$="e.cr.pool"+str$(p)+",s,r":dr=3:gosub 1011:if e%then gosub {:4034}
 {:4006}
-	RETURN
+	return
 {:4008}
-	A$="E.CR.POOL 1":DR=3:GOTO 1023
+	a$="e.cr.pool 1":dr=3:goto 1023
 {:4010}
-	A$="E.CR.POOL 2,S,A":GOSUB 1011:IF E%THEN{:4038}
-	RETURN
+	a$="e.cr.pool 2,s,a":gosub 1011:if e%then{:4038}
+	return
 {:4014}
-	A=.:B=.:C=.:D=.:N=.:L=.
-	&"{f6}{gray3}{$c9}NSTRUCTIONS? ":GOSUB 1902:IF A THEN A$="S.POOL":DR=1:GOSUB 1075
-	&"{f6}{cyan}{$d9}OU {$c8}AVE {white}":&STR$(CR):&" {cyan}{$c3}REDITS."
+	a=.:b=.:c=.:d=.:n=.:l=.
+	&"{f6}{gray3}{$c9}nstructions? ":gosub 1902:if a then a$="s.pool":dr=1:gosub 1075
+	&"{f6}{cyan}{$d9}ou {$c8}ave {white}":&str$(cr):&" {cyan}{$c3}redits."
 {:4020}
-	&"{f6}{lt. green}({f5}{$d1}{f5} {$d1}UITS:100 {$cd}AX){f6}{$c8}OW {$cd}ANY {$c3}REDITS? {pound}I1":ON TR%+1 GOTO 1603:IF AN$="{$d1}"THEN RETURN
-	A=INT(VAL(AN$)):IF A<10 OR A>CR OR A>100 THEN:&"{f6}{$d3}ORRY, {$ce}OT {$c1}CCEPTABLE":GOTO{:4020}
-	P=1:GOSUB{:4004}:&,2,2:N=VAL(A$):&,2,2:B=VAL(A$):CLOSE 2
-	&"{f6:2}{$d0}RESENT {$d0}OOL {$d3}TANDS {$c1}T":&STR$(B)
-	A%=A/10:&"{f6}{$d9}OU {$c8}AVE {pound}%A {$c3}HANCES {$d4}O {$d7}IN"
-	C=A+B:&"{f6}{$ce}EW {$d6}ALUE = ":&STR$(C):&"{f6:2}{$c7}OOD {$cc}UCK!!{f6}":CR=CR-A
-	GOSUB{:4008}:PRINT# 2,N+A%:PRINT# 2,C:CLOSE 2:GOSUB{:4010}:FOR I=1 TO A%:PRINT# 2,NA$:NEXT:CLOSE 2:RETURN
+	&"{f6}{lt. green}({f5}{$d1}{f5} {$d1}uits:100 {$cd}ax){f6}{$c8}ow {$cd}any {$c3}redits? {pound}i1":on tr%+1 goto 1603:if an$="{$d1}"then return
+	a=int(val(an$)):if a<10 or a>cr or a>100 then:&"{f6}{$d3}orry, {$ce}ot {$c1}cceptable":goto {:4020}
+	p=1:gosub {:4004}:&,2,2:n=val(a$):&,2,2:b=val(a$):close 2
+	&"{f6:2}{$d0}resent {$d0}ool {$d3}tands {$c1}t":&str$(b)
+	a%=a/10:&"{f6}{$d9}ou {$c8}ave {pound}%a {$c3}hances {$d4}o {$d7}in"
+	c=a+b:&"{f6}{$ce}ew {$d6}alue = ":&str$(c):&"{f6:2}{$c7}ood {$cc}uck!!{f6}":cr=cr-a
+	gosub {:4008}:print# 2,n+a%:print# 2,c:close 2:gosub {:4010}:for i=1 to a%:print# 2,na$:next:close 2:return
 {:4034}
-	DR=3:A$="E.CR.POOL 1":GOSUB 1023:PRINT# 2,0:PRINT# 2,0:A$="E.CR.POOL 1,S,R"
-	GOSUB 1011:RETURN
+	dr=3:a$="e.cr.pool 1":gosub 1023:print# 2,0:print# 2,0:a$="e.cr.pool 1,s,r"
+	gosub 1011:return
 {:4038}
-	DR=3:A$="E.CR.POOL 2":GOSUB 1023:RETURN
-	COPR. 1990 FRED DART 12-26-90
+	dr=3:a$="e.cr.pool 2":gosub 1023:return
+	copr. 1990 fred dart 12-26-90

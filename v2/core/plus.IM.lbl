@@ -1,227 +1,228 @@
-	ZZ%=8:PR$="":LM$="":&,52,44,3:MM=A%:&,52,45,3:MM=MM AND A%:FL=.
+{number:3000}
+	zz%=8:pr$="":lm$="":&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%:fl=.
 {:3002}
-	DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2:IF FL THEN RETURN
-	GOSUB{:3006}:&,28,1:GOTO 1811
+	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2:if fl then return
+	gosub {:3006}:&,28,1:goto 1811
 {:3006}
-	&,28,1:N=14:DIM M%(16,N),DT$(60),ED$(60),A%(60):IF TR%<1 THEN RETURN
-	&,16,.,34,M%(.,1),"{$c1}","","{$cd}ACROS {$c5}DITOR"
-	&,16,.,34,M%(.,2),"{$c2}","","{$c3}OMMAND {$d3}ET"
-	&,16,.,34,M%(.,3),"{$c3}","","{$d0}AYROLL {$c5}DITOR"
-	&,16,.,34,M%(.,4),"{$c4}","","{$cc}OGON {$c5}DITOR"
-	&,16,.,34,M%(.,5),"{$c5}","","{$c1}CCESS {$c7}ROUPS"
-	&,16,.,34,M%(.,6),"{$c6}","","{$c6}ILE {$cc}ISTS"
-	&,16,.,34,M%(.,7),"{$c7}","","{$c6}UNCTION {$cb}EYS"
-	&,16,.,34,M%(.,8),"{$c8}","","{$cc}IGHTBAR/{$c1}LARMS"
-	&,16,.,34,M%(.,9),"{$c9}","","{$cd}ISC. {$c6}EATURES"
-	&,16,.,34,M%(.,10),"{$ca}","","{$cd}ODEM {$c3}ONFIG"
-	&,16,.,34,M%(.,11),"{$cb}","","{$d3}ET {$d4}IME"
-	&,16,.,34,M%(.,12),"{$cc}","","{$d3}YSTEM {$c4}RIVES"
-	&,16,.,34,M%(.,13),"{$cd}","","{$ce}ETMAIL {$c3}ONFIG"
-	&,16,.,34,M%(.,14),"{$ce}","","{$d1}UIT"
-	GOSUB{:3330}:IF TR%<1 OR LM=N OR LM=.THEN RETURN
-	ON LM GOTO{:3188},{:3172},{:3192},{:3068},{:3176},{:3178},{:3190},{:3084},{:3120},{:3174}
-	ON LM-10 GOTO{:3264},{:3104},{:3044}
-	RETURN
+	&,28,1:n=14:dim m%(16,n),dt$(60),ed$(60),a%(60):if tr%<1 then return
+	&,16,.,34,m%(.,1),"{$c1}","","{$cd}acros {$c5}ditor"
+	&,16,.,34,m%(.,2),"{$c2}","","{$c3}ommand {$d3}et"
+	&,16,.,34,m%(.,3),"{$c3}","","{$d0}ayroll {$c5}ditor"
+	&,16,.,34,m%(.,4),"{$c4}","","{$cc}ogon {$c5}ditor"
+	&,16,.,34,m%(.,5),"{$c5}","","{$c1}ccess {$c7}roups"
+	&,16,.,34,m%(.,6),"{$c6}","","{$c6}ile {$cc}ists"
+	&,16,.,34,m%(.,7),"{$c7}","","{$c6}unction {$cb}eys"
+	&,16,.,34,m%(.,8),"{$c8}","","{$cc}ightbar/{$c1}larms"
+	&,16,.,34,m%(.,9),"{$c9}","","{$cd}isc. {$c6}eatures"
+	&,16,.,34,m%(.,10),"{$ca}","","{$cd}odem {$c3}onfig"
+	&,16,.,34,m%(.,11),"{$cb}","","{$d3}et {$d4}ime"
+	&,16,.,34,m%(.,12),"{$cc}","","{$d3}ystem {$c4}rives"
+	&,16,.,34,m%(.,13),"{$cd}","","{$ce}etmail {$c3}onfig"
+	&,16,.,34,m%(.,14),"{$ce}","","{$d1}uit"
+	gosub {:3330}:if tr%<1 or lm=n or lm=.then return
+	on lm goto {:3188},{:3172},{:3192},{:3068},{:3176},{:3178},{:3190},{:3084},{:3120},{:3174}
+	on lm-10 goto {:3264},{:3104},{:3044}
+	return
 {:3044}
-	&,28,1:N=8:DIM M%(16,N)
-	&,16,.,34,M%(.,1),"{$c1}","","{$cc}OCAL {$c9}NFO"
-	&,16,.,34,M%(.,2),"{$c2}","","{$cd}ODEM {$d3}PECS"
-	&,16,.,34,M%(.,3),"{$c3}","","{$c3}ALLING {$c8}OURS"
-	&,16,.,34,M%(.,4),"{$c4}","","{$c3}ONNECTIONS"
-	&,16,.,34,M%(.,5),"{$c5}","","{$cd}AIL {$c6}ORWARDS"
-	&,16,.,34,M%(.,6),"{$c6}","","{$d3}TARLINK"
-	&,16,.,34,M%(.,7),"{$c7}","","{$ce}ETWALL/{$c7}RF"
-	&,16,.,34,M%(.,8),"{$c8}","","{$d1}UIT"
+	&,28,1:n=8:dim m%(16,n)
+	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ocal {$c9}nfo"
+	&,16,.,34,m%(.,2),"{$c2}","","{$cd}odem {$d3}pecs"
+	&,16,.,34,m%(.,3),"{$c3}","","{$c3}alling {$c8}ours"
+	&,16,.,34,m%(.,4),"{$c4}","","{$c3}onnections"
+	&,16,.,34,m%(.,5),"{$c5}","","{$cd}ail {$c6}orwards"
+	&,16,.,34,m%(.,6),"{$c6}","","{$d3}tarlink"
+	&,16,.,34,m%(.,7),"{$c7}","","{$ce}etwall/{$c7}rf"
+	&,16,.,34,m%(.,8),"{$c8}","","{$d1}uit"
 {:3062}
-	N=8:GOSUB{:3330}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
-	&"{lt. red}{$d4}HAT FUNCTION IS NOT YET SUPPORTED.{pound}W1":GOTO{:3062}
-	A$="NETMAIL":GOSUB{:3182}:GOTO{:3062}
+	n=8:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	&"{lt. red}{$d4}hat function is not yet supported.{pound}w1":goto {:3062}
+	a$="netmail":gosub {:3182}:goto {:3062}
 {:3068}
-	&,28,1:N=5:DIM M%(16,N),TX$(60),FB%(29,15),A%(60):IF TR%<1 THEN{:3006}
-	&,16,.,34,M%(.,1),"{$c1}","","{$cc}OGIN {$cd}ODS"
-	&,16,.,34,M%(.,2),"{$c2}","","{$cd}AINT {$cd}ODS"
-	&,16,.,34,M%(.,3),"{$c3}","","{$d7}ALL {$c1}DS"
-	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UICKLIST"
-	&,16,.,34,M%(.,5),"{$c5}","","{$d1}UIT"
+	&,28,1:n=5:dim m%(16,n),tx$(60),fb%(29,15),a%(60):if tr%<1 then{:3006}
+	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ogin {$cd}ods"
+	&,16,.,34,m%(.,2),"{$c2}","","{$cd}aint {$cd}ods"
+	&,16,.,34,m%(.,3),"{$c3}","","{$d7}all {$c1}ds"
+	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uicklist"
+	&,16,.,34,m%(.,5),"{$c5}","","{$d1}uit"
 {:3080}
-	N=5:GOSUB{:3330}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
-	A$="LOGON":GOSUB{:3182}:FL=1:GOSUB{:3002}:FL=.:GOTO{:3080}
+	n=5:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	a$="logon":gosub {:3182}:fl=1:gosub {:3002}:fl=.:goto {:3080}
 {:3084}
-	&,28,1:N=4:ZZ%=8:DIM AM%(3,15),M%(16,N),B$(ZZ%*16-1),C$(60),A%(60)
-	&"{f6}{$d2}EADING {$c3}HECKMARK {$c4}EFINITIONS...":IF TR%<1 THEN{:3006}
-	DR=1:A$="S.LIGHTDEFS,S,R":GOSUB 1011:X=.:IF E%THEN CLOSE 2:&:GOTO{:3092}
-	FOR X=.TO 16*ZZ%-1:&,2,2:B$(X)=A$:NEXT:CLOSE 2:&"{$c4}ONE{f6}"
+	&,28,1:n=4:zz%=8:dim am%(3,15),m%(16,n),b$(zz%*16-1),c$(60),a%(60)
+	&"{f6}{$d2}eading {$c3}heckmark {$c4}efinitions...":if tr%<1 then{:3006}
+	dr=1:a$="s.lightdefs,s,r":gosub 1011:x=.:if e%then close 2:&:goto {:3092}
+	for x=.to 16*zz%-1:&,2,2:b$(x)=a$:next:close 2:&"{$c4}one{f6}"
 {:3092}
-	&,16,.,34,M%(.,1),"{$c1}","","{$cc}IGHT{$c2}AR {$c4}EFS"
-	&,16,.,34,M%(.,2),"{$c2}","","{$c1}LARMS"
-	&,16,.,34,M%(.,3),"{$c3}","","{$ce}ET{$cd}AIL {$c1}LARMS"
-	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UIT"
+	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ight{$c2}ar {$c4}efs"
+	&,16,.,34,m%(.,2),"{$c2}","","{$c1}larms"
+	&,16,.,34,m%(.,3),"{$c3}","","{$ce}et{$cd}ail {$c1}larms"
+	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uit"
 {:3100}
-	N=4:GOSUB{:3330}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
-	A$="LIGHTBAR":GOSUB{:3182}:GOTO{:3100}
+	n=4:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	a$="lightbar":gosub {:3182}:goto {:3100}
 {:3104}
-	&,28,1:N=7:ZZ%=6:DIM M%(20,N)
-	A=1:A$="{$d3}YSTEM":GOSUB{:3116}:A=2:A$="{$c5}-{$cd}AIL":GOSUB{:3116}
-	A=3:A$="{$c5}TCETERA":GOSUB{:3116}:A=4:A$="{$c4}IRECTORY":GOSUB{:3116}
-	A=5:A$="{$d0}ROGRAM":GOSUB{:3116}:A=6:A$="{$d5}SER":GOSUB{:3116}
-	&,16,.,42,M%(.,7),"{$c7}","","{$d1}UIT":N=7:GOSUB{:3336}:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
-	GOSUB{:3252}:GOTO{:3104}
+	&,28,1:n=7:zz%=6:dim m%(20,n)
+	a=1:a$="{$d3}ystem":gosub {:3116}:a=2:a$="{$c5}-{$cd}ail":gosub {:3116}
+	a=3:a$="{$c5}tcetera":gosub {:3116}:a=4:a$="{$c4}irectory":gosub {:3116}
+	a=5:a$="{$d0}rogram":gosub {:3116}:a=6:a$="{$d5}ser":gosub {:3116}
+	&,16,.,42,m%(.,7),"{$c7}","","{$d1}uit":n=7:gosub {:3336}:if tr%<1 or lm=n or lm=.then{:3006}
+	gosub {:3252}:goto {:3104}
 {:3116}
-	B$=RIGHT$("   "+STR$(DV%(A)),3)+","+MID$(STR$(DR%(A)),2)
-	&,16,.,42,M%(.,A),CHR$(192+A),"",LEFT$(A$+" {$c4}ISK:     ",15)+B$:RETURN
+	b$=right$("   "+str$(dv%(a)),3)+","+mid$(str$(dr%(a)),2)
+	&,16,.,42,m%(.,a),chr$(192+a),"",left$(a$+" {$c4}isk:     ",15)+b$:return
 {:3120}
-	&,28,1:N=13:DIM M%(22,N):GOSUB 1063:X=38:GOSUB 1001:&,2,2:LK%=VAL(A$)
-	X=39:GOSUB 1001:&,2,2:A%(2)=VAL(A$):X=40:GOSUB 1001:&,2,2:A%(3)=VAL(A$)
-	X=41:GOSUB 1001:&,2,2:A%(4)=VAL(A$):X=42:GOSUB 1001:&,2,2:A%(5)=VAL(A$)
-	X=43:GOSUB 1001:&,2,2:MM$=A$:X=45:GOSUB 1001:&,2,2:TZ$=A$
-	X=47:GOSUB 1001:&,2,2:BN$=A$:X=51:GOSUB 1001:&,2,2:CC$=A$
-	X=58:GOSUB 1001:&,2,2:NC=VAL(A$):CLOSE 2:A$=BD$+"BD.DATA,S,R":GOSUB 1011
-	INPUT# 2,A$,B$,PO$:CLOSE 2:RESTORE:FOR I=1 TO 15:READ TT$(I):NEXT:TT$(.)=TT$(3)
+	&,28,1:n=13:dim m%(22,n):gosub 1063:x=38:gosub 1001:&,2,2:lk%=val(a$)
+	x=39:gosub 1001:&,2,2:a%(2)=val(a$):x=40:gosub 1001:&,2,2:a%(3)=val(a$)
+	x=41:gosub 1001:&,2,2:a%(4)=val(a$):x=42:gosub 1001:&,2,2:a%(5)=val(a$)
+	x=43:gosub 1001:&,2,2:mm$=a$:x=45:gosub 1001:&,2,2:tz$=a$
+	x=47:gosub 1001:&,2,2:bn$=a$:x=51:gosub 1001:&,2,2:cc$=a$
+	x=58:gosub 1001:&,2,2:nc=val(a$):close 2:a$=bd$+"bd.data,s,r":gosub 1011
+	input# 2,a$,b$,po$:close 2:restore:for i=1 to 15:read tt$(i):next:tt$(.)=tt$(3)
 {:3134}
-	&,16,.,46,M%(.,1),"{$c1}","","{$cc}T. {$cb}ERNAL {$c4}EVICE: "+STR$(LK%)
-	&,16,.,46,M%(.,2),"{$c2}","","{$c1}UTOWEED {$c3}UTOFF:   "+STR$(A%(2))
-	&,16,.,46,M%(.,3),"{$c3}","","{$c4}EFAULT {$c3}OLOR:      "+TT$(A%(3))
-	&,16,.,46,M%(.,4),"{$c4}","","{$d0}RINTER {$c1}DDRESS:   "+STR$(A%(4))
-	A$=MID$("{$d9}ES{$ce}O",-3*(A%(5)<>10)+1,3)
-	&,16,.,46,M%(.,5),"{$c5}","","{$d0}RINTER {$cc}INEFEEDS:  "+A$
-	&,16,.,46,M%(.,6),"{$c6}","","{$d0}ASSWORD {$cd}ASKS:     "+MM$
-	&,16,.,46,M%(.,7),"{$c7}","","{$d4}IME {$da}ONE:          "+LEFT$(TZ$,3):A$=PO$
-	&,16,.,46,M%(.,8),"{$c8}","","{$cd}AIN {$d0}ROMPT:        "+LEFT$(PO$,15)
-	&,16,.,46,M%(.,9),"{$c9}","","{$c2:2}{$d3} {$ce}AME:           "+LEFT$(BN$,15)
-	&,16,.,46,M%(.,10),"{$ca}","","{$d3}YSTEM {$c9}{$c4}           "+CC$
-	&,16,.,46,M%(.,11),"{$cb}","","{$ce}EW {$d5}SER {$c3}REDITS:  "+STR$(NC)
-	&,16,.,46,M%(.,12),"{$cc}","","{$c3}HAT {$cd}ESSAGES"
-	&,16,.,46,M%(.,13),"{$cd}","","{$d1}UIT"
-	N=13:GOSUB{:3342}:A=LM:IF TR%<1 OR LM=N OR LM=.THEN{:3006}
-	A$="MISC":GOSUB{:3182}:GOTO{:3134}
-	DATA"{$d7}HITE","{$d2}ED","{$c3}YAN","{$d0}URPLE","{$c7}REEN","{$c2}LUE","{$d9}ELLOW","{$cf}RANGE","{$c2}ROWN"
-	DATA"{$cc}IGHT {$d2}ED","{$c4}ARK {$c7}RAY","{$cd}EDIUM {$c7}RAY","{$cc}IGHT {$c7}REEN","{$cc}IGHT {$c2}LUE"
-	DATA"{$cc}IGHT {$c7}RAY"
+	&,16,.,46,m%(.,1),"{$c1}","","{$cc}t. {$cb}ernal {$c4}evice: "+str$(lk%)
+	&,16,.,46,m%(.,2),"{$c2}","","{$c1}utoweed {$c3}utoff:   "+str$(a%(2))
+	&,16,.,46,m%(.,3),"{$c3}","","{$c4}efault {$c3}olor:      "+tt$(a%(3))
+	&,16,.,46,m%(.,4),"{$c4}","","{$d0}rinter {$c1}ddress:   "+str$(a%(4))
+	a$=mid$("{$d9}es{$ce}o",-3*(a%(5)<>10)+1,3)
+	&,16,.,46,m%(.,5),"{$c5}","","{$d0}rinter {$cc}inefeeds:  "+a$
+	&,16,.,46,m%(.,6),"{$c6}","","{$d0}assword {$cd}asks:     "+mm$
+	&,16,.,46,m%(.,7),"{$c7}","","{$d4}ime {$da}one:          "+left$(tz$,3):a$=po$
+	&,16,.,46,m%(.,8),"{$c8}","","{$cd}ain {$d0}rompt:        "+left$(po$,15)
+	&,16,.,46,m%(.,9),"{$c9}","","{$c2:2}{$d3} {$ce}ame:           "+left$(bn$,15)
+	&,16,.,46,m%(.,10),"{$ca}","","{$d3}ystem {$c9}{$c4}           "+cc$
+	&,16,.,46,m%(.,11),"{$cb}","","{$ce}ew {$d5}ser {$c3}redits:  "+str$(nc)
+	&,16,.,46,m%(.,12),"{$cc}","","{$c3}hat {$cd}essages"
+	&,16,.,46,m%(.,13),"{$cd}","","{$d1}uit"
+	n=13:gosub {:3342}:a=lm:if tr%<1 or lm=n or lm=.then{:3006}
+	a$="misc":gosub {:3182}:goto {:3134}
+	data"{$d7}hite","{$d2}ed","{$c3}yan","{$d0}urple","{$c7}reen","{$c2}lue","{$d9}ellow","{$cf}range","{$c2}rown"
+	data"{$cc}ight {$d2}ed","{$c4}ark {$c7}ray","{$cd}edium {$c7}ray","{$cc}ight {$c7}reen","{$cc}ight {$c2}lue"
+	data"{$cc}ight {$c7}ray"
 {:3172}
-	A$="ECS":GOSUB{:3182}:GOTO{:3006}
+	a$="ecs":gosub {:3182}:goto {:3006}
 {:3174}
-	A$="MODEM":GOSUB{:3182}:GOTO{:3006}
+	a$="modem":gosub {:3182}:goto {:3006}
 {:3176}
-	A$="ACCESS":GOSUB{:3182}:GOTO{:3006}
+	a$="access":gosub {:3182}:goto {:3006}
 {:3178}
-	A$="FILELIST":GOSUB{:3182}:GOTO{:3006}
+	a$="filelist":gosub {:3182}:goto {:3006}
 {:3180}
-	A$="MACROS":GOSUB{:3182}:GOTO{:3006}
+	a$="macros":gosub {:3182}:goto {:3006}
 {:3182}
-	&"{f6}{$cc}OADING {pound}$A MODULE.."
-	IF LM$<>"{$c9}{$cd}."+A$THEN DR=5:GOSUB 1010:LM$="{$c9}{$cd}."+A$:A$=DR$+"+/"+LM$:LOAD A$,DV%
-	&"{f6}":GOTO 4000
+	&"{f6}{$cc}oading {pound}$a module.."
+	if lm$<>"{$c9}{$cd}."+a$then dr=5:gosub 1010:lm$="{$c9}{$cd}."+a$:a$=dr$+"+/"+lm$:load a$,dv%
+	&"{f6}":goto 4000
 {:3188}
-	LM=1:GOTO{:3180}
+	lm=1:goto {:3180}
 {:3190}
-	LM=2:GOTO{:3180}
+	lm=2:goto {:3180}
 {:3192}
-	DR=6:A$="U.PAYROLL,S,R":N=.:GOSUB 1011:IF E%THEN{:3196}
+	dr=6:a$="u.payroll,s,r":n=.:gosub 1011:if e%then{:3196}
 {:3194}
-	N=N+1:&,2,2:TT$(N)=A$:IF ST=.THEN{:3194}
+	n=n+1:&,2,2:tt$(n)=a$:if st=.then{:3194}
 {:3196}
-	CLOSE 2:CF=.
+	close 2:cf=.
 {:3198}
-	&"{clear}{f6}{gray3}{$d0}AYROLL {$c5}DITOR{f6}{white}{pound}VJ":POKE 53252,38
-	IF N=.THEN:&"{yellow}{$ce}O {$c5}NTRIES.{f6}":GOTO{:3206}
-	FOR I=1 TO N:A%=I:B%=VAL(LEFT$(TT$(I),3)):C%=VAL(MID$(TT$(I),5))
-	&"{lt. green}{pound}#2{pound}# {pound}%A{blue}) {lt. green}{$c9}{$c4}{white}{pound}#0{pound}%B{pound}{back arrow}17{pound}#4{pound}# {pound}%C {lt. green}{$c3}REDITS{f6}":I=I+RC*N:NEXT
+	&"{clear}{f6}{gray3}{$d0}ayroll {$c5}ditor{f6}{white}{pound}vj":poke 53252,38
+	if n=.then:&"{yellow}{$ce}o {$c5}ntries.{f6}":goto {:3206}
+	for i=1 to n:a%=i:b%=val(left$(tt$(i),3)):c%=val(mid$(tt$(i),5))
+	&"{lt. green}{pound}#2{pound}# {pound}%a{blue}) {lt. green}{$c9}{$c4}{white}{pound}#0{pound}%b{pound}{back arrow}17{pound}#4{pound}# {pound}%c {lt. green}{$c3}redits{f6}":i=i+rc*n:next
 {:3206}
-	&"{white}{pound}VJ{$c1}{green}DD{blue}/{white}{$c4}{green}ELETE{blue}/{white}{$c5}{green}DIT{blue}/{white}{$d1}{green}UIT{blue}: {white}{pound}G1"
-	ON-(AN$="{$c1}")-2*(AN$="{$c4}")-3*(AN$="{$c5}")GOTO{:3220},{:3230},{:3238}
-	&"{$d1}UIT{f6}":IF CF=.THEN{:3218}
-	&"{f6}{white}{$d3}AVE {$c3}HANGES? ":GOSUB 1907:IF A=.THEN{:3218}
-	DR=6:A$="U.PAYROLL":GOSUB 1023
-	FOR I=1 TO N:PRINT# 2,TT$(I):NEXT:CLOSE 2
+	&"{white}{pound}vj{$c1}{green}dd{blue}/{white}{$c4}{green}elete{blue}/{white}{$c5}{green}dit{blue}/{white}{$d1}{green}uit{blue}: {white}{pound}g1"
+	on-(an$="{$c1}")-2*(an$="{$c4}")-3*(an$="{$c5}")goto {:3220},{:3230},{:3238}
+	&"{$d1}uit{f6}":if cf=.then{:3218}
+	&"{f6}{white}{$d3}ave {$c3}hanges? ":gosub 1907:if a=.then{:3218}
+	dr=6:a$="u.payroll":gosub 1023
+	for i=1 to n:print# 2,tt$(i):next:close 2
 {:3218}
-	GOTO{:3006}
+	goto {:3006}
 {:3220}
-	&"{$c1}DD{f6:2}"
-	POKE 53252,4:&"{$c9}{$c4}: {pound}I1":B%=VAL(AN$):IF B%<1 OR B%>UR THEN{:3198}
-	POKE 53252,5:&"{$c3}REDITS: {pound}I1":C%=VAL(AN$):IF C%<1 THEN{:3198}
-	N=N+1:TT$(N)=RIGHT$(STR$(1000+B%),3)+STR$(C%):CF=1
-	GOTO{:3198}
+	&"{$c1}dd{f6:2}"
+	poke 53252,4:&"{$c9}{$c4}: {pound}i1":b%=val(an$):if b%<1 or b%>ur then{:3198}
+	poke 53252,5:&"{$c3}redits: {pound}i1":c%=val(an$):if c%<1 then{:3198}
+	n=n+1:tt$(n)=right$(str$(1000+b%),3)+str$(c%):cf=1
+	goto {:3198}
 {:3230}
-	&"{$c4}ELETE{f6:2}"
-	&"{$d7}HICH #? {pound}I1":A=VAL(AN$):IF A<1 OR A>N THEN{:3198}
-	CF=1:N=N-1:IF A=N+1 THEN{:3198}
-	FOR I=A TO N:TT$(I)=TT$(I+1):NEXT:GOTO{:3198}
+	&"{$c4}elete{f6:2}"
+	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then{:3198}
+	cf=1:n=n-1:if a=n+1 then{:3198}
+	for i=a to n:tt$(i)=tt$(i+1):next:goto {:3198}
 {:3238}
-	&"{$c5}DIT{f6:2}"
-	&"{$d7}HICH #? {pound}I1":A=VAL(AN$):IF A<1 OR A>N THEN 3938
-	B$=(LEFT$(TT$(A),3)):C$=MID$(TT$(A),5)
-	POKE 53252,4:W$=B$:P$="{$c9}{$c4}":PL=1:&,1,32:IF AN$<>""THEN B$=AN$
-	POKE 53252,5:W$=C$:P$="{$c3}REDITS":PL=.:&,1,32:IF AN$<>""THEN C$=AN$
-	B%=VAL(B$):C%=VAL(C$)
-	TT$(A)=RIGHT$(STR$(1000+B%),3)+STR$(C%):CF=1:GOTO{:3198}
+	&"{$c5}dit{f6:2}"
+	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then 3938
+	b$=(left$(tt$(a),3)):c$=mid$(tt$(a),5)
+	poke 53252,4:w$=b$:p$="{$c9}{$c4}":pl=1:&,1,32:if an$<>""then b$=an$
+	poke 53252,5:w$=c$:p$="{$c3}redits":pl=.:&,1,32:if an$<>""then c$=an$
+	b%=val(b$):c%=val(c$)
+	tt$(a)=right$(str$(1000+b%),3)+str$(c%):cf=1:goto {:3198}
 {:3252}
-	P$="{gray3}{$c4}EVICE{white}":W$=MID$(STR$(DV%(LM)),2):&,1,32:A=VAL(AN$)
-	IF AN$<>""AND A<>DV%(LM)AND A>6 AND A<32 THEN TF=1:DV%(LM)=A
-	P$="{gray3}{$c4}RIVE/{$cc}{$d5}{white}":W$=MID$(STR$(DR%(LM)),2):&,1,32:A=VAL(AN$)
-	IF AN$<>""AND A<>DR%(LM)AND A=>.AND A<255 THEN TF=1:DR%(LM)=A
-	IF TF THEN GOSUB 1063:X=LM+51:GOSUB 1001:PRINT# 2,DV%(LM);R$;DR%(LM):CLOSE 2
-	RETURN
+	p$="{gray3}{$c4}evice{white}":w$=mid$(str$(dv%(lm)),2):&,1,32:a=val(an$)
+	if an$<>""and a<>dv%(lm)and a>6 and a<32 then tf=1:dv%(lm)=a
+	p$="{gray3}{$c4}rive/{$cc}{$d5}{white}":w$=mid$(str$(dr%(lm)),2):&,1,32:a=val(an$)
+	if an$<>""and a<>dr%(lm)and a=>.and a<255 then tf=1:dr%(lm)=a
+	if tf then gosub 1063:x=lm+51:gosub 1001:print# 2,dv%(lm);r$;dr%(lm):close 2
+	return
 {:3264}
-	&"{f6:2}{purple}{pound}VJ{cyan}   {$d2}EMOTE {$d4}IME {$c5}DITOR V2.0{f6}{purple}{pound}VJ{cyan}":GOTO{:3268}
-	A$=D1$:GOSUB 1520:T1=A:RETURN
+	&"{f6:2}{purple}{pound}vj{cyan}   {$d2}emote {$d4}ime {$c5}ditor v2.0{f6}{purple}{pound}vj{cyan}":goto {:3268}
+	a$=d1$:gosub 1520:t1=a:return
 {:3268}
-	&"{f6}{pound}{back arrow}10{cyan}{$c3}URRENT {$c4}ATE/{$d4}IME IS{f6}{pound}{back arrow}07{pound}V0{f6:3}":D$=D1$:TZ=.
+	&"{f6}{pound}{back arrow}10{cyan}{$c3}urrent {$c4}ate/{$d4}ime is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
 {:3270}
-	P$=" {$c4}AY   ":W$=LEFT$(D$,1):A=1:GOSUB{:3310}:IF A<1 OR A>7 THEN{:3270}
-	DW$=MID$(STR$(VAL(AN$)),2,1)
+	p$=" {$c4}ay   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
+	dw$=mid$(str$(val(an$)),2,1)
 {:3274}
-	P$=" {$cd}ONTH ":W$=MID$(D$,4,2):A=2:GOSUB{:3310}:IF A<1 OR A>12 THEN{:3274}
-	GOSUB{:3316}:MO$=AN$
+	p$=" {$cd}onth ":w$=mid$(d$,4,2):a=2:gosub {:3310}:if a<1 or a>12 then{:3274}
+	gosub {:3316}:mo$=an$
 {:3278}
-	P$=" {$c4}ATE  ":W$=MID$(D$,6,2):A=2:GOSUB{:3310}:IF A<1 OR A>31 THEN{:3278}
-	GOSUB{:3316}:DT$=AN$
+	p$=" {$c4}ate  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
+	gosub {:3316}:dt$=an$
 {:3282}
-	P$=" {$d9}EAR  ":W$=MID$(D$,2,2):A=2:GOSUB{:3310}:IF A<1 OR A>99 THEN{:3282}
-	GOSUB{:3316}:YR$=AN$
-	C$="{$c1}":E%=VAL(MID$(D$,8,2)):IF E%>79 THEN E%=E%-80:C$="{$d0}"
+	p$=" {$d9}ear  ":w$=mid$(d$,2,2):a=2:gosub {:3310}:if a<1 or a>99 then{:3282}
+	gosub {:3316}:yr$=an$
+	c$="{$c1}":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="{$d0}"
 {:3288}
-	P$=" {$c8}OUR  ":AN$=MID$(STR$(E%),2):GOSUB{:3316}:W$=AN$:A=2:GOSUB{:3310}:IF A<1 OR A>12 THEN{:3288}
-	GOSUB{:3308}:B=A:GOSUB{:3316}:HR$=AN$
+	p$=" {$c8}our  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
+	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
 {:3292}
-	P$=" {$cd}IN.  ":W$=RIGHT$(D$,2):A=2:GOSUB{:3310}:IF A<.OR A>59 THEN{:3292}
-	A=A-SGN(A):GOSUB{:3308}:C=A:MN$=AN$:W$=C$
+	p$=" {$cd}in.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
+	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
 {:3296}
-	P$=" {$c1}/{$d0}   ":A=1:GOSUB{:3310}:ON-(AN$<>"{$c1}"AND AN$<>"{$d0}")GOTO{:3296}:IF AN$<>V$THEN TZ=1
-	IF(AN$="{$d0}"AND B<>18)OR(AN$="{$c1}"AND B=18)THEN B=B OR 128:GOSUB{:3318}
-	ON TZ+1 GOTO{:3328}:GOSUB{:3320}:&"{cyan}{pound}{back arrow}10{$d3}ETTING {$c4}ATE/{$d4}IME TO{f6}{pound}{back arrow}07{$04}"+A$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
-	GOSUB 1907:ON A+1 GOTO{:3326}:GOSUB{:3322}:POKE 56331,B:POKE 56330,C:POKE 56329,89
-	POKE 56328,.:POKE 1010,1
-	GOSUB 1063:X=19:GOSUB 1001:PRINT# 2,D1$:CLOSE 2:GOTO{:3326}
+	p$=" {$c1}/{$d0}   ":a=1:gosub {:3310}:on-(an$<>"{$c1}"and an$<>"{$d0}")goto {:3296}:if an$<>v$then tz=1
+	if(an$="{$d0}"and b<>18)or(an$="{$c1}"and b=18)then b=b or 128:gosub {:3318}
+	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10{$d3}etting {$c4}ate/{$d4}ime to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
+	gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
+	poke 56328,.:poke 1010,1
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:goto {:3326}
 {:3308}
-	A=16*INT(A/10)+A-INT(A/10)*10:RETURN
+	a=16*int(a/10)+a-int(a/10)*10:return
 {:3310}
-	V$=W$:P$="{cyan}"+P$+"{gray3}":POKE 53252,A:PL=1:&,1,32:ON-(AN$="")GOTO{:3314}:&"{f6}"
-	A=VAL(AN$):TZ=(TZ OR-(A<>VAL(V$))):RETURN
+	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:on-(an$="")goto {:3314}:&"{f6}"
+	a=val(an$):tz=(tz or-(a<>val(v$))):return
 {:3314}
-	&"{f6}":AN$=V$:A=VAL(AN$):RETURN
+	&"{f6}":an$=v$:a=val(an$):return
 {:3316}
-	AN$=RIGHT$("0"+MID$(STR$(VAL(AN$)),2,2),2):RETURN
+	an$=right$("0"+mid$(str$(val(an$)),2,2),2):return
 {:3318}
-	HR$=RIGHT$("0"+MID$(STR$(-80*(AN$="{$d0}")+VAL(HR$)),2,2),2):RETURN
+	hr$=right$("0"+mid$(str$(-80*(an$="{$d0}")+val(hr$)),2,2),2):return
 {:3320}
-	A$=DW$+YR$+MO$+DT$+HR$+MN$:RETURN
+	a$=dw$+yr$+mo$+dt$+hr$+mn$:return
 {:3322}
-	A=VAL(DW$):GOSUB{:3308}:POKE 52935,A:A=VAL(MO$):GOSUB{:3308}:POKE 52936,A
-	A=VAL(DT$):GOSUB{:3308}:POKE 52937,A:A=VAL(YR$):GOSUB{:3308}:POKE 52938,A
+	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
+	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
 {:3326}
-	RETURN
+	return
 {:3328}
-	&"{f6}{$ce}O {$c3}HANGES {$cd}ADE - {$c1}BORTED!{f6:2}":RETURN
+	&"{f6}{$ce}o {$c3}hanges {$cd}ade - {$c1}borted!{f6:2}":return
 {:3330}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	&,16,2,34,M%(.,1),N,17,2,N/2+.5,2,6,.:LM=A%+1:&,70,.,N/2+8.5:&"{white}":RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}":return
 {:3336}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	&,16,2,42,M%(.,1),N,36,1,N,2,6,.:LM=A%+1:&,70,.,N+8:&"{white}":RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,42,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {:3342}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}ONFIGURATION {$c5}DITOR{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	&,16,2,46,M%(.,1),N,36,1,N,2,6,.:LM=A%+1:&,70,.,N+8:&"{white}":RETURN
-	COPR. 1994 NEW IMAGE 10/19/94
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
+	copr. 1994 new image 10/19/94

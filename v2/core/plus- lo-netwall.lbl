@@ -1,130 +1,131 @@
-	REM "+.LO.NETWALL" 01-29-95
-	&"{f6}{lt. blue}{$d6}IEW {lt. green}{$ce}ETWALL? ":GOSUB 1902:IF A=.THEN RETURN
-	&,5:V=LP:ON ZZ GOTO{:4058}
+{number:4000}
+	rem "+.lo.netwall" 01-29-95
+	&"{f6}{lt. blue}{$d6}iew {lt. green}{$ce}etwall? ":gosub 1902:if a=.then return
+	&,5:v=lp:on zz goto {:4058}
 {:4006}
-	DR=2:A$="NM.CONFIG":GOSUB 1011:IF E%THEN NN=0:GOTO{:4020}
-	INPUT# 2,NN,A%:Q=SGN(A%AND 2^AC%):IF NN<1 THEN{:4034}
-	X=4:GOSUB 1001:&,2,2:KK$="{$c9}N "+A$:&,2,2:KK$=KK$+"{f1} "+A$:CLOSE 2
-	DR=2:A$="NM.WALL HEADER,S,R":GOSUB 1011:H$="":IF E%THEN{:4016}
+	dr=2:a$="nm.config":gosub 1011:if e%then nn=0:goto {:4020}
+	input# 2,nn,a%:q=sgn(a%and 2^ac%):if nn<1 then{:4034}
+	x=4:gosub 1001:&,2,2:kk$="{$c9}n "+a$:&,2,2:kk$=kk$+"{f1} "+a$:close 2
+	dr=2:a$="nm.wall header,s,r":gosub 1011:h$="":if e%then{:4016}
 {:4014}
-	&,2,2:IF LEN(A$)+LEN(H$)<254 THEN H$=H$+A$+R$:ON-(ST=0)GOTO{:4014}
+	&,2,2:if len(a$)+len(h$)<254 then h$=h$+a$+r$:on-(st=0)goto {:4014}
 {:4016}
-	DR=2:A$="NM.NODES":GOSUB 1011:ON SGN(E%)GOTO{:4034}:&,2,2:A=VAL(A$):IF NN>A THEN{:4034}
-	X=NN+1:GOSUB 1001:&,2,2:NN$=A$:&,2,2:&,2,2:BB$=A$:CLOSE 2
+	dr=2:a$="nm.nodes":gosub 1011:on sgn(e%)goto {:4034}:&,2,2:a=val(a$):if nn>a then{:4034}
+	x=nn+1:gosub 1001:&,2,2:nn$=a$:&,2,2:&,2,2:bb$=a$:close 2
 {:4020}
-	GOSUB 2912:LP=1:&"{clear}{f6}{blue}{pound}VJ{pound}$Q{pound}{back arrow}09 {cyan}{$ce}ETWORK {$c7}RAFFITI {$d6}2.0{pound}{back arrow}39 {blue}{pound}VJ{pound}Q0{f6:2}":GOTO{:4036}
+	gosub 2912:lp=1:&"{clear}{f6}{blue}{pound}vj{pound}$q{pound}{back arrow}09 {cyan}{$ce}etwork {$c7}raffiti {$d6}2.0{pound}{back arrow}39 {blue}{pound}vj{pound}q0{f6:2}":goto {:4036}
 {:4022}
-	POKE 2024,255:&,3,2:RETURN
+	poke 2024,255:&,3,2:return
 {:4024}
-	IF H$<>""THEN PRINT# 2,H$:PRINT# 2,"{lt. blue}{$c2}Y{white} "NA$"{blue} @ {white}"NN$:GOTO{:4028}
-	PRINT# 2,"{lt. blue}{$c2}Y{white} "NA$"{blue} @ {white}"NN$:IF NN THEN PRINT# 2,"{lt. blue}{$c1}T {white}"BB$R$KK$
+	if h$<>""then print# 2,h$:print# 2,"{lt. blue}{$c2}y{white} "na$"{blue} @ {white}"nn$:goto {:4028}
+	print# 2,"{lt. blue}{$c2}y{white} "na$"{blue} @ {white}"nn$:if nn then print# 2,"{lt. blue}{$c1}t {white}"bb$r$kk$
 {:4028}
-	PRINT# 2,"{pound}Q0":FOR I=1 TO KK-1:PRINT# 2,TT$(I):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+	print# 2,"{pound}q0":for i=1 to kk-1:print# 2,tt$(i):next:print# 2,"{up arrow}":close 2:return
 {:4030}
-	DR=2:A$=O$+",S,W":GOSUB 1011:IF E%THEN A$=O$+",S,A":GOSUB 1011
-	RETURN
+	dr=2:a$=o$+",s,w":gosub 1011:if e%then a$=o$+",s,a":gosub 1011
+	return
 {:4034}
-	CLOSE 2:RETURN
+	close 2:return
 {:4036}
-	DR=2:A$="NM.WALL,S,R":GOSUB 1011:IF E%THEN:&"{f6}{pound}VJ{$c9}T'S {$c5}MPTY!{f6}":GOTO{:4044}
-	&"{lt. blue}{$d3}CANNING {$c6}OR {lt. green}{$ce}EW {$cd}ESSAGES{yellow}...{pound}Q0"
+	dr=2:a$="nm.wall,s,r":gosub 1011:if e%then:&"{f6}{pound}vj{$c9}t's {$c5}mpty!{f6}":goto {:4044}
+	&"{lt. blue}{$d3}canning {$c6}or {lt. green}{$ce}ew {$cd}essages{yellow}...{pound}q0"
 {:4038}
-	SH=0:&,2,2:IF MID$(A$,2,6)<MID$(LD$,2,6)THEN:&"{yellow}.{pound}Q0":GOSUB{:4022}:GOTO{:4042}
-	LP=1:&"{f6}{pound}VJ{f6}{$04}"+A$:&,3,2:IF RC AND A$<>"{up arrow}"THEN GOSUB{:4022}
+	sh=0:&,2,2:if mid$(a$,2,6)<mid$(ld$,2,6)then:&"{yellow}.{pound}q0":gosub {:4022}:goto {:4042}
+	lp=1:&"{f6}{pound}vj{f6}{$04}"+a$:&,3,2:if rc and a$<>"{up arrow}"then gosub {:4022}
 {:4042}
-	GOSUB 1914:IF ST=.AND SH=0 THEN{:4038}
+	gosub 1914:if st=.and sh=0 then{:4038}
 {:4044}
-	CLOSE 2:&"{f6}{pound}VJ":IF Q THEN:&"{f6:2} {$c1}DD YOUR COMMENTS? ":GOSUB 1902:ON A GOSUB{:4048}
-	GOTO{:4034}
+	close 2:&"{f6}{pound}vj":if q then:&"{f6:2} {$c1}dd your comments? ":gosub 1902:on a gosub {:4048}
+	goto {:4034}
 {:4048}
-	GOSUB{:4122}:IF KK<1 THEN RETURN
-	&"{$c6}ILING..."
-	O$="NM.WALL":GOSUB{:4030}:PRINT# 2,D1$:GOSUB{:4024}
-	IF NN THEN O$="NM.{$c7}.TEMP":GOSUB{:4030}:GOSUB{:4024}
-	&"{pound}H6ED {$ce}ET{$c7}RAFFITI.{f6}":RETURN
+	gosub {:4122}:if kk<1 then return
+	&"{$c6}iling..."
+	o$="nm.wall":gosub {:4030}:print# 2,d1$:gosub {:4024}
+	if nn then o$="nm.{$c7}.temp":gosub {:4030}:gosub {:4024}
+	&"{pound}h6ed {$ce}et{$c7}raffiti.{f6}":return
 {:4058}
-	&"{f6:2} ({$c5})DIT ({$cb})ILL ({$d6})IEW ({$d7})EED: {pound}G1{pound}V7{f6}":IF TR%<1 OR AN$=CHR$(13)THEN RETURN
-	ON-(AN$="{$d6}")-2*(AN$="{$c5}")-3*(AN$="{$cb}")-4*(AN$="{$d7}")GOSUB{:4006},{:4092},{:4062},{:4066}:GOTO{:4058}
+	&"{f6:2} ({$c5})dit ({$cb})ill ({$d6})iew ({$d7})eed: {pound}g1{pound}v7{f6}":if tr%<1 or an$=chr$(13)then return
+	on-(an$="{$d6}")-2*(an$="{$c5}")-3*(an$="{$cb}")-4*(an$="{$d7}")gosub {:4006},{:4092},{:4062},{:4066}:goto {:4058}
 {:4062}
-	&"{f6}{$c1}RE {$d9}OU {$d3}URE? ":GOSUB 1902:IF A THEN DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.WALL"
-	RETURN
+	&"{f6}{$c1}re {$d9}ou {$d3}ure? ":gosub 1902:if a then dr=2:gosub 1010:print# 15,"s"dr$"nm.wall"
+	return
 {:4066}
-	&"{$c8}OW {$cd}ANY {$c4}AYS {$c2}ACK? {pound}I1":A=VAL(AN$):A$=D1$:IF A<1 OR A>99 THEN RETURN
-	A=VAL(MID$(A$,6,2))-A:B=VAL(MID$(A$,4,2)):C=VAL(MID$(A$,2,2))
-	IF A<1 THEN A=A+ASC(MID$("{blue:2}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}",B,1)):B=B-1:IF B<1 THEN B=12:C=C-1
-	TT$=RIGHT$(STR$(100+C),2)+RIGHT$(STR$(100+B),2)+RIGHT$(STR$(100+A),2)
-	A$=TT$:&"{$d7}EED WRITINGS OLDER THAN {pound}$A? ":GOSUB 1902:IF A=0 THEN RETURN
-	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.TEMP"
-	CLOSE 2:OPEN 2,DV%,2,DR$+"NM.WALL,S,R":CLOSE 3:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W"
+	&"{$c8}ow {$cd}any {$c4}ays {$c2}ack? {pound}i1":a=val(an$):a$=d1$:if a<1 or a>99 then return
+	a=val(mid$(a$,6,2))-a:b=val(mid$(a$,4,2)):c=val(mid$(a$,2,2))
+	if a<1 then a=a+asc(mid$("{blue:2}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}",b,1)):b=b-1:if b<1 then b=12:c=c-1
+	tt$=right$(str$(100+c),2)+right$(str$(100+b),2)+right$(str$(100+a),2)
+	a$=tt$:&"{$d7}eed writings older than {pound}$a? ":gosub 1902:if a=0 then return
+	dr=2:gosub 1010:print# 15,"s"dr$"nm.temp"
+	close 2:open 2,dv%,2,dr$+"nm.wall,s,r":close 3:open 3,dv%,3,dr$+"nm.temp,s,w"
 {:4080}
-	&,2,2:S=ST:&"{$04}"+A$:IF MID$(A$,2,6)<TT$THEN:&" {$cb}ILL{f6}":GOTO{:4086}
-	&" {$cb}EEP{f6}"
+	&,2,2:s=st:&"{$04}"+a$:if mid$(a$,2,6)<tt$then:&" {$cb}ill{f6}":goto {:4086}
+	&" {$cb}eep{f6}"
 {:4084}
-	PRINT# 3,A$:&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:4084}:PRINT# 3,"{up arrow}":GOTO{:4088}
+	print# 3,a$:&,2,2:s=st:on-(a$<>"{up arrow}"and s=0)goto {:4084}:print# 3,"{up arrow}":goto {:4088}
 {:4086}
-	&,2,2:S=ST:ON-(A$<>"{up arrow}"AND S=0)GOTO{:4086}
+	&,2,2:s=st:on-(a$<>"{up arrow}"and s=0)goto {:4086}
 {:4088}
-	ON-(S=0)GOTO{:4080}:CLOSE 2:CLOSE 3
-	PRINT# 15,"S"DR$"NM.WALL":PRINT# 15,"R"DR$"NM.WALL=NM.TEMP":RETURN
+	on-(s=0)goto {:4080}:close 2:close 3
+	print# 15,"s"dr$"nm.wall":print# 15,"r"dr$"nm.wall=nm.temp":return
 {:4092}
-	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"NM.TEMP"
-	CLOSE 2:OPEN 2,DV%,2,DR$+"NM.WALL,S,R":CLOSE 3:OPEN 3,DV%,3,DR$+"NM.TEMP,S,W"
-	A%=0:B%=0:S=0
+	dr=2:gosub 1010:print# 15,"s"dr$"nm.temp"
+	close 2:open 2,dv%,2,dr$+"nm.wall,s,r":close 3:open 3,dv%,3,dr$+"nm.temp,s,w"
+	a%=0:b%=0:s=0
 {:4098}
-	&"{clear}":ON-(S<>0)GOTO{:4116}:N=0:A%=A%+1
+	&"{clear}":on-(s<>0)goto {:4116}:n=0:a%=a%+1
 {:4100}
-	&,2,2:S=ST:N=N+1:TT$(N)=A$:IF A$<>"{up arrow}"AND S=0 THEN{:4100}
-	LP=1:&"{pound}VJ{f6}{$04}"+TT$(1):FOR I=2 TO N-1:LP=1:&TT$(I):NEXT:&"{f6}{pound}VJ"
+	&,2,2:s=st:n=n+1:tt$(n)=a$:if a$<>"{up arrow}"and s=0 then{:4100}
+	lp=1:&"{pound}vj{f6}{$04}"+tt$(1):for i=2 to n-1:lp=1:&tt$(i):next:&"{f6}{pound}vj"
 {:4104}
-	&"{f6:2}#{pound}%A ({pound}%B {$cb}EPT) {$c4}ELETE {$cb}EEP {$c1}BORT -->"
+	&"{f6:2}#{pound}%a ({pound}%b {$cb}ept) {$c4}elete {$cb}eep {$c1}bort -->"
 {:4106}
-	&"{pound}G1":IF TR%<1 THEN AN$="{$c1}"
-	IF AN$="{$cb}"THEN:&"{$cb}EEP{f6:2}":FOR I=1 TO N:PRINT# 3,TT$(I):NEXT:B%=B%+1:GOTO{:4098}
-	IF AN$="{$c1}"THEN:&"{$c1}BORT{f6:2}":CLOSE 2:CLOSE 3:PRINT# 15,"S"DR$"NM.TEMP":GOTO{:4120}
-	IF AN$<>"{$c4}"THEN{:4106}
-	&"{$c4}ELETE{f6:2} {$c1}RE YOU SURE? ":GOSUB 1902:ON A GOTO{:4098}:GOTO{:4104}
+	&"{pound}g1":if tr%<1 then an$="{$c1}"
+	if an$="{$cb}"then:&"{$cb}eep{f6:2}":for i=1 to n:print# 3,tt$(i):next:b%=b%+1:goto {:4098}
+	if an$="{$c1}"then:&"{$c1}bort{f6:2}":close 2:close 3:print# 15,"s"dr$"nm.temp":goto {:4120}
+	if an$<>"{$c4}"then{:4106}
+	&"{$c4}elete{f6:2} {$c1}re you sure? ":gosub 1902:on a goto {:4098}:goto {:4104}
 {:4116}
-	CLOSE 2:CLOSE 3
-	PRINT# 15,"S"DR$"NM.WALL":PRINT# 15,"R"DR$"NM.WALL=NM.TEMP"
+	close 2:close 3
+	print# 15,"s"dr$"nm.wall":print# 15,"r"dr$"nm.wall=nm.temp"
 {:4120}
-	RETURN
+	return
 {:4122}
-	KK=1:GOSUB{:4140}:DR=1:A$="S.EDITOR":GOSUB 1076:B%=.:GOSUB{:4166}:A=0
+	kk=1:gosub {:4140}:dr=1:a$="s.editor":gosub 1076:b%=.:gosub {:4166}:a=0
 {:4124}
-	&,54,A:A=PEEK(781):AN$=CHR$(PEEK(780)OR 128):REM IFV<>1.3THEN966
+	&,54,a:a=peek(781):an$=chr$(peek(780)or 128):rem ifv<>1.3then966
 {:4126}
-	KK=PEEK(1016):ON A GOTO{:4128},{:4134},{:4132}:&"{f6:2}":B%=KK-1:KK=.:RETURN
+	kk=peek(1016):on a goto {:4128},{:4134},{:4132}:&"{f6:2}":b%=kk-1:kk=.:return
 {:4128}
-	POKE 2031,0:B%=KK-1:&"{f6}{pound}%B {$cc}INES {$d5}SED.{f6}":IF KK=1 THEN A=0:GOTO{:4126}
-	B%=KK:RETURN
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b {$cc}ines {$d5}sed.{f6}":if kk=1 then a=0:goto {:4126}
+	b%=kk:return
 {:4132}
-	POKE 2031,0:GOSUB{:4138}:GOTO{:4124}
+	poke 2031,0:gosub {:4138}:goto {:4124}
 {:4134}
-	B%=KK-1:A=2:GOTO{:4124}
-	B%=KK-1:GOSUB{:4140}:GOSUB{:4166}:POKE 2031,1:A=1:GOTO{:4124}
+	b%=kk-1:a=2:goto {:4124}
+	b%=kk-1:gosub {:4140}:gosub {:4166}:poke 2031,1:a=1:goto {:4124}
 {:4138}
-	DR=1:A$="S.MENU 3":GOTO 1075
+	dr=1:a$="s.menu 3":goto 1075
 {:4140}
-	REM IFV<>1.3THEN963
-	POKE 53249,0:POKE 1016,KK:POKE 1018,4:POKE 1019,KK:POKE 1023,87
-	PL=.:POKE 1022,11:POKE 53252,LL%-2
-	RETURN
-	POKE 53249,0:POKE 1016,KK:POKE 1018,4:POKE 1019,KK:POKE 1023,87
-	PL=.:POKE 1022,11:POKE 53252,LL%-2
-	RETURN
+	rem ifv<>1.3then963
+	poke 53249,0:poke 1016,kk:poke 1018,4:poke 1019,kk:poke 1023,87
+	pl=.:poke 1022,11:poke 53252,ll%-2
+	return
+	poke 53249,0:poke 1016,kk:poke 1018,4:poke 1019,kk:poke 1023,87
+	pl=.:poke 1022,11:poke 53252,ll%-2
+	return
 {:4154}
-	KK=PEEK(1016):ON A GOTO{:4156},{:4162},{:4160}:&"{f6:2}":B%=KK-1:KK=.:RETURN
+	kk=peek(1016):on a goto {:4156},{:4162},{:4160}:&"{f6:2}":b%=kk-1:kk=.:return
 {:4156}
-	POKE 2031,0:B%=KK-1:&"{f6}{pound}%B {$cc}INES {$d5}SED.{f6}":IF KK=1 THEN A=0:GOTO{:4154}
-	B%=KK:RETURN
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b {$cc}ines {$d5}sed.{f6}":if kk=1 then a=0:goto {:4154}
+	b%=kk:return
 {:4160}
-	POKE 2031,0:GOSUB{:4138}:GOTO{:4124}
+	poke 2031,0:gosub {:4138}:goto {:4124}
 {:4162}
-	B%=KK-1:A=2:GOTO{:4124}
-	B%=KK-1:GOSUB{:4168}:GOSUB{:4166}:POKE 2031,1:A=1:GOTO{:4124}
+	b%=kk-1:a=2:goto {:4124}
+	b%=kk-1:gosub {:4168}:gosub {:4166}:poke 2031,1:a=1:goto {:4124}
 {:4166}
-	A%=PEEK(1022)-1:C%=A%-B%:&"{pound}Q0{f6:2}{$d4}OTAL {$cc}INES:{f6}{$c1}VAILABLE  : {pound}%A"
+	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{$d4}otal {$cc}ines:{f6}{$c1}vailable  : {pound}%a"
 {:4168}
-	&"{f6}{$c9}N {$cd}EMORY  : {pound}%B{f6}{$d2}EMAINING  : {pound}%C":IF ZZ THEN:&"{f6}{$c6}REE {$cd}EMORY: {pound}%Z"
-	&"{f6:2}":RETURN
-	COPR. 1990 NEW IMAGE 01-29-95
+	&"{f6}{$c9}n {$cd}emory  : {pound}%b{f6}{$d2}emaining  : {pound}%c":if zz then:&"{f6}{$c6}ree {$cd}emory: {pound}%z"
+	&"{f6:2}":return
+	copr. 1990 new image 01-29-95

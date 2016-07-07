@@ -1,38 +1,39 @@
-	&"{f6}{$c3}REDIT {$d0}OOL {$c3}ALCULATIONS...{f6}"
-	DR=3:A$="E.CR.POOL 1,S,R":GOSUB 1011:IF E%THEN K=250:CLOSE 2:GOTO{:4020}
-	&,2,2:BL=VAL(A$):&,2,2:K=VAL(A$):CLOSE 2:IF BL=.THEN GOSUB{:4040}:GOTO{:4020}
-	DR=3:A$="E.CR.POOL 2,S,R":GOSUB 1011:IF E%THEN CLOSE 2:GOTO{:4020}
+{number:4000}
+	&"{f6}{$c3}redit {$d0}ool {$c3}alculations...{f6}"
+	dr=3:a$="e.cr.pool 1,s,r":gosub 1011:if e%then k=250:close 2:goto {:4020}
+	&,2,2:bl=val(a$):&,2,2:k=val(a$):close 2:if bl=.then gosub {:4040}:goto {:4020}
+	dr=3:a$="e.cr.pool 2,s,r":gosub 1011:if e%then close 2:goto {:4020}
 {:4008}
-	L$="":FOR I=1 TO RND(1)*BL+1:&,2,2:NEXT:AN$=A$:&,15,1:M$=A$:IF A$=""THEN{:4008}
-	L$=AN$+"":A$="{yellow} {$c3}REDIT {$d0}OOL {$d7}INNER: {white} "+L$+R$+" {yellow}{$c3}REDITS {$d7}ON:{white}"+STR$(K)+R$
-	A$=A$+" {pound}Q0{yellow}{pound}O{$c0}{pound}O{$c0}":GOSUB 1095:A$="":AN$=M$:GOSUB 1046:Y=I:IF I=.THEN{:4020}
-	X=I:GOSUB 1065:GOSUB 1001:FOR I=1 TO 23:&,2,2:TT$(I)=A$:NEXT
-	A$="":TT$(19)=STR$(VAL(TT$(19))+K):FOR I=1 TO 23:A$=A$+TT$(I)+R$:NEXT
-	GOSUB 1001:PRINT# 2,A$:CLOSE 2:GOSUB{:4026}:K=250
+	l$="":for i=1 to rnd(1)*bl+1:&,2,2:next:an$=a$:&,15,1:m$=a$:if a$=""then{:4008}
+	l$=an$+"":a$="{yellow} {$c3}redit {$d0}ool {$d7}inner: {white} "+l$+r$+" {yellow}{$c3}redits {$d7}on:{white}"+str$(k)+r$
+	a$=a$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095:a$="":an$=m$:gosub 1046:y=i:if i=.then{:4020}
+	x=i:gosub 1065:gosub 1001:for i=1 to 23:&,2,2:tt$(i)=a$:next
+	a$="":tt$(19)=str$(val(tt$(19))+k):for i=1 to 23:a$=a$+tt$(i)+r$:next
+	gosub 1001:print# 2,a$:close 2:gosub {:4026}:k=250
 {:4020}
-	DR=3:A$="E.CR.POOL 2":GOSUB 1024:A$="E.CR.POOL 1":GOSUB 1023
-	PRINT# 2,0;R$;K:CLOSE 2
-	&"{$c4}ONE!":RETURN
+	dr=3:a$="e.cr.pool 2":gosub 1024:a$="e.cr.pool 1":gosub 1023
+	print# 2,0;r$;k:close 2
+	&"{$c4}one!":return
 {:4026}
-	Z=1:A$="W":TT$=M$:GOSUB 1062:IF E%THEN A$="A":Z=.:GOSUB 1062
-	PRINT# 2,"{$c3}{$d2}{$c5}{$c4}{$c9}{$d4}{$a0}{$d0}{$cf:2}{$cc} {$d7}{$c9}{$ce:2}{$c5}{$d2}"R$;0;R$;D1$;R$;"[{$c3}ONGRATULATIONS]"R$
-	PRINT# 2," {$d9}OU {$c8}AVE {$d7}{$cf}{$ce} TODAYS {white}{rvrs on}{$c3}{$d2}{$c5}{$c4}{$c9}{$d4} {$d0}{$cf:2}{$cc}{rvrs off}."R$
-	PRINT# 2," {lt. green}{$d9}OU WERE AWARDED"+STR$(K)+" {$c3}REDITS"R$:PRINT# 2,"{up arrow}":CLOSE 2
-	IF Y=1 THEN GOSUB 1060:X=2:I=1:GOSUB 1025:X=13:GOSUB 1025:X=24:GOSUB 1025:X=31:GOSUB 1025
-	ON-(Y<>1)GOSUB 1060:X=3:I=1:GOSUB 1025:X=14:GOSUB 1025:X=32:GOSUB 1025
-	X=25:ON Z GOSUB 1025:CLOSE 2:GOSUB 1081
+	z=1:a$="w":tt$=m$:gosub 1062:if e%then a$="a":z=.:gosub 1062
+	print# 2,"{$c3}{$d2}{$c5}{$c4}{$c9}{$d4}{$a0}{$d0}{$cf:2}{$cc} {$d7}{$c9}{$ce:2}{$c5}{$d2}"r$;0;r$;d1$;r$;"[{$c3}ongratulations]"r$
+	print# 2," {$d9}ou {$c8}ave {$d7}{$cf}{$ce} todays {white}{rvrs on}{$c3}{$d2}{$c5}{$c4}{$c9}{$d4} {$d0}{$cf:2}{$cc}{rvrs off}."r$
+	print# 2," {lt. green}{$d9}ou were awarded"+str$(k)+" {$c3}redits"r$:print# 2,"{up arrow}":close 2
+	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
+	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
+	x=25:on z gosub 1025:close 2:gosub 1081
 {:4040}
-	DR=1:A$="N.${$d7}INNER":GOSUB 1023
-	IF BL=.THEN{:4054}
-	PRINT# 2,"{pound}$Q{pound}{back arrow}15{rvrs on}{white} {$d7}{$c9}{$ce:2}{$c5}{$d2}! {rvrs off}"
-	PRINT# 2,"{f6:2}{pound}$Q{yellow}{$d4}ODAY'S {lt. red}{rvrs on}{$c3}REDIT {$d0}OOL {$d7}INNER{rvrs off} {lt. green}IS:"
-	PRINT# 2,"{f6:2}{pound}$Q{rvrs on}{gray3}"+L$+"{rvrs off}{yellow} WHO WON{gray3} {rvrs on}"+STR$(K)+"{rvrs off} {yellow}{$c3}REDITS."
-	PRINT# 2,"{f6:2}{pound}$Q{$cd}AYBE {$d9}{$cf}{$d5}{$a0}WILL BE THE {$ce}{$c5}{$d8}{$d4} WINNER!"R$R$
+	dr=1:a$="n.${$d7}inner":gosub 1023
+	if bl=.then{:4054}
+	print# 2,"{pound}$q{pound}{back arrow}15{rvrs on}{white} {$d7}{$c9}{$ce:2}{$c5}{$d2}! {rvrs off}"
+	print# 2,"{f6:2}{pound}$q{yellow}{$d4}oday's {lt. red}{rvrs on}{$c3}redit {$d0}ool {$d7}inner{rvrs off} {lt. green}is:"
+	print# 2,"{f6:2}{pound}$q{rvrs on}{gray3}"+l$+"{rvrs off}{yellow} who won{gray3} {rvrs on}"+str$(k)+"{rvrs off} {yellow}{$c3}redits."
+	print# 2,"{f6:2}{pound}$q{$cd}aybe {$d9}{$cf}{$d5}{$a0}will be the {$ce}{$c5}{$d8}{$d4} winner!"r$r$
 {:4052}
-	PRINT# 2,"{pound}$Q{white}({gray3}{$c1}NY {$cb}EY{white}){lt. green} {pound}G1{pound}HJ":PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+	print# 2,"{pound}$q{white}({gray3}{$c1}ny {$cb}ey{white}){lt. green} {pound}g1{pound}hj":print# 2,"{up arrow}":close 2:return
 {:4054}
-	PRINT# 2,"{pound}N3{pound}$Q{pound}{back arrow}06{lt. green}{$b0}{$c0:21}{$ae}"
-	PRINT# 2,"{pound}$Q{pound}{back arrow}06{$dd} {$ce}O {$d7}INNER IN {$d4}ODAYS {$dd}"
-	PRINT# 2,"{pound}$Q{pound}{back arrow}06{$dd}     {$c3}REDIT {$d0}OOL!    {$dd}"
-	PRINT# 2,"{pound}$Q{pound}{back arrow}06{$ad}{$c0:21}{$bd}{pound}N2":GOTO{:4052}
-	COPR. 1994 NEW IMAGE 9/8/94
+	print# 2,"{pound}n3{pound}$q{pound}{back arrow}06{lt. green}{$b0}{$c0:21}{$ae}"
+	print# 2,"{pound}$q{pound}{back arrow}06{$dd} {$ce}o {$d7}inner in {$d4}odays {$dd}"
+	print# 2,"{pound}$q{pound}{back arrow}06{$dd}     {$c3}redit {$d0}ool!    {$dd}"
+	print# 2,"{pound}$q{pound}{back arrow}06{$ad}{$c0:21}{$bd}{pound}n2":goto {:4052}
+	copr. 1994 new image 9/8/94

@@ -1,61 +1,62 @@
-	KK=0:IF IM<1 OR IM>2 THEN RETURN
+{number:60000}
+	kk=0:if im<1 or im>2 then return
 {:60001}
-	GOSUB{:60010}
+	gosub {:60010}
 {:60002}
-	GOSUB{:60030}
+	gosub {:60030}
 {:60003}
-	&"{f6}{pound}Q0{$d3})CAN {$c3})LEAR {$c4})LOAD {$cb})ILL {$c1})DD {$d1})UIT: {pound}G1{pound}V7{f6}":A$=AN$
-	X=-(A$="{$d3}")-2*(A$="{$d1}")-3*(A$="{$c3}")-4*(A$="{$c4}")-5*(A$="{$c1}")
-	IF TR%>0 THEN ON X GOTO{:60002},{:60006},{:60008},{:60007},{:60001}:GOTO{:60003}
+	&"{f6}{pound}q0{$d3})can {$c3})lear {$c4})load {$cb})ill {$c1})dd {$d1})uit: {pound}g1{pound}v7{f6}":a$=an$
+	x=-(a$="{$d3}")-2*(a$="{$d1}")-3*(a$="{$c3}")-4*(a$="{$c4}")-5*(a$="{$c1}")
+	if tr%>0 then on x goto {:60002},{:60006},{:60008},{:60007},{:60001}:goto {:60003}
 {:60006}
-	KK=0
+	kk=0
 {:60007}
-	RETURN
+	return
 {:60008}
-	KK=0:GOTO{:60002}
+	kk=0:goto {:60002}
 {:60010}
-	ON IM GOSUB{:60100},{:60200}:X=KK
+	on im gosub {:60100},{:60200}:x=kk
 {:60012}
-	ON IM GOSUB{:60110},{:60210}:IF AN$=""THEN RETURN
-	&"{white}: ":IF Y$<>"{$c5}"THEN:&"{pound}G1":Y$=AN$
-	IF Y$="{$c5}"THEN:&"{$c5}VERY{f6}":GOTO{:60026}
-	IF Y$="{$d9}"THEN:&"{$d9}ES{f6}":GOTO{:60026}
-	IF Y$="{$d3}"THEN:&"{$d3}TART{f6}":RETURN
-	IF Y$="{$c1}"THEN:&"{$c1}BORT{f6}":KK=X:RETURN
-	&"{$ce}O{f6}":GOTO{:60012}
+	on im gosub {:60110},{:60210}:if an$=""then return
+	&"{white}: ":if y$<>"{$c5}"then:&"{pound}g1":y$=an$
+	if y$="{$c5}"then:&"{$c5}very{f6}":goto {:60026}
+	if y$="{$d9}"then:&"{$d9}es{f6}":goto {:60026}
+	if y$="{$d3}"then:&"{$d3}tart{f6}":return
+	if y$="{$c1}"then:&"{$c1}bort{f6}":kk=x:return
+	&"{$ce}o{f6}":goto {:60012}
 {:60026}
-	GOSUB{:60050}:&"{f6}":ON FL GOTO{:60012}:KK=KK+1:TT$(KK)=MID$(STR$(B%),2)+":"+F$
-	GOTO{:60012}
+	gosub {:60050}:&"{f6}":on fl goto {:60012}:kk=kk+1:tt$(kk)=mid$(str$(b%),2)+":"+f$
+	goto {:60012}
 {:60030}
-	&"{f6}":IF KK=0 THEN:&"{$ce}O FILES SELECTED.{f6}":RETURN
-	D$="":IF CO%>2 THEN D$="K"
-	T=0:FOR I=1 TO KK:AN$=TT$(I):&,15,6,58:A%=VAL(A$):T=T+A%
-	D$="{$c2}LKS":IF CO%>2 THEN D$="{$cb}":A%=INT(A*254/1024)
-	&"{white}{pound}!I){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%A {pound}$D{pound}{back arrow}15{cyan}{f5}{pound}V7{f5}{f6}":NEXT
-	D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":T=INT(T*254/1024)
-	&"{f6}{yellow}{pound}!T {$d4}OTAL {pound}$D{f6}{pound}Q0":RETURN
+	&"{f6}":if kk=0 then:&"{$ce}o files selected.{f6}":return
+	d$="":if co%>2 then d$="k"
+	t=0:for i=1 to kk:an$=tt$(i):&,15,6,58:a%=val(a$):t=t+a%
+	d$="{$c2}lks":if co%>2 then d$="{$cb}":a%=int(a*254/1024)
+	&"{white}{pound}!i){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%a {pound}$d{pound}{back arrow}15{cyan}{f5}{pound}v7{f5}{f6}":next
+	d$="{$c2}locks":if co%>2 then d$="{$cb}bytes":t=int(t*254/1024)
+	&"{f6}{yellow}{pound}!t {$d4}otal {pound}$d{f6}{pound}q0":return
 {:60050}
-	FL=1:A=B%*254/QB*10/.95:A%=A:C%=(A-A%)*60:V$="{f6}{$d3}ORRY, YOU "
-	D%=B%:D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":D%=B%*254/1024
-	&"{pound}%D {pound}$D {$d4}OTAL, {$d4}RANSFER {$d4}IME: {pound}#2{pound}%A:{pound}%C{f6}":A=7:GOSUB 1004
-	IF A%>TR%AND TR%<100 THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$d4}IME!":RETURN
-	IF A=0 AND B%>L THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$c3}REDITS!":RETURN
-	IF DC%>=DA%AND DA%<>0 THEN LP=1:&"{pound}$V HAVE DOWNLOADED YOUR LIMIT!":RETURN
-	FL=0:RETURN
+	fl=1:a=b%*254/qb*10/.95:a%=a:c%=(a-a%)*60:v$="{f6}{$d3}orry, you "
+	d%=b%:d$="{$c2}locks":if co%>2 then d$="{$cb}bytes":d%=b%*254/1024
+	&"{pound}%d {pound}$d {$d4}otal, {$d4}ransfer {$d4}ime: {pound}#2{pound}%a:{pound}%c{f6}":a=7:gosub 1004
+	if a%>tr%and tr%<100 then lp=1:&"{pound}$vdon't have enough {$d4}ime!":return
+	if a=0 and b%>l then lp=1:&"{pound}$vdon't have enough {$c3}redits!":return
+	if dc%>=da%and da%<>0 then lp=1:&"{pound}$v have downloaded your limit!":return
+	fl=0:return
 {:60100}
-	DR=7:GOSUB 1010:CLOSE 15:IF ST THEN RETURN
-	&"{f6}{$d0}ATTERN: ":GOSUB 1499:B$="*"
-	FOR I=1 TO LEN(AN$):IF MID$(AN$,I,1)="*"THEN B$=""
-	NEXT:AN$=AN$+B$:&"{f6}":CLOSE 1:OPEN 1,DV%,0,"$"+DR$+AN$
-	GET#1,A$,A$:&,8,1,1:&"{pound}$A{f6:2}":Y$="":RETURN
+	dr=7:gosub 1010:close 15:if st then return
+	&"{f6}{$d0}attern: ":gosub 1499:b$="*"
+	for i=1 to len(an$):if mid$(an$,i,1)="*"then b$=""
+	next:an$=an$+b$:&"{f6}":close 1:open 1,dv%,0,"$"+dr$+an$
+	get#1,a$,a$:&,8,1,1:&"{pound}$a{f6:2}":y$="":return
 {:60110}
-	&,8,1,1:T$=MID$(A$,26,1):AN$=A$:&,15,6,34:B%=VAL(A$):IF AN$=""THEN RETURN
-	A%=B%:D$="":IF CO%>2 THEN A%=A%*254/1024:D$="K"
-	&,15,6,34:F$=A$+","+T$:&"{yellow}{pound}%A{white}{pound}$D{pound}{back arrow}07{cyan}{f5}{pound}$F{f5}{pound}{back arrow}30":RETURN
+	&,8,1,1:t$=mid$(a$,26,1):an$=a$:&,15,6,34:b%=val(a$):if an$=""then return
+	a%=b%:d$="":if co%>2 then a%=a%*254/1024:d$="k"
+	&,15,6,34:f$=a$+","+t$:&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":return
 {:60200}
-	N=0:RETURN
+	n=0:return
 {:60210}
-	IF N=>S%(0,0)THEN AN$="":RETURN
-	N=N+1:B%=S%(39,N):&,60,1,16,S%(13,N),F$
-	A%=B%:D$="":IF CO%>2 THEN A%=A%*254/1024:D$="K"
-	&"{yellow}{pound}%A{white}{pound}$D{pound}{back arrow}07{cyan}{f5}{pound}$F{f5}{pound}{back arrow}30":RETURN
+	if n=>s%(0,0)then an$="":return
+	n=n+1:b%=s%(39,n):&,60,1,16,s%(13,n),f$
+	a%=b%:d$="":if co%>2 then a%=a%*254/1024:d$="k"
+	&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":return

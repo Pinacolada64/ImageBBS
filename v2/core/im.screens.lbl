@@ -1,16 +1,17 @@
-	ON IM GOTO{:60022},{:60024}
-	RETURN
+{number:60000}
+	on im goto {:60022},{:60024}
+	return
 {:60004}
-	A=PEEK(53248):POKE 53248,1:&,18,0
-	X$="{$d3}END":IF X>1 THEN X$="{$d2}ECEIV":IF X>2 THEN X$="{$c3}OPY":IF X>3 THEN X$="{$d3}CANN"
+	a=peek(53248):poke 53248,1:&,18,0
+	x$="{$d3}end":if x>1 then x$="{$d2}eceiv":if x>2 then x$="{$c3}opy":if x>3 then x$="{$d3}cann"
 	&"{clear} {cyan}{$a2:37}{f6}"
-	&" {rvrs on} {pound}$XING{pound}{back arrow}11: {f5}{pound}V7{f5}{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}EVICE   : {pound}%A{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}RIVE    : {pound}%B{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$d0}ROTOCOL : {pound}VL{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on} {pound}$xing{pound}{back arrow}11: {f5}{pound}v7{f5}{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}evice   : {pound}%a{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$c4}rive    : {pound}%b{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} {$d0}rotocol : {pound}vl{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
 	&" {yellow}{$bc}{rvrs on}{$a2:36}{rvrs off}{$be}{f6}{lt. blue}"
-	&" {$c7}OOD: 00000  {$c2}AD: 00000  {$c2}YTES: 000000{f6}":POKE 53248,A:RETURN
+	&" {$c7}ood: 00000  {$c2}ad: 00000  {$c2}ytes: 000000{f6}":poke 53248,a:return
 {:60022}
-	A%=DV%(BN+6):B%=DR%(BN+6):GOTO{:60004}
+	a%=dv%(bn+6):b%=dr%(bn+6):goto {:60004}
 {:60024}
-	A%=D1%:B%=D2%:GOTO{:60004}
+	a%=d1%:b%=d2%:goto {:60004}

@@ -1,110 +1,111 @@
-	LG=1:ON IM GOTO{:60002},{:60066},{:60076}:RETURN
+{number:60000}
+	lg=1:on im goto {:60002},{:60066},{:60076}:return
 {:60002}
-	FL=.:A=9:GOSUB 1004:IF A=.THEN X=4:GOTO 1980
-	X=ABS(VAL(MID$(AN$,3))):IF X THEN:&"{f6:2}":GOTO{:60012}
-	&"{f6}{pound}V5 {$ce}OTE{$d0}AD.{f6:2}"
+	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
+	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60012}
+	&"{f6}{pound}v5 {$ce}ote{$d0}ad.{f6:2}"
 {:60006}
-	P$="":&"{f6:2}{lt. red}{$c5}NTER {$d5}SER {$c8}ANDLE {$cf}R {$c9}{$c4}#.{f6:2}":GOSUB 1006:X=ABS(VAL(AN$)):IF X THEN{:60012}
-	ON TR%+1 GOTO{:60048}:ON-(AN$="")GOTO{:60048}:GOSUB 1046:X=I:IF X THEN NN$=AN$:GOTO{:60020}
-	&"{f6:2}{white}{f5}{gray3}{pound}V7{white}{f5} {gray3}{$ce}OT {$c6}OUND.{f6}":GOTO{:60006}
+	p$="":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60012}
+	on tr%+1 goto {:60048}:on-(an$="")goto {:60048}:gosub 1046:x=i:if x then nn$=an$:goto {:60020}
+	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}{$ce}ot {$c6}ound.{f6}":goto {:60006}
 {:60012}
-	I=X:IF X<1 OR X>UR THEN{:60016}
-	GOSUB 1065:GOSUB 1001:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"{$d2}{$c5}{$d3}"THEN{:60018}
+	i=x:if x<1 or x>ur then{:60016}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"{$d2}{$c5}{$d3}"then{:60018}
 {:60016}
-	&"{f6}{yellow}{$c9}NVALID {$c1}CCOUNT {$ce}UMBER.{f6}":X=.:GOTO{:60048}
+	&"{f6}{yellow}{$c9}nvalid {$c1}ccount {$ce}umber.{f6}":x=.:goto {:60048}
 {:60018}
-	&"{f6}{lt. green}{$c8}ANDLE: {rvrs on}":&NN$:&"{f6}{yellow}{$c9}S {$d4}HAT {$c3}ORRECT?: ":GOSUB 1907:IF A=.THEN{:60002}
+	&"{f6}{lt. green}{$c8}andle: {rvrs on}":&nn$:&"{f6}{yellow}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1907:if a=.then{:60002}
 {:60020}
-	Y=I:DR=2:GOSUB 1079:ON-(A<20)GOTO{:60044}:GOSUB 1085:IF A THEN GOSUB 1980:GOTO{:60048}
-	ON FL GOTO{:60030}
-	POKE 53252,30:&"{f6}":&"{$d3}UBJECT: ":PL=.:&,1,5:IF AN$=""THEN AN$="{$ce}OTE"
-	&"{up}{$d3}UBJECT: {pound}V7{f6}"
-	TT$(.)="["+AN$+"]":GOSUB 1604:A=1:ON TR%+1 GOTO{:60048}:IF KK=.THEN{:60048}
+	y=i:dr=2:gosub 1079:on-(a<20)goto {:60044}:gosub 1085:if a then gosub 1980:goto {:60048}
+	on fl goto {:60030}
+	poke 53252,30:&"{f6}":&"{$d3}ubject: ":pl=.:&,1,5:if an$=""then an$="{$ce}ote"
+	&"{up}{$d3}ubject: {pound}v7{f6}"
+	tt$(.)="["+an$+"]":gosub 1604:a=1:on tr%+1 goto {:60048}:if kk=.then{:60048}
 {:60030}
-	&"{f6}{$c6}ILING {$cd}AIL {$c6}OR ":&NN$:&"...{f6}"
-	IF LG THEN FD$="{$cc}OCAL {$d1}UICK{$cd}AIL":GOSUB{:60050}
-	Z=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":Z=.:GOSUB 1062
-	PRINT# 2,NA$R$ID;R$D1$:FOR X=.TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
-	IF Y=1 THEN GOSUB 1060:X=2:I=1:GOSUB 1025:X=13:GOSUB 1025:X=24:GOSUB 1025:X=31:GOSUB 1025
-	ON-(Y<>1)GOSUB 1060:X=3:I=1:GOSUB 1025:X=14:GOSUB 1025:X=32:GOSUB 1025
-	X=25:ON Z GOSUB 1025:CLOSE 2:GOSUB 1081:GOTO{:60046}
+	&"{f6}{$c6}iling {$cd}ail {$c6}or ":&nn$:&"...{f6}"
+	if lg then fd$="{$cc}ocal {$d1}uick{$cd}ail":gosub {:60050}
+	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
+	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
+	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
+	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
+	x=25:on z gosub 1025:close 2:gosub 1081:goto {:60046}
 {:60044}
-	X=2:GOSUB 1980
+	x=2:gosub 1980
 {:60046}
-	&"{f6:2}{$d3}END TO ANOTHER USER? ":GOSUB 1902:IF A THEN FL=1:GOTO{:60006}
+	&"{f6:2}{$d3}end to another user? ":gosub 1902:if a then fl=1:goto {:60006}
 {:60048}
-	RETURN
+	return
 {:60050}
-	A$="A":B$="EM LOG":GOSUB 1027:IF E%THEN A$="W":GOSUB 1027:PRINT# 2,"{blue}{pound}O{$c0}{pound}O{$c0}{f6}{cyan}{pound}{back arrow}14{$c5}-{$cd}AIL {$cc}OG{f6}{blue}{pound}O{$c0}{pound}O{$c0}"
-	HR$=D1$:&,15
-	PRINT# 2,"{cyan}{$d4}YPE:{white} "+FD$
-	PRINT# 2,"{cyan}{$c6}ROM:{white} "+NA$
-	PRINT# 2,"{cyan}{$d4}O  :{white} "+NN$
-	PRINT# 2,"{cyan}{$cf}N  :{white} {$04}"+HR$
-	PRINT# 2,"{blue}{pound}O{$c0}{pound}O{$c0}{f6}"
-	CLOSE 2:RETURN
+	a$="a":b$="em log":gosub 1027:if e%then a$="w":gosub 1027:print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}{cyan}{pound}{back arrow}14{$c5}-{$cd}ail {$cc}og{f6}{blue}{pound}o{$c0}{pound}o{$c0}"
+	hr$=d1$:&,15
+	print# 2,"{cyan}{$d4}ype:{white} "+fd$
+	print# 2,"{cyan}{$c6}rom:{white} "+na$
+	print# 2,"{cyan}{$d4}o  :{white} "+nn$
+	print# 2,"{cyan}{$cf}n  :{white} {$04}"+hr$
+	print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}"
+	close 2:return
 {:60066}
-	DR=1:A$="S.PS":GOSUB 1075:IF NL<>1 THEN{:60094}
-	ON-(NL<>1)GOTO{:60094}:&"{clear}":GOSUB{:60084}:&"{home}{lt. red}{$ba}":A=1
+	dr=1:a$="s.ps":gosub 1075:if nl<>1 then{:60094}
+	on-(nl<>1)goto {:60094}:&"{clear}":gosub {:60084}:&"{home}{lt. red}{$ba}":a=1
 {:60070}
-	&,3,2:S=ST
-	IF S=.THEN{:60070}
-	RETURN
+	&,3,2:s=st
+	if s=.then{:60070}
+	return
 {:60076}
-	TS=.:&,52,34,3:IF A%THEN TS=1:&,52,34,.
-	DR=1:A$="S.PS":GOSUB 1075:IF NL=.THEN{:60106}
+	ts=.:&,52,34,3:if a%then ts=1:&,52,34,.
+	dr=1:a$="s.ps":gosub 1075:if nl=.then{:60106}
 {:60080}
-	&"{clear}":GOSUB{:60096}:&"{home}{lt. red}{$ba}":A=1
+	&"{clear}":gosub {:60096}:&"{home}{lt. red}{$ba}":a=1
 {:60082}
-	GOSUB 1007:ON TR%+1 GOTO{:60102}:ON-(AN$="{down}")-(AN$="{up}")*2 GOTO{:60086},{:60088}
+	gosub 1007:on tr%+1 goto {:60102}:on-(an$="{down}")-(an$="{up}")*2 goto {:60086},{:60088}
 {:60084}
-	IF AN$=R$THEN{:60114}
+	if an$=r$then{:60114}
 {:60086}
-	&"{left}{white}.{left}{down}{lt. red}{$ba}":A=A+1:GOTO{:60090}
+	&"{left}{white}.{left}{down}{lt. red}{$ba}":a=a+1:goto {:60090}
 {:60088}
-	&"{left}{white}.{left}{up}{lt. red}{$ba}":A=A-1
+	&"{left}{white}.{left}{up}{lt. red}{$ba}":a=a-1
 {:60090}
-	IF A<1 THEN:&"{home}{white}.{left}{down:3}{lt. red}{$ba}":A=4:GOTO{:60082}
-	IF A>4 THEN:&"{left} {home}{lt. red}{$ba}":A=1:GOTO{:60082}
+	if a<1 then:&"{home}{white}.{left}{down:3}{lt. red}{$ba}":a=4:goto {:60082}
+	if a>4 then:&"{left} {home}{lt. red}{$ba}":a=1:goto {:60082}
 {:60094}
-	GOTO{:60082}
+	goto {:60082}
 {:60096}
-	&"{white}. {yellow}{rvrs on}{$cc}IST {$cf}NE {$d3}IGNATURE{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}{$cc}IST {$c1}{$cc:2} {$d3}IGNATURES{pound}{back arrow}37{gray3} {f6}"
-	&"{white}. {yellow}{rvrs on}{$c3}REATE/{$c5}DIT {$d3}IGNATURE{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}{$d1}UIT{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38{f6}"
-	&"{f6:2} {lt. green}{$c3}REATE UP TO 10 SIGNATURES.{f6}":RETURN
+	&"{white}. {yellow}{rvrs on}{$cc}ist {$cf}ne {$d3}ignature{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}{$cc}ist {$c1}{$cc:2} {$d3}ignatures{pound}{back arrow}37{gray3} {f6}"
+	&"{white}. {yellow}{rvrs on}{$c3}reate/{$c5}dit {$d3}ignature{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}{$d1}uit{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38{f6}"
+	&"{f6:2} {lt. green}{$c3}reate up to 10 signatures.{f6}":return
 {:60102}
-	IF TS THEN:&,52,34,1
-	RETURN
+	if ts then:&,52,34,1
+	return
 {:60106}
-	&"{white}1) {yellow}{$cc}IST {$cf}NE {$d3}IGNATURE{f6}"
-	&"{white}2) {yellow}{$cc}IST {$c1}{$cc:2} {$d3}IGNATURES{f6}{white}3) {yellow}{$c3}REATE/{$c5}DIT {$d3}IGNATURE{f6}{white}4) {yellow}{$d1}UIT{f6:2}"
-	&"{white}  {lt. green}{$c3}REATE {$d5}P {$d4}O 10 {$d3}IGNATURES.{f6:2}{white}  {$d9}OUR {$d3}ELECTION -=> {pound}G1":A=VAL(AN$)
-	IF A<1 OR A>4 THEN{:60106}
+	&"{white}1) {yellow}{$cc}ist {$cf}ne {$d3}ignature{f6}"
+	&"{white}2) {yellow}{$cc}ist {$c1}{$cc:2} {$d3}ignatures{f6}{white}3) {yellow}{$c3}reate/{$c5}dit {$d3}ignature{f6}{white}4) {yellow}{$d1}uit{f6:2}"
+	&"{white}  {lt. green}{$c3}reate {$d5}p {$d4}o 10 {$d3}ignatures.{f6:2}{white}  {$d9}our {$d3}election -=> {pound}g1":a=val(an$)
+	if a<1 or a>4 then{:60106}
 {:60114}
-	ON A GOTO{:60116},{:60124},{:60138},{:60102}
+	on a goto {:60116},{:60124},{:60138},{:60102}
 {:60116}
-	&"{clear}{f6:2}{green}{$d6}IEW {$d7}HICH {$cf}NE? {f6:2}{lt. green}{$c5}NTER (0-9) -=> {white}{pound}G1{pound}V7{f6}"
-	IF TR%<1 THEN{:60102}
-	DR=3:A$=LEFT$("PS."+AN$+NA$,16):GOSUB 1076
-	&"{f6:2}{green}{$d6}IEW {$c1}NOTHER {$cf}NE? ":GOSUB 1907:ON TR%+1 GOTO{:60102}:ON A+1 GOTO{:60080}:GOTO{:60116}
+	&"{clear}{f6:2}{green}{$d6}iew {$d7}hich {$cf}ne? {f6:2}{lt. green}{$c5}nter (0-9) -=> {white}{pound}g1{pound}v7{f6}"
+	if tr%<1 then{:60102}
+	dr=3:a$=left$("ps."+an$+na$,16):gosub 1076
+	&"{f6:2}{green}{$d6}iew {$c1}nother {$cf}ne? ":gosub 1907:on tr%+1 goto {:60102}:on a+1 goto {:60080}:goto {:60116}
 {:60124}
-	&"{clear}{f6:3}":B=.
+	&"{clear}{f6:3}":b=.
 {:60126}
-	B$=MID$(STR$(B),2):&"{green}{$cd}ACRO # {pound}$B.{f6:2}":DR=3:A$=LEFT$("PS."+B$+NA$,16)
-	GOSUB 1011:ON-(E%=.)GOTO{:60132}:CLOSE 2:&"{lt. green}{$cd}ACRO # {pound}$B {$ce}OT {$c3}ONFIGURED!{f6:2}"
-	GOTO{:60134}
+	b$=mid$(str$(b),2):&"{green}{$cd}acro # {pound}$b.{f6:2}":dr=3:a$=left$("ps."+b$+na$,16)
+	gosub 1011:on-(e%=.)goto {:60132}:close 2:&"{lt. green}{$cd}acro # {pound}$b {$ce}ot {$c3}onfigured!{f6:2}"
+	goto {:60134}
 {:60132}
-	&,12,2:CLOSE 2:&"{pound}Q0{f6:2}{yellow}{$d0}RESS {$c1} {$cb}EY {pound}G1{f6:2}":ON TR%+1 GOTO{:60102}
+	&,12,2:close 2:&"{pound}q0{f6:2}{yellow}{$d0}ress {$c1} {$cb}ey {pound}g1{f6:2}":on tr%+1 goto {:60102}
 {:60134}
-	B=B+1:ON-(B>9)GOTO{:60136}:GOTO{:60126}
+	b=b+1:on-(b>9)goto {:60136}:goto {:60126}
 {:60136}
-	&"{f6:2}{lt. green}{$d6}IEW {$d4}HEM {$c1}GAIN? ":B=.:GOSUB 1902:ON A+1 GOTO{:60080}:GOTO{:60124}
+	&"{f6:2}{lt. green}{$d6}iew {$d4}hem {$c1}gain? ":b=.:gosub 1902:on a+1 goto {:60080}:goto {:60124}
 {:60138}
-	NN$="{f6}{gray3}{$d4}HE {$cd}ULTI-{$d0}ERSONAL {$d3}IGNATURE {$cd}AKER{f6:2}"
-	&"{clear}{f6:3}{lt. green}{$c5}NTER {$ce}UMBER {$d4}O {$c3}HANGE{gray2} -=> {white}{pound}G1{pound}V7":B$=AN$:IF TR%<1 THEN{:60102}
-	&"{f6}{green}{$c7}ET {$d2}EADY {$d4}O {$c5}NTER {$d9}OUR {$d3}IGNATURE :{f6}"
-	GOSUB 1604:ON-(KK=.)GOTO{:60080}
-	&"{f6}{white}{$c6}ILING":&NN$:DR=3:A$=LEFT$("PS."+B$+NA$,16):GOSUB 1023
-	FOR X=1 TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2:CLOSE 2:GOSUB 1081:&"{f6:2}{lt. green}{$d3}AVED!{f6:2}"
-	&"{yellow}{$d0}RESS {$c1} {$cb}EY {pound}G1{f6:2}":GOTO{:60080}
-	COPR. 1994 NEW IMAGE 9/28/94
+	nn$="{f6}{gray3}{$d4}he {$cd}ulti-{$d0}ersonal {$d3}ignature {$cd}aker{f6:2}"
+	&"{clear}{f6:3}{lt. green}{$c5}nter {$ce}umber {$d4}o {$c3}hange{gray2} -=> {white}{pound}g1{pound}v7":b$=an$:if tr%<1 then{:60102}
+	&"{f6}{green}{$c7}et {$d2}eady {$d4}o {$c5}nter {$d9}our {$d3}ignature :{f6}"
+	gosub 1604:on-(kk=.)goto {:60080}
+	&"{f6}{white}{$c6}iling":&nn$:dr=3:a$=left$("ps."+b$+na$,16):gosub 1023
+	for x=1 to kk-1:print# 2,tt$(x):next:print# 2:close 2:gosub 1081:&"{f6:2}{lt. green}{$d3}aved!{f6:2}"
+	&"{yellow}{$d0}ress {$c1} {$cb}ey {pound}g1{f6:2}":goto {:60080}
+	copr. 1994 new image 9/28/94

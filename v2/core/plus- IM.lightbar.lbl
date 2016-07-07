@@ -1,145 +1,148 @@
-	ON LM GOTO{:4100},{:4200},{:4300}
-	RETURN
+{number:4000}
+	on lm goto {:4100},{:4200},{:4300}
+	return
 {:4004}
-	IF B<0 THEN A$="--:--":RETURN
-	A%=B/60:B%=B-A%*60:A$="{$c1}":IF A%>11 THEN A$="{$d0}":A%=A%-12
-	A%=A%-12*(A%=0):A$=RIGHT$(STR$(A%),2)+":"+RIGHT$(STR$(100+B%),2)+A$:RETURN
+	if b<0 then a$="--:--":return
+	a%=b/60:b%=b-a%*60:a$="{$c1}":if a%>11 then a$="{$d0}":a%=a%-12
+	a%=a%-12*(a%=0):a$=right$(str$(a%),2)+":"+right$(str$(100+b%),2)+a$:return
+{number:4100}
 {:4100}
-	GOSUB{:4128}:P%=1
+	gosub {:4128}:p%=1
 {:4102}
-	P%=P%+ZZ%*(P%>ZZ%)-ZZ%*(P%<1)
-	&"{clear}{lt. blue}{$d0}AGE{white} {pound}%P{f6}":GOSUB{:4140}
-	&"{f6:2}{white}{$cc}{lt. blue}OAD{blue}/{white}{$d3}{lt. blue}AVE{blue}/{white}{$ce}{lt. blue}EXT{blue}/{white}{$d0}{lt. blue}REV{blue}/{white}#{blue}/{white}{$d1}{lt. blue}UIT{blue}:{white} {pound}I1"
-	IF AN$="{$ce}"OR AN$="{$d0}"THEN P%=P%+(AN$="{$d0}")-(AN$="{$ce}"):GOTO{:4102}
-	IF AN$="{$cc}"THEN GOSUB{:4128}:GOTO{:4102}
-	IF AN$="{$d3}"THEN GOSUB{:4134}:GOTO{:4102}
-	IF VAL(AN$)THEN GOSUB{:4120}:GOTO{:4102}
-	IF TZ THEN:&"{$d3}AVE {$c3}HANGES? ":GOSUB 1902:IF A THEN GOSUB{:4134}
-	&,11:RETURN
+	p%=p%+zz%*(p%>zz%)-zz%*(p%<1)
+	&"{clear}{lt. blue}{$d0}age{white} {pound}%p{f6}":gosub {:4140}
+	&"{f6:2}{white}{$cc}{lt. blue}oad{blue}/{white}{$d3}{lt. blue}ave{blue}/{white}{$ce}{lt. blue}ext{blue}/{white}{$d0}{lt. blue}rev{blue}/{white}#{blue}/{white}{$d1}{lt. blue}uit{blue}:{white} {pound}i1"
+	if an$="{$ce}"or an$="{$d0}"then p%=p%+(an$="{$d0}")-(an$="{$ce}"):goto {:4102}
+	if an$="{$cc}"then gosub {:4128}:goto {:4102}
+	if an$="{$d3}"then gosub {:4134}:goto {:4102}
+	if val(an$)then gosub {:4120}:goto {:4102}
+	if tz then:&"{$d3}ave {$c3}hanges? ":gosub 1902:if a then gosub {:4134}
+	&,11:return
 {:4120}
-	A=VAL(AN$):IF A<1 OR A>16 THEN RETURN
-	A$=MID$(C$(P%),A,1):IF A$="-"THEN RETURN
-	A$=CHR$(48-(A$="0")):C$(P%)=LEFT$(C$(P%),A-1)+A$+MID$(C$(P%),A+1)
-	TZ=1:RETURN
+	a=val(an$):if a<1 or a>16 then return
+	a$=mid$(c$(p%),a,1):if a$="-"then return
+	a$=chr$(48-(a$="0")):c$(p%)=left$(c$(p%),a-1)+a$+mid$(c$(p%),a+1)
+	tz=1:return
 {:4128}
-	TZ=0:&"{$cc}OADING {$c3}HECKMARK {$c4}EFAULTS{f6}":GOSUB{:4146}
-	DR=3:A$="E.LIGHTDEFS,S,R":GOSUB 1011:IF E%THEN CLOSE 2:RETURN
-	FOR X=1 TO ZZ%:&,2,2:GOSUB{:4164}:C$(X)=A$:X=X-(ST<>0)*ZZ%:NEXT:CLOSE 2:RETURN
+	tz=0:&"{$cc}oading {$c3}heckmark {$c4}efaults{f6}":gosub {:4146}
+	dr=3:a$="e.lightdefs,s,r":gosub 1011:if e%then close 2:return
+	for x=1 to zz%:&,2,2:gosub {:4164}:c$(x)=a$:x=x-(st<>0)*zz%:next:close 2:return
 {:4134}
-	DR=3:GOSUB 1010:PRINT# 15,"S"DR$"E.LIGHTDEFS"
-	DR=3:A$="E.LIGHTDEFS,S,W":GOSUB 1011
-	FOR X=1 TO ZZ%:PRINT# 2,C$(X):NEXT:CLOSE 2:TZ=0:RETURN
+	dr=3:gosub 1010:print# 15,"s"dr$"e.lightdefs"
+	dr=3:a$="e.lightdefs,s,w":gosub 1011
+	for x=1 to zz%:print# 2,c$(x):next:close 2:tz=0:return
 {:4140}
-	FOR I=1 TO 16:A$=MID$(C$(P%),I,1):IF A$<>"-"THEN A$=MID$(" {$ba}",VAL(A$)+1,1)
-	A%=I:B%=(P%-1)*16+I-1:B$=B$(B%):&"{white}{pound}#2{pound}# {pound}%A {pound}$A {pound}$B{f6}"
-	NEXT:RETURN
+	for i=1 to 16:a$=mid$(c$(p%),i,1):if a$<>"-"then a$=mid$(" {$ba}",val(a$)+1,1)
+	a%=i:b%=(p%-1)*16+i-1:b$=b$(b%):&"{white}{pound}#2{pound}# {pound}%a {pound}$a {pound}$b{f6}"
+	next:return
 {:4146}
-	C$(1)="00-0---0--00-000"
-	C$(2)="-----00000000-00"
-	C$(3)="00-000000000-000"
-	C$(4)="0000000000000000"
-	C$(5)="0000000000000000"
-	C$(6)="0000000000000000"
-	C$(7)="0000000000000000"
-	C$(8)="0000000000000000"
-	RETURN
+	c$(1)="00-0---0--00-000"
+	c$(2)="-----00000000-00"
+	c$(3)="00-000000000-000"
+	c$(4)="0000000000000000"
+	c$(5)="0000000000000000"
+	c$(6)="0000000000000000"
+	c$(7)="0000000000000000"
+	c$(8)="0000000000000000"
+	return
 {:4164}
-	FOR I=1 TO LEN(A$):XX$=MID$(A$,I,1):YY$=MID$(C$(X),I,1)
-	IF YY$="0"AND XX$="-"THEN XX$="0"
-	IF YY$="-"THEN XX$="-"
-	A$=LEFT$(A$,I-1)+XX$+MID$(A$,I+1):NEXT:RETURN
+	for i=1 to len(a$):xx$=mid$(a$,i,1):yy$=mid$(c$(x),i,1)
+	if yy$="0"and xx$="-"then xx$="0"
+	if yy$="-"then xx$="-"
+	a$=left$(a$,i-1)+xx$+mid$(a$,i+1):next:return
+{number:4200}
 {:4200}
-	GOSUB{:4212}:ON-(E%=0)GOTO{:4218}:FOR I=8 TO 15:AM%(0,I)=256:NEXT
-	FOR I=0 TO 7:AM%(0,I)=112+I*2:AM%(3,I)=113+I*2:NEXT:GOSUB{:4214}:GOTO{:4218}
+	gosub {:4212}:on-(e%=0)goto {:4218}:for i=8 to 15:am%(0,i)=256:next
+	for i=0 to 7:am%(0,i)=112+i*2:am%(3,i)=113+i*2:next:gosub {:4214}:goto {:4218}
 {:4204}
-	TZ=0:DR=3:GOSUB 1010:A$=DR$+"E.ALARMS":RETURN
+	tz=0:dr=3:gosub 1010:a$=dr$+"e.alarms":return
 {:4206}
-	&"{clear}{$c1}LARM {$d4}IME/{$c3}HECKMARK {$c5}DITOR 1.3{f6}{pound}$K":RETURN
-	A%=B/60:B%=B-A%*60:A$="{$c1}":IF A%>11 THEN A$="{$d0}":A%=A%-12
-	A%=A%-12*(A%=0):A$=RIGHT$(STR$(A%),2)+":"+RIGHT$(STR$(100+B%),2)+A$:RETURN
+	&"{clear}{$c1}larm {$d4}ime/{$c3}heckmark {$c5}ditor 1.3{f6}{pound}$k":return
+	a%=b/60:b%=b-a%*60:a$="{$c1}":if a%>11 then a$="{$d0}":a%=a%-12
+	a%=a%-12*(a%=0):a$=right$(str$(a%),2)+":"+right$(str$(100+b%),2)+a$:return
 {:4212}
-	GOSUB{:4204}:&,60,2,0,AM%(0,0),A$,DV%:GOTO 1012
+	gosub {:4204}:&,60,2,0,am%(0,0),a$,dv%:goto 1012
 {:4214}
-	GOSUB{:4204}:PRINT# 15,"S"A$:&,60,3,0,AM%(0,0),128,A$,DV%:GOTO 1012
+	gosub {:4204}:print# 15,"s"a$:&,60,3,0,am%(0,0),128,a$,dv%:goto 1012
 {:4216}
-	GOSUB{:4204}:&,7,DV%,9:RETURN
+	gosub {:4204}:&,7,dv%,9:return
 {:4218}
-	FOR I=0 TO 15:GOSUB{:4282}:NEXT:K$=" {$c0:38}{f6}"
+	for i=0 to 15:gosub {:4282}:next:k$=" {$c0:38}{f6}"
 {:4220}
-	GOSUB{:4206}:&" ##  {$cf}N{$d4}IME {$cf}FF{$d4}IME {$c3}HECK {$c1}CTIVE?{f6:2}"
-	FOR I=0 TO 15:A%=I+1:A$=C$(I):&" {pound}#2{pound}# {pound}%A) {pound}$A{f6}":NEXT
-	&"{pound}$K{$c5}DIT {$d7}HICH ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$d1}UIT)? {pound}I1":IF AN$=""THEN{:4276}
-	A=VAL(AN$):ON-(A<1 OR A>16)GOTO{:4220}:A=A-1
+	gosub {:4206}:&" ##  {$cf}n{$d4}ime {$cf}ff{$d4}ime {$c3}heck {$c1}ctive?{f6:2}"
+	for i=0 to 15:a%=i+1:a$=c$(i):&" {pound}#2{pound}# {pound}%a) {pound}$a{f6}":next
+	&"{pound}$k{$c5}dit {$d7}hich ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$d1}uit)? {pound}i1":if an$=""then{:4276}
+	a=val(an$):on-(a<1 or a>16)goto {:4220}:a=a-1
 {:4228}
-	GOSUB{:4206}:A%=A+1:&"{$c1}LARM #{pound}%A:{f6:2}"
-	B=AM%(1,A):GOSUB{:4004}:&" 1) {$cf}N {$d4}IME:  {pound}$A{f6}"
-	B=AM%(2,A):GOSUB{:4004}:&" 2) {$cf}FF {$d4}IME: {pound}$A{f6}":A%=AM%(0,A)
-	IF A%=256 THEN:&" 3) {$c4}ISABLED{f6}"
-	IF A%>256 THEN:&" 3) {$c5}NABLED{f6}"
-	IF A%<256 THEN:&" 3) {$c5}NABLED {$c2}Y {$c3}HECKMARK {pound}%A{f6}"
-	A%=AM%(3,A):&" 4) {$c3}HECKMARK {pound}%A IS {$d4}RIGGERED{f6}"
-	&"{pound}$K{$c3}HANGE {$d7}HICH ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT)? {pound}I1":IF AN$=""THEN I=A:GOSUB{:4282}:GOTO{:4220}
-	&"{f6}":X=VAL(AN$):ON X GOSUB{:4246},{:4250},{:4258},{:4270}:GOTO{:4228}
+	gosub {:4206}:a%=a+1:&"{$c1}larm #{pound}%a:{f6:2}"
+	b=am%(1,a):gosub {:4004}:&" 1) {$cf}n {$d4}ime:  {pound}$a{f6}"
+	b=am%(2,a):gosub {:4004}:&" 2) {$cf}ff {$d4}ime: {pound}$a{f6}":a%=am%(0,a)
+	if a%=256 then:&" 3) {$c4}isabled{f6}"
+	if a%>256 then:&" 3) {$c5}nabled{f6}"
+	if a%<256 then:&" 3) {$c5}nabled {$c2}y {$c3}heckmark {pound}%a{f6}"
+	a%=am%(3,a):&" 4) {$c3}heckmark {pound}%a is {$d4}riggered{f6}"
+	&"{pound}$k{$c3}hange {$d7}hich ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort)? {pound}i1":if an$=""then i=a:gosub {:4282}:goto {:4220}
+	&"{f6}":x=val(an$):on x gosub {:4246},{:4250},{:4258},{:4270}:goto {:4228}
 {:4246}
-	P$="{$d4}URN {$cf}N {$d4}IME":GOTO{:4250}
-	P$="{$d4}URN {$cf}FF {$d4}IME"
+	p$="{$d4}urn {$cf}n {$d4}ime":goto {:4250}
+	p$="{$d4}urn {$cf}ff {$d4}ime"
 {:4250}
-	B=AM%(X,A):GOSUB{:4004}:W$=A$:POKE 53252,6:&,1,32:IF AN$=""THEN RETURN
-	B=VAL(LEFT$(AN$,2)):IF B=12 THEN B=0
-	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="{$d0}")*720:IF B=AM%(X,A)THEN RETURN
-	AM%(X,A)=B:TZ=1:RETURN
+	b=am%(x,a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$=""then return
+	b=val(left$(an$,2)):if b=12 then b=0
+	b=b*60+val(mid$(an$,4,2))-(right$(an$,1)="{$d0}")*720:if b=am%(x,a)then return
+	am%(x,a)=b:tz=1:return
 {:4258}
-	&"{$c6}ORCED [{$c5}]NABLED, {$c6}ORCED [{$c4}]ISABLED,OR{f6}[{$c3}]HECKMARK? {pound}G1":B=AM%(0,A)
-	IF AN$="{$c5}"THEN B=257
-	IF AN$="{$c4}"THEN B=256
-	IF AN$="{$c3}"THEN:&"{$d7}HICH {$cf}NE? {pound}I1":B=VAL(AN$)
-	IF AM%(0,A)=B THEN RETURN
-	AM%(0,A)=B:TZ=1:RETURN
+	&"{$c6}orced [{$c5}]nabled, {$c6}orced [{$c4}]isabled,or{f6}[{$c3}]heckmark? {pound}g1":b=am%(0,a)
+	if an$="{$c5}"then b=257
+	if an$="{$c4}"then b=256
+	if an$="{$c3}"then:&"{$d7}hich {$cf}ne? {pound}i1":b=val(an$)
+	if am%(0,a)=b then return
+	am%(0,a)=b:tz=1:return
 {:4270}
-	&"{$d7}HICH {$c3}HECK DO YOU WANT TRIGGERED? {pound}I1":IF AN$=""THEN RETURN
-	B=VAL(AN$):IF AM%(3,A)=B THEN RETURN
-	AM%(3,A)=B:TZ=1:RETURN
+	&"{$d7}hich {$c3}heck do you want triggered? {pound}i1":if an$=""then return
+	b=val(an$):if am%(3,a)=b then return
+	am%(3,a)=b:tz=1:return
 {:4276}
-	A=0:IF TZ THEN:&"{$c3}HANGES {$cd}ADE! {$d3}AVE? ":GOSUB 1902
-	IF A THEN GOSUB{:4214}:&"{$c1}CTIVATE {$d3}AVED {$d4}ABLE? ":GOSUB 1902:ON A GOSUB{:4216}
-	RETURN
+	a=0:if tz then:&"{$c3}hanges {$cd}ade! {$d3}ave? ":gosub 1902
+	if a then gosub {:4214}:&"{$c1}ctivate {$d3}aved {$d4}able? ":gosub 1902:on a gosub {:4216}
+	return
 {:4282}
-	A=AM%(0,I):B=AM%(1,I):GOSUB{:4004}:B$=A$:B=AM%(2,I):GOSUB{:4004}:C$=A$:A%=AM%(3,I)
-	A$=B$+" "+C$+"  "+LEFT$(B$(AM%(3,I)AND 127),5)+"  "
-	IF A=256 THEN A$=A$+"{$ce}O":GOTO{:4292}
-	IF A>256 THEN A$=A$+"{$d9}ES":GOTO{:4292}
-	A$=A$+"IF "+LEFT$(B$(A AND 127),5)
+	a=am%(0,i):b=am%(1,i):gosub {:4004}:b$=a$:b=am%(2,i):gosub {:4004}:c$=a$:a%=am%(3,i)
+	a$=b$+" "+c$+"  "+left$(b$(am%(3,i)and 127),5)+"  "
+	if a=256 then a$=a$+"{$ce}o":goto {:4292}
+	if a>256 then a$=a$+"{$d9}es":goto {:4292}
+	a$=a$+"if "+left$(b$(a and 127),5)
 {:4292}
-	C$(I)=A$:RETURN
-	REM
+	c$(i)=a$:return
+	rem
 {:4300}
-	&"{$cc}OADING {$ce}ET{$cd}AIL {$c1}LARM {$d4}ABLE..."
-	FOR I=0 TO 23:A%(I)=I*60:NEXT:GOSUB{:4308}:TZ=-(E%<>0)
-	FOR I=0 TO 23:B=A%(I):GOSUB{:4004}:C$(I)=A$:NEXT:GOTO{:4314}
+	&"{$cc}oading {$ce}et{$cd}ail {$c1}larm {$d4}able..."
+	for i=0 to 23:a%(i)=i*60:next:gosub {:4308}:tz=-(e%<>0)
+	for i=0 to 23:b=a%(i):gosub {:4004}:c$(i)=a$:next:goto {:4314}
 {:4306}
-	GOSUB{:4310}:PRINT# 15,"S"A$:&,60,3,0,A%(0),48,A$,DV%:GOTO 1012
+	gosub {:4310}:print# 15,"s"a$:&,60,3,0,a%(0),48,a$,dv%:goto 1012
 {:4308}
-	GOSUB{:4310}:&,60,2,0,A%(0),A$,DV%:GOTO 1012
+	gosub {:4310}:&,60,2,0,a%(0),a$,dv%:goto 1012
 {:4310}
-	DR=2:GOSUB 1010:A$=DR$+"NM.TIMES":RETURN
+	dr=2:gosub 1010:a$=dr$+"nm.times":return
 {:4312}
-	GOSUB{:4310}:&,7,DV%,12:GOTO 1012
+	gosub {:4310}:&,7,dv%,12:goto 1012
 {:4314}
-	&"{clear}{f6}{$ce}ET{$cd}AIL {$d4}RIGGER {$d4}IMES:{f6:2}"
-	FOR I=0 TO 11:A%=I+1:A$=C$(I):B%=I+13:B$=C$(I+12)
-	&"{pound}#2{pound}# {pound}%A) {pound}$A{pound}{back arrow}20{pound}%B) {pound}$B{f6}"
-	NEXT:&"{f6}{$c3}HANGE {$d7}HICH? {pound}I1":A=VAL(AN$):IF A<1 OR A>24 THEN{:4336}
-	P$="{$ce}ET{$cd}AIL {$c1}LARM #"+STR$(A)
-	A=A-1:B=A%(A):GOSUB{:4004}:W$=A$:POKE 53252,6:&,1,32:IF AN$=""THEN{:4314}
-	IF AN$="-"OR AN$="{f8}"THEN B=-1:GOTO{:4332}
-	B=VAL(LEFT$(AN$,2)):IF B=12 THEN B=0
-	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="{$d0}")*720
+	&"{clear}{f6}{$ce}et{$cd}ail {$d4}rigger {$d4}imes:{f6:2}"
+	for i=0 to 11:a%=i+1:a$=c$(i):b%=i+13:b$=c$(i+12)
+	&"{pound}#2{pound}# {pound}%a) {pound}$a{pound}{back arrow}20{pound}%b) {pound}$b{f6}"
+	next:&"{f6}{$c3}hange {$d7}hich? {pound}i1":a=val(an$):if a<1 or a>24 then{:4336}
+	p$="{$ce}et{$cd}ail {$c1}larm #"+str$(a)
+	a=a-1:b=a%(a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$=""then{:4314}
+	if an$="-"or an$="{f8}"then b=-1:goto {:4332}
+	b=val(left$(an$,2)):if b=12 then b=0
+	b=b*60+val(mid$(an$,4,2))-(right$(an$,1)="{$d0}")*720
 {:4332}
-	IF B=A%(A)THEN{:4314}
-	A%(A)=B:GOSUB{:4004}:C$(A)=A$:TZ=1:GOTO{:4314}
+	if b=a%(a)then{:4314}
+	a%(a)=b:gosub {:4004}:c$(a)=a$:tz=1:goto {:4314}
 {:4336}
-	IF TZ=0 THEN RETURN
-	&"{f6}{$d3}AVE {$c3}HANGES? ":GOSUB 1902:IF A THEN GOSUB{:4306}
-	&"{f6}{$c1}CTIVATE {$d3}AVED {$d4}ABLE? ":GOSUB 1902:IF A THEN GOSUB{:4312}
-	RETURN
-	REM
+	if tz=0 then return
+	&"{f6}{$d3}ave {$c3}hanges? ":gosub 1902:if a then gosub {:4306}
+	&"{f6}{$c1}ctivate {$d3}aved {$d4}able? ":gosub 1902:if a then gosub {:4312}
+	return
+	rem

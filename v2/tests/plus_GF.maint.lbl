@@ -1,7 +1,7 @@
 {number:4000}
 {step:2}
 '	rem this is i.gf.maint renumbered: "+/GF.maint"
-	ON MM GOTO{:4100},{:4200},{:4300},{:4400}:RETURN
+	ON MM goTO {:4100},{:4200},{:4300},{:4400}:RETURN
 {:4002}
 	A=ABS(INT(VAL(MID$(AN$,2,4)))):RETURN
 {:4004}
@@ -13,20 +13,20 @@
 	S%(5,BR)=0:S%(6,BR)=0:&,60,4,0,S%(7,BR),D1$:&,60,4,0,S%(10,BR),D1$
 	&,60,0,16,S%(27,BR),"":&,60,0,28,S%(13,BR),""
 	S%(36,BR)=0:S%(37,BR)=0:S%(38,BR)=0:S%(39,BR)=0
-	GOSUB{:4500}:&,60,1,16,S%(27,BR),A$:&,60,1,28,S%(13,BR),B$:A=S%(1,BR)
+	goSUB {:4500}:&,60,1,16,S%(27,BR),A$:&,60,1,28,S%(13,BR),B$:A=S%(1,BR)
 	IF A<1 OR A$=""OR B$=""THEN RETURN
 	S%(0,0)=S%(0,0)+1:TZ=1:&"{$c1}DDED":RETURN
 {number:4200}
 {:4200}
-	GOSUB{:4002}:IF A>0 AND A<=RN THEN BR=E%(A):TZ=1:GOTO{:4500}
+	goSUB {:4002}:IF A>0 AND A<=RN THEN BR=E%(A):TZ=1:goTO {:4500}
 	RETURN
 {number:4300}
 {:4300}
-	A$="":GOSUB{:4002}:IF A<1 OR A>RN THEN RETURN
+	A$="":goSUB {:4002}:IF A<1 OR A>RN THEN RETURN
 	BR=E%(A):&"{f6}{purple} {$b0}{pound}$Y{$ae}{f6}":MM=4:GOSUB 3000:&"{purple} {$ad}{pound}$Y{$bd}{f6:2}{pound}Q0{$cb}ILL {$d4}HIS? ":GOSUB 1902
 	IF A=0 THEN RETURN
 	&"{f6}{$d3}CRATCH {pound}$J? ":GOSUB 1902:IF A=0 THEN{:4314}
-	A=S%(2,BR):GOSUB{:4004}:&,60,1,16,S%(13,BR),C$:A$=B$+C$
+	A=S%(2,BR):goSUB {:4004}:&,60,1,16,S%(13,BR),C$:A$=B$+C$
 	D1%=S%(3,BR):D2%=S%(4,BR):GOSUB 1010:PRINT# 15,"S"DR$A$
 {:4314}
 	IF BR<>S%(0,0)THEN FOR A=BR TO S%(0,0)-1:&,60,10,80,S%(0,A+1),S%(0,A):NEXT
@@ -41,13 +41,13 @@
 	&"5. {$c4}EVICE: {pound}%A{f6}":A%=S%(4,0)
 	&"6. {$c4}RIVE:  {pound}%A{f6}"
 	&"{f6}> {pound}G1":A=VAL(AN$)
-	IF A THEN:&"{pound}V7{f6:2}":ON A GOSUB{:4420},{:4432},{:4456},{:4438},{:4444},{:4450}:GOTO{:4400}
+	IF A THEN:&"{pound}V7{f6:2}":ON A goSUB {:4420},{:4432},{:4456},{:4438},{:4444},{:4450}:goTO {:4400}
 	RETURN
 {:4420}
-	DR=1:O$="S."+PF$(PF):A$=O$+",S,R":GOSUB 1011:KK=1:IF E%THEN:&:GOTO{:4426}
+	DR=1:O$="S."+PF$(PF):A$=O$+",S,R":GOSUB 1011:KK=1:IF E%THEN:&:goTO {:4426}
 	&"{f6}{$cc}OADING {$d4}EXT...{f6:2}"
 {:4424}
-	&,2,2:IF A$<>"{up arrow}"AND KK<101 THEN TT$(KK)=A$:KK=KK+1:&".":GOTO{:4424}
+	&,2,2:IF A$<>"{up arrow}"AND KK<101 THEN TT$(KK)=A$:KK=KK+1:&".":goTO {:4424}
 {:4426}
 ' load editor:
 '	CLOSE 2:IM=2:GOSUB 440:IF KK=0 THEN RETURN
@@ -77,27 +77,27 @@
 {number:4500}
 {:4500}
 	&"{clear}{f6}":&,60,1,28,S%(13,BR),A$
-	&"{blue}({white}1{blue}) {cyan}{$d4}ITLE{blue}:  {white}{pound}$A{f6}":A=S%(2,BR):GOSUB{:4004}
+	&"{blue}({white}1{blue}) {cyan}{$d4}ITLE{blue}:  {white}{pound}$A{f6}":A=S%(2,BR):goSUB {:4004}
 	&"{blue}({white}2{blue}) {cyan}{$d4}YPE{blue}:   {white}{pound}$A{f6}":A%=S%(1,BR)
 	&"{blue}({white}3{blue}) {cyan}{$c1}CCESS{blue}: {white}{pound}%A{f6}":A%=S%(5,BR)
 	&"{blue}({white}4{blue}) {cyan}{$c3}REDIT{blue}: {white}{pound}%A{f6}":&,60,1,16,S%(27,BR),A$
-	&"{blue}({white}5{blue}) {cyan}{pound}$J{blue}:   {cyan}{pound}$B{white}{pound}$A{f6}":N=5:ON-(DR=4)GOTO{:4516}:N=7:A%=S%(3,BR)
+	&"{blue}({white}5{blue}) {cyan}{pound}$J{blue}:   {cyan}{pound}$B{white}{pound}$A{f6}":N=5:ON-(DR=4)goTO {:4516}:N=7:A%=S%(3,BR)
 	&"{blue}({white}6{blue}) {cyan}{$c4}EVICE{blue}: {white}{pound}%A{f6}":A%=S%(4,BR)
 	&"{blue}({white}7{blue}) {cyan}{$c4}RIVE{blue}:  {white}{pound}%A{f6}"
 {:4516}
 	&"{f6}> {pound}G1":A=VAL(AN$):A=VAL(AN$):IF A<1 OR A>N THEN RETURN
-	&"{pound}V7{f6:2}":ON A GOSUB{:4520},{:4526},{:4558},{:4552},{:4534},{:4540},{:4546}:GOTO{:4500}
+	&"{pound}V7{f6:2}":ON A goSUB {:4520},{:4526},{:4558},{:4552},{:4534},{:4540},{:4546}:goTO {:4500}
 {:4520}
 	P$="{$d4}ITLE":&,60,1,28,S%(13,BR),W$:POKE 53252,28:PL=0
 	&,1,33:IF AN$=""THEN RETURN
 	&,60,0,28,S%(13,BR),AN$:RETURN
 {:4526}
-	&"{$d4}YPE:{f6:2}":FOR A=1 TO 9:GOSUB{:4004}:A$=MID$(A$,2):LP=1:&"{pound}!A-{pound}$A ":NEXT
+	&"{$d4}YPE:{f6:2}":FOR A=1 TO 9:goSUB {:4004}:A$=MID$(A$,2):LP=1:&"{pound}!A-{pound}$A ":NEXT
 	&"{f6:2}{pound}Q0> {pound}G1"
 	A=VAL(AN$):IF A<1 OR A>7 THEN RETURN
-	GOSUB{:4004}:&"{pound}$A{f6}":S%(2,BR)=A:RETURN
+	goSUB {:4004}:&"{pound}$A{f6}":S%(2,BR)=A:RETURN
 {:4534}
-	A=S%(2,BR):GOSUB{:4004}:P$=J$:&,60,1,16,S%(27,BR),W$:PL=0
+	A=S%(2,BR):goSUB {:4004}:P$=J$:&,60,1,16,S%(27,BR),W$:PL=0
 	POKE 53252,16-LEN(B$):&,1,32:IF AN$=""THEN RETURN
 	&,60,0,16,S%(27,BR),AN$:RETURN
 {:4540}

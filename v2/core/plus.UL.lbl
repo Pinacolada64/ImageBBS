@@ -1,77 +1,79 @@
-	A=4:GOSUB 1736:DR=6:GOSUB 1010:A$=DR$+"U.INDEX":&,16,1:UH=A%:GOTO{:3008}
+{number:3000}
+	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:uh=a%:goto {:3008}
 {:3002}
-	FOR X=1 TO KK:A%=X:B$=NN$(X):D$=DT$(X):IF X=2 THEN D$=CO$(VAL(DT$(X)))
-	&"{white}{pound}%A> {lt. red}{pound}$B{pound}{back arrow}17: {lt. green}{pound}$D{f6}":NEXT:RETURN
+	for x=1 to kk:a%=x:b$=nn$(x):d$=dt$(x):if x=2 then d$=co$(val(dt$(x)))
+	&"{white}{pound}%a> {lt. red}{pound}$b{pound}{back arrow}17: {lt. green}{pound}$d{f6}":next:return
 {:3006}
-	A%=UR:&"{f6:2}{yellow}{$cf}UT {$cf}F {pound}%A {$d5}SERS, {$d7}HERE {$d3}HOULD{f6}{$d4}HE {$cc}IST {$c2}EGIN? (1){f6:2}{lt. blue}":RETURN
+	a%=ur:&"{f6:2}{yellow}{$cf}ut {$cf}f {pound}%a {$d5}sers, {$d7}here {$d3}hould{f6}{$d4}he {$cc}ist {$c2}egin? (1){f6:2}{lt. blue}":return
 {:3008}
-	P$="{lt. green}{$d5}SER {$cc}IST{lt. blue}":CM$=P$:GOSUB 1360:A=10:GOSUB 1004
-	IF A=.THEN X=4:GOSUB 1980:CLOSE 2:GOTO 1811
+	p$="{lt. green}{$d5}ser {$cc}ist{lt. blue}":cm$=p$:gosub 1360:a=10:gosub 1004
+	if a=.then x=4:gosub 1980:close 2:goto 1811
 {:3012}
-	CLOSE 2
-	&"{f6:2}{lt. green} [{$c6}]AST ({$c9}{$c4}# {$c1}ND {$c8}ANDLE){f6}{lt. red} [{$d2}]EG. ({$c1}LL {$c9}NFO){f6:2}{cyan}{$d5}SER {$cc}IST: {pound}G1{pound}V7{f6}"
-	ON-(AN$="{$c6}")GOTO{:3074}:IF AN$<>"{$d2}"OR AN$="{$d1}"OR TR%<1 THEN 1811
-	RESTORE:FOR X=1 TO 7:READ NN$(X):DT$(X)="":NEXT:QE=.
-	KK=3:A=8:GOSUB 1004:IF A+ZZ THEN KK=7
+	close 2
+	&"{f6:2}{lt. green} [{$c6}]ast ({$c9}{$c4}# {$c1}nd {$c8}andle){f6}{lt. red} [{$d2}]eg. ({$c1}ll {$c9}nfo){f6:2}{cyan}{$d5}ser {$cc}ist: {pound}g1{pound}v7{f6}"
+	on-(an$="{$c6}")goto {:3074}:if an$<>"{$d2}"or an$="{$d1}"or tr%<1 then 1811
+	restore:for x=1 to 7:read nn$(x):dt$(x)="":next:qe=.
+	kk=3:a=8:gosub 1004:if a+zz then kk=7
 {:3022}
-	&"{clear}{f6:2}{white} {$d3}ELECT {$d4}HE {$c1}TTRIBUTES {$d4}O {$d3}EARCH {$c6}OR.{cyan}"
-	&"{f6}{yellow} {$d0}RESS {rvrs on}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{rvrs off} {$d7}HEN {$c6}INISHED,  {$cf}R {$c9}F"
-	&"{f6} {$ce}O {$c1}TTRIBUTES {$c1}RE {$ce}EEDED. ({$c1}LL {$d5}SERS){f6:2}":GOSUB{:3002}
-	&"{f6}{green} {$c1}TTRIBUTE?: {yellow}{pound}G1{pound}V7{f6}":A=VAL(AN$):IF A<1 OR A>KK THEN{:3036}
-	IF A=2 THEN GOSUB{:3112}
-	&"{f6}":A%=A:B$=NN$(A):IF DT$(A)<>""THEN C$=DT$(A):&"{white}{pound}%A-  {lt. red}{pound}$B: {lt. green}{pound}$C{f6}"
-	&"{pound}%A-  {pound}$B: {pound}I1":ON TR%+1 GOTO 1811:DT$(A)=AN$:QE=QE OR(AN$<>""):GOTO{:3022}
+	&"{clear}{f6:2}{white} {$d3}elect {$d4}he {$c1}ttributes {$d4}o {$d3}earch {$c6}or.{cyan}"
+	&"{f6}{yellow} {$d0}ress {rvrs on}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{rvrs off} {$d7}hen {$c6}inished,  {$cf}r {$c9}f"
+	&"{f6} {$ce}o {$c1}ttributes {$c1}re {$ce}eeded. ({$c1}ll {$d5}sers){f6:2}":gosub {:3002}
+	&"{f6}{green} {$c1}ttribute?: {yellow}{pound}g1{pound}v7{f6}":a=val(an$):if a<1 or a>kk then{:3036}
+	if a=2 then gosub {:3112}
+	&"{f6}":a%=a:b$=nn$(a):if dt$(a)<>""then c$=dt$(a):&"{white}{pound}%a-  {lt. red}{pound}$b: {lt. green}{pound}$c{f6}"
+	&"{pound}%a-  {pound}$b: {pound}i1":on tr%+1 goto 1811:dt$(a)=an$:qe=qe or(an$<>""):goto {:3022}
 {:3036}
-	GOSUB{:3006}:GOSUB 1006:C=INT(VAL(LEFT$(AN$,4))):IF C<1 OR C>UR THEN C=1
-	&"{clear}{f6}{yellow}{$d3}EARCHING {$c6}OR:{f6:2}":IF QE=.THEN:&"{white}({$ce}O {$d3}PECIFICS){f6:2}":GOTO{:3042}
-	GOSUB{:3002}:&"{f6}"
+	gosub {:3006}:gosub 1006:c=int(val(left$(an$,4))):if c<1 or c>ur then c=1
+	&"{clear}{f6}{yellow}{$d3}earching {$c6}or:{f6:2}":if qe=.then:&"{white}({$ce}o {$d3}pecifics){f6:2}":goto {:3042}
+	gosub {:3002}:&"{f6}"
 {:3042}
-	&"{orange}({$c8}IT {$d3}PACE {$c2}AR {$d4}O {$c1}BORT {$c1}T {$c1}NY {$d4}IME){f6:2}":GOSUB 1065
+	&"{orange}({$c8}it {$d3}pace {$c2}ar {$d4}o {$c1}bort {$c1}t {$c1}ny {$d4}ime){f6:2}":gosub 1065
 {:3044}
-	IF C>UR OR TR%<1 THEN{:3114}
-	X=C:GOSUB 1001:INPUT# 2,TT$(1),A$,TT$(4),TT$(5),TT$(3),A$,TT$(6),A$,A$,TT$(2)
-	INPUT# 2,A$,A$,A$,A$,A$,A$,A$,A$,A$,A$,A$,TT$(8):TT$(9)=TT$(4)+" "+TT$(5)
-	TT$(7)=MID$(TT$(3),7):TT$(3)=MID$(TT$(3),2,3)
-	Q=1:FOR X=1 TO KK:IF DT$(X)<>""THEN IF DT$(X)<>LEFT$(TT$(X),LEN(DT$(X)))THEN Q=.
-	NEXT:IF Q=.OR TT$(1)="{up arrow}"OR TT$(1)="{$d2}{$c5}{$d3}"THEN Q=.:GOTO{:3072}
-	IF KK<>1 THEN:&"{f6}"
-	Q=.:A%=C:AN$=TT$(1):&,15,1:C$=AN$:&"{lt. red}{pound}VN{pound}%A{pound}{back arrow}08: {white}{rvrs on}{pound}$C{f6}":Q=Q+RC
-	ON KK GOTO{:3072}:LP=1:&"{lt. red}{$cc}AST {$cf}N : {lt. green}{$04}"+TT$(8):Q=Q+RC
-	B$=CO$(VAL(TT$(2))):&"{lt. red}{$c3}OMPUTER: {green}{pound}$B{f6}":Q=Q+RC
-	B$=TT$(3):A$="{lt. red}{$c1}REA {$c3}ODE: {white}({yellow}{pound}$B{white}){lt. red}":IF KK=3 THEN{:3070}
-	C$=TT$(7):AN$=TT$(9):&,15,1:D$=AN$:&"{lt. red}{$d0}HONE # : {white}({lt. green}{pound}$B{white}){orange}/{lt. green}{pound}$C{f6}{lt. red}{$ce}AME    : {green}{pound}$D{f6}"
-	C$=TT$(6):A$="{lt. red}{$c1}CCESS  : {yellow}{pound}$C"
+	if c>ur or tr%<1 then{:3114}
+	x=c:gosub 1001:input# 2,tt$(1),a$,tt$(4),tt$(5),tt$(3),a$,tt$(6),a$,a$,tt$(2)
+	input# 2,a$,a$,a$,a$,a$,a$,a$,a$,a$,a$,a$,tt$(8):tt$(9)=tt$(4)+" "+tt$(5)
+	tt$(7)=mid$(tt$(3),7):tt$(3)=mid$(tt$(3),2,3)
+	q=1:for x=1 to kk:if dt$(x)<>""then if dt$(x)<>left$(tt$(x),len(dt$(x)))then q=.
+	next:if q=.or tt$(1)="{up arrow}"or tt$(1)="{$d2}{$c5}{$d3}"then q=.:goto {:3072}
+	if kk<>1 then:&"{f6}"
+	q=.:a%=c:an$=tt$(1):&,15,1:c$=an$:&"{lt. red}{pound}vn{pound}%a{pound}{back arrow}08: {white}{rvrs on}{pound}$c{f6}":q=q+rc
+	on kk goto {:3072}:lp=1:&"{lt. red}{$cc}ast {$cf}n : {lt. green}{$04}"+tt$(8):q=q+rc
+	b$=co$(val(tt$(2))):&"{lt. red}{$c3}omputer: {green}{pound}$b{f6}":q=q+rc
+	b$=tt$(3):a$="{lt. red}{$c1}rea {$c3}ode: {white}({yellow}{pound}$b{white}){lt. red}":if kk=3 then{:3070}
+	c$=tt$(7):an$=tt$(9):&,15,1:d$=an$:&"{lt. red}{$d0}hone # : {white}({lt. green}{pound}$b{white}){orange}/{lt. green}{pound}$c{f6}{lt. red}{$ce}ame    : {green}{pound}$d{f6}"
+	c$=tt$(6):a$="{lt. red}{$c1}ccess  : {yellow}{pound}$c"
 {:3070}
-	LP=1:&:Q=Q+RC
+	lp=1:&:q=q+rc
 {:3072}
-	&"{white}.":ON-(Q+RC>.)GOTO{:3114}:C=C+1:GOTO{:3044}
+	&"{white}.":on-(q+rc>.)goto {:3114}:c=c+1:goto {:3044}
 {:3074}
-	&"{f6}{purple}{$d1}UICK {$d5}SER {$cc}IST.{f6}"
-	&"{f6}{yellow}{$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$cc}IST:{f6:2} {lt. green}[{$ce}]UMERICALLY {$cf}R{f6} [{$c1}]LPHABETICALLY?: {yellow}{pound}G1{pound}V7{f6}"
-	IF AN$<>"{$c1}"AND AN$<>"{$ce}"THEN{:3012}
-	KK=1:DT$(1)="":ON-(AN$="{$ce}")GOTO{:3096}:A%=UH:&"{f6:2}{white}{pound}%A {orange}{$d5}SERS.{f6}"
-	&"{f6}{yellow}{$c5}NTER {$c2}EGINNING {$c3}HAR(S) {$cf}F {$d4}HE{f6}{$c8}ANDLE {$d9}OU {$d7}ANT {$d4}O {$d3}TART {$c1}T.{f6:2}"
-	GOSUB 1006:GOSUB 1065:&,16:IF A%=.AND B%=1 THEN B%=.
-	RC=.:SH=.:&"{f6:2}"
+	&"{f6}{purple}{$d1}uick {$d5}ser {$cc}ist.{f6}"
+	&"{f6}{yellow}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$cc}ist:{f6:2} {lt. green}[{$ce}]umerically {$cf}r{f6} [{$c1}]lphabetically?: {yellow}{pound}g1{pound}v7{f6}"
+	if an$<>"{$c1}"and an$<>"{$ce}"then{:3012}
+	kk=1:dt$(1)="":on-(an$="{$ce}")goto {:3096}:a%=uh:&"{f6:2}{white}{pound}%a {orange}{$d5}sers.{f6}"
+	&"{f6}{yellow}{$c5}nter {$c2}eginning {$c3}har(s) {$cf}f {$d4}he{f6}{$c8}andle {$d9}ou {$d7}ant {$d4}o {$d3}tart {$c1}t.{f6:2}"
+	gosub 1006:gosub 1065:&,16:if a%=.and b%=1 then b%=.
+	rc=.:sh=.:&"{f6:2}"
 {:3088}
-	&,16,6:X=A%:GOSUB 1001:INPUT# 2,AN$:&,15,1:B$=AN$:C$=CC$:D$=MID$(STR$(A%),2)
-	D$=LEFT$(D$+"{white}----",6)
-	&"{yellow}{pound}$C{pound}$D{white}{rvrs on} {pound}$B {rvrs off}{f6}":IF RC THEN{:3114}
-	ON-(B%<UH)GOTO{:3088}:GOTO{:3114}
+	&,16,6:x=a%:gosub 1001:input# 2,an$:&,15,1:b$=an$:c$=cc$:d$=mid$(str$(a%),2)
+	d$=left$(d$+"{white}----",6)
+	&"{yellow}{pound}$c{pound}$d{white}{rvrs on} {pound}$b {rvrs off}{f6}":if rc then{:3114}
+	on-(b%<uh)goto {:3088}:goto {:3114}
 {:3096}
-	GOSUB 1065:RC=.:SH=.:GOSUB{:3006}:GOSUB 1006:IF TR%<1 THEN 1811
-	X=VAL(AN$):IF X<1 OR X>UR THEN X=1
-	&"{f6:2}":FOR X=X TO UR:GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN A$="{orange}({$c4}ELETED {$c1}CCOUNT)":GOTO{:3106}
-	IF A$="{$d2}{$c5}{$d3}"THEN A$="{purple}({$d2}ESERVED {$c1}CCOUNT)":GOTO{:3106}
-	AN$=A$:&,15,1:A$=AN$
+	gosub 1065:rc=.:sh=.:gosub {:3006}:gosub 1006:if tr%<1 then 1811
+	x=val(an$):if x<1 or x>ur then x=1
+	&"{f6:2}":for x=x to ur:gosub 1001:&,2,2:if a$="{up arrow}"then a$="{orange}({$c4}eleted {$c1}ccount)":goto {:3106}
+	if a$="{$d2}{$c5}{$d3}"then a$="{purple}({$d2}eserved {$c1}ccount)":goto {:3106}
+	an$=a$:&,15,1:a$=an$
 {:3106}
-	D$=MID$(STR$(X),2):D$=LEFT$(D$+"{white}----",6)
-	&"{lt. red}{pound}VN{pound}$D{yellow}{pound}$A{f6}":IF RC THEN X=UR
-	NEXT:GOTO{:3114}
+	d$=mid$(str$(x),2):d$=left$(d$+"{white}----",6)
+	&"{lt. red}{pound}vn{pound}$d{yellow}{pound}$a{f6}":if rc then x=ur
+	next:goto {:3114}
 {:3112}
-	FOR I=1 TO 9:B%=I:AN$=CO$(I):&"{f6} {white}{pound}%B> {lt. blue}{pound}V7":NEXT:&"{f6:2}":RETURN
+	for i=1 to 9:b%=i:an$=co$(i):&"{f6} {white}{pound}%b> {lt. blue}{pound}v7":next:&"{f6:2}":return
 {:3114}
-	&"{f6}{white}{$cc}ISTING {$c6}INISHED.{f6}":GOTO{:3012}
-	DATA"{$c8}ANDLE","{$c3}OMPUTER {$d4}YPE","{$c1}REA {$c3}ODE","{$c6}IRST {$ce}AME","{$cc}AST {$ce}AME"
-	DATA"{$c1}CCESS {$c7}ROUP","{$d0}HONE {$ce}UMBER"
-	COPR.1988 NEW IMAGE
+	&"{f6}{white}{$cc}isting {$c6}inished.{f6}":goto {:3012}
+	data"{$c8}andle","{$c3}omputer {$d4}ype","{$c1}rea {$c3}ode","{$c6}irst {$ce}ame","{$cc}ast {$ce}ame"
+	data"{$c1}ccess {$c7}roup","{$d0}hone {$ce}umber"
+	rem +.ul
+	copr.1988 new image

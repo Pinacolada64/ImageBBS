@@ -1,109 +1,111 @@
-	GOTO{:3010}
+{number:3000}
+	goto {:3010}
 {:3002}
-	POKE 53252,L:&,1:A=ABS(INT(VAL(AN$))):RETURN
+	poke 53252,l:&,1:a=abs(int(val(an$))):return
 {:3004}
-	GOSUB 1001:FOR I=1 TO 5:&,2,2:B$=B$+A$+R$:NEXT:RETURN
+	gosub 1001:for i=1 to 5:&,2,2:b$=b$+a$+r$:next:return
 {:3006}
-	GOSUB{:3008}:&,22,1
+	gosub {:3008}:&,22,1
 {:3008}
-	PRINT# 16,"P{stop}"CHR$(X AND 255)CHR$(X/256)"{$01}":RETURN
+	print# 16,"p{stop}"chr$(x and 255)chr$(x/256)"{$01}":return
 {:3010}
-	&,5:IF LP<1.3 THEN GOSUB{:3020}:GOTO{:3014}
-	DR=5:GOSUB 1009:A$=DR$+"++ COPIER":&,7,DV%,2:D4$="{$c3}OPIER":GOSUB{:3052}
+	&,5:if lp<1.3 then gosub {:3020}:goto {:3014}
+	dr=5:gosub 1009:a$=dr$+"++ copier":&,7,dv%,2:d4$="{$c3}opier":gosub {:3052}
 {:3014}
-	GOTO 1812
+	goto 1812
 {:3016}
-	A%=NG:LP=1:&"{f6}{$d1}UITTING NOW WOULD LEAVE {pound}%A MESSAGE(S) {f5}LOST{f5}.{f6:2}"
-	RETURN
+	a%=ng:lp=1:&"{f6}{$d1}uitting now would leave {pound}%a message(s) {f5}lost{f5}.{f6:2}"
+	return
 {:3020}
-	LP=1:&"{$d3}ORRY, THIS PROGRAM WILL NOT RUN ON VERSIONS OF {$c9}MAGE {$c2:2}{$d3} LESS THAN "
-	LP=1:&"1.3{f6:2}":RETURN
+	lp=1:&"{$d3}orry, this program will not run on versions of {$c9}mage {$c2:2}{$d3} less than "
+	lp=1:&"1.3{f6:2}":return
 {:3024}
-	&"{f6}{$c7}RABBED {$cd}ESSAGES:{f6:2}"
-	FOR I=1 TO NG:AN$=TT$(I):&,15,6,13
-	A%=I:&"{pound}#3{pound}# {pound}%A) {pound}$A{f6}":IF RC=0 THEN NEXT
-	RETURN
+	&"{f6}{$c7}rabbed {$cd}essages:{f6:2}"
+	for i=1 to ng:an$=tt$(i):&,15,6,13
+	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
+	return
 {:3032}
-	&"{f6}{$c1}VAILABLE {$cd}ESSAGES:{f6:2}"
-	FOR I=1 TO N:X=I+1:GOSUB 1001:&,2,2
-	A%=I:&"{pound}#3{pound}# {pound}%A) {pound}$A{f6}":IF RC=0 THEN NEXT
-	RETURN
+	&"{f6}{$c1}vailable {$cd}essages:{f6:2}"
+	for i=1 to n:x=i+1:gosub 1001:&,2,2
+	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
+	return
 {:3040}
-	&"{f6}{$c1}VAILABLE {$d3}UBS:{f6:2}"
-	FOR I=1 TO N:X=I+1:GOSUB 1001:&,2,2:&,2,2:&,2,2
-	IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN A$=MID$(A$,4)
-	IF RIGHT$(A$,1)="?"THEN A$=LEFT$(A$,LEN(A$)-1)
-	A%=I:&"{pound}#3{pound}# {pound}%A) {pound}$A{f6}":IF RC=0 THEN NEXT
-	RETURN
+	&"{f6}{$c1}vailable {$d3}ubs:{f6:2}"
+	for i=1 to n:x=i+1:gosub 1001:&,2,2:&,2,2:&,2,2
+	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
+	if right$(a$,1)="?"then a$=left$(a$,len(a$)-1)
+	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
+	return
 {:3052}
-	NG=0:L$="{clear}{$c0:20}{f6}{$cd}ESSAGE {$cd}OVE {$d5}TILITY{f6}"
-	L$=L$+" {$c5}NTER {f5}?{f5} FOR {$c8}ELP {f6}{$c0:20}{f6:2}":NG=0
+	ng=0:l$="{clear}{$c0:20}{f6}{$cd}essage {$cd}ove {$d5}tility{f6}"
+	l$=l$+" {$c5}nter {f5}?{f5} for {$c8}elp {f6}{$c0:20}{f6:2}":ng=0
 {:3056}
-	DR=3:A$="E.{$d3}UB":GOSUB 1011:IF E%THEN CLOSE 2:&:RETURN
-	X=1:GOSUB 1001:&,2,2:N=VAL(A$)
+	dr=3:a$="e.{$d3}ub":gosub 1011:if e%then close 2:&:return
+	x=1:gosub 1001:&,2,2:n=val(a$)
 {:3060}
-	A%=N:B%=NG:&"{pound}$L{pound}%A {$d3}UB(S) {$c1}VAILABLE{f6}{pound}%B {$cd}ESSAGE(S) {$c7}RABBED{f6}"
+	a%=n:b%=ng:&"{pound}$l{pound}%a {$d3}ub(s) {$c1}vailable{f6}{pound}%b {$cd}essage(s) {$c7}rabbed{f6}"
 {:3062}
-	P$="{f6}{$d7}HICH {$d3}UB ({$cc}={$cc}IST)":L=3:GOSUB{:3002}:IF AN$="{f2}"THEN GOSUB{:3140}:GOTO{:3062}
-	IF AN$="{$cc}"THEN GOSUB{:3040}:GOTO{:3062}
-	IF AN$=""AND NG>0 THEN GOSUB{:3016}:GOTO{:3062}
-	IF AN$=""OR TR%=0 THEN CLOSE 2:RETURN
-	IF A<1 OR A>N THEN{:3060}
-	X=A+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:&,2,2:&,2,2:D1%=VAL(A$):&,2,2:D2%=VAL(A$)
-	SB=A:CLOSE 2:DR=4:A$="D.SUB"+STR$(SB):GOSUB 1011:IF E%=0 THEN:&,2,2:N=VAL(A$)
-	IF E%THEN CLOSE 2:A$="D.SUB"+STR$(SB)+",L,"+CHR$(80):GOSUB 1011:PRINT# 2,0:N=0
+	p$="{f6}{$d7}hich {$d3}ub ({$cc}={$cc}ist)":l=3:gosub {:3002}:if an$="{f2}"then gosub {:3140}:goto {:3062}
+	if an$="{$cc}"then gosub {:3040}:goto {:3062}
+	if an$=""and ng>0 then gosub {:3016}:goto {:3062}
+	if an$=""or tr%=0 then close 2:return
+	if a<1 or a>n then{:3060}
+	x=a+1:gosub 1001:&,2,2:&,2,2:&,2,2:&,2,2:&,2,2:d1%=val(a$):&,2,2:d2%=val(a$)
+	sb=a:close 2:dr=4:a$="d.sub"+str$(sb):gosub 1011:if e%=0 then:&,2,2:n=val(a$)
+	if e%then close 2:a$="d.sub"+str$(sb)+",l,"+chr$(80):gosub 1011:print# 2,0:n=0
 {:3078}
-	A%=SB:B%=N:C%=NG:&"{pound}$L{$d3}UB {pound}%A {$d3}ELECTED{f6}{pound}%B {$cd}ESSAGE(S), {pound}%C {$c7}RABBED{f6}"
+	a%=sb:b%=n:c%=ng:&"{pound}$l{$d3}ub {pound}%a {$d3}elected{f6}{pound}%b {$cd}essage(s), {pound}%c {$c7}rabbed{f6}"
 {:3080}
-	P$="{f6}{$d7}HICH {$cd}ESSAGE ({$cc}={$cc}IST,{$c4}={$c4}ROP)":L=2:GOSUB{:3002}:IF AN$="{f2}"THEN GOSUB{:3148}:GOTO{:3080}
-	IF AN$="{$cc}"AND N>0 THEN GOSUB{:3032}:GOTO{:3080}
-	IF AN$=""OR TR%=0 THEN CLOSE 2:GOTO{:3056}
-	IF AN$="{$c4}"AND NG>0 AND N<60 THEN{:3100}
-	IF A<1 OR A>N THEN{:3078}
-	M=A:X=M+1:GOSUB 1001:&,2,2:&"{$c7}RAB {f5}{pound}$A{f5}? ":GOSUB 1902:IF A=0 THEN{:3078}
-	B$=RIGHT$(STR$(SB),2):GOSUB{:3004}:NG=NG+1:TT$(NG)=B$:A%(NG)=D1%:F%(NG)=D2%
-	&"{$d2}EMOVING {$cd}ESSAGE FROM {$d3}UB..."
-	IF M<N THEN FOR J=M+1 TO N:X=J+1:B$="":GOSUB{:3004}:X=J:GOSUB 1001:PRINT# 2,B$;:NEXT
-	N=N-1:X=1:GOSUB 1001:PRINT# 2,N:GOSUB 1001:GOTO{:3078}
+	p$="{f6}{$d7}hich {$cd}essage ({$cc}={$cc}ist,{$c4}={$c4}rop)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3148}:goto {:3080}
+	if an$="{$cc}"and n>0 then gosub {:3032}:goto {:3080}
+	if an$=""or tr%=0 then close 2:goto {:3056}
+	if an$="{$c4}"and ng>0 and n<60 then{:3100}
+	if a<1 or a>n then{:3078}
+	m=a:x=m+1:gosub 1001:&,2,2:&"{$c7}rab {f5}{pound}$a{f5}? ":gosub 1902:if a=0 then{:3078}
+	b$=right$(str$(sb),2):gosub {:3004}:ng=ng+1:tt$(ng)=b$:a%(ng)=d1%:f%(ng)=d2%
+	&"{$d2}emoving {$cd}essage from {$d3}ub..."
+	if m<n then for j=m+1 to n:x=j+1:b$="":gosub {:3004}:x=j:gosub 1001:print# 2,b$;:next
+	n=n-1:x=1:gosub 1001:print# 2,n:gosub 1001:goto {:3078}
 {:3100}
-	A%=SB:B%=N:C%=NG:&"{pound}$L{$d3}UB {pound}%A {$d3}ELECTED{f6}{pound}%B {$cd}ESSAGE(S), {pound}%C {$c7}RABBED{f6}"
+	a%=sb:b%=n:c%=ng:&"{pound}$l{$d3}ub {pound}%a {$d3}elected{f6}{pound}%b {$cd}essage(s), {pound}%c {$c7}rabbed{f6}"
 {:3102}
-	P$="{f6}{$c4}ROP {$d7}HICH ({$cc}={$cc}IST)":L=2:GOSUB{:3002}:IF AN$="{f2}"THEN GOSUB{:3158}:GOTO{:3102}
-	IF AN$="{$cc}"AND NG>0 THEN GOSUB{:3024}:GOTO{:3102}
-	IF AN$=""OR TR%=0 THEN{:3078}
-	IF A<1 OR A>NG THEN{:3100}
-	AN$=TT$(A):A%=A%(A):F%=F%(A):N=N+1:X=N+1:GOSUB 1001:PRINT# 2,MID$(AN$,3)
-	X=1:GOSUB 1001:PRINT# 2,N:GOSUB 1001:CLOSE 2
-	IF A<NG THEN FOR I=A TO NG-1:TT$(I)=TT$(I+1):A%(I)=A%(I+1):F%(I)=F%(I+1):NEXT
-	TT$(NG)="":NG=NG-1
-	IF SB=VAL(LEFT$(AN$,2))THEN{:3138}
-	&,15,6,13:A$=LEFT$(A$,16):B$=RIGHT$(STR$(SB),2)+MID$(A$,3):DR=0:GOSUB 1010
-	FR$=MID$(STR$(F),2)+":"
-	IF A%=D1%AND F%=D2%THEN PRINT# 15,"R"DR$B$"="A$:GOTO{:3138}
-	IF A%=D1%THEN PRINT# 15,"C"DR$B$"="FR$A$:GOTO{:3138}
-	CLOSE 15:OPEN 15,A%,15:CLOSE 2:OPEN 2,A%,2,FR$+A$
-	CLOSE 16:OPEN 16,DV%,16:CLOSE 3:OPEN 3,DV%,3,DR$+B$+",L,"+CHR$(81)
-	&,18,0:&"{clear}{$c3}OPYING...   ":X=1
+	p$="{f6}{$c4}rop {$d7}hich ({$cc}={$cc}ist)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3158}:goto {:3102}
+	if an$="{$cc}"and ng>0 then gosub {:3024}:goto {:3102}
+	if an$=""or tr%=0 then{:3078}
+	if a<1 or a>ng then{:3100}
+	an$=tt$(a):a%=a%(a):f%=f%(a):n=n+1:x=n+1:gosub 1001:print# 2,mid$(an$,3)
+	x=1:gosub 1001:print# 2,n:gosub 1001:close 2
+	if a<ng then for i=a to ng-1:tt$(i)=tt$(i+1):a%(i)=a%(i+1):f%(i)=f%(i+1):next
+	tt$(ng)="":ng=ng-1
+	if sb=val(left$(an$,2))then{:3138}
+	&,15,6,13:a$=left$(a$,16):b$=right$(str$(sb),2)+mid$(a$,3):dr=0:gosub 1010
+	fr$=mid$(str$(f),2)+":"
+	if a%=d1%and f%=d2%then print# 15,"r"dr$b$"="a$:goto {:3138}
+	if a%=d1%then print# 15,"c"dr$b$"="fr$a$:goto {:3138}
+	close 15:open 15,a%,15:close 2:open 2,a%,2,fr$+a$
+	close 16:open 16,dv%,16:close 3:open 3,dv%,3,dr$+b$+",l,"+chr$(81)
+	&,18,0:&"{clear}{$c3}opying...   ":x=1
 {:3134}
-	B%=X:&"{pound}H3{pound}#3{pound}%B":GOSUB 1001:GOSUB 1012:GOSUB{:3006}:IF E%=0 THEN:&,16:X=X+1:GOTO{:3134}
-	CLOSE 2:CLOSE 3::PRINT# 15,"S"FR$A$
+	b%=x:&"{pound}h3{pound}#3{pound}%b":gosub 1001:gosub 1012:gosub {:3006}:if e%=0 then:&,16:x=x+1:goto {:3134}
+	close 2:close 3::print# 15,"s"fr$a$
 {:3138}
-	DR=4:A$="D.SUB"+STR$(SB):GOSUB 1011:GOTO{:3100}
+	dr=4:a$="d.sub"+str$(sb):gosub 1011:goto {:3100}
 {:3140}
-	LP=1:&"{$c1}T THIS PROMPT YOU MAY SELECT A SUB TO GRAB MESSAGES FROM, OR TO "
-	LP=1:&"DROP MESSAGES INTO. {$d9}OU MAY ENTER {f5}{$cc}{f5} TO LIST THE SUBS THAT ARE "
-	LP=1:&"AVAILABLE. {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO QUIT THE PROGRAM. {$ce}OTE THAT YOU CANNOT "
-	LP=1:&"QUIT WHILE YOU STILL HAVE MESSAGES THAT ARA GRABBED.{f6:2}":RETURN
+	lp=1:&"{$c1}t this prompt you may select a sub to grab messages from, or to "
+	lp=1:&"drop messages into. {$d9}ou may enter {f5}{$cc}{f5} to list the subs that are "
+	lp=1:&"available. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to quit the program. {$ce}ote that you cannot "
+	lp=1:&"quit while you still have messages that ara grabbed.{f6:2}":return
 {:3148}
-	LP=1:&"{$c1}T THIS PROMPT YOU MAY SELECT A MESSAGE TO GRAB. {$c7}RABBED MESSAGES "
-	LP=1:&"ARE REMOVED FROM THE SUB THAT YOU ARE IN, AND THE HEADER IS KEPT "
-	LP=1:&"IN MEMORY UNTIL YOU DROP IT INTO ANOTHER SUB. {$d9}OU MAY ENTER {f5}{$c4}{f5} TO "
-	LP=1:&"SELECT MESSAGES TO DROP IN THIS SUB. {$d9}OU MAY ALSO ENTER {f5}{$cc}{f5} TO "
-	LP=1:&"LIST THE MESSAGES THAT ARE IN THIS SUB.{f6:2}":RETURN
+	lp=1:&"{$c1}t this prompt you may select a message to grab. {$c7}rabbed messages "
+	lp=1:&"are removed from the sub that you are in, and the header is kept "
+	lp=1:&"in memory until you drop it into another sub. {$d9}ou may enter {f5}{$c4}{f5} to "
+	lp=1:&"select messages to drop in this sub. {$d9}ou may also enter {f5}{$cc}{f5} to "
+	lp=1:&"list the messages that are in this sub.{f6:2}":return
 {:3158}
-	LP=1:&"{$c1}T THIS PROMPT YOU MAY SELECT A MESSAGE TO DROP. {$c4}ROPPED MESSAGES "
-	LP=1:&"WILL BE ADDED ONTO THE END OF THE LIST OF MESSAGES FOR THIS SUB, "
-	LP=1:&"AND THE HEADER WILL BE REMOVED FROM MEMORY. {$ca}UST PRESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO "
-	LP=1:&"EXIT TO {$c7}RAB MODE. {$d9}OU MAY ALSO ENTER {f5}{$cc}{f5} TO LIST THE HEADERS "
-	LP=1:&"THAT ARE CURRENTLY IN MEMORY.{f6:2}":RETURN
-	REM
+	lp=1:&"{$c1}t this prompt you may select a message to drop. {$c4}ropped messages "
+	lp=1:&"will be added onto the end of the list of messages for this sub, "
+	lp=1:&"and the header will be removed from memory. {$ca}ust press {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to "
+	lp=1:&"exit to {$c7}rab mode. {$d9}ou may also enter {f5}{$cc}{f5} to list the headers "
+	lp=1:&"that are currently in memory.{f6:2}":return
+	rem +.mu
+	

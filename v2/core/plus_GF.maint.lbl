@@ -1,118 +1,118 @@
 {nice:2}
 {alpha:upper}
 {number:4000}
-	PR$="":rem +/gf-MAINT - aL's VERSION
+	pr$="":rem +/gf-MAINT - AL'S VERSION
 {:3002}
-	&"{clear}{$cd}AINTENANCE {$cf}PTIONS:{f6:2}"
-	&"1. {$c4}IRECTORY {$c6}LAGS{f6}"
-	&"2. {$d3}UB{$cf}P {$cc}IST{f6}"
-	&"3. {$c1}CCESS {$d3}ETTINGS{f6}"
-	&"4. {$c4}EVICE/{$c4}RIVE {$c9}NFO{f6}"
-	&"5. {$d0}ROMPT{f6}"
-	&"6. {$d0}ASSWORD{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3100},{:3200},{:3300},{:3400},{:3500},{:3600}:GOTO{:3002}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$cd}aintenance {$cf}ptions:{f6:2}"
+	&"1. {$c4}irectory {$c6}lags{f6}"
+	&"2. {$d3}ub{$cf}p {$cc}ist{f6}"
+	&"3. {$c1}ccess {$d3}ettings{f6}"
+	&"4. {$c4}evice/{$c4}rive {$c9}nfo{f6}"
+	&"5. {$d0}rompt{f6}"
+	&"6. {$d0}assword{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a then on a gosub {:3100},{:3200},{:3300},{:3400},{:3500},{:3600}:goto {:3002}
+	&"{$d1}uit{f6:2}":return
 {number:4050}
 {:3050}
-	A=SGN(s%(X,0)AND 2^A):A$=MID$("{$d9}ES{$ce}O",1-3*(A=0),3):RETURN
+	a=sgn(s%(x,0)and 2^a):a$=mid$("{$d9}es{$ce}o",1-3*(a=0),3):return
 {:3052}
-	A=A-1:B=s%(X,0):B=(NOT 2^A AND B)OR(NOT B AND 2^A):s%(X,0)=B:CF=1:RETURN
+	a=a-1:b=s%(x,0):b=(not 2^a and b)or(not b and 2^a):s%(x,0)=b:cf=1:return
 {number:4100}
 {:3100}
-	&"{clear}{$c4}IRECTORY {$c6}LAGS:{f6:2}":X=1
-	A=0:GOSUB{:3050}:&"1. {$c3}LOSED:     {pound}$A{f6}"
-	A=1:GOSUB{:3050}:&"2. {$d3}OMETHING:  {pound}$A{f6}"
-	A=2:GOSUB{:3050}:&"3. {$d3}OMETHING:  {pound}$A{f6}"
-	A=3:GOSUB{:3050}:&"4. {$d3}OMETHING:  {pound}$A{f6}"
-	A=4:GOSUB{:3050}:&"5. {$d3}OMETHING:  {pound}$A{f6}"
-	A=5:GOSUB{:3050}:&"6. {$d3}OMETHING:  {pound}$A{f6}"
-	A=6:GOSUB{:3050}:&"7. {$d3}OMETHING:  {pound}$A{f6}"
-	A=7:GOSUB{:3050}:&"8. {$d3}OMETHING:  {pound}$A{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3052}:GOTO{:3100}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$c4}irectory {$c6}lags:{f6:2}":x=1
+	a=0:gosub {:3050}:&"1. {$c3}losed:     {pound}$a{f6}"
+	a=1:gosub {:3050}:&"2. {$d3}omething:  {pound}$a{f6}"
+	a=2:gosub {:3050}:&"3. {$d3}omething:  {pound}$a{f6}"
+	a=3:gosub {:3050}:&"4. {$d3}omething:  {pound}$a{f6}"
+	a=4:gosub {:3050}:&"5. {$d3}omething:  {pound}$a{f6}"
+	a=5:gosub {:3050}:&"6. {$d3}omething:  {pound}$a{f6}"
+	a=6:gosub {:3050}:&"7. {$d3}omething:  {pound}$a{f6}"
+	a=7:gosub {:3050}:&"8. {$d3}omething:  {pound}$a{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a then on a gosub {:3052}:goto {:3100}
+	&"{$d1}uit{f6:2}":return
 {number:4200}
 {:3200}
-	&"{clear}{$d3}UB{$cf}P {$cc}IST:{f6:2}"
-	A%=s%( 6,0):&"1. {$d3}UB{$cf}P #1 {$c9}{$c4}:    {pound}%A{f6}"
-	A%=s%( 7,0):&"2. {$d3}UB{$cf}P #1 {$c6}LAGS: {pound}%A{f6:2}"
-	A%=s%( 8,0):&"3. {$d3}UB{$cf}P #2 {$c9}{$c4}:    {pound}%A{f6}"
-	A%=s%( 9,0):&"4. {$d3}UB{$cf}P #2 {$c6}LAGS: {pound}%A{f6:2}"
-	A%=s%(10,0):&"5. {$d3}UB{$cf}P #3 {$c9}{$c4}:    {pound}%A{f6}"
-	A%=s%(11,0):&"6. {$d3}UB{$cf}P #3 {$c6}LAGS: {pound}%A{f6:2}"
-	A%=s%(12,0):&"7. {$d3}UB{$cf}P #4 {$c9}{$c4}:    {pound}%A{f6}"
-	A%=s%(13,0):&"8. {$d3}UB{$cf}P #4 {$c6}LAGS: {pound}%A{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A>0 AND A<9 THEN GOSUB{:3222}:GOTO{:3200}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$d3}ub{$cf}p {$cc}ist:{f6:2}"
+	a%=s%( 6,0):&"1. {$d3}ub{$cf}p #1 {$c9}{$c4}:    {pound}%a{f6}"
+	a%=s%( 7,0):&"2. {$d3}ub{$cf}p #1 {$c6}lags: {pound}%a{f6:2}"
+	a%=s%( 8,0):&"3. {$d3}ub{$cf}p #2 {$c9}{$c4}:    {pound}%a{f6}"
+	a%=s%( 9,0):&"4. {$d3}ub{$cf}p #2 {$c6}lags: {pound}%a{f6:2}"
+	a%=s%(10,0):&"5. {$d3}ub{$cf}p #3 {$c9}{$c4}:    {pound}%a{f6}"
+	a%=s%(11,0):&"6. {$d3}ub{$cf}p #3 {$c6}lags: {pound}%a{f6:2}"
+	a%=s%(12,0):&"7. {$d3}ub{$cf}p #4 {$c9}{$c4}:    {pound}%a{f6}"
+	a%=s%(13,0):&"8. {$d3}ub{$cf}p #4 {$c6}lags: {pound}%a{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a>0 and a<9 then gosub {:3222}:goto {:3200}
+	&"{$d1}uit{f6:2}":return
 {:3222}
-	A=A-1:X=A+2:N%=A/2+1:ON A AND 1 GOTO{:3230}
-	&"{$d3}UB{$cf}P #{pound}%N {$c9}{$c4}{f6:2}":P$="{$c9}{$c4}":W$=MID$(STR$(s%(X,0)),2):POKE 53252,4:PL=1
-	&,1,32:N=VAL(AN$):IF N=0 THEN:&"{$d2}EMOVE {$d3}UB{$cf}P":GOSUB 1902:N=0:IF A=0 THEN RETURN
-	s%(X,0)=N:CF=1:RETURN
+	a=a-1:x=a+2:n%=a/2+1:on a and 1 goto {:3230}
+	&"{$d3}ub{$cf}p #{pound}%n {$c9}{$c4}{f6:2}":p$="{$c9}{$c4}":w$=mid$(str$(s%(x,0)),2):poke 53252,4:pl=1
+	&,1,32:n=val(an$):if n=0 then:&"{$d2}emove {$d3}ub{$cf}p":gosub 1902:n=0:if a=0 then return
+	s%(x,0)=n:cf=1:return
 {:3230}
-	&"{clear}{$d3}UB{$cf}P #{pound}%N {$c6}LAGS:{f6:2}"
-	A=0:GOSUB{:3050}:&"1. {$cd}AINT {$cd}ENU:   {pound}$A{f6}"
-	A=1:GOSUB{:3050}:&"2. {$d0}OSTS:        {pound}$A{f6}"
-	A=2:GOSUB{:3050}:&"3. {$d5}P/{$c4}OWNLOAD:  {pound}$A{f6}"
-	A=3:GOSUB{:3050}:&"4. {$d4}EXT {$c6}ILES:   {pound}$A{f6}"
-	A=4:GOSUB{:3050}:&"5. {$cd}OVIE {$c6}ILES:  {pound}$A{f6}"
-	A=5:GOSUB{:3050}:&"6. {$d2}{$cc}{$c5} {$c6}ILES:    {pound}$A{f6}"
-	A=6:GOSUB{:3050}:&"7. {$d6}OTE {$d4}OPICS:  {pound}$A{f6}"
-	A=7:GOSUB{:3050}:&"8. {$d3}OMETHING:    {pound}$A{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A THEN GOSUB{:3052}:GOTO{:3230}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$d3}ub{$cf}p #{pound}%n {$c6}lags:{f6:2}"
+	a=0:gosub {:3050}:&"1. {$cd}aint {$cd}enu:   {pound}$a{f6}"
+	a=1:gosub {:3050}:&"2. {$d0}osts:        {pound}$a{f6}"
+	a=2:gosub {:3050}:&"3. {$d5}p/{$c4}ownload:  {pound}$a{f6}"
+	a=3:gosub {:3050}:&"4. {$d4}ext {$c6}iles:   {pound}$a{f6}"
+	a=4:gosub {:3050}:&"5. {$cd}ovie {$c6}iles:  {pound}$a{f6}"
+	a=5:gosub {:3050}:&"6. {$d2}{$cc}{$c5} {$c6}iles:    {pound}$a{f6}"
+	a=6:gosub {:3050}:&"7. {$d6}ote {$d4}opics:  {pound}$a{f6}"
+	a=7:gosub {:3050}:&"8. {$d3}omething:    {pound}$a{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a then gosub {:3052}:goto {:3230}
+	&"{$d1}uit{f6:2}":return
 {number:4300}
 {:3300}
-	&"{clear}{$c1}CCESS {$d3}ETTINGS:{f6:2}"
-	A%=s%(2,0):&"1. {$d0}OST:         {pound}%A{f6}"
-	A%=s%(3,0):&"2. {$d2}ESPOND:      {pound}%A{f6}"
-	A%=s%(4,0):&"3. {$d6}IEW {$cd}ESSAGE: {pound}%A{f6}"
-	A%=s%(5,0):&"4. {$d5}PLOAD:       {pound}%A{f6}"
-	A%=s%(6,0):&"5. {$d6}IEW {$d5}PLOAD:  {pound}%A{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3316},{:3318},{:3320},{:3322},{:3324}:GOTO{:3300}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$c1}ccess {$d3}ettings:{f6:2}"
+	a%=s%(2,0):&"1. {$d0}ost:         {pound}%a{f6}"
+	a%=s%(3,0):&"2. {$d2}espond:      {pound}%a{f6}"
+	a%=s%(4,0):&"3. {$d6}iew {$cd}essage: {pound}%a{f6}"
+	a%=s%(5,0):&"4. {$d5}pload:       {pound}%a{f6}"
+	a%=s%(6,0):&"5. {$d6}iew {$d5}pload:  {pound}%a{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a then on a gosub {:3316},{:3318},{:3320},{:3322},{:3324}:goto {:3300}
+	&"{$d1}uit{f6:2}":return
 {:3316}
-	P$="{$d0}OST":X=2:GOTO{:3326}
+	p$="{$d0}ost":x=2:goto {:3326}
 {:3318}
-	P$="{$d2}ESPOND":X=3:GOTO{:3326}
+	p$="{$d2}espond":x=3:goto {:3326}
 {:3320}
-	P$="{$d6}IEW {$cd}ESSAGE":X=4:GOTO{:3326}
+	p$="{$d6}iew {$cd}essage":x=4:goto {:3326}
 {:3322}
-	P$="{$d5}PLOAD":X=5:GOTO{:3326}
+	p$="{$d5}pload":x=5:goto {:3326}
 {:3324}
-	P$="{$d6}IEW {$c4}OWNLOAD":X=6
+	p$="{$d6}iew {$c4}ownload":x=6
 {:3326}
-	&"{pound}$P{f6:2}":W$=MID$(STR$(s%(X,0)),2):POKE 53252,5:PL=1
-	&,1,32:IF AN$=""THEN RETURN
-	A=VAL(AN$):IF AN$="{f2}"THEN GOSUB{:3334}
-	s%(X,0)=A:CF=1:RETURN
+	&"{pound}$p{f6:2}":w$=mid$(str$(s%(x,0)),2):poke 53252,5:pl=1
+	&,1,32:if an$=""then return
+	a=val(an$):if an$="{f2}"then gosub {:3334}
+	s%(x,0)=a:cf=1:return
 {:3334}
-	B=0:FOR I=0 TO 9:&"{$c7}ROUP {pound}!I":GOSUB 1902:B=B+A*2^I:NEXT:A=B:RETURN
+	b=0:for i=0 to 9:&"{$c7}roup {pound}!i":gosub 1902:b=b+a*2^i:next:a=b:return
 {number:4400}
 {:3400}
-	&"{clear}{$c4}EVICE/{$c4}RIVE INFO:{f6:2}":A%=s%(7,0):B%=s%(8,0):&,60,1,16,s%(9,0),A$
-	&"1. {$c4}EVICE: {pound}%A{f6}"
-	&"2. {$c4}RIVE: {pound}%B{f6}"
-	&"3. {$c4}{$cf}{$d3} {$c3}MD: {pound}$A{f6}"
-	&"{f6}> {pound}G1":A=VAL(AN$):IF A THEN ON A GOSUB{:3412},{:3418},{:3424}:GOTO{:3400}
-	&"{$d1}UIT{f6:2}":RETURN
+	&"{clear}{$c4}evice/{$c4}rive info:{f6:2}":a%=s%(7,0):b%=s%(8,0):&,60,1,16,s%(9,0),a$
+	&"1. {$c4}evice: {pound}%a{f6}"
+	&"2. {$c4}rive: {pound}%b{f6}"
+	&"3. {$c4}{$cf}{$d3} {$c3}md: {pound}$a{f6}"
+	&"{f6}> {pound}g1":a=val(an$):if a then on a gosub {:3412},{:3418},{:3424}:goto {:3400}
+	&"{$d1}uit{f6:2}":return
 {:3412}
-	&"{$c4}EVICE{f6:2}":P$="{$c4}EVICE":W$=MID$(STR$(s%(7,0)),2):POKE 53252,3:PL=1
-	&,1,32:IF AN$=""THEN RETURN
-	s%(7,0)=VAL(AN$):CF=1:RETURN
+	&"{$c4}evice{f6:2}":p$="{$c4}evice":w$=mid$(str$(s%(7,0)),2):poke 53252,3:pl=1
+	&,1,32:if an$=""then return
+	s%(7,0)=val(an$):cf=1:return
 {:3418}
-	&"{$c4}RIVE{f6:2}":P$="{$c4}RIVE":W$=MID$(STR$(s%(8,0)),2):POKE 53252,3:PL=1
-	&,1,32:IF AN$=""THEN RETURN
-	s%(8,0)=VAL(AN$):CF=1:RETURN
+	&"{$c4}rive{f6:2}":p$="{$c4}rive":w$=mid$(str$(s%(8,0)),2):poke 53252,3:pl=1
+	&,1,32:if an$=""then return
+	s%(8,0)=val(an$):cf=1:return
 {:3424}
-	&"{$c4}{$cf}{$d3} {$c3}MD{f6:2}":P$="{$c4}{$cf}{$d3}":&,60,1,16,s%(9,0),W$:POKE 53252,16:PL=0
-	&,1,32:IF AN$=""THEN:&"{$d2}EMOVE {$c4}{$cf}{$d3} {$c3}MD":GOSUB 1902:AN$="":IF A=0 THEN RETURN
-	&,60,0,16,s%(9,0),AN$:CF=1:RETURN
+	&"{$c4}{$cf}{$d3} {$c3}md{f6:2}":p$="{$c4}{$cf}{$d3}":&,60,1,16,s%(9,0),w$:poke 53252,16:pl=0
+	&,1,32:if an$=""then:&"{$d2}emove {$c4}{$cf}{$d3} {$c3}md":gosub 1902:an$="":if a=0 then return
+	&,60,0,16,s%(9,0),an$:cf=1:return
 {:3500}
-	&"{$d0}ROMPT{f6:2}":P$="{$d0}ROMPT":&,60,1,20,s%(24,0),W$:POKE 53252,20:PL=0
-	&,1,40:IF AN$=""THEN RETURN
-	&,60,0,20,s%(24,0),AN$:CF=1:RETURN
+	&"{$d0}rompt{f6:2}":p$="{$d0}rompt":&,60,1,20,s%(24,0),w$:poke 53252,20:pl=0
+	&,1,40:if an$=""then return
+	&,60,0,20,s%(24,0),an$:cf=1:return
 {:3600}
-	&"{$d0}ASSWORD{f6:2}":P$="{$d0}ASSWORD":&,60,1,16,s%(34,0),W$:PL=1:POKE 53252,15:PL=1
-	&,1,32:IF AN$=""THEN:&"{$d2}EMOVE {$d0}ASSWORD":GOSUB 1902:AN$="":IF A=0 THEN RETURN
-	&,60,0,16,s%(34,0),AN$:CF=1:RETURN
-	rem +/gf-MAINT
+	&"{$d0}assword{f6:2}":p$="{$d0}assword":&,60,1,16,s%(34,0),w$:pl=1:poke 53252,15:pl=1
+	&,1,32:if an$=""then:&"{$d2}emove {$d0}assword":gosub 1902:an$="":if a=0 then return
+	&,60,0,16,s%(34,0),an$:cf=1:return
+	rem +/gf-maint

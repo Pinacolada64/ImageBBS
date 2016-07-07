@@ -1,0 +1,2165 @@
+{loadaddr:$1000}
+{uses:\TADA-svn\pinacolada\image-bbs\disassembly\image-equates.lbl}
+
+' tabs are 4 characters wide
+
+' used Peter Schepers' 64COPY4.45 utility
+' for initial disassembly:
+' <http://ist.uwaterloo.ca/~schepers/personal.html>
+
+' using Jeff Hoag's C64List 3.03 utility
+' for further fiddling:
+' <http://commodoreserver.com/Downloads.asp>
+
+' some strings are zero-delimited, thus labels start with "sz"
+' some are not, so they start with "s"
+
+' in comments to the right of disassembly...
+' (example)
+' 1000:0002	4c 31 10
+' 1000:					address
+'      0002				offset in bytes from beginning of disassembly
+'			4c 31 10	opcodes/operands
+
+' goal of round one is to finish labeling stuff and make a byte-for-byte match
+' with original "ml.editor"
+
+{asm}
+	; &,54,0 - start with empty buffer
+
+		jmp clearbuf	; 1000:0002	4c 31 10
+
+	; &,54,1 - preserve text already in tt$()
+
+		jmp keepbuf		; 1003:0005	4c 28 10
+
+	; &,54,2 - hook for extended commands
+
+		jmp extracmd	; 1006:0008	4c 25 10
+
+	; Return to BASIC
+
+editrts:
+		sta sareg		; 1009:000b	8d 0c 03
+		stx sxreg		; 100c:000e	8e 0d 03
+		sty syreg		; 100f:0011	8c 0e 03
+		ldx lbl_1147	; 1012:0014	ae 47 11
+		txs				; 1015:0017	9a
+		ldy #$00		; 1016:0018	a0 00
+		sty mci			; 1018:001a	8c ef 07
+		lda sareg		; 101b:001d	ad 0c 03
+		ldx sxreg		; 101e:0020	ae 0d 03
+		ldy syreg		; 1021:0023	ac 0e 03
+		rts 			; 1024:0026	60
+
+extracmd:
+		jmp extended	; 1025:0027	4c 05 11
+
+keepbuf:
+		lda case		; 1028:002a	ad 01 d0
+		sta $03f4		; 102b:002d	8d f4 03
+		jmp goto1048	; 102e:0030	4c 48 10
+
+clearbuf:
+		lda case		; 1031:0033	ad 01 d0
+		sta $03f4		; 1034:0036	8d f4 03
+		jsr sub_1ab4	; 1037:0039	20 b4 1a
+		lda #$01		; 103a:003c	a9 01
+		sta $03fb		; 103c:003e	8d fb 03
+		sta $03f8		; 103f:0041	8d f8 03
+goto1042:
+		jsr sub_outCR	; 1042:0044	20 77 1d
+		jsr resetmci	; 1045:0047	20 8b 1d
+goto1048:
+		tsx				; 1048:004a	ba
+		stx lbl_1147	; 1049:004b	8e 47 11
+		lda #$00		; 104c:004e	a9 00
+		sta mci			; 104e:0050	8d ef 07
+		jsr sub_1bda	; 1051:0053	20 da 1b
+		lda #$00		; 1054:0056	a9 00
+		sta mjump		; 1056:0058	8d e8 07
+		sta mprint		; 1059:005b	8d eb 07
+		sta mspeed		; 105c:005e	8d ea 07
+goto105f:
+		lda $03f8		; 105f:0061	ad f8 03
+		cmp EditorLines	; 1062:0064	cd fe 03
+		beq fwd_1069	; 1065:0067	f0 02
+		bcs fwd_108a	; 1067:0069	b0 21
+fwd_1069:
+		ldx $03ff	; 1069:006b	ae ff 03
+		jsr sub_1df5	; 106c:006e	20 f5 1d
+		lda chat		; 106f:0071	ad 06 d0
+		beq fwd_1084	; 1072:0074	f0 10
+		cmp #$01		; 1074:0076	c9 01
+		bne fwd_107b	; 1076:0078	d0 03
+		jmp fwd_108a	; 1078:007a	4c 8a 10
+
+fwd_107b:
+		cmp #$03		; 107b:007d	c9 03
+		bne fwd_1084	; 107d:007f	d0 05
+	; called after checking for caller's modem carrier status:
+goto107f:
+		ldx #$00		; 107f:0081	a2 00
+		jmp editrts		; 1081:0083	4c 09 10
+
+fwd_1084:
+		jsr sub_1099	; 1084:0086	20 99 10
+		jmp goto1048	; 1087:0089	4c 48 10
+
+fwd_108a:
+		jmp goto10c7	; 108a:008c	4c c7 10
+
+	; output multiple DELetes:
+	; .x=# of DELetes
+sub_OutXdels:
+		cpx #$00		; 108d:008f	e0 00
+		bne fwd_1092		; 108f:0091	d0 01
+		rts				; 1091:0093	60
+
+fwd_1092:
+		jsr sub_outDel	; 1092:0094	20 72 1d
+		dex				; 1095:0097	ca
+		jmp sub_OutXdels	; 1096:0098	4c 8d 10
+
+sub_1099:
+		ldx $03f8		; 1099:009b	ae f8 03
+		cpx EditorLines	; 109c:009e	ec fe 03
+		bcc fwd_10a4	; 109f:00a1	90 03
+		beq fwd_10a4	; 10a1:00a3	f0 01
+		rts				; 10a3:00a5	60
+
+fwd_10a4:
+		lda LineNumberMode	; 10a4:00a6	ad fa 03
+		and #$01		; 10a7:00a9	29 01
+		beq fwd_10b1	; 10a9:00ab	f0 06
+		ldx $03fb		; 10ab:00ad	ae fb 03
+		jmp goto19eb	; 10ae:00b0	4c eb 19
+
+fwd_10b1:
+		ldx $03fb		; 10b1:00b3	ae fb 03
+		jsr sub_1b9c	; 10b4:00b6	20 9c 1b
+		inc $03fb		; 10b7:00b9	ee fb 03
+		inc $03f8		; 10ba:00bc	ee f8 03
+		rts				; 10bd:00bf	60
+
+len_Command:
+		byte $08		; 10be:00c0	tbl-10be
+
+sCommand:
+		ascii "ÃOMMAND"	; 10bf:00c1	tbl-10c6
+		byte colon
+		
+goto10c7:
+		lda len_Command	; 10c7:00c9	ad be 10
+		ldx #<sCommand	; 10ca:00cc	a2 bf
+		ldy #>sCommand	; 10cc:00ce	a0 10
+		jsr sub_1dbc	; 10ce:00d0	20 bc 1d
+		lda LineNumberMode		; 10d1:00d3	ad fa 03
+		and #$01		; 10d4:00d6	29 01
+		beq fwd_10de		; 10d6:00d8	f0 06
+		lda #$58		; 10d8:00da	a9 58
+		ldx #$00		; 10da:00dc	a2 00
+		beq fwd_1114		; 10dc:00de	f0 36
+fwd_10de:
+		jsr sub_1bab	; 10de:00e0	20 ab 1b
+		and #$7f		; 10e1:00e3	29 7f
+		tax 			; 10e3:00e5	aa
+		lda chk_left	; 10e4:00e6	ad f4 07
+		and #$04		; 10e7:00e9	29 04
+		bne fwd_10f5		; 10e9:00eb	d0 0a
+	; check caller's modem carrier status:
+		lda carrst		; 10eb:00ed	ad f1 07
+		and #$7f		; 10ee:00f0	29 7f
+		beq fwd_10f5		; 10f0:00f2	f0 03
+		jmp goto107f	; 10f2:00f4	4c 7f 10
+
+	; check for . hit?
+fwd_10f5:
+		txa				; 10f5:00f7	8a
+		cmp #period		; 10f6:00f8	c9 2e
+		bne fwd_110e		; 10f8:00fa	d0 14
+		ldx len_Command	; 10fa:00fc	ae be 10
+		jsr sub_OutXdels	; 10fd:00ff	20 8d 10
+		lda #period		; 1100:0102	a9 2e
+		jmp goto105f	; 1102:0104	4c 5f 10
+
+	; looking for extended editor command?
+extended:
+		ldx len_Command	; 1105:0107	ae be 10
+		jsr sub_OutXdels	; 1108:010a	20 8d 10
+		jmp goto105f	; 110b:010d	4c 5f 10
+
+	; DELete hit?
+fwd_110e:
+		cmp #$14		; 110e:0110	c9 14
+		beq extended	; 1110:0112	f0 f3
+		ldx #$00		; 1112:0114	a2 00
+fwd_1114:
+		cmp dotcmds,x	; 1114:0116	dd 49 11
+		beq fwd_1124		; 1117:0119	f0 0b
+		inx		 		; 1119:011b	e8
+		cpx numcmds		; 111a:011c	ec 48 11
+		bne fwd_1114		; 111d:011f	d0 f5
+		ldx #$02		; 111f:0121	a2 02
+		jmp editrts		; 1121:0123	4c 09 10
+
+fwd_1124:
+		stx $03f9		; 1124:0126	8e f9 03
+		txa 			; 1127:0129	8a
+		asl				; 1128:012a	0a
+		tay 			; 1129:012b	a8
+		lda dotaddrs,y	; 112a:012c	b9 5f 11
+		sta dispatch+1	; 112d:012f	8d 42 11
+		lda dotaddrs+1,y; 1130:0132	b9 60 11
+		sta dispatch+2	; 1133:0135	8d 43 11
+		lda dottext,y	; 1136:0138	b9 8d 11
+		tax 			; 1139:013b	aa
+		lda dottext+1,y	; 113a:013c	b9 8e 11
+		tay 			; 113d:013f	a8
+		jsr sub_outString	; 113e:0140	20 d2 1d
+	; self-modifying:
+dispatch:
+		jsr $ffff		; 1141:0143	20 ff ff
+		jmp goto1042	; 1144:0146	4c 42 10
+
+lbl_1147:
+		byte $00		; 1147:0149	00
+
+numcmds:
+		byte $16		; 1148:014a	tbl-1148
+
+		;	   abcdefhijklmnorsvxyz
+dotcmds:
+		ascii "ABCDEFHIJKLMNORSVXYZ"	; 1149:014b	tbl-115c
+
+	; Did not know this! Must test.
+	; .<Tab> is apparently the same as Help
+	; Yep. Tested. I thought it was gonna be this unused
+	; .Indent command...
+dothelp:	byte $09		; .<Tab>			; 115d:015f	tbl-115d
+
+dotscale:	ascii "#"		; .# Scale		; 115e:0160	tbl-115e
+
+	; routine addresses (23) - not alphabetical order!
+	; p<RoutineAddress> - "pointer" *shrug*
+dotaddrs:
+		word pAbort			; $1267
+		word pBorder		; $1271
+		word pColumns		; $1591
+		word pDelete		; $12df
+		word pEdit			; $133e
+		word pFind			; $1351	; 115f:0161	tbl-118c
+		word pHelp			; $141b
+		word pInsert		; $1423
+		word pJustify		; $143d
+		word pReplace		; $139c
+		word pList			; $14f1
+		word pMCIread		; $14fe	; 116b:016d
+		word pClearText		; $150b
+		word pLineNumbers	; $1566
+		word pRead			; $1515
+		word pSaveText 		; $1540
+		word pVersion		; $169c
+		word pExit			; $154b	; 1177:0179
+		word pMove			; $160c
+		word pCopy			; $15bf
+		word pHelp			; $141b
+		word pScale			; $1659
+		word $0000			; $0000	; 1183:0185
+
+	; dot command text (23)
+	; sz = string, zero-delimited
+dottext:
+		word szAbort		; .a $11bb		; 118d:018f	tbl-11ba
+		word szBorder		; .b $11c1
+		word szColumns		; .c $1240
+		word szDelete		; .d $11c8
+		word szEdit			; .e $11cf
+		word szFind			; .f $11d4
+		word szHelp			; .h $11d9
+		word szInsert		; .i $11df
+		word szJustify		; .j $11e6
+		word szReplace		; .k $11fe
+		word szList			; .l $1206
+		word szMCIread		; .m $120b		; 1199:019b
+		word szClearText	; .n $1214
+		word szLineNumbers 	; .o $1233
+		word szRead			; .r $121f
+		word szSaveText 	; .s $1224
+		word szVersion		; .v $125f
+		word szExit			; .x $122e		; 11a5:01a7
+		word szMove			; .y $124d
+		word szCopy			; .z $1248
+		word szIndentOrphan	; .<Tab>  $1258
+		word szScale		; .# $1252
+		word szIndentOrphan	; .  $1258		; 11b1:01b3
+
+szAbort:
+		ascii "ÁBORT"
+		byte $00		; 11bb:01bd	tbl-11c0
+
+szBorder:
+		ascii "ÂORDER"
+		byte $00		; 11c1:01c3	tbl-11c7
+
+szDelete:
+		ascii "ÄELETE"
+		byte $00		; 11c8:01ca	tbl-11ce
+
+szEdit:
+		ascii "ÅDIT"
+		byte $00		; 11cf:01d1	tbl-11d3
+
+szFind:
+		ascii "ÆIND"
+		byte $00		; 11d4:01d6	tbl-11d8
+
+szHelp:
+		ascii "ÈELP!"
+		byte $00		; 11d9:01db	tbl-11de
+
+szInsert:
+		ascii "ÉNSERT"
+		byte $00		; 11df:01e1	tbl-11e5
+
+szJustify:
+		ascii "ÊUSTIFY (Ã,Å,É,Ì,Ð,Ò,Õ)"
+		byte $00		; 11e6:01e8	tbl-11fd
+
+szReplace:
+		ascii "ÒEPLACE"
+		byte $00		; 11fe:0200	tbl-1205
+
+szList:
+		ascii "ÌIST"
+		byte $00		; 1206:0208	tbl-120a
+
+szMCIread:
+		ascii "ÍÃÉ ÒEAD"
+		byte $00		; 120b:020d	tbl-1213
+
+szClearText:
+		ascii "ÃLEAR ÔEXT"
+		byte $00		; 1214:0216	tbl-121e
+
+szRead:
+		ascii "ÒEAD"
+		byte $00		; 121f:0221	tbl-1223
+
+szSaveText:
+		ascii "ÓAVE ÔEXT"
+		byte $00		; 1224:0226	tbl-122d
+
+szExit:
+		ascii "ÅXIT"
+		byte $00		; 122e:0230	tbl-1232
+
+szLineNumbers:
+		ascii "ÌINE ÎUMBERS"
+		byte $00		; 1233:0235	tbl-123f
+
+szColumns:
+		ascii "ÃOLUMNS"
+		byte $00		; 1240:0242	tbl-1247
+
+szCopy:
+		ascii "ÃOPY"
+		byte $00		; 1248:024a	tbl-124c
+
+szMove:
+		ascii "ÍOVE"
+		byte $00		; 124d:024f	tbl-1251
+
+szScale:
+		ascii "ÓCALE"
+		byte $00		; 1252:0254	tbl-1257
+
+; this is in the command table, but Ctrl-I/Tab doesn't seem
+; to call this routine...
+szIndentOrphan:
+		ascii "ÉNDENT"
+		byte $00		; 1258:025a	tbl-125e
+
+szVersion:
+		ascii "ÖERSION"
+		byte $00		; 125f:0261	tbl-1266
+
+		; .Abort - want confirmation!
+pAbort:
+		jsr sub_return_key		; 1267:0269	20 a7 1a
+		lda #$00			; 126a:026c	a9 00
+		ldx #$00			; 126c:026e	a2 00
+		jmp editrts			; 126e:0270	4c 09 10
+
+		; .Border (ask for single character)
+pBorder:
+		ldx #$01		; 1271:0273	a2 01
+		ldy $03f8		; 1273:0275	ac f8 03
+		dey 			; 1276:0278	88
+		beq fwd_12cd		; 1277:0279	f0 54
+		jsr sub_1c8f	; 1279:027b	20 8f 1c
+		ldx linnum		; 127c:027e	a6 14
+		stx lbl_12dd		; 127e:0280	8e dd 12
+		ldy linnum+1	; 1281:0283	a4 15
+		sty lbl_12de		; 1283:0285	8c de 12
+	; get address for border (?) routine @ $1824:
+		ldx #<sub_1824	; 1286:0288	a2 24
+		ldy #>sub_1824	; 1288:028a	a0 18
+	; self-modifying JMP address:
+		stx sub_1755+1	; 128a:028c	8e 56 17
+		sty sub_1755+2	; 128d:028f	8c 57 17
+	; ask for character:
+	; print "Character:" prompt @ $12d0:
+		ldx #>szCharacter		; 1290:0292	a2 d0
+		ldy #<szCharacter		; 1292:0294	a0 12
+	; output prompt - calls usetbl1
+		jsr sub_outString	; 1294:0296	20 d2 1d
+    ; another variable
+	; sub_1bab -> usetbl1
+		jsr sub_1bab	; 1297:0299	20 ab 1b
+		sta brdrchar		; 129a:029c	8d dc 12
+		jsr sub_outChar	; 129d:029f	20 97 1d
+	; sub_outCR -> sub_1bb0 (use another routine)
+		jsr sub_outCR	; 12a0:02a2	20 77 1d
+lbl_12a3:
+		lda $12dc		; 12a3:02a5	ad dc 12
+	; space
+		cmp #$20		; 12a6:02a8	c9 20
+		bcc fwd_12cc		; 12a8:02aa	90 22
+		jsr sub_1723	; 12aa:02ac	20 23 17
+		ldy #$00		; 12ad:02af	a0 00
+		lda brdrchar	; 12af:02b1	ad dc 12
+b_12b2:
+		sta buffer,y	; 12b2:02b4	99 77 ce
+		iny 			; 12b5:02b7	c8
+		cpy llen		; 12b6:02b8	cc 04 d0
+		bcc b_12b2		; 12b9:02bb	90 f7
+		sty index		; 12bb:02bd	8c 0f d0
+		ldx lbl_12dd		; 12be:02c0	ae dd 12
+		jsr goto19eb	; 12c1:02c3	20 eb 19
+		ldx lbl_12de		; 12c4:02c6	ae de 12
+		inx 			; 12c7:02c9	e8
+		inx 			; 12c8:02ca	e8
+		jmp goto19eb	; 12c9:02cb	4c eb 19
+
+fwd_12cc:
+		rts 		; 12cc:02ce	60
+
+fwd_12cd:
+		jmp goto1cf2	; 12cd:02cf	4c f2 1c
+
+szCharacter:
+		byte $8b		; 12d0:02d2	tbl-12d0
+		ascii "ÃHARACTER"
+		byte colon
+		byte $00		; 12d1:02d3	tbl-12db
+
+; must be border character:
+brdrchar:
+		brk 		; 12dc:02de	00
+lbl_12dd:
+		brk 		; 12dd:02df	00
+lbl_12de:
+		brk 		; 12de:02e0	00
+
+		; .Delete line (or range of lines)
+pDelete:
+	
+		ldx $03f8			; 12df:02e1	ae f8 03
+		dex 				; 12e2:02e4	ca
+		ldy $03f8			; 12e3:02e5	ac f8 03
+		dey 				; 12e6:02e8	88
+		beq fwd_1324			; 12e7:02e9	f0 3b
+		jsr sub_1c8f		; 12e9:02eb	20 8f 1c
+		ldy #$00			; 12ec:02ee	a0 00
+		ldx #<szLine		; 12ee:02f0	a2 27
+		ldy #>szLine		; 12f0:02f2	a0 13
+		jsr sub_outString	; 12f2:02f4	20 d2 1d
+		lda linnum			; 12f5:02f7	a5 14
+		cmp linnum+1		; 12f7:02f9	c5 15
+		beq fwd_1300		; 12f9:02fb	f0 05
+		lda #$53			; 12fb:02fd	a9 53
+							; "s"
+		jsr sub_outChar		; 12fd:02ff	20 97 1d
+fwd_1300:
+		jsr sub_outSpace	; 1300:0302	20 86 1d
+		lda linnum			; 1303:0305	a5 14
+		jsr sub_outApercent	; 1305:0307	20 ba 1b
+		lda linnum			; 1308:030a	a5 14
+		cmp linnum+1		; 130a:030c	c5 15
+		beq fwd_131a		; 130c:030e	f0 0c
+		ldx #>szLine		; 130e:0310	a2 2d
+		ldy #<szLine		; 1310:0312	a0 13
+		jsr sub_outString	; 1312:0314	20 d2 1d
+		lda linnum+1		; 1315:0317	a5 15
+		jsr sub_outApercent	; 1317:0319	20 ba 1b
+fwd_131a:
+		ldx #>szDeleted		; 131a:031c	a2 32
+		ldy #<szDeleted		; 131c:031e	a0 13
+		jsr sub_outString	; 131e:0320	20 d2 1d
+		jmp goto19b0		; 1321:0323	4c b0 19
+
+fwd_1324:
+		jmp goto1cf2		; 1324:0326	4c f2 1c
+
+szLine:
+		byte $28			; 1327:0329	tbl-1327
+		ascii "ÌINE"
+		byte $00			; 1328:032a	tbl-132c
+
+t_132d:
+		ascii " ÔO "
+		byte $00			; 132d:032f	tbl-1331
+
+szDeleted:
+		ascii " ÄELETED.)"	; 1332:0334	tbl-133b
+		byte $0d,$00		; 133c:033e	tbl-133d
+
+		; .Edit line (or range of lines)
+pEdit:
+		ldx $03f8			; 133e:0340	ae f8 03
+		dex 				; 1341:0343	ca
+		ldy $03f8			; 1342:0344	ac f8 03
+		dey 				; 1345:0347	88
+		beq fwd_134e		; 1346:0348	f0 06
+		jsr sub_1c8f		; 1348:034a	20 8f 1c
+		jmp goto19c0		; 134b:034d	4c c0 19
+
+fwd_134e:
+		jmp goto1cf2		; 134e:0350	4c f2 1c
+
+		; .Find text in line (or range of lines)
+pFind:
+		ldx #$01			; 1351:0353	a2 01
+		ldy $03f8			; 1353:0355	ac f8 03
+		dey 				; 1356:0358	88
+		beq fwd_138a		; 1357:0359	f0 31
+		jsr sub_1c8f		; 1359:035b	20 8f 1c
+		ldx #$8d			; 135c:035e	a2 8d
+		ldy #$13			; 135e:0360	a0 13
+		jsr sub_outString	; 1360:0362	20 d2 1d
+		jsr sub_getline		; 1363:0365	20 2e 1d
+		ldy index			; 1366:0368	ac 0f d0
+		beq fwd_1389		; 1369:036b	f0 1e
+		ldy #$00			; 136b:036d	a0 00
+b_136d:
+		lda buffer,y		; 136d:036f	b9 77 ce
+		sta buffer2,y		; 1370:0372	99 27 ce
+		iny 				; 1373:0375	c8
+		cpy index			; 1374:0376	cc 0f d0
+		bne b_136d			; 1377:0379	d0 f4
+		sty lbl_18d8		; 1379:037b	8c d8 18
+		lda #$81			; 137c:037e	a9 81
+		sta mci				; 137e:0380	8d ef 07
+		lda #$80			; 1381:0383	a9 80
+		sta $03f3			; 1383:0385	8d f3 03
+		jsr sub_189b		; 1386:0388	20 9b 18
+fwd_1389:
+		rts 				; 1389:038b	60
+
+fwd_138a:
+		jmp goto1cf2		; 138a:038c	4c f2 1c
+
+szSearchPhrase:
+		ascii "ÓEARCH ÐHRASE"
+		byte colon
+		byte $00		; 138d:038f	tbl-139b
+
+		; .K (Search-and-replace) a line or range of lines
+pFindAndReplace:
+		ldx #$01			; 139c:039e	a2 01
+		ldy $03f8			; 139e:03a0	ac f8 03
+		dey 				; 13a1:03a3	88
+		beq fwd_13fa		; 13a2:03a4	f0 56
+		jsr sub_1c8f		; 13a4:03a6	20 8f 1c
+		ldx #<szSearchPhrase2		; 13a7:03a9	a2 fd
+		ldy #>szSearchPhrase2		; 13a9:03ab	a0 13
+		jsr sub_outString	; 13ab:03ad	20 d2 1d
+		jsr sub_getline		; 13ae:03b0	20 2e 1d
+		ldy index			; 13b1:03b3	ac 0f d0
+		beq fwd_13f9		; 13b4:03b6	f0 43
+		ldy #$00			; 13b6:03b8	a0 00
+b_13b8:
+		lda buffer,y		; 13b8:03ba	b9 77 ce
+		sta buffer2,y		; 13bb:03bd	99 27 ce
+		iny 				; 13be:03c0	c8
+		cpy index			; 13bf:03c1	cc 0f d0
+		bne b_13b8			; 13c2:03c4	d0 f4
+		sty lbl_18d8		; 13c4:03c6	8c d8 18
+		ldx #<szReplaceWith	; 13c7:03c9	a2 0c
+		ldy #>szReplaceWith	; 13c9:03cb	a0 14
+		jsr sub_outString	; 13cb:03cd	20 d2 1d
+		jsr sub_getline		; 13ce:03d0	20 2e 1d
+		ldy #$00			; 13d1:03d3	a0 00
+		cpy index			; 13d3:03d5	cc 0f d0
+		beq fwd_13e9		; 13d6:03d8	f0 11
+		cpy index			; 13d8:03da	cc 0f d0
+		beq fwd_13e9		; 13db:03dd	f0 0c
+b_13dd:
+		lda buffer,y		; 13dd:03df	b9 77 ce
+		sta buf,y			; 13e0:03e2	99 00 02
+		iny 				; 13e3:03e5	c8
+		cpy index			; 13e4:03e6	cc 0f d0
+		bne b_13dd			; 13e7:03e9	d0 f4
+fwd_13e9:
+		sty lbl_18db		; 13e9:03eb	8c db 18
+		lda #$81			; 13ec:03ee	a9 81
+		sta mci				; 13ee:03f0	8d ef 07
+		lda #$80			; 13f1:03f3	a9 80
+		sta $03f3			; 13f3:03f5	8d f3 03
+		jsr sub_18dd		; 13f6:03f8	20 dd 18
+fwd_13f9:
+		rts 				; 13f9:03fb	60
+
+fwd_13fa:
+		jmp goto1cf2		; 13fa:03fc	4c f2 1c
+
+		; FIXME: This is repeated @ $138d.
+		; That string could be reused to save space.
+szSearchPhrase2:
+		ascii "ÓEARCH ÐHRASE"	; 13fd:03ff	tbl-140b
+		byte colon
+		byte $00		
+
+szReplaceWith:
+		ascii "ÒEPLACE ×ITH "
+		byte colon
+		byte $00		; 140c:040e	tbl-141a
+
+		; .Help!
+		; returns to BASIC to read "s.menu 3"
+		; returns to editor with buffer intact
+pHelp:
+		jsr sub_return_key	; 141b:041d	20 a7 1a
+		ldx #$03			; 141e:0420	a2 03
+		jmp editrts			; 1420:0422	4c 09 10
+
+		; .Insert line (or range of lines)
+pInsert:
+		ldx #$01		; 1423:0425	a2 01
+		jsr sub_1c75		; 1425:0427	20 75 1c
+		ldx linnum		; 1428:042a	a6 14
+		beq fwd_143c		; 142a:042c	f0 10
+		cpx $03f8		; 142c:042e	ec f8 03
+		bcs fwd_143c		; 142f:0431	b0 0b
+		stx $03fb		; 1431:0433	8e fb 03
+		lda LineNumberMode		; 1434:0436	ad fa 03
+		ora #$01		; 1437:0439	09 01
+		sta LineNumberMode		; 1439:043b	8d fa 03
+fwd_143c:
+		rts 		; 143c:043e	60
+
+		; .Justify line or range of lines
+		; (Center,Expand,Packed,Left,Right,Indent,Un-Indent)
+pJustify:
+		ldx $03f8		; 143d:043f	ae f8 03
+		dex 		; 1440:0442	ca
+		beq fwd_1478		; 1441:0443	f0 35
+		jsr sub_1bab		; 1443:0445	20 ab 1b
+		and #$7f		; 1446:0448	29 7f
+		ldx #$ff		; 1448:044a	a2 ff
+		cmp #$43		; 144a:044c	c9 43
+		bne fwd_1450		; 144c:044e	d0 02
+		ldx #$00		; 144e:0450	a2 00
+fwd_1450:
+		cmp #$45		; 1450:0452	c9 45
+		bne fwd_1456		; 1452:0454	d0 02
+		ldx #$01		; 1454:0456	a2 01
+fwd_1456:
+		cmp #$50		; 1456:0458	c9 50
+		bne fwd_145c		; 1458:045a	d0 02
+		ldx #$02		; 145a:045c	a2 02
+fwd_145c:
+		cmp #$4c		; 145c:045e	c9 4c
+		bne fwd_1462		; 145e:0460	d0 02
+		ldx #$03		; 1460:0462	a2 03
+fwd_1462:
+		cmp #$52		; 1462:0464	c9 52
+		bne fwd_1468		; 1464:0466	d0 02
+		ldx #$04		; 1466:0468	a2 04
+fwd_1468:
+		cmp #$49		; 1468:046a	c9 49
+		bne fwd_146e		; 146a:046c	d0 02
+		ldx #$05		; 146c:046e	a2 05
+fwd_146e:
+		cmp #$55		; 146e:0470	c9 55
+		bne fwd_1474		; 1470:0472	d0 02
+		ldx #$06		; 1472:0474	a2 06
+fwd_1474:
+		cpx #$ff		; 1474:0476	e0 ff
+		bne fwd_14c9		; 1476:0478	d0 51
+fwd_1478:
+		jmp goto1cf2		; 1478:047a	4c f2 1c
+
+szCenter:
+		ascii "ÃENTER"
+		byte $00		; 147b:047d	tbl-1481
+
+szExpand:
+		ascii "ÅXPAND"
+		byte $00		; 1482:0484	tbl-1488
+
+szPacked:
+		ascii "ÐACKED"
+		byte $00		; 1489:048b	tbl-148f
+
+szLeft:
+		ascii "ÌEFT"
+		byte $00		; 1490:0492	tbl-1494
+
+szRight:
+		ascii "ÒIGHT"
+		byte $00		; 1495:0497	tbl-149a
+
+szIndent:
+		ascii "ÉNDENT"
+		byte $00		; 149b:049d	tbl-14a1
+
+szUnindent:
+		ascii "ÕN-ÉNDENT"
+		byte $00		; 14a2:04a4	tbl-14ab
+
+t_14ac:
+		byte $00		; 14ac:04ae	tbl-14ac
+
+		; justification text option addresses
+justtext:
+		word szCenter	; $147b
+		word szExpand	; $1482
+		word szPacked	; $1489
+		word szLeft		; $1490
+		word szRight	; $1495
+		word szIndent	; $149b		; 14ad:04af	tbl-14c8
+		word szUnindent	; $14a2		; 14b9:04bb
+
+		; justification routine addresses
+justaddr:
+		word pCenter	; $1784
+		word pExpand	; $17d9
+		word pPacked	; $179d
+		word pLeft		; $175e
+		word pRight		; $1773
+		word pIndent	; $181a		; 14bb:04bd	tbl-14c8
+		word pUnindent	; $181f		; 14c7:04c9
+
+fwd_14c9:
+		stx t_14ac		; 14c9:04cb	8e ac 14
+		ldx #$0f		; 14cc:04ce	a2 0f
+		jsr sub_OutXdels		; 14ce:04d0	20 8d 10
+		ldx t_14ac		; 14d1:04d3	ae ac 14
+		txa 		; 14d4:04d6	8a
+		asl		; 14d5:04d7	0a
+		tay 		; 14d6:04d8	a8
+		lda justtext,y		; 14d7:04d9	b9 ad 14
+		tax 		; 14da:04dc	aa
+		lda $14ae,y		; 14db:04dd	b9 ae 14
+		tay 		; 14de:04e0	a8
+		jsr sub_outString		; 14df:04e1	20 d2 1d
+		lda t_14ac		; 14e2:04e4	ad ac 14
+		asl		; 14e5:04e7	0a
+		tay 		; 14e6:04e8	a8
+		lda justaddr+1,y		; 14e7:04e9	b9 bc 14
+		tax 		; 14ea:04ec	aa
+		lda justaddr,y		; 14eb:04ed	b9 bb 14
+		jmp goto170d		; 14ee:04f0	4c 0d 17
+
+		; .List (defaults to all lines)
+pList:
+		lda #$81		; 14f1:04f3	a9 81
+		sta lbl_153f		; 14f3:04f5	8d 3f 15
+		lda #$80		; 14f6:04f8	a9 80
+		sta $03f3		; 14f8:04fa	8d f3 03
+		jmp goto151f		; 14fb:04fd	4c 1f 15
+
+		; .MCI Read
+pMCIread:
+		lda #$00		; 14fe:0500	a9 00
+		sta lbl_153f	; 1500:0502	8d 3f 15
+		lda #$00		; 1503:0505	a9 00
+		sta $03f3		; 1505:0507	8d f3 03
+		jmp goto151f	; 1508:050a	4c 1f 15
+
+		; .New (want confirmation!)
+pNewText:
+		jsr sub_return_key	; 150b:050d	20 a7 1a
+		ldx lbl_1147			; 150e:0510	ae 47 11
+		txs 				; 1511:0513	9a
+		jmp clearbuf		; 1512:0514	4c 31 10
+
+		; .Read message (defaults to all lines)
+		; can also specify line range (1, 1-, 1-2, -2)
+pRead:
+		lda #$81		; 1515:0517	a9 81
+		sta lbl_153f	; 1517:0519	8d 3f 15
+		lda #$00		; 151a:051c	a9 00
+		sta $03f3		; 151c:051e	8d f3 03
+goto151f:
+		ldx #$01		; 151f:0521	a2 01
+		ldy $03f8		; 1521:0523	ac f8 03
+		dey 			; 1524:0526	88
+		beq fwd_153c	; 1525:0527	f0 15
+		jsr sub_1c8f	; 1527:0529	20 8f 1c
+		jsr sub_outCR	; 152a:052c	20 77 1d
+		lda lbl_153f	; 152d:052f	ad 3f 15
+		sta mci			; 1530:0532	8d ef 07
+		jsr sub_1851	; 1533:0535	20 51 18
+		lda #$00		; 1536:0538	a9 00
+		sta mci			; 1538:053a	8d ef 07
+		rts 			; 153b:053d	60
+
+fwd_153c:
+		jmp goto1cf2	; 153c:053e	4c f2 1c
+
+lbl_153f:
+		brk 			; 153f:0541	00
+
+		; .Save text
+pSave:
+		jsr sub_return_key		; 1540:0542	20 a7 1a
+		lda $03fb		; 1543:0545	ad fb 03
+		ldx #$01		; 1546:0548	a2 01
+		jmp editrts		; 1548:054a	4c 09 10
+
+		lda LineNumberMode		; 154b:054d	ad fa 03
+		and #$01		; 154e:0550	29 01
+		beq fwd_1563		; 1550:0552	f0 11
+		lda $03f8		; 1552:0554	ad f8 03
+		sta $03fb		; 1555:0557	8d fb 03
+		lda LineNumberMode		; 1558:055a	ad fa 03
+		and #$fe		; 155b:055d	29 fe
+		sta LineNumberMode		; 155d:055f	8d fa 03
+		jmp sub_outCR		; 1560:0562	4c 77 1d
+
+fwd_1563:
+		jmp goto1cf2		; 1563:0565	4c f2 1c
+
+		; .O Line numbers on/off
+pLineNumbers:
+		lda LineNumberMode		; 1566:0568	ad fa 03
+		eor #$02		; 1569:056b	49 02
+		sta LineNumberMode		; 156b:056d	8d fa 03
+		and #$02		; 156e:0570	29 02
+		beq fwd_1576		; 1570:0572	f0 04
+		ldy #$00		; 1572:0574	a0 00
+		beq fwd_1578		; 1574:0576	f0 02
+fwd_1576:
+		ldy #$06		; 1576:0578	a0 06
+fwd_1578:
+		lda szOn,y		; 1578:057a	b9 84 15
+		beq fwd_1583		; 157b:057d	f0 06
+		jsr sub_outChar		; 157d:057f	20 97 1d
+		iny 		; 1580:0582	c8
+		bne fwd_1578		; 1581:0583	d0 f5
+fwd_1583:
+		rts 		; 1583:0585	60
+
+szOn:
+		ascii " ÏN."	; 1584:0586	tbl-158b
+		byte $0d,$00	; 1588:058a	tbl-1589
+
+		ascii " ÏFF."	; 158a:058c	tbl-158e
+		byte $0d,$00	; 158f:0591	tbl-1590
+
+		; .Columns
+pColumns:
+		ldx #$00			; 1591:0593	a2 00
+		jsr sub_1c61		; 1593:0595	20 61 1c
+		ldx linnum			; 1596:0598	a6 14
+		cpx #$51			; 1598:059a	e0 51
+		bcs fwd_15a4			; 159a:059c	b0 08
+		cpx #$16			; 159c:059e	e0 16
+		bcc fwd_15a4			; 159e:05a0	90 04
+		dex 				; 15a0:05a2	ca
+		jsr sub_1f00		; 15a1:05a3	20 00 1f
+fwd_15a4:
+		ldx #>szSetTo		; 15a4:05a6	a2 b6
+		ldy #<szSetTo		; 15a6:05a8	a0 15
+		jsr sub_outString	; 15a8:05aa	20 d2 1d
+		ldx llen			; 15ab:05ad	ae 04 d0
+		inx 				; 15ae:05b0	e8
+		txa 				; 15af:05b1	8a
+		jsr sub_outApercent	; 15b0:05b2	20 ba 1b
+		jmp sub_outCR		; 15b3:05b5	4c 77 1d
+
+szSetTo:
+		ascii "ÓET ÔO"
+		byte colon
+		byte ' '
+		byte $00		; 15b6:05b8	tbl-15be
+
+		ldx #$01		; 15bf:05c1	a2 01
+		ldy $03f8		; 15c1:05c3	ac f8 03
+		dey 		; 15c4:05c6	88
+		beq fwd_15fa		; 15c5:05c7	f0 33
+		jsr sub_1c8f		; 15c7:05c9	20 8f 1c
+		ldx #<szCopyTo		; 15ca:05cc	a2 03
+		ldy #>szCopyTo		; 15cc:05ce	a0 16
+		jsr sub_outString		; 15ce:05d0	20 d2 1d
+		lda linnum		; 15d1:05d3	a5 14
+		pha 		; 15d3:05d5	48
+		ldx $03f8		; 15d4:05d6	ae f8 03
+		jsr sub_1c59		; 15d7:05d9	20 59 1c
+		lda linnum		; 15da:05dc	a5 14
+		beq fwd_15fa		; 15dc:05de	f0 1c
+		cmp $03f8		; 15de:05e0	cd f8 03
+		beq fwd_15e5		; 15e1:05e3	f0 02
+		bcs fwd_15fa		; 15e3:05e5	b0 15
+fwd_15e5:
+		sta $03fb		; 15e5:05e7	8d fb 03
+		pla 		; 15e8:05ea	68
+		sta linnum		; 15e9:05eb	85 14
+		ldx $03fb		; 15eb:05ed	ae fb 03
+		cpx linnum		; 15ee:05f0	e4 14
+		bcc fwd_15f7		; 15f0:05f2	90 05
+		dex 		; 15f2:05f4	ca
+		cpx linnum+1		; 15f3:05f5	e4 15
+		bcc fwd_15fa		; 15f5:05f7	90 03
+fwd_15f7:
+		jmp goto1ad1		; 15f7:05f9	4c d1 1a
+
+fwd_15fa:
+		lda $03f8		; 15fa:05fc	ad f8 03
+		sta $03fb		; 15fd:05ff	8d fb 03
+		jmp goto1cf2		; 1600:0602	4c f2 1c
+
+szCopyTo:
+		ascii "ÃOPY ÔO"
+		byte colon
+		byte $00		; 1603:0605	tbl-160b
+
+		ldx #$01		; 160c:060e	a2 01
+		ldy $03f8		; 160e:0610	ac f8 03
+		dey 		; 1611:0613	88
+		beq fwd_1647		; 1612:0614	f0 33
+		jsr sub_1c8f		; 1614:0616	20 8f 1c
+		ldx #<sMoveTo		; 1617:0619	a2 50
+		ldy #>sMoveTo		; 1619:061b	a0 16
+		jsr sub_outString		; 161b:061d	20 d2 1d
+		lda linnum		; 161e:0620	a5 14
+		pha 		; 1620:0622	48
+		ldx $03f8		; 1621:0623	ae f8 03
+		jsr sub_1c59		; 1624:0626	20 59 1c
+		lda linnum		; 1627:0629	a5 14
+		beq fwd_1647		; 1629:062b	f0 1c
+		cmp $03f8		; 162b:062d	cd f8 03
+		beq fwd_1632		; 162e:0630	f0 02
+		bcs fwd_1647		; 1630:0632	b0 15
+fwd_1632:
+		sta $03fb		; 1632:0634	8d fb 03
+		pla 		; 1635:0637	68
+		sta linnum		; 1636:0638	85 14
+		ldx $03fb		; 1638:063a	ae fb 03
+		cpx linnum		; 163b:063d	e4 14
+		bcc fwd_1644		; 163d:063f	90 05
+		dex 		; 163f:0641	ca
+		cpx linnum+1		; 1640:0642	e4 15
+		bcc fwd_1647			; 1642:0644	90 03
+fwd_1644:
+		jmp goto1ae1			; 1644:0646	4c e1 1a
+
+fwd_1647:
+		lda $03f8			; 1647:0649	ad f8 03
+		sta $03fb			; 164a:064c	8d fb 03
+		jmp goto1cf2			; 164d:064f	4c f2 1c
+
+sMoveTo:
+	 	ascii "ÍOVE ÔO"
+		byte colon
+		byte $00			; 1650:0652	tbl-1658
+
+		lda #$3a			; 1659:065b	a9 3a
+		ldx #<l_scale		; 165b:065d	a2 62
+		ldy #>l_scale		; 165d:065f	a0 16
+		jmp mcioff			; 165f:0661	4c ac 1d
+
+		;	this all prints a scale for knowing which column you're in
+		;	(in 40 columns, it'd be nice to extend this out to 80 if
+		;	the caller is in 80 column mode)
+		;	"          1         2         3"
+		;	"01234567890123456789012345678900123456789"
+lbl_scale:
+		byte $8b		; 1662:0664	tbl-1662
+
+t_scale1:
+	 	ascii "\_101\_202\_303"		; 1663:0665	tbl-1671
+
+t_1672:
+		byte $8b		; 1672:0674	tbl-1672
+
+		; Somehow I want this to be shortened with a subroutine
+		; seems to be a waste of space
+t_scale2:
+	 	ascii "0123456789"		; 1673:0675	tbl-169a
+		ascii "0123456789"		; 167d:067f
+		ascii "0123456789"		; 1687:0689
+		ascii "0123456789"		; 1691:0693
+
+t_169b:
+		byte $8b		; 169b:069d	tbl-169b
+
+		; .Version of editor
+		;
+		lda #$24			; 169c:069e	a9 24
+		ldx #<szEditorVersion		; 169e:06a0	a2 a5
+		ldy #>szEditorVersion		; 16a0:06a2	a0 16
+		jmp mcioff			; 16a2:06a4	4c ac 1d
+
+szEditorVersion:
+		byte $8b		; 16a5:06a7	tbl-16a5
+
+		; build date repeated, use text at very end instead?
+		;
+		ascii "Image 1.2 Editor "		; 16a6:06a8	tbl-16c7
+		ascii "(09/21/89 01"
+		byte colon
+		ascii "26A)"		; 16b7:06b9
+
+t_16c8:
+		byte $8b		; 16c8:06ca	tbl-16c8
+
+sub_16c9:
+		sty arisgn		; 16c9:06cb	84 6f
+		cpy index		; 16cb:06cd	cc 0f d0
+		beq fwd_16dc		; 16ce:06d0	f0 0c
+b_16d0:
+		lda buffer+1,y		; 16d0:06d2	b9 78 ce
+		sta buffer,y		; 16d3:06d5	99 77 ce
+		iny 		; 16d6:06d8	c8
+		cpy index		; 16d7:06d9	cc 0f d0
+		bcc b_16d0		; 16da:06dc	90 f4
+fwd_16dc:
+		ldy index		; 16dc:06de	ac 0f d0
+		beq fwd_16e4		; 16df:06e1	f0 03
+		dec index		; 16e1:06e3	ce 0f d0
+fwd_16e4:
+		ldy arisgn		; 16e4:06e6	a4 6f
+		rts 		; 16e6:06e8	60
+
+sub_16e7:
+		sty arisgn		; 16e7:06e9	84 6f
+		ldy index		; 16e9:06eb	ac 0f d0
+		beq fwd_1702		; 16ec:06ee	f0 14
+		cpy arisgn		; 16ee:06f0	c4 6f
+		bcc fwd_1702		; 16f0:06f2	90 10
+		cpy llen		; 16f2:06f4	cc 04 d0
+		bcs fwd_1705		; 16f5:06f7	b0 0e
+b_16f7:
+		lda buffer,y		; 16f7:06f9	b9 77 ce
+		sta buffer+1,y		; 16fa:06fc	99 78 ce
+		dey 		; 16fd:06ff	88
+		cpy arisgn		; 16fe:0700	c4 6f
+		bpl b_16f7		; 1700:0702	10 f5
+fwd_1702:
+		inc index		; 1702:0704	ee 0f d0
+fwd_1705:
+		ldy arisgn		; 1705:0707	a4 6f
+		lda #$20		; 1707:0709	a9 20
+		sta buffer,y		; 1709:070b	99 77 ce
+		rts 		; 170c:070e	60
+
+goto170d:
+		sta sub_1755+1		; 170d:070f	8d 56 17
+		stx sub_1755+2		; 1710:0712	8e 57 17
+		lda dscpnt+2		; 1713:0715	a5 52
+		clc 		; 1715:0717	18
+		adc #$08		; 1716:0718	69 08
+		sta dscpnt+2		; 1718:071a	85 52
+		ldx #$01		; 171a:071c	a2 01
+		ldy $03f8		; 171c:071e	ac f8 03
+		dey 		; 171f:0721	88
+		jsr sub_1c8f		; 1720:0722	20 8f 1c
+sub_1723:
+		ldx linnum		; 1723:0725	a6 14
+		dex 		; 1725:0727	ca
+		cpx linnum+1		; 1726:0728	e4 15
+		bcs fwd_174e		; 1728:072a	b0 24
+		inx 		; 172a:072c	e8
+		jsr sub_1b97		; 172b:072d	20 97 1b
+		ldx index		; 172e:0730	ae 0f d0
+		beq fwd_1744		; 1731:0733	f0 11
+		dex 		; 1733:0735	ca
+		cpx llen		; 1734:0736	ec 04 d0
+		bcs fwd_1744		; 1737:0739	b0 0b
+		lda index		; 1739:073b	ad 0f d0
+		jsr sub_1755		; 173c:073e	20 55 17
+		ldx linnum		; 173f:0741	a6 14
+		jsr sub_1b9c		; 1741:0743	20 9c 1b
+fwd_1744:
+		ldx linnum		; 1744:0746	a6 14
+		cpx linnum+1		; 1746:0748	e4 15
+		beq fwd_174e		; 1748:074a	f0 04
+		inc linnum		; 174a:074c	e6 14
+		bne sub_1723		; 174c:074e	d0 d5
+fwd_174e:
+		ldx #<szDone		; 174e:0750	a2 58
+		ldy #>szDone		; 1750:0752	a0 17
+		jmp sub_outString		; 1752:0754	4c d2 1d
+
+sub_1755:
+		jmp $ffff		; 1755:0757	4c ff ff
+
+szDone:
+		ascii "ÄONE."
+		byte $00		; 1758:075a	tbl-175d
+
+goto175e:
+pLeft:		; $175e
+		lda index		; 175e:0760	ad 0f d0
+		beq fwd_1772		; 1761:0763	f0 0f
+		lda buffer		; 1763:0765	ad 77 ce
+		cmp #$20		; 1766:0768	c9 20
+		bne fwd_1772		; 1768:076a	d0 08
+		ldy #$00		; 176a:076c	a0 00
+		jsr sub_16c9	; 176c:076e	20 c9 16
+		jmp goto175e	; 176f:0771	4c 5e 17
+
+fwd_1772:
+		rts 		; 1772:0774	60
+
+pRight:		; $1773
+		lda index			; 1773:0775	ad 0f d0
+		cmp llen		; 1776:0778	cd 04 d0
+		bcs fwd_1783		; 1779:077b	b0 08
+		ldy #$00		; 177b:077d	a0 00
+		jsr sub_16e7		; 177d:077f	20 e7 16
+		jmp pRight		; 1780:0782	4c 73 17
+
+fwd_1783:
+		rts 		; 1783:0785	60
+
+	; justification routines
+pCenter:
+		jsr goto175e		; 1784:0786	20 5e 17
+		lda llen		; 1787:0789	ad 04 d0
+		sec 		; 178a:078c	38
+		sbc index		; 178b:078d	ed 0f d0
+		beq fwd_179c		; 178e:0790	f0 0c
+		bcc fwd_179c		; 1790:0792	90 0a
+		ldy #$00		; 1792:0794	a0 00
+		lsr				; 1794:0796	4a
+		tax 		; 1795:0797	aa
+b_1796:
+		jsr sub_16e7		; 1796:0798	20 e7 16
+		dex 		; 1799:079b	ca
+		bne b_1796		; 179a:079c	d0 fa
+fwd_179c:
+		rts 		; 179c:079e	60
+
+pPacked:
+		jsr goto175e		; 179d:079f	20 5e 17
+		lda index		; 17a0:07a2	ad 0f d0
+		beq fwd_17d8		; 17a3:07a5	f0 33
+		ldy #$00		; 17a5:07a7	a0 00
+b_17a7:
+		lda buffer,y		; 17a7:07a9	b9 77 ce
+		iny 		; 17aa:07ac	c8
+		cmp #$20		; 17ab:07ad	c9 20
+		bne fwd_17c1		; 17ad:07af	d0 12
+		cpy index			; 17af:07b1	cc 0f d0
+		bcs fwd_17c6		; 17b2:07b4	b0 12
+		bcs fwd_17c6		; 17b4:07b6	b0 10
+		lda buffer,y		; 17b6:07b8	b9 77 ce
+		cmp #$20		; 17b9:07bb	c9 20
+		bne fwd_17c1		; 17bb:07bd	d0 04
+		dey 		; 17bd:07bf	88
+		jsr sub_16c9		; 17be:07c0	20 c9 16
+fwd_17c1:
+		cpy index		; 17c1:07c3	cc 0f d0
+		bcc b_17a7		; 17c4:07c6	90 e1
+fwd_17c6:
+		ldy index		; 17c6:07c8	ac 0f d0
+		beq fwd_17d8		; 17c9:07cb	f0 0d
+		dey 		; 17cb:07cd	88
+		beq fwd_17d8		; 17cc:07ce	f0 0a
+		lda buffer,y		; 17ce:07d0	b9 77 ce
+		cmp #$20		; 17d1:07d3	c9 20
+		bne fwd_17d8		; 17d3:07d5	d0 03
+		sty index		; 17d5:07d7	8c 0f d0
+fwd_17d8:
+		rts 		; 17d8:07da	60
+
+pExpand:
+		jsr sub_179d		; 17d9:07db	20 9d 17
+b_17dc:
+		ldx #$00		; 17dc:07de	a2 00
+		lda index		; 17de:07e0	ad 0f d0
+		cmp llen		; 17e1:07e3	cd 04 d0
+		bcs fwd_1819		; 17e4:07e6	b0 33
+		ldy #$00		; 17e6:07e8	a0 00
+b_17e8:
+		lda buffer,y		; 17e8:07ea	b9 77 ce
+		cmp #$20		; 17eb:07ed	c9 20
+		bne fwd_180a		; 17ed:07ef	d0 1b
+		jsr sub_16e7		; 17ef:07f1	20 e7 16
+		inx 		; 17f2:07f4	e8
+		lda index		; 17f3:07f5	ad 0f d0
+		cmp llen		; 17f6:07f8	cd 04 d0
+		bcs fwd_1819		; 17f9:07fb	b0 1e
+b_17fb:
+		lda buffer,y		; 17fb:07fd	b9 77 ce
+		cmp #$20		; 17fe:0800	c9 20
+		bne fwd_180a		; 1800:0802	d0 08
+		iny 		; 1802:0804	c8
+		cpy index		; 1803:0805	cc 0f d0
+		bcc b_17fb		; 1806:0808	90 f3
+		bcs b_17dc		; 1808:080a	b0 d2
+fwd_180a:
+		iny 			; 180a:080c	c8
+		cpy index		; 180b:080d	cc 0f d0
+		bcc b_17e8		; 180e:0810	90 d8
+		cpx #$00		; 1810:0812	e0 00
+		beq fwd_1819		; 1812:0814	f0 05
+		cpy index		; 1814:0816	cc 0f d0
+		bcs b_17dc		; 1817:0819	b0 c3
+fwd_1819:
+		rts 			; 1819:081b	60
+
+pIndent:
+		ldy #$00		; 181a:081c	a0 00
+		jmp sub_16e7		; 181c:081e	4c e7 16
+
+pUnindent:	; $181f
+		ldy #$00		; 181f:0821	a0 00
+		jmp sub_16c9		; 1821:0823	4c c9 16
+
+		; called by .border
+		; this looks like it does the actual border function
+		; not called from anywhere else as far as i see
+sub_1824:
+		ldy index		; 1824:0826	ac 0f d0
+		iny 			; 1827:0829	c8
+		cpy llen		; 1828:082a	cc 04 d0
+		bcs fwd_1850		; 182b:082d	b0 23
+		ldy #$00		; 182d:082f	a0 00
+		jsr sub_16e7	; 182f:0831	20 e7 16
+		lda brdrchar		; 1832:0834	ad dc 12
+		sta buffer		; 1835:0837	8d 77 ce
+		ldy index		; 1838:083a	ac 0f d0
+		lda #$20		; 183b:083d	a9 20
+bkwd_183d:
+		sta buffer,y	; 183d:083f	99 77 ce
+		iny 			; 1840:0842	c8
+		cpy llen		; 1841:0843	cc 04 d0
+		bcc bkwd_183d		; 1844:0846	90 f7
+		sty index		; 1846:0848	8c 0f d0
+		dey 			; 1849:084b	88
+		lda brdrchar		; 184a:084c	ad dc 12
+		sta buffer,y	; 184d:084f	99 77 ce
+fwd_1850:
+		rts 			; 1850:0852	60
+
+sub_1851:
+		lda lbl_153f		; 1851:0853	ad 3f 15
+		sta mci			; 1854:0856	8d ef 07
+		ldx linnum		; 1857:0859	a6 14
+		jsr sub_186c		; 1859:085b	20 6c 18
+		lda chat		; 185c:085e	ad 06 d0
+		bne fwd_186b		; 185f:0861	d0 0a
+		ldx linnum		; 1861:0863	a6 14
+		cpx linnum+1	; 1863:0865	e4 15
+		beq fwd_186b		; 1865:0867	f0 04
+		inc linnum			; 1867:0869	e6 14
+		bne sub_1851		; 1869:086b	d0 e6
+fwd_186b:
+		rts 				; 186b:086d	60
+
+sub_186c:
+		txa		 			; 186c:086e	8a
+		pha 				; 186d:086f	48
+		lda $03f3			; 186e:0870	ad f3 03
+		bpl fwd_187d		; 1871:0873	10 0a
+		txa 				; 1873:0875	8a
+		jsr sub_outApercent	; 1874:0876	20 ba 1b
+		jsr sub_outColon	; 1877:0879	20 81 1d
+		jsr sub_outCR		; 187a:087c	20 77 1d
+fwd_187d:
+		lda #$81		; 187d:087f	a9 81
+		sta var			; 187f:0881	85 61
+		lda #$00		; 1881:0883	a9 00
+		sta var+1		; 1883:0885	85 62
+		lda #$00		; 1885:0887	a9 00
+		sta var+2		; 1887:0889	85 63
+		lda #$00		; 1889:088b	a9 00
+		sta var+3		; 188b:088d	85 64
+		lda #$00		; 188d:088f	a9 00
+		sta var+4		; 188f:0891	85 65
+		ldx #$0f		; 1891:0893	a2 0f
+		jsr sub_1ba1		; 1893:0895	20 a1 1b
+		pla 		; 1896:0898	68
+		tax 		; 1897:0899	aa
+		jmp goto1bb5		; 1898:089a	4c b5 1b
+
+sub_189b:
+		ldx linnum		; 189b:089d	a6 14
+		jsr sub_1b97		; 189d:089f	20 97 1b
+		ldx #$00		; 18a0:08a2	a2 00
+		stx lbl_18d9		; 18a2:08a4	8e d9 18
+b_18a5:
+		ldy #$00		; 18a5:08a7	a0 00
+b_18a7:
+		lda buffer,x		; 18a7:08a9	bd 77 ce
+		cmp buffer2,y		; 18aa:08ac	d9 27 ce
+		bne fwd_18bb		; 18ad:08af	d0 0c
+		iny 		; 18af:08b1	c8
+		cpy lbl_18d8		; 18b0:08b2	cc d8 18
+		bcs fwd_18d0		; 18b3:08b5	b0 1b
+		inx 		; 18b5:08b7	e8
+		cpx index		; 18b6:08b8	ec 0f d0
+		bcc b_18a7		; 18b9:08bb	90 ec
+fwd_18bb:
+		inc lbl_18d9		; 18bb:08bd	ee d9 18
+		ldx lbl_18d9		; 18be:08c0	ae d9 18
+		cpx index		; 18c1:08c3	ec 0f d0
+		bcc b_18a5		; 18c4:08c6	90 df
+goto18c6:
+		inc linnum		; 18c6:08c8	e6 14
+		ldx linnum		; 18c8:08ca	a6 14
+		dex 		; 18ca:08cc	ca
+		cpx linnum+1		; 18cb:08cd	e4 15
+		bcc sub_189b		; 18cd:08cf	90 cc
+		rts 		; 18cf:08d1	60
+
+fwd_18d0:
+		ldx linnum		; 18d0:08d2	a6 14
+		jsr sub_186c		; 18d2:08d4	20 6c 18
+		jmp goto18c6		; 18d5:08d7	4c c6 18
+
+lbl_18d8:
+		brk 		; 18d8:08da	00
+lbl_18d9:
+		brk 		; 18d9:08db	00
+lbl_18da:
+		brk 		; 18da:08dc	00
+lbl_18db:
+		brk 		; 18db:08dd	00
+lbl_18dc:
+		brk 		; 18dc:08de	00
+sub_18dd:
+		ldx linnum		; 18dd:08df	a6 14
+		jsr sub_1b97		; 18df:08e1	20 97 1b
+		ldx #$00		; 18e2:08e4	a2 00
+		stx lbl_18d9		; 18e4:08e6	8e d9 18
+		stx lbl_18dc		; 18e7:08e9	8e dc 18
+b_18ea:
+		ldy #$00		; 18ea:08ec	a0 00
+b_18ec:
+		lda buffer,x		; 18ec:08ee	bd 77 ce
+		cmp buffer2,y		; 18ef:08f1	d9 27 ce
+		bne fwd_1900		; 18f2:08f4	d0 0c
+		iny 		; 18f4:08f6	c8
+		cpy lbl_18d8		; 18f5:08f7	cc d8 18
+		bcs fwd_191f		; 18f8:08fa	b0 25
+		inx 		; 18fa:08fc	e8
+		cpx index		; 18fb:08fd	ec 0f d0
+		bcc b_18ec		; 18fe:0900	90 ec
+fwd_1900:
+		inc lbl_18d9		; 1900:0902	ee d9 18
+		ldx lbl_18d9		; 1903:0905	ae d9 18
+		cpx index		; 1906:0908	ec 0f d0
+		bcc b_18ea		; 1909:090b	90 df
+goto190b:
+		lda lbl_18dc		; 190b:090d	ad dc 18
+		beq fwd_1915		; 190e:0910	f0 05
+		ldx linnum		; 1910:0912	a6 14
+		jsr sub_186c		; 1912:0914	20 6c 18
+fwd_1915:
+		inc linnum		; 1915:0917	e6 14
+		ldx linnum		; 1917:0919	a6 14
+		dex 		; 1919:091b	ca
+		cpx linnum+1		; 191a:091c	e4 15
+		bcc sub_18dd		; 191c:091e	90 bf
+		rts 		; 191e:0920	60
+
+fwd_191f:
+		lda lbl_18dc		; 191f:0921	ad dc 18
+		bne fwd_1929		; 1922:0924	d0 05
+		ldx linnum		; 1924:0926	a6 14
+		jsr sub_186c		; 1926:0928	20 6c 18
+fwd_1929:
+		inc lbl_18dc		; 1929:092b	ee dc 18
+		ldx linnum		; 192c:092e	a6 14
+		jsr sub_1b97		; 192e:0930	20 97 1b
+		lda index		; 1931:0933	ad 0f d0
+		sec 		; 1934:0936	38
+		sbc lbl_18d8		; 1935:0937	ed d8 18
+		clc 		; 1938:093a	18
+		adc lbl_18db		; 1939:093b	6d db 18
+		cmp llen		; 193c:093e	cd 04 d0
+		bcs fwd_198d		; 193f:0941	b0 4c
+		ldx lbl_18d8		; 1941:0943	ae d8 18
+b_1944:
+		stx lbl_18da		; 1944:0946	8e da 18
+		cpx #$00		; 1947:0949	e0 00
+		beq fwd_1957		; 1949:094b	f0 0c
+		ldy lbl_18d9		; 194b:094d	ac d9 18
+		jsr sub_16c9		; 194e:0950	20 c9 16
+		ldx lbl_18da		; 1951:0953	ae da 18
+		dex 		; 1954:0956	ca
+		bne b_1944		; 1955:0957	d0 ed
+fwd_1957:
+		ldx lbl_18db		; 1957:0959	ae db 18
+		beq fwd_1979		; 195a:095c	f0 1d
+		dex 		; 195c:095e	ca
+b_195d:
+		stx lbl_18da		; 195d:095f	8e da 18
+		cpx #$00		; 1960:0962	e0 00
+		bmi fwd_1979		; 1962:0964	30 15
+		ldy lbl_18d9		; 1964:0966	ac d9 18
+		jsr sub_16e7		; 1967:0969	20 e7 16
+		ldx lbl_18da		; 196a:096c	ae da 18
+		lda $0200,x		; 196d:096f	bd 00 02
+		ldy lbl_18d9		; 1970:0972	ac d9 18
+		sta buffer,y		; 1973:0975	99 77 ce
+		dex 		; 1976:0978	ca
+		bpl b_195d		; 1977:0979	10 e4
+fwd_1979:
+		ldx linnum		; 1979:097b	a6 14
+		jsr sub_1b9c		; 197b:097d	20 9c 1b
+		lda lbl_18d9		; 197e:0980	ad d9 18
+		clc 		; 1981:0983	18
+		adc lbl_18db		; 1982:0984	6d db 18
+		tax 		; 1985:0987	aa
+		dex 		; 1986:0988	ca
+		stx lbl_18d9		; 1987:0989	8e d9 18
+		jmp fwd_1900		; 198a:098c	4c 00 19
+
+fwd_198d:
+		ldx #<szTooBig		; 198d:098f	a2 97
+		ldy #>szTooBig		; 198f:0991	a0 19
+		jsr sub_outString		; 1991:0993	20 d2 1d
+		jmp goto190b		; 1994:0996	4c 0b 19
+
+szTooBig:
+		ascii "ÔOO ÂIG. ÃAN'T ÒEPLACE."		; 1997:0999	tbl-19ad
+
+t_19ae:
+		byte $0d,$00		; 19ae:09b0	tbl-19af
+
+goto19b0:
+		ldx linnum+1		; 19b0:09b2	a6 15
+		jsr sub_19d0		; 19b2:09b4	20 d0 19
+		ldx linnum+1		; 19b5:09b7	a6 15
+		cpx linnum		; 19b7:09b9	e4 14
+		beq fwd_19bf		; 19b9:09bb	f0 04
+		dec linnum+1		; 19bb:09bd	c6 15
+		bne goto19b0		; 19bd:09bf	d0 f1
+fwd_19bf:
+		rts 		; 19bf:09c1	60
+
+goto19c0:
+		ldx linnum		; 19c0:09c2	a6 14
+		jsr sub_1a28		; 19c2:09c4	20 28 1a
+		ldx linnum		; 19c5:09c7	a6 14
+		cpx linnum+1		; 19c7:09c9	e4 15
+		beq fwd_19cf		; 19c9:09cb	f0 04
+		inc linnum		; 19cb:09cd	e6 14
+		bne goto19c0		; 19cd:09cf	d0 f1
+fwd_19cf:
+		rts 		; 19cf:09d1	60
+
+sub_19d0:
+		stx arisgn		; 19d0:09d2	86 6f
+		inx 		; 19d2:09d4	e8
+		jsr sub_1b8d		; 19d3:09d5	20 8d 1b
+		ldx arisgn		; 19d6:09d8	a6 6f
+		jsr sub_1b92		; 19d8:09da	20 92 1b
+		inc arisgn		; 19db:09dd	e6 6f
+		ldx arisgn		; 19dd:09df	a6 6f
+		cpx $03f8		; 19df:09e1	ec f8 03
+		bcc sub_19d0		; 19e2:09e4	90 ec
+		dec $03f8		; 19e4:09e6	ce f8 03
+		dec $03fb		; 19e7:09e9	ce fb 03
+		rts 		; 19ea:09ec	60
+
+goto19eb:
+		stx arisgn		; 19eb:09ed	86 6f
+		cpx $03f8		; 19ed:09ef	ec f8 03
+		bcs fwd_1a0d		; 19f0:09f2	b0 1b
+		ldx $03f8		; 19f2:09f4	ae f8 03
+		cpx EditorLines	; 19f5:09f7	ec fe 03
+		bcs fwd_1a27		; 19f8:09fa	b0 2d
+		dex 		; 19fa:09fc	ca
+b_19fb:
+		stx numwork+8		; 19fb:09fd	86 5f
+		jsr sub_1b8d		; 19fd:09ff	20 8d 1b
+		ldx numwork+8		; 1a00:0a02	a6 5f
+		inx 		; 1a02:0a04	e8
+		jsr sub_1b92		; 1a03:0a05	20 92 1b
+		ldx numwork+8		; 1a06:0a08	a6 5f
+		dex 		; 1a08:0a0a	ca
+		cpx arisgn		; 1a09:0a0b	e4 6f
+		bcs b_19fb		; 1a0b:0a0d	b0 ee
+fwd_1a0d:
+		ldx arisgn		; 1a0d:0a0f	a6 6f
+		jsr sub_1b9c		; 1a0f:0a11	20 9c 1b
+		ldx $03f8		; 1a12:0a14	ae f8 03
+		cpx EditorLines	; 1a15:0a17	ec fe 03
+		bcs fwd_1a27		; 1a18:0a1a	b0 0d
+		ldx $03fb		; 1a1a:0a1c	ae fb 03
+		cpx arisgn		; 1a1d:0a1f	e4 6f
+		bcc fwd_1a24		; 1a1f:0a21	90 03
+		inc $03fb		; 1a21:0a23	ee fb 03
+fwd_1a24:
+		inc $03f8		; 1a24:0a26	ee f8 03
+fwd_1a27:
+		rts 		; 1a27:0a29	60
+
+sub_1a28:
+		stx $03f7			; 1a28:0a2a	8e f7 03
+		jsr sub_1b97		; 1a2b:0a2d	20 97 1b
+		ldx #$1b			; 1a2e:0a30	a2 1b
+		jsr sub_1ba1		; 1a30:0a32	20 a1 1b
+		lda $03f7			; 1a33:0a35	ad f7 03
+		jsr sub_outApercent	; 1a36:0a38	20 ba 1b
+		jsr sub_outColon	; 1a39:0a3b	20 81 1d
+		jsr sub_outCR		; 1a3c:0a3e	20 77 1d
+		lda $03ff			; 1a3f:0a41	ad ff 03
+		and #$ef			; 1a42:0a44	29 ef
+		ora #$a0			; 1a44:0a46	09 a0
+		tax 				; 1a46:0a48	aa
+		lda #$81			; 1a47:0a49	a9 81
+		sta mci				; 1a49:0a4b	8d ef 07
+		jsr sub_1df5		; 1a4c:0a4e	20 f5 1d
+		lda #$00			; 1a4f:0a51	a9 00
+		sta mci				; 1a51:0a53	8d ef 07
+		lda chat			; 1a54:0a56	ad 06 d0
+		beq fwd_1a71		; 1a57:0a59	f0 18
+		lda buffer			; 1a59:0a5b	ad 77 ce
+		cmp #$14			; 1a5c:0a5e	c9 14
+		beq fwd_1a7c		; 1a5e:0a60	f0 1c
+		pla 				; 1a60:0a62	68
+		pla 				; 1a61:0a63	68
+		pla 				; 1a62:0a64	68
+		pla 				; 1a63:0a65	68
+		lda lbl_cmdexit		; 1a64:0a66	ad 94 1a
+		ldx #$95			; 1a67:0a69	a2 95
+		ldy #$1a			; 1a69:0a6b	a0 1a
+		jsr sub_1dbc		; 1a6b:0a6d	20 bc 1d
+		jmp goto1048		; 1a6e:0a70	4c 48 10
+
+fwd_1a71:
+		ldy index			; 1a71:0a73	ac 0f d0
+		beq fwd_1a7c		; 1a74:0a76	f0 06
+		ldx $03f7			; 1a76:0a78	ae f7 03
+		jmp sub_1b9c		; 1a79:0a7b	4c 9c 1b
+
+fwd_1a7c:
+		lda len_NoChange		; 1a7c:0a7e	ad 86 1a
+		ldx #<sNoChange		; 1a7f:0a81	a2 87
+		ldy #>sNoChange	; 1a81:0a83	a0 1a
+		jmp sub_1dbc		; 1a83:0a85	4c bc 1d
+
+len_NoChange:
+		byte $0d		; 1a86:0a88	tbl-1a86
+sNoChange:
+		ascii "(ÎO ÃHANGE.)"		; 1a87:0a89	tbl-1a92
+		byte $0d		; 1a93:0a95	tbl-1a93
+
+	; another duplicate message (sort of)
+
+len_CmdExit:
+		byte $0d		; 1a94:0a96	tbl-1a94
+
+sCmdExit:
+		ascii "ÃOMMAND"
+		byte colon
+		ascii "ÅXIT"		; 1a95:0a97	tbl-1aa0
+
+t_1aa1:
+		byte $0d		; 1aa1:0aa3	tbl-1aa1
+
+		ldx #$0b		; 1aa2:0aa4	a2 0b
+		jmp sub_OutXdels	; 1aa4:0aa6	4c 8d 10
+
+sub_return_key:
+		jsr sub_1bab	; 1aa7:0aa9	20 ab 1b
+		cmp #return		; 1aaa:0aac	c9 0d
+		beq fwd_1ab1		; 1aac:0aae	f0 03
+		jmp goto1cf2	; 1aae:0ab0	4c f2 1c
+
+fwd_1ab1:
+		jmp sub_outChar	; 1ab1:0ab3	4c 97 1d
+
+sub_1ab4:
+		ldx EditorLines	; 1ab4:0ab6	ae fe 03
+		dex 			; 1ab7:0ab9	ca
+		stx linnum		; 1ab8:0aba	86 14
+b_1aba:
+		ldx linnum		; 1aba:0abc	a6 14
+		jsr sub_1ac4	; 1abc:0abe	20 c4 1a
+		dec linnum		; 1abf:0ac1	c6 14
+		bne b_1aba		; 1ac1:0ac3	d0 f7
+		rts 			; 1ac3:0ac5	60
+
+sub_1ac4:
+		jsr sub_1b8d	; 1ac4:0ac6	20 8d 1b
+		lda #$00		; 1ac7:0ac9	a9 00
+		sta var			; 1ac9:0acb	85 61
+		ldx linnum		; 1acb:0acd	a6 14
+		jsr sub_1b92	; 1acd:0acf	20 92 1b
+		rts 			; 1ad0:0ad2	60
+
+goto1ad1:
+		ldx linnum		; 1ad1:0ad3	a6 14
+		jsr sub_1af1	; 1ad3:0ad5	20 f1 1a
+		ldx linnum		; 1ad6:0ad8	a6 14
+		cpx linnum+1	; 1ad8:0ada	e4 15
+		beq fwd_1ae0		; 1ada:0adc	f0 04
+		inc linnum		; 1adc:0ade	e6 14
+		bne goto1ad1	; 1ade:0ae0	d0 f1
+fwd_1ae0:
+		rts 			; 1ae0:0ae2	60
+
+goto1ae1:
+		ldx linnum		; 1ae1:0ae3	a6 14
+		jsr sub_1b1f	; 1ae3:0ae5	20 1f 1b
+		ldx linnum		; 1ae6:0ae8	a6 14
+		cpx linnum+1	; 1ae8:0aea	e4 15
+		beq fwd_1af0		; 1aea:0aec	f0 04
+		inc linnum		; 1aec:0aee	e6 14
+		bne goto1ae1	; 1aee:0af0	d0 f1
+fwd_1af0:
+		rts		 		; 1af0:0af2	60
+
+sub_1af1:
+		jsr sub_1b97	; 1af1:0af3	20 97 1b
+		ldx $03f8		; 1af4:0af6	ae f8 03
+		cpx EditorLines	; 1af7:0af9	ec fe 03
+		bcs fwd_1b1e		; 1afa:0afc	b0 22
+		ldx $03fb		; 1afc:0afe	ae fb 03
+		cpx $03f8		; 1aff:0b01	ec f8 03
+		beq fwd_1b0a		; 1b02:0b04	f0 06
+		jsr goto19eb	; 1b04:0b06	20 eb 19
+		jmp goto1b13	; 1b07:0b09	4c 13 1b
+
+fwd_1b0a:
+		jsr sub_1b9c	; 1b0a:0b0c	20 9c 1b
+		inc $03fb		; 1b0d:0b0f	ee fb 03
+		inc $03f8		; 1b10:0b12	ee f8 03
+goto1b13:
+		ldx $03fb		; 1b13:0b15	ae fb 03
+		cpx linnum+1	; 1b16:0b18	e4 15
+		bcs fwd_1b1e		; 1b18:0b1a	b0 04
+		inc linnum		; 1b1a:0b1c	e6 14
+		inc linnum+1	; 1b1c:0b1e	e6 15
+fwd_1b1e:
+		rts 			; 1b1e:0b20	60
+
+sub_1b1f:
+		stx arisgn		; 1b1f:0b21	86 6f
+		cpx $03fb		; 1b21:0b23	ec fb 03
+		bcc fwd_1b59		; 1b24:0b26	90 33
+		jsr sub_1b8d	; 1b26:0b28	20 8d 1b
+		lda var			; 1b29:0b2b	a5 61
+		pha 			; 1b2b:0b2d	48
+		lda var+1		; 1b2c:0b2e	a5 62
+		pha 			; 1b2e:0b30	48
+		lda var+2		; 1b2f:0b31	a5 63
+		pha 			; 1b31:0b33	48
+b_1b32:
+		ldx arisgn		; 1b32:0b34	a6 6f
+		dex 			; 1b34:0b36	ca
+		jsr sub_1b8d	; 1b35:0b37	20 8d 1b
+		ldx arisgn		; 1b38:0b3a	a6 6f
+		jsr sub_1b92	; 1b3a:0b3c	20 92 1b
+		dec arisgn		; 1b3d:0b3f	c6 6f
+		ldx arisgn		; 1b3f:0b41	a6 6f
+		cpx $03fb		; 1b41:0b43	ec fb 03
+		bcs b_1b32		; 1b44:0b46	b0 ec
+		pla 			; 1b46:0b48	68
+		sta var+2		; 1b47:0b49	85 63
+		pla 			; 1b49:0b4b	68
+		sta var+1		; 1b4a:0b4c	85 62
+		pla 			; 1b4c:0b4e	68
+		sta var			; 1b4d:0b4f	85 61
+		ldx $03fb		; 1b4f:0b51	ae fb 03
+		jsr sub_1b92	; 1b52:0b54	20 92 1b
+		inc $03fb		; 1b55:0b57	ee fb 03
+		rts 			; 1b58:0b5a	60
+
+fwd_1b59:
+		jsr sub_1b8d	; 1b59:0b5b	20 8d 1b
+		lda var			; 1b5c:0b5e	a5 61
+		pha 			; 1b5e:0b60	48
+		lda var+1		; 1b5f:0b61	a5 62
+		pha 			; 1b61:0b63	48
+		lda var+2		; 1b62:0b64	a5 63
+		pha 			; 1b64:0b66	48
+b_1b65:
+		ldx arisgn		; 1b65:0b67	a6 6f
+		inx 			; 1b67:0b69	e8
+		jsr sub_1b8d	; 1b68:0b6a	20 8d 1b
+		ldx arisgn		; 1b6b:0b6d	a6 6f
+		jsr sub_1b92	; 1b6d:0b6f	20 92 1b
+		inc arisgn		; 1b70:0b72	e6 6f
+		ldx arisgn		; 1b72:0b74	a6 6f
+		cpx $03fb		; 1b74:0b76	ec fb 03
+		bcc b_1b65		; 1b77:0b79	90 ec
+		pla 			; 1b79:0b7b	68
+		sta var+2		; 1b7a:0b7c	85 63
+		pla		 		; 1b7c:0b7e	68
+		sta var+1		; 1b7d:0b7f	85 62
+		pla 			; 1b7f:0b81	68
+		sta var			; 1b80:0b82	85 61
+		dec linnum		; 1b82:0b84	c6 14
+		dec linnum+1	; 1b84:0b86	c6 15
+		ldx $03fb		; 1b86:0b88	ae fb 03
+		dex 			; 1b89:0b8b	ca
+		jmp sub_1b92	; 1b8a:0b8c	4c 92 1b
+
+	; think these are irq routines
+sub_1b8d:
+		lda #$21		; 1b8d:0b8f	a9 21
+		jmp usetbl1		; 1b8f:0b91	4c 03 cd
+
+sub_1b92:
+		lda #$22		; 1b92:0b94	a9 22
+		jmp usetbl1		; 1b94:0b96	4c 03 cd
+
+sub_1b97:
+		lda #$23		; 1b97:0b99	a9 23
+		jmp usetbl1		; 1b99:0b9b	4c 03 cd
+
+sub_1b9c:
+		lda #$24		; 1b9c:0b9e	a9 24
+		jmp usetbl1		; 1b9e:0ba0	4c 03 cd
+
+sub_1ba1:
+		lda #$1e		; 1ba1:0ba3	a9 1e
+		jmp usetbl1		; 1ba3:0ba5	4c 03 cd
+
+sub_1ba6:
+		lda #$00		; 1ba6:0ba8	a9 00
+		jmp usetbl1		; 1ba8:0baa	4c 03 cd
+
+	; seems to be part of a "get character" routine
+sub_1bab:
+		lda #$17		; 1bab:0bad	a9 17
+		jmp usetbl1		; 1bad:0baf	4c 03 cd
+
+sub_1bb0:
+		lda #$18		; 1bb0:0bb2	a9 18
+		jmp usetbl1		; 1bb2:0bb4	4c 03 cd
+
+goto1bb5:
+		lda #$27		; 1bb5:0bb7	a9 27
+		jmp usetbl1		; 1bb7:0bb9	4c 03 cd
+
+sub_1bba:
+; output value in .a as MCI integer {pound}%a
+
+		sta var+1		; 1bba:0bbc	85 62
+		lda mci		; 1bbc:0bbe	ad ef 07
+		pha 		; 1bbf:0bc1	48
+		lda #$00		; 1bc0:0bc2	a9 00
+		sta var		; 1bc2:0bc4	85 61
+		ldx #$1e		; 1bc4:0bc6	a2 1e
+		jsr sub_1ba1		; 1bc6:0bc8	20 a1 1b
+		lda #$03		; 1bc9:0bcb	a9 03
+		ldx #<sA_percent		; 1bcb:0bcd	a2 d7
+		ldy #>sA_percent		; 1bcd:0bcf	a0 1b
+		jsr mcioff		; 1bcf:0bd1	20 ac 1d
+		pla 		; 1bd2:0bd4	68
+		sta mci		; 1bd3:0bd5	8d ef 07
+		rts 		; 1bd6:0bd8	60
+
+	; output a%
+sA_percent:
+		byte #pound		; 1bd7:0bd9	tbl-1bd7
+		byte "%a"		; 1bd8:0bda	25 41
+
+sub_1bda:
+		lda $03f8		; 1bda:0bdc	ad f8 03
+		cmp EditorLines	; 1bdd:0bdf	cd fe 03
+		bcc fwd_1bf6		; 1be0:0be2	90 14
+		beq fwd_1bf6		; 1be2:0be4	f0 12
+		sta $03fb		; 1be4:0be6	8d fb 03
+		lda LineNumberMode		; 1be7:0be9	ad fa 03
+		and #$04		; 1bea:0bec	29 04
+		sta LineNumberMode		; 1bec:0bee	8d fa 03
+		ldx #<szNoRAM	; 1bef:0bf1	a2 21
+		ldy #>szNoRAM	; 1bf1:0bf3	a0 1c
+		jsr sub_outString	; 1bf3:0bf5	20 d2 1d
+fwd_1bf6:
+		lda LineNumberMode		; 1bf6:0bf8	ad fa 03
+		and #$01			; 1bf9:0bfb	29 01
+		beq fwd_1c02		; 1bfb:0bfd	f0 05
+		lda #$c9			; "I"
+						; 1bfd:0bff	a9 c9
+		jsr sub_outChar		; 1bff:0c01	20 97 1d
+fwd_1c02:
+		lda LineNumberMode		; 1c02:0c04	ad fa 03
+		and #$03		; 1c05:0c07	29 03
+		beq fwd_1c15		; 1c07:0c09	f0 0c
+		lda $03fb		; 1c09:0c0b	ad fb 03
+		jsr sub_1bba		; 1c0c:0c0e	20 ba 1b
+		jsr sub_outColon		; 1c0f:0c11	20 81 1d
+		jsr sub_outCR		; 1c12:0c14	20 77 1d
+fwd_1c15:
+		lda #$00		; 1c15:0c17	a9 00
+		sta index		; 1c17:0c19	8d 0f d0
+		lda $03f4		; 1c1a:0c1c	ad f4 03
+		sta case		; 1c1d:0c1f	8d 01 d0
+		rts 			; 1c20:0c22	60
+
+szNoRAM:
+		ascii "** ÅND ÏF ÍEMORY **"		; 1c21:0c23	tbl-1c33
+		byte $0d						; 1c34:0c36	tbl-1c34
+		ascii "ÔYPE 'Ó' ÔO ÓAVE, ÏR 'È' ÆOR È"		; 1c35:0c37	tbl-1c56
+		ascii "ELP."								; 1c53:0c55
+		byte $0d,$00		; 1c57:0c59	tbl-1c58
+
+sub_1c59:
+		stx linnum		; 1c59:0c5b	86 14
+		jsr sub_getline		; 1c5b:0c5d	20 2e 1d
+		jmp goto1c66		; 1c5e:0c60	4c 66 1c
+
+sub_1c61:
+		stx linnum		; 1c61:0c63	86 14
+		jsr sub_1d3e		; 1c63:0c65	20 3e 1d
+goto1c66:
+		ldy index		; 1c66:0c68	ac 0f d0
+		beq fwd_1c74		; 1c69:0c6b	f0 09
+		ldy #$00		; 1c6b:0c6d	a0 00
+		lda linnum		; 1c6d:0c6f	a5 14
+		jsr sub_1cfe		; 1c6f:0c71	20 fe 1c
+		sta linnum		; 1c72:0c74	85 14
+fwd_1c74:
+		rts 		; 1c74:0c76	60
+
+sub_1c75:
+		stx linnum			; 1c75:0c77	86 14
+		stx linnum+1		; 1c77:0c79	86 15
+		jsr sub_1d3e		; 1c79:0c7b	20 3e 1d
+		ldy index			; 1c7c:0c7e	ac 0f d0
+		beq fwd_1c8c		; 1c7f:0c81	f0 0b
+		ldy #$00			; 1c81:0c83	a0 00
+		lda linnum			; 1c83:0c85	a5 14
+		jsr sub_1cfe		; 1c85:0c87	20 fe 1c
+		sta linnum			; 1c88:0c8a	85 14
+		sta linnum+1		; 1c8a:0c8c	85 15
+fwd_1c8c:
+		jmp goto1cd0		; 1c8c:0c8e	4c d0 1c
+
+sub_1c8f:
+		stx linnum			; 1c8f:0c91	86 14
+		sty linnum+1		; 1c91:0c93	84 15
+		jsr sub_1d3e		; 1c93:0c95	20 3e 1d
+		ldy index			; 1c96:0c98	ac 0f d0
+		beq fwd_1cb0		; 1c99:0c9b	f0 15
+		ldy #$00			; 1c9b:0c9d	a0 00
+		lda linnum			; 1c9d:0c9f	a5 14
+		jsr sub_1cfe		; 1c9f:0ca1	20 fe 1c
+		sta linnum			; 1ca2:0ca4	85 14
+		cpy index			; 1ca4:0ca6	cc 0f d0
+		bcc fwd_1cba		; 1ca7:0ca9	90 11
+		lda linnum			; 1ca9:0cab	a5 14
+		sta linnum+1		; 1cab:0cad	85 15
+		jmp goto1cd0		; 1cad:0caf	4c d0 1c
+
+fwd_1cb0:
+		lda arisgn			; 1cb0:0cb2	a5 6f
+		cmp #$85			; 1cb2:0cb4	c9 85
+		bne fwd_1c8c		; 1cb4:0cb6	d0 d6
+		lda #$01			; 1cb6:0cb8	a9 01
+		sta linnum			; 1cb8:0cba	85 14
+fwd_1cba:
+		iny			 		; 1cba:0cbc	c8
+		cpy index			; 1cbb:0cbd	cc 0f d0
+		bcc fwd_1cc9		; 1cbe:0cc0	90 09
+		ldx $03f8			; 1cc0:0cc2	ae f8 03
+		dex 				; 1cc3:0cc5	ca
+		stx linnum+1		; 1cc4:0cc6	86 15
+		jmp goto1cd0		; 1cc6:0cc8	4c d0 1c
+
+fwd_1cc9:	lda linnum+1	; 1cc9:0ccb	a5 15
+		jsr sub_1cfe		; 1ccb:0ccd	20 fe 1c
+		sta linnum+1		; 1cce:0cd0	85 15
+goto1cd0:	ldx linnum+1	; 1cd0:0cd2	a6 15
+		cpx linnum			; 1cd2:0cd4	e4 14
+		bcc fwd_1ceb		; 1cd4:0cd6	90 15
+		ldx $03f8			; 1cd6:0cd8	ae f8 03
+		dex 				; 1cd9:0cdb	ca
+		cpx linnum			; 1cda:0cdc	e4 14
+		bcc fwd_1ceb		; 1cdc:0cde	90 0d
+		cpx linnum+1		; 1cde:0ce0	e4 15
+		bcc fwd_1ceb		; 1ce0:0ce2	90 09
+		ldx linnum			; 1ce2:0ce4	a6 14
+		beq fwd_1ceb		; 1ce4:0ce6	f0 05
+		ldx linnum+1		; 1ce6:0ce8	a6 15
+		beq fwd_1ceb		; 1ce8:0cea	f0 01
+		rts 				; 1cea:0cec	60
+
+fwd_1ceb:
+		ldx lbl_1147		; 1ceb:0ced	ae 47 11
+		txs 				; 1cee:0cf0	9a
+		jmp goto1048		; 1cef:0cf1	4c 48 10
+
+goto1cf2:
+		ldx dscpnt+2		; 1cf2:0cf4	a6 52
+		jsr sub_OutXdels		; 1cf4:0cf6	20 8d 10
+		ldx lbl_1147		; 1cf7:0cf9	ae 47 11
+		txs 		; 1cfa:0cfc	9a
+		jmp fwd_10de		; 1cfb:0cfd	4c de 10
+
+sub_1cfe:
+		sta numwork+8		; 1cfe:0d00	85 5f
+		ldx #$00		; 1d00:0d02	a2 00
+b_1d02:
+		lda buffer,y		; 1d02:0d04	b9 77 ce
+		cmp #$30		; 1d05:0d07	c9 30
+		bcc fwd_1d2b		; 1d07:0d09	90 22
+		cmp #$3a		; 1d09:0d0b	c9 3a
+		bcs fwd_1d2b		; 1d0b:0d0d	b0 1e
+		cpx #$00		; 1d0d:0d0f	e0 00
+		bne fwd_1d14		; 1d0f:0d11	d0 03
+		stx numwork+8		; 1d11:0d13	86 5f
+		inx 		; 1d13:0d15	e8
+fwd_1d14:
+		and #$0f		; 1d14:0d16	29 0f
+		sta arisgn		; 1d16:0d18	85 6f
+		lda numwork+8		; 1d18:0d1a	a5 5f
+		asl		; 1d1a:0d1c	0a
+		asl		; 1d1b:0d1d	0a
+		clc 		; 1d1c:0d1e	18
+		adc numwork+8		; 1d1d:0d1f	65 5f
+		asl		; 1d1f:0d21	0a
+		clc 		; 1d20:0d22	18
+		adc arisgn		; 1d21:0d23	65 6f
+		sta numwork+8		; 1d23:0d25	85 5f
+		iny 		; 1d25:0d27	c8
+		cpy index		; 1d26:0d28	cc 0f d0
+		bcc b_1d02		; 1d29:0d2b	90 d7
+fwd_1d2b:
+		lda numwork+8		; 1d2b:0d2d	a5 5f
+		rts 		; 1d2d:0d2f	60
+
+		; get line of text from user?
+		; called during find, replace, end of memory
+sub_getline:
+		jsr sub_outSpace		; 1d2e:0d30	20 86 1d
+		lda $03ff		; 1d31:0d33	ad ff 03
+		and #$08		; 1d34:0d36	29 08
+		ora #$45		; 1d36:0d38	09 45
+		tax 			; 1d38:0d3a	aa
+		ldy #$81		; 1d39:0d3b	a0 81
+		jmp goto1d51		; 1d3b:0d3d	4c 51 1d
+
+sub_1d3e:
+		jsr sub_outSpace		; 1d3e:0d40	20 86 1d
+		ldx #$c4		; 1d41:0d43	a2 c4
+		ldy #$00		; 1d43:0d45	a0 00
+		jsr goto1d51		; 1d45:0d47	20 51 1d
+		bne fwd_1d50		; 1d48:0d4a	d0 06
+		jsr sub_outDel		; 1d4a:0d4c	20 72 1d
+		jmp goto1cf2		; 1d4d:0d4f	4c f2 1c
+
+fwd_1d50:
+		rts 		; 1d50:0d52	60
+
+goto1d51:
+		lda llen		; 1d51:0d53	ad 04 d0
+		pha 		; 1d54:0d56	48
+		lda mci		; 1d55:0d57	ad ef 07
+		pha 		; 1d58:0d5a	48
+		lda #$10		; 1d59:0d5b	a9 10
+		sta llen		; 1d5b:0d5d	8d 04 d0
+		sty mci		; 1d5e:0d60	8c ef 07
+		jsr sub_1df5		; 1d61:0d63	20 f5 1d
+		pla 		; 1d64:0d66	68
+		sta mci		; 1d65:0d67	8d ef 07
+		pla 		; 1d68:0d6a	68
+		sta llen		; 1d69:0d6b	8d 04 d0
+		lda buffer		; 1d6c:0d6e	ad 77 ce
+		cmp #$14		; 1d6f:0d71	c9 14
+		rts 		; 1d71:0d73	60
+
+; output delete:
+sub_outDel:
+		lda #$14		; 1d72:0d74	a9 14
+		jmp sub_outChar		; 1d74:0d76	4c 97 1d
+
+; output carriage return:
+sub_outCR:
+		lda #$0d		; 1d77:0d79	a9 0d
+		jmp sub_outChar		; 1d79:0d7b	4c 97 1d
+	
+; orphaned code?
+; output a bell character
+		lda #$07		; 1d7c:0d7e	a9 07
+		jmp sub_outChar		; 1d7e:0d80	4c 97 1d
+
+; output a colon:
+sub_outColon:
+		lda #$3a		; 1d81:0d83	a9 3a
+		jmp sub_outChar		; 1d83:0d85	4c 97 1d
+
+; output space:
+sub_outSpace:
+		lda #$20		; 1d86:0d88	a9 20
+		jmp sub_outChar		; 1d88:0d8a	4c 97 1d
+
+resetmci:
+		lda #$03			; 1d8b:0d8d	a9 03
+		ldx #<sMCIreset		; 1d8d:0d8f	a2 94
+		ldy #>sMCIreset		; 1d8f:0d91	a0 1d
+		jmp mcioff			; 1d91:0d93	4c ac 1d
+
+; output {pound}q0
+sMCIreset:
+		byte #pound
+		ascii "Q0"			; 1d94:0d96	tbl-1d96
+
+	; output character in .a
+sub_outChar:
+		sta free_fe		; 1d97:0d99	85 fe
+		pha 			; 1d99:0d9b	48
+		jsr sub_1bb0	; 1d9a:0d9c	20 b0 1b
+		pla 			; 1d9d:0d9f	68
+		rts 			; 1d9e:0da0	60
+	
+		lda index		; 1d9f:0da1	ad 0f d0
+		ldx #<buffer	; 1da2:0da4	a2 77
+		ldy #>buffer	; 1da4:0da6	a0 ce
+		jsr sub_1dbc	; 1da6:0da8	20 bc 1d
+		jmp sub_outCR	; 1da9:0dab	4c 77 1d
+
+mcioff:
+		pha 			; 1dac:0dae	48
+		lda #$00		; 1dad:0daf	a9 00
+		sta mci			; 1daf:0db1	8d ef 07
+		jmp goto1dbb	; 1db2:0db4	4c bb 1d
+
+; orphaned code?
+		pha 			; 1db5:0db7	48
+		lda #$01		; 1db6:0db8	a9 01
+		sta mci			; 1db8:0dba	8d ef 07
+
+	; call with:
+	; .a: length
+	; .x: <string_addr
+	; .y: >string_addr
+
+goto1dbb:
+		pla 			; 1dbb:0dbd	68
+sub_1dbc:
+		sta var				; 1dbc:0dbe	85 61
+		stx var+1			; 1dbe:0dc0	86 62
+		sty var+2			; 1dc0:0dc2	84 63
+		sta dscpnt+2		; 1dc2:0dc4	85 52
+		ldx #$01			; 1dc4:0dc6	a2 01
+		jsr sub_1ba1		; 1dc6:0dc8	20 a1 1b
+		jsr sub_1ba6		; 1dc9:0dcb	20 a6 1b
+		lda #$01			; 1dcc:0dce	a9 01
+		sta mci				; 1dce:0dd0	8d ef 07
+		rts 				; 1dd1:0dd3	60
+
+	; output a non-zero-terminated string?
+	; .x: >string_addr
+	; .y: <string_addr
+sub_outString:
+		stx var+1			; 1dd2:0dd4	86 62
+		sty var+2			; 1dd4:0dd6	84 63
+		ldy #$00			; 1dd6:0dd8	a0 00
+bkwd_1dd8:
+		lda (var+1),y		; 1dd8:0dda	b1 62
+		beq fwd_1df2		; 1dda:0ddc	f0 16
+		sta free_fe			; 1ddc:0dde	85 fe
+		lda var+1			; 1dde:0de0	a5 62
+		pha 				; 1de0:0de2	48
+		lda var+2			; 1de1:0de3	a5 63
+		pha 				; 1de3:0de5	48
+		lda free_fe			; 1de4:0de6	a5 fe
+		jsr sub_outChar		; 1de6:0de8	20 97 1d
+		pla 				; 1de9:0deb	68
+		sta var+2			; 1dea:0dec	85 63
+		pla 				; 1dec:0dee	68
+		sta var+1			; 1ded:0def	85 62
+		iny 				; 1def:0df1	c8
+		bne bkwd_1dd8		; 1df0:0df2	d0 e6
+fwd_1df2:
+		sty dscpnt+2		; 1df2:0df4	84 52
+		rts 				; 1df4:0df6	60
+
+sub_1df5:
+		lda #$01			; 1df5:0df7	a9 01
+		ldy #$00			; 1df7:0df9	a0 00
+		jmp usetbl1			; 1df9:0dfb	4c 03 cd
+
+	; TODO:
+	; would like to use this string when printing build date
+	; with .Version to save some space
+
+sBuildDate:
+		ascii "09/21/89 01"
+		byte colon
+		ascii "26A"		; 1dfc:0dfe	tbl-1e0a
+
+		; $ff fill bytes
+
+filler1:
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e0b:0e0d	tbl-1eff
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e15:0e17
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e1f:0e21
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e29:0e2b
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e33:0e35
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e3d:0e3f
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e47:0e49
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e51:0e53
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e5b:0e5d
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e65:0e67
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e6f:0e71
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e79:0e7b
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e83:0e85
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e8d:0e8f
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e97:0e99
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ea1:0ea3
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1eab:0ead
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1eb5:0eb7
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ebf:0ec1
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ec9:0ecb
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ed3:0ed5
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1edd:0edf
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ee7:0ee9
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ef1:0ef3
+		byte $ea,$ea,$ea,$ea,$ea						; 1efb:0efd
+
+	; must be a patch
+
+sub_1f00:
+		dex 		; 1f00:0f02	ca
+		stx llen	; 1f01:0f03	8e 04 d0
+		rts 		; 1f04:0f06	60
+
+	; filler: ends at $1ffd
+
+filler2:
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f05:0f07	tbl-1ffd
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f0f:0f11
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f19:0f1b
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f23:0f25
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f2d:0f2f
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f37:0f39
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f41:0f43
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f4b:0f4d
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f55:0f57
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f5f:0f61
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f69:0f6b
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f73:0f75
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f7d:0f7f
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f87:0f89
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f91:0f93
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f9b:0f9d
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fa5:0fa7
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1faf:0fb1
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fb9:0fbb
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fc3:0fc5
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fcd:0fcf
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fd7:0fd9
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fe1:0fe3
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1feb:0fed
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea		; 1ff5:0ff7
+
+		nop 		; 1000:1000:6	ea
+		nop 		; 1001:1001:6	ea
+{endasm}

@@ -1,8 +1,9 @@
-	REM BLOCKS FREE
-	&"{f6}{$d5}PDATING {$c2}LOCKS {$c6}REE.{f6}"
-	FOR DR=1 TO 6:GOSUB 1081:TT$(DR)=STR$(BF):NEXT:A$="  {lt. green}{$c2}LOCKS {$c6}REE:"+R$
-	GOSUB 1095:FOR I=1 TO 6
-	A$=" {lt. green}"+MID$("{$d3}YS{$c5}-{$cd}{$c5}TC{$c4}IR{$d0}RG{$d5}SR",I*3-2,3)+" {$c4}ISK:{white}"+TT$(I)
-	GOSUB 1095:NEXT:A$=" {pound}Q0{yellow}{pound}O{$c0}{pound}O{$c0}":GOSUB 1095:CLOSE 2:RETURN
-	CLOSE 2:RETURN
-	COPR. 1994 NEW IMAGE 9/17/94
+{number:4000}
+	rem blocks free
+	&"{f6}{$d5}pdating {$c2}locks {$c6}ree.{f6}"
+	for dr=1 to 6:gosub 1081:tt$(dr)=str$(bf):next:a$="  {lt. green}{$c2}locks {$c6}ree:"+r$
+	gosub 1095:for i=1 to 6
+	a$=" {lt. green}"+mid$("{$d3}ys{$c5}-{$cd}{$c5}tc{$c4}ir{$d0}rg{$d5}sr",i*3-2,3)+" {$c4}isk:{white}"+tt$(i)
+	gosub 1095:next:a$=" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095:close 2:return
+	close 2:return
+	copr. 1994 new image 9/17/94

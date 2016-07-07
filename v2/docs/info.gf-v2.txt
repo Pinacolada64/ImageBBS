@@ -1,0 +1,178 @@
+s%(47,30) - Basic array
+
+s%(p,0): Record 0 - Config Info (Part 1)
+
+ p=  0    : # Items
+     1    : Directory Type
+               0 Dir
+               1 U/X
+               2 Vote Topic
+     2    : Maximum number of Items
+     3-5  : Date Last Entered (6 bytes, 3 elements)
+     6    : Device #
+     7    : Drive
+     8-15 : String (16 bytes, 8 elements)
+               All: Subdirectory/User/Partition
+     16   : Sub Flags
+     17   : Post Access
+     18   : Respond Access
+     19   : View Message Access
+     20   : U/D Flags
+     21   : Upload Access
+     22   : View Upload Access
+     23-32: Dir Name (20 bytes, 10 elements)
+     33-47: Prompt (30 bytes, 15 elements)
+
+
+s%(p,1): Record 1 - Config Info (Part 2)
+
+ p=  0    : SubOp A (ID)
+     1    : SubOp B (ID)
+     2    : SubOp C (ID)
+     3    : SubOp D (ID)
+     4    : SubOp E (ID)
+     5    : SubOp F (ID)
+     6    : SubOp A (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+     7    : SubOp B (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+     8    : SubOp C (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+     9    : SubOp D (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+     10   : SubOp E (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+     11   : SubOp F (Flags)
+               Bit  SubOp Type
+                0   Messages (Subs)
+                1   Uploads/Downloads (U/Ds)
+                2   Text
+                3   Movies
+                4   RLE
+                5   Voting Booth
+
+     12-38: Unused (yet!)
+     39   : Directory Flags (open/closed, etc.)
+     40-47: String (16 bytes, 8 elements)
+               Directory Password
+
+
+s%(p,n): Records 2+ - Item Info
+
+ p=  0    : Scan Flags
+     1    : View Access
+     2    : Item Type
+               1 DIRectory
+               2 PRoGram
+               3 MODule
+               4 TeXT
+               5 MOVie
+               6 RLE
+               7 U/X Configuration File
+               8 U/D (File)
+               9 SUB (Post)
+               10 Voting Booth
+     3    : Device
+     4    : Drive
+     5-12 : String (16 bytes, 8 elements)
+               All: Subdirectory/User/Partition
+     13   : Credits Charged
+     14   : Integer
+               Dir: Times Used
+               U/D: Times Downloaded
+               Sub: # Responses
+     15-17: Date (6 bytes, 3 elements)
+               Dir: Date Added
+               U/D: Date Uploaded
+               Sub: Date Posted
+     18-20: Date (6 bytes, 3 elements)
+               Dir: Date Last Used
+               U/D: Date Last Downloaded
+               Sub: Date of Last Response
+     21-34: String (28 bytes, 14 elements)
+               Dir: Title
+               U/D: Uploader Handle
+               Sub: Poster Handle
+     35-44: String (20 bytes, 10 elements)
+               Dir: Filename
+               U/D: Filename,type
+               Sub: Post Title
+     45   : Integer
+               Dir: Unusued
+               U/D: Computer Type
+               Sub: Respond Access
+     46   : Integer
+               Dir: Unused
+               U/D: Cross-Directory Link Reference #
+               Sub: Cross-Directory Link Reference #
+     47   : Integer
+               Dir: Unused
+               U/D: File Size (blocks)
+               Sub: NetSub ID
+
+------------------------------------
+Entries to modules: (line 4000)
+
+rk=1:     Called once when entering a sub/ud/ux
+rk=2:     Called before the prompt is printed
+rk=3:     Called to interpret commands
+
+Notes:
+
+     Local mode required to add U/X Config files, programs or
+     modules, or to change the default device, drive, or
+     subdirectory/user/partition.
+
+     The General SubOp has SubOp access over all files in a
+     particular directory (except U/X and programs, see above). 
+     There is also slots for SubOps for just the posts, just the
+     U/D's, and just the various forms of read-only files.
+
+     The device, drive, and subdirectory/user/partition
+     information in record 0 is copied to the entry automatically
+     when a new post is made or a file is uploaded.  This means
+     that mixed Subs and U/Ds in a single directory will end up
+     in the same location (except where someone with local mode
+     on changes them).
+
+     Default Credits Charged: 0 for all items except files (U/D),
+     which defaults to number of blocks in the file (of course,
+     editable by SysOp/SubOp)
+
+     The "Link" is a number that references a relative file
+     record containing a list of the directory files where the
+     same entry is duplicated.  For example, a post could be
+     linked to other directories, and this number will allow the
+     routines that update the number of responses/last response
+     date to also update the other directories where the post can
+     be viewed.

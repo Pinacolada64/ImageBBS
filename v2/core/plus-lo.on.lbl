@@ -1,102 +1,103 @@
-	&"{f6}{green}{rvrs on}{$cc}OADING {$d0}ARAMETERS{rvrs off}{white}...":F4=.:ON CD%GOSUB{:4150}:CD%=1
-	A$="":FOR A=1 TO LL%-2:A$=A$+"{$c0}":NEXT:AK$=" "+A$+"{f6}"
-	F1=.:AO%=AC%:GOSUB 1634
-	GOSUB 1063:X=1:GOSUB 1001:&,2,2:CA=VAL(A$):CLOSE 2:&,52,20,EM
-	POKE 970,.:&,52,$22,VAL(MID$(UF$,2,1)):&,52,21,3:IF I%THEN QB=2400:GOTO{:4050}
-	&,52,4,3:IF A%THEN QB=2400
-	IF A%=.THEN{:4018}
-	A=3:GOSUB 1004:IF NA$<>D3$OR A<>.THEN{:4018}
-	&"{f6}{$d3}ORRY, {$ce}O {$c2}ACK-{$d4}O-{$c2}ACK {$c3}ALLS!{f6}":AC%=16:F4=1:RETURN
+{number:4000}
+	&"{f6}{green}{rvrs on}{$cc}oading {$d0}arameters{rvrs off}{white}...":f4=.:on cd%gosub {:4150}:cd%=1
+	a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}"
+	f1=.:ao%=ac%:gosub 1634
+	gosub 1063:x=1:gosub 1001:&,2,2:ca=val(a$):close 2:&,52,20,em
+	poke 970,.:&,52,$22,val(mid$(uf$,2,1)):&,52,21,3:if i%then qb=2400:goto {:4050}
+	&,52,4,3:if a%then qb=2400
+	if a%=.then{:4018}
+	a=3:gosub 1004:if na$<>d3$or a<>.then{:4018}
+	&"{f6}{$d3}orry, {$ce}o {$c2}ack-{$d4}o-{$c2}ack {$c3}alls!{f6}":ac%=16:f4=1:return
 {:4018}
-	A=17:GOSUB 1004:IF LEFT$(D1$,7)<>LEFT$(D5$,7)THEN CT%=.
-	F2=.:CT%=CT%+1:TC%=TC%+1:IF CT%<A OR A=.THEN{:4026}
-	IF CT%>A THEN:&"{f6}{lt. blue}{$d3}ORRY, {$c3}ALL {$cc}IMIT {$d5}SED {$d4}ODAY!{f6}":F4=1:AC%=16:RETURN
-	&"{f6:2}{white}{$ce}OTE{blue}:{lt. green} {$d4}HIS {$c9}S {$d9}OUR {$cc}AST {$c3}ALL {$d4}ODAY.{f6}"
+	a=17:gosub 1004:if left$(d1$,7)<>left$(d5$,7)then ct%=.
+	f2=.:ct%=ct%+1:tc%=tc%+1:if ct%<a or a=.then{:4026}
+	if ct%>a then:&"{f6}{lt. blue}{$d3}orry, {$c3}all {$cc}imit {$d5}sed {$d4}oday!{f6}":f4=1:ac%=16:return
+	&"{f6:2}{white}{$ce}ote{blue}:{lt. green} {$d4}his {$c9}s {$d9}our {$cc}ast {$c3}all {$d4}oday.{f6}"
 {:4026}
-	&"{f6:2}{lt. green}{rvrs on}{$cc}OGGING {$c3}ALL{rvrs off}{white}...":ON SGN(ID)GOSUB{:4142}
-	DR=3:A$="E.LAST,S,R":GOSUB 1011:IF E%=.THEN FOR I=1 TO 10:&,2,2:TT$(I)=A$:NEXT
-	CLOSE 2:DR=3:A$="E.LAST":GOSUB 1023:AN$=NA$:&,15,1:PRINT# 2,D1$AN$
-	FOR I=1 TO 9:PRINT# 2,TT$(I):NEXT:CLOSE 2
-	GOSUB 1060:I=1:X=20:GOSUB 1025:CLOSE 2
-	DD$=CC$+MID$(STR$(ID),2):JN$="":POKE 53252,3:AN$=NA$:&,15,1:N$=AN$
-	A$=" {yellow}{$c3}ALLER{white}"+STR$(CA)+"   {green}"+DD$+":{white} {rvrs on}"+N$+R$+"{cyan}"+STR$(QB)+" {$c2}AUD, "
-	&,52,16,3:B=A%:&,52,18,3:C=A%:B$="{yellow}{$c3}/{$c7}":IF B THEN B$="{gray3}{$c1}{$d3}{$c3}{$c9:2}":IF C THEN B$="{lt. red}{$c1}{$ce}{$d3}{$c9}"
-	A$=A$+B$+" {$cd}ODE"+R$+" {cyan}{$cc}OGON  {white}{$04}"+D1$
-	ON-(TC%>1)GOTO{:4048}:&"{$ce}EW {$d5}SER!{f6}"
-	A$=A$+R$+" {$ce}EW {$d5}SER!":IF ID=.THEN A$=A$+" ({$ca}UST {$cc}OOKING)"
+	&"{f6:2}{lt. green}{rvrs on}{$cc}ogging {$c3}all{rvrs off}{white}...":on sgn(id) gosub {:4142}
+	dr=3:a$="e.last,s,r":gosub 1011:if e%=.then for i=1 to 10:&,2,2:tt$(i)=a$:next
+	close 2:dr=3:a$="e.last":gosub 1023:an$=na$:&,15,1:print# 2,d1$an$
+	for i=1 to 9:print# 2,tt$(i):next:close 2
+	gosub 1060:i=1:x=20:gosub 1025:close 2
+	dd$=cc$+mid$(str$(id),2):jn$="":poke 53252,3:an$=na$:&,15,1:n$=an$
+	a$=" {yellow}{$c3}aller{white}"+str$(ca)+"   {green}"+dd$+":{white} {rvrs on}"+n$+r$+"{cyan}"+str$(qb)+" {$c2}aud, "
+	&,52,16,3:b=a%:&,52,18,3:c=a%:b$="{yellow}{$c3}/{$c7}":if b then b$="{gray3}{$c1}{$d3}{$c3}{$c9:2}":if c then b$="{lt. red}{$c1}{$ce}{$d3}{$c9}"
+	a$=a$+b$+" {$cd}ode"+r$+" {cyan}{$cc}ogon  {white}{$04}"+d1$
+	on-(tc%>1)goto {:4048}:&"{$ce}ew {$d5}ser!{f6}"
+	a$=a$+r$+" {$ce}ew {$d5}ser!":if id=.then a$=a$+" ({$ca}ust {$cc}ooking)"
 {:4048}
-	A$=A$+R$+" {lt. red}{$c3}REDIT {white}{rvrs on}"+STR$(CR):GOSUB 1095
+	a$=a$+r$+" {lt. red}{$c3}redit {white}{rvrs on}"+str$(cr):gosub 1095
 {:4050}
-	F1=.:PT%=.:A=1:GOSUB 1003
-	GOSUB 1019:&,52,7,3:IF A%THEN PT%=1-PT%:IF P1%<1 THEN P1%=30
-	IF PT%=.THEN{:4062}
-	PRINT"{home}{down}{rvrs on}{white}{$d0}":PRINT"{rvrs on}{white}{$d2}":PRINT"{rvrs on}{white}{$c9}":PRINT"{rvrs on}{white}{$cd}":PRINT"{rvrs on}{white}{$c5}":IF G<P1%THEN{:4062}
-	A%=P1%:TR%=A%
-	&"{f6}{$ce}OTE - {$c9}T {$c9}S {$ce}OW {$d0}RIME {$d4}IME -{f6}{$c1}{$cc:2} {$c3}ALLERS {$c1}RE {$cc}IMITED {$d4}O {pound}%A {$cd}INUTES!{f6:2}"
+	f1=.:pt%=.:a=1:gosub 1003
+	gosub 1019:&,52,7,3:if a%then pt%=1-pt%:if p1%<1 then p1%=30
+	if pt%=.then{:4062}
+	print"{home}{down}{rvrs on}{white}{$d0}":print"{rvrs on}{white}{$d2}":print"{rvrs on}{white}{$c9}":print"{rvrs on}{white}{$cd}":print"{rvrs on}{white}{$c5}":if g<p1%then{:4062}
+	a%=p1%:tr%=a%
+	&"{f6}{$ce}ote - {$c9}t {$c9}s {$ce}ow {$d0}rime {$d4}ime -{f6}{$c1}{$cc:2} {$c3}allers {$c1}re {$cc}imited {$d4}o {pound}%a {$cd}inutes!{f6:2}"
 {:4062}
-	&"{f6}":CN=CN+1:GOSUB 1073
-	A=17:GOSUB 1004:ON A+1 GOTO{:4066}:A%=A-CT%:&"{f6}{lt. green}{$c3}ALLS {$cc}EFT {$d4}ODAY{blue}:{white} {pound}%A{f6}"
+	&"{f6}":cn=cn+1:gosub 1073
+	a=17:gosub 1004:on a+1 goto {:4066}:a%=a-ct%:&"{f6}{lt. green}{$c3}alls {$cc}eft {$d4}oday{blue}:{white} {pound}%a{f6}"
 {:4066}
-	A%=VAL(MID$(FL$,18,2)):IF A%>.THEN:&"{f6}{lt. green}{$d4}IME {$c1}LLOWED {$d4}HIS {$c3}ALL{blue}:{white} {pound}%A {$cd}IN.{f6:2}"
-	TR%=A%-101*(A%=.):IF LEN(UF$)<11 THEN IM=4:GOSUB 2428:GOTO{:4072}
-	IM=6:GOSUB 2428
+	a%=val(mid$(fl$,18,2)):if a%>.then:&"{f6}{lt. green}{$d4}ime {$c1}llowed {$d4}his {$c3}all{blue}:{white} {pound}%a {$cd}in.{f6:2}"
+	tr%=a%-101*(a%=.):if len(uf$)<11 then im=4:gosub 2428:goto {:4072}
+	im=6:gosub 2428
 {:4072}
-	ON-(MP%>.AND MP%<>40 AND MP%<>80)GOTO{:4078}:A$="LINES/SCREEN":GOSUB 1350
-	LP=1:&"{f6:2}{lt. green}{$c8}OW {$cd}ANY {$cc}INES {$cf}F {$d4}EXT {$c3}AN {$d9}OUR {$d3}CREEN {$c4}ISPLAY?: {pound}I1"
-	MP%=ABS(VAL(AN$))-25*(TR%=.):IF MP%<1 OR MP%>255 OR MP%=40 OR MP%=80 THEN MP%=.:GOTO{:4072}
+	on-(mp%>.and mp%<>40 and mp%<>80)goto {:4078}:a$="lines/screen":gosub 1350
+	lp=1:&"{f6:2}{lt. green}{$c8}ow {$cd}any {$cc}ines {$cf}f {$d4}ext {$c3}an {$d9}our {$d3}creen {$c4}isplay?: {pound}i1"
+	mp%=abs(val(an$))-25*(tr%=.):if mp%<1 or mp%>255 or mp%=40 or mp%=80 then mp%=.:goto {:4072}
 {:4078}
-	A$=LEFT$("F."+NA$,16)+",S,R":DR=2:GOSUB 1011:ON E%GOTO{:4134}
+	a$=left$("f."+na$,16)+",s,r":dr=2:gosub 1011:on e%goto {:4134}
 {:4080}
-	F4=.:&"{f6}":&,2,2:C$=B$:B$=A$:IF A$="{up arrow}"OR ST<>.THEN{:4088}
-	FL=-(A$="{$c5}{$d2}{$c1}{$d3}{$c5}"OR A$="{$cb}{$c9}{$cc:2}"OR A$="{$cf}{$c6:2}"):ON FL GOTO{:4080}
-	FL=-(LEFT$(A$,1)="!"OR LEFT$(A$,1)="{back arrow}"OR LEFT$(A$,1)="@"):ON FL GOTO{:4080}
-	&:GOTO{:4080}
+	f4=.:&"{f6}":&,2,2:c$=b$:b$=a$:if a$="{up arrow}"or st<>.then{:4088}
+	fl=-(a$="{$c5}{$d2}{$c1}{$d3}{$c5}"or a$="{$cb}{$c9}{$cc:2}"or a$="{$cf}{$c6:2}"):on fl goto {:4080}
+	fl=-(left$(a$,1)="!"or left$(a$,1)="{back arrow}"or left$(a$,1)="@"):on fl goto {:4080}
+	&:goto {:4080}
 {:4088}
-	A$="{$cb}{$c9}{$cc:2}":IF B$=A$OR C$=A$THEN:&"{f6:2}{$d4}ERMINATING {pound}V2...{f6}":GOSUB{:4116}
-	A$="!":IF LEFT$(B$,1)=A$THEN B$=MID$(B$,2):GOSUB{:4108}
-	A$="!":IF LEFT$(C$,1)=A$THEN B$=MID$(C$,2):GOSUB{:4108}
-	A$="{$cf}{$c6:2}":IF B$=A$OR C$=A$THEN F4=1
-	A$="{back arrow}":IF LEFT$(B$,1)=A$THEN AC%=VAL(MID$(B$,2)):FL$=FL$(AC%)
-	A$="{back arrow}":IF LEFT$(C$,1)=A$THEN AC%=VAL(MID$(C$,2)):FL$=FL$(AC%)
-	A$="{$c5}{$d2}{$c1}{$d3}{$c5}":IF B$=A$OR C$=A$THEN GOSUB{:4110}
-	A$="@":IF LEFT$(B$,1)=A$THEN NN$=MID$(B$,2):GOSUB{:4136}
-	A$="@":IF LEFT$(C$,1)=A$THEN NN$=MID$(C$,2):GOSUB{:4136}
-	GOTO{:4134}
+	a$="{$cb}{$c9}{$cc:2}":if b$=a$or c$=a$then:&"{f6:2}{$d4}erminating {pound}v2...{f6}":gosub {:4116}
+	a$="!":if left$(b$,1)=a$then b$=mid$(b$,2):gosub {:4108}
+	a$="!":if left$(c$,1)=a$then b$=mid$(c$,2):gosub {:4108}
+	a$="{$cf}{$c6:2}":if b$=a$or c$=a$then f4=1
+	a$="{back arrow}":if left$(b$,1)=a$then ac%=val(mid$(b$,2)):fl$=fl$(ac%)
+	a$="{back arrow}":if left$(c$,1)=a$then ac%=val(mid$(c$,2)):fl$=fl$(ac%)
+	a$="{$c5}{$d2}{$c1}{$d3}{$c5}":if b$=a$or c$=a$then gosub {:4110}
+	a$="@":if left$(b$,1)=a$then nn$=mid$(b$,2):gosub {:4136}
+	a$="@":if left$(c$,1)=a$then nn$=mid$(c$,2):gosub {:4136}
+	goto {:4134}
 {:4108}
-	IF MID$(D1$,2,6)<MID$(B$,2,6)THEN{:4112}
+	if mid$(d1$,2,6)<mid$(b$,2,6)then{:4112}
 {:4110}
-	DR=2:GOSUB 1010:PRINT# 15,"S"DR$"F."LEFT$(NA$,13):GOSUB 1081:GOTO{:4134}
+	dr=2:gosub 1010:print# 15,"s"dr$"f."left$(na$,13):gosub 1081:goto {:4134}
 {:4112}
-	AN$=B$:&,15:B$=MID$(AN$,1,12):&"{f6:2}{lt. red}{$d3}ORRY, {$d9}OUR {$c1}CCOUNT {$c9}S {$d3}USPENDED"
-	&" {$d5}NTIL{f6}{pound}$B...{f6}":A$=" {$c1}CCOUNT {$d3}USPENDED!":GOSUB 1095:GOTO{:4128}
+	an$=b$:&,15:b$=mid$(an$,1,12):&"{f6:2}{lt. red}{$d3}orry, {$d9}our {$c1}ccount {$c9}s {$d3}uspended"
+	&" {$d5}ntil{f6}{pound}$b...{f6}":a$=" {$c1}ccount {$d3}uspended!":gosub 1095:goto {:4128}
 {:4116}
-	&,52,4,3:ON-(A%=1 OR ID=1)GOTO{:4134}:AN$=NA$:TT$=AN$:GOSUB 1034:TT$(1)="{up arrow}":TT$(2)="D":FOR I=3 TO 24:TT$(I)="0":NEXT
-	GOSUB 1065:A$="":FOR I=1 TO 23:A$=A$+TT$(I)+R$:NEXT:X=ID:GOSUB 1001:PRINT# 2,A$:C
-	IF X<L1 THEN L1=X:X=31:GOSUB 1063:GOSUB 1001:PRINT# 2,L1:CLOSE 2
-	A$="R":GOSUB 1062:CLOSE 2:IF E%=.THEN GOSUB{:4134}:I=-1:X=25:GOSUB 1025:CLOSE 2
-	DR=2:D$=LEFT$(TT$,14):A$="F."+D$:GOSUB 1024:A$="M."+D$:GOSUB 1024:GOSUB 1081
-	A$=" {$d5}SER {$d4}ERMINATED!":GOSUB 1095
+	&,52,4,3:on-(a%=1 or id=1)goto {:4134}:an$=na$:tt$=an$:gosub 1034:tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next
+	gosub 1065:a$="":for i=1 to 23:a$=a$+tt$(i)+r$:next:x=id:gosub 1001:print# 2,a$:c
+	if x<l1 then l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
+	a$="r":gosub 1062:close 2:if e%=.then gosub {:4134}:i=-1:x=25:gosub 1025:close 2
+	dr=2:d$=left$(tt$,14):a$="f."+d$:gosub 1024:a$="m."+d$:gosub 1024:gosub 1081
+	a$=" {$d5}ser {$d4}erminated!":gosub 1095
 {:4128}
-	AN$=D1$:&,15:A$=A$+" {cyan}{$cc}OGOFF {white}"+AN$+"{$cd}"+R$
-	A$=A$+" {pound}Q0{yellow}{pound}O{$c0}{pound}O{$c0}":GOSUB 1095
-	AC%=16:F4=1
+	an$=d1$:&,15:a$=a$+" {cyan}{$cc}ogoff {white}"+an$+"{$cd}"+r$
+	a$=a$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095
+	ac%=16:f4=1
 {:4134}
-	CLOSE 2:RETURN
+	close 2:return
 {:4136}
-	AN$=NA$:GOSUB 1034:DR=2:GOSUB 1010:PRINT# 15,"R"DR$"F."LEFT$(NN$,14)"=F."LEFT$(NA$,14)
-	PRINT# 15,"R"DR$"M."LEFT$(NN$,14)"=M."LEFT$(NA$,14):AN$=NN$:GOSUB 1038:NA$=NN$
-	GOSUB 1073:GOSUB 1070:GOTO 1081
+	an$=na$:gosub 1034:dr=2:gosub 1010:print# 15,"r"dr$"f."left$(nn$,14)"=f."left$(na$,14)
+	print# 15,"r"dr$"m."left$(nn$,14)"=m."left$(na$,14):an$=nn$:gosub 1038:na$=nn$
+	gosub 1073:gosub 1070:goto 1081
 {:4142}
-	A=4:GOSUB 1736:DR=6:GOSUB 1010:A$=DR$+"U.WEEDINFO":&,16,1:GOSUB 1012
-	IF E%THEN:&,16,3:B%=1:GOTO{:4148}
+	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.weedinfo":&,16,1:gosub 1012
+	if e%then:&,16,3:b%=1:goto {:4148}
 {:4146}
-	A%=ID:&,16,8:IF A%THEN:&,16,5:GOTO{:4146}
+	a%=id:&,16,8:if a%then:&,16,5:goto {:4146}
 {:4148}
-	A%=ID:&,16,4:A$=DR$+"U.WEEDINFO":PRINT# 15,"S"A$:&,16,2:RETURN
+	a%=id:&,16,4:a$=dr$+"u.weedinfo":print# 15,"s"a$:&,16,2:return
 {:4150}
-	AN$=D5$:&,15:LP=1:&"{f6:2}{$c1}T THE END OF YOUR LAST CALL, ON {pound}V7{$cd}, YOU "
-	LP=1:&"DIDN'T PROPERLY LOG OFF. {$c4}O YOU WANT YOUR MESSAGE SCAN DATE SET TO "
-	LP=1:&"THAT TIME? ":GOSUB 1907
-	IF A THEN LD$=D5$
-	RETURN
-	COPR. 1994 NEW IMAGE 11/14/94
+	an$=d5$:&,15:lp=1:&"{f6:2}{$c1}t the end of your last call, on {pound}v7{$cd}, you "
+	lp=1:&"didn't properly log off. {$c4}o you want your message scan date set to "
+	lp=1:&"that time? ":gosub 1907
+	if a then ld$=d5$
+	return
+	copr. 1994 new image 11/14/94

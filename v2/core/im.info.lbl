@@ -1,71 +1,72 @@
-	ON IM GOTO{:60002},{:60030},{:60068},{:60074},{:60072},{:60078}:RETURN
+{number:60000}
+	on im goto {:60002},{:60030},{:60068},{:60074},{:60072},{:60078}:return
 {:60002}
-	AN$=FF$:&,15,1:F$=AN$:AN$=LL$:&,15,1:L$=AN$:RN$=FF$+" "+LL$
-	T$=MID$(UF$,6,3)
-	A$="M.INFO":GOSUB 1350:POKE 53252,2:&"{white}  > {pound}I1":A=VAL(AN$)
-	IF A THEN GOSUB{:60012}:GOTO{:60002}
-	RETURN
+	an$=ff$:&,15,1:f$=an$:an$=ll$:&,15,1:l$=an$:rn$=ff$+" "+ll$
+	t$=mid$(uf$,6,3)
+	a$="m.info":gosub 1350:poke 53252,2:&"{white}  > {pound}i1":a=val(an$)
+	if a then gosub {:60012}:goto {:60002}
+	return
 {:60012}
-	ON A GOTO{:60022},{:60026},{:60014},{:60074},{:60030}
+	on a goto {:60022},{:60026},{:60014},{:60074},{:60030}
 {:60014}
-	A1$=MID$(PH$,2,3):A2$=MID$(PH$,7,8)
-	&"{f6}":W$=A1$:PL=1:POKE 53252,3:P$="{$c1}REA {$c3}ODE":&,1,32:IF LEN(AN$)=3 THEN A1$=AN$
-	&"{f6}":W$=A2$:PL=1:POKE 53252,8:P$="{$d0}HONE {$ce}O":&,1,32:IF LEN(AN$)=8 THEN A2$=AN$
-	PH$="["+A1$+"] "+A2$:RETURN
+	a1$=mid$(ph$,2,3):a2$=mid$(ph$,7,8)
+	&"{f6}":w$=a1$:pl=1:poke 53252,3:p$="{$c1}rea {$c3}ode":&,1,32:if len(an$)=3 then a1$=an$
+	&"{f6}":w$=a2$:pl=1:poke 53252,8:p$="{$d0}hone {$ce}o":&,1,32:if len(an$)=8 then a2$=an$
+	ph$="["+a1$+"] "+a2$:return
 {:60022}
-	W$=FF$:P$="{$c6}IRST {$ce}AME":PL=1:POKE 53252,15:&,1,32:IF AN$<>""THEN FF$=AN$
-	RETURN
+	w$=ff$:p$="{$c6}irst {$ce}ame":pl=1:poke 53252,15:&,1,32:if an$<>""then ff$=an$
+	return
 {:60026}
-	W$=LL$:P$="{$cc}AST {$ce}AME":PL=1:POKE 53252,15:&,1,32:IF AN$<>""THEN LL$=AN$
-	RETURN
+	w$=ll$:p$="{$cc}ast {$ce}ame":pl=1:poke 53252,15:&,1,32:if an$<>""then ll$=an$
+	return
 {:60030}
-	ON ABS(PW$=""OR I%)GOTO 1603:&"{f6}{$cf}LD {$d0}ASSWORD?: ":&,6:ON-(AN$<>PW$)GOTO 1920
+	on abs(pw$=""or i%)goto 1603:&"{f6}{$cf}ld {$d0}assword?: ":&,6:on-(an$<>pw$)goto 1920
 {:60032}
-	&"{f6:2}{$d7}OULD YOU LIKE TO:{f6:2} ({$c1}) {$c5}NTER A PASSWORD{f6} ({$c2}) {$c7}ENERATE A {$d2}ANDOM "
-	&"{$d0}ASSWORD{f6} ({$c3}) {$ce}OT CHANGE YOUR PASSWORD{f6:2}> {pound}G1"
-	IF TR%>.THEN ON-(AN$="{$c1}")-2*(AN$="{$c2}")-3*(AN$="{$c3}")GOTO{:60042},{:60052},{:60040}:GOTO{:60032}
+	&"{f6:2}{$d7}ould you like to:{f6:2} ({$c1}) {$c5}nter a password{f6} ({$c2}) {$c7}enerate a {$d2}andom "
+	&"{$d0}assword{f6} ({$c3}) {$ce}ot change your password{f6:2}> {pound}g1"
+	if tr%>.then on-(an$="{$c1}")-2*(an$="{$c2}")-3*(an$="{$c3}")goto {:60042},{:60052},{:60040}:goto {:60032}
 	&"{$c3}{f6:2}"
 {:60040}
-	RETURN
+	return
 {:60042}
-	POKE 53252,14:&"{$c1}{f6:2}{$d0}LEASE {$c5}NTER {$c1} {$d0}ASSWORD {$d4}O {$d5}SE{f6}"
-	&"FOR YOUR ACCOUNT ON THIS {$c2:2}{$d3}.{f6:2}: {pound}I1":ON TR%+1 GOTO{:60040}:IF AN$=""THEN{:60032}
-	PW$=AN$:POKE 53252,20:IF NA$=PW$OR TR%<1 THEN{:60050}
-	IF NA$=AN$THEN:&"{f6}{$d0}LEASE {$c4}O {$ce}OT {$d5}SE {$d9}OUR {$c8}ANDLE{f6}{$c1}S {$c1} {$d0}ASSWORD.{f6}":GOTO{:60042}
+	poke 53252,14:&"{$c1}{f6:2}{$d0}lease {$c5}nter {$c1} {$d0}assword {$d4}o {$d5}se{f6}"
+	&"for your account on this {$c2:2}{$d3}.{f6:2}: {pound}i1":on tr%+1 goto {:60040}:if an$=""then{:60032}
+	pw$=an$:poke 53252,20:if na$=pw$or tr%<1 then{:60050}
+	if na$=an$then:&"{f6}{$d0}lease {$c4}o {$ce}ot {$d5}se {$d9}our {$c8}andle{f6}{$c1}s {$c1} {$d0}assword.{f6}":goto {:60042}
 {:60050}
-	PW$=AN$:RETURN
+	pw$=an$:return
 {:60052}
-	&"{$c2}{f6:2}":GOSUB{:60058}:&"{$d9}OUR RANDOM PASSWORD IS {f5}{pound}$B{f5}{f6:2}{$c9}S THIS OK? ":GOSUB 1907
-	IF A THEN PW$=B$:RETURN
-	GOTO{:60032}
+	&"{$c2}{f6:2}":gosub {:60058}:&"{$d9}our random password is {f5}{pound}$b{f5}{f6:2}{$c9}s this ok? ":gosub 1907
+	if a then pw$=b$:return
+	goto {:60032}
 {:60058}
-	B$="":V$="{$c1}{$c5}{$c9}{$cf}{$d5}":C$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":N$="{$ce}{$d4}{$d2}{$d3}{$c2}"
-	GOSUB{:60064}:GOSUB{:60066}:GOSUB{:60064}:GOSUB{:60066}:GOSUB{:60064}:GOSUB{:60066}
-	B$=B$+MID$(N$,INT(RND(1)*LEN(N$))+1,1):RETURN
+	b$="":v$="{$c1}{$c5}{$c9}{$cf}{$d5}":c$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":n$="{$ce}{$d4}{$d2}{$d3}{$c2}"
+	gosub {:60064}:gosub {:60066}:gosub {:60064}:gosub {:60066}:gosub {:60064}:gosub {:60066}
+	b$=b$+mid$(n$,int(rnd(1)*len(n$))+1,1):return
 {:60064}
-	B$=B$+MID$(C$,INT(RND(1)*(LEN(C$)/2))*2+1,2):RETURN
+	b$=b$+mid$(c$,int(rnd(1)*(len(c$)/2))*2+1,2):return
 {:60066}
-	B$=B$+MID$(V$,INT(RND(1)*LEN(V$))+1,1):RETURN
+	b$=b$+mid$(v$,int(rnd(1)*len(v$))+1,1):return
 {:60068}
-	D$="{$d3}YSTEM":GOSUB{:60084}:IF A=.THEN RETURN
-	TZ$=AN$:GOSUB 1063:X=45:GOSUB 1001:PRINT# 2,TZ$:CLOSE 2
+	d$="{$d3}ystem":gosub {:60084}:if a=.then return
+	tz$=an$:gosub 1063:x=45:gosub 1001:print# 2,tz$:close 2
 {:60072}
-	AN$=TZ$:GOSUB{:60082}:POKE 866,X:POKE 867,Y:RETURN
+	an$=tz$:gosub {:60082}:poke 866,x:poke 867,y:return
 {:60074}
-	D$="{$d9}OUR":GOSUB{:60084}:IF A=.THEN RETURN
-	UF$=LEFT$(UF$,5)+AN$
+	d$="{$d9}our":gosub {:60084}:if a=.then return
+	uf$=left$(uf$,5)+an$
 {:60078}
-	AN$=MID$(UF$,6):GOSUB{:60082}:POKE 868,X:POKE 869,Y
-	FOR I=.TO 2:POKE 5882+I,ASC(MID$(AN$+"   ",I+1,1)):NEXT:POKE 5885,.:RETURN
+	an$=mid$(uf$,6):gosub {:60082}:poke 868,x:poke 869,y
+	for i=.to 2:poke 5882+i,asc(mid$(an$+"   ",i+1,1)):next:poke 5885,.:return
 {:60082}
-	X=VAL(MID$(AN$,4,2)):Y=VAL(MID$(AN$,6,2)):A$=LEFT$(AN$+"   ",3):RETURN
+	x=val(mid$(an$,4,2)):y=val(mid$(an$,6,2)):a$=left$(an$+"   ",3):return
 {:60084}
-	DR=1:A$="S.TIMEZONES,S,R":GOSUB 1011:N=.:IF E%THEN CLOSE 2:RETURN
+	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e%then close 2:return
 {:60086}
-	&,2,2:IF A$<>"{up arrow}"THEN N=N+1:TT$(N)=A$:ON-(ST=.)GOTO{:60086}
-	CLOSE 2:&"{f6}{$d3}ELECT {pound}$D {$d4}IME {$da}ONE:{f6:2}"
-	FOR I=1 TO N:B$=LEFT$(TT$(I),3):C$=MID$(TT$(I),8):A%=I:&"{pound}%A) ({pound}$B) {pound}$C{f6}":NEXT
-	POKE 53252,2:&"{f6}{$d7}HICH {$cf}NE? {pound}I1"
-	A=VAL(AN$):IF AN$=""OR A<1 OR A>N THEN A=.:RETURN
-	C$=MID$(TT$(A),8):AN$=LEFT$(TT$(A),7):RETURN
-	COPR. 1994 NEW IMAGE 9/18/94
+	&,2,2:if a$<>"{up arrow}"then n=n+1:tt$(n)=a$:on-(st=.)goto {:60086}
+	close 2:&"{f6}{$d3}elect {pound}$d {$d4}ime {$da}one:{f6:2}"
+	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
+	poke 53252,2:&"{f6}{$d7}hich {$cf}ne? {pound}i1"
+	a=val(an$):if an$=""or a<1 or a>n then a=.:return
+	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
+	copr. 1994 new image 9/18/94

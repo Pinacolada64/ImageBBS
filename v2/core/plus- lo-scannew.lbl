@@ -1,49 +1,50 @@
-	REM SCAN FOR NEW
-	L$=MID$(LD$,2,6):B=VAL(MID$(LD$,8,4))/100:GOSUB{:4010}:L=B
-	&"{f6:2}{yellow}{$d3}CAN {$c6}OR {$ce}EW {$d0}OSTS/{$d2}ESPONSES?:{rvrs off} ":GOSUB 1902:ON A GOSUB{:4016}
-	&"{f6:2}{yellow}{$d3}CAN {$c6}OR {$ce}EW {$d5}PLOADS?:{rvrs off} ":GOSUB 1902:ON A GOSUB{:4048}
-	RETURN
+{number:4000}
+	rem scan for new
+	l$=mid$(ld$,2,6):b=val(mid$(ld$,8,4))/100:gosub {:4010}:l=b
+	&"{f6:2}{yellow}{$d3}can {$c6}or {$ce}ew {$d0}osts/{$d2}esponses?:{rvrs off} ":gosub 1902:on a gosub {:4016}
+	&"{f6:2}{yellow}{$d3}can {$c6}or {$ce}ew {$d5}ploads?:{rvrs off} ":gosub 1902:on a gosub {:4048}
+	return
 {:4010}
-	B=B+68*(B>80):IF INT(B)=12 OR INT(B)=24 THEN B=B-12
-	A=-(B$>L$):IF A=0 THEN A=-(B>L)
-	RETURN
+	b=b+68*(b>80):if int(b)=12 or int(b)=24 then b=b-12
+	a=-(b$>l$):if a=0 then a=-(b>l)
+	return
 {:4016}
-	DR=3:A$="E.{$d3}UB":GOSUB 1011:IF E%THEN{:4046}
-	&"{f6} {$d3}UB{pound}{back arrow}25{$d0}OSTS/{$d2}ESPS{f6}{pound}VJ":&,2,2:N=VAL(A$):ON-(N=0)GOTO{:4046}:FOR I=1 TO N
-	X=I+1:GOSUB 1001:&,2,2:&,2,2:A=VAL(A$):&,2,2:IF(A AND 2^AC%)=0 THEN{:4044}
-	IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN A$=MID$(A$,4)
-	IF RIGHT$(A$,1)="{up arrow}"THEN A$=LEFT$(A$,LEN(A$)-1)
-	A$=LEFT$(A$,26):&" {pound}$A{pound}{back arrow}28":IF RC THEN I=N:GOTO{:4044}
-	CLOSE 2:P=0:NP=0:NR=0:DR=4:A$="D.SUB"+STR$(I):GOSUB 1011:IF E%THEN{:4038}
-	&,2,2:P=VAL(A$):FOR J=1 TO P:X=J+1:GOSUB 1001:INPUT# 2,A$,A$,A$
-	B$=MID$(A$,2,6):B=VAL(MID$(A$,8,4))/100:GOSUB{:4010}:NP=NP+A:IF A THEN{:4036}
-	B$=MID$(A$,13,6):B=VAL(MID$(A$,19,4))/100:GOSUB{:4010}:NR=NR+A
+	dr=3:a$="e.{$d3}ub":gosub 1011:if e%then{:4046}
+	&"{f6} {$d3}ub{pound}{back arrow}25{$d0}osts/{$d2}esps{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4046}:for i=1 to n
+	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4044}
+	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
+	if right$(a$,1)="{up arrow}"then a$=left$(a$,len(a$)-1)
+	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4044}
+	close 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+str$(i):gosub 1011:if e%then{:4038}
+	&,2,2:p=val(a$):for j=1 to p:x=j+1:gosub 1001:input# 2,a$,a$,a$
+	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:np=np+a:if a then{:4036}
+	b$=mid$(a$,13,6):b=val(mid$(a$,19,4))/100:gosub {:4010}:nr=nr+a
 {:4036}
-	NEXT
+	next
 {:4038}
-	CLOSE 2:A%=NP:B%=NR:C%=P
-	&"{pound}#2{pound}# {pound}%A/{pound}#2{pound}# {pound}%B {$cf}F {pound}#2{pound}# {pound}%C{f6}":IF RC THEN I=N:GOTO{:4044}
-	IF I<N-1 THEN DR=3:A$="E.{$d3}UB":GOSUB 1011
+	close 2:a%=np:b%=nr:c%=p
+	&"{pound}#2{pound}# {pound}%a/{pound}#2{pound}# {pound}%b {$cf}f {pound}#2{pound}# {pound}%c{f6}":if rc then i=n:goto {:4044}
+	if i<n-1 then dr=3:a$="e.{$d3}ub":gosub 1011
 {:4044}
-	NEXT:&"{pound}Q0{pound}VJ":CLOSE 2:RETURN
+	next:&"{pound}q0{pound}vj":close 2:return
 {:4046}
-	CLOSE 2:&"{f6:2}{$ce}O {$d3}UBS!{f6}":RETURN
+	close 2:&"{f6:2}{$ce}o {$d3}ubs!{f6}":return
 {:4048}
-	DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011:IF E%THEN{:4074}
-	&"{f6} {$d5}/{$c4}{pound}{back arrow}30{$ce}EW {$c6}ILES{f6}{pound}VJ":&,2,2:N=VAL(A$):ON-(N=0)GOTO{:4074}:FOR I=1 TO N
-	X=I+1:GOSUB 1001:&,2,2:&,2,2:A=VAL(A$):&,2,2:IF(A AND 2^AC%)=0 THEN{:4072}
-	IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN A$=MID$(A$,4)
-	A$=LEFT$(A$,26):&" {pound}$A{pound}{back arrow}28":IF RC THEN I=N:GOTO{:4072}
-	CLOSE 2:U=0:NU=0:DR=4:A$="D.U/D"+STR$(I):GOSUB 1011:IF E%THEN{:4066}
-	&,2,2:U=VAL(A$):IF U=0 THEN{:4066}
-	FOR J=1 TO U:&,2,2:&,2,2:&,2,2:B$=A$:&,2,2:&,2,2:A$=B$
-	B$=MID$(A$,2,6):B=VAL(MID$(A$,8,4))/100:GOSUB{:4010}:NU=NU+A:NEXT
+	dr=3:a$="e.{$d5}/{$c4}":gosub 1011:if e%then{:4074}
+	&"{f6} {$d5}/{$c4}{pound}{back arrow}30{$ce}ew {$c6}iles{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4074}:for i=1 to n
+	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4072}
+	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
+	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4072}
+	close 2:u=0:nu=0:dr=4:a$="d.u/d"+str$(i):gosub 1011:if e%then{:4066}
+	&,2,2:u=val(a$):if u=0 then{:4066}
+	for j=1 to u:&,2,2:&,2,2:&,2,2:b$=a$:&,2,2:&,2,2:a$=b$
+	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:nu=nu+a:next
 {:4066}
-	CLOSE 2:A%=NU:B%=U
-	&"{pound}#2{pound}# {pound}%A {$cf}F {pound}#2{pound}# {pound}%B{f6}":IF RC THEN I=N:GOTO{:4072}
-	IF I<N-1 THEN DR=3:A$="E.{$d5}/{$c4}":GOSUB 1011
+	close 2:a%=nu:b%=u
+	&"{pound}#2{pound}# {pound}%a {$cf}f {pound}#2{pound}# {pound}%b{f6}":if rc then i=n:goto {:4072}
+	if i<n-1 then dr=3:a$="e.{$d5}/{$c4}":gosub 1011
 {:4072}
-	NEXT:&"{pound}Q0{pound}VJ":CLOSE 2:RETURN
+	next:&"{pound}q0{pound}vj":close 2:return
 {:4074}
-	CLOSE 2:&"{f6:2}{$ce}O {$d5}/{$c4}S!{f6}":RETURN
-	COPR. 1990 NEW IMAGE 12-26-90
+	close 2:&"{f6:2}{$ce}o {$d5}/{$c4}s!{f6}":return
+	copr. 1990 new image 12-26-90

@@ -1,61 +1,62 @@
-	REM AUTOMAINT MAIN MODULE
-	Z$=LEFT$(AM$,1)
-	GOSUB{:4094}:REM UPDATE DAILY STATS
-	GOSUB{:4078}:REM TOTALS AT END OF LOG
-	REM GOSUB846:REM WEEKLY LOG ROUTINES
-	GOSUB{:4046}:REM DAILY LOG ROUTINES
-	GOSUB{:4018}:REM READ E.DATA FROM DISK
-	GOSUB{:4032}:REM COMPUTE IDLE TIME
-	CLOSE 2:RETURN
+{number:4000}
+	rem automaint main module
+	z$=left$(am$,1)
+	gosub {:4094}:rem update daily stats
+	gosub {:4078}:rem totals at end of log
+	rem gosub 846:rem weekly log routines
+	gosub {:4046}:rem daily log routines
+	gosub {:4018}:rem read e.data from disk
+	gosub {:4032}:rem compute idle time
+	close 2:return
 {:4018}
-	&"{f6}{yellow}{$d2}EADING {f5}E.DATA{f5}{f6}":GOSUB 1063:IF E%THEN CLOSE 2:&"{rvrs on}{lt. red}{f5}E.DATA{f5}{$a0}{$ce}OT {$c6}OUND{f6}":RETURN
-	X=1:GOSUB 1001:INPUT# 2,CA:X=12:GOSUB 1001:&,2,2:UR=VAL(A$)-1
-	X=17:GOSUB 1001:INPUT# 2,D3$:X=18:GOSUB 1001:INPUT# 2,PP$
-	X=19:GOSUB 1001:INPUT# 2,Z$:X=20:GOSUB 1001:INPUT# 2,P1%,P2%,P3%
-	FOR X=21 TO 30:GOSUB 1001:INPUT# 2,FL$(X-21):NEXT:X=31:GOSUB 1001:INPUT# 2,L1
-	X=VAL(I1$)+2:GOSUB 1001:&,2,2:I3$=A$
-	GOSUB 1060:FOR X=1 TO 38:GOSUB 1001:INPUT# 2,ST(X):NEXT:CLOSE 2:GOSUB 1045:RETURN
+	&"{f6}{yellow}{$d2}eading {f5}e.data{f5}{f6}":gosub 1063:if e%then close 2:&"{rvrs on}{lt. red}{f5}e.data{f5}{$a0}{$ce}ot {$c6}ound{f6}":return
+	x=1:gosub 1001:input# 2,ca:x=12:gosub 1001:&,2,2:ur=val(a$)-1
+	x=17:gosub 1001:input# 2,d3$:x=18:gosub 1001:input# 2,pp$
+	x=19:gosub 1001:input# 2,z$:x=20:gosub 1001:input# 2,p1%,p2%,p3%
+	for x=21 to 30:gosub 1001:input# 2,fl$(x-21):next:x=31:gosub 1001:input# 2,l1
+	x=val(i1$)+2:gosub 1001:&,2,2:i3$=a$
+	gosub 1060:for x=1 to 38:gosub 1001:input# 2,st(x):next:close 2:gosub 1045:return
 {:4032}
-	&"{f6}{green}{$c3}OMPUTING {$c9}DLE/{$d5}SED {$d4}IME{f6}":I=T1:A$=D1$:GOSUB 1520:T1=A:IF A<I THEN A=A+1440
-	GOSUB 1060:I=A-I:ST(11)=I:X=11:GOSUB 1026:X=22:GOSUB 1025:X=38:GOSUB 1025
-	CLOSE 2:RETURN
-	A$="E.LOGWEEK,S,R":DR=3:GOSUB 1011:ON-(E%<>.)GOTO{:4072}:IF LEFT$(D1$,1)="1"THEN{:4064}
-	&"{f6}{gray2}{$c1}PPENDING TO {$d7}EEKLY {$cc}OG{f6}"
+	&"{f6}{green}{$c3}omputing {$c9}dle/{$d5}sed {$d4}ime{f6}":i=t1:a$=d1$:gosub 1520:t1=a:if a<i then a=a+1440
+	gosub 1060:i=a-i:st(11)=i:x=11:gosub 1026:x=22:gosub 1025:x=38:gosub 1025
+	close 2:return
+	a$="e.logweek,s,r":dr=3:gosub 1011:on-(e%<>.)goto {:4072}:if left$(d1$,1)="1"then{:4064}
+	&"{f6}{gray2}{$c1}ppending to {$d7}eekly {$cc}og{f6}"
 {:4042}
-	CLOSE 2:PRINT# 15,"C"DR$"TEMP=E.LOGWEEK,E.LOG"
-	PRINT# 15,"S"DR$"E.LOGWEEK":PRINT# 15,"R"DR$"E.LOGWEEK=TEMP":RETURN
+	close 2:print# 15,"c"dr$"temp=e.logweek,e.log"
+	print# 15,"s"dr$"e.logweek":print# 15,"r"dr$"e.logweek=temp":return
 {:4046}
-	&"{$d2}ESTARTING LOG FOR ":DR=3:GOSUB 1010:Z$=LEFT$(D1$,1)
-	&MID$("{$d3}UN{$cd}ON{$d4}UE{$d7}ED{$d4}HU{$c6}RI{$d3}AT",VAL(Z$)*3-2,3)
-	DR=3:A$="E.LOG"+Z$:GOSUB 1024
-	AN$=D1$:&,15:D6$=AN$:B$="LOG"+Z$:GOSUB 1068
-	A$="{orange} {$d3}{$d4}{$c1}{$d2}{$d4}--"+D6$:PRINT# 2,A$:A$=MID$(A$,2):GOSUB 1096
-	A$="{yellow}"+LEFT$(AK$,26)+"{f6}":PRINT# 2,A$:A$=MID$(A$,2):GOSUB 1096
-	A$=LEFT$(AK$,24):PRINT# 2,A$:GOSUB 1096
-	CLOSE 2:GOSUB 1081
+	&"{$d2}estarting log for ":dr=3:gosub 1010:z$=left$(d1$,1)
+	&mid$("{$d3}un{$cd}on{$d4}ue{$d7}ed{$d4}hu{$c6}ri{$d3}at",val(z$)*3-2,3)
+	dr=3:a$="e.log"+z$:gosub 1024
+	an$=d1$:&,15:d6$=an$:b$="log"+z$:gosub 1068
+	a$="{orange} {$d3}{$d4}{$c1}{$d2}{$d4}--"+d6$:print# 2,a$:a$=mid$(a$,2):gosub 1096
+	a$="{yellow}"+left$(ak$,26)+"{f6}":print# 2,a$:a$=mid$(a$,2):gosub 1096
+	a$=left$(ak$,24):print# 2,a$:gosub 1096
+	close 2:gosub 1081
 {:4062}
-	GOSUB 1060:FOR X=12 TO 22:ST(X)=.:GOSUB 1026:NEXT:GOSUB 1026:CLOSE 2
+	gosub 1060:for x=12 to 22:st(x)=.:gosub 1026:next:gosub 1026:close 2
 {:4064}
-	&"{f6:2}{$cc}OG {$d2}ESTARTED.{f6:2}":T$=AM$:AM$=D1$+"":RETURN
-	K$=MID$(D1$,4,2)+"/"+MID$(D1$,6,2)+"/"+MID$(D1$,2,2):A$="LOG"+K$:RETURN
-	GOSUB{:4062}:&"{f6}{brown}{$c1}RCHIVING {$d7}EEKLY {$cc}OG{f6}"
-	DR=3:GOSUB 1010:PRINT# 15,"R"+DR$+A$+"=E.LOGWEEK":CLOSE 15
+	&"{f6:2}{$cc}og {$d2}estarted.{f6:2}":t$=am$:am$=d1$+"":return
+	k$=mid$(d1$,4,2)+"/"+mid$(d1$,6,2)+"/"+mid$(d1$,2,2):a$="log"+k$:return
+	gosub {:4062}:&"{f6}{brown}{$c1}rchiving {$d7}eekly {$cc}og{f6}"
+	dr=3:gosub 1010:print# 15,"r"+dr$+a$+"=e.logweek":close 15
 {:4072}
-	&"{f6}{gray1}{$d3}TARTING {$ce}EW {$d7}EEKLY {$cc}OG{f6}":GOSUB{:4062}
-	A$="E.LOGWEEK,S,W":DR=3:GOSUB 1011:PRINT# 2,"{$d7}EEKLY {$cc}OG {$d2}ESTARTED "+K$+R$
-	CLOSE 2:GOTO{:4042}
+	&"{f6}{gray1}{$d3}tarting {$ce}ew {$d7}eekly {$cc}og{f6}":gosub {:4062}
+	a$="e.logweek,s,w":dr=3:gosub 1011:print# 2,"{$d7}eekly {$cc}og {$d2}estarted "+k$+r$
+	close 2:goto {:4042}
 {:4078}
-	B$="LOG"+Z$:GOSUB 1068:IF E%THEN CLOSE 2:RETURN
-	PRINT# 2,R$"{orange} {$cc}OG {$d4}OTALS:"R$
-	PRINT# 2,R$"{yellow} {$d0}OSTS :"STR$(ST(15))R$" {$d2}ESPS :"STR$(ST(16))R$
-	PRINT# 2," {lt. red}{$d5}PLDS :"STR$(ST(17))R$" {$c4}WNLD :"STR$(ST(18))R$
-	PRINT# 2," {green}{$ce}EW {$d5}R:"STR$(ST(19))R$" {$c3}ALLS :"STR$(ST(20))
-	A=ST(21):B=ST(22):C=A+B:IF C=.THEN A$=" 0":B$=" 0":GOTO{:4092}
-	A=INT(A/C*100):B$=STR$(100-A):A$=STR$(A)
+	b$="log"+z$:gosub 1068:if e%then close 2:return
+	print# 2,r$"{orange} {$cc}og {$d4}otals:"r$
+	print# 2,r$"{yellow} {$d0}osts :"str$(st(15))r$" {$d2}esps :"str$(st(16))r$
+	print# 2," {lt. red}{$d5}plds :"str$(st(17))r$" {$c4}wnld :"str$(st(18))r$
+	print# 2," {green}{$ce}ew {$d5}r:"str$(st(19))r$" {$c3}alls :"str$(st(20))
+	a=st(21):b=st(22):c=a+b:if c=.then a$=" 0":b$=" 0":goto {:4092}
+	a=int(a/c*100):b$=str$(100-a):a$=str$(a)
 {:4092}
-	PRINT# 2,R$"{cyan}{rvrs on} {$d3}YSTEM USED"A$"%, {$c9}DLE"B$"% THIS LOG"R$:CLOSE 2:RETURN
+	print# 2,r$"{cyan}{rvrs on} {$d3}ystem used"a$"%, {$c9}dle"b$"% this log"r$:close 2:return
 {:4094}
-	DR=3:A$="E.DAILY STATS,L,P":GOSUB 1011:X=INT(VAL(Z$)):GOSUB 1001
-	A$="":FOR I=12 TO 22:A$=A$+STR$(ST(I))+R$:NEXT:PRINT# 2,D1$R$A$;:CLOSE 2
-	RETURN
-	COPR. 1990 NEW IMAGE 12-26-90
+	dr=3:a$="e.daily stats,l,p":gosub 1011:x=int(val(z$)):gosub 1001
+	a$="":for i=12 to 22:a$=a$+str$(st(i))+r$:next:print# 2,d1$r$a$;:close 2
+	return
+	copr. 1990 new image 12-26-90

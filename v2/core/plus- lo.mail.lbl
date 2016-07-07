@@ -1,19 +1,20 @@
-	A=9:GOSUB 1004:ON-(A=.)GOTO{:4026}:B%=.:A%=.:MM=.
-	A$="R":TT$=NA$:GOSUB 1062:IF E%THEN:&"{f6}{$d3}ORRY, {$ce}O {$cd}AIL {$d4}ODAY.{f6}":GOTO{:4026}
-	IF I%OR K%THEN CLOSE 2:&"{f6:2}{gray3}{$d9}OU HAVE {$cd}AIL":GOTO{:4024}
+{number:4000}
+	a=9:gosub 1004:on-(a=.)goto {:4026}:b%=.:a%=.:mm=.
+	a$="r":tt$=na$:gosub 1062:if e%then:&"{f6}{$d3}orry, {$ce}o {$cd}ail {$d4}oday.{f6}":goto {:4026}
+	if i%or k%then close 2:&"{f6:2}{gray3}{$d9}ou have {$cd}ail":goto {:4024}
 {:4006}
-	&".":IF RC THEN CLOSE 2:&"{f6:2}{gray3}{$d9}OU HAVE {$cd}AIL":GOTO{:4024}
-	B%=B%+1:INPUT# 2,A$,A$,A$:IF MID$(A$,2)>MID$(LD$,2)THEN A%=A%+1
+	&".":if rc then close 2:&"{f6:2}{gray3}{$d9}ou have {$cd}ail":goto {:4024}
+	b%=b%+1:input# 2,a$,a$,a$:if mid$(a$,2)>mid$(ld$,2)then a%=a%+1
 {:4010}
-	&,2,2:S=ST:ON TR%+1 GOTO{:4026}:ON-(A$<>"{up arrow}")GOTO{:4010}:ON-(S=.)GOTO{:4006}:CLOSE 2
-	&"{f6}":A$="S.MAIL":DR=1:GOSUB 1076:B$="":IF B%>1 THEN B$="S"
-	C$="{$c9}T {$c9}S":IF A%>1 THEN C$="{$c1}RE"
-	MM=1:&"{f6}{green}{$d9}OU {$c8}AVE {white}{pound}%B{green} {$d0}IECE{pound}$B {$cf}F {$cd}AIL":IF A%=1 THEN:&"{f1}{green} {pound}$C {$ce}EW":GOTO{:4024}
-	IF B%>1 THEN IF A%=1 THEN:&"{f1}{white}{pound}%A {green}{$c9}S {$ce}EW":GOTO{:4024}
-	IF B%>1 THEN IF A%=B%THEN:&"{f1} {green}{$c1}LL {pound}$C {$ce}EW":GOTO{:4024}
-	&"{f1}{white} {pound}%A {green}{pound}$C {$ce}EW"
+	&,2,2:s=st:on tr%+1 goto {:4026}:on-(a$<>"{up arrow}")goto {:4010}:on-(s=.)goto {:4006}:close 2
+	&"{f6}":a$="s.mail":dr=1:gosub 1076:b$="":if b%>1 then b$="s"
+	c$="{$c9}t {$c9}s":if a%>1 then c$="{$c1}re"
+	mm=1:&"{f6}{green}{$d9}ou {$c8}ave {white}{pound}%b{green} {$d0}iece{pound}$b {$cf}f {$cd}ail":if a%=1 then:&"{f1}{green} {pound}$c {$ce}ew":goto {:4024}
+	if b%>1 then if a%=1 then:&"{f1}{white}{pound}%a {green}{$c9}s {$ce}ew":goto {:4024}
+	if b%>1 then if a%=b%then:&"{f1} {green}{$c1}ll {pound}$c {$ce}ew":goto {:4024}
+	&"{f1}{white} {pound}%a {green}{pound}$c {$ce}ew"
 {:4024}
-	&"!{f6:2}{$d2}EAD {$ce}OW?: ":GOTO 1907
+	&"!{f6:2}{$d2}ead {$ce}ow?: ":goto 1907
 {:4026}
-	CLOSE 2:A=.:RETURN
-	COPR. 1994 NEW IMAGE 11/27/94
+	close 2:a=.:return
+	copr. 1994 new image 11/27/94

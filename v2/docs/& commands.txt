@@ -138,13 +138,20 @@ Last updated 25/Dec/2008 16:43
 		&,60,3,.,fb%(.,.),960,a$,dv%
 	
 	PutDate: put date string into structure (BCD)
-	Usage:	&,60,4,array(a,b),<string>
-	
+	Usage:	&,60,4,0,array(a,b),<string$>
+
+		array(a,b)	starting element
+		string$		the date string
+
 	GetDate: get date string from structure (BCD)
 	Usage:	&,60,5,array(a,b),<string>
+
+		arry(a,b)	starting element
+		string$		the date string
 	
 	DoScan: Scan structures (yikes)
 	Usage:	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
+
 	<number>	# of structures to scan
 	<command>
 			0	2 byte AND, <>0
@@ -153,8 +160,8 @@ Last updated 25/Dec/2008 16:43
 			3	2 byte CMP, >=
 			4	date   CMP, <
 			5	date   CMP, >=
-	<a(a,b)>	starting flags element
-	<b(a,b)>	starting object element
+	a(a,b)		starting flags element
+	b(a,b)		starting object element
 	<l>		unknown
 	<bits>		the bits to set if true
 	<test>		the object to test for
@@ -170,19 +177,29 @@ Last updated 25/Dec/2008 16:43
 	
 	scannums
 	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
+
 	num	number of items in struct
 	siz	
+	acs
+	a(a,b)
+	a%(a)
+	start
+
 	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
 		(sub.menus)
+
 	
 	scansum
 	Usage:	&,60,9,num,siz,a(a,b)
+
 	
 	cpystruc
 	Usage:	&,60,10,size,a1(a,b),a2(a,b)
+
 	
 	scanstr
 	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
+
 	
 	gamescan
 	Usage:	&,60,13,count,size,a$,a%(a,b),b$

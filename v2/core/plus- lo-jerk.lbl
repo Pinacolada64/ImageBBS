@@ -1,68 +1,70 @@
-	&"{f6}{gray3}{$d6}OTE FOR {$ca}ERK {$c1}WARD? ":GOSUB 1907:ON A+1 GOTO 1603
-	A=8:GOSUB 1004:Q=A:GOSUB 2912:A$="N.${$ca}ERK {$c1}WARD":DR=1:GOSUB 1075
+{number:4000}
+	rem +.lo.jerk
+	&"{f6}{gray3}{$d6}ote for {$ca}erk {$c1}ward? ":gosub 1907:on a+1 goto 1603
+	a=8:gosub 1004:q=a:gosub 2912:a$="n.${$ca}erk {$c1}ward":dr=1:gosub 1075
 {:4004}
-	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} {$d0}ORT {$c3}OMMODORE {rvrs off}{f6}{pound}{back arrow}13{green}{$d0}RESENTS....{f6:2}{pound}{back arrow}10{white}{$d4}HE {rvrs on}{purple}{$ca}{$c5}{$d2}{$cb}{green}{rvrs off} {$c1}WARD!!{f6}"
-	A$="E.JERKS":DR=3:GOSUB 1011:IF E%THEN:&"{f6}{$ce}OT CONFIGURED{pound}W2":GOTO{:4100}
-	X=17:GOSUB 1001:&,2,2:D=VAL(A$):X=1:GOSUB 1001:&,2,2:IF A$="{up arrow}"THEN{:4050}
-	IF A$="{$ff}"THEN{:4050}
-	N$=A$:&"{f6:3}{lt. blue}{$d4}HE {white}{$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3}{lt. blue} {$c1}RE: {f6}":C=.
+	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} {$d0}ort {$c3}ommodore {rvrs off}{f6}{pound}{back arrow}13{green}{$d0}resents....{f6:2}{pound}{back arrow}10{white}{$d4}he {rvrs on}{purple}{$ca}{$c5}{$d2}{$cb}{green}{rvrs off} {$c1}ward!!{f6}"
+	a$="e.jerks":dr=3:gosub 1011:if e%then:&"{f6}{$ce}ot configured{pound}w2":goto {:4100}
+	x=17:gosub 1001:&,2,2:d=val(a$):x=1:gosub 1001:&,2,2:if a$="{up arrow}"then{:4050}
+	if a$="{$ff}"then{:4050}
+	n$=a$:&"{f6:3}{lt. blue}{$d4}he {white}{$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3}{lt. blue} {$c1}re: {f6}":c=.
 {:4014}
-	C%=VAL(N$):N$=MID$(N$,4)
-	B%=X:&"{f6}{white}<{gray1}{pound}%B{white}>{green} {pound}$N{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%C{yellow} {$d6}OTE!":IF C%<>1 THEN:&"{pound}H1S"
-	&"!":X=X+1:KK=X:GOSUB 1001:&,2,2:N$=A$:IF MID$(N$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"THEN C=C+1
-	IF N$<>"{up arrow}"THEN{:4014}
+	c%=val(n$):n$=mid$(n$,4)
+	b%=x:&"{f6}{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} {$d6}ote!":if c%<>1 then:&"{pound}h1s"
+	&"!":x=x+1:kk=x:gosub 1001:&,2,2:n$=a$:if mid$(n$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"then c=c+1
+	if n$<>"{up arrow}"then{:4014}
 {:4022}
-	&"{f6:2}{gray3}{$d6})OTE, {$c1})DD {$c1} {$ce}EW {$ce}OMINEE {$cf}R {$d1})UIT?{f6}15 {$ce}AME {$cd}AXIMUM.{f6}> {pound}G1{lt. green}{pound}V7{f6}"
-	IF TR%<1 THEN{:4100}
-	ON-(AN$="{$d6}")-(AN$="{$c1}")*2-(AN$="{$d1}")*3 GOTO{:4028},{:4054},{:4100}:GOTO{:4022}
+	&"{f6:2}{gray3}{$d6})ote, {$c1})dd {$c1} {$ce}ew {$ce}ominee {$cf}r {$d1})uit?{f6}15 {$ce}ame {$cd}aximum.{f6}> {pound}g1{lt. green}{pound}v7{f6}"
+	if tr%<1 then{:4100}
+	on-(an$="{$d6}")-(an$="{$c1}")*2-(an$="{$d1}")*3 goto {:4028},{:4054},{:4100}:goto {:4022}
 {:4028}
-	C=1:A$="E.JVOTERS,S,R":DR=3:GOSUB 1011:IF E%THEN{:4100}
+	c=1:a$="e.jvoters,s,r":dr=3:gosub 1011:if e%then{:4100}
 {:4030}
-	ON Q GOTO{:4034}:FOR X=1 TO D:&,2,2:IF NA$=A$THEN X=D:C=.
-	NEXT:ON-(C<>.)GOTO{:4034}:&"{f6:2}{$d3}ORRY, {$d9}OU'VE {$c1}LREADY {$d6}OTED{pound}W2":GOTO{:4100}
+	on q goto {:4034}:for x=1 to d:&,2,2:if na$=a$then x=d:c=.
+	next:on-(c<>.)goto {:4034}:&"{f6:2}{$d3}orry, {$d9}ou've {$c1}lready {$d6}oted{pound}w2":goto {:4100}
 {:4034}
-	&"{f6:2}{yellow}{$d6}OTE {$c6}OR {$d7}HICH {$ce}UMBER?{cyan} {pound}I1":ON-(AN$=""OR AN$="{$d1}")GOTO{:4100}
-	ON TR%+1 GOTO{:4100}:X=INT(VAL(AN$)):IF X<1 OR X>KK THEN{:4030}
-	A$="E.JERKS":DR=3:GOSUB 1011:IF E%THEN{:4100}
-	GOSUB 1001:&,2,2:N$=A$:C%=VAL(N$):N$=MID$(N$,4)
-	C%=C%+1:N$=RIGHT$(STR$(1000+C%),3)+N$
-	GOSUB 1001:PRINT# 2,N$:CLOSE 2:A$="E.JVOTERS,S,A":DR=3:GOSUB 1011:IF E%THEN{:4100}
-	IF Q=.THEN PRINT# 2,NA$:D=D+1:A$="E.JERKS":GOSUB 1011:X=17:GOSUB 1001:PRINT# 2,D
-	&"{f6:2}{$d9}OUR {$d6}OTE {$c8}AS {$c2}EEN {$d2}ECORDED, {$d4}HANKS!{f6}{pound}W2":GOTO{:4100}
+	&"{f6:2}{yellow}{$d6}ote {$c6}or {$d7}hich {$ce}umber?{cyan} {pound}i1":on-(an$=""or an$="{$d1}")goto {:4100}
+	on tr%+1 goto {:4100}:x=int(val(an$)):if x<1 or x>kk then{:4030}
+	a$="e.jerks":dr=3:gosub 1011:if e%then{:4100}
+	gosub 1001:&,2,2:n$=a$:c%=val(n$):n$=mid$(n$,4)
+	c%=c%+1:n$=right$(str$(1000+c%),3)+n$
+	gosub 1001:print# 2,n$:close 2:a$="e.jvoters,s,a":dr=3:gosub 1011:if e%then{:4100}
+	if q=.then print# 2,na$:d=d+1:a$="e.jerks":gosub 1011:x=17:gosub 1001:print# 2,d
+	&"{f6:2}{$d9}our {$d6}ote {$c8}as {$c2}een {$d2}ecorded, {$d4}hanks!{f6}{pound}w2":goto {:4100}
 {:4050}
-	&"{f6:2}{cyan}{$d4}HERE {$c1}RE {$ce}{$cf} {$ce}OMINEES, {$d7}OULD {$d9}OU {$cc}IKE {$d4}O{f6}{$ce}OMINATE {$d3}OMEONE? "
-	GOSUB 1902:IF A=.THEN{:4100}
+	&"{f6:2}{cyan}{$d4}here {$c1}re {$ce}{$cf} {$ce}ominees, {$d7}ould {$d9}ou {$cc}ike {$d4}o{f6}{$ce}ominate {$d3}omeone? "
+	gosub 1902:if a=.then{:4100}
 {:4054}
-	IF KK>15 AND C=.THEN:&"{f6:2}{purple}{$ce}O {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3} {$c2}EING {$c1}CCEPTED {$c1}T {$d4}HIS {$d4}IME!{f6}":GOTO{:4022}
-	&"{f6:2}{cyan}{$c1}ND {rvrs on}{white} {$d7}{$c8}{$cf} {rvrs off}{cyan} {$c9}S {$d9}OUR {$ce}OMINEE?{f6:2}> {pound}I1":A=LEN(AN$):IF TR%<1 THEN{:4100}
-	IF A<5 OR A>20 THEN{:4062}
-	GOSUB 1046:IF I THEN{:4064}
+	if kk>15 and c=.then:&"{f6:2}{purple}{$ce}o {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3} {$c2}eing {$c1}ccepted {$c1}t {$d4}his {$d4}ime!{f6}":goto {:4022}
+	&"{f6:2}{cyan}{$c1}nd {rvrs on}{white} {$d7}{$c8}{$cf} {rvrs off}{cyan} {$c9}s {$d9}our {$ce}ominee?{f6:2}> {pound}i1":a=len(an$):if tr%<1 then{:4100}
+	if a<5 or a>20 then{:4062}
+	gosub 1046:if i then{:4064}
 {:4062}
-	&"{f6:2}{$d3}ORRY, {pound}V7 {$c4}OESN'T {$c5}XIST!{f6}":GOTO{:4068}
+	&"{f6:2}{$d3}orry, {pound}v7 {$c4}oesn't {$c5}xist!{f6}":goto {:4068}
 {:4064}
-	IF I=1 THEN:&"{f6:2}{$c9}T'S {$ce}OT {$ce}{$c9}{$c3}{$c5} {$d4}O {$c6}OOL {$d7}ITH {$d4}HE {$d3}YSOP!{pound}W2{f6}":GOTO{:4100}
-	GOTO{:4070}
+	if i=1 then:&"{f6:2}{$c9}t's {$ce}ot {$ce}{$c9}{$c3}{$c5} {$d4}o {$c6}ool {$d7}ith {$d4}he {$d3}ysop!{pound}w2{f6}":goto {:4100}
+	goto {:4070}
 {:4068}
-	&"{f6:2}{$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$d4}RY {$c1}GAIN? ":GOSUB 1902:ON A GOTO{:4054}:GOTO{:4100}
+	&"{f6:2}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$d4}ry {$c1}gain? ":gosub 1902:on a goto {:4054}:goto {:4100}
 {:4070}
-	NN$=AN$:DR=3:A$="E.JERKS":GOSUB 1011:IF E%THEN{:4100}
-	X=.:TT$=""
+	nn$=an$:dr=3:a$="e.jerks":gosub 1011:if e%then{:4100}
+	x=.:tt$=""
 {:4074}
-	X=X+1:GOSUB 1001:&,2,2:TT$=A$:IF MID$(TT$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"THEN{:4082}
-	IF MID$(TT$,4)=NN$THEN:&"{f6:2}{white}{$d4}HAT {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2} {$c1}LREADY {$c5}XISTS!{f6}{pound}W2{lt. green}":GOTO{:4100}
-	IF TT$<>"{up arrow}"THEN{:4074}
-	GOSUB 1001:PRINT# 2,"000"NN$:X=X+1:GOSUB 1001:PRINT# 2,"{up arrow}":GOTO{:4084}
+	x=x+1:gosub 1001:&,2,2:tt$=a$:if mid$(tt$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"then{:4082}
+	if mid$(tt$,4)=nn$then:&"{f6:2}{white}{$d4}hat {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2} {$c1}lready {$c5}xists!{f6}{pound}w2{lt. green}":goto {:4100}
+	if tt$<>"{up arrow}"then{:4074}
+	gosub 1001:print# 2,"000"nn$:x=x+1:gosub 1001:print# 2,"{up arrow}":goto {:4084}
 {:4082}
-	GOSUB 1001:PRINT# 2,"000"NN$
+	gosub 1001:print# 2,"000"nn$
 {:4084}
-	CLOSE 2:&"{f6:2}{orange}{$d9}OUR {$ce}OMINEE {$c8}AS {$c2}EEN {$c1}DDED!{f6}"
-	&"{$ce}OMINEE NOW BEING NOTIFED VIA {$c5}MAIL"
-	W=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":W=.:GOSUB 1062
-	PRINT# 2,"{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}{f6}{$ce}{$cf}{$cd}{$c9}{$ce}{$c1}{$d4}{$c9}{$cf}{$ce}{$a0}{$c3}{$cf}{$cd:2}{$c9}{$d4:2}{$c5:2}"R$"({$d5}{$c9}{$c4}#0)"R$;D1$
-	PRINT# 2,"[{$c3}{$cf}{$ce}{$c7}{$d2}{$c1}{$d4}{$d5}{$cc}{$c1}{$d4}{$c9}{$cf}{$ce}{$d3}]":PRINT# 2,NA$+" {$c8}AS {$ce}OMINATED {$d9}{$cf}{$d5}"
-	PRINT# 2,"FOR THE {white}{rvrs on}{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}":PRINT# 2,"{f6}{lt. green}{$d9}OUR VERY WELL DESERVED NOMINATION"
-	PRINT# 2,"HAS BEEN ACCEPTED!!":PRINT# 2,"{up arrow}":CLOSE 2
-	&"{f6:2}{$d4}IDINGS SENT!{pound}W2":GOTO{:4004}
+	close 2:&"{f6:2}{orange}{$d9}our {$ce}ominee {$c8}as {$c2}een {$c1}dded!{f6}"
+	&"{$ce}ominee now being notifed via {$c5}mail"
+	w=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":w=.:gosub 1062
+	print# 2,"{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}{f6}{$ce}{$cf}{$cd}{$c9}{$ce}{$c1}{$d4}{$c9}{$cf}{$ce}{$a0}{$c3}{$cf}{$cd:2}{$c9}{$d4:2}{$c5:2}"r$"({$d5}{$c9}{$c4}#0)"r$;d1$
+	print# 2,"[{$c3}{$cf}{$ce}{$c7}{$d2}{$c1}{$d4}{$d5}{$cc}{$c1}{$d4}{$c9}{$cf}{$ce}{$d3}]":print# 2,na$+" {$c8}as {$ce}ominated {$d9}{$cf}{$d5}"
+	print# 2,"for the {white}{rvrs on}{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}":print# 2,"{f6}{lt. green}{$d9}our very well deserved nomination"
+	print# 2,"has been accepted!!":print# 2,"{up arrow}":close 2
+	&"{f6:2}{$d4}idings sent!{pound}w2":goto {:4004}
 {:4100}
-	D=.:X=.:C=.:CLOSE 2:RETURN
-	COPR. 1994 NEW IMAGE 9/18/94
+	d=.:x=.:c=.:close 2:return
+	copr. 1994 new image 9/18/94

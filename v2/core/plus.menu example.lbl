@@ -1,38 +1,39 @@
-	REM MENU DEMO/EXAMPLE PROGRAM
-	&,52,44,3:MM=A%:&,52,45,3:MM=MM AND A%: REM CHECK LITEBAR VERIFY BOTH =1
-	DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2: REM LOAD IN PROTOCOL
+{number:3000}
+	rem menu demo/example program
+	&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%: rem check litebar verify both =1
+	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2: rem load in protocol
 {:3006}
-	&,28,1: REM CLEAR VARIABLES
-	N=4: REM NUMBER OF OPTIONS
-	DIM M%(16,N):REM 16 IS # OF CHARACTERS FOR OPTIONS
-	REM NEXT LINES SETUP MENU INFORMATION
-	&,16,.,34,M%(.,1),"{$c1}","","{$cf}PTION {$c1}"
-	&,16,.,34,M%(.,2),"{$c2}","","{$cf}PTION {$c2}"
-	&,16,.,34,M%(.,3),"{$c3}","","{$cf}PTION {$c3}"
-	&,16,.,34,M%(.,4),"{$c4}","","{$d1}UIT"
-	REM SETUP HEADER
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            {$c9}MAGE {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$cd}ENU {$c5}XAMPLE {$d0}ROGRAM{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	REM ENABLE MENU
-	&,16,2,34,M%(.,1),N,17,2,N/2+.5,2,6,.:LM=A%+1:&,70,.,N/2+8.5:&"{white}"
-	REM
-	IF TR%<1 OR LM=N OR LM=.THEN 1811:REM CHECK FOR CARRIER DROP OR FOR
-	REM NULL STRING, OR FOR QUIT OPTION WHICH MUST BE LAST ON LIST
-	ON LM GOTO {:3040},{:3048},{:3056}
-	GOTO 1811: REM NO OPTION/RETURN TO MAIN
+	&,28,1: rem clear variables
+	n=4: rem number of options
+	dim m%(16,n):rem 16 is # of characters for options
+	rem next lines setup menu information
+	&,16,.,34,m%(.,1),"{$c1}","","{$cf}ption {$c1}"
+	&,16,.,34,m%(.,2),"{$c2}","","{$cf}ption {$c2}"
+	&,16,.,34,m%(.,3),"{$c3}","","{$cf}ption {$c3}"
+	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uit"
+	rem setup header
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$cd}enu {$c5}xample {$d0}rogram{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	rem enable menu
+	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"
+	rem
+	if tr%<1 or lm=n or lm=.then 1811:rem check for carrier drop or for
+	rem null string, or for quit option which must be last on list
+	on lm goto {:3040},{:3048},{:3056}
+	goto 1811: rem no option/return to main
 {:3040}
-	REM OPTION A
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c1} {$c5}XECUTED *{rvrs off}":
-	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
-	GOTO {:3006}
+	rem option a
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c1} {$c5}xecuted *{rvrs off}":
+	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	goto {:3006}
 {:3048}
-	REM OPTION B
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c2} {$c5}XECUTED *{rvrs off}":
-	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
-	GOTO{:3006}
+	rem option b
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c2} {$c5}xecuted *{rvrs off}":
+	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	goto {:3006}
 {:3056}
-	REM OPTION C
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}PTION {$c3} {$c5}XECUTED *{rvrs off}"
-	&"{f6:2}{white}- {$c8}IT {$c1}NY {$cb}EY -{pound}G1":
-	GOTO{:3006}
-	COPR. 1994 NEW IMAGE 10/25/94
+	rem option c
+	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c3} {$c5}xecuted *{rvrs off}"
+	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	goto {:3006}
+	copr. 1994 new image 10/25/94

@@ -1,7 +1,7 @@
-	ON MM GOTO{:3100},{:3200},{:3300}
+	ON MM goTO {:3100},{:3200},{:3300}
 {:3002}
 	W$=MID$(STR$(CM%(Y,X)),2):POKE 53252,5:PL=1:&,1,32:IF AN$=""THEN RETURN
-	A=VAL(AN$):IF AN$="{f2}"THEN GOSUB{:3008}
+	A=VAL(AN$):IF AN$="{f2}"THEN goSUB {:3008}
 	CM%(Y,X)=A:TZ=1:RETURN
 {:3008}
 	B=0:FOR I=0 TO 9:&"{$c7}ROUP {pound}!I":GOSUB 3:B=B+A*2^I:NEXT:A=B:RETURN
@@ -29,24 +29,24 @@
 	&"6. {$d4}ITLE: {pound}$A{f6}":&,60,1,20,CM%(40,X),A$
 	&"7. {$c6}ILE: {f5}{pound}$B{pound}$A{f5}{f6}"
 	&"{f6}> {pound}G1":A=VAL(AN$)
-	IF A THEN ON A GOSUB{:3058},{:3060},{:3068},{:3062},{:3070},{:3072},{:3074}:GOTO{:3032}
+	IF A THEN ON A goSUB {:3058},{:3060},{:3068},{:3062},{:3070},{:3072},{:3074}:goTO {:3032}
 	&"{$d1}UIT{f6:2}":RETURN
 {:3058}
-	&"{$c1}CCESS{f6:2}":P$="{$d6}IEW":Y=1:GOSUB{:3002}:P$="{$d5}SE":Y=2:GOTO{:3002}
+	&"{$c1}CCESS{f6:2}":P$="{$d6}IEW":Y=1:goSUB {:3002}:P$="{$d5}SE":Y=2:goTO {:3002}
 {:3060}
-	&"{$d4}YPE{f6:2}":P$="{$d4}YPE":Y=3:L=2:GOTO{:3010}
+	&"{$d4}YPE{f6:2}":P$="{$d4}YPE":Y=3:L=2:goTO {:3010}
 {:3062}
-	&"{$c4}EVICE{f6:2}":P$="{$c4}EVICE":Y=5:L=3:GOSUB{:3010}
-	P$="{$c4}RIVE":Y=6:L=3:GOSUB{:3010}
-	P$="{$c4}{$cf}{$d3} {$c3}MD":PL=1:Y=7:L=16:GOSUB{:3018}:RETURN
+	&"{$c4}EVICE{f6:2}":P$="{$c4}EVICE":Y=5:L=3:goSUB {:3010}
+	P$="{$c4}RIVE":Y=6:L=3:goSUB {:3010}
+	P$="{$c4}{$cf}{$d3} {$c3}MD":PL=1:Y=7:L=16:goSUB {:3018}:RETURN
 {:3068}
-	&"{$c3}REDITS{f6:2}":P$="{$c3}REDITS":Y=4:L=5:GOTO{:3010}
+	&"{$c3}REDITS{f6:2}":P$="{$c3}REDITS":Y=4:L=5:goTO {:3010}
 {:3070}
-	&"{$d4}IMES {$d5}SED{f6:2}":P$="{$d4}IMES {$d5}SED":Y=21:L=5:GOTO{:3010}
+	&"{$d4}IMES {$d5}SED{f6:2}":P$="{$d4}IMES {$d5}SED":Y=21:L=5:goTO {:3010}
 {:3072}
-	&"{$d4}ITLE{f6:2}":P$="{$d4}ITLE":PL=0:Y=26:L=28:GOTO{:3014}
+	&"{$d4}ITLE{f6:2}":P$="{$d4}ITLE":PL=0:Y=26:L=28:goTO {:3014}
 {:3074}
-	&"{$c6}ILE{f6:2}":T=CM%(3,X):GOSUB 100:P$="{$c6}ILE":PL=0:Y=40:L=16-LEN(B$):GOTO{:3014}
+	&"{$c6}ILE{f6:2}":T=CM%(3,X):GOSUB 100:P$="{$c6}ILE":PL=0:Y=40:L=16-LEN(B$):goTO {:3014}
 {:3100}
 	X=CM%(0,0)+1
 	CM%(0,X)=0:CM%(1,X)=CM%(4,0):CM%(2,X)=CM%(1,X):CM%(3,X)=0:CM%(4,X)=0
@@ -55,11 +55,11 @@
 	&,60,4,0,CM%(15,X),D1$:&,60,4,0,CM%(18,X),D1$:CM%(21,X)=0
 	CM%(22,X)=0:CM%(23,X)=0:CM%(24,X)=0:CM%(25,X)=0
 	&,60,0,28,CM%(26,X),"":&,60,0,20,CM%(40,X),""
-	GOSUB{:3030}:IF CM%(3,X)<>0 THEN CM%(0,0)=X:CF=1
+	goSUB {:3030}:IF CM%(3,X)<>0 THEN CM%(0,0)=X:CF=1
 	RETURN
 {:3200}
 	X=VAL(MID$(AN$,2,2)):IF X<0 OR X>CL%(0)THEN RETURN
-	X=CL%(X):GOSUB{:3030}:IF TZ THEN CF=1
+	X=CL%(X):goSUB {:3030}:IF TZ THEN CF=1
 	RETURN
 {:3300}
 	I=VAL(MID$(AN$,2,2)):IF I<0 OR I>CL%(0)THEN RETURN

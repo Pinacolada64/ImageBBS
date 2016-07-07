@@ -1,89 +1,90 @@
+{number:3000}
 {:3000}
-	GOSUB{:3094}:PR$="":GOTO 1812
+	gosub {:3094}:pr$="":goto 1812
 {:3002}
-	GOSUB{:3018}:GOSUB{:3022}:GOSUB{:3032}:GOSUB{:3118}:CLOSE 2:GOSUB{:3026}:GOTO{:3000}:REM INSERT
+	gosub {:3018}:gosub {:3022}:gosub {:3032}:gosub {:3118}:close 2:gosub {:3026}:goto {:3000}:rem insert
 {:3004}
-	GOSUB{:3018}:GOSUB{:3022}:GOSUB{:3032}:GOSUB{:3114}:CLOSE 2:GOSUB{:3026}:GOTO{:3020}:REM DELETE
+	gosub {:3018}:gosub {:3022}:gosub {:3032}:gosub {:3114}:close 2:gosub {:3026}:goto {:3020}:rem delete
 {:3006}
-	GOSUB{:3018}:GOSUB{:3022}:GOSUB{:3078}:CLOSE 2:GOTO{:3020}:REM CONVERT >U.ALPHA
+	gosub {:3018}:gosub {:3022}:gosub {:3078}:close 2:goto {:3020}:rem convert >u.alpha
 {:3008}
-	GOSUB{:3018}:GOSUB{:3032}:GOSUB{:3070}:CLOSE 2:GOSUB{:3026}:GOTO{:3020}:REM CREATE
+	gosub {:3018}:gosub {:3032}:gosub {:3070}:close 2:gosub {:3026}:goto {:3020}:rem create
 {:3010}
-	GOSUB{:3062}:GOSUB{:3018}:GOSUB{:3022}:GOSUB{:3032}:GOSUB{:3038}:CLOSE 2:GOSUB{:3064}:GOTO{:3020}:REM SEARCH
+	gosub {:3062}:gosub {:3018}:gosub {:3022}:gosub {:3032}:gosub {:3038}:close 2:gosub {:3064}:goto {:3020}:rem search
 {:3012}
-	GOSUB{:3018}:GOSUB{:3022}:GOSUB{:3032}:GOSUB{:3058}:CLOSE 2:GOTO{:3020}:REM LIST
+	gosub {:3018}:gosub {:3022}:gosub {:3032}:gosub {:3058}:close 2:goto {:3020}:rem list
 {:3014}
-	GOSUB{:3018}:GOSUB{:3034}:GOSUB{:3036}:CLOSE 2:GOSUB{:3026}:GOTO{:3020}:REM CONVERT <U.ALPHA
+	gosub {:3018}:gosub {:3034}:gosub {:3036}:close 2:gosub {:3026}:goto {:3020}:rem convert <u.alpha
 {:3016}
-	X=UR%(N):GOSUB 1001:&,2,2:RETURN
+	x=ur%(n):gosub 1001:&,2,2:return
 {:3018}
-	M=PEEK(49)+PEEK(50)*256:DIM UR%(UR):RETURN
+	m=peek(49)+peek(50)*256:dim ur%(ur):return
 {:3020}
-	POKE 49,M-INT(M/256)*256:POKE 50,M/256:RETURN
+	poke 49,m-int(m/256)*256:poke 50,m/256:return
 {:3022}
-	&"{$cc}OADING{f6}":DR=6:GOSUB 1010:CLOSE 8,DV%,0,DR$+"U.INDEX":A=M+7
-	POKE 780,0:POKE 781,A-INT(A/256)*256:POKE 782,INT(A/256):SYS 65493:RETURN
+	&"{$cc}oading{f6}":dr=6:gosub 1010:close 8,dv%,0,dr$+"u.index":a=m+7
+	poke 780,0:poke 781,a-int(a/256)*256:poke 782,int(a/256):sys 65493:return
 {:3026}
-	&"{$d3}AVING{f6}":DR=6:GOSUB 1010:PRINT# 15,"S"DR$"U.INDEX":CLOSE 8,DV%,1,DR$+"U.INDEX"
-	A=M+7:B=UR%(0)*2+A+3:POKE 780,5:POKE 5,A-INT(A/256)*256:POKE 6,INT(A/256)
-	POKE 781,B-INT(B/256)*256:POKE 782,INT(B/256):SYS 65496:RETURN
+	&"{$d3}aving{f6}":dr=6:gosub 1010:print# 15,"s"dr$"u.index":close 8,dv%,1,dr$+"u.index"
+	a=m+7:b=ur%(0)*2+a+3:poke 780,5:poke 5,a-int(a/256)*256:poke 6,int(a/256)
+	poke 781,b-int(b/256)*256:poke 782,int(b/256):sys 65496:return
 {:3032}
-	DR=6:A$="U.CONFIG":GOSUB 1011:RETURN
+	dr=6:a$="u.config":gosub 1011:return
 {:3034}
-	DR=6:A$="U.ALPHA":GOSUB 1011:RETURN
+	dr=6:a$="u.alpha":gosub 1011:return
 {:3036}
-	UR%(0)=UH:FOR X=1 TO UH:GOSUB 1001:&,2,2:&,2,2:UR%(X)=VAL(A$):&".":NEXT:RETURN
+	ur%(0)=uh:for x=1 to uh:gosub 1001:&,2,2:&,2,2:ur%(x)=val(a$):&".":next:return
 {:3038}
-	H=UR%(0):L=1:I=0:IF H=0 THEN N=1:RETURN
-	N=L:GOSUB{:3016}:IF AN$=A$THEN I=1:RETURN
-	IF AN$<A$THEN RETURN
-	N=H:GOSUB{:3016}:IF AN$=A$THEN I=1:RETURN
-	IF AN$>A$THEN N=N+1:RETURN
+	h=ur%(0):l=1:i=0:if h=0 then n=1:return
+	n=l:gosub {:3016}:if an$=a$then i=1:return
+	if an$<a$then return
+	n=h:gosub {:3016}:if an$=a$then i=1:return
+	if an$>a$then n=n+1:return
 {:3048}
-	IF H=L THEN N=H:RETURN
-	N=INT((H+L)/2):IF N=L THEN L=H:N=H
-	GOSUB{:3016}:IF AN$=A$THEN I=1:RETURN
-	IF AN$<A$THEN H=N:GOTO{:3048}
-	L=N:GOTO{:3048}
+	if h=l then n=h:return
+	n=int((h+l)/2):if n=l then l=h:n=h
+	gosub {:3016}:if an$=a$then i=1:return
+	if an$<a$then h=n:goto {:3048}
+	l=n:goto {:3048}
 {:3058}
-	FOR N=1 TO UR%(0):GOSUB{:3016}:A%=N:B%=UR%(N):&"{pound}#3{pound}# {pound}%A {pound}%B:{pound}$A{f6}":N=N+RC*UR%(0):NEXT
-	RETURN
+	for n=1 to ur%(0):gosub {:3016}:a%=n:b%=ur%(n):&"{pound}#3{pound}# {pound}%a {pound}%b:{pound}$a{f6}":n=n+rc*ur%(0):next
+	return
 {:3062}
-	&"{$c8}ANDLE:{pound}I1":RETURN
+	&"{$c8}andle:{pound}i1":return
 {:3064}
-	A%=N:IF I THEN:&"{$c6}OUND:{pound}%A{f6}"
-	IF I=.THEN:&"{$ce}OT {$c6}OUND. {$d7}OULD BE {pound}%A.{f6}"
-	RETURN
+	a%=n:if i then:&"{$c6}ound:{pound}%a{f6}"
+	if i=.then:&"{$ce}ot {$c6}ound. {$d7}ould be {pound}%a.{f6}"
+	return
 {:3070}
-	UR%(0)=1:UR%(1)=1
-	FOR U=2 TO UR:&".":X=U:GOSUB 1001:INPUT# 2,AN$
-	IF AN$<>"{up arrow}"AND AN$<>"{$d2}{$c5}{$d3}"THEN GOSUB{:3086}
-	NEXT:RETURN
+	ur%(0)=1:ur%(1)=1
+	for u=2 to ur:&".":x=u:gosub 1001:input# 2,an$
+	if an$<>"{up arrow}"and an$<>"{$d2}{$c5}{$d3}"then gosub {:3086}
+	next:return
 {:3078}
-	FOR N=1 TO UR%(0):&".":GOSUB{:3032}:GOSUB{:3016}:CLOSE 2:AN$=A$
-	GOSUB{:3034}:X=N:GOSUB 1001:PRINT# 2,AN$R$UR%(N):CLOSE 2
-	A%=N:B%=UR%(N):&"{pound}#3{pound}# {pound}%A {pound}%B:{pound}V7{f6}"
-	NEXT:RETURN
+	for n=1 to ur%(0):&".":gosub {:3032}:gosub {:3016}:close 2:an$=a$
+	gosub {:3034}:x=n:gosub 1001:print# 2,an$r$ur%(n):close 2
+	a%=n:b%=ur%(n):&"{pound}#3{pound}# {pound}%a {pound}%b:{pound}v7{f6}"
+	next:return
 {:3086}
-	GOSUB{:3038}:IF I THEN RETURN
-	FOR A=UR%(0)TO N STEP-1:UR%(A+1)=UR%(A):NEXT:UR%(N)=U:UR%(0)=UR%(0)+1:RETURN
+	gosub {:3038}:if i then return
+	for a=ur%(0)to n step-1:ur%(a+1)=ur%(a):next:ur%(n)=u:ur%(0)=ur%(0)+1:return
 {:3090}
-	GOSUB{:3038}:IF I=.THEN RETURN
-	FOR A=N TO UR%(0):UR%(A)=UR%(A+1):NEXT:UR%(0)=UR%(0)-1:RETURN
+	gosub {:3038}:if i=.then return
+	for a=n to ur%(0):ur%(a)=ur%(a+1):next:ur%(0)=ur%(0)-1:return
 {:3094}
-	&"{clear}{f6}{$d5}.{$c9}{$ce}{$c4}{$c5}{$d8} {$d5}TILITIES 1.0{f6}"
-	&" 1. {$c9}NSERT{f6}"
-	&" 2. {$c4}ELETE{f6}"
-	&" 3. {$c3}ONVERT U.INDEX -> U.ALPHA{f6}"
-	&" 4. {$c3}REATE U.INDEX FROM U.CONFIG{f6}"
-	&" 5. {$d3}EARCH INDEX FOR HANDLE{f6}"
-	&" 6. {$cc}IST HANDLES IN INDEX{f6}"
-	&" 7. {$c3}ONVERT U.ALPHA -> U.INDEX{f6}"
-	&" 0. {$d1}UIT{f6}{rvrs on}{$c0:2}]{pound}G1{pound}V7{f6}":A=VAL(AN$):IF A<1 OR A>6 THEN RETURN
-	ON A GOSUB{:3002},{:3004},{:3006},{:3008},{:3010},{:3012},{:3014}:GOTO{:3094}
+	&"{clear}{f6}{$d5}.{$c9}{$ce}{$c4}{$c5}{$d8} {$d5}tilities 1.0{f6}"
+	&" 1. {$c9}nsert{f6}"
+	&" 2. {$c4}elete{f6}"
+	&" 3. {$c3}onvert u.index -> u.alpha{f6}"
+	&" 4. {$c3}reate u.index from u.config{f6}"
+	&" 5. {$d3}earch index for handle{f6}"
+	&" 6. {$cc}ist handles in index{f6}"
+	&" 7. {$c3}onvert u.alpha -> u.index{f6}"
+	&" 0. {$d1}uit{f6}{rvrs on}{$c0:2}]{pound}g1{pound}v7{f6}":a=val(an$):if a<1 or a>6 then return
+	on a gosub {:3002},{:3004},{:3006},{:3008},{:3010},{:3012},{:3014}:goto {:3094}
 {:3114}
-	&"{$c9}{$c4} #:{pound}I1":U=VAL(AN$):IF U<1 OR U>UR THEN RETURN
-	X=U:GOSUB 1001:&,2,2:AN$=A$:GOTO{:3090}
+	&"{$c9}{$c4} #:{pound}i1":u=val(an$):if u<1 or u>ur then return
+	x=u:gosub 1001:&,2,2:an$=a$:goto {:3090}
 {:3118}
-	&"{$c9}{$c4} #:{pound}I1":U=VAL(AN$):IF U<1 OR U>UR THEN RETURN
-	X=U:GOSUB 1001:&,2,2:AN$=A$:GOTO{:3086}
+	&"{$c9}{$c4} #:{pound}i1":u=val(an$):if u<1 or u>ur then return
+	x=u:gosub 1001:&,2,2:an$=a$:goto {:3086}

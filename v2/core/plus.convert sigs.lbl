@@ -1,8 +1,10 @@
-	&,28,1:DIM X%(17,60):GOSUB{:3002}:&,28,1:GOTO 1811
+{number:3000}
+	&,28,1:dim x%(17,60):gosub {:3002}:&,28,1:goto 1811
 {:3002}
-	DR=3:A$="E.{$d3}IG":GOSUB 1011:IF E%THEN CLOSE 2:&:RETURN
-	&,2,2:X%(0,0)=VAL(A$):IF X%(0,0)=0 THEN CLOSE 2:RETURN
-	FOR I=1 TO X%(0,0):X=I+1:GOSUB 1001:&,2,2:INPUT# 2,X%(1,I),X%(0,I),X%(2,I)
-	IF X%(2,I)<0 THEN X%(2,I)=0
-	&,60,0,30,X%(3,I),A$:NEXT:CLOSE 2
-	&,60,3,0,X%(0,0),36+X%(0,0)*36,DR$+"E.{$d3}IGLIST",DV%:GOSUB 1012:&:RETURN
+	dr=3:a$="e.{$d3}ig":gosub 1011:if e%then close 2:&:return
+	&,2,2:x%(0,0)=val(a$):if x%(0,0)=0 then close 2:return
+	for i=1 to x%(0,0):x=i+1:gosub 1001:&,2,2:input# 2,x%(1,i),x%(0,i),x%(2,i)
+	if x%(2,i)<0 then x%(2,i)=0
+	&,60,0,30,x%(3,i),a$:next:close 2
+	&,60,3,0,x%(0,0),36+x%(0,0)*36,dr$+"e.{$d3}iglist",dv%:gosub 1012:&:return
+	rem +.convert sigs

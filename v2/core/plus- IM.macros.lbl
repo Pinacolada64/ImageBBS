@@ -1,96 +1,97 @@
-	ON LM GOTO{:4012},{:4108}
+{number:4000}
+	on lm goto {:4012},{:4108}
 {:4002}
-	DR=3:A$="E.MACROS":GOTO 1011
+	dr=3:a$="e.macros":goto 1011
 {:4004}
-	FOR T=1 TO LEN(TT$):IF MID$(TT$,T,1)="{back arrow}"THEN TT$=LEFT$(TT$,T-1)+"{f6}"+MID$(TT$,T+1)
-	NEXT:RETURN
+	for t=1 to len(tt$):if mid$(tt$,t,1)="{back arrow}"then tt$=left$(tt$,t-1)+"{f6}"+mid$(tt$,t+1)
+	next:return
 {:4008}
-	GOSUB{:4002}:IF E%THEN:&:CLOSE 2:FL=1:RETURN
-	X=1:&,2,2:MC=VAL(A$):RETURN
+	gosub {:4002}:if e%then:&:close 2:fl=1:return
+	x=1:&,2,2:mc=val(a$):return
 {:4012}
-	&"{f6:2}{rvrs on}   <>-     {$c9}{$cd}{$c1}{$c7}{$c5} {$d6}2.0     -<>   {rvrs off}{f6}{rvrs on}   <>-{$cd}ACRO {$c5}DITOR/{$c3}REATOR-<>   {rvrs off}{f6:2}"
-	LP=1:&"{$cb}EYBOARD {$c3}OLORS ARE ACTIVE.{f6}{$d5}SE THE {f5}{back arrow}{f5} WHEN YOU WANT A >{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}< IN"
-	LP=1:&" YOUR MACRO."
-	POKE 53252,78:GOTO{:4078}
+	&"{f6:2}{rvrs on}   <>-     {$c9}{$cd}{$c1}{$c7}{$c5} {$d6}2.0     -<>   {rvrs off}{f6}{rvrs on}   <>-{$cd}acro {$c5}ditor/{$c3}reator-<>   {rvrs off}{f6:2}"
+	lp=1:&"{$cb}eyboard {$c3}olors are active.{f6}{$d5}se the {f5}{back arrow}{f5} when you want a >{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}< in"
+	lp=1:&" your macro."
+	poke 53252,78:goto {:4078}
 {:4020}
-	&"{f6:2}{$d9}OU {$cd}UST [{$c3}]REATE {$d4}HE {$c6}ILE {$c6}IRST"
+	&"{f6:2}{$d9}ou {$cd}ust [{$c3}]reate {$d4}he {$c6}ile {$c6}irst"
 {:4022}
-	FL=.:&"{f6:2}{$c3})REATE, {$c5})DIT, {$cc})IST, {$c1})DD, {$d1})UIT {f6:2}{$cd}{$c3}-]: {pound}G1{pound}V7{f6}"
-	IF TR%<1 THEN{:4148}
-	ON-(AN$="{$c3}")-(AN$="{$c5}")*2 GOTO{:4082},{:4030}
-	ON-(AN$="{$cc}")-(AN$="{$c1}")*2-(AN$="{$d1}")*3 GOTO{:4062},{:4048},{:4148}:GOTO{:4022}
+	fl=.:&"{f6:2}{$c3})reate, {$c5})dit, {$cc})ist, {$c1})dd, {$d1})uit {f6:2}{$cd}{$c3}-]: {pound}g1{pound}v7{f6}"
+	if tr%<1 then{:4148}
+	on-(an$="{$c3}")-(an$="{$c5}")*2 goto {:4082},{:4030}
+	on-(an$="{$cc}")-(an$="{$c1}")*2-(an$="{$d1}")*3 goto {:4062},{:4048},{:4148}:goto {:4022}
 {:4030}
-	GOSUB{:4008}:ON FL GOTO{:4020}
-	Z%=MC:&"{f6:2}{$d4}HERE {$c1}RE {pound}%Z {$cd}ACROS, {$c5}DIT {$d7}HICH?: {pound}I1":X=VAL(AN$)+1
-	IF AN$=""OR X=.OR X>MC+1 THEN CLOSE 2:GOTO{:4022}
-	GOSUB 1001:&,2,2:B$=A$
-	X%=X-1:&"{f6}{$cd}{$c1}{$c3}{$d2}{$cf}# {pound}%X{f6}{pound}$B{f6:2}{$c3}HANGE {$c9}T?: ":GOSUB 1907:IF TR%<1 THEN{:4148}
-	IF A=.THEN CLOSE 2:GOTO{:4022}
-	P$="{f6}{$c5}NTER {$ce}EW {$cd}{$c1}{$c3}{$d2}{$cf} #{pound}%X (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":PL=.:&,1,43:P$="":IF TR%<1 THEN{:4148}
-	IF AN$=""THEN:&"{f6:2}{$ce}O {$c3}HANGE!":CLOSE 2:GOTO{:4022}
-	TT$=LEFT$(AN$,78):GOSUB{:4004}:GOSUB 1001:PRINT# 2,TT$:GOTO{:4022}
+	gosub {:4008}:on fl goto {:4020}
+	z%=mc:&"{f6:2}{$d4}here {$c1}re {pound}%z {$cd}acros, {$c5}dit {$d7}hich?: {pound}i1":x=val(an$)+1
+	if an$=""or x=.or x>mc+1 then close 2:goto {:4022}
+	gosub 1001:&,2,2:b$=a$
+	x%=x-1:&"{f6}{$cd}{$c1}{$c3}{$d2}{$cf}# {pound}%x{f6}{pound}$b{f6:2}{$c3}hange {$c9}t?: ":gosub 1907:if tr%<1 then{:4148}
+	if a=.then close 2:goto {:4022}
+	p$="{f6}{$c5}nter {$ce}ew {$cd}{$c1}{$c3}{$d2}{$cf} #{pound}%x (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":pl=.:&,1,43:p$="":if tr%<1 then{:4148}
+	if an$=""then:&"{f6:2}{$ce}o {$c3}hange!":close 2:goto {:4022}
+	tt$=left$(an$,78):gosub {:4004}:gosub 1001:print# 2,tt$:goto {:4022}
 {:4048}
-	&"{f6:2}{$c1}DDING {$cd}ACROS...":GOSUB{:4008}:ON FL GOTO{:4022}
-	Z%=MC:&"{f6:2}{$d4}HERE {$c1}RE {pound}%Z {$cd}ACROS{f6}{$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$c1}DD {$cf}NE?: ":GOSUB 1907
-	IF A=.THEN CLOSE 2:GOTO{:4022}
-	Z%=Z%+1:&"{f6:2}{$c1}DD {$cd}ACRO {pound}%Z (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":PL=.:&,1,43:ON TR%+1 GOTO 1603
-	IF AN$=""THEN CLOSE 2:GOTO{:4022}
-	TT$=AN$:GOSUB{:4004}:MC=Z%:X=MC+1:GOSUB 1001:PRINT# 2,TT$:X=1:GOSUB 1001
-	PRINT# 2,MC:CLOSE 2:&"{f6:2}{$c1}DDED...{pound}W1":GOTO{:4022}
+	&"{f6:2}{$c1}dding {$cd}acros...":gosub {:4008}:on fl goto {:4022}
+	z%=mc:&"{f6:2}{$d4}here {$c1}re {pound}%z {$cd}acros{f6}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$c1}dd {$cf}ne?: ":gosub 1907
+	if a=.then close 2:goto {:4022}
+	z%=z%+1:&"{f6:2}{$c1}dd {$cd}acro {pound}%z (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":pl=.:&,1,43:on tr%+1 goto 1603
+	if an$=""then close 2:goto {:4022}
+	tt$=an$:gosub {:4004}:mc=z%:x=mc+1:gosub 1001:print# 2,tt$:x=1:gosub 1001
+	print# 2,mc:close 2:&"{f6:2}{$c1}dded...{pound}w1":goto {:4022}
 {:4062}
-	&"{f6:2}{$cc}ISTING {$cd}ACROS...{f6:2}"
-	GOSUB{:4008}:ON FL GOTO{:4022}
-	B%=MC:&"{$d3}TARTING #? (1 TO {pound}%B) {pound}I1":ON TR%+1 GOTO 1603:A=VAL(AN$)+1
-	IF A<1 OR A>MC THEN{:4062}
-	IF AN$=""THEN A=2
-	FOR X=A TO MC+1
-	GOSUB 1001:INPUT# 2,TT$:X%=X-1:&"[{pound}%X]{f6}":&TT$:&"{f6}"
-	NEXT:CLOSE 2:GOTO{:4022}
+	&"{f6:2}{$cc}isting {$cd}acros...{f6:2}"
+	gosub {:4008}:on fl goto {:4022}
+	b%=mc:&"{$d3}tarting #? (1 to {pound}%b) {pound}i1":on tr%+1 goto 1603:a=val(an$)+1
+	if a<1 or a>mc then{:4062}
+	if an$=""then a=2
+	for x=a to mc+1
+	gosub 1001:input# 2,tt$:x%=x-1:&"[{pound}%x]{f6}":&tt$:&"{f6}"
+	next:close 2:goto {:4022}
 {:4078}
-	GOSUB{:4008}:ON FL GOTO{:4080}:CLOSE 2:GOTO{:4022}
+	gosub {:4008}:on fl goto {:4080}:close 2:goto {:4022}
 {:4080}
-	&"{f6:2}{$ce}O {$cd}ACROS {$c4}EFINED!!{pound}W2":CLOSE 2:GOTO{:4022}
+	&"{f6:2}{$ce}o {$cd}acros {$c4}efined!!{pound}w2":close 2:goto {:4022}
 {:4082}
-	&"{$c3}REATING {$cd}ACROS {$c6}ILE...":A$="E.MACROS,L,"+CHR$(100):DR=3:GOSUB 1011
-	X=20:GOSUB 1001:PRINT# 2,CHR$(255):X=1:PRINT# 2,0:CLOSE 2
-	&"{f6:2}{$cd}ACRO {$c6}ILE {$c8}AS {$c2}EEN {$c3}REATED"
+	&"{$c3}reating {$cd}acros {$c6}ile...":a$="e.macros,l,"+chr$(100):dr=3:gosub 1011
+	x=20:gosub 1001:print# 2,chr$(255):x=1:print# 2,0:close 2
+	&"{f6:2}{$cd}acro {$c6}ile {$c8}as {$c2}een {$c3}reated"
 {:4088}
-	&"{f6:2}{$c8}OW {$cd}ANY {$cd}ACROS {$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$c8}AVE?{f6:2}: {pound}I1":IF TR%<1 THEN{:4148}
-	MC=INT(VAL(AN$)):IF MC<1 THEN{:4088}
-	GOSUB{:4002}
-	FOR I=2 TO MC:X%=I-1
-	&"{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$cf}N {$c2}LANK {$d7}ILL {$c5}ND!{f6:2}"
-	&"{f6}{$c5}NTER {$cd}ACRO #{pound}%X (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":PL=.:&,1,43:IF TR%<1 THEN{:4148}
-	IF AN$=""THEN X=MC:GOTO{:4104}
-	TT$=AN$:GOSUB{:4004}:X=I:GOSUB 1001:PRINT# 2,TT$
+	&"{f6:2}{$c8}ow {$cd}any {$cd}acros {$d7}ould {$d9}ou {$cc}ike {$d4}o {$c8}ave?{f6:2}: {pound}i1":if tr%<1 then{:4148}
+	mc=int(val(an$)):if mc<1 then{:4088}
+	gosub {:4002}
+	for i=2 to mc:x%=i-1
+	&"{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$cf}n {$c2}lank {$d7}ill {$c5}nd!{f6:2}"
+	&"{f6}{$c5}nter {$cd}acro #{pound}%x (78 {$c3}{$c8}{$d2}{$d3}){f6:2}":pl=.:&,1,43:if tr%<1 then{:4148}
+	if an$=""then x=mc:goto {:4104}
+	tt$=an$:gosub {:4004}:x=i:gosub 1001:print# 2,tt$
 {:4104}
-	NEXT:&"{f6:2}{$cd}ACROS {$c1}RE {$c2}EING {$d3}AVED{f6:2}{$d5}SE {$c5})DIT {$d4}O {$c5}{$c4}{$c9}{$d4} {pound}W3"
-	X=1:GOSUB 1001:PRINT# 2,MC:CLOSE 2:GOTO{:4022}
+	next:&"{f6:2}{$cd}acros {$c1}re {$c2}eing {$d3}aved{f6:2}{$d5}se {$c5})dit {$d4}o {$c5}{$c4}{$c9}{$d4} {pound}w3"
+	x=1:gosub 1001:print# 2,mc:close 2:goto {:4022}
 {:4108}
-	DR=3:A$="E.FKEYS,S,R":GOSUB 1011:IF E%THEN FOR I=1 TO 8:TT$(I)="":NEXT:GOTO{:4112}
-	FOR I=1 TO 8:&,2,2:TT$(I)=A$:NEXT
+	dr=3:a$="e.fkeys,s,r":gosub 1011:if e%then for i=1 to 8:tt$(i)="":next:goto {:4112}
+	for i=1 to 8:&,2,2:tt$(i)=a$:next
 {:4112}
-	CLOSE 2:CF=.
+	close 2:cf=.
 {:4114}
-	&"{clear}{f6}{gray3}{$c6}UNCTION {$cb}EY {$c5}DITOR 2.0{f6}{white}{pound}VJ":POKE 53252,38
-	&"{f6:2}{$d5}SE {f5}{back arrow}{f5} FOR A >{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}<{f6:2}"
-	FOR I=1 TO 8:A$=LEFT$(TT$(I),35):A%=I
-	&"{green}{$c6}{pound}#1{pound}%A{blue}) {white}{pound}$A{f6}":I=I+RC*N:NEXT
-	&"{white}{pound}VJ{green}{$c5}{lt. green}DIT {$d7}HICH{blue}?{white} {pound}G1":A=VAL(AN$):IF A<1 OR A>8 THEN{:4130}
-	&AN$:&"{f6:2}":W$=TT$(A):P$="{$c6}"+CHR$(48+A):POKE 53252,75:PL=.:&,1,32
-	IF AN$<>""THEN TT$(A)=AN$:CF=1
-	GOTO{:4114}
+	&"{clear}{f6}{gray3}{$c6}unction {$cb}ey {$c5}ditor 2.0{f6}{white}{pound}vj":poke 53252,38
+	&"{f6:2}{$d5}se {f5}{back arrow}{f5} for a >{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}<{f6:2}"
+	for i=1 to 8:a$=left$(tt$(i),35):a%=i
+	&"{green}{$c6}{pound}#1{pound}%a{blue}) {white}{pound}$a{f6}":i=i+rc*n:next
+	&"{white}{pound}vj{green}{$c5}{lt. green}dit {$d7}hich{blue}?{white} {pound}g1":a=val(an$):if a<1 or a>8 then{:4130}
+	&an$:&"{f6:2}":w$=tt$(a):p$="{$c6}"+chr$(48+a):poke 53252,75:pl=.:&,1,32
+	if an$<>""then tt$(a)=an$:cf=1
+	goto {:4114}
 {:4130}
-	&"{$d1}UIT{f6:2}":IF CF=.THEN{:4148}
-	&"{$d3}AVE {$c3}HANGES? ":GOSUB 1907:IF A=.THEN{:4138}
-	DR=3:A$="E.FKEYS":GOSUB 1023
-	FOR I=1 TO 8:PRINT# 2,TT$(I):NEXT:CLOSE 2
+	&"{$d1}uit{f6:2}":if cf=.then{:4148}
+	&"{$d3}ave {$c3}hanges? ":gosub 1907:if a=.then{:4138}
+	dr=3:a$="e.fkeys":gosub 1023
+	for i=1 to 8:print# 2,tt$(i):next:close 2
 {:4138}
-	&"{$c1}CTIVATE? ":GOSUB 1907:IF A=.THEN{:4148}
-	FOR I=1 TO 8:A$=TT$(I):IF RIGHT$(A$,1)="{back arrow}"THEN A$=LEFT$(A$,LEN(A$)-1)+CHR$(13)
-	TT$(I)=A$:NEXT
-	F1$=TT$(1):F2$=TT$(2):F3$=TT$(3):F4$=TT$(4)
-	F5$=TT$(5):F6$=TT$(6):F7$=TT$(7):F8$=TT$(8)
+	&"{$c1}ctivate? ":gosub 1907:if a=.then{:4148}
+	for i=1 to 8:a$=tt$(i):if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
+	tt$(i)=a$:next
+	f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
+	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8)
 {:4148}
-	RETURN
-	COPR. 1994 NEW IMAGE 9/25/94
+	return
+	copr. 1994 new image 9/25/94

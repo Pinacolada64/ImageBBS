@@ -1,86 +1,87 @@
-	ON IM GOTO{:60082},{:60088}:RETURN
+{number:60000}
+	on im goto {:60082},{:60088}:return
 {:60002}
-	CLOSE 6:OPEN 6,DV%,6,DR$+V$+",S,"+A$:GOTO 1012
+	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
 {:60004}
-	P$="{$c6}ILENAME":B$=B$+" {$c6}ILE"
+	p$="{$c6}ilename":b$=b$+" {$c6}ile"
 {:60006}
-	&"{pound}$B {pound}G1":FL=0:IF AN$<>R$THEN:&"{pound}H"+CHR$(65+LEN(B$)):FL=1:RETURN
-	&"{f6}":RETURN
+	&"{pound}$b {pound}g1":fl=0:if an$<>r$then:&"{pound}h"+chr$(65+len(b$)):fl=1:return
+	&"{f6}":return
 {:60010}
-	A%=PEEK(1022)-1:C%=A%-B%:&"{pound}Q0{f6:2}{white}{rvrs on}{$d4}OTAL {$cc}INES:{f6}{gray3}{$c1}VAILABLE  : {yellow}{pound}%A"
-	&"{pound}{back arrow}20{gray3}{$c9}N {$cd}EMORY  : {yellow}{pound}%B{f6}{gray3}{$d2}EMAINING  : {yellow}{pound}%C":IF ZZ THEN:&"{pound}{back arrow}20{gray3}{$c6}REE {$cd}EMORY: {yellow}{pound}%Z"
-	&"{lt. green}{f6:2}":RETURN
+	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{white}{rvrs on}{$d4}otal {$cc}ines:{f6}{gray3}{$c1}vailable  : {yellow}{pound}%a"
+	&"{pound}{back arrow}20{gray3}{$c9}n {$cd}emory  : {yellow}{pound}%b{f6}{gray3}{$d2}emaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}{$c6}ree {$cd}emory: {yellow}{pound}%z"
+	&"{lt. green}{f6:2}":return
 {:60016}
-	P$=PU$:GOTO 1914
+	p$=pu$:goto 1914
 {:60018}
-	PU$=P$:V$="":RETURN
+	pu$=p$:v$="":return
 {:60020}
-	POKE 53249,0:POKE 1016,KK:POKE 1018,4:POKE 1019,KK
-	POKE 1023,87:A=14:GOSUB 1004:&,52,31,3:IF A%=0 THEN POKE 1023,87+A*8
-	PL=.:POKE 1022,LE+1:GOSUB 1372:A=INT((Z%-300)/79)+1:IF LE>A THEN POKE 1022,A+1
-	POKE 53252,LL%-2:IF ZZ THEN POKE 1022,254
-	RETURN
+	poke 53249,0:poke 1016,kk:poke 1018,4:poke 1019,kk
+	poke 1023,87:a=14:gosub 1004:&,52,31,3:if a%=0 then poke 1023,87+a*8
+	pl=.:poke 1022,le+1:gosub 1372:a=int((z%-300)/79)+1:if le>a then poke 1022,a+1
+	poke 53252,ll%-2:if zz then poke 1022,254
+	return
 {:60030}
-	B$="{$c7}ET":GOSUB{:60004}:ON FL GOTO{:60108}:&"{f6:2}":GOSUB 1005:V$=AN$:IF V$=""THEN{:60110}
+	b$="{$c7}et":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
 {:60032}
-	GOSUB 1008:GOSUB 1470:IF A THEN GOSUB 1995:GOTO{:60032}
-	GOSUB 1010:A$="R":GOSUB{:60002}:GOSUB 1372:IF E%THEN CLOSE 6:&:GOTO{:60110}
+	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60032}
+	gosub 1010:a$="r":gosub {:60002}:gosub 1372:if e%then close 6:&:goto {:60110}
 {:60036}
-	&,2,6:TT$(KK)=A$:KK=KK+1:GOSUB 1373:ON-(Z%>100 AND KK<254 AND ST=0)GOTO{:60036}
-	CLOSE 6:GOTO{:60110}
+	&,2,6:tt$(kk)=a$:kk=kk+1:gosub 1373:on-(z%>100 and kk<254 and st=0)goto {:60036}
+	close 6:goto {:60110}
 {:60040}
-	ON KK GOTO{:60108}:B$="{$d0}UT":GOSUB{:60004}:ON FL GOTO{:60108}:&"{f6:2}"
-	IF V$<>""THEN POKE 53252,16:W$=V$:&,1,32:GOTO{:60046}
-	GOSUB 1005:IF AN$=""THEN{:60110}
+	on kk goto {:60108}:b$="{$d0}ut":gosub {:60004}:on fl goto {:60108}:&"{f6:2}"
+	if v$<>""then poke 53252,16:w$=v$:&,1,32:goto {:60046}
+	gosub 1005:if an$=""then{:60110}
 {:60046}
-	IF AN$<>""THEN V$=AN$
+	if an$<>""then v$=an$
 {:60048}
-	GOSUB 1008:GOSUB 1470:IF A THEN GOSUB 1995:GOTO{:60048}
-	GOSUB 1010
+	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60048}
+	gosub 1010
 {:60052}
-	A$="W":GOSUB{:60002}:IF E%=.THEN{:60062}
+	a$="w":gosub {:60002}:if e%=.then{:60062}
 {:60054}
-	CLOSE 6:&:IF E%<>63 THEN{:60066}
-	&"{f6} [{$c1}]PPEND [{$d2}]EPLACE [{$d1}]UIT: {pound}I1":IF AN$="{$d1}"OR TR%<1 THEN{:60066}
-	IF AN$="{$d2}"THEN A$=V$:GOSUB 1024:GOTO{:60052}
-	ON-(AN$<>"{$c1}")GOTO{:60054}:A$="A":GOSUB{:60002}:IF E%THEN{:60066}
+	close 6:&:if e%<>63 then{:60066}
+	&"{f6} [{$c1}]ppend [{$d2}]eplace [{$d1}]uit: {pound}i1":if an$="{$d1}"or tr%<1 then{:60066}
+	if an$="{$d2}"then a$=v$:gosub 1024:goto {:60052}
+	on-(an$<>"{$c1}")goto {:60054}:a$="a":gosub {:60002}:if e%then{:60066}
 {:60062}
-	FOR I=1 TO KK-1:IF TT$(I)="{f8}"THEN TT$(I)="{up arrow}"
-	NEXT:&,14,6,KK-1
+	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
+	next:&,14,6,kk-1
 {:60066}
-	CLOSE 6:GOSUB 1081:GOTO{:60110}
+	close 6:gosub 1081:goto {:60110}
 {:60068}
-	B$="{$d6}IEW {$c4}IRECTORY":GOSUB{:60006}:ON FL GOTO{:60108}:GOSUB 1008:GOSUB 1089:GOTO{:60110}
+	b$="{$d6}iew {$c4}irectory":gosub {:60006}:on fl goto {:60108}:gosub 1008:gosub 1089:goto {:60110}
 {:60070}
-	&"{$d1}UERY{f6}":GOTO{:60110}
+	&"{$d1}uery{f6}":goto {:60110}
 {:60072}
-	B$="{$c4}ISK {$c3}OMMAND":GOSUB{:60006}:ON FL GOTO{:60108}:&"{f6:2}":GOSUB 1450:GOTO{:60110}
+	b$="{$c4}isk {$c3}ommand":gosub {:60006}:on fl goto {:60108}:&"{f6:2}":gosub 1450:goto {:60110}
 {:60074}
-	B$="{$d2}EAD":GOSUB{:60004}:ON FL GOTO{:60108}:&"{f6:2}":GOSUB 1005:V$=AN$:IF V$=""THEN{:60110}
-	GOSUB 1008:GOSUB 1470:IF A THEN GOSUB 1995:GOTO{:60110}
-	GOSUB 1010:A$="R":GOSUB{:60002}:IF E%THEN CLOSE 6:&:GOTO{:60110}
-	&,3,6:CLOSE 6:GOTO{:60110}
+	b$="{$d2}ead":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
+	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60110}
+	gosub 1010:a$="r":gosub {:60002}:if e%then close 6:&:goto {:60110}
+	&,3,6:close 6:goto {:60110}
 {:60082}
-	GOSUB{:60018}:KK=1:IF LE<1 THEN P$=PU$:KK=.:RETURN
-	GOSUB{:60020}:DR=1:A$="S.EDITOR":GOSUB 1076
-	B%=.:GOSUB{:60010}:A=0:GOTO{:60100}
+	gosub {:60018}:kk=1:if le<1 then p$=pu$:kk=.:return
+	gosub {:60020}:dr=1:a$="s.editor":gosub 1076
+	b%=.:gosub {:60010}:a=0:goto {:60100}
 {:60088}
-	GOSUB{:60018}:IF LE<1 THEN P$=PU$:KK=.:RETURN
-	GOTO{:60110}
+	gosub {:60018}:if le<1 then p$=pu$:kk=.:return
+	goto {:60110}
 {:60092}
-	KK=PEEK(1016):ON A GOTO{:60094},{:60102},{:60098}:&"{f6:2}":B%=KK-1:KK=.:GOTO{:60016}
+	kk=peek(1016):on a goto {:60094},{:60102},{:60098}:&"{f6:2}":b%=kk-1:kk=.:goto {:60016}
 {:60094}
-	POKE 2031,0:B%=KK-1:&"{f6}{pound}%B {$cc}INES {$d5}SED.{f6}":IF KK=1 THEN A=0:GOTO{:60092}
-	B%=KK:GOTO{:60016}
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b {$cc}ines {$d5}sed.{f6}":if kk=1 then a=0:goto {:60092}
+	b%=kk:goto {:60016}
 {:60098}
-	POKE 2031,0:DR=1:A$="S.MENU 3":GOSUB 1075:GOTO{:60088}
+	poke 2031,0:dr=1:a$="s.menu 3":gosub 1075:goto {:60088}
 {:60100}
-	&,54,A:A=PEEK(781):AN$=CHR$(PEEK(780)AND 127):GOTO{:60092}
+	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:60092}
 {:60102}
-	B%=KK-1:IF AN$="Q"THEN{:60070}
-	IF ZZ THEN ON-(AN$="G")-(AN$="P")*2-(AN$="$")*3 GOTO{:60030},{:60040},{:60068}
-	IF ZZ THEN ON-(AN$="@")-(AN$="&")*2 GOTO{:60072},{:60074}
+	b%=kk-1:if an$="q"then{:60070}
+	if zz then on-(an$="g")-(an$="p")*2-(an$="$")*3 goto {:60030},{:60040},{:60068}
+	if zz then on-(an$="@")-(an$="&")*2 goto {:60072},{:60074}
 {:60108}
-	A=2:GOTO{:60100}
+	a=2:goto {:60100}
 {:60110}
-	B%=KK-1:GOSUB{:60020}:GOSUB{:60010}:POKE 2031,1:A=1:GOTO{:60100}
+	b%=kk-1:gosub {:60020}:gosub {:60010}:poke 2031,1:a=1:goto {:60100}

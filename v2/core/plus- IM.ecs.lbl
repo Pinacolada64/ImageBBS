@@ -1,182 +1,182 @@
-	REM ECS EDITOR
-	&"{clear}{f6:2} {$d2}EADING {$c3}OMMAND {$cc}IST...":Z$="":FOR I=1 TO 20:Z$=Z$+CHR$(0):NEXT:TZ=0
+{number:4000}
+	rem ecs editor
+	&"{clear}{f6:2} {$d2}eading {$c3}ommand {$cc}ist...":z$="":for i=1 to 20:z$=z$+chr$(0):next:tz=0
 {:4004}
-	&,42,2:N=A%:GOTO{:4034}
+	&,42,2:n=a%:goto {:4034}
 {:4006}
-	&"{$c7}ET {$c6}ROM {$cd}EMORY{f6:2}":GOTO{:4004}
+	&"{$c7}et {$c6}rom {$cd}emory{f6:2}":goto {:4004}
 {:4008}
-	&"{$d0}UT {$d4}O {$cd}EMORY{f6:2}":GOSUB{:4010}:GOTO{:4034}
+	&"{$d0}ut {$d4}o {$cd}emory{f6:2}":gosub {:4010}:goto {:4034}
 {:4010}
-	TT$(N+1)=CHR$(0):&,42,3,N+1:RETURN
+	tt$(n+1)=chr$(0):&,42,3,n+1:return
 {:4012}
-	&"{$cc}OAD {$c6}ROM {$c4}ISK{f6:2}":GOSUB{:4018}:GOSUB 1009:A$=DR$+A$:&,42,4:TZ=1:GOTO{:4034}
+	&"{$cc}oad {$c6}rom {$c4}isk{f6:2}":gosub {:4018}:gosub 1009:a$=dr$+a$:&,42,4:tz=1:goto {:4034}
 {:4014}
-	GOSUB{:4016}:GOTO{:4034}
+	gosub {:4016}:goto {:4034}
 {:4016}
-	&"{$d3}AVE {$d4}O {$c4}ISK{f6:2}":GOSUB{:4010}:GOSUB{:4018}:GOSUB 1024:A$=DR$+A$:&,42,5:TZ=0:RETURN
+	&"{$d3}ave {$d4}o {$c4}isk{f6:2}":gosub {:4010}:gosub {:4018}:gosub 1024:a$=dr$+a$:&,42,5:tz=0:return
 {:4018}
-	DR=3:A$="E.ECS.MAIN":RETURN
+	dr=3:a$="e.ecs.main":return
 {:4020}
-	IF Q$>""THEN IF ASC(RIGHT$(Q$,1))=0 THEN Q$=LEFT$(Q$,LEN(Q$)-1):GOTO{:4020}
-	RETURN
+	if q$>""then if asc(right$(q$,1))=0 then q$=left$(q$,len(q$)-1):goto {:4020}
+	return
 {:4024}
-	ON A GOSUB{:4026},{:4030}:RETURN
+	on a gosub {:4026},{:4030}:return
 {:4026}
-	L$=CHR$(128+64+16*G+B)+CHR$(F AND 255)+CHR$(F/256)
-	L$=L$+LEFT$(C$+Z$,7)+LEFT$(D$+Z$,14)+LEFT$(E$+Z$,7)+CHR$(H):RETURN
+	l$=chr$(128+64+16*g+b)+chr$(f and 255)+chr$(f/256)
+	l$=l$+left$(c$+z$,7)+left$(d$+z$,14)+left$(e$+z$,7)+chr$(h):return
 {:4030}
-	L$=CHR$(128+64+16*G+8+B)+CHR$(F AND 255)+CHR$(F/256)
-	L$=L$+LEFT$(C$+Z$,2)+LEFT$(D$+Z$,2)+CHR$(H):RETURN
+	l$=chr$(128+64+16*g+8+b)+chr$(f and 255)+chr$(f/256)
+	l$=l$+left$(c$+z$,2)+left$(d$+z$,2)+chr$(h):return
 {:4034}
-	N%=N:&"{clear}{f6:2}{$c5}{$c3}{$d3} {$c5}{$c4}{$c9}{$d4}{$cf}{$d2}:{pound}%N {$c3}OMMANDS{f6:2}":POKE 53252,40
-	LP=1:&"{$c1}DD {$c4}ELETE {$c5}DIT {$cc}OAD {$d3}AVE {$c7}ET {$d0}UT {$c6}IND {$d6}IEW {$d1}UIT > "
+	n%=n:&"{clear}{f6:2}{$c5}{$c3}{$d3} {$c5}{$c4}{$c9}{$d4}{$cf}{$d2}:{pound}%n {$c3}ommands{f6:2}":poke 53252,40
+	lp=1:&"{$c1}dd {$c4}elete {$c5}dit {$cc}oad {$d3}ave {$c7}et {$d0}ut {$c6}ind {$d6}iew {$d1}uit > "
 {:4038}
-	&"{pound}G1":IF TR%<1 THEN AN$="{$d1}"
-	ON-(AN$="{$cc}")-2*(AN$="{$d3}")-3*(AN$="{$c7}")-4*(AN$="{$d0}")GOTO{:4012},{:4014},{:4006},{:4008}
-	ON-(AN$="{$c1}")-2*(AN$="{$c4}")-3*(AN$="{$c5}")-4*(AN$="{$c6}")GOTO{:4100},{:4072},{:4146},{:4084}
-	ON-(AN$="{$d6}")-2*(AN$="{f2}")-3*(AN$="{$d1}")GOTO{:4048},{:4038},{:4096}:GOTO{:4038}
-	&"{$cd}AKE {$c1}CTIVE{f6:2}":&,42,3,N:GOTO{:4034}
+	&"{pound}g1":if tr%<1 then an$="{$d1}"
+	on-(an$="{$cc}")-2*(an$="{$d3}")-3*(an$="{$c7}")-4*(an$="{$d0}")goto {:4012},{:4014},{:4006},{:4008}
+	on-(an$="{$c1}")-2*(an$="{$c4}")-3*(an$="{$c5}")-4*(an$="{$c6}")goto {:4100},{:4072},{:4146},{:4084}
+	on-(an$="{$d6}")-2*(an$="{f2}")-3*(an$="{$d1}")goto {:4048},{:4038},{:4096}:goto {:4038}
+	&"{$cd}ake {$c1}ctive{f6:2}":&,42,3,n:goto {:4034}
 {:4048}
-	&"{$d6}IEW{f6}{$d3}TART AT? {pound}I1":Z=VAL(AN$):IF Z<1 OR Z>N THEN{:4034}
-	&"{f6}{white}{pound}VJ":FOR Z=Z TO N:A%=Z
-	GOSUB{:4054}:Z=Z+N*RC:NEXT:&"{$d0}RESS {$c1}NY {$cb}EY:{pound}G1":GOTO{:4034}
+	&"{$d6}iew{f6}{$d3}tart at? {pound}i1":z=val(an$):if z<1 or z>n then{:4034}
+	&"{f6}{white}{pound}vj":for z=z to n:a%=z
+	gosub {:4054}:z=z+n*rc:next:&"{$d0}ress {$c1}ny {$cb}ey:{pound}g1":goto {:4034}
 {:4054}
-	A$=TT$(A%):GOSUB{:4222}
-	H$=MID$("-{$da}",SGN(A AND 1)+1,1)
-	H$=H$+MID$("-{$c9}",SGN(A AND 4)+1,1)
-	G$="{f5}+."+C$+"{f5}":IF A AND 16 THEN G$=C$
-	I$="{$c7}{$cf}{$d4}{$cf}":IF A AND 32 THEN I$="{$c7}{$cf}{$d3}{$d5}{$c2}"
-	A$="*":IF A AND 128 THEN A$=" "
-	E%=E:F%=F:Y$="{red}{pound}$A{cyan}#{pound}#2{pound}%A{blue}:{white}{f5}{pound}$B{f5}{pound}{back arrow}15{lt. blue}{pound}$I{pound}{back arrow}21{white}{pound}$G{pound}{back arrow}39 "
-	Y$=Y$+" {lt. blue}{$c1}C{blue}:{white}{pound}#4{pound}%E {lt. blue}{$c3}R{blue}:{white}{pound}#3{pound}%F {lt. blue}{$c6}L{blue}:{white}{pound}$H {lt. blue}{$d0}W{blue}:{white}{f5}{pound}$D{f5}{f6}{white}{pound}VJ"
-	&Y$:RETURN
+	a$=tt$(a%):gosub {:4222}
+	h$=mid$("-{$da}",sgn(a and 1)+1,1)
+	h$=h$+mid$("-{$c9}",sgn(a and 4)+1,1)
+	g$="{f5}+."+c$+"{f5}":if a and 16 then g$=c$
+	i$="{$c7}{$cf}{$d4}{$cf}":if a and 32 then i$="{$c7}{$cf}{$d3}{$d5}{$c2}"
+	a$="*":if a and 128 then a$=" "
+	e%=e:f%=f:y$="{red}{pound}$a{cyan}#{pound}#2{pound}%a{blue}:{white}{f5}{pound}$b{f5}{pound}{back arrow}15{lt. blue}{pound}$i{pound}{back arrow}21{white}{pound}$g{pound}{back arrow}39 "
+	y$=y$+" {lt. blue}{$c1}c{blue}:{white}{pound}#4{pound}%e {lt. blue}{$c3}r{blue}:{white}{pound}#3{pound}%f {lt. blue}{$c6}l{blue}:{white}{pound}$h {lt. blue}{$d0}w{blue}:{white}{f5}{pound}$d{f5}{f6}{white}{pound}vj"
+	&y$:return
 {:4072}
-	A%=N:POKE 53252,3:&"{$c4}ELETE #(1-{pound}%A): {pound}I1{f6}":A=VAL(AN$):IF A<1 OR A>N THEN{:4034}
-	TZ=1:IF A=N THEN N=N-1:GOTO{:4034}
-	FOR X=A TO N-1:TT$(X)=TT$(X+1):NEXT:N=N-1:GOTO{:4034}
-	&"{$cc}OAD{f6:2}":GOTO{:4004}
-	&"{$d3}AVE{f6:2}":&,42,3,N
-	GOSUB{:4018}:GOSUB 1024:A$=DR$+A$:&,42,5:RETURN
+	a%=n:poke 53252,3:&"{$c4}elete #(1-{pound}%a): {pound}i1{f6}":a=val(an$):if a<1 or a>n then{:4034}
+	tz=1:if a=n then n=n-1:goto {:4034}
+	for x=a to n-1:tt$(x)=tt$(x+1):next:n=n-1:goto {:4034}
+	&"{$cc}oad{f6:2}":goto {:4004}
+	&"{$d3}ave{f6:2}":&,42,3,n
+	gosub {:4018}:gosub 1024:a$=dr$+a$:&,42,5:return
 {:4084}
-	POKE 53252,7:&"{$c6}IND {$d7}HICH? {pound}I1":IF AN$=""THEN{:4034}
-	&"{$d3}EARCHING...":Z=0
-	FOR I=1 TO N:A$=TT$(I):GOSUB{:4222}:IF AN$=B$THEN Z=I:I=N
-	IF INT(I/5)=(I/5)THEN:&"."
-	NEXT:IF Z=0 THEN:&"{$ce}OT {$c6}OUND!{pound}W1{f6}":GOTO{:4034}
-	GOTO{:4148}
+	poke 53252,7:&"{$c6}ind {$d7}hich? {pound}i1":if an$=""then{:4034}
+	&"{$d3}earching...":z=0
+	for i=1 to n:a$=tt$(i):gosub {:4222}:if an$=b$then z=i:i=n
+	if int(i/5)=(i/5)then:&"."
+	next:if z=0 then:&"{$ce}ot {$c6}ound!{pound}w1{f6}":goto {:4034}
+	goto {:4148}
 {:4096}
-	IF TZ THEN:&"{f6:2}{$d3}AVE {$c3}HANGES? ":GOSUB 1902:ON A GOSUB{:4016}
-	RETURN
+	if tz then:&"{f6:2}{$d3}ave {$c3}hanges? ":gosub 1902:on a gosub {:4016}
+	return
 {:4100}
-	&"{lt. blue}{$c1}DD {$c1} {$c3}OMMAND{pound}Q0{f6:2}":TZ=1
-	POKE 53252,7:&"{$c3}OMMAND: {pound}I1":ON-(AN$="")GOTO{:4136}:C$=AN$:POKE 53252,14
-	&"{f6} 1) {$c6}ILE{f6} 2) {$cc}INE IN {f5}IM{f5}{f6}{$cc}OCATION: "
-	A$="{$c6}ILE{$cc}INE":B=4:GOSUB{:4142}:G=A:ON G GOTO{:4110}
-	POKE 53252,14:&"{f6}{$c6}ILENAME: {pound}I0":ON-(AN$="")GOTO{:4136}:GOTO{:4114}
+	&"{lt. blue}{$c1}dd {$c1} {$c3}ommand{pound}q0{f6:2}":tz=1
+	poke 53252,7:&"{$c3}ommand: {pound}i1":on-(an$="")goto {:4136}:c$=an$:poke 53252,14
+	&"{f6} 1) {$c6}ile{f6} 2) {$cc}ine in {f5}im{f5}{f6}{$cc}ocation: "
+	a$="{$c6}ile{$cc}ine":b=4:gosub {:4142}:g=a:on g goto {:4110}
+	poke 53252,14:&"{f6}{$c6}ilename: {pound}i0":on-(an$="")goto {:4136}:goto {:4114}
 {:4110}
-	POKE 53252,4:&"{f6}{$cc}INE {$ce}UMBER: {pound}I1":ON-(AN$="")GOTO{:4136}
-	A=VAL(AN$):ON-(A<1000 OR A>9999)GOTO{:4136}:AN$=CHR$(A AND 255)+CHR$(A/256)
+	poke 53252,4:&"{f6}{$cc}ine {$ce}umber: {pound}i1":on-(an$="")goto {:4136}
+	a=val(an$):on-(a<1000 or a>9999)goto {:4136}:an$=chr$(a and 255)+chr$(a/256)
 {:4114}
-	D$=AN$:&"{f6} 1) {$c7}{$cf}{$d4}{$cf}{f6} 2) {$c7}{$cf}{$d3}{$d5}{$c2}{f6}{$cd}ETHOD: "
-	A$="{$c7}{$cf}{$d4}{$cf} {$c7}{$cf}{$d3}{$d5}{$c2}":B=5:GOSUB{:4142}:G=G+A*2
-	POKE 53252,4:&"{f6}{$c1}CCESS ({$cf}R {f5}?{f5}): {pound}I1":ON-(AN$="{f2}")GOSUB{:4138}:F=VAL(AN$)
-	IF F<1 OR F>1023 THEN F=1023
-	POKE 53252,3:&"{f6}{$c3}REDITS: {pound}I1":H=VAL(AN$)
-	E$="":IF(LEN(C$)>2)AND(LEN(D$)>2)AND((G AND 1)=1)THEN{:4128}
-	POKE 53252,6:&"{f6}{$d0}ASSWORD: {pound}I1":E$=AN$
+	d$=an$:&"{f6} 1) {$c7}{$cf}{$d4}{$cf}{f6} 2) {$c7}{$cf}{$d3}{$d5}{$c2}{f6}{$cd}ethod: "
+	a$="{$c7}{$cf}{$d4}{$cf} {$c7}{$cf}{$d3}{$d5}{$c2}":b=5:gosub {:4142}:g=g+a*2
+	poke 53252,4:&"{f6}{$c1}ccess ({$cf}r {f5}?{f5}): {pound}i1":on-(an$="{f2}")gosub {:4138}:f=val(an$)
+	if f<1 or f>1023 then f=1023
+	poke 53252,3:&"{f6}{$c3}redits: {pound}i1":h=val(an$)
+	e$="":if(len(c$)>2)and(len(d$)>2)and((g and 1)=1)then{:4128}
+	poke 53252,6:&"{f6}{$d0}assword: {pound}i1":e$=an$
 {:4128}
-	&"{f6}{$c6}LAGS:{f6} {$da:2} {$cc}OCKED? ":GOSUB 1902:B=A
-	&" {$c9}GNORE {$c5}XTRA? ":GOSUB 1902:B=B+A*4
-	T=2:IF LEN(C$)>2 OR LEN(D$)>2 OR(G AND 1)=1 THEN T=1
-	A=T:GOSUB{:4024}:N=N+1:TT$(N)=L$
+	&"{f6}{$c6}lags:{f6} {$da:2} {$cc}ocked? ":gosub 1902:b=a
+	&" {$c9}gnore {$c5}xtra? ":gosub 1902:b=b+a*4
+	t=2:if len(c$)>2 or len(d$)>2 or(g and 1)=1 then t=1
+	a=t:gosub {:4024}:n=n+1:tt$(n)=l$
 {:4136}
-	GOTO{:4034}
+	goto {:4034}
 {:4138}
-	A%=.:FOR I=0 TO 9:B%=I:&"{$c7}ROUP {pound}%B? ":GOSUB 1902:A%=A%+A*2^I:NEXT
-	AN$="":ON-(A%=0)GOTO{:4198}:AN$=STR$(A%):RETURN
+	a%=.:for i=0 to 9:b%=i:&"{$c7}roup {pound}%b? ":gosub 1902:a%=a%+a*2^i:next
+	an$="":on-(a%=0)goto {:4198}:an$=str$(a%):return
 {:4142}
-	&"{pound}G1":A=VAL(AN$)-1:IF TR%<1 THEN A=0:RETURN
-	ON-(A<0 OR A>1)GOTO{:4142}:LP=1:&MID$(A$,A*B+1,B):RETURN
+	&"{pound}g1":a=val(an$)-1:if tr%<1 then a=0:return
+	on-(a<0 or a>1)goto {:4142}:lp=1:&mid$(a$,a*b+1,b):return
 {:4146}
-	POKE 53252,3:A%=N:&"{$c5}DIT #(1-{pound}%N): {pound}I1":Z=VAL(AN$):IF Z<1 OR Z>N THEN{:4034}
+	poke 53252,3:a%=n:&"{$c5}dit #(1-{pound}%n): {pound}i1":z=val(an$):if z<1 or z>n then{:4034}
 {:4148}
-	A%=Z:&"{clear}{white}{pound}VJ":GOSUB{:4054}:A$="{$cc}ONG":IF A AND 8 THEN A$="{$d3}HORT"
-	&"    {lt. blue}{$d3}TORAGE:{white}{pound}{back arrow}20{pound}$A{f6}"
-	&"{cyan} 1{blue}) {lt. blue}{$c3}OMMAND:{white}{pound}{back arrow}20{pound}$B{f6}"
-	TY=SGN(A AND 16):A$=MID$("{$c6}ILE{$cc}INE",TY*4+1,4):&"{cyan} 2{blue}) {lt. blue}{$cc}OCATION:{white}{pound}{back arrow}20{pound}$A{f6}"
-	ON TY GOTO{:4160}
-	&"{cyan} 3{blue}) {lt. blue}{$c6}ILE {$ce}AME:{white}{pound}{back arrow}20{pound}$G{f6}":GOTO{:4162}
+	a%=z:&"{clear}{white}{pound}vj":gosub {:4054}:a$="{$cc}ong":if a and 8 then a$="{$d3}hort"
+	&"    {lt. blue}{$d3}torage:{white}{pound}{back arrow}20{pound}$a{f6}"
+	&"{cyan} 1{blue}) {lt. blue}{$c3}ommand:{white}{pound}{back arrow}20{pound}$b{f6}"
+	ty=sgn(a and 16):a$=mid$("{$c6}ile{$cc}ine",ty*4+1,4):&"{cyan} 2{blue}) {lt. blue}{$cc}ocation:{white}{pound}{back arrow}20{pound}$a{f6}"
+	on ty goto {:4160}
+	&"{cyan} 3{blue}) {lt. blue}{$c6}ile {$ce}ame:{white}{pound}{back arrow}20{pound}$g{f6}":goto {:4162}
 {:4160}
-	&"{cyan} 3{blue}) {lt. blue}{$cc}INE {$ce}UMBER:{white}{pound}{back arrow}20{pound}$G{f6}"
+	&"{cyan} 3{blue}) {lt. blue}{$cc}ine {$ce}umber:{white}{pound}{back arrow}20{pound}$g{f6}"
 {:4162}
-	A%=LEN(D$):&"{cyan} 4{blue}) {lt. blue}{$d0}ASSWORD:{white}{pound}{back arrow}20{f5}{pound}$D{f5} ({pound}%A){f6}":
-	E%=E:&"{cyan} 5{blue}) {lt. blue}{$c1}CCESS:{white}{pound}{back arrow}20{pound}%E{f6}"
-	F%=F:&"{cyan} 6{blue}) {lt. blue}{$c3}REDITS:{white}{pound}{back arrow}20{pound}%F{f6}"
-	&"{cyan} 7{blue}) {lt. blue}{$cd}ETHOD:{white}{pound}{back arrow}20{pound}$I{f6}":A$="{$ce}O":IF A AND 128 THEN A$="{$d9}ES"
-	&"{cyan} 8{blue}) {lt. blue}{$c1}CTIVE:{white}{pound}{back arrow}20{pound}$A{f6}"
-	&"{cyan}{$a0}9{blue}) {lt. blue}{$c6}LAGS:{white}{pound}{back arrow}20{pound}$H{f6}"
-	&"{f6}{cyan}  {$c5}DIT{blue}: {white}{pound}G1{pound}V7{f6:2}":X=VAL(AN$):IF X=0 THEN{:4034}
-	ON X GOSUB{:4178},{:4182},{:4186},{:4192},{:4194},{:4200},{:4204},{:4206},{:4208}:GOSUB{:4236}:TT$(Z)=L$:GOTO{:4148}
+	a%=len(d$):&"{cyan} 4{blue}) {lt. blue}{$d0}assword:{white}{pound}{back arrow}20{f5}{pound}$d{f5} ({pound}%a){f6}":
+	e%=e:&"{cyan} 5{blue}) {lt. blue}{$c1}ccess:{white}{pound}{back arrow}20{pound}%e{f6}"
+	f%=f:&"{cyan} 6{blue}) {lt. blue}{$c3}redits:{white}{pound}{back arrow}20{pound}%f{f6}"
+	&"{cyan} 7{blue}) {lt. blue}{$cd}ethod:{white}{pound}{back arrow}20{pound}$i{f6}":a$="{$ce}o":if a and 128 then a$="{$d9}es"
+	&"{cyan} 8{blue}) {lt. blue}{$c1}ctive:{white}{pound}{back arrow}20{pound}$a{f6}"
+	&"{cyan}{$a0}9{blue}) {lt. blue}{$c6}lags:{white}{pound}{back arrow}20{pound}$h{f6}"
+	&"{f6}{cyan}  {$c5}dit{blue}: {white}{pound}g1{pound}v7{f6:2}":x=val(an$):if x=0 then{:4034}
+	on x gosub {:4178},{:4182},{:4186},{:4192},{:4194},{:4200},{:4204},{:4206},{:4208}:gosub {:4236}:tt$(z)=l$:goto {:4148}
 {:4178}
-	PL=1:W$=B$:P$="{$c3}OMMAND":POKE 53252,7:&,1,32:IF AN$<>""THEN B$=AN$:TZ=1
-	RETURN
+	pl=1:w$=b$:p$="{$c3}ommand":poke 53252,7:&,1,32:if an$<>""then b$=an$:tz=1
+	return
 {:4182}
-	X=1-SGN(A AND 16):A=(A AND NOT 16)OR(16*X):C$="NONE":TZ=1:IF X THEN C$="2000"
-	RETURN
+	x=1-sgn(a and 16):a=(a and not 16)or(16*x):c$="none":tz=1:if x then c$="2000"
+	return
 {:4186}
-	P$="{$c6}ILE {$ce}AME":L=14:PL=0:IF TY THEN P$="{$cc}INE {$ce}UMBER":L=4:PL=1
-	POKE 53252,L:W$=C$:&,1,32:IF AN$<>""THEN C$=AN$:TZ=1
-	RETURN
+	p$="{$c6}ile {$ce}ame":l=14:pl=0:if ty then p$="{$cc}ine {$ce}umber":l=4:pl=1
+	poke 53252,l:w$=c$:&,1,32:if an$<>""then c$=an$:tz=1
+	return
 {:4192}
-	PL=1:W$=D$:P$="{$d0}ASSWORD":POKE 53252,7:&,1,32:D$=AN$:TZ=1:RETURN
+	pl=1:w$=d$:p$="{$d0}assword":poke 53252,7:&,1,32:d$=an$:tz=1:return
 {:4194}
-	W$=MID$(STR$(E),2):P$="{$c1}CCESS":POKE 53252,4:&,1,32:ZZ%=A
-	ON-(AN$="{f2}")GOSUB{:4138}:A=ZZ%:IF AN$<>""THEN E=VAL(AN$):TZ=1
+	w$=mid$(str$(e),2):p$="{$c1}ccess":poke 53252,4:&,1,32:zz%=a
+	on-(an$="{f2}")gosub {:4138}:a=zz%:if an$<>""then e=val(an$):tz=1
 {:4198}
-	RETURN
+	return
 {:4200}
-	W$=MID$(STR$(F),2):P$="{$c3}REDITS":POKE 53252,3:&,1,32:IF AN$<>""THEN F=VAL(AN$):TZ=1
-	RETURN
+	w$=mid$(str$(f),2):p$="{$c3}redits":poke 53252,3:&,1,32:if an$<>""then f=val(an$):tz=1
+	return
 {:4204}
-	X=1-SGN(A AND 32):A=(A AND NOT 32)OR(32*X):TZ=1:RETURN
+	x=1-sgn(a and 32):a=(a and not 32)or(32*x):tz=1:return
 {:4206}
-	X=1-SGN(A AND 128):A=(A AND NOT 128)OR(128*X):TZ=1:RETURN
+	x=1-sgn(a and 128):a=(a and not 128)or(128*x):tz=1:return
 {:4208}
-	TZ=1:&"{$c9}GNORE {$c5}XTRA? {pound}G1"
-	IF AN$="{$d9}"THEN A=A OR 4:&"{$d9}ES"
-	IF AN$="{$ce}"THEN A=A AND NOT 4:&"{$ce}O"
-	&"{f6}{$da:2} {$cc}OCKED? {pound}G1"
-	IF AN$="{$d9}"THEN A=A OR 1:&"{$d9}ES"
-	IF AN$="{$ce}"THEN A=A AND NOT 1:&"{$ce}O"
-	&"{f6}":RETURN
+	tz=1:&"{$c9}gnore {$c5}xtra? {pound}g1"
+	if an$="{$d9}"then a=a or 4:&"{$d9}es"
+	if an$="{$ce}"then a=a and not 4:&"{$ce}o"
+	&"{f6}{$da:2} {$cc}ocked? {pound}g1"
+	if an$="{$d9}"then a=a or 1:&"{$d9}es"
+	if an$="{$ce}"then a=a and not 1:&"{$ce}o"
+	&"{f6}":return
 {:4222}
-	NL$=CHR$(0):A=ASC(A$+NL$):D$=MID$(A$,25,7)
-	B$=MID$(A$,4,7):C$=MID$(A$,11,14):E$=MID$(A$,2,2):F$=MID$(A$,32,1)
-	IF A AND 8 THEN B$=MID$(A$,4,2):C$=MID$(A$,6,2):F$=MID$(A$,8,1)
-	F=ASC(F$+NL$):E=ASC(E$+NL$)+ASC(MID$(E$,2)+NL$)*256
-	IF(A AND 16)THEN C$=MID$(STR$(ASC(C$+NL$)+ASC(MID$(C$,2)+NL$)*256),2)
-	Q$=B$:GOSUB{:4020}:B$=Q$:Q$=D$:GOSUB{:4020}:D$=Q$:Q$=C$:GOSUB{:4020}:C$=Q$
-	RETURN
+	nl$=chr$(0):a=asc(a$+nl$):d$=mid$(a$,25,7)
+	b$=mid$(a$,4,7):c$=mid$(a$,11,14):e$=mid$(a$,2,2):f$=mid$(a$,32,1)
+	if a and 8 then b$=mid$(a$,4,2):c$=mid$(a$,6,2):f$=mid$(a$,8,1)
+	f=asc(f$+nl$):e=asc(e$+nl$)+asc(mid$(e$,2)+nl$)*256
+	if(a and 16)then c$=mid$(str$(asc(c$+nl$)+asc(mid$(c$,2)+nl$)*256),2)
+	q$=b$:gosub {:4020}:b$=q$:q$=d$:gosub {:4020}:d$=q$:q$=c$:gosub {:4020}:c$=q$
+	return
 {:4236}
-	IF(A AND 16)THEN C=VAL(C$):C$=CHR$(C AND 255)+CHR$(C/256)
-	A=A AND NOT 8:IF(LEN(B$)=2)AND(LEN(C$)=2)AND(D$="")THEN A=A OR 8
-	ON SGN(A AND 8)+1 GOTO{:4242},{:4246}
+	if(a and 16)then c=val(c$):c$=chr$(c and 255)+chr$(c/256)
+	a=a and not 8:if(len(b$)=2)and(len(c$)=2)and(d$="")then a=a or 8
+	on sgn(a and 8)+1 goto {:4242},{:4246}
 {:4242}
-	L$=CHR$(A)+CHR$(E AND 255)+CHR$(E/256)+LEFT$(B$+Z$,7)+LEFT$(C$+Z$,14)
-	L$=L$+LEFT$(D$+Z$,7)+CHR$(F):RETURN
+	l$=chr$(a)+chr$(e and 255)+chr$(e/256)+left$(b$+z$,7)+left$(c$+z$,14)
+	l$=l$+left$(d$+z$,7)+chr$(f):return
 {:4246}
-	L$=CHR$(A)+CHR$(E AND 255)+CHR$(E/256)+B$+C$+CHR$(F):RETURN
-	REM  A =
-	REM   1  = NO LOCK/ZZ LOCK
-	REM   2  = UNUSED
-	REM   4  = NORMAL/IGNORE EXTRA
-	REM   8  = LONG/SHORT
-	REM   16 = FILE/LINE
-	REM   32 = GOTO/GOSUB
-	REM   64 = USED/EMPTY SLOT
-	REM   128= INACTIVE/ACTIVE
-	REM  B$= COMMAND
-	REM  C$= FILENAME OR LINE#
-	REM  D$= PASSWORD
-	REM  E = ACCESS
-	REM  F = CREDITS
+	l$=chr$(a)+chr$(e and 255)+chr$(e/256)+b$+c$+chr$(f):return
+	rem  a =
+	rem   1  = no lock/zz lock
+	rem   2  = unused
+	rem   4  = normal/ignore extra
+	rem   8  = long/short
+	rem   16 = file/line
+	rem   32 = goto /gosub 	rem   64 = used/empty slot
+	rem   128= inactive/active
+	rem  b$= command
+	rem  c$= filename or line#
+	rem  d$= password
+	rem  e = access
+	rem  f = credits

@@ -2,14 +2,14 @@
 	&,28,1:DIM M%(22,25,6),U$(50,3),AC$(15,1),YN$(1):PR$=""
 	YN$(0)="{$ce}O":YN$(1)="{$d9}ES":GOSUB 1061
 	FOR I=0 TO 9:X=I+1:GOSUB 1001:&,2,2:AC$(I,0)=A$:&,2,2:AC$(I,1)=A$:NEXT
-	CLOSE 2:IF R THEN AN$="":X=R:GOTO{:3016}
+	CLOSE 2:IF R THEN AN$="":X=R:goTO {:3016}
 {:3010}
 	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}SER {$c1}CCOUNT {$c5}DITOR {f6}{cyan}":P$="{$d5}SER {$c5}DIT"
 	A%=UR:&"{f6} {$d5}SERS: {pound}%A{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}DIT.{f6:2}":GOSUB 1006
 	ON-(AN$="")GOTO 1811:X=ABS(INT(VAL(LEFT$(AN$,4))))
 {:3016}
 	IF(X<=UR)AND X>.THEN{:3020}
-	I=0:ON-(AN$<>"")GOSUB 1046:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":GOTO{:3010}
+	I=0:ON-(AN$<>"")GOSUB 1046:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":goTO {:3010}
 {:3020}
 	GOSUB 1065:GOSUB 1001:FOR I=1 TO 24:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
 	U$(I,0)=A$:NEXT:A$=U$(13,0):U$(13,0)=LEFT$(A$,1)
@@ -18,8 +18,8 @@
 	U$(29,0)=MID$(STR$(INT(A AND 255)),2)
 	A$=U$(23,0):FOR I=1 TO 20:U$(30+I,0)=MID$(A$,I,1):NEXT:U$(48,0)=MID$(A$,18,2)
 	RESTORE:FOR I=1 TO 50:READ T,P,X,U$(I,3):U$(I,1)=U$(I,0):U$(I,2)=" "
-	A$=CHR$(192+X):ON T GOSUB{:3040},{:3042},{:3044},{:3046}:IF M%(0,0,P)<X THEN M%(0,0,P)=X
-	NEXT:PG=1:GOSUB{:3100}:GOTO{:3010}
+	A$=CHR$(192+X):ON T goSUB {:3040},{:3042},{:3044},{:3046}:IF M%(0,0,P)<X THEN M%(0,0,P)=X
+	NEXT:PG=1:goSUB {:3100}:goTO {:3010}
 {:3040}
 	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+U$(I,0):RETURN
 {:3042}
@@ -80,35 +80,35 @@
 	DATA1,4,9,"{$c4}{$cc}'S/{$c3}ALL:      "
 {:3100}
 	IF TR%<1 THEN RETURN
-	LM=0:GOSUB{:3150}:KK=M%(0,0,PG):N=KK
-	IF PG<>1 THEN B$="/{$c9}":A$="{$c5}DIT {$d5}SER {$c9}NFORMATION":GOSUB{:3152}
-	IF PG<>2 THEN B$="/{$d3}":A$="{$c5}DIT {$d5}SER {$d3}TATS":GOSUB{:3152}
-	IF PG<>3 THEN B$="/{$d4}":A$="{$c5}DIT {$d4}ERMINAL {$d0}ARAMETERS":GOSUB{:3152}
-	IF PG<>4 THEN B$="/{$c6}":A$="{$c5}DIT {$d5}SER {$c6}LAGS":GOSUB{:3152}
-	IF PG<>5 THEN B$="/{$cd}":A$="{$c5}DIT {$d5}SER {$cd}AINT {$c6}LAGS":GOSUB{:3152}
-	B$="/{$d1}":A$="{$d1}UIT":GOSUB{:3152}
+	LM=0:goSUB {:3150}:KK=M%(0,0,PG):N=KK
+	IF PG<>1 THEN B$="/{$c9}":A$="{$c5}DIT {$d5}SER {$c9}NFORMATION":goSUB {:3152}
+	IF PG<>2 THEN B$="/{$d3}":A$="{$c5}DIT {$d5}SER {$d3}TATS":goSUB {:3152}
+	IF PG<>3 THEN B$="/{$d4}":A$="{$c5}DIT {$d4}ERMINAL {$d0}ARAMETERS":goSUB {:3152}
+	IF PG<>4 THEN B$="/{$c6}":A$="{$c5}DIT {$d5}SER {$c6}LAGS":goSUB {:3152}
+	IF PG<>5 THEN B$="/{$cd}":A$="{$c5}DIT {$d5}SER {$cd}AINT {$c6}LAGS":goSUB {:3152}
+	B$="/{$d1}":A$="{$d1}UIT":goSUB {:3152}
 	&,16,2,46,M%(0,1,PG),N,36,1,N,3,5,0:LM=A%+1:&,70,0,23
 	IF TR%<1 OR LM=N OR LM=0 THEN RETURN
-	IF LM>KK THEN A=LM-KK:PG=A-(A>=PG):GOTO{:3100}
-	GOSUB{:3150}:GOTO{:3100}
+	IF LM>KK THEN A=LM-KK:PG=A-(A>=PG):goTO {:3100}
+	goSUB {:3150}:goTO {:3100}
 {:3124}
 	RETURN
 {:3150}
-	ON PG GOTO{:3154},{:3158},{:3162},{:3166},{:3170}:RETURN
+	ON PG goTO {:3154},{:3158},{:3162},{:3166},{:3170}:RETURN
 {:3152}
 	N=N+1:&,16,0,46,M%(0,N,PG),B$,"",A$:RETURN
 {:3154}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c9}NFORMATION{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3158}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          {$d5}SER {$d3}TATISTICS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3162}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        {$d4}ERMINAL {$d0}ARAMETERS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3166}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3170}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      {$d5}SER {$cd}AINT {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN

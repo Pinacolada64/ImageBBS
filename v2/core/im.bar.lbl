@@ -1,43 +1,44 @@
-	ON IM GOTO{:60002},{:60008}:RETURN
+{number:60000}
+	on im goto {:60002},{:60008}:return
 {:60002}
-	GOSUB{:60004}:&"{pound}{back arrow}13{rvrs on} {$d0}{$d2}{$c5}{$d3:2} {$c1}{$a0}{$cb}{$c5}{$d9} {pound}G1{f6}":RETURN
+	gosub {:60004}:&"{pound}{back arrow}13{rvrs on} {$d0}{$d2}{$c5}{$d3:2} {$c1}{$a0}{$cb}{$c5}{$d9} {pound}g1{f6}":return
 {:60004}
-	A=11:GOSUB 1004:ON-(A<>.)GOTO{:60008}:RETURN
-	GOSUB 1060:FOR X=1 TO 38:GOSUB 1001:&,2,2:ST(X)=VAL(A$):NEXT:CLOSE 2
+	a=11:gosub 1004:on-(a<>.)goto {:60008}:return
+	gosub 1060:for x=1 to 38:gosub 1001:&,2,2:st(x)=val(a$):next:close 2
 {:60008}
-	B$=D6$:&"{clear}  {$d2}ESTARTED: {pound}$B"
-	&"{f6} {rvrs on}{yellow}  {$c2}.{$c1}.{$d2}.  {white} {$d4}HIS   {$cc}OG  {$c3}URRENT {$d3}YSTEM "
-	&"{f6} {rvrs on}{yellow}  {$d3}TATS   {white} {$c3}ALL  {$d4}OTAL  {$d4}OTAL  {$d4}OTAL  ":RESTORE
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B  {pound}%C  {pound}%D {rvrs on} "
-	B$="{$c6}EEDBACK  ":X=1:GOSUB{:60060}
-	B$="{$d3}YSOP {$cd}AIL":X=2:GOSUB{:60060}
-	B$="{$d5}SERS {$cd}AIL":X=3:GOSUB{:60060}
-	B$="{$d0}OSTS     ":X=4:GOSUB{:60060}
-	B$="{$d2}ESPONSES ":X=5:GOSUB{:60060}
-	B$="{$d5}PLOADS   ":X=6:GOSUB{:60060}
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B    {$ce}/{$c1}  {pound}%D {rvrs on} "
-	B$="{$c4}OWNLOADS ":X=7:GOSUB{:60060}
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B  {pound}%C    {$ce}/{$c1} {rvrs on} ":C=ST(29):C%=C+(C>32767)*65536
-	B$="{$ce}EW {$d5}SERS ":X=8:GOSUB{:60062}
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B {rvrs on}    {$cc}OG   {$d4}OT  "
-	B$="{$c3}ALLS/{$cc}OG ":X=9:GOSUB{:60062}
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%C   {pound}%D  {rvrs on} "
-	X=21:GOSUB{:60052}:X=37:GOSUB{:60064}
-	B$="{$d4}IME {$d5}SED ":X=10:GOSUB{:60062}
-	A$="{f6} {rvrs on}{pound}$B{rvrs off}{pound}#5{pound}# {pound}%A  {pound}%B {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%E   {pound}%F  {rvrs on} "
-	B$="{$d4}IME {$c9}DLE ":X=11:GOSUB{:60062}
-	&"{f6} {rvrs on}{pound}O {pound}O {cyan}{f6}":RETURN
+	b$=d6$:&"{clear}  {$d2}estarted: {pound}$b"
+	&"{f6} {rvrs on}{yellow}  {$c2}.{$c1}.{$d2}.  {white} {$d4}his   {$cc}og  {$c3}urrent {$d3}ystem "
+	&"{f6} {rvrs on}{yellow}  {$d3}tats   {white} {$c3}all  {$d4}otal  {$d4}otal  {$d4}otal  ":restore
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c  {pound}%d {rvrs on} "
+	b$="{$c6}eedback  ":x=1:gosub {:60060}
+	b$="{$d3}ysop {$cd}ail":x=2:gosub {:60060}
+	b$="{$d5}sers {$cd}ail":x=3:gosub {:60060}
+	b$="{$d0}osts     ":x=4:gosub {:60060}
+	b$="{$d2}esponses ":x=5:gosub {:60060}
+	b$="{$d5}ploads   ":x=6:gosub {:60060}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b    {$ce}/{$c1}  {pound}%d {rvrs on} "
+	b$="{$c4}ownloads ":x=7:gosub {:60060}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c    {$ce}/{$c1} {rvrs on} ":c=st(29):c%=c+(c>32767)*65536
+	b$="{$ce}ew {$d5}sers ":x=8:gosub {:60062}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}    {$cc}og   {$d4}ot  "
+	b$="{$c3}alls/{$cc}og ":x=9:gosub {:60062}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%c   {pound}%d  {rvrs on} "
+	x=21:gosub {:60052}:x=37:gosub {:60064}
+	b$="{$d4}ime {$d5}sed ":x=10:gosub {:60062}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%e   {pound}%f  {rvrs on} "
+	b$="{$d4}ime {$c9}dle ":x=11:gosub {:60062}
+	&"{f6} {rvrs on}{pound}o {pound}o {cyan}{f6}":return
 {:60052}
-	C%=100:E%=0:A=ST(X):B=ST(X+1):IF A+B=0 THEN RETURN
-	IF A=.THEN E%=100:C%=0:RETURN
-	IF B=.THEN C%=100:E%=0:RETURN
-	C%=A/(A+B)*100+.5:E%=100-C%:RETURN
+	c%=100:e%=0:a=st(x):b=st(x+1):if a+b=0 then return
+	if a=.then e%=100:c%=0:return
+	if b=.then c%=100:e%=0:return
+	c%=a/(a+b)*100+.5:e%=100-c%:return
 {:60060}
-	C=ST(X+22):D=ST(X+29):C%=C+(C>32767)*65536:D%=D+(D>32767)*65536
+	c=st(x+22):d=st(x+29):c%=c+(c>32767)*65536:d%=d+(d>32767)*65536
 {:60062}
-	A=ST(X):B=ST(X+11):A%=A+(A>32767)*65536:B%=B+(B>32767)*65536:&:RETURN
+	a=st(x):b=st(x+11):a%=a+(a>32767)*65536:b%=b+(b>32767)*65536:&:return
 {:60064}
-	D%=100:F%=0:A=ST(X):B=ST(X+1):IF A+B=0 THEN RETURN
-	IF A=.THEN F%=100:D%=0:RETURN
-	IF B=.THEN D%=100:F%=0:RETURN
-	D%=A/(A+B)*100+.5:F%=100-D%:RETURN
+	d%=100:f%=0:a=st(x):b=st(x+1):if a+b=0 then return
+	if a=.then f%=100:d%=0:return
+	if b=.then d%=100:f%=0:return
+	d%=a/(a+b)*100+.5:f%=100-d%:return

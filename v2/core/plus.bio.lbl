@@ -1,29 +1,29 @@
 	&"{f6}{cyan} {$c0:15}{f6} {rvrs on}{purple} {$d5}SER {$c2}IO V1.3 {f6}{cyan} {$c0:15}{f6}":A=8:GOSUB 1004:Q=A
-	GOSUB{:3008}:ON E%+1 GOTO{:3010}:IF Q=.THEN:&"{f6}{$d3}ORRY, {$ce}O {$c2}IOGRAPHIES {$c1}VAILABLE {$d4}ODAY.{f6}":GOTO{:3042}
+	goSUB {:3008}:ON E%+1 goTO {:3010}:IF Q=.THEN:&"{f6}{$d3}ORRY, {$ce}O {$c2}IOGRAPHIES {$c1}VAILABLE {$d4}ODAY.{f6}":goTO {:3042}
 	&"{f6}{$c3}REATING {f5}U.BIOGRAPHIES{f5} {$ce}OW...":DR=6:A$="U.BIOGRAPHIES,L,"+CHR$(125):GOSUB 1011
-	X=UR:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:&"!{f6}":GOTO{:3010}
+	X=UR:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:&"!{f6}":goTO {:3010}
 {:3008}
 	DR=6:A$="U.BIOGRAPHIES":GOTO 1011
 {:3010}
 	I=.:X=.:A=.:POKE 53252,20:&"{f6}{cyan}{$c5}NTER {$d4}HE {$c8}ANDLE {$cf}R{f1} {$d5}SER{f6}{$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$d6}IEW{f6}: {white}{pound}I1"
-	ON-(TR%<1 OR AN$=""OR AN$=R$)GOTO{:3042}:A=ABS(VAL(AN$)):IF A THEN{:3016}
-	GOSUB 1046:A=I:IF A THEN N$=AN$:I=1:GOTO{:3018}
+	ON-(TR%<1 OR AN$=""OR AN$=R$)goTO {:3042}:A=ABS(VAL(AN$)):IF A THEN{:3016}
+	GOSUB 1046:A=I:IF A THEN N$=AN$:I=1:goTO {:3018}
 {:3016}
-	IF A<1 OR A>UR THEN:&"{f6}{white}{$c9}NVALID {$d5}SER {$c1}CCOUNT!{f6}":GOTO{:3010}
+	IF A<1 OR A>UR THEN:&"{f6}{white}{$c9}NVALID {$d5}SER {$c1}CCOUNT!{f6}":goTO {:3010}
 {:3018}
-	GOSUB 1065:X=A:GOSUB 1001:&,2,2:ON I GOTO{:3020}:N$=A$:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A=.:GOTO{:3016}
+	GOSUB 1065:X=A:GOSUB 1001:&,2,2:ON I goTO {:3020}:N$=A$:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A=.:goTO {:3016}
 {:3020}
-	INPUT# 2,A$,F$,L$:CLOSE 2:GOSUB{:3008}:X=A:GOSUB 1001:&,2,2
-	IF N$<>A$THEN AN$=N$:&,15,1:LP=1:&"{f6}{cyan}{$d4}HERE {$c9}S {$ce}O {$c2}IOGRAPHY {$c1}VAILABLE {$c6}OR {pound}V7.{f6}":GOTO{:3010}
+	INPUT# 2,A$,F$,L$:CLOSE 2:goSUB {:3008}:X=A:GOSUB 1001:&,2,2
+	IF N$<>A$THEN AN$=N$:&,15,1:LP=1:&"{f6}{cyan}{$d4}HERE {$c9}S {$ce}O {$c2}IOGRAPHY {$c1}VAILABLE {$c6}OR {pound}V7.{f6}":goTO {:3010}
 	INPUT# 2,B$,C$,D$:CLOSE 2
 	A%=A:AN$=N$:&,15,1:&"{f6} {pound}VN{pound}#0{pound}%A - {cyan}{pound}V7":IF Q THEN AN$=F$+" "+L$:&,15,1:&"{f6}{cyan} {$d2}EAL {$ce}AME: {white}{pound}V7"
 	AN$=B$:&,15,1:&"{f6} {lt. blue}{$c6}ROM:{lt. green} {pound}V7{f1} {pound}$C{f6} {purple}{$c2}IOGRAPHY:{cyan}{f6:2} {pound}$D{f6}":IF Q=.OR A<>ID THEN{:3010}
-	I=A:&"{f6}{yellow}{$c5}DIT {$d4}HIS {$c2}IO?:{white} ":GOSUB 1902:ON A+1 GOTO{:3010}
-	&"{f6}":TF=.:GOSUB{:3008}:X=A%:GOSUB 1001:INPUT# 2,AA$,B$,C$,D$:CLOSE 2
+	I=A:&"{f6}{yellow}{$c5}DIT {$d4}HIS {$c2}IO?:{white} ":GOSUB 1902:ON A+1 goTO {:3010}
+	&"{f6}":TF=.:goSUB {:3008}:X=A%:GOSUB 1001:INPUT# 2,AA$,B$,C$,D$:CLOSE 2
 	POKE 53252,20:PL=1:W$=B$:P$="{$c3}ITY":&,1,32:IF AN$<>W$OR AN$<>""THEN B$=AN$:TF=1
 	&"{f6}":POKE 53252,2:PL=1:W$=C$:P$="{$d3}TATE":&,1,32:IF AN$<>W$OR AN$<>""THEN C$=AN$:TF=.
 	&"{f6}":POKE 53252,79:PL=.:W$=D$:P$="{$c2}IO":&,1,32:IF AN$<>W$OR AN$<>""THEN D$=AN$:TF=1
-	ON TF+1 GOTO{:3010}:GOSUB{:3008}:X=I:GOSUB 1001:TT$=AA$+R$+B$+R$+C$+R$+D$:PRINT# 2,TT$:CLOSE 2:GOTO{:3010}
+	ON TF+1 goTO {:3010}:goSUB {:3008}:X=I:GOSUB 1001:TT$=AA$+R$+B$+R$+C$+R$+D$:PRINT# 2,TT$:CLOSE 2:goTO {:3010}
 {:3042}
 	GOTO 1811
 	COPR. 1990 NEW IMAGE SOFTWARE

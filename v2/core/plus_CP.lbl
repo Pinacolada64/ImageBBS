@@ -17,13 +17,13 @@
 	gosub {:3138}:gosub 1500:if an$="" then an$="*"
 	&"{f6}":open 2,f,0,"$"+f$+an$:&,8,2:close 2
 {:3022}
-	&"{f6}{pound}{back arrow}12{rvrs on} {$d0}ress {$c1} {$cb}ey: {rvrs off}{pound}g1":goto{:3004}
+	&"{f6}{pound}{back arrow}12{rvrs on} {$d0}ress {$c1} {$cb}ey: {rvrs off}{pound}g1":goto {:3004}
 {:3024}
 ' copy files:
-	a9$="":s1=.:c1=.:s8=.:c8=.:d$="{$d3}ource":b%=8:f=8:gosub{:3134}:if b%>6 and b%<33 then f=b%
-	f$="0:":gosub{:3136}:a=val(an$):if a>. then f$=mid$(str$(a),2)+":"
+	a9$="":s1=.:c1=.:s8=.:c8=.:d$="{$d3}ource":b%=8:f=8:gosub {:3134}:if b%>6 and b%<33 then f=b%
+	f$="0:":gosub {:3136}:a=val(an$):if a>. then f$=mid$(str$(a),2)+":"
 	d$="{$d4}arget":b%=8-(f=8):g=b%:gosub {:3134}:if b%>6 and b%<33 then g=b%
-	g$="0:":gosub{:3136}:a=val(an$):if a>.then g$=mid$(str$(a),2)+":"
+	g$="0:":gosub {:3136}:a=val(an$):if a>.then g$=mid$(str$(a),2)+":"
 	d1%=g:d2%=val(g$):dr=.:gosub 1079:lp=1:&"{f6}{$c2}locks {$c6}ree: {pound}!a":kk=a
 	if a<3 then gosub 1920:goto {:3004}
 	gosub {:3138}:gosub 1500:if an$="" then an$="*"
@@ -40,27 +40,27 @@
 	a=val(a$):c$=mid$(a$,8):a$=mid$(a$,26,1)
 	for i=2 to 17:if mid$(c$,i,1)=qt$ then c$=left$(c$,i-1)
 	next:tt$=c$+","+a$:b$=a$:if s then {:3090}
-	if s8 then c8=c8+1:if c8<>8 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto{:3050}
-	if s1 then c1=c1+1:if c1<>143 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto{:3050}
+	if s8 then c8=c8+1:if c8<>8 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto {:3050}
+	if s1 then c1=c1+1:if c1<>143 then a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25{$d3}kip":goto {:3050}
 	s1=.:c1=.:c8=.:s8=.:a%=a:&"{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25"
 	if tz+a>kk then:&"{$d4}oo {$c2}ig!{f6}":goto {:3086}
 	if b$="r" then:&"({$d2}{$c5}{$cc} {$c6}ile){f6}":goto {:3086}
 	if a9$="{$d2}" then x=x9:goto {:3072}
-	&"?: {pound}g1":x=-(an$="{$d9}")-(an$="{$ce}")*2-(an$="{$d3}")*3-(an$="{$c1}")*4-(an$="8")*5:gosub{:3188}
+	&"?: {pound}g1":x=-(an$="{$d9}")-(an$="{$ce}")*2-(an$="{$d3}")*3-(an$="{$c1}")*4-(an$="8")*5:gosub {:3188}
 {:3072}
 	if x=. then x=2
 	lp=1:&mid$("{$d9}es  {$ce}o   {$d3}tart{$c1}bort{$d3}kip {$d3}kip ",(x-1)*5+1,5) '+"{f6}"
 	if x=1 then t=t+1:tz=tz+a%:tt$(t)=tt$:if t>143 then:&"{$cc}imit {$d2}eached!{f6}":x=3 ':goto {:3090}
 	if x=3 then {:3090}
-	if x=4 then t=.:goto{:3090}
-	if kk-tz<3 then:&"{$ce}o {$cd}ore {$d2}oom!{f6}":goto{:3090}
+	if x=4 then t=.:goto {:3090}
+	if kk-tz<3 then:&"{$ce}o {$cd}ore {$d2}oom!{f6}":goto {:3090}
 	if x=5 then s1=1:x9=.
 {:3086}
 	if x=6 then s8=1:x9=.
 	if s=. then {:3050}
 {:3090}
 	close 1:a9$="":if t=. then gosub 1920:goto {:3004}
-	&"{f6}":a=f:gosub {:3132}:on -(a<>.) goto {:3116}:a=g:gosub {:3132}:on -(a<>.) goto{:3116}
+	&"{f6}":a=f:gosub {:3132}:on -(a<>.) goto {:3116}:a=g:gosub {:3132}:on -(a<>.) goto {:3116}
 {:3094}
 	gosub {:3202}
 {:3096}
@@ -79,7 +79,7 @@
 {:3112}
 	close 2:close 3:next:&"{f6:2}{$c4}one!":goto {:3004}
 {:3114}
-	on -(a$<>"63") goto {:3112}:close 2:&"{f6}[{$d3}]kip [{$d2}]eplace [{$c1}]bort :{pound}g1":goto{:3180}
+	on -(a$<>"63") goto {:3112}:close 2:&"{f6}[{$d3}]kip [{$d2}]eplace [{$c1}]bort :{pound}g1":goto {:3180}
 	' todo: change target name
 {:3116}
 	&"{lt. red}{$c5}rror: {$c4}evice not present!{f6}":return
@@ -116,7 +116,7 @@
 	for i=2 to 17:if mid$(f$,i,1)=qt$then f$=left$(f$,i-1)
 	next:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
 	x=-(a$="{$d9}")-2*(a$="{$d3}")-3*(a$="{$c1}"):lp=1:&mid$("{$ce}o   {$d9}es  {$d3}tart{$c1}bort",x*5+1,5)
-	on x+1 goto{:3170},{:3166},{:3168},{:3168}
+	on x+1 goto {:3170},{:3166},{:3168},{:3168}
 {:3166}
 	f%=f%+1:a%(f%)=b%:tt$(f%)=f$:a%(f%)=b%:l=l+b%:goto {:3170}
 {:3168}
@@ -143,13 +143,13 @@
 	if an$<>"{$c4}" then {:3100}
 	&"{f6}{$c4}elete {$d7}hich {$ce}umber: {pound}i1"
 	zq=val(an$):if zq<1 or zq>t then{:3096}
-	tt$(zq)="[{$c4}eleted]":goto{:3094}
+	tt$(zq)="[{$c4}eleted]":goto {:3094}
 {:3202}
 	for i=1 to t:&"{f6}"+str$(i)+":"+tt$(i)
 	if i/20=int(i/20) then:&"{f6}{$d0}ress a key: {pound}g1"
 	next:return
 {:3208}
-	gosub{:3138}:gosub 1500:if an$=""then an$="*"
+	gosub {:3138}:gosub 1500:if an$=""then an$="*"
 	t$=an$:if tr%<1 then {:quit}
 	goto {:3042}
 {:3214}
@@ -173,11 +173,11 @@
 	rem get drive #
 	a=4:gosub {:sub.input_length}
 {:3410}
-	an$="":&"{f6}{cyan}{pound}$d{$c4}rive{pound}{back arrow}15{white}(0){cyan} : {pound}i1":if an$=""then an$="0:":goto{:3420}
-	if val(an$)<-1 or val(an$)>255 then:&"{lt. red}{$c9}nvalid drive number (0-255).":goto{:3410}
+	an$="":&"{f6}{cyan}{pound}$d{$c4}rive{pound}{back arrow}15{white}(0){cyan} : {pound}i1":if an$=""then an$="0:":goto {:3420}
+	if val(an$)<-1 or val(an$)>255 then:&"{lt. red}{$c9}nvalid drive number (0-255).":goto {:3410}
 {:3420}
 	an$=an$+":" ' &"an$={pound}v7{f6}"
-	goto{:3320}
+	goto {:3320}
 
 {:quit}
 ' restore screen mask to user online state:

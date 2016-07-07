@@ -1,55 +1,56 @@
-	REM MISC. LOGON MODULE
-	POKE 53248,1:&"{clear}{lt. blue}":POKE 53248,0:ON A GOTO{:4050},{:4068}
+{number:4000}
+	rem misc. logon module
+	poke 53248,1:&"{clear}{lt. blue}":poke 53248,0:on a goto {:4050},{:4068}
 {:4004}
-	PRINT"{home}{down:2}  {$c5}NTER {$c3}URRENT {$c4}ATE/{$d4}IME:{down}"
+	print"{home}{down:2}  {$c5}nter {$c3}urrent {$c4}ate/{$d4}ime:{down}"
 {:4006}
-	AN$=" {$c4}AY   :"+LEFT$(D1$,1):GOSUB{:4046}:IF A<1 OR A>7 THEN{:4006}
-	GOSUB{:4044}:POKE 52935,A:PRINT
+	an$=" {$c4}ay   :"+left$(d1$,1):gosub {:4046}:if a<1 or a>7 then{:4006}
+	gosub {:4044}:poke 52935,a:print
 {:4010}
-	AN$=" {$cd}ONTH :"+MID$(D1$,4,2):GOSUB{:4046}:IF A<1 OR A>12 THEN{:4010}
-	GOSUB{:4044}:POKE 52936,A:PRINT
+	an$=" {$cd}onth :"+mid$(d1$,4,2):gosub {:4046}:if a<1 or a>12 then{:4010}
+	gosub {:4044}:poke 52936,a:print
 {:4014}
-	AN$=" {$c4}ATE  :"+MID$(D1$,6,2):GOSUB{:4046}:IF A<1 OR A>31 THEN{:4014}
-	GOSUB{:4044}:POKE 52937,A:PRINT
+	an$=" {$c4}ate  :"+mid$(d1$,6,2):gosub {:4046}:if a<1 or a>31 then{:4014}
+	gosub {:4044}:poke 52937,a:print
 {:4018}
-	AN$=" {$d9}EAR  :"+MID$(D1$,2,2):GOSUB{:4046}:IF A<1 OR A>99 THEN{:4018}
-	GOSUB{:4044}:POKE 52938,A:PRINT
-	B$="A":A=VAL(MID$(D1$,8,2)):IF A>79 THEN A=A-80:B$="P"
+	an$=" {$d9}ear  :"+mid$(d1$,2,2):gosub {:4046}:if a<1 or a>99 then{:4018}
+	gosub {:4044}:poke 52938,a:print
+	b$="a":a=val(mid$(d1$,8,2)):if a>79 then a=a-80:b$="p"
 {:4024}
-	AN$=" {$c8}OUR  :"+MID$(STR$(A),2):GOSUB{:4046}:IF A<1 OR A>12 THEN{:4024}
-	B=A:PRINT
+	an$=" {$c8}our  :"+mid$(str$(a),2):gosub {:4046}:if a<1 or a>12 then{:4024}
+	b=a:print
 {:4028}
-	AN$=" {$cd}IN.  :"+MID$(STR$(VAL(MID$(D1$,10,2))),2):GOSUB{:4046}:IF A<.OR A>59 THEN{:4028}
-	C=A:PRINT
+	an$=" {$cd}in.  :"+mid$(str$(val(mid$(d1$,10,2))),2):gosub {:4046}:if a<.or a>59 then{:4028}
+	c=a:print
 {:4032}
-	AN$=" {$c1}/{$d0}   :"+B$:GOSUB{:4046}:IF AN$<>"A"AND AN$<>"P"THEN{:4032}
-	PRINT:IF AN$="P"THEN B=B+80
-	INPUT"{down}  {$cf}{$cb}";AN$:IF LEFT$(AN$,1)<>"Y"THEN{:4004}
-	&,62,B,C:B=B+80*((B=92)-(B=12))+12*((B=93)OR(B=13)):&,58,B,0:POKE 1010,1
-	A$=D1$:GOSUB 1520:T1=A:REM AN$=D1$:&,15:D2$=AN$+"{$cd}"
-	GOSUB 1063:X=19:GOSUB 1001:PRINT# 2,D1$:CLOSE 2:RETURN
+	an$=" {$c1}/{$d0}   :"+b$:gosub {:4046}:if an$<>"a"and an$<>"p"then{:4032}
+	print:if an$="p"then b=b+80
+	input"{down}  {$cf}{$cb}";an$:if left$(an$,1)<>"y"then{:4004}
+	&,62,b,c:b=b+80*((b=92)-(b=12))+12*((b=93)or(b=13)):&,58,b,0:poke 1010,1
+	a$=d1$:gosub 1520:t1=a:rem an$=d1$:&,15:d2$=an$+"{$cd}"
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
 {:4044}
-	A=16*INT(A/10)+A-INT(A/10)*10:RETURN
+	a=16*int(a/10)+a-int(a/10)*10:return
 {:4046}
-	Z$=MID$(AN$,9):PRINT"{up}"AN$:INPUT"{up}{right:6}";AN$:A=VAL(AN$):IF AN$=""THEN AN$=Z$
-	RETURN
+	z$=mid$(an$,9):print"{up}"an$:input"{up}{right:6}";an$:a=val(an$):if an$=""then an$=z$
+	return
 {:4050}
-	POKE 53248,1:POKE 53252,10
+	poke 53248,1:poke 53252,10
 {:4052}
-	&"{clear}{f6}{$d3}YSTEM {$d0}ASSWORD{f6:2}[{$c1}]LL {$c3}ALLS, [{$cf}]NE {$c3}ALL OR [{$ce}]ONE? {pound}G1"
-	ON-(AN$="{$ce}")-2*(AN$="{$cf}")-3*(AN$="{$c1}")GOTO{:4056},{:4058},{:4060}:RETURN
+	&"{clear}{f6}{$d3}ystem {$d0}assword{f6:2}[{$c1}]ll {$c3}alls, [{$cf}]ne {$c3}all or [{$ce}]one? {pound}g1"
+	on-(an$="{$ce}")-2*(an$="{$cf}")-3*(an$="{$c1}")goto {:4056},{:4058},{:4060}:return
 {:4056}
-	L2=0:&,52,40,0:&"{$ce}ONE{f6}":GOTO{:4064}
+	l2=0:&,52,40,0:&"{$ce}one{f6}":goto {:4064}
 {:4058}
-	L2=0:&,52,40,1:&"{$cf}NE{f6}":GOTO{:4062}
+	l2=0:&,52,40,1:&"{$cf}ne{f6}":goto {:4062}
 {:4060}
-	L2=1:&,52,40,1:&"{$c1}LL{f6}"
+	l2=1:&,52,40,1:&"{$c1}ll{f6}"
 {:4062}
-	&"{f6:2}{$c5}NTER {$d0}ASSWORD: {pound}I1":ON-(AN$="")GOTO{:4052}:L2$=AN$
+	&"{f6:2}{$c5}nter {$d0}assword: {pound}i1":on-(an$="")goto {:4052}:l2$=an$
 {:4064}
-	GOSUB 1063:X=37:GOSUB 1001:PRINT# 2,CHR$(48+L2)L2$:CLOSE 2
-	RETURN
+	gosub 1063:x=37:gosub 1001:print# 2,chr$(48+l2)l2$:close 2
+	return
 {:4068}
-	POKE 53248,1:A$="R":GOSUB 1064:SH=.:&"{clear}{f6}":IF E%=0 THEN:&,3,2
-	&"{f6:2}{pound}Q0{$d0}RESS {$c1}NY {$cb}EY {pound}G1":CLOSE 2:RETURN
-	REM
+	poke 53248,1:a$="r":gosub 1064:sh=.:&"{clear}{f6}":if e%=0 then:&,3,2
+	&"{f6:2}{pound}q0{$d0}ress {$c1}ny {$cb}ey {pound}g1":close 2:return
+	rem
