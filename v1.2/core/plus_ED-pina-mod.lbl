@@ -1,0 +1,360 @@
+{crunch:on}
+{alpha:invert}
+{def:debug}
+' Re-creating my better +.ED editor from last year
+
+' changelog:
+' 6/Jan/2016 11:35
+' + added small time/date editor from +.MM.ld
+' + now displays On/Off for linefeeds/expert mode
+' + shortened "Default transfer protocol"
+' + added file transfer protocol editor
+
+' earlier:
+' + computer types listed now
+' + added "Account Editor" display in Area
+' + changed "Image User Account Editor" to "Image BBS Account Editor"
+' + moved close2 after e.text read
+' + change 11-digit string into readable an$ for last read date/last call date
+
+' earlier still:
+' + options 13-14 ("Linefeeds","Expert mode") should toggle
+' ? tz=0 to save seems backward, reversed logic
+' + changed "upper/lower" flag to default file transfer protocol
+' + added lookup/display of next free user account
+' + sped up display of page 1 stats
+
+' idea: add user file backup/restore to seq file.
+' when restoring, if handle in seq backup file doesn't match handle in u.config,
+' display difference and ask whether to overwrite
+
+' todo: X-TEC wants +.am module to verify data is correct in user file,
+'		send email if error detected
+
+	' tz: edit flag - 0: edits made, prompt to save
+
+' 12/May/2015 11:24
+' "reboot required" prompted for and notice printed if # next available user # 
+'	modified
+' {:input} - checked for "N" (switch pages) before normalizing input, wasn't 
+'	changing pages - c64list oddity, need {$Cx-D0} in quotes
+' changed back to old code of checking for handle change for deleted or 
+'	REServed users since {:res_pw} is not called with GOSUB
+
+{number:1}
+	rem +.ED ENHANCED
+	goto {:100}
+
+{nice:5}
+{:sub.change_prompt}
+	&" # to change: {pound}i1"
+
+{nice:5}
+{:sub.normalize_a}
+	a=abs(int(val(an$))):return
+
+{nice:5}
+{:sub.verbose_date}
+	an$=tt$(i):&,15:c$=an$+"M":return ' c$="{$04}"+tt$(i) <-- does not work!
+
+{nice:5}
+{:sub.time_date_edit}
+' copy time/date (an$) into c$ (&,15 destroys an$):
+' copy menu option (a) into op (a is used in this subroutine)
+' output an$
+	c$=an$:op=a
+' date/time format:
+
+' 1  90 11 03 80 45    IMAGE BBS will translate this into the string
+' ^  ^  ^  ^  ^  ^     "Sun, Nov  3 1990  12:45 PM"
+' |  |  |  |  |  |
+' |  |  |  |  |  +---- Minutes  00-59
+' |  |  |  |  |
+' |  |  |  |  +------- Hour     00-11: AM
+' |  |  |  |                    80-91: PM (subtract 80 to get correct hour)
+' |  |  |  |
+' |  |  |  +---------- Date     01-31
+' |  |  |
+' |  |  +------------- Month    01-12
+' |  |
+' |  +---------------- Year     00-99     (plus hard-coded century base)
+' |
+' +------------------- Day       1-7      (1=Sunday, 7=Saturday)
+
+' stolen from +.MM.ld
+{:901}
+	&"{f6}Edit last "
+	if op=6 then b$="date"
+	if op=22then b$="call"
+	&"{pound}$b:{f6}{$04}"+c$+"{f6:2}Add or subtract how many days{f6}(-999 to 999)?{f6:2}"
+	p$="Last "+b$:gosub 1005
+{:904}
+	a=int(val(an$)):if tr%<1 then return
+{:906}
+	on -(a=.) goto {:932}:if a<-999 or a>999 then:&"{f6}Out of range!{f6}":goto {:901}
+{:908}
+	b=val(left$(c$,1))+a:c=val(mid$(c$,2,2)):d=val(mid$(c$,4,2))
+{:910}
+	e=val(mid$(c$,6,2))+a:a$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
+{:912}
+	if e<=asc(mid$(a$,d)) then {:918}
+{:914}
+	e=e-asc(mid$(a$,d)):d=d+1:if d<13 then {:912}
+{:916}
+	d=1:c=c+1:goto {:912}
+{:918}
+	if e>. then {:924}
+{:920}
+	d=d-1:e=e+asc(mid$(a$,d-12*(d=.))):if d>. then {:918}
+{:922}
+	d=12:c=c-1:goto {:918}
+{:924}
+	if b>7 then b=b-7:goto {:924}
+{:926}
+	if b<1 then b=b+7:goto {:926}
+{:928}
+	a$=right$("0"+mid$(str$(c),2),2)+right$("0"+mid$(str$(d),2),2)
+{:930}
+	c$=chr$(48+b)+a$+right$("0"+mid$(str$(e),2),2)+right$(c$,4)
+' show new date:
+	gosub {:934}
+{:932}
+	&"{f6}Change time?: ":gosub 1902:if a=. then return
+{:936}
+	&"{f6}Enter time in this format:{f6:2}Example:  9:20 AM--920A{f6}"
+{:938}
+	&"{pound}{back arrow}0911:23 PM--1123P{f6:2}"
+{:940}
+	&"Last {pound}$b time: {pound}i1":a$=right$(an$,1):if an$="" or tr%<1 then return
+{:942}
+' A or P
+	an$=left$(an$,len(an$)-1):if (a$<>"{$c1}" and a$<>"{$d0}") or val(right$(an$,2))>59 then {:936}
+{:944}
+	if val(an$)>1259 or val(an$)<100 then {:936}
+{:946}
+	t=-(a$="P")*8000
+{:948}
+	c$=left$(c$,7)+right$("0"+mid$(str$(val(an$)+t),2),4)
+
+{:934}
+	tt$(op)=c$:&"{f6}Last {pound}$b date:{f6}{$04}"+c$+"M{f6:2}":return
+
+	rem TIME/DATE EDITOR COPR.1990 NEW IMAGE 01/02/90
+
+	
+{number:100}
+{:100}
+' update cm$ for +.er "Pfile" area, and update "Area" window if screen mask enabled
+	cm$="{green}Account Editor":gosub 1360:restore:for i=1 to 38:read ed$(i):next
+{:102}
+	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
+
+{ifdef:debug}
+	{uses:\Documents and Settings\User\My Documents\C64\Image BBS\development\build-date_image-bbs.lbl}
+{endif}
+
+	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
+' if user deleted, notify sysop if user count modified:
+	if rr then:&"{f6}{lt. red}User count modified, reboot required"
+	&"{f6:2}{cyan}Enter handle or ID# of user to edit.{f6:2}"
+	tz=1:p$="User Edit":gosub 1006:if an$="" then 1811
+' look up user:
+	p=.:gosub {:sub.normalize_a}:x=a:if x<=ur and x>. then {:110}
+	gosub 1046:x=i:if i=. then:&"{f6}{f5}{pound}v7{f5} not found.{pound}w2":goto {:102}
+{:110}
+	gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
+' handle copied into tt$ to check if changed
+	tt$(i)=a$:next:tt$=tt$(1):close 2
+
+{:page0}
+	a%=x:&"{cyan}{clear}{f6} {pound}vn#{pound}%a{pound}{back arrow}15(Type {f5}N{f5} for next page){f6:2}"
+'	for i=1 to 23:a%=i:b$=ed$(i):c$=tt$(i):a$="{pound}#2{pound}# {pound}%a) {pound}$b{pound}{back arrow}16: {pound}$c"
+	a$="{pound}#2{pound}# {pound}%a) {pound}$b{pound}{back arrow}16: {pound}$c{f6}"
+	if p then {:page1}
+
+' page 0: 1-9, 22-23
+	for i=1 to 9:a%=i:b$=ed$(i):c$=tt$(i)
+' hide password from non-sysop:
+	if i=2 and id<>1 then c$="Not available"
+' verbose last message read date:
+	if i=6 then gosub {:sub.verbose_date}
+	&:next
+' last call:
+	i=22:a%=i:b$=ed$(i):gosub {:sub.verbose_date}:&
+' flags:
+	i=23:a%=i:b$=ed$(i):c$=tt$(i):&:goto {:input}
+	
+{:page1}
+' page 1: 10-21
+	for i=10 to 21:a%=i:b$=ed$(i):c$=tt$(i)
+' computer type:
+	if i=10 then c$=co$(val(tt$(i)))
+' transfer protocol:
+	if i=12 then c$=mid$("Punter        Xmodem        Copier        Relaxed Punter",val(tt$(i))*14-13,14)
+' Linefeeds/Expert Mode
+	if i=13 or i=14 then c$=mid$("No Yes",(val(tt$(i))+1)*3-2,3)
+
+' 1 dim tt$(13):tt$(13)="0":i=13
+' 2 if i=13 or i=14 then c$=mid$("No Yes",(val(tt$(i))+1)*3-2,3)
+' 3 print c$
+
+'	if (p=1 and (i>9 and i<22)) or (p=. and (i<10 or i>21)) then lp=1:&
+	&:next
+{:input}
+' original code:
+' 214={:sub.change_prompt}, 2={:sub.normalize_a}
+' 120 next:&"{f6}":gosub 214:&"{f6}":gosub 2:if tr%<1 then 1811
+' 122 if an$="N" then p=1-p:goto 112
+
+	&"{f6}":gosub {:sub.change_prompt}
+	if an$="{$ce}" then p=1-p:goto {:page0}
+	on -(tr%<1)-2*(a<1 or a>23) goto 1811,{:132}
+
+' changing password with/without permission:
+' if not sysop, display "Sorry, restricted function." from e.text:
+	if a=2 then on -(id=1) gosub {:sub.existing_pw}:if id<>1 then x=3:gosub 1980:&"{pound}w2":goto {:page0}
+
+' edit "Last date"/"Last call" date:
+	if a=6 or a=22 then an$=tt$(a):gosub {:sub.time_date_edit}:goto {:page0}
+	
+' computer type:
+	if a=10 then gosub {:142}:goto {:page0}
+
+' transfer protocol:
+	if a=12 then gosub {:sub:xfer_proto}:goto {:page0}
+	
+' 13/14 - Linefeeds/Expert Mode toggle
+	if a=13 or a=14 then tt$(a)=str$(1-val(tt$(a))):goto {:page0}
+'	on -(a<1 or a>23) goto {:132}:on -(a=23) goto {:change_flags}
+
+' edit user flags:
+	if a=23 then {:change_flags}
+
+' &,1,32
+' p$=prompt/w$=wrapped text. input shows original value, new prompt
+' Password: ----------
+' Password: []
+
+' general purpose edit:
+	p$=ed$(a):w$=tt$(a):&,1,32:if an$="" or an$=tt$(a) then {:page0}
+' handle or access group edited:
+	tt$(a)=an$:tz=.:on-(a=1)-(a=7)*2 goto {:148},{:154}:goto {:page0}
+{:132}
+'	on tz goto {:102}:&"{f6}Save changes?: ":gosub 1902:on-(a=.)goto {:102}
+	on tz goto {:102}:&"{f6}Save changes? ":gosub 1902:if a=. then {:102}
+	&"{clear}{f6}Writing to user data files..."
+	if tt$(1)<>"{up arrow}" and tt$(1)<>"RES" and tt$(1)<>tt$ then gosub {:206} ':gosub {:sub.write_stats}:goto {:102}
+	gosub {:sub.write_stats}:if tt$(1)="RES" and tt$<>"{up arrow}" and tt$<>"RES" then {:166}
+	goto {:102}
+{:142}
+' 10 - computer type:
+'	&"{f6:2}":for t=1 to 9:b$=co$(t):a%=t:&"{pound}%a) {pound}$b{f6}":next
+	&"{f6}":for t=1 to 9:a%=t:&"{f6}{pound}%a) "+co$(t):next
+'	&"{f6}Computer Type: {pound}g1{pound}v7{f6}":gosub {:sub.normalize_a}:if tr%<1 then return
+	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
+	on -(a<1 or a>9) goto {:142}:tt$(10)=str$(a):tz=.:return
+
+{:sub:xfer_proto}
+' 12 - transfer protocol:
+	&"{f6}1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
+	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
+	on -(a<1 or a>4) goto {:sub:xfer_proto}:tt$(12)=str$(a):tz=.:return
+
+{:148}
+' deleted (^) or REServed users:
+	on -(an$="{f8}")-(an$="RES")*2 goto {:160},{:res_pw}:g=x:gosub 1046:x=g
+' fixme: always reports used by DE23 - 1046 above destroys i and a%
+'	on -(an$="{f8}") goto {:160}:on -(an$="RES") gosub {:res_pw}:g=x:gosub 1046:x=g
+	on i+1 goto {:page0}:a%=i:&"{f6:2}Handle already used by {pound}vn{pound}%a{pound}w2":tt$(1)=tt$:goto {:page0}
+{:154}
+	tt$(23)=fl$(val(tt$(7))):goto {:page0}
+{:sub.write_stats}
+' write stats:
+	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:gosub 1001
+	print# 2,a$;:close 2:return
+{:160}
+'	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}Are You Sure?: ":gosub 1902:if a=.then{:102}
+' 1901 calls "Are You Sure?: " routine:
+	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}":gosub 1901:if a=. then {:102}
+	an$=tt$:gosub 1034
+	tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next:gosub {:sub.write_stats}
+' 1063: open e.data, adjust next available user account (L1):
+	if x<l1 then l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
+{:166}
+' if user email exists, decrease current total # of emails in bar stats:
+	a$="r":gosub 1062:close 2:if e%=. then gosub 1060:i=-1:x=25:gosub 1025:close 2
+' scratch forced mail, regular mail:
+	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024:goto {:102}
+{:res_pw}
+' this is for creating a REServed user's pw:
+' inform of default password:
+'	&"{f6}Password: {pound}i1":if an$=""then an$="PASS"
+' example from PRG: W$=NA$:P$="Handle":&,1,32:IF AN$<>"" THEN NA$=AN$
+
+' this routine could be used by main password editor:
+	w$="PASS":gosub {:sub.change_pw}:for i=3 to 24:tt$(i)="0":next:goto {:page0}
+{:sub.existing_pw}
+' this edits the current password:
+	w$=tt$(2)
+{:sub.change_pw}
+' if input <> Return or original text, then modify it, set tz=0
+	p$="Password":&,1,32:if an$<>"" or an$<>w$ then tt$(2)=an$:tz=.
+	return
+
+{:change_flags}
+	&"{clear}":for i=1 to 15:b$=mid$(tt$(23),i,1):an$=b$:gosub {:sub.normalize_a}:a%=i:c$=ed$(i+23)
+' credit ratio:
+	if i=2 then b$=b$+"/1":goto {:186}
+' max editor lines:
+	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:186}
+' flags:
+	b$=mid$("YesNo",(1-a)*3+1,3)
+{:186}
+	&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}21: {pound}$b{f6}":next:gosub {:sub.change_prompt}
+	i=a:on -(tr%<1)-2*(a<1 or a>15) goto 1811,{:page0}
+' credit ratio:
+	if a=2 then b$=mid$(tt$(23),2,1)+"/1":goto {:198}
+' max editor lines=multiple of 10:
+	if a=6 then b$=mid$(str$((val(mid$(tt$(23),6,1))+1)*10),2):goto {:198}
+' toggle flag:
+	b$=mid$(str$(1-val(mid$(tt$(23),a,1))),2)
+{:196}
+	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+1):&"{f6}":goto {:change_flags}
+
+{:198}
+' editing flags:
+' todo: change to yes/no for most options?
+	p$=ed$(i+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="") goto 1811,{:change_flags}
+  ' b$=left$(an$,1):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
+	b$=left$(an$,1):if a<>6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
+	goto {:196}
+{:206}
+' handle change: rename forced mail and regular mail files:
+	dr=2:gosub 1010:a$="f.":for i=1 to 2
+	print# 15,"r"dr$a$left$(tt$(1),13)"="a$left$(tt$,13):a$="m.":next
+' check error channel, delete old handle an$ from alphabetical user index:
+	gosub 1012:an$=tt$:kk=id:id=x:gosub 1034:an$=tt$(1)
+' insert new handle into alphabetical user index:
+	on -(an$<>"{f8}"and an$<>"RES") gosub 1038:id=kk:return
+
+	data"Handle","Password"
+	data"First name","Last name"
+	data"Phone number","Last date"
+	data"Access group","Calls today"
+	data"Total calls","Computer"
+	data"Line length","Xfer proto"
+	data"Linefeeds","Expert Mode"
+	data"Downloads","Uploads"
+	data"Blks Dnld","Blks Upld"
+	data"Credit pts","Posts"
+	data"Responses","Last call"
+
+	data"Flags"
+	data"Non-weed status","Credit ratio","Local maint"
+	data"Post/respond","U/D access","Max. editor lines"
+	data"Unlimited D/Ls","Remote maint","E-mail"
+	data"User list","B.A.R./log view","Sub-maint"
+	data"Files maint","MCI Access","UDs at prime time"
+{number:998}
+	rem "+.ed" ENHANCED - MAY 12, 2015 - PINACOLADA
+	rem COPR. 1988 NEW IMAGE

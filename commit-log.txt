@@ -73,3 +73,8 @@ Renumbered +/GF-maint, fixed IM call
 Renumbered from 3000- to 4000-, changed "gosub 3" to "gosub 1902" (for yes/no questions)
 - turn MN mode (graphic menu) on, alter access level from lightbar, change to a=9, then /z appears in GF
 - load +/GF-maint OK, crashes with ?bad subscript in 4415 when selecting "Prompt"
+
+16/Jul/2016 0:02
+working on "+.test y2k patch", needs to bank out $a000 (basic) 1st
+added more editor related labels from visual.s to equates20.lbl
+trying to understand what format "ml patcher" patch files are in, may write a patch file for "ml 2.0"

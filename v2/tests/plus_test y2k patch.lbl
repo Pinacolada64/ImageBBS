@@ -1,0 +1,21 @@
+' h 0000 ffff a9 2c (lda #$2c, "," in d1str)
+' code is at $af2d :)
+'
+' (C:$af54) a af32
+' .af32  lda #$32
+' .af34
+' (C:$af34) a af37
+' .af37  lda #$30
+
+{number:3000}
+{alpha:invert}
+	rem +.TEST Y2K PATCH
+'	&,5:if lp<2 then:&"Sorry, this works only under Image BBS 2.0.{f6}":goto 1811
+	&"Image BBS 2.0 Y2K patch test{f6:2}
+	&"Before Y2K patch: {pound}v0{f6}"
+	poke $16ec,$32:poke $16ed,$30
+	&" After Y2K patch: {pound}v0{f6:2}"
+	&"Wait until the system clock rolls over{f6}"
+	&"to the next minute, then hit RETURN: {pound}i1"
+	goto 1811
+	rem +.TEST Y2K PATCH

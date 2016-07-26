@@ -1,87 +1,96 @@
 {asm}
-;image 2.0 equates
+;image bbs 2.0 equates
 ;
-var = $61
-chrget = $73
-chrgot = $79
-ridbe = $29b
-ridbs = $29c
+; zero-page
+var		= $61
+chrget	= $73
+chrgot	= $79
+ridbe	= $29b ; rs-232 input buffer start
+ridbs	= $29c ; rs-232 input buffer end
 ;
-ten = $dc08
-scs = $dc09
-min = $dc0a
-hrs = $dc0b
+ten		= $dc08
+scs		= $dc09
+min		= $dc0a
+hrs		= $dc0b
 ;carrier = $dd01
 ;
-getin = $ffe4
-chkout= $ffc9
-chrout= $ffd2
-clrchn= $ffcc
-chkin = $ffc6
-setnam= $ffbd
-setlfs= $ffba
+
+colors	= $e8da ; chat page colors
+
+; kernal routines:
+getin	= $ffe4
+chkout	= $ffc9
+chrout	= $ffd2
+clrchn	= $ffcc
+chkin	= $ffc6
+setnam	= $ffbd
+setlfs	= $ffba
 loadf = $ffd5
 savef = $ffd8
 readst= $ffb7
-colors= $e8da
 chrin = $ffcf
 setmsg= $ff90
 openf = $ffc0
 closef= $ffc3
 ;
-poketok= 151
-peektok= 194
-systok = 158
-loadtok= 147
-newtok = 162
+; extended BASIC tokens:
+poketok	= 151
+peektok	= 194
+systok	= 158
+loadtok	= 147
+newtok	= 162
 ;
-linkprg=$a533
-makerm1=$b475
-getbytc=$b79b
-ptrget1=$b0e7
-synerr =$af08
-;chrget =$73 - dupe
-getnum =$b7eb
-ilqerr =$b248
-;chrgot =$79 - dupe
-retval =$bc49
-parchk =$aef1
-getadr =$b7f7
-retbyt =$b3a2
-gone1 = $a7e7
-gone2 = $a7ea
-eval1 = $ae8d
-frmnum =$ad8a
-syscll =$e130
-comma = $aefd
-getfile=57812
-linget = $a96b
-error = $a437
-chkcom= $aefd
+; BASIC routines:
+linkprg	= $a533
+synerr	= $af08 ; syntax error
+parchk	= $aef1
+gone1	= $a7e7
+gone2	= $a7ea
+eval1	= $ae8d
+frmnum	= $ad8a
+syscll	= $e130
+comma	= $aefd
+chkcom	= $aefd
+error	= $a437
+linget	= $a96b
+
+ptrget1	= $b0e7
+ilqerr	= $b248 ; illegal quantity
+retbyt	= $b3a2
+makerm1	= $b475
+getbytc	= $b79b
+getnum	= $b7eb
+getadr	= $b7f7
+retval	= $bc49
+
+getfile	= $e1d4 ; 57812 - show last filename
+
 ;
-jmptbl = $a000
+jmptbl	= $a000
 outastrp= $cd00
-usetbl1 = $cd03
+usetbl1	= $cd03
 swapper = $cd06
 swapagn = $cd09
-trace = $cd0c
+trace	= $cd0c
 chkspcl = $cd0f
 convchr = $cd12
-buffer = $ce77
-buf2 = $ce27
+buffer	= $ce77
+buf2	= $ce27
+
+; bbs serial # stuff
+bsnpre	= $02fd ; serial prefix
+bsnval	= $02fe ; serial number
+
 ;
-bsnpre = $02fd
-bsnval = $02fe
-;
-death= $1800
-prgstart = $1801
-bmpstart = $2001
-mmpstart = $3001
-lmpstart = $4001
-prgend = $5000
+death	= $1800
+prgstart= $1801
+bmpstart= $2001
+mmpstart= $3001
+lmpstart= $4001
+prgend	= $5000
 imstart = $5001
-protostart = $c000
-protoend = $ca80
+protostart	= $c000
+protoend	= $ca80
 ;
 mainline = 1000
 trapline = 2000
@@ -89,30 +98,35 @@ imodline = 2300
 immdline = 3000
 immdsize = $a00
 ;
-tdisp=$0400+960:tcolr=$d800+960
-sdisp=$0400+920:scolr=$d800+920
-ldisp=$0400+640:lcolr=$d800+640
-adisp=$0400+880:acolr=$d800+880
+; sysop screen stuff:
+tdisp=$0400+960
+tcolr=$d800+960
+sdisp=$0400+920
+scolr=$d800+920
+ldisp=$0400+640
+lcolr=$d800+640
+adisp=$0400+880
+acolr=$d800+880
 ;
 fkeybuf = 679 ;32
 emptym0 = 711 ;57
 ;
-cassbuff = 828
-idlemax = 830
+cassbuff= 828
+idlemax	= 830
 datebuf = 831 ;11
-daytbl = 842 ;24
-tzoneh = 866 ; system time zone hour? - rns
-tzonem = 867 ; system time zone min? - rns
-uzoneh = 868 ; user's time zone hour difference? - rns
-uzonem = 869 ; user's time zone hour difference? - rns
+daytbl	= 842 ;24
+tzoneh	= 866 ; system time zone hour? - rns
+tzonem	= 867 ; system time zone min? - rns
+uzoneh	= 868 ; user's time zone hour difference? - rns
+uzonem	= 869 ; user's time zone hour difference? - rns
 wrapbuf = 870 ;80
 wrapflg = 950
 modclmn = 951
 ptrclmn = 952
 wrapind = 953
 wrapdmp = 954
-ptrclm = 955 ; column printer is printing? - rns
-modclm = 956 ; column modem is outputting? - rns
+ptrclm	= 955 ; column printer is printing? - rns
+modclm	= 956 ; column modem is outputting? - rns
 sndtim1 = 957
 sndtim2 = 958
 sndwav1 = 959
@@ -121,26 +135,40 @@ sndwav3 = 961
 sndrept = 962
 sndtim1a= 963
 sndtim2a= 964
-jiffy = 965
-blnkflag =966
-blnkcntr =967
-ptrlin = 968
-ptrlinm= 969
-usrlin = 970
-usrlinm= 971
+jiffy	= 965
+blnkflag= 966
+blnkcntr= 967
+ptrlin	= 968
+ptrlinm = 969
+usrlin	= 970
+usrlinm	= 971
 fredmode= 972
-montbl = 973 ; 36
-emptym1= 1009 ;1
-timeset= 1010
-flag1 = 1011
-case1 = 1012
-temp3 = 1015
-mline = 1016
-comm = 1017
-flags = 1018
-cline = 1019
-lines = 1022
-modes = 1023
+montbl	= 973 ; 36
+
+emptym1		= 1009 ; 1
+timeset		= 1010 ; flag indicating time hasn't been set
+
+ok flag1	= 1011
+ok case1	= 1012
+ok temp3	= 1015
+ok mline	= 1016
+ok comm		= 1017
+ok flags	= 1018
+ok cline	= 1019
+ok lines	= 1022
+modes		= 1023
+
+; from visual.s - text editor flags:
+modes	= $03ff ; 1023
+lines	= $03fe ; 1022
+cline	= $03fb ; 1019 - current line being edited?
+flags	= $03fa ; 1018
+comm	= $03f9 ; 1017
+mline	= $03f8 ; 1016
+temp3	= $03f7 ; 1015
+case1	= $03f4 ; 1012
+flag1	= $03f3 ; 1011
+
 ;
 gc = $c000
 gchide = $e000
@@ -237,7 +265,7 @@ mleft =$12e8
 cphase =$12e9
 key =$12ea
 shft =$12eb
-ptrlnfd=$12f0
+ptrlnfd=$12f0 ; printer linefeed?
 ha577 =$12f1
 mask =$12f2
 scnmode=$12f3
@@ -282,8 +310,8 @@ hibytec =$174b ;25
 emptym4 =$1764 ;28
 pmodetbl=$1780 ;$80
 ;
-ribuf = $0b00
-robuf = $0b80
+ribuf = $0b00 ; rs232 input buffer
+robuf = $0b80 ; rs232 output buffer
 ;
 wedgemem= $0c00
 trapoff =wedgemem+0

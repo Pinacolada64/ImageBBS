@@ -1,0 +1,298 @@
+{asm}
+; image 1.2 ml equates
+; sorted and de-duped (12/Jul/2016 14:16)
+
+; from image bbs programmer's reference guide
+
+; {uses:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v1.2\source\equates-1_2.lbl}
+
+; zero-page:
+d6510    = $00
+r6510    = $01
+zp_02    = $02 ; free for use
+adray1   = $03
+adray2   = $05
+charac   = $07
+endchr   = $08
+dimflg   = $0c
+valtyp   = $0d
+intflg   = $0e
+tansgn   = $12
+linnum   = $14
+temppt   = $16
+lastpnt  = $17
+tempst   = $19
+z_index  = $22
+resho    = $26
+txttab   = $2b
+vartab   = $2d
+arytab   = $2f
+strend   = $31
+fretop   = $33
+frespc   = $35
+memsiz   = $37
+curlin   = $39
+oldlin   = $3b
+oldtxt   = $3d
+datlin   = $3f
+datptr   = $41
+inpptr   = $43 ; pointer to source of data (read, input, get)
+varnam   = $45
+varpnt   = $47
+forpnt   = $49
+opptr    = $4b
+opmask   = $4d
+defpnt   = $4e
+dscpnt   = $50
+four6    = $53
+jmper    = $54
+numwork  = $57	; 6 bytes
+var      = $61	; Floating point accumulator:
+				; store value of variable for usevar, putvar, zero,
+				; minusone, getarr, putarr, getin, putin, etc.
+fac2     = $69
+arisgn   = $6f ; arithmetic sign
+fbufpt   = $71
+chrget   = $0073 ; 2 bytes for proper zero-page JSR
+chrinc   = $76
+chrgot   = $0079 ; 2 bytes for proper zero-page JSR
+txtptr   = $7a
+cmpspace = $80
+rndx     = $8b
+status   = $90
+svxt     = $92
+verck    = $93
+syno     = $96
+xsav     = $97
+dfltn    = $99
+dfltno   = $9a
+dpsw     = $9c
+ptr1     = $9e
+jiffy    = $a2
+sal      = $ac
+eal      = $ae
+nxtbit   = $b5
+rodata   = $b6 ; RS-232 Output Byte Buffer
+fnlen    = $b7 ; filename length
+la       = $b8
+sa       = $b9
+fa       = $ba ; current output device
+fnadr    = $bb
+fsblk    = $be
+mych     = $bf
+stal     = $c1
+zp_c4    = $c4
+lstx     = $c5
+ndx      = $c6
+rvs      = $c7
+sfdx     = $cb
+blnsw    = $cc
+blnct    = $cd
+gdbln    = $ce
+blnon    = $cf
+crsw     = $d0
+pnt      = $d1
+pntr     = $d3
+qtsw     = $d4
+lnmx     = $d5
+tblx     = $d6
+zp_d7    = $d7 ; temp storage for ASCII value of last char printed
+insrt    = $d8
+ldtb1    = $d9
+user     = $f3
+ribuf    = $f7
+robuf    = $f9
+free_fb  = $fb
+free_fc  = $fc
+free_fd  = $fd
+free_fe  = $fe
+free_ff  = $ff
+
+buf      = $0200
+sat      = $026d ; secondary address table
+keyd     = $0277
+color    = $0286 ; fix this label
+gdcol    = $0287
+shflag   = $028d
+ridbe    = $029b ; RS-232 input buffer end
+ridbs    = $029c ; RS-232 input buffer start
+var_02f0 = $02f0
+var_02fc = $02fc
+bsnpre   = $02fd ; BBS serial # prefix (A-G)
+bsnval   = $02fe ; BBS serial # value
+var_02ff = $02ff
+
+; vectors
+ierror   = $0300
+imain    = $0302
+igone    = $0308
+sareg    = $030c ; .a storage
+sxreg    = $030d ; .x storage
+syreg    = $030e ; .y storage
+cinv     = $0314 ; IRQ vector
+ibsout   = $0326 ; CHROUT vector
+iload    = $0330
+
+tbuffer  = $033c ; tape buffer
+idlemax  = $033e ; Maximum idle time allowed
+LineNumberMode	= $03fa	; text editor flag: printing line numbers?
+EditorLines		= $03fe ; Number of lines of text in text editor buffer
+						; (line 1657 in im)
+v_03ff	= $03ff ; unused
+
+videoram= $0400 ; start of sysop status line
+light	= $04f0 ; lightbar screen ram start
+var_0518= $0518 ; 1st line of sysop screen if mask on
+
+; mci stuff:  
+mjump	= $07e8 ; Number of lines to skip for £J, £E, £D
+mresult = $07e9 ; Result of £A, £T
+mspeed	= $07ea ; Print speed for £S
+mprint	= $07eb
+mcolor	= $07ec
+mprtr	= $07ed
+mreverse= $07ee
+mci		= $07ef
+mdigits = $07f0 ; Number of digits for £%
+carrst	= $07f1 ; 2033
+tsp1	= $07f2	; 2034 transmit speed lo byte
+tsp2	= $07f3	; 2035 transmit speed hi byte
+chk_left= $07f4 ; 2036 [official label is "chks"]
+				; Checkmark flag for Lightbar (left side)
+chk_right=$07f5 ; 2037 Checkmark flag for Lightbar (right side)
+readmode= $07f6 ; unabortable file read flag
+filenum = $07f7
+tmp5	= $07f8
+abtchar	= $07f9
+clock	= $07fa
+filetyp = $07fb
+tmp1	= $07fc
+tmp2	= $07fd
+tmp3	= $07fe
+tmp4	= $07ff
+
+prgstart= $0801
+
+bmpstart= $1001
+mmpstart= $2001
+lmpstart= $3001
+
+prgend = $4000
+
+; screen ram
+tempbott= $4000	; text
+tempbotc= $4050	; color
+
+; print mode table
+pmodetbl= $40a0
+
+; screen ram
+tempscn = $4100
+tempcol = $41f0
+
+idlejif = $42e0
+idlesec = $42e1
+idleten = $42e2
+idlemin = $42e3
+curdisp	= $42e4
+bar		= $42e5
+tsr2	= $42e6
+undchr	= $42e7
+undcol	= $42e8
+cphase	= $42e9
+key		= $42ea
+shft	= $42eb
+ptrpnfd = $42f0
+ha577	= $42f1
+mask	= $42f2 ; 17138 Password mask character
+scnmode	= $42f3
+dflag	= $42f4
+dstat	= $42f5
+cytemp	= $42f6
+interm	= $42f7
+cxsav	= $42f8
+len1	= $42f9
+passmode= $42fa
+scnlock	= $42fb
+tmp6	= $42fc
+tmp7	= $42fd
+freq	= $42fe
+
+; rs-232 jump table
+rsInit	= $4300
+rsInabl = $4303
+rsDisab = $4306
+rsGet	= $4309
+rsOut	= $430c
+rsBaud	= $430f
+rsChar	= $4312
+
+cnstart = $4601
+
+trapline= 2000	; BASIC line number where error-trapping starts
+
+; BASIC Kernal calls:
+linkprg = $a533
+
+ptrget1 = $b0e7
+makerm1 = $b475
+getbytc = $b79b
+
+protosta= $c000
+swapper = $ca80
+swapagn = $ca88
+protoend= $cb00
+usetbl1	= $cd03
+buffer2	= $ce27 ; 52775 buffer: 80 ($50) bytes
+buffer	= $ce77
+
+; BBS flags
+local	= $d000 ; 53248 Flag for local mode (1=on: if enabled,
+				; nothing is output to modem with usage of &)
+case	= $d001
+editor	= $d002
+tsr		= $d003
+llen	= $d004 ; 53252 Number of characters allowed for input.
+				; Line length for &,1 and £Ix MCI command. 
+flag	= $d005
+chat	= $d006
+inchat	= $d007
+chatpage= $d008
+access	= $d009
+mxor	= $d00a
+mkolor	= $d00b
+mupcase = $d00c
+irqcount= $d00d
+trans	= $d00e
+index	= $d00f
+
+; user time remaining
+ten		= $dc08
+scs		= $dc09
+min		= $dc0a
+hrs		= $dc0b
+
+carrier = $dd01
+
+; flashing chat page color table
+colors	= $e8da
+
+; kernal routines:
+setmsg	= $ff90
+readst	= $ffb7
+setlfs	= $ffba
+setnam	= $ffbd
+chkin	= $ffc6
+chkout	= $ffc9
+clrchn	= $ffcc
+chrin	= $ffcf
+chrout	= $ffd2
+loadf	= $ffd5
+savef	= $ffd8
+getin	= $ffe4
+
+; printable equates
+period	= 46 ; $2e
+colon	= 58 ; $3a
+pound	= 92 ; $5c
+{endasm}

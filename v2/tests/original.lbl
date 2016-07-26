@@ -1,0 +1,11 @@
+' original.lbl
+' use "ml patcher" to apply the patch "patch" to this
+' unknown file format at this time
+{loadaddr:$c000}
+{asm}
+	lda #$01
+	sta $d020 ; turn background white
+	lda #$02
+	sta $d021 ; turn border red
+	rts
+{endasm}
