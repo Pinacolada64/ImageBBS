@@ -1739,7 +1739,7 @@ sub_1ba6:
 		jmp usetbl1		; 1ba8:0baa	4c 03 cd
 
 	; seems to be part of a "get character" routine
-	; #23 - 
+	; main irq routine #$17 - wait for .x seconds?
 sub_1bab:
 		lda #$17		; 1bab:0bad	a9 17
 		jmp usetbl1		; 1bad:0baf	4c 03 cd
