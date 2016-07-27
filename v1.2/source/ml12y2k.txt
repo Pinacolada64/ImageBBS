@@ -418,21 +418,21 @@ var_ffff = $ffff
               ;
               ; called by $ae78, $cc77, $cc6c
               ;
-a000:0002:1   tbl-a029 irqtable .word $b567,$be23,$abdc,$be68,$a95c,$b773
-a00c:000e:1                     .word $be2d,$aa84,$ab3a,$be63,$be4f,$be59
-a018:001a:1                     .word $be6d,$a858,$0000,$a128,$c000,$c003
+a000:0002:1   tbl-a029 irqtable .word $b567,$be23,$abdc,$be68,$a95c,$b773 ; index $06
+a00c:000e:1                     .word $be2d,$aa84,$ab3a,$be63,$be4f,$be59 ; index $0c
+a018:001a:1                     .word $be6d,$a858,$0000,$a128,$c000,$c003 ; index $12
 a024:0026:1                     .word $b099,$b450,$b426
 
 a02a:002c:1   tbl-a073 vartable .byte $fa,$b3
-a02c:002e:1                     .byte $f2,$a6
-a02e:0030:1                     .byte $27,$a8
+a02c:002e:1                     .byte $f2,$a6 ; index $17 - wait for .x seconds?
+a02e:0030:1                     .byte $27,$a8 ; index $18
 a030:0032:1                     .byte $04,$a7
 a032:0034:1                     .byte $84,$be
 a034:0036:1                     .byte $5c,$a9
 a036:0038:1                     .byte $72,$be
 a038:003a:1                     .byte $77,$be
 a03a:003c:1                     .byte $91,$b5
-a03c:003e:1                     .byte $a5,$b5
+a03c:003e:1                     .byte $a5,$b5 ; index $1f
 a03e:0040:1                     .byte $b9,$b5
 a040:0042:1                     .byte $c4,$b5
 a042:0044:1                     .byte $d7,$b4
@@ -448,7 +448,7 @@ a054:0056:1                     .byte $ed,$ca
 a056:0058:1                     .byte $08,$aa
 a058:005a:1                     .byte $6c,$b6
 a05a:005c:1                     .byte $7a,$b5
-a05c:005e:1                     .byte $80,$b5
+a05c:005e:1                     .byte $80,$b5 ; index $2f
 a05e:0060:1                     .byte $c4,$a9
 a060:0062:1                     .byte $49,$a9
 a062:0064:1                     .byte $23,$ba
@@ -459,7 +459,7 @@ a06a:006c:1                     .byte $62,$b4
 a06c:006e:1                     .byte $32,$be
 a06e:0070:1                     .byte $12,$a7
 a070:0072:1                     .byte $54,$be
-a072:0074:1                     .byte $5e,$be
+a072:0074:1                     .byte $5e,$be ; index $3a
 
               ;
               ; $b4fc, $b577, $b57d
@@ -1259,6 +1259,7 @@ a6eb:06ed:1   8d eb a2          sta lbl_a2eb
 a6ee:06f0:1   20 c4 a3          jsr gotoa3c4
 a6f1:06f3:1   60       skipa6f1 rts 
 
+; wait for .x seconds?
 a6f2:06f4:1   e0 00    sub_a6f2 cpx #$00
 a6f4:06f6:1   f0 0b             beq skipa701
 a6f6:06f8:1   ad 08 dc loopa6f6 lda cia1dsec
@@ -4984,15 +4985,15 @@ cd03:2d05:1   8d 0c 03 usetbl1  sta sareg
 cd06:2d08:1   8e 0d 03          stx sxreg
 cd09:2d0b:1   8c 0e 03          sty syreg
 cd0c:2d0e:1   20 6c cc          jsr sub_cc6c
-cd0f:2d11:1   8c 23 cd          sty lbl_2d24+1
-cd12:2d14:1   8e 24 cd          stx lbl_2d24+2
+cd0f:2d11:1   8c 23 cd          sty lbl_cd22+1
+cd12:2d14:1   8e 24 cd          stx lbl_cd22+2
 cd15:2d17:1   a5 01             lda $01
 cd17:2d19:1   48                pha 
 cd18:2d1a:1   a9 36             lda #$36
 cd1a:2d1c:1   85 01             sta $01
 cd1c:2d1e:1   ae 0d 03          ldx sxreg
 cd1f:2d21:1   ac 0e 03          ldy syreg
-cd22:2d24:1   20 ff ff lbl_2d24 jsr var_ffff
+cd22:2d24:1   20 ff ff lbl_cd22 jsr $ffff ; self-modifying
 cd25:2d27:1   8d 0c 03          sta sareg
 cd28:2d2a:1   68                pla 
 cd29:2d2b:1   85 01             sta $01
