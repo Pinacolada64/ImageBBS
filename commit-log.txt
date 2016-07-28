@@ -78,3 +78,8 @@ Renumbered from 3000- to 4000-, changed "gosub 3" to "gosub 1902" (for yes/no qu
 working on "+.test y2k patch", needs to bank out $a000 (basic) 1st
 added more editor related labels from visual.s to equates20.lbl
 trying to understand what format "ml patcher" patch files are in, may write a patch file for "ml 2.0"
+
+27/Jul/2016 13:30
+new mod_* labels for self-modifying code
+changed .byte sequences to .word with \$([\da-f]{2}),(\$[\da-f]{2}) -> \2\1
+changed 8 spaces to a tab

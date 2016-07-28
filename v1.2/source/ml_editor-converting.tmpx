@@ -1538,7 +1538,7 @@ sub_1a28:
 		pla 				; 1a62:0a64	68
 		pla 				; 1a63:0a65	68
 ; get ready to print "Command:Exit"
-		lda lbl_cmdexit		; 1a64:0a66	ad 94 1a
+		lda len_CmdExit		; 1a64:0a66	ad 94 1a
 		ldx #>sCmdExit		; 1a67:0a69	a2 95
 		ldy #<sCmdExit		; 1a69:0a6b	a0 1a
 		jsr sub_outString	; 1a6b:0a6d	20 bc 1d
@@ -1565,7 +1565,7 @@ sNoChange:
 	; another duplicate message (sort of)
 
 len_CmdExit:
-		byte $0d		; 1a94:0a96	tbl-1a94
+		byte $0d			; 1a94:0a96	tbl-1a94
 
 sCmdExit:
 		ascii "ÃOMMAND"	; 1a95:0a97	tbl-1aa0
@@ -1575,12 +1575,12 @@ sCmdExit:
 
 ; orphaned code?
 		ldx #$0b		; 1aa2:0aa4	a2 0b
-		jmp sub_OutXdels	; 1aa4:0aa6	4c 8d 10
+		jmp sub_OutXdels; 1aa4:0aa6	4c 8d 10
 
 sub_ReturnKey:
 		jsr sub_1bab	; 1aa7:0aa9	20 ab 1b
 		cmp #return		; 1aaa:0aac	c9 0d
-		beq fwd_1ab1		; 1aac:0aae	f0 03
+		beq fwd_1ab1	; 1aac:0aae	f0 03
 		jmp goto1cf2	; 1aae:0ab0	4c f2 1c
 
 fwd_1ab1:
