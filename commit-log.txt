@@ -83,3 +83,8 @@ trying to understand what format "ml patcher" patch files are in, may write a pa
 new mod_* labels for self-modifying code
 changed .byte sequences to .word with \$([\da-f]{2}),(\$[\da-f]{2}) -> \2\1
 changed 8 spaces to a tab
+
+28/Jul/2016 14:47
+fixed all mod_* labels, changed label names which were offsets from start of file to their absolute addresses
+changed 'var' variable to fac1
+added RS232 routine names
