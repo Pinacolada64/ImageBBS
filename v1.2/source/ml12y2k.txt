@@ -18,7 +18,7 @@ linnum	 = $14
 temppt	 = $16
 lastpnt	 = $17
 tempst	 = $19
-z_index	 = $22
+z_index	 = $22 ; $22-$25: Miscellaneous Temporary Pointers and Save Area
 resho	 = $26
 txttab	 = $2b
 vartab	 = $2d
@@ -45,7 +45,7 @@ jmper	 = $54
 numwork	 = $57
 fac1	 = $0061
 fac2	 = $69
-arisgn	 = $6f
+arisgn	 = $6f	; arithmetic sign
 fbufpt	 = $71
 chrget	 = $0073
 chrinc	 = $76
@@ -103,7 +103,7 @@ free_fe	 = $fe
 free_ff	 = $ff
 buf	 = $0200
 sat	 = $026d ; secondary address table
-keyd	 = $0277
+keyd	 = $0277 ; keyboard buffer
 color	 = $0286 ; fix this label
 gdcol	 = $0287
 shflag	 = $028d
@@ -111,9 +111,9 @@ ridbe	 = $029b
 ridbs	 = $029c
 var_02f0 = $02f0
 var_02fc = $02fc
-bsnpre	 = $02fd ; serial # prefix
-bsnval	 = $02fe ; serial # value
-var_02ff = $02ff
+bsnpre	 = $02fd ; bbs serial # prefix
+bsnvallo = $02fe ; bbs serial # value, lo byte?
+bsnvalhi = $02ff ; bbs serial # value, hi byte?
 ierror	 = $0300
 imain	 = $0302
 igone	 = $0308
@@ -139,9 +139,8 @@ var_051e = $051e
 var_072e = $072e
 var_0748 = $0748
 var_0770 = $0770
-; start of bottom screen mask
-; (scn.t3)
-mask_bot = $0798
+mask_bot = $0798 ; start of bottom screen mask - (scn.t3)
+; mci flags:
 mjump	 = $07e8
 mresult	 = $07e9
 mspeed	 = $07ea
@@ -155,7 +154,7 @@ carrst	 = $07f1 ; 2033
 tsp1	 = $07f2
 tsp2	 = $07f3
 chk_left = $07f4 ; official label is "chks"
-chk_rght = $07f5
+chk_right= $07f5
 readmode = $07f6 ; unabortable file read flag
 filenum	 = $07f7
 tmp5	 = $07f8
@@ -221,8 +220,6 @@ var_3030 = $3030
 var_3032 = $3032
 var_3120 = $3120
 var_31ba = $31ba
-var_3451 = $3451
-return	 = #$0d
 var_3931 = $3931
 var_3aa9 = $3aa9
 var_3b3a = $3b3a
@@ -231,7 +228,7 @@ var_3df5 = $3df5
 var_3eb8 = $3eb8
 var_3f3e = $3f3e
 tempbott = $4000 ; temp text storage under bottom screen mask
-tempbotc = $4050
+tempbotc = $4050 ; temp color storage
 var_4051 = $4051
 var_4078 = $4078
 var_4079 = $4079
@@ -245,7 +242,7 @@ var_4142 = $4142
 var_4145 = $4145
 var_41c8 = $41c8
 var_41c9 = $41c9
-tempcol	 = $41f0 ; temp storage under top screen mask
+tempcol	 = $41f0 ; temp color storage under top screen mask
 idlejif	 = $42e0
 idlesec	 = $42e1
 idleten	 = $42e2
@@ -332,7 +329,6 @@ var_5bda = $5bda
 var_5e0d = $5e0d
 var_5f03 = $5f03
 var_5f5e = $5f5e
-pound	 = #$5c
 var_6ab4 = $6ab4
 var_6dbe = $6dbe
 var_6e6d = $6e6d
@@ -341,7 +337,7 @@ var_7ab6 = $7ab6
 var_84be = $84be
 var_9b9a = $9b9a
 var_9f9e = $9f9e
-; sub_b5a5 = somewhere in garbage collection
+sub_b5a5 = $b5a5 ; somewhere in garbage collection
 var_bf7b = $bf7b
 protosta = $c000
 protoend = $cb00
@@ -350,6 +346,9 @@ var_cf0f = $cf0f
 var_cf12 = $cf12
 var_cf14 = $cf14
 var_cfff = $cfff
+
+; bbs flags:
+
 local	 = $d000
 case	 = $d001
 editor	 = $d002
@@ -374,7 +373,7 @@ vicirqf	 = $d019
 vicirqm	 = $d01a
 bordrclr = $d020
 bckgrnd0 = $d021
-sprtcol5 = $d02c
+sprtcol5 = $d02c ; sprites not used
 var_d3c5 = $d3c5
 colorram = $d800 ; ends at $dbff
 cia1prta = $dc00
@@ -382,13 +381,13 @@ cia1dsec = $dc08
 cia1sec	 = $dc09
 cia1min	 = $dc0a
 cia1hour = $dc0b
-cia1icr	 = $dc0d
+cia1icr	 = $dc0d ; interrupt control register
 var_dcdd = $dcdd
 cia2prta = $dd00
 carrier	 = $dd01
 cia2ddrb = $dd03
 swiftlnk = $de00
-v_df02	 = $df02
+v_df02	 = $df02 ; swiftlink command register?
 var_dfde = $dfde
 var_dfdf = $dfdf
 var_e404 = $e404
@@ -428,6 +427,10 @@ inctime	 = $ffea
 plot	 = $fff0
 
 var_ffff = $ffff ; usually self-modifying addresses
+
+; printables
+return	 = #$0d
+pound	 = #$5c
 
 	      ;
 	      ; called by $ae78, $cc77, $cc6c
@@ -1518,8 +1521,8 @@ a89a:089c:1   d0 02		bne skipa89e
 a89c:089e:1   a9 ff		lda #$ff
 a89e:08a0:1   aa       skipa89e tax
 a89f:08a1:1   ad 02 d0 l_a89f	lda editor
-a8a2:08a4:1   29       lbl_08a4 BAD
-a8a3:08a5:1   01       sub_a8a3 BAD
+a8a2:08a4:1   29   		BAD		; fixme: and #$01
+a8a3:08a5:1   01       sub_a8a3 BAD		; $cd91 jmps here
 a8a4:08a6:1   d0 0e		bne skipa8b4
 a8a6:08a8:1   e0 e0		cpx #$e0
 a8a8:08aa:1   b0 08		bcs skipa8b2
@@ -1610,6 +1613,7 @@ a957:0959:1   a9 00		lda #$00
 a959:095b:1   c9 00    skipa959 cmp #$00
 a95b:095d:1   60		rts
 
+; irq routine #5
 a95c:095e:1   20 03 43 lbl_a95c jsr rsEnable
 a95f:0961:1   38		sec
 a960:0962:1   20 09 43		jsr rsGetChar
@@ -1624,7 +1628,7 @@ a970:0972:1   48		pha
 a971:0973:1   ad f3 42 skipa971 lda scnmode
 a974:0976:1   d0 2b		bne skipa9a1
 a976:0978:1   a0 00		ldy #$00
-a978:097a:1   ad f5 07		lda chk_rght
+a978:097a:1   ad f5 07		lda chk_right
 a97b:097d:1   29 01		and #$01
 a97d:097f:1   f0 02		beq skipa981
 a97f:0981:1   a0 06		ldy #$06
@@ -1650,7 +1654,10 @@ a9a2:09a4:1   60		rts
 a9a3:09a5:1   a9 00    skipa9a3 lda #$00
 a9a5:09a7:1   60		rts
 
-a9a6:09a8:1   tbl-a9ad spclchar .text ",:"*?=^"
+a9a6:09a8:1   tbl-a9ad spclchar .text ",:"
+				.byte 34
+				.text "*?="
+				.byte 13				.text "^"
 
 a9ae:09b0:1   c9 85    sub_a9ae cmp #$85
 a9b0:09b2:1   90 11		bcc skipa9c3
@@ -1775,7 +1782,7 @@ aa84:0a86:1   ad 0e aa		lda lbl_aa0e
 aa87:0a89:1   29 0f		and #$0f
 aa89:0a8b:1   8d ff 02		sta $02ff
 aa8c:0a8e:1   ad 0f aa		lda lbl_aa0f
-aa8f:0a91:1   8d fe 02		sta bsnval
+aa8f:0a91:1   8d fe 02		sta bsnvallo
 aa92:0a94:1   8a		txa
 aa93:0a95:1   c0 01		cpy #$01
 aa95:0a97:1   f0 35		beq skipaacc
@@ -2083,12 +2090,14 @@ acfa:0cfc:1   4c 1c b0 lbl_0cfc jmp gotob01c
 
 acfd:0cff:1   4c d2 b1 lbl_0cff jmp gotob1d2
 
+; modem carrier status stuff
 ad00:0d02:1   4c 1d b2 lbl_0d02 jmp gotob21d
 
 ad03:0d05:1   4c 4f b2		jmp mod_b24f
 
 ad06:0d08:1   4c 1c b0		jmp gotob01c
 
+; reset task pointer
 ad09:0d0b:1   a9 fd		lda #$fd
 ad0b:0d0d:1   8d f3 ac		sta mod_acf2+1
 ad0e:0d10:1   60		rts
@@ -2555,8 +2564,9 @@ b0de:10e0:1   99 f0 41		sta tempcol,y
 b0e1:10e3:1   c8		iny
 b0e2:10e4:1   c0 f0		cpy #$f0
 b0e4:10e6:1   d0 df		bne loopb0c5
-b0e6:10e8:1   a0       lbl_b0e6 BAD
-b0e7:10e9:1   00       ptrget1	brk
+b0e6:10e8:1   a0       lbl_b0e6 BAD		; fixme: a0 00 ldy #$00
+	; with BASIC ROM banked in, ptrget finds var address:
+b0e7:10e9:1   00       ptrget1	brk		
 b0e8:10ea:1   b9 98 07 loopb0e8 lda mask_bot,y
 b0eb:10ed:1   aa		tax
 b0ec:10ee:1   b9 00 40		lda tempbott,y
@@ -2669,7 +2679,7 @@ b1c8:11ca:1   09 80		ora #$80
 b1ca:11cc:1   8d 09 d0		sta access
 b1cd:11cf:1   4c 86 b0		jmp skipb086
 
-b1d0:11d2:1   tbl-b1d1 lbl_b1d0 .byte $d1
+b1d0:11d2:1   tbl-b1d1 lbl_b1d0 .byte $d1	; fixme: cmp ($77),y
 
 b1d1:11d3:1	       lbl_b1d1 .byte $77
 
@@ -2709,20 +2719,21 @@ b21b:121d:1   tbl-b21c lbl_b21b .byte $d1
 
 b21c:121e:1	       lbl_b21c .byte $77
 
+; modem carrier status stuff:
 b21d:121f:1   ad f1 07 gotob21d lda carrst
 b220:1222:1   29 7f		and #$7f
-b222:1224:1   c9 01    lbl_1224 cmp #$01
+b222:1224:1   c9 01    mod_b222 cmp #$01
 b224:1226:1   f0 0c		beq skipb232
-b226:1228:1   8d 23 b2		sta lbl_1224+1
+b226:1228:1   8d 23 b2		sta mod_b222+1
 b229:122b:1   c9 00		cmp #$00
 b22b:122d:1   d0 05		bne skipb232
 b22d:122f:1   a9 01		lda #$01
 b22f:1231:1   8d 05 d0		sta flag
 b232:1234:1   ad f4 07 skipb232 lda chk_left
 b235:1237:1   29 04		and #$04
-b237:1239:1   c9 00    lbl_1239 cmp #$00
+b237:1239:1   c9 00    mod_b237 cmp #$00
 b239:123b:1   f0 13		beq skipb24e
-b23b:123d:1   8d 38 b2		sta lbl_1239+1
+b23b:123d:1   8d 38 b2		sta mod_b237+1
 b23e:1240:1   c9 00		cmp #$00
 b240:1242:1   f0 0c		beq skipb24e
 b242:1244:1   ad f1 07		lda carrst
@@ -2971,9 +2982,9 @@ b439:143b:1   20 dc af		jsr sub_afdc
 b43c:143e:1   ad f4 07		lda chk_left
 b43f:1441:1   29 fb		and #$fb
 b441:1443:1   8d f4 07		sta chk_left
-b444:1446:1   ad f5 07		lda chk_rght
+b444:1446:1   ad f5 07		lda chk_right
 b447:1449:1   29 fb		and #$fb
-b449:144b:1   8d f5 07		sta chk_rght
+b449:144b:1   8d f5 07		sta chk_right
 b44c:144e:1   ee 50 b2		inc mod_b24f+1
 b44f:1451:1   60		rts
 
@@ -3329,7 +3340,7 @@ b708:170a:1   60		rts
 
 b709:170b:1   8d 52 b7 skipb709 sta lbl_b752
 b70c:170e:1   8e 53 b7		stx lbl_b753
-b70f:1711:1   ad f5 07		lda chk_rght
+b70f:1711:1   ad f5 07		lda chk_right
 b712:1714:1   29 01		and #$01
 b714:1716:1   f0 1f		beq skipb735
 b716:1718:1   a0 01		ldy #$01
@@ -3553,7 +3564,7 @@ b8c4:18c6:1   60		rts
 
 b8c5:18c7:1   4c 16 e7		jmp $e716
 
-b8c8:18ca:1   ad f5 07		lda chk_rght
+b8c8:18ca:1   ad f5 07		lda chk_right
 b8cb:18cd:1   29 10		and #$10
 b8cd:18cf:1   f0 05		beq skipb8d4
 b8cf:18d1:1   a2 02		ldx #$02
@@ -4111,6 +4122,7 @@ be7c:1e7e:1   a9 0c		lda #$0c
 be7e:1e80:1   20 1b be		jsr gotobe1b
 be81:1e83:1   4c 67 b5		jmp sub_b567
 
+; some serial # stuff?
 be84:1e86:1   a9 0f    sub_be84 lda #$0f
 be86:1e88:1   20 1b be		jsr gotobe1b
 be89:1e8b:1   a2 02		ldx #$02
@@ -4374,7 +4386,7 @@ c187:2189:1   8d fa 07		sta $07fa
 c18a:218c:1   8d 08 d0		sta chatpage
 c18d:218f:1   8d 03 d0		sta tsr
 c190:2192:1   8d f4 07		sta chk_left
-c193:2195:1   8d f5 07		sta chk_rght
+c193:2195:1   8d f5 07		sta chk_right
 c196:2198:1   8d 09 d0		sta access
 c199:219b:1   a9 01		lda #$01
 c19b:219d:1   8d 00 d0		sta local
@@ -4429,12 +4441,12 @@ c204:2206:1   4a		lsr a
 c205:2207:1   4a		lsr a
 c206:2208:1   4a		lsr a
 c207:2209:1   09 c0		ora #$c0
-c209:220b:1   8d fd 02		sta bsnpre
+c209:220b:1   8d fd 02		sta bsnprelo
 c20c:220e:1   ad 08 c0		lda lbl_c008
 c20f:2211:1   29 0f		and #$0f
-c211:2213:1   8d ff 02		sta var_02ff
+c211:2213:1   8d ff 02		sta bsnvalhi
 c214:2216:1   ad 07 c0		lda lbl_c007
-c217:2219:1   8d fe 02		sta bsnval
+c217:2219:1   8d fe 02		sta bsnvallo
 c21a:221c:1   60		rts
 
 ; set up bsout vector
@@ -4908,18 +4920,18 @@ cb05:2b07:1   a2 00		ldx #$00
 cb07:2b09:1   20 99 b0		jsr sub_b099
 cb0a:2b0c:1   a9 05		lda #$05
 cb0c:2b0e:1   20 03 cd		jsr usetbl1
-cb0f:2b11:1   a9 1b		lda #$1b	      ; message length
+cb0f:2b11:1   a9 1b		lda #$1b	; message length
 cb11:2b13:1   85 61		sta fac1
-cb13:2b15:1   a9 25		lda #$25
+cb13:2b15:1   a9 25		lda #<bootmsg	; #$25
 cb15:2b17:1   85 62		sta fac1+1
-cb17:2b19:1   a9 cb		lda #$cb
+cb17:2b19:1   a9 cb		lda #>bootmsg	; #$cb
 cb19:2b1b:1   85 63		sta fac1+2
 cb1b:2b1d:1   a2 00		ldx #$00
 cb1d:2b1f:1   20 a5 b5		jsr sub_b5a5
 cb20:2b22:1   a2 00		ldx #$00
 cb22:2b24:1   4c 80 b5		jmp gotob580
 
-cb25:2b27:1   tbl-cb3f bootmsg	.byte $93
+cb25:2b27:1   tbl-cb3f bootmsg	.byte $93		; 147 - clear screen
 				.text " 1.2 Image2000 By IronAxe"
 				.byte $8b
 
@@ -5099,15 +5111,16 @@ cd7c:2d7e:1   a5 39		lda curlin
 cd7e:2d80:1   8d 0d 03		sta sxreg
 cd81:2d83:1   a5 3a		lda curlin+1
 cd83:2d85:1   8d 0e 03		sta syreg
-cd86:2d88:1   a9 d0		lda #<inchat
+cd86:2d88:1   a9 d0		lda #>inchat
 cd88:2d8a:1   85 14		sta linnum
-cd8a:2d8c:1   a9 07		lda #>inchat
+cd8a:2d8c:1   a9 07		lda #<inchat
 cd8c:2d8e:1   85 15		sta linnum+1
 cd8e:2d90:1   a2 fa		ldx #$fa
 cd90:2d92:1   9a		txs
 cd91:2d93:1   20 a3 a8		jsr sub_a8a3
 cd94:2d96:1   4c ae a7		jmp lbl_a7ad+1
 
+; new IGONE vector:
 cd97:2d99:1   a9 36		lda #$36
 cd99:2d9b:1   85 01		sta $01
 cd9b:2d9d:1   20 6c b6		jsr sub_b66c
@@ -5249,8 +5262,9 @@ cee7:2ee9:1   tbl-cef5 blddate	.text "12/30/99 09:45P"
 
 cef6:2ef8:1   tbl-cef9 tablcef6 .byte $81,$19,$99,$99
 
-cefa:2efc:1   tbl-cefc tablcefa .text "š",$00
-cefc:2efe:1			.text $00
+cefa:2efc:1   tbl-cefc tablcefa .byte $9a ' "š"
+				.byte $00
+cefc:2efe:1			.byte $00
 
 cefd:2eff:1   tbl-cf00 tablcefd .byte $ff,$35,$ff,$20
 

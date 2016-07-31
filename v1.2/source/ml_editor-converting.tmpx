@@ -1,6 +1,7 @@
-{loadaddr:$1000}
 {uses:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v1.2\source\equates-1_2.lbl}
+
 {asm}
+orig $1000	; start assembling at $1000
 ; tabs are 4 characters wide
 
 ; used Peter Schepers' 64COPY4.45 utility
@@ -10,6 +11,9 @@
 ; using Jeff Hoag's C64List 3.03 utility
 ; for further fiddling:
 ; <http://commodoreserver.com/Downloads.asp>
+
+; 30/Jul/2016 18:49
+; now using Jeff's casm 4.0 beta3 assembler
 
 ; some strings are zero-delimited, thus labels start with "sz"
 ; some are not, so they start with "s"
@@ -26,7 +30,6 @@
 
 ; todo: add "jmp out_szDone" on a few routines
 
-{asm}
 	; &,54,0 - start with empty buffer
 
 		jmp clearbuf	; 1000:0002	4c 31 10
@@ -88,7 +91,7 @@ goto105f:
 		beq fwd_1069	; 1065:0067	f0 02
 		bcs fwd_108a	; 1067:0069	b0 21
 fwd_1069:
-		ldx $03ff	; 1069:006b	ae ff 03
+		ldx $03ff		; 1069:006b	ae ff 03
 		jsr sub_1df5	; 106c:006e	20 f5 1d
 		lda chat		; 106f:0071	ad 06 d0
 		beq fwd_1084	; 1072:0074	f0 10
@@ -148,7 +151,9 @@ len_Command:
 		byte $08		; 10be:00c0	tbl-10be
 
 sCommand:
-		ascii "ÃOMMAND"	; 10bf:00c1	tbl-10c6
+		.byte $c3		; "C"
+		.ascii "OMMAND"
+			; 10bf:00c1	tbl-10c6
 		byte colon
 		
 goto10c7:
@@ -179,16 +184,16 @@ fwd_10de:
 fwd_10f5:
 		txa				; 10f5:00f7	8a
 		cmp #period		; 10f6:00f8	c9 2e
-		bne fwd_110e		; 10f8:00fa	d0 14
+		bne fwd_110e	; 10f8:00fa	d0 14
 		ldx len_Command	; 10fa:00fc	ae be 10
-		jsr sub_OutXdels	; 10fd:00ff	20 8d 10
+		jsr sub_OutXdels; 10fd:00ff	20 8d 10
 		lda #period		; 1100:0102	a9 2e
 		jmp goto105f	; 1102:0104	4c 5f 10
 
 	; looking for extended editor command?
 extended:
 		ldx len_Command	; 1105:0107	ae be 10
-		jsr sub_OutXdels	; 1108:010a	20 8d 10
+		jsr sub_OutXdels; 1108:010a	20 8d 10
 		jmp goto105f	; 110b:010d	4c 5f 10
 
 	; DELete hit?
@@ -198,10 +203,10 @@ fwd_110e:
 		ldx #$00		; 1112:0114	a2 00
 fwd_1114:
 		cmp dotcmds,x	; 1114:0116	dd 49 11
-		beq fwd_1124		; 1117:0119	f0 0b
+		beq fwd_1124	; 1117:0119	f0 0b
 		inx		 		; 1119:011b	e8
 		cpx numcmds		; 111a:011c	ec 48 11
-		bne fwd_1114		; 111d:011f	d0 f5
+		bne fwd_1114	; 111d:011f	d0 f5
 		ldx #$02		; 111f:0121	a2 02
 		jmp editrts		; 1121:0123	4c 09 10
 
@@ -218,7 +223,8 @@ fwd_1124:
 		tax 			; 1139:013b	aa
 		lda dottext+1,y	; 113a:013c	b9 8e 11
 		tay 			; 113d:013f	a8
-		jsr sub_outzString	; 113e:0140	20 d2 1d
+		jsr sub_outzString
+						; 113e:0140	20 d2 1d
 	; self-modifying:
 dispatch:
 		jsr $ffff		; 1141:0143	20 ff ff
@@ -231,161 +237,193 @@ stackptr:
 numcmds:
 		byte $16		; 1148:014a	tbl-1148
 
-		;	   abcdefhijklmnorsvxyz
+			;  abcdefhijklmnorsvxyz
 dotcmds:
-		ascii "ABCDEFHIJKLMNORSVXYZ"	; 1149:014b	tbl-115c
+		ascii "ABCDEFHIJKLMNORSVXYZ"
+			; 1149:014b	tbl-115c
 
 	; Did not know this! Must test.
 	; .<Tab> is apparently the same as Help
 	; Yep. Tested. I thought it was gonna be this unused
 	; .Indent command...
-dothelp:	byte $09		; .<Tab>			; 115d:015f	tbl-115d
-
-dotscale:	ascii "#"		; .# Scale		; 115e:0160	tbl-115e
+		byte $09		; .<Tab>			; 115d:015f	tbl-115d
+		ascii "#"
+		; .# Scale		; 115e:0160	tbl-115e
 
 	; routine addresses (23) - not alphabetical order!
 	; p<RoutineName> - "pointer" *shrug*
 dotaddrs:
-		word >pAbort			,<pAbort		; .A $1267
-		byte >pBorder			,<pBorder		; .B $1271
-		byte >pColumns			,<pColumns		; .C $1591
-		byte >pDelete			,<pDelete		; .D $12df
-		byte >pEdit				,<pEdit			; .E $133e
-		byte >pFind				,<pFind			; .F $1351	; 115f:0161
-		byte >pHelp				,<pHelp			; .H $141b
-		byte >pInsert			,<pInsert		; .I $1423
-		byte >pJustify			,<pJustify		; .J $143d
-		byte >pFindAndReplace	,<pFindAndReplace; .K $139c
-		byte >pList				,<pList			; .L $14f1
-		byte >pMCIread			,<pMCIread		; .M $14fe	; 116b:016d
-		byte >pNewText			,<pNewText		; .N $150b
-		byte >pLineNumbers		,<pLineNumbers	; .O $1566
-		byte >pRead				,<pRead			; .R $1515
-		byte >pSaveText 		,<pSaveText	 	; .S $1540
-		byte >pVersion			,<pVersion		; .V $169c
-		byte >pExit				,<pExit			; .X $154b	; 1177:0179
-		byte >pMove				,<pMove			; .Y $160c
-		byte >pCopy				,<pCopy			; .Z $15bf
-		byte >pHelp				,<pHelp			; .? $141b
-		byte >pScale			,<pScale		; .# $1659
-		word $0000								;    $0000	; 1183:0185
+		word pAbort			; .A $1267
+		word pBorder		; .B $1271
+		word pColumns		; .C $1591
+		word pDelete		; .D $12df
+		word pEdit			; .E $133e
+		word pFind			; .F $1351	; 115f:0161
+		word pHelp			; .H $141b
+		word pInsert		; .I $1423
+		word pJustify		; .J $143d
+		word pFindAndReplace; .K $139c
+		word pList			; .L $14f1
+		word pMCIread		; .M $14fe	; 116b:016d
+		word pNewText		; .N $150b
+		word pLineNumbers	; .O $1566
+		word pRead			; .R $1515
+		word pSaveText 		; .S $1540
+		word pVersion		; .V $169c
+		word pExit			; .X $154b	; 1177:0179
+		word pMove			; .Y $160c
+		word pCopy			; .Z $15bf
+		word pHelp			; .? $141b
+		word pScale			; .# $1659
+		word $0000			;    $0000	; 1183:0185
 
 	; dot command text (23)
 	; sz = string, zero-delimited
 dottext:
-		byte >szAbort		,<szAbort		; .a $11bb		; 118d:018f	tbl-11ba
-		byte >szBorder		,<szBorder		; .b $11c1
-		byte >szColumns		,<szColumns		; .c $1240
-		byte >szDelete		,<szDelete		; .d $11c8
-		byte >szEdit		,<szEdit			; .e $11cf
-		byte >szFind		,<szFind			; .f $11d4
-		byte >szHelp		,<szHelp			; .h $11d9
-		byte >szInsert		,<szInsert		; .i $11df
-		byte >szJustify		,<szJustify		; .j $11e6
-		byte >szReplace		,<szReplace		; .k $11fe
-		byte >szList		,<szList			; .l $1206
-		byte >szMCIread		,<szMCIread		; .m $120b		; 1199:019b
-		byte >szClearText	,<szClearText	; .n $1214
-		byte >szLineNumbers ,<szLineNumbers 	; .o $1233
-		byte >szRead		,<szRead			; .r $121f
-		byte >szSaveText 	,<szSaveText 	; .s $1224
-		byte >szVersion		,<szVersion		; .v $125f
-		byte >szExit		,<szExit			; .x $122e		; 11a5:01a7
-		byte >szMove		,<szMove			; .y $124d
-		byte >szCopy		,<szCopy			; .z $1248
-		byte >szIndentOrphan,<szIndentOrphan	; .<Tab>  $1258
-		byte >szScale		,<szScale		; .# $1252
-		byte >szIndentOrphan,<szIndentOrphan	; .<Tab>  $1258		; 11b1:01b3
+		word szAbort		; .a $11bb	; 118d:018f	tbl-11ba
+		word szBorder		; .b $11c1
+		word szColumns		; .c $1240
+		word szDelete		; .d $11c8
+		word szEdit			; .e $11cf
+		word szFind			; .f $11d4
+		word szHelp			; .h $11d9
+		word szInsert		; .i $11df
+		word szJustify		; .j $11e6
+		word szReplace		; .k $11fe
+		word szList			; .l $1206
+		word szMCIread		; .m $120b	; 1199:019b
+		word szClearText	; .n $1214
+		word szLineNumbers	; .o $1233
+		word szRead			; .r $121f
+		word szSaveText		; .s $1224
+		word szVersion		; .v $125f
+		word szExit			; .x $122e	; 11a5:01a7
+		word szMove			; .y $124d
+		word szCopy			; .z $1248
+		word szIndentOrphan ; .<Tab>  $1258
+		word szScale		; .# $1252
+		word szIndentOrphan ; .<Tab>  $1258	; 11b1:01b3
 
 szAbort:
-		ascii "ÁBORT"
+  		byte $c1
+  		ascii "BORT"
 		byte $00		; 11bb:01bd	tbl-11c0
 
 szBorder:
-		ascii "ÂORDER"
+		byte $c2
+		ascii "ORDER"
 		byte $00		; 11c1:01c3	tbl-11c7
 
 szDelete:
-		ascii "ÄELETE"
+		byte $c4
+		ascii "ELETE"
 		byte $00		; 11c8:01ca	tbl-11ce
 
 szEdit:
-		ascii "ÅDIT"
+		byte $c5
+		ascii "DIT"
 		byte $00		; 11cf:01d1	tbl-11d3
 
 szFind:
-		ascii "ÆIND"
+		byte $c6
+		ascii "IND"
 		byte $00		; 11d4:01d6	tbl-11d8
 
 szHelp:
-		ascii "ÈELP!"
+		byte $c8
+		ascii "ELP!"
 		byte $00		; 11d9:01db	tbl-11de
 
 szInsert:
-		ascii "ÉNSERT"
+		byte $c9
+		ascii "NSERT"
 		byte $00		; 11df:01e1	tbl-11e5
 
 szJustify:
-		ascii "ÊUSTIFY (Ã,Å,É,Ì,Ð,Ò,Õ)"
+		byte $ca
+		ascii "USTIFY ("
+		byte $c3,$2c,$c5,$2c,$c9,$2c,$cc,$2c,$d1,$2c,$d3,$2c,$d6
+						; "C,E,I,L,P,R,U"
+		ascii ")"
 		byte $00		; 11e6:01e8	tbl-11fd
 
 szReplace:
-		ascii "ÒEPLACE"
+		byte $d3
+		ascii "EPLACE"
 		byte $00		; 11fe:0200	tbl-1205
 
 szList:
-		ascii "ÌIST"
+		byte $cc
+		ascii "IST"
 		byte $00		; 1206:0208	tbl-120a
 
 szMCIread:
-		ascii "ÍÃÉ ÒEAD"
+		byte $cd,$c3,$c9,$20,$d3 ; "MCI R"
+		ascii "EAD"
 		byte $00		; 120b:020d	tbl-1213
 
 szClearText:
-		ascii "ÃLEAR ÔEXT"
+		byte $c3
+		ascii "LEAR "
+		byte $d5
+		ascii "EXT"
 		byte $00		; 1214:0216	tbl-121e
 
 szRead:
-		ascii "ÒEAD"
+		byte $d3
+		ascii "EAD"
 		byte $00		; 121f:0221	tbl-1223
 
 szSaveText:
-		ascii "ÓAVE ÔEXT"
+		byte $d4
+		ascii "AVE "
+		byte $d5
+		ascii "EXT"
 		byte $00		; 1224:0226	tbl-122d
 
 szExit:
-		ascii "ÅXIT"
+		byte $c5
+		ascii "XIT"
 		byte $00		; 122e:0230	tbl-1232
 
 szLineNumbers:
-		ascii "ÌINE ÎUMBERS"
+		byte $cc
+		ascii "INE "
+		byte $ce
+		ascii "UMBERS"
 		byte $00		; 1233:0235	tbl-123f
 
 szColumns:
-		ascii "ÃOLUMNS"
+		byte $c3
+		ascii "OLUMNS"
 		byte $00		; 1240:0242	tbl-1247
 
 szCopy:
-		ascii "ÃOPY"
+		byte $c3
+		ascii "OPY"
 		byte $00		; 1248:024a	tbl-124c
 
 szMove:
-		ascii "ÍOVE"
+		byte $cd
+		ascii "OVE"
 		byte $00		; 124d:024f	tbl-1251
 
 szScale:
 ; TODO: add 80 column scale output
-		ascii "ÓCALE"
+		byte $d4
+		ascii "CALE"
 		byte $00		; 1252:0254	tbl-1257
 
 ; FIXME: this is in the command table, but Ctrl-I/Tab doesn't seem
 ; to call this routine...
 szIndentOrphan:
-		ascii "ÉNDENT"
+		byte $c9
+		ascii "NDENT"
 		byte $00		; 1258:025a	tbl-125e
 
 szVersion:
-		ascii "ÖERSION"
+		byte $d7
+		ascii "ERSION"
 		byte $00		; 125f:0261	tbl-1266
 
 		; .Abort - TODO: want confirmation!
@@ -414,8 +452,8 @@ pBorder:
 		sty sub_1755+2		; 128d:028f	8c 57 17
 	; ask for character:
 	; print "Character:" prompt @ $12d0:
-		ldx #>szCharacter	; 1290:0292	a2 d0
-		ldy #<szCharacter	; 1292:0294	a0 12
+		ldx #<szCharacter	; 1290:0292	a2 d0
+		ldy #>szCharacter	; 1292:0294	a0 12
 	; output prompt - calls usetbl1
 		jsr sub_outzString	; 1294:0296	20 d2 1d
     ; another variable
@@ -427,8 +465,7 @@ pBorder:
 		jsr sub_outCR		; 12a0:02a2	20 77 1d
 lbl_12a3:
 		lda brdrchar		; 12a3:02a5	ad dc 12
-	; space
-		cmp #$20			; 12a6:02a8	c9 20
+		cmp #space			; 12a6:02a8	c9 20
 		bcc fwd_12cc		; 12a8:02aa	90 22
 		jsr sub_1723		; 12aa:02ac	20 23 17
 		ldy #$00			; 12ad:02af	a0 00
@@ -453,8 +490,9 @@ fwd_12cd:
 		jmp goto1cf2	; 12cd:02cf	4c f2 1c
 
 szCharacter:
-		byte $8b		; 12d0:02d2	tbl-12d0
-		ascii "ÃHARACTER"
+		byte ImageReturn; 12d0:02d2	tbl-12d0
+		byte $c3
+		ascii "HARACTER"
 		byte colon
 		byte $00		; 12d1:02d3	tbl-12db
 
@@ -472,7 +510,7 @@ pDelete:
 		dex 				; 12e2:02e4	ca
 		ldy $03f8			; 12e3:02e5	ac f8 03
 		dey 				; 12e6:02e8	88
-		beq fwd_1324			; 12e7:02e9	f0 3b
+		beq fwd_1324		; 12e7:02e9	f0 3b
 		jsr sub_1c8f		; 12e9:02eb	20 8f 1c
 		ldy #$00			; 12ec:02ee	a0 00
 		ldx #<szLine		; 12ee:02f0	a2 27
@@ -491,14 +529,14 @@ fwd_1300:
 		lda linnum			; 1308:030a	a5 14
 		cmp linnum+1		; 130a:030c	c5 15
 		beq fwd_131a		; 130c:030e	f0 0c
-		ldx #>szLine		; 130e:0310	a2 2d
-		ldy #<szLine		; 1310:0312	a0 13
+		ldx #<szLine		; 130e:0310	a2 2d
+		ldy #>szLine		; 1310:0312	a0 13
 		jsr sub_outzString	; 1312:0314	20 d2 1d
 		lda linnum+1		; 1315:0317	a5 15
 		jsr sub_outApercent	; 1317:0319	20 ba 1b
 fwd_131a:
-		ldx #>szDeleted		; 131a:031c	a2 32
-		ldy #<szDeleted		; 131c:031e	a0 13
+		ldx #<szDeleted		; 131a:031c	a2 32
+		ldy #>szDeleted		; 131c:031e	a0 13
 		jsr sub_outzString	; 131e:0320	20 d2 1d
 		jmp goto19b0		; 1321:0323	4c b0 19
 
@@ -506,15 +544,21 @@ fwd_1324:
 		jmp goto1cf2		; 1324:0326	4c f2 1c
 
 szLine:
-		ascii "(ÌINE"		; 1327:0329	tbl-1327
+		ascii "("
+		byte $cc
+		ascii "INE"
+							; 1327:0329	tbl-1327
 		byte $00			; 1328:032a	tbl-132c
 
 t_132d:
-		ascii " ÔO "
+		ascii " "
+		byte $cc
+		ascii "O "
 		byte $00			; 132d:032f	tbl-1331
 
 szDeleted:
-		ascii " ÄELETED.)"	; 1332:0334	tbl-133b
+		ascii " dELETED.)"
+							; 1332:0334	tbl-133b
 		byte $0d,$00		; 133c:033e	tbl-133d
 
 		; .Edit line (or range of lines)
@@ -537,8 +581,8 @@ pFind:
 		dey 				; 1356:0358	88
 		beq fwd_138a		; 1357:0359	f0 31
 		jsr sub_1c8f		; 1359:035b	20 8f 1c
-		ldx #$8d			; 135c:035e	a2 8d
-		ldy #$13			; 135e:0360	a0 13
+		ldx #<szSearchPhrase; 135c:035e	a2 8d
+		ldy #>szSearchPhrase; 135e:0360	a0 13
 		jsr sub_outzString	; 1360:0362	20 d2 1d
 		jsr sub_getline		; 1363:0365	20 2e 1d
 		ldy index			; 1366:0368	ac 0f d0
@@ -563,7 +607,8 @@ fwd_138a:
 		jmp goto1cf2		; 138a:038c	4c f2 1c
 
 szSearchPhrase:
-		ascii "ÓEARCH ÐHRASE"	; 138d:038f	tbl-139b
+		ascii "sEARCH pHRASE"
+							; 138d:038f	tbl-139b
 		byte colon
 		byte $00
 
@@ -577,7 +622,7 @@ pFindAndReplace:
 		ldx #<szSearchPhrase2	; 13a7:03a9	a2 fd
 		ldy #>szSearchPhrase2	; 13a9:03ab	a0 13
 		jsr sub_outzString		; 13ab:03ad	20 d2 1d
-		jsr sub_getline			; 13ae:03b0	20 2e 1d
+		jsr sub_getline		; 13ae:03b0	20 2e 1d
 		ldy index				; 13b1:03b3	ac 0f d0
 		beq fwd_13f9			; 13b4:03b6	f0 43
 		ldy #$00				; 13b6:03b8	a0 00
@@ -620,12 +665,13 @@ fwd_13fa:
 		; That string could be reused to save space.
 		; This occupies 15 bytes.
 szSearchPhrase2:
-		ascii "ÓEARCH ÐHRASE"	; 13fd:03ff	tbl-140b
+		ascii "sEARCH pHRASE"
+							; 13fd:03ff	tbl-140b
 		byte colon
 		byte $00		
 
 szReplaceWith:
-		ascii "ÒEPLACE ×ITH "
+		ascii "rEPLACE wITH "
 		byte colon
 		byte $00		; 140c:040e	tbl-141a
 
@@ -695,31 +741,32 @@ fwd_1478:
 		jmp goto1cf2		; 1478:047a	4c f2 1c
 
 szCenter:
-		ascii "ÃENTER"		; 147b:047d	tbl-1481
+		ascii "cENTER"
+							; 147b:047d	tbl-1481
 		byte $00
 
 szExpand:
-		ascii "ÅXPAND"
+		ascii "eXPAND"
 		byte $00			; 1482:0484	tbl-1488
 
 szPacked:
-		ascii "ÐACKED"
+		ascii "pACKED"
 		byte $00			; 1489:048b	tbl-148f
 
 szLeft:
-		ascii "ÌEFT"
+		ascii "lEFT"
 		byte $00			; 1490:0492	tbl-1494
 
 szRight:
-		ascii "ÒIGHT"
+		ascii "rIGHT"
 		byte $00			; 1495:0497	tbl-149a
 
 szIndent:
-		ascii "ÉNDENT"
+		ascii "iNDENT"
 		byte $00			; 149b:049d	tbl-14a1
 
 szUnindent:
-		ascii "ÕN-ÉNDENT"
+		ascii "uN-iNDENT"
 		byte $00			; 14a2:04a4	tbl-14ab
 
 t_14ac:
@@ -737,12 +784,12 @@ justtext:
 
 		; justification routine addresses
 justaddr:
-		word pJustifyCenter	; $1784
-		word pJustifyExpand	; $17d9
-		word pJustifyPacked	; $179d
+		word pJustifyCenter		; $1784
+		word pJustifyExpand		; $17d9
+		word pJustifyPacked		; $179d
 		word pJustifyLeft		; $175e
 		word pJustifyRight		; $1773
-		word pIndent	; $181a		; 14bb:04bd	tbl-14c8
+		word pJustifyIndent		; $181a		; 14bb:04bd	tbl-14c8
 		word pJustifyUnindent	; $181f		; 14c7:04c9
 
 fwd_14c9:
@@ -770,10 +817,10 @@ fwd_14c9:
 		; .List (defaults to all lines)
 pList:
 		lda #$81		; 14f1:04f3	a9 81
-		sta lbl_153f		; 14f3:04f5	8d 3f 15
+		sta lbl_153f	; 14f3:04f5	8d 3f 15
 		lda #$80		; 14f6:04f8	a9 80
 		sta $03f3		; 14f8:04fa	8d f3 03
-		jmp goto151f		; 14fb:04fd	4c 1f 15
+		jmp goto151f	; 14fb:04fd	4c 1f 15
 
 		; .MCI Read
 pMCIread:
@@ -818,7 +865,7 @@ lbl_153f:
 		brk 			; 153f:0541	00
 
 		; .Save text
-pSave:
+pSaveText:
 		jsr sub_ReturnKey	; 1540:0542	20 a7 1a
 		lda $03fb			; 1543:0545	ad fb 03
 		ldx #$01			; 1546:0548	a2 01
@@ -858,10 +905,16 @@ fwd_1583:
 		rts 				; 1583:0585	60
 
 szOn:
-		ascii " ÏN."		; 1584:0586	tbl-158b
+		ascii " "
+		byte $cf
+		ascii "N."
+							; 1584:0586	tbl-158b
 		byte $0d,$00		; 1588:058a	tbl-1589
 
-		ascii " ÏFF."		; 158a:058c	tbl-158e
+		ascii " "
+		byte $cf
+		ascii "FF."
+							; 158a:058c	tbl-158e
 		byte $0d,$00		; 158f:0591	tbl-1590
 
 		; .Columns
@@ -878,8 +931,8 @@ pColumns:
 		dex 				; 15a0:05a2	ca
 		jsr sub_1f00		; 15a1:05a3	20 00 1f
 fwd_15a4:
-		ldx #>szSetTo		; 15a4:05a6	a2 b6
-		ldy #<szSetTo		; 15a6:05a8	a0 15
+		ldx #<szSetTo		; 15a4:05a6	a2 b6
+		ldy #>szSetTo		; 15a6:05a8	a0 15
 		jsr sub_outzString	; 15a8:05aa	20 d2 1d
 		ldx llen			; 15ab:05ad	ae 04 d0
 		inx 				; 15ae:05b0	e8
@@ -888,7 +941,7 @@ fwd_15a4:
 		jmp sub_outCR		; 15b3:05b5	4c 77 1d
 
 szSetTo:
-		ascii "ÓET ÔO"
+		ascii "sET tO"
 		byte colon
 		ascii " "
 		byte $00			; 15b6:05b8	tbl-15be
@@ -930,7 +983,8 @@ fwd_15fa:
 		jmp goto1cf2		; 1600:0602	4c f2 1c
 
 szCopyTo:
-		ascii "ÃOPY ÔO"
+		byte $c3
+		ascii "OPY tO"
 		byte colon
 		byte $00			; 1603:0605	tbl-160b
 
@@ -971,7 +1025,8 @@ fwd_1647:
 		jmp goto1cf2			; 164d:064f	4c f2 1c
 
 sMoveTo:
-	 	ascii "ÍOVE ÔO"
+	 	byte $cd
+	 	ascii "OVE tO"
 		byte colon
 		byte $00			; 1650:0652	tbl-1658
 
@@ -986,11 +1041,13 @@ pScale:
 		;	the caller is in 80 column mode)
 		;	"          1         2         3"
 		;	"01234567890123456789012345678900123456789"
-lbl_scale:
+l_scale:
 		byte $8b		; 1662:0664	tbl-1662
 
 t_scale1:
-	 	ascii "\_101\_202\_303"		; 1663:0665	tbl-1671
+	 	ascii "{pound}{back arrow}101"
+	 	ascii "{pound}{back arrow}202"
+	 	ascii "{pound}{back arrow}303"		; 1663:0665	tbl-1671
 
 t_1672:
 		byte $8b		; 1672:0674	tbl-1672
@@ -1018,10 +1075,11 @@ szEditorVersion:
 
 		; build date repeated, use text at very end instead?
 		;
-		ascii "Image 1.2 Editor "		; 16a6:06a8	tbl-16c7
+		ascii "iMAGE 1.2 eDITOR "
+						; 16a6:06a8	tbl-16c7
 		ascii "(09/21/89 01"
 		byte colon
-		ascii "26A)"	; 16b7:06b9
+		ascii "26a)"	; 16b7:06b9
 		byte $8b		; 16c8:06ca	tbl-16c8
 
 sub_16c9:
@@ -1060,7 +1118,7 @@ fwd_1702:
 		inc index		; 1702:0704	ee 0f d0
 fwd_1705:
 		ldy arisgn		; 1705:0707	a4 6f
-		lda #$20		; 1707:0709	a9 20
+		lda #space		; 1707:0709	a9 20
 		sta buffer,y		; 1709:070b	99 77 ce
 		rts 		; 170c:070e	60
 
@@ -1107,14 +1165,14 @@ sub_1755:
 		jmp $ffff			; 1755:0757	4c ff ff
 
 szDone:
-		ascii "ÄONE."
+		ascii "dONE."
 		byte $00			; 1758:075a	tbl-175d
 
 pJustifyLeft:		; $175e
 		lda index		; 175e:0760	ad 0f d0
 		beq JustifyLeftRTS		; 1761:0763	f0 0f
 		lda buffer		; 1763:0765	ad 77 ce
-		cmp #$20		; 1766:0768	c9 20
+		cmp #space		; 1766:0768	c9 20
 		bne JustifyLeftRTS		; 1768:076a	d0 08
 		ldy #$00		; 176a:076c	a0 00
 		jsr sub_16c9	; 176c:076e	20 c9 16
@@ -1136,37 +1194,38 @@ JustifyRightRTS:
 
 	; justification routines
 pJustifyCenter:
-		jsr pJustifyLeft		; 1784:0786	20 5e 17
-		lda llen		; 1787:0789	ad 04 d0
-		sec 		; 178a:078c	38
-		sbc index		; 178b:078d	ed 0f d0
-		beq JustifyCenterRTS		; 178e:0790	f0 0c
-		bcc JustifyCenterRTS		; 1790:0792	90 0a
-		ldy #$00		; 1792:0794	a0 00
-		lsr				; 1794:0796	4a
-		tax 		; 1795:0797	aa
+		jsr pJustifyLeft	; 1784:0786	20 5e 17
+		lda llen			; 1787:0789	ad 04 d0
+		sec 				; 178a:078c	38
+		sbc index			; 178b:078d	ed 0f d0
+		beq JustifyCenterRTS; 178e:0790	f0 0c
+		bcc JustifyCenterRTS; 1790:0792	90 0a
+		ldy #$00			; 1792:0794	a0 00
+		lsr					; 1794:0796	4a
+		tax 				; 1795:0797	aa
 b_1796:
 		jsr sub_16e7		; 1796:0798	20 e7 16
-		dex 		; 1799:079b	ca
-		bne b_1796		; 179a:079c	d0 fa
+		dex 				; 1799:079b	ca
+		bne b_1796			; 179a:079c	d0 fa
 JustifyCenterRTS:
-		rts 		; 179c:079e	60
+		rts 				; 179c:079e	60
 
-JustifyPacked:
-		jsr pJustifyLeft		; 179d:079f	20 5e 17
-		lda index		; 17a0:07a2	ad 0f d0
-		beq JustifyPackedRTS		; 17a3:07a5	f0 33
-		ldy #$00		; 17a5:07a7	a0 00
+pJustifyPacked:
+		jsr pJustifyLeft	; 179d:079f	20 5e 17
+		lda index			; 17a0:07a2	ad 0f d0
+		beq JustifyPackedRTS; 17a3:07a5	f0 33
+		ldy #$00			; 17a5:07a7	a0 00
 b_17a7:
 		lda buffer,y		; 17a7:07a9	b9 77 ce
-		iny 		; 17aa:07ac	c8
-		cmp #$20		; 17ab:07ad	c9 20
+		iny 				; 17aa:07ac	c8
+		cmp #space			; 17ab:07ad	c9 20
 		bne fwd_17c1		; 17ad:07af	d0 12
 		cpy index			; 17af:07b1	cc 0f d0
 		bcs fwd_17c6		; 17b2:07b4	b0 12
+	; fixme? duplicate code
 		bcs fwd_17c6		; 17b4:07b6	b0 10
 		lda buffer,y		; 17b6:07b8	b9 77 ce
-		cmp #$20		; 17b9:07bb	c9 20
+		cmp #space			; 17b9:07bb	c9 20
 		bne fwd_17c1		; 17bb:07bd	d0 04
 		dey 		; 17bd:07bf	88
 		jsr sub_16c9		; 17be:07c0	20 c9 16
@@ -1179,14 +1238,14 @@ fwd_17c6:
 		dey 		; 17cb:07cd	88
 		beq JustifyPackedRTS		; 17cc:07ce	f0 0a
 		lda buffer,y		; 17ce:07d0	b9 77 ce
-		cmp #$20		; 17d1:07d3	c9 20
+		cmp #space		; 17d1:07d3	c9 20
 		bne JustifyPackedRTS		; 17d3:07d5	d0 03
 		sty index		; 17d5:07d7	8c 0f d0
 JustifyPackedRTS:
 		rts 		; 17d8:07da	60
 
 pJustifyExpand:
-		jsr JustifyPacked		; 17d9:07db	20 9d 17
+		jsr pJustifyPacked		; 17d9:07db	20 9d 17
 b_17dc:
 		ldx #$00		; 17dc:07de	a2 00
 		lda index		; 17de:07e0	ad 0f d0
@@ -1195,7 +1254,7 @@ b_17dc:
 		ldy #$00		; 17e6:07e8	a0 00
 b_17e8:
 		lda buffer,y		; 17e8:07ea	b9 77 ce
-		cmp #$20		; 17eb:07ed	c9 20
+		cmp #space		; 17eb:07ed	c9 20
 		bne fwd_180a		; 17ed:07ef	d0 1b
 		jsr sub_16e7		; 17ef:07f1	20 e7 16
 		inx 		; 17f2:07f4	e8
@@ -1204,7 +1263,7 @@ b_17e8:
 		bcs JustifyExpandRTS		; 17f9:07fb	b0 1e
 b_17fb:
 		lda buffer,y		; 17fb:07fd	b9 77 ce
-		cmp #$20		; 17fe:0800	c9 20
+		cmp #space		; 17fe:0800	c9 20
 		bne fwd_180a		; 1800:0802	d0 08
 		iny 		; 1802:0804	c8
 		cpy index		; 1803:0805	cc 0f d0
@@ -1221,7 +1280,7 @@ fwd_180a:
 JustifyExpandRTS:
 		rts 			; 1819:081b	60
 
-pIndent:
+pJustifyIndent:
 		ldy #$00		; 181a:081c	a0 00
 		jmp sub_16e7		; 181c:081e	4c e7 16
 
@@ -1242,7 +1301,7 @@ sub_DoBorder:
 		lda brdrchar		; 1832:0834	ad dc 12
 		sta buffer		; 1835:0837	8d 77 ce
 		ldy index		; 1838:083a	ac 0f d0
-		lda #$20		; 183b:083d	a9 20
+		lda #space		; 183b:083d	a9 20
 bkwd_183d:
 		sta buffer,y	; 183d:083f	99 77 ce
 		iny 			; 1840:0842	c8
@@ -1438,7 +1497,8 @@ fwd_198d:
 		jmp goto190b		; 1994:0996	4c 0b 19
 
 szTooBig:
-		ascii "ÔOO ÂIG. ÃAN'T ÒEPLACE."		; 1997:0999	tbl-19ad
+		ascii "tOO bIG. cAN'T rEPLACE."
+							; 1997:0999	tbl-19ad
 		byte $0d,$00		; 19ae:09b0	tbl-19af
 
 goto19b0:
@@ -1539,8 +1599,8 @@ sub_1a28:
 		pla 				; 1a63:0a65	68
 ; get ready to print "Command:Exit"
 		lda len_CmdExit		; 1a64:0a66	ad 94 1a
-		ldx #>sCmdExit		; 1a67:0a69	a2 95
-		ldy #<sCmdExit		; 1a69:0a6b	a0 1a
+		ldx #<sCmdExit		; 1a67:0a69	a2 95
+		ldy #>sCmdExit		; 1a69:0a6b	a0 1a
 		jsr sub_outString	; 1a6b:0a6d	20 bc 1d
 		jmp goto1048		; 1a6e:0a70	4c 48 10
 
@@ -1559,7 +1619,8 @@ fwd_1a7c:
 len_NoChange:
 		byte $0d			; 1a86:0a88	tbl-1a86
 sNoChange:
-		ascii "(ÎO ÃHANGE.)"; 1a87:0a89	tbl-1a92
+		ascii "(nO cHANGE.)"
+							; 1a87:0a89	tbl-1a92
 		byte $0d			; 1a93:0a95	tbl-1a93
 
 	; another duplicate message (sort of)
@@ -1568,9 +1629,10 @@ len_CmdExit:
 		byte $0d			; 1a94:0a96	tbl-1a94
 
 sCmdExit:
-		ascii "ÃOMMAND"	; 1a95:0a97	tbl-1aa0
+		ascii "cOMMAND"
+							; 1a95:0a97	tbl-1aa0
 		byte colon
-		ascii "ÅXIT"
+		ascii "eXIT"
 		byte $0d		; 1aa1:0aa3	tbl-1aa1
 
 ; orphaned code?
@@ -1752,7 +1814,7 @@ goto1bb5:
 		lda #$27		; 1bb5:0bb7	a9 27
 		jmp usetbl1		; 1bb7:0bb9	4c 03 cd
 
-sub_1bba:
+sub_outApercent:
 ; output value in .a as MCI integer {pound}%a
 
 		sta var+1		; 1bba:0bbc	85 62
@@ -1773,7 +1835,8 @@ sub_1bba:
 	; output a%
 sA_percent:
 		byte pound		; 1bd7:0bd9	tbl-1bd7
-		ascii "%a"		; 1bd8:0bda	25 41
+		ascii "%A"
+						; 1bd8:0bda	25 41
 
 sub_1bda:
 		lda $03f8		; 1bda:0bdc	ad f8 03
@@ -1788,19 +1851,19 @@ sub_1bda:
 		ldy #>szNoRAM	; 1bf1:0bf3	a0 1c
 		jsr sub_outzString	; 1bf3:0bf5	20 d2 1d
 fwd_1bf6:
-		lda LineNumberMode		; 1bf6:0bf8	ad fa 03
+		lda LineNumberMode	; 1bf6:0bf8	ad fa 03
 		and #$01			; 1bf9:0bfb	29 01
 		beq fwd_1c02		; 1bfb:0bfd	f0 05
 		lda #$c9			; "I"
-						; 1bfd:0bff	a9 c9
+							; 1bfd:0bff	a9 c9
 		jsr sub_outChar		; 1bff:0c01	20 97 1d
 fwd_1c02:
-		lda LineNumberMode		; 1c02:0c04	ad fa 03
-		and #$03		; 1c05:0c07	29 03
+		lda LineNumberMode	; 1c02:0c04	ad fa 03
+		and #$03			; 1c05:0c07	29 03
 		beq fwd_1c15		; 1c07:0c09	f0 0c
-		lda $03fb		; 1c09:0c0b	ad fb 03
-		jsr sub_1bba		; 1c0c:0c0e	20 ba 1b
-		jsr sub_outColon		; 1c0f:0c11	20 81 1d
+		lda $03fb			; 1c09:0c0b	ad fb 03
+		jsr sub_outApercent	; 1c0c:0c0e	20 ba 1b
+		jsr sub_outColon	; 1c0f:0c11	20 81 1d
 		jsr sub_outCR		; 1c12:0c14	20 77 1d
 fwd_1c15:
 		lda #$00		; 1c15:0c17	a9 00
@@ -1810,15 +1873,18 @@ fwd_1c15:
 		rts 			; 1c20:0c22	60
 
 szNoRAM:
-		ascii "** ÅND ÏF ÍEMORY **"		; 1c21:0c23	tbl-1c33
+		ascii "** eND oF mEMORY **"
+										; 1c21:0c23	tbl-1c33
 		byte $0d						; 1c34:0c36	tbl-1c34
-		ascii "ÔYPE 'Ó' ÔO ÓAVE, ÏR 'È' ÆOR È"		; 1c35:0c37	tbl-1c56
-		ascii "ELP."								; 1c53:0c55
+		ascii "tYPE 's' tO sAVE, oR 'h' fOR h"
+													; 1c35:0c37	tbl-1c56
+		ascii "ELP."
+													; 1c53:0c55
 		byte $0d,$00		; 1c57:0c59	tbl-1c58
 
 sub_1c59:
 		stx linnum		; 1c59:0c5b	86 14
-		jsr sub_getline		; 1c5b:0c5d	20 2e 1d
+		jsr sub_getline	; 1c5b:0c5d	20 2e 1d
 		jmp goto1c66		; 1c5e:0c60	4c 66 1c
 
 sub_1c61:
@@ -1879,10 +1945,12 @@ fwd_1cba:
 		stx linnum+1		; 1cc4:0cc6	86 15
 		jmp goto1cd0		; 1cc6:0cc8	4c d0 1c
 
-fwd_1cc9:	lda linnum+1	; 1cc9:0ccb	a5 15
+fwd_1cc9:
+		lda linnum+1		; 1cc9:0ccb	a5 15
 		jsr sub_1cfe		; 1ccb:0ccd	20 fe 1c
 		sta linnum+1		; 1cce:0cd0	85 15
-goto1cd0:	ldx linnum+1	; 1cd0:0cd2	a6 15
+goto1cd0:
+		ldx linnum+1		; 1cd0:0cd2	a6 15
 		cpx linnum			; 1cd2:0cd4	e4 14
 		bcc fwd_1ceb		; 1cd4:0cd6	90 15
 		ldx $03f8			; 1cd6:0cd8	ae f8 03
@@ -1964,6 +2032,7 @@ sub_1d3e:
 fwd_1d50:
 		rts 				; 1d50:0d52	60
 
+; called from sub_getline:
 goto1d51:
 		lda llen			; 1d51:0d53	ad 04 d0
 		pha 				; 1d54:0d56	48
@@ -2003,7 +2072,7 @@ sub_outColon:
 
 ; output space:
 sub_outSpace:
-		lda #$20			; 1d86:0d88	a9 20
+		lda #space			; 1d86:0d88	a9 20
 		jmp sub_outChar		; 1d88:0d8a	4c 97 1d
 
 resetmci:
@@ -2014,8 +2083,8 @@ resetmci:
 
 ; output {pound}q0
 sMCIreset:
-		byte pound
-		ascii "Q0"			; 1d94:0d96	tbl-1d96
+		ascii "{pound}Q0"
+							; 1d94:0d96	tbl-1d96
 
 	; output character in .a
 sub_outChar:
@@ -2105,7 +2174,8 @@ sub_1df5:
 sBuildDate:
 		ascii "09/21/89 01"
 		byte colon
-		ascii "26A"		; 1dfc:0dfe	tbl-1e0a
+		ascii "26a"
+							; 1dfc:0dfe	tbl-1e0a
 
 		; $ff fill bytes
 

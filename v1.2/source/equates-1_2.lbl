@@ -4,8 +4,6 @@
 
 ; from image bbs programmer's reference guide
 
-; {uses:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v1.2\source\equates-1_2.lbl}
-
 ; zero-page:
 d6510    = $00
 r6510    = $01
@@ -249,24 +247,24 @@ buffer	= $ce77
 ; BBS flags
 local	= $d000 ; 53248 Flag for local mode (1=on: if enabled,
 				; nothing is output to modem with usage of &)
-case	= $d001
-editor	= $d002
-tsr		= $d003
+case	= $d001 ; uppercase lock flag (only for non-TurboREL systems): 1=all uppercase
+editor	= $d002 ; flags for &,1
+tsr		= $d003 ; time remaining for caller
 llen	= $d004 ; 53252 Number of characters allowed for input.
 				; Line length for &,1 and £Ix MCI command. 
-flag	= $d005
-chat	= $d006
-inchat	= $d007
-chatpage= $d008
-access	= $d009
-mxor	= $d00a
-mkolor	= $d00b
+flag	= $d005 ; found from Image 2.0 source
+chat	= $d006 ; flag for returning from and for an abort
+inchat	= $d007 ; Presumably a flag set when you're in chat mode (found from Image 2.0 source)
+chatpage= $d008 ; Turns on flashing page
+access	= $d009 ; shadow for ac%
+mxor	= $d00a ; Modem carrier invert XOR value: either 0 or 16, depending on modem type
+mkolor	= $d00b ; MCI Kolorific mode flag
 mupcase = $d00c
 irqcount= $d00d
 trans	= $d00e
 index	= $d00f
 
-; user time remaining
+; Time of Day Clock (TOD) registers
 ten		= $dc08
 scs		= $dc09
 min		= $dc0a
@@ -291,8 +289,15 @@ loadf	= $ffd5
 savef	= $ffd8
 getin	= $ffe4
 
-; printable equates
+; printable equates:
+return	= 13 ; $0d
+space	= 32 ; $20
+quote	= 34 ; $22
+comma	= 44 ; $2c
 period	= 46 ; $2e
 colon	= 58 ; $3a
 pound	= 92 ; $5c
+
+ImageReturn = $8b ; f6
+
 {endasm}
