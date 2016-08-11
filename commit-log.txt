@@ -88,3 +88,9 @@ changed 8 spaces to a tab
 fixed all mod_* labels, changed label names which were offsets from start of file to their absolute addresses
 changed 'var' variable to fac1
 added RS232 routine names
+found MCI variable table, documented it
+
+30/Jul/2016 20:58
+casm 4.0 beta3 released, fixes using labels with pseudo-ops
+no {alpha:} directive, so inverted 'ascii' text works for now
+careful of comments after 'ascii' pseudo-ops, they are assembled too (bug)

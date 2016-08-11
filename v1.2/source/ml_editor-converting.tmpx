@@ -300,55 +300,55 @@ dottext:
 		word szExit			; .x $122e	; 11a5:01a7
 		word szMove			; .y $124d
 		word szCopy			; .z $1248
-		word szIndentOrphan ; .<Tab>  $1258
+		word szHelp			; .<Tab>  $11d9
 		word szScale		; .# $1252
-		word szIndentOrphan ; .<Tab>  $1258	; 11b1:01b3
+		word szIndentOrphan	; .<Tab>  $1258	; 11b1:01b3
 
 szAbort:
-  		byte $c1
+  		byte $c1		; 11bb:01bd	tbl-11c0
   		ascii "BORT"
-		byte $00		; 11bb:01bd	tbl-11c0
+		byte $00
 
 szBorder:
-		byte $c2
+		byte $c2		; 11c1:01c3	tbl-11c7
 		ascii "ORDER"
-		byte $00		; 11c1:01c3	tbl-11c7
+		byte $00
 
 szDelete:
-		byte $c4
+		byte $c4		; 11c8:01ca	tbl-11ce
 		ascii "ELETE"
-		byte $00		; 11c8:01ca	tbl-11ce
+		byte $00
 
 szEdit:
-		byte $c5
+		byte $c5		; 11cf:01d1	tbl-11d3
 		ascii "DIT"
-		byte $00		; 11cf:01d1	tbl-11d3
+		byte $00
 
 szFind:
-		byte $c6
+		byte $c6		; 11d4:01d6	tbl-11d8
 		ascii "IND"
-		byte $00		; 11d4:01d6	tbl-11d8
+		byte $00
 
 szHelp:
-		byte $c8
+		byte $c8		; 11d9:01db	tbl-11de
 		ascii "ELP!"
-		byte $00		; 11d9:01db	tbl-11de
+		byte $00
 
 szInsert:
-		byte $c9
+		byte $c9		; 11df:01e1	tbl-11e5
 		ascii "NSERT"
-		byte $00		; 11df:01e1	tbl-11e5
+		byte $00
 
 szJustify:
 		byte $ca
 		ascii "USTIFY ("
-		byte $c3,$2c,$c5,$2c,$c9,$2c,$cc,$2c,$d1,$2c,$d3,$2c,$d6
+		byte $c3,$2c,$c5,$2c,$c9,$2c,$cc,$2c,$d0,$2c,$d2,$2c,$d5
 						; "C,E,I,L,P,R,U"
 		ascii ")"
 		byte $00		; 11e6:01e8	tbl-11fd
 
 szReplace:
-		byte $d3
+		byte $d2
 		ascii "EPLACE"
 		byte $00		; 11fe:0200	tbl-1205
 
@@ -358,26 +358,26 @@ szList:
 		byte $00		; 1206:0208	tbl-120a
 
 szMCIread:
-		byte $cd,$c3,$c9,$20,$d3 ; "MCI R"
+		byte $cd,$c3,$c9,$20,$d2 ; "MCI R"
 		ascii "EAD"
 		byte $00		; 120b:020d	tbl-1213
 
 szClearText:
 		byte $c3
 		ascii "LEAR "
-		byte $d5
+		byte $d4
 		ascii "EXT"
 		byte $00		; 1214:0216	tbl-121e
 
 szRead:
-		byte $d3
+		byte $d2
 		ascii "EAD"
 		byte $00		; 121f:0221	tbl-1223
 
 szSaveText:
-		byte $d4
+		byte $d3
 		ascii "AVE "
-		byte $d5
+		byte $d4
 		ascii "EXT"
 		byte $00		; 1224:0226	tbl-122d
 
@@ -410,7 +410,7 @@ szMove:
 
 szScale:
 ; TODO: add 80 column scale output
-		byte $d4
+		byte $d5
 		ascii "CALE"
 		byte $00		; 1252:0254	tbl-1257
 
@@ -422,7 +422,7 @@ szIndentOrphan:
 		byte $00		; 1258:025a	tbl-125e
 
 szVersion:
-		byte $d7
+		byte $d6
 		ascii "ERSION"
 		byte $00		; 125f:0261	tbl-1266
 
@@ -543,23 +543,24 @@ fwd_131a:
 fwd_1324:
 		jmp goto1cf2		; 1324:0326	4c f2 1c
 
-szLine:
+szLine:						; 1327:0329
 		ascii "("
 		byte $cc
 		ascii "INE"
-							; 1327:0329	tbl-1327
-		byte $00			; 1328:032a	tbl-132c
+		byte $00
 
 t_132d:
 		ascii " "
-		byte $cc
+		byte $cc			; 132d:032f
 		ascii "O "
-		byte $00			; 132d:032f	tbl-1331
+		byte $00
 
 szDeleted:
-		ascii " dELETED.)"
-							; 1332:0334	tbl-133b
-		byte $0d,$00		; 133c:033e	tbl-133d
+		ascii " "
+		byte $c4			; 1332:0334
+		ascii "ELETED.)"
+
+		byte $0d,$00		; 133c:033e
 
 		; .Edit line (or range of lines)
 pEdit:
@@ -622,7 +623,7 @@ pFindAndReplace:
 		ldx #<szSearchPhrase2	; 13a7:03a9	a2 fd
 		ldy #>szSearchPhrase2	; 13a9:03ab	a0 13
 		jsr sub_outzString		; 13ab:03ad	20 d2 1d
-		jsr sub_getline		; 13ae:03b0	20 2e 1d
+		jsr sub_getline			; 13ae:03b0	20 2e 1d
 		ldy index				; 13b1:03b3	ac 0f d0
 		beq fwd_13f9			; 13b4:03b6	f0 43
 		ldy #$00				; 13b6:03b8	a0 00
@@ -741,32 +742,39 @@ fwd_1478:
 		jmp goto1cf2		; 1478:047a	4c f2 1c
 
 szCenter:
-		ascii "cENTER"
+		byte $c3
+		ascii "ENTER"
 							; 147b:047d	tbl-1481
 		byte $00
 
 szExpand:
-		ascii "eXPAND"
+		byte $c5
+		ascii "XPAND"
 		byte $00			; 1482:0484	tbl-1488
 
 szPacked:
-		ascii "pACKED"
+		byte $d1
+		ascii "ACKED"
 		byte $00			; 1489:048b	tbl-148f
 
 szLeft:
-		ascii "lEFT"
+		byte $c0
+		ascii "EFT"
 		byte $00			; 1490:0492	tbl-1494
 
 szRight:
-		ascii "rIGHT"
+		byte $d3
+		ascii "IGHT"
 		byte $00			; 1495:0497	tbl-149a
 
 szIndent:
-		ascii "iNDENT"
+		byte $c9
+		ascii "NDENT"
 		byte $00			; 149b:049d	tbl-14a1
 
 szUnindent:
-		ascii "uN-iNDENT"
+		byte $d6
+		ascii "N-iNDENT"
 		byte $00			; 14a2:04a4	tbl-14ab
 
 t_14ac:
@@ -941,7 +949,10 @@ fwd_15a4:
 		jmp sub_outCR		; 15b3:05b5	4c 77 1d
 
 szSetTo:
-		ascii "sET tO"
+		byte $d4
+		ascii "ET "
+		byte $d5
+		ascii "O"
 		byte colon
 		ascii " "
 		byte $00			; 15b6:05b8	tbl-15be
@@ -1061,26 +1072,31 @@ t_scale2:
 		ascii "0123456789"		; 1691:0693
 
 t_169b:
-		byte $8b		; 169b:069d	tbl-169b
+		byte ImageReturn		; 169b:069d	tbl-169b
 
 		; .Version of editor (string: 36 bytes)
 pVersion:
-		lda #$24			; 169c:069e	a9 24
-		ldx #<szEditorVersion		; 169e:06a0	a2 a5
-		ldy #>szEditorVersion		; 16a0:06a2	a0 16
-		jmp mcioff			; 16a2:06a4	4c ac 1d
+		lda #$24				; 169c:069e	a9 24
+		ldx #<szEditorVersion	; 169e:06a0	a2 a5
+		ldy #>szEditorVersion	; 16a0:06a2	a0 16
+		jmp mcioff				; 16a2:06a4	4c ac 1d
 
 szEditorVersion:
-		byte $8b		; 16a5:06a7	tbl-16a5
+		byte ImageReturn		; 16a5:06a7	tbl-16a5
 
 		; build date repeated, use text at very end instead?
-		;
-		ascii "iMAGE 1.2 eDITOR "
-						; 16a6:06a8	tbl-16c7
+
+		byte $c9
+		ascii MAGE 1.2 "
+		byte $c5
+		ascii "DITOR "
+								; 16a6:06a8	tbl-16c7
 		ascii "(09/21/89 01"
 		byte colon
-		ascii "26a)"	; 16b7:06b9
-		byte $8b		; 16c8:06ca	tbl-16c8
+		ascii "26"
+		byte $c1
+		ascii ")"				; 16b7:06b9
+		byte ImageReturn		; 16c8:06ca	tbl-16c8
 
 sub_16c9:
 		sty arisgn		; 16c9:06cb	84 6f
@@ -1165,32 +1181,33 @@ sub_1755:
 		jmp $ffff			; 1755:0757	4c ff ff
 
 szDone:
-		ascii "dONE."
+		byte $c4
+		ascii "ONE."
 		byte $00			; 1758:075a	tbl-175d
 
-pJustifyLeft:		; $175e
-		lda index		; 175e:0760	ad 0f d0
-		beq JustifyLeftRTS		; 1761:0763	f0 0f
-		lda buffer		; 1763:0765	ad 77 ce
-		cmp #space		; 1766:0768	c9 20
-		bne JustifyLeftRTS		; 1768:076a	d0 08
-		ldy #$00		; 176a:076c	a0 00
-		jsr sub_16c9	; 176c:076e	20 c9 16
+pJustifyLeft:				; $175e
+		lda index			; 175e:0760	ad 0f d0
+		beq JustifyLeftRTS	; 1761:0763	f0 0f
+		lda buffer			; 1763:0765	ad 77 ce
+		cmp #space			; 1766:0768	c9 20
+		bne JustifyLeftRTS	; 1768:076a	d0 08
+		ldy #$00			; 176a:076c	a0 00
+		jsr sub_16c9		; 176c:076e	20 c9 16
 		jmp pJustifyLeft	; 176f:0771	4c 5e 17
 
 JustifyLeftRTS:
-		rts 		; 1772:0774	60
+		rts 				; 1772:0774	60
 
-pJustifyRight:		; $1773
+pJustifyRight:				; $1773
 		lda index			; 1773:0775	ad 0f d0
-		cmp llen		; 1776:0778	cd 04 d0
-		bcs JustifyRightRTS		; 1779:077b	b0 08
-		ldy #$00		; 177b:077d	a0 00
+		cmp llen			; 1776:0778	cd 04 d0
+		bcs JustifyRightRTS	; 1779:077b	b0 08
+		ldy #$00			; 177b:077d	a0 00
 		jsr sub_16e7		; 177d:077f	20 e7 16
-		jmp pJustifyRight		; 1780:0782	4c 73 17
+		jmp pJustifyRight	; 1780:0782	4c 73 17
 
 JustifyRightRTS:
-		rts 		; 1783:0785	60
+		rts 				; 1783:0785	60
 
 	; justification routines
 pJustifyCenter:
@@ -1227,90 +1244,90 @@ b_17a7:
 		lda buffer,y		; 17b6:07b8	b9 77 ce
 		cmp #space			; 17b9:07bb	c9 20
 		bne fwd_17c1		; 17bb:07bd	d0 04
-		dey 		; 17bd:07bf	88
+		dey 				; 17bd:07bf	88
 		jsr sub_16c9		; 17be:07c0	20 c9 16
 fwd_17c1:
-		cpy index		; 17c1:07c3	cc 0f d0
-		bcc b_17a7		; 17c4:07c6	90 e1
+		cpy index			; 17c1:07c3	cc 0f d0
+		bcc b_17a7			; 17c4:07c6	90 e1
 fwd_17c6:
-		ldy index		; 17c6:07c8	ac 0f d0
-		beq JustifyPackedRTS		; 17c9:07cb	f0 0d
-		dey 		; 17cb:07cd	88
-		beq JustifyPackedRTS		; 17cc:07ce	f0 0a
+		ldy index			; 17c6:07c8	ac 0f d0
+		beq JustifyPackedRTS; 17c9:07cb	f0 0d
+		dey 				; 17cb:07cd	88
+		beq JustifyPackedRTS; 17cc:07ce	f0 0a
 		lda buffer,y		; 17ce:07d0	b9 77 ce
-		cmp #space		; 17d1:07d3	c9 20
-		bne JustifyPackedRTS		; 17d3:07d5	d0 03
-		sty index		; 17d5:07d7	8c 0f d0
+		cmp #space			; 17d1:07d3	c9 20
+		bne JustifyPackedRTS; 17d3:07d5	d0 03
+		sty index			; 17d5:07d7	8c 0f d0
 JustifyPackedRTS:
-		rts 		; 17d8:07da	60
+		rts 				; 17d8:07da	60
 
 pJustifyExpand:
-		jsr pJustifyPacked		; 17d9:07db	20 9d 17
+		jsr pJustifyPacked	; 17d9:07db	20 9d 17
 b_17dc:
-		ldx #$00		; 17dc:07de	a2 00
-		lda index		; 17de:07e0	ad 0f d0
-		cmp llen		; 17e1:07e3	cd 04 d0
-		bcs JustifyExpandRTS		; 17e4:07e6	b0 33
-		ldy #$00		; 17e6:07e8	a0 00
+		ldx #$00			; 17dc:07de	a2 00
+		lda index			; 17de:07e0	ad 0f d0
+		cmp llen			; 17e1:07e3	cd 04 d0
+		bcs JustifyExpandRTS; 17e4:07e6	b0 33
+		ldy #$00			; 17e6:07e8	a0 00
 b_17e8:
 		lda buffer,y		; 17e8:07ea	b9 77 ce
-		cmp #space		; 17eb:07ed	c9 20
+		cmp #space			; 17eb:07ed	c9 20
 		bne fwd_180a		; 17ed:07ef	d0 1b
 		jsr sub_16e7		; 17ef:07f1	20 e7 16
-		inx 		; 17f2:07f4	e8
-		lda index		; 17f3:07f5	ad 0f d0
-		cmp llen		; 17f6:07f8	cd 04 d0
-		bcs JustifyExpandRTS		; 17f9:07fb	b0 1e
+		inx 				; 17f2:07f4	e8
+		lda index			; 17f3:07f5	ad 0f d0
+		cmp llen			; 17f6:07f8	cd 04 d0
+		bcs JustifyExpandRTS; 17f9:07fb	b0 1e
 b_17fb:
 		lda buffer,y		; 17fb:07fd	b9 77 ce
-		cmp #space		; 17fe:0800	c9 20
+		cmp #space			; 17fe:0800	c9 20
 		bne fwd_180a		; 1800:0802	d0 08
-		iny 		; 1802:0804	c8
-		cpy index		; 1803:0805	cc 0f d0
-		bcc b_17fb		; 1806:0808	90 f3
-		bcs b_17dc		; 1808:080a	b0 d2
+		iny 				; 1802:0804	c8
+		cpy index			; 1803:0805	cc 0f d0
+		bcc b_17fb			; 1806:0808	90 f3
+		bcs b_17dc			; 1808:080a	b0 d2
 fwd_180a:
-		iny 			; 180a:080c	c8
-		cpy index		; 180b:080d	cc 0f d0
-		bcc b_17e8		; 180e:0810	90 d8
-		cpx #$00		; 1810:0812	e0 00
-		beq JustifyExpandRTS		; 1812:0814	f0 05
-		cpy index		; 1814:0816	cc 0f d0
-		bcs b_17dc		; 1817:0819	b0 c3
+		iny 				; 180a:080c	c8
+		cpy index			; 180b:080d	cc 0f d0
+		bcc b_17e8			; 180e:0810	90 d8
+		cpx #$00			; 1810:0812	e0 00
+		beq JustifyExpandRTS; 1812:0814	f0 05
+		cpy index			; 1814:0816	cc 0f d0
+		bcs b_17dc			; 1817:0819	b0 c3
 JustifyExpandRTS:
-		rts 			; 1819:081b	60
+		rts 				; 1819:081b	60
 
 pJustifyIndent:
-		ldy #$00		; 181a:081c	a0 00
+		ldy #$00			; 181a:081c	a0 00
 		jmp sub_16e7		; 181c:081e	4c e7 16
 
-pJustifyUnindent:	; $181f
-		ldy #$00		; 181f:0821	a0 00
+pJustifyUnindent:			; $181f
+		ldy #$00			; 181f:0821	a0 00
 		jmp sub_16c9		; 1821:0823	4c c9 16
 
 		; called by .Border
 		; this looks like it does the actual border function
 		; not called from anywhere else as far as i see
 sub_DoBorder:
-		ldy index		; 1824:0826	ac 0f d0
-		iny 			; 1827:0829	c8
-		cpy llen		; 1828:082a	cc 04 d0
+		ldy index			; 1824:0826	ac 0f d0
+		iny 				; 1827:0829	c8
+		cpy llen			; 1828:082a	cc 04 d0
 		bcs fwd_1850		; 182b:082d	b0 23
-		ldy #$00		; 182d:082f	a0 00
-		jsr sub_16e7	; 182f:0831	20 e7 16
+		ldy #$00			; 182d:082f	a0 00
+		jsr sub_16e7		; 182f:0831	20 e7 16
 		lda brdrchar		; 1832:0834	ad dc 12
-		sta buffer		; 1835:0837	8d 77 ce
-		ldy index		; 1838:083a	ac 0f d0
-		lda #space		; 183b:083d	a9 20
+		sta buffer			; 1835:0837	8d 77 ce
+		ldy index			; 1838:083a	ac 0f d0
+		lda #space			; 183b:083d	a9 20
 bkwd_183d:
-		sta buffer,y	; 183d:083f	99 77 ce
-		iny 			; 1840:0842	c8
-		cpy llen		; 1841:0843	cc 04 d0
+		sta buffer,y		; 183d:083f	99 77 ce
+		iny 				; 1840:0842	c8
+		cpy llen			; 1841:0843	cc 04 d0
 		bcc bkwd_183d		; 1844:0846	90 f7
-		sty index		; 1846:0848	8c 0f d0
-		dey 			; 1849:084b	88
+		sty index			; 1846:0848	8c 0f d0
+		dey 				; 1849:084b	88
 		lda brdrchar		; 184a:084c	ad dc 12
-		sta buffer,y	; 184d:084f	99 77 ce
+		sta buffer,y		; 184d:084f	99 77 ce
 fwd_1850:
 		rts 			; 1850:0852	60
 
@@ -1341,9 +1358,10 @@ sub_186c:
 fwd_187d:
 		lda #$81		; 187d:087f	a9 81
 		sta var			; 187f:0881	85 61
-; FIXME: why the repeated lda / sta here? seems wasteful
 		lda #$00		; 1881:0883	a9 00
 		sta var+1		; 1883:0885	85 62
+; FIXME: why the repeated lda / sta here?
+; seems wasteful - could save 6 bytes
 		lda #$00		; 1885:0887	a9 00
 		sta var+2		; 1887:0889	85 63
 		lda #$00		; 1889:088b	a9 00
@@ -1525,50 +1543,50 @@ fwd_19cf:
 
 sub_19d0:
 		stx arisgn		; 19d0:09d2	86 6f
-		inx 		; 19d2:09d4	e8
-		jsr sub_1b8d		; 19d3:09d5	20 8d 1b
+		inx 			; 19d2:09d4	e8
+		jsr sub_1b8d	; 19d3:09d5	20 8d 1b
 		ldx arisgn		; 19d6:09d8	a6 6f
-		jsr sub_1b92		; 19d8:09da	20 92 1b
+		jsr sub_1b92	; 19d8:09da	20 92 1b
 		inc arisgn		; 19db:09dd	e6 6f
 		ldx arisgn		; 19dd:09df	a6 6f
 		cpx $03f8		; 19df:09e1	ec f8 03
-		bcc sub_19d0		; 19e2:09e4	90 ec
+		bcc sub_19d0	; 19e2:09e4	90 ec
 		dec $03f8		; 19e4:09e6	ce f8 03
 		dec $03fb		; 19e7:09e9	ce fb 03
-		rts 		; 19ea:09ec	60
+		rts 			; 19ea:09ec	60
 
 goto19eb:
 		stx arisgn		; 19eb:09ed	86 6f
 		cpx $03f8		; 19ed:09ef	ec f8 03
-		bcs fwd_1a0d		; 19f0:09f2	b0 1b
+		bcs fwd_1a0d	; 19f0:09f2	b0 1b
 		ldx $03f8		; 19f2:09f4	ae f8 03
 		cpx EditorLines	; 19f5:09f7	ec fe 03
-		bcs fwd_1a27		; 19f8:09fa	b0 2d
-		dex 		; 19fa:09fc	ca
+		bcs fwd_1a27	; 19f8:09fa	b0 2d
+		dex 			; 19fa:09fc	ca
 b_19fb:
-		stx numwork+8		; 19fb:09fd	86 5f
-		jsr sub_1b8d		; 19fd:09ff	20 8d 1b
-		ldx numwork+8		; 1a00:0a02	a6 5f
-		inx 		; 1a02:0a04	e8
-		jsr sub_1b92		; 1a03:0a05	20 92 1b
-		ldx numwork+8		; 1a06:0a08	a6 5f
-		dex 		; 1a08:0a0a	ca
+		stx numwork+8	; 19fb:09fd	86 5f
+		jsr sub_1b8d	; 19fd:09ff	20 8d 1b
+		ldx numwork+8	; 1a00:0a02	a6 5f
+		inx 			; 1a02:0a04	e8
+		jsr sub_1b92	; 1a03:0a05	20 92 1b
+		ldx numwork+8	; 1a06:0a08	a6 5f
+		dex 			; 1a08:0a0a	ca
 		cpx arisgn		; 1a09:0a0b	e4 6f
 		bcs b_19fb		; 1a0b:0a0d	b0 ee
 fwd_1a0d:
 		ldx arisgn		; 1a0d:0a0f	a6 6f
-		jsr sub_1b9c		; 1a0f:0a11	20 9c 1b
+		jsr sub_1b9c	; 1a0f:0a11	20 9c 1b
 		ldx $03f8		; 1a12:0a14	ae f8 03
 		cpx EditorLines	; 1a15:0a17	ec fe 03
-		bcs fwd_1a27		; 1a18:0a1a	b0 0d
+		bcs fwd_1a27	; 1a18:0a1a	b0 0d
 		ldx $03fb		; 1a1a:0a1c	ae fb 03
 		cpx arisgn		; 1a1d:0a1f	e4 6f
-		bcc fwd_1a24		; 1a1f:0a21	90 03
+		bcc fwd_1a24	; 1a1f:0a21	90 03
 		inc $03fb		; 1a21:0a23	ee fb 03
 fwd_1a24:
 		inc $03f8		; 1a24:0a26	ee f8 03
 fwd_1a27:
-		rts 		; 1a27:0a29	60
+		rts 			; 1a27:0a29	60
 
 sub_1a28:
 		stx $03f7			; 1a28:0a2a	8e f7 03
@@ -2015,7 +2033,7 @@ sub_getline:
 		jsr sub_outSpace	; 1d2e:0d30	20 86 1d
 		lda $03ff			; 1d31:0d33	ad ff 03
 		and #$08			; 1d34:0d36	29 08
-		ora #$45			; 1d36:0d38	09 45
+		ora #{%:01000101}	; 1d36:0d38	09 45
 		tax 				; 1d38:0d3a	aa
 		ldy #$81			; 1d39:0d3b	a0 81
 		jmp goto1d51		; 1d3b:0d3d	4c 51 1d
