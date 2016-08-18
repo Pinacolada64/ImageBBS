@@ -151,7 +151,7 @@ len_Command:
 		byte $08		; 10be:00c0	tbl-10be
 
 sCommand:
-		.byte $c3		; "C"
+		byte upper+3	; "C"
 		.ascii "OMMAND"
 			; 10bf:00c1	tbl-10c6
 		byte colon
@@ -305,135 +305,136 @@ dottext:
 		word szIndentOrphan	; .<Tab>  $1258	; 11b1:01b3
 
 szAbort:
-  		byte $c1		; 11bb:01bd	tbl-11c0
+  		byte upper+$01		; 11bb:01bd	tbl-11c0
   		ascii "BORT"
 		byte $00
 
 szBorder:
-		byte $c2		; 11c1:01c3	tbl-11c7
+		byte upper+$02		; 11c1:01c3	tbl-11c7
 		ascii "ORDER"
 		byte $00
 
 szDelete:
-		byte $c4		; 11c8:01ca	tbl-11ce
+		byte upper+$04		; 11c8:01ca	tbl-11ce
 		ascii "ELETE"
 		byte $00
 
 szEdit:
-		byte $c5		; 11cf:01d1	tbl-11d3
+		byte upper+$05		; 11cf:01d1	tbl-11d3
 		ascii "DIT"
 		byte $00
 
 szFind:
-		byte $c6		; 11d4:01d6	tbl-11d8
+		byte upper+$06		; 11d4:01d6	tbl-11d8
 		ascii "IND"
 		byte $00
 
 szHelp:
-		byte $c8		; 11d9:01db	tbl-11de
+		byte upper+$08		; 11d9:01db	tbl-11de
 		ascii "ELP!"
 		byte $00
 
 szInsert:
-		byte $c9		; 11df:01e1	tbl-11e5
+		byte upper+$09		; 11df:01e1	tbl-11e5
 		ascii "NSERT"
 		byte $00
 
 szJustify:
-		byte $ca
+		byte upper+$0a
 		ascii "USTIFY ("
-		byte $c3,$2c,$c5,$2c,$c9,$2c,$cc,$2c,$d0,$2c,$d2,$2c,$d5
+		byte upper+$03,$2c,upper+$05,$2c,upper+$09,$2c,upper+$0c,$2c
+		byte upper+$10,$2c,upper+$12,$2c,upper+$15
 						; "C,E,I,L,P,R,U"
 		ascii ")"
 		byte $00		; 11e6:01e8	tbl-11fd
 
 szReplace:
-		byte $d2
+		byte upper+$12
 		ascii "EPLACE"
 		byte $00		; 11fe:0200	tbl-1205
 
 szList:
-		byte $cc
+		byte upper+$0c
 		ascii "IST"
 		byte $00		; 1206:0208	tbl-120a
 
 szMCIread:
-		byte $cd,$c3,$c9,$20,$d2 ; "MCI R"
+		byte upper+$0d,upper+$03,upper+$09,space,upper+$12 ; "MCI R"
 		ascii "EAD"
 		byte $00		; 120b:020d	tbl-1213
 
 szClearText:
-		byte $c3
+		byte upper+$03
 		ascii "LEAR "
-		byte $d4
+		byte upper+$14
 		ascii "EXT"
 		byte $00		; 1214:0216	tbl-121e
 
 szRead:
-		byte $d2
+		byte upper+$12
 		ascii "EAD"
 		byte $00		; 121f:0221	tbl-1223
 
 szSaveText:
-		byte $d3
+		byte upper+$13
 		ascii "AVE "
-		byte $d4
+		byte upper+$14
 		ascii "EXT"
 		byte $00		; 1224:0226	tbl-122d
 
 szExit:
-		byte $c5
+		byte upper+$05	; 122e:0230	tbl-1232
 		ascii "XIT"
-		byte $00		; 122e:0230	tbl-1232
+		byte $00
 
 szLineNumbers:
-		byte $cc
+		byte upper+$0c	; 1233:0235	tbl-123f
 		ascii "INE "
-		byte $ce
+		byte upper+$0e
 		ascii "UMBERS"
-		byte $00		; 1233:0235	tbl-123f
+		byte $00
 
 szColumns:
-		byte $c3
+		byte upper+$03	; 1240:0242	tbl-1247
 		ascii "OLUMNS"
-		byte $00		; 1240:0242	tbl-1247
+		byte $00
 
 szCopy:
-		byte $c3
+		byte upper+$03	; 1248:024a	tbl-124c
 		ascii "OPY"
-		byte $00		; 1248:024a	tbl-124c
+		byte $00
 
 szMove:
-		byte $cd
+		byte upper+$0d	; 124d:024f	tbl-1251
 		ascii "OVE"
-		byte $00		; 124d:024f	tbl-1251
+		byte $00
 
 szScale:
 ; TODO: add 80 column scale output
-		byte $d5
+		byte upper+$13	; 1252:0254	tbl-1257
 		ascii "CALE"
-		byte $00		; 1252:0254	tbl-1257
+		byte $00
 
 ; FIXME: this is in the command table, but Ctrl-I/Tab doesn't seem
 ; to call this routine...
 szIndentOrphan:
-		byte $c9
+		byte upper+$09	; 1258:025a	tbl-125e
 		ascii "NDENT"
-		byte $00		; 1258:025a	tbl-125e
+		byte $00
 
 szVersion:
-		byte $d6
+		byte upper+$16	; 125f:0261	tbl-1266
 		ascii "ERSION"
-		byte $00		; 125f:0261	tbl-1266
+		byte $00
 
-		; .Abort - TODO: want confirmation!
+	; .Abort - TODO: want confirmation!
 pAbort:
 		jsr sub_ReturnKey	; 1267:0269	20 a7 1a
 		lda #$00			; 126a:026c	a9 00
 		ldx #$00			; 126c:026e	a2 00
 		jmp editrts			; 126e:0270	4c 09 10
 
-		; .Border (ask for single character)
+	; .Border (ask for single character)
 pBorder:
 		ldx #$01			; 1271:0273	a2 01
 		ldy $03f8			; 1273:0275	ac f8 03
@@ -491,7 +492,7 @@ fwd_12cd:
 
 szCharacter:
 		byte ImageReturn; 12d0:02d2	tbl-12d0
-		byte $c3
+		byte upper+$03
 		ascii "HARACTER"
 		byte colon
 		byte $00		; 12d1:02d3	tbl-12db
@@ -529,8 +530,8 @@ fwd_1300:
 		lda linnum			; 1308:030a	a5 14
 		cmp linnum+1		; 130a:030c	c5 15
 		beq fwd_131a		; 130c:030e	f0 0c
-		ldx #<szLine		; 130e:0310	a2 2d
-		ldy #>szLine		; 1310:0312	a0 13
+		ldx #<szTo			; 130e:0310	a2 2d
+		ldy #>szTo			; 1310:0312	a0 13
 		jsr sub_outzString	; 1312:0314	20 d2 1d
 		lda linnum+1		; 1315:0317	a5 15
 		jsr sub_outApercent	; 1317:0319	20 ba 1b
@@ -545,22 +546,22 @@ fwd_1324:
 
 szLine:						; 1327:0329
 		ascii "("
-		byte $cc
+		byte upper+$0c
 		ascii "INE"
 		byte $00
 
-t_132d:
+szTo:
 		ascii " "
-		byte $cc			; 132d:032f
+		byte upper+$14		; 132d:032f
 		ascii "O "
 		byte $00
 
 szDeleted:
 		ascii " "
-		byte $c4			; 1332:0334
+		byte upper+$04		; 1332:0334
 		ascii "ELETED.)"
 
-		byte $0d,$00		; 133c:033e
+		byte ImageReturn,$00; 133c:033e
 
 		; .Edit line (or range of lines)
 pEdit:
@@ -608,8 +609,11 @@ fwd_138a:
 		jmp goto1cf2		; 138a:038c	4c f2 1c
 
 szSearchPhrase:
-		ascii "sEARCH pHRASE"
 							; 138d:038f	tbl-139b
+		byte upper+$13 ; s
+		ascii "EARCH "
+		byte upper+$10 ; p
+		ascii "HRASE"
 		byte colon
 		byte $00
 
@@ -666,13 +670,19 @@ fwd_13fa:
 		; That string could be reused to save space.
 		; This occupies 15 bytes.
 szSearchPhrase2:
-		ascii "sEARCH pHRASE"
 							; 13fd:03ff	tbl-140b
+		byte upper+$13 ; s
+		ascii "EARCH "
+		byte upper+$10 ; p
+		ascii "HRASE"
 		byte colon
-		byte $00		
+		byte $00
 
 szReplaceWith:
-		ascii "rEPLACE wITH "
+		byte upper+$12 ; r
+		ascii "EPLACE "
+		byte upper+$17 ; w
+		ascii "ITH "
 		byte colon
 		byte $00		; 140c:040e	tbl-141a
 
@@ -742,40 +752,41 @@ fwd_1478:
 		jmp goto1cf2		; 1478:047a	4c f2 1c
 
 szCenter:
-		byte $c3
+		byte upper+$03		; 147b:047d	tbl-1481
 		ascii "ENTER"
-							; 147b:047d	tbl-1481
 		byte $00
 
 szExpand:
-		byte $c5
+		byte upper+$05		; 1482:0484	tbl-1488
 		ascii "XPAND"
-		byte $00			; 1482:0484	tbl-1488
+		byte $00
 
 szPacked:
-		byte $d1
+		byte upper+$10		; 1489:048b	tbl-148f
 		ascii "ACKED"
-		byte $00			; 1489:048b	tbl-148f
+		byte $00
 
 szLeft:
-		byte $c0
+		byte upper+$0c		; 1490:0492	tbl-1494
 		ascii "EFT"
-		byte $00			; 1490:0492	tbl-1494
+		byte $00
 
 szRight:
-		byte $d3
+		byte upper+$12		; 1495:0497	tbl-149a
 		ascii "IGHT"
-		byte $00			; 1495:0497	tbl-149a
+		byte $00
 
 szIndent:
-		byte $c9
+		byte upper+$09		; 149b:049d	tbl-14a1
 		ascii "NDENT"
-		byte $00			; 149b:049d	tbl-14a1
+		byte $00
 
 szUnindent:
-		byte $d6
-		ascii "N-iNDENT"
-		byte $00			; 14a2:04a4	tbl-14ab
+		byte upper+$15		; 14a2:04a4	tbl-14ab
+		ascii "N"
+		byte $2d,upper+$09	; "-I"
+		ascii "NDENT"
+		byte $00
 
 t_14ac:
 		byte $00			; 14ac:04ae	tbl-14ac
@@ -949,9 +960,9 @@ fwd_15a4:
 		jmp sub_outCR		; 15b3:05b5	4c 77 1d
 
 szSetTo:
-		byte $d4
+		byte upper+$13		; "S"
 		ascii "ET "
-		byte $d5
+		byte upper+$14		; "T"
 		ascii "O"
 		byte colon
 		ascii " "
@@ -1082,21 +1093,21 @@ pVersion:
 		jmp mcioff				; 16a2:06a4	4c ac 1d
 
 szEditorVersion:
-		byte ImageReturn		; 16a5:06a7	tbl-16a5
+		byte ImageReturn		; 16a5:06a7
 
-		; build date repeated, use text at very end instead?
+		; todo: build date repeated, use sBuildDate instead?
 
-		byte $c9
-		ascii MAGE 1.2 "
-		byte $c5
+		byte upper+$09
+		ascii "MAGE 1.2 "
+		byte upper+$05
 		ascii "DITOR "
-								; 16a6:06a8	tbl-16c7
-		ascii "(09/21/89 01"
+								; 16a6:06a8
+		ascii "(08/17/06 03"
 		byte colon
-		ascii "26"
-		byte $c1
+		ascii "50"
+		byte upper+$10
 		ascii ")"				; 16b7:06b9
-		byte ImageReturn		; 16c8:06ca	tbl-16c8
+		byte ImageReturn		; 16c8:06ca
 
 sub_16c9:
 		sty arisgn		; 16c9:06cb	84 6f
@@ -1850,23 +1861,21 @@ sub_outApercent:
 		sta mci		; 1bd3:0bd5	8d ef 07
 		rts 		; 1bd6:0bd8	60
 
-	; output a%
 sA_percent:
-		byte pound		; 1bd7:0bd9	tbl-1bd7
-		ascii "%A"
-						; 1bd8:0bda	25 41
+	; output a%				; 1bd7:0bd9 5c 25 41
+		ascii "{pound}%A"
 
 sub_1bda:
-		lda $03f8		; 1bda:0bdc	ad f8 03
-		cmp EditorLines	; 1bdd:0bdf	cd fe 03
+		lda $03f8			; 1bda:0bdc	ad f8 03
+		cmp EditorLines		; 1bdd:0bdf	cd fe 03
 		bcc fwd_1bf6		; 1be0:0be2	90 14
 		beq fwd_1bf6		; 1be2:0be4	f0 12
-		sta $03fb		; 1be4:0be6	8d fb 03
-		lda LineNumberMode		; 1be7:0be9	ad fa 03
-		and #$04		; 1bea:0bec	29 04
-		sta LineNumberMode		; 1bec:0bee	8d fa 03
-		ldx #<szNoRAM	; 1bef:0bf1	a2 21
-		ldy #>szNoRAM	; 1bf1:0bf3	a0 1c
+		sta $03fb			; 1be4:0be6	8d fb 03
+		lda LineNumberMode	; 1be7:0be9	ad fa 03
+		and #$04			; 1bea:0bec	29 04
+		sta LineNumberMode	; 1bec:0bee	8d fa 03
+		ldx #<szNoRAM		; 1bef:0bf1	a2 21
+		ldy #>szNoRAM		; 1bf1:0bf3	a0 1c
 		jsr sub_outzString	; 1bf3:0bf5	20 d2 1d
 fwd_1bf6:
 		lda LineNumberMode	; 1bf6:0bf8	ad fa 03
@@ -1891,62 +1900,82 @@ fwd_1c15:
 		rts 			; 1c20:0c22	60
 
 szNoRAM:
-		ascii "** eND oF mEMORY **"
-										; 1c21:0c23	tbl-1c33
-		byte $0d						; 1c34:0c36	tbl-1c34
-		ascii "tYPE 's' tO sAVE, oR 'h' fOR h"
-													; 1c35:0c37	tbl-1c56
+		ascii "** "
+		byte upper+5	; E
+		ascii "ND "
+		byte upper+15	; O
+		ascii "F " 
+		byte upper+13	; M
+		ascii "EMORY **"
+												; 1c21:0c23	tbl-1c33
+		byte ImageReturn						; 1c34:0c36	tbl-1c34
+		byte upper+20	; T
+		ascii "YPE '"
+		byte upper+19	; S
+		ascii "' "
+		byte upper+20	; T
+		ascii "O "
+		byte upper+19	; S
+		ascii "AVE, "
+		byte upper+15	; O
+		ascii "R '"
+		byte upper+8	; H
+		ascii "' "
+		byte upper+6	; F
+		ascii "OR "
+		byte upper+8	; H
+												; 1c35:0c37	tbl-1c56
 		ascii "ELP."
-													; 1c53:0c55
-		byte $0d,$00		; 1c57:0c59	tbl-1c58
+												; 1c53:0c55
+		byte ImageReturn,$00					; 1c57:0c59	tbl-1c58
 
 sub_1c59:
 		stx linnum		; 1c59:0c5b	86 14
 		jsr sub_getline	; 1c5b:0c5d	20 2e 1d
-		jmp goto1c66		; 1c5e:0c60	4c 66 1c
+		jmp goto1c66	; 1c5e:0c60	4c 66 1c
 
 sub_1c61:
 		stx linnum		; 1c61:0c63	86 14
-		jsr sub_1d3e		; 1c63:0c65	20 3e 1d
+		jsr sub_1d3e	; 1c63:0c65	20 3e 1d
 goto1c66:
 		ldy index		; 1c66:0c68	ac 0f d0
-		beq fwd_1c74		; 1c69:0c6b	f0 09
+		beq fwd_1c74	; 1c69:0c6b	f0 09
 		ldy #$00		; 1c6b:0c6d	a0 00
 		lda linnum		; 1c6d:0c6f	a5 14
-		jsr sub_1cfe		; 1c6f:0c71	20 fe 1c
+		jsr sub_1cfe	; 1c6f:0c71	20 fe 1c
 		sta linnum		; 1c72:0c74	85 14
 fwd_1c74:
-		rts 		; 1c74:0c76	60
+		rts 			; 1c74:0c76	60
 
 sub_1c75:
-		stx linnum			; 1c75:0c77	86 14
-		stx linnum+1		; 1c77:0c79	86 15
-		jsr sub_1d3e		; 1c79:0c7b	20 3e 1d
-		ldy index			; 1c7c:0c7e	ac 0f d0
-		beq fwd_1c8c		; 1c7f:0c81	f0 0b
-		ldy #$00			; 1c81:0c83	a0 00
-		lda linnum			; 1c83:0c85	a5 14
-		jsr sub_1cfe		; 1c85:0c87	20 fe 1c
-		sta linnum			; 1c88:0c8a	85 14
-		sta linnum+1		; 1c8a:0c8c	85 15
+		stx linnum		; 1c75:0c77	86 14
+		stx linnum+1	; 1c77:0c79	86 15
+		jsr sub_1d3e	; 1c79:0c7b	20 3e 1d
+		ldy index		; 1c7c:0c7e	ac 0f d0
+		beq fwd_1c8c	; 1c7f:0c81	f0 0b
+		ldy #$00		; 1c81:0c83	a0 00
+		lda linnum		; 1c83:0c85	a5 14
+		jsr sub_1cfe	; 1c85:0c87	20 fe 1c
+		sta linnum		; 1c88:0c8a	85 14
+		sta linnum+1	; 1c8a:0c8c	85 15
 fwd_1c8c:
-		jmp goto1cd0		; 1c8c:0c8e	4c d0 1c
+		jmp goto1cd0	; 1c8c:0c8e	4c d0 1c
 
 sub_1c8f:
-		stx linnum			; 1c8f:0c91	86 14
-		sty linnum+1		; 1c91:0c93	84 15
-		jsr sub_1d3e		; 1c93:0c95	20 3e 1d
-		ldy index			; 1c96:0c98	ac 0f d0
-		beq fwd_1cb0		; 1c99:0c9b	f0 15
-		ldy #$00			; 1c9b:0c9d	a0 00
-		lda linnum			; 1c9d:0c9f	a5 14
-		jsr sub_1cfe		; 1c9f:0ca1	20 fe 1c
-		sta linnum			; 1ca2:0ca4	85 14
-		cpy index			; 1ca4:0ca6	cc 0f d0
-		bcc fwd_1cba		; 1ca7:0ca9	90 11
-		lda linnum			; 1ca9:0cab	a5 14
-		sta linnum+1		; 1cab:0cad	85 15
-		jmp goto1cd0		; 1cad:0caf	4c d0 1c
+		stx linnum		; 1c8f:0c91	86 14
+		sty linnum+1	; 1c91:0c93	84 15
+		jsr sub_1d3e	; 1c93:0c95	20 3e 1d
+		ldy index		; 1c96:0c98	ac 0f d0
+		beq fwd_1cb0	; 1c99:0c9b	f0 15
+		ldy #$00		; 1c9b:0c9d	a0 00
+		lda linnum		; 1c9d:0c9f	a5 14
+		jsr sub_1cfe	; 1c9f:0ca1	20 fe 1c
+		sta linnum		; 1ca2:0ca4	85 14
+		cpy index		; 1ca4:0ca6	cc 0f d0
+		bcc fwd_1cba	; 1ca7:0ca9	90 11
+		lda linnum		; 1ca9:0cab	a5 14
+		sta linnum+1	; 1cab:0cad	85 15
+		jmp goto1cd0	; 1cad:0caf	4c d0 1c
 
 fwd_1cb0:
 		lda arisgn			; 1cb0:0cb2	a5 6f
@@ -2112,7 +2141,7 @@ sub_outChar:
 		pla 			; 1d9d:0d9f	68
 		rts 			; 1d9e:0da0	60
 
-; orphaned code?
+; orphaned code? 13 bytes
 		lda index		; 1d9f:0da1	ad 0f d0
 		ldx #<buffer	; 1da2:0da4	a2 77
 		ldy #>buffer	; 1da4:0da6	a0 ce
@@ -2125,7 +2154,7 @@ mcioff:
 		sta mci			; 1daf:0db1	8d ef 07
 		jmp goto1dbb	; 1db2:0db4	4c bb 1d
 
-; FIXME: orphaned code?
+; FIXME: orphaned code? 6 bytes
 		pha 			; 1db5:0db7	48
 		lda #$01		; 1db6:0db8	a9 01
 		sta mci			; 1db8:0dba	8d ef 07
@@ -2190,10 +2219,11 @@ sub_1df5:
 	; Move .Version text (szEditorVersion) here to save some space
 
 sBuildDate:
-		ascii "09/21/89 01"
+	; 15 bytes				; 1dfc:0dfe	tbl-1e0a
+		ascii "08/17/06 03"
 		byte colon
-		ascii "26a"
-							; 1dfc:0dfe	tbl-1e0a
+		ascii "50"
+		byte upper+$10	; "P"
 
 		; $ff fill bytes
 
@@ -2258,8 +2288,8 @@ filler2:
 		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fd7:0fd9
 		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fe1:0fe3
 		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1feb:0fed
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea		; 1ff5:0ff7
-
+		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ff5:0ff7
+		byte $ea
 		nop 		; 1000:1000:6	ea
 		nop 		; 1001:1001:6	ea
 {endasm}

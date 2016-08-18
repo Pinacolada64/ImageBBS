@@ -299,5 +299,5 @@ colon	= 58 ; $3a
 pound	= 92 ; $5c
 
 ImageReturn = $8b ; f6
-
+upper	= $60 ; normally $c0 ; +1 = A ... +26 = z
 {endasm}
