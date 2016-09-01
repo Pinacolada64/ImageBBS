@@ -168,12 +168,12 @@ goto10c7:
 		ldx #$00		; 10da:00dc	a2 00
 		beq fwd_1114	; 10dc:00de	f0 36
 fwd_10de:
-		jsr sub_1bab	; 10de:00e0	20 ab 1b
+		jsr sub_GetChar	; 10de:00e0	20 ab 1b
 		and #$7f		; 10e1:00e3	29 7f
 		tax 			; 10e3:00e5	aa
 		lda chk_left	; 10e4:00e6	ad f4 07
 		and #$04		; 10e7:00e9	29 04
-		bne fwd_10f5		; 10e9:00eb	d0 0a
+		bne fwd_10f5	; 10e9:00eb	d0 0a
 	; check caller's modem carrier status:
 		lda carrst		; 10eb:00ed	ad f1 07
 		and #$7f		; 10ee:00f0	29 7f
@@ -342,8 +342,8 @@ szInsert:
 szJustify:
 		byte upper+$0a
 		ascii "USTIFY ("
-		byte upper+$03,$2c,upper+$05,$2c,upper+$09,$2c,upper+$0c,$2c
-		byte upper+$10,$2c,upper+$12,$2c,upper+$15
+		byte upper+$03,comma,upper+$05,comma,upper+$09,comma,upper+$0c,comma
+		byte upper+$10,comma,upper+$12,comma,upper+$15
 						; "C,E,I,L,P,R,U"
 		ascii ")"
 		byte $00		; 11e6:01e8	tbl-11fd
@@ -410,7 +410,6 @@ szMove:
 		byte $00
 
 szScale:
-; TODO: add 80 column scale output
 		byte upper+$13	; 1252:0254	tbl-1257
 		ascii "CALE"
 		byte $00
@@ -458,8 +457,8 @@ pBorder:
 	; output prompt - calls usetbl1
 		jsr sub_outzString	; 1294:0296	20 d2 1d
     ; another variable
-	; sub_1bab -> usetbl1
-		jsr sub_1bab		; 1297:0299	20 ab 1b
+	; sub_GetChar -> usetbl1
+		jsr sub_GetChar		; 1297:0299	20 ab 1b
 		sta brdrchar		; 129a:029c	8d dc 12
 		jsr sub_outChar		; 129d:029f	20 97 1d
 	; sub_outCR -> sub_1bb0 (use another routine)
@@ -624,8 +623,8 @@ pFindAndReplace:
 		dey 					; 13a1:03a3	88
 		beq fwd_13fa			; 13a2:03a4	f0 56
 		jsr sub_1c8f			; 13a4:03a6	20 8f 1c
-		ldx #<szSearchPhrase2	; 13a7:03a9	a2 fd
-		ldy #>szSearchPhrase2	; 13a9:03ab	a0 13
+		ldx #<szSearchPhrase	; 13a7:03a9	a2 fd
+		ldy #>szSearchPhrase	; 13a9:03ab	a0 13
 		jsr sub_outzString		; 13ab:03ad	20 d2 1d
 		jsr sub_getline			; 13ae:03b0	20 2e 1d
 		ldy index				; 13b1:03b3	ac 0f d0
@@ -666,18 +665,8 @@ fwd_13f9:
 fwd_13fa:
 		jmp goto1cf2		; 13fa:03fc	4c f2 1c
 
-		; FIXME: This is repeated @ $138d.
-		; That string could be reused to save space.
-		; This occupies 15 bytes.
-szSearchPhrase2:
-							; 13fd:03ff	tbl-140b
-		byte upper+$13 ; s
-		ascii "EARCH "
-		byte upper+$10 ; p
-		ascii "HRASE"
-		byte colon
-		byte $00
-
+		.area 14,$00		; *** free space ***
+		
 szReplaceWith:
 		byte upper+$12 ; r
 		ascii "EPLACE "
@@ -715,7 +704,7 @@ pJustify:
 		ldx $03f8			; 143d:043f	ae f8 03
 		dex 				; 1440:0442	ca
 		beq fwd_1478		; 1441:0443	f0 35
-		jsr sub_1bab		; 1443:0445	20 ab 1b
+		jsr sub_GetChar		; 1443:0445	20 ab 1b
 		and #$7f			; 1446:0448	29 7f
 		ldx #$ff			; 1448:044a	a2 ff
 		cmp #$43			; 144a:044c	c9 43
@@ -849,12 +838,22 @@ pMCIread:
 		sta $03f3		; 1505:0507	8d f3 03
 		jmp goto151f	; 1508:050a	4c 1f 15
 
-		; .New (TODO: want confirmation!)
+		; .Clear Text (TODO: want confirmation!)
 pNewText:
-		jsr sub_ReturnKey	; 150b:050d	20 a7 1a
-		ldx stackptr		; 150e:0510	ae 47 11
-		txs 				; 1511:0513	9a
-		jmp clearbuf		; 1512:0514	4c 31 10
+	; 10 bytes:
+	; get # of lines in editor:
+		lda #$ffff
+		jmp NewTextPatch
+		nop
+		nop
+		nop
+		nop		
+		
+	; 10 bytes:
+;		jsr sub_ReturnKey	; 150b:050d	20 a7 1a
+;		ldx stackptr		; 150e:0510	ae 47 11
+;		txs 				; 1511:0513	9a
+;		jmp clearbuf		; 1512:0514	4c 31 10
 
 		; .Read message (defaults to all lines)
 		; can also specify line range (1, 1-, 1-2, -2)
@@ -925,13 +924,14 @@ fwd_1583:
 
 szOn:
 		ascii " "
-		byte $cf
+		byte upper+$0f ; "o"
 		ascii "N."
 							; 1584:0586	tbl-158b
-		byte $0d,$00		; 1588:058a	tbl-1589
+		byte ImageReturn
+		byte $00		; 1588:058a	tbl-1589
 
 		ascii " "
-		byte $cf
+		byte upper+$0f ; "o"
 		ascii "FF."
 							; 158a:058c	tbl-158e
 		byte $0d,$00		; 158f:0591	tbl-1590
@@ -1005,50 +1005,54 @@ fwd_15fa:
 		jmp goto1cf2		; 1600:0602	4c f2 1c
 
 szCopyTo:
-		byte $c3
-		ascii "OPY tO"
+		byte upper+$03		; "C"
+		ascii "OPY "
+		byte upper+$14		; "T"
+		ascii "O"
 		byte colon
 		byte $00			; 1603:0605	tbl-160b
 
 pMove:
-		ldx #$01		; 160c:060e	a2 01
-		ldy $03f8		; 160e:0610	ac f8 03
-		dey 		; 1611:0613	88
+		ldx #$01			; 160c:060e	a2 01
+		ldy $03f8			; 160e:0610	ac f8 03
+		dey 				; 1611:0613	88
 		beq fwd_1647		; 1612:0614	f0 33
 		jsr sub_1c8f		; 1614:0616	20 8f 1c
 		ldx #<sMoveTo		; 1617:0619	a2 50
 		ldy #>sMoveTo		; 1619:061b	a0 16
-		jsr sub_outzString		; 161b:061d	20 d2 1d
-		lda linnum		; 161e:0620	a5 14
-		pha 		; 1620:0622	48
-		ldx $03f8		; 1621:0623	ae f8 03
+		jsr sub_outzString	; 161b:061d	20 d2 1d
+		lda linnum			; 161e:0620	a5 14
+		pha 				; 1620:0622	48
+		ldx $03f8			; 1621:0623	ae f8 03
 		jsr sub_1c59		; 1624:0626	20 59 1c
-		lda linnum		; 1627:0629	a5 14
+		lda linnum			; 1627:0629	a5 14
 		beq fwd_1647		; 1629:062b	f0 1c
-		cmp $03f8		; 162b:062d	cd f8 03
+		cmp $03f8			; 162b:062d	cd f8 03
 		beq fwd_1632		; 162e:0630	f0 02
 		bcs fwd_1647		; 1630:0632	b0 15
 fwd_1632:
-		sta $03fb		; 1632:0634	8d fb 03
-		pla 		; 1635:0637	68
-		sta linnum		; 1636:0638	85 14
-		ldx $03fb		; 1638:063a	ae fb 03
-		cpx linnum		; 163b:063d	e4 14
+		sta $03fb			; 1632:0634	8d fb 03
+		pla 				; 1635:0637	68
+		sta linnum			; 1636:0638	85 14
+		ldx $03fb			; 1638:063a	ae fb 03
+		cpx linnum			; 163b:063d	e4 14
 		bcc fwd_1644		; 163d:063f	90 05
-		dex 		; 163f:0641	ca
+		dex			 		; 163f:0641	ca
 		cpx linnum+1		; 1640:0642	e4 15
-		bcc fwd_1647			; 1642:0644	90 03
+		bcc fwd_1647		; 1642:0644	90 03
 fwd_1644:
-		jmp goto1ae1			; 1644:0646	4c e1 1a
+		jmp goto1ae1		; 1644:0646	4c e1 1a
 
 fwd_1647:
 		lda $03f8			; 1647:0649	ad f8 03
 		sta $03fb			; 164a:064c	8d fb 03
-		jmp goto1cf2			; 164d:064f	4c f2 1c
+		jmp goto1cf2		; 164d:064f	4c f2 1c
 
 sMoveTo:
-	 	byte $cd
-	 	ascii "OVE tO"
+	 	byte upper+$0d	; "M"
+	 	ascii "OVE "
+	 	byte upper+$14	; "T"
+	 	ascii "O"
 		byte colon
 		byte $00			; 1650:0652	tbl-1658
 
@@ -1064,18 +1068,20 @@ pScale:
 		;	"          1         2         3"
 		;	"01234567890123456789012345678900123456789"
 l_scale:
-		byte $8b		; 1662:0664	tbl-1662
+		byte ImageReturn	; 1662:0664	tbl-1662
 
-t_scale1:
 	 	ascii "{pound}{back arrow}101"
 	 	ascii "{pound}{back arrow}202"
 	 	ascii "{pound}{back arrow}303"		; 1663:0665	tbl-1671
 
 t_1672:
-		byte $8b		; 1672:0674	tbl-1672
+		byte ImageReturn		; 1672:0674	tbl-1672
 
+		; FIXME:
 		; Somehow I want this to be shortened with a subroutine
-		; seems to be a waste of space
+		; seems to be a waste of space (40 bytes, could be 10
+		; with 3-6 JSRs once .Scale string is dependant on 40/80
+		; columns)
 t_scale2:
 	 	ascii "0123456789"		; 1673:0675	tbl-169a
 		ascii "0123456789"		; 167d:067f
@@ -1112,33 +1118,33 @@ szEditorVersion:
 sub_16c9:
 		sty arisgn		; 16c9:06cb	84 6f
 		cpy index		; 16cb:06cd	cc 0f d0
-		beq fwd_16dc		; 16ce:06d0	f0 0c
+		beq fwd_16dc	; 16ce:06d0	f0 0c
 b_16d0:
-		lda buffer+1,y		; 16d0:06d2	b9 78 ce
-		sta buffer,y		; 16d3:06d5	99 77 ce
-		iny 		; 16d6:06d8	c8
+		lda buffer+1,y	; 16d0:06d2	b9 78 ce
+		sta buffer,y	; 16d3:06d5	99 77 ce
+		iny 			; 16d6:06d8	c8
 		cpy index		; 16d7:06d9	cc 0f d0
 		bcc b_16d0		; 16da:06dc	90 f4
 fwd_16dc:
 		ldy index		; 16dc:06de	ac 0f d0
-		beq fwd_16e4		; 16df:06e1	f0 03
+		beq fwd_16e4	; 16df:06e1	f0 03
 		dec index		; 16e1:06e3	ce 0f d0
 fwd_16e4:
 		ldy arisgn		; 16e4:06e6	a4 6f
-		rts 		; 16e6:06e8	60
+		rts 			; 16e6:06e8	60
 
 sub_16e7:
 		sty arisgn		; 16e7:06e9	84 6f
 		ldy index		; 16e9:06eb	ac 0f d0
-		beq fwd_1702		; 16ec:06ee	f0 14
+		beq fwd_1702	; 16ec:06ee	f0 14
 		cpy arisgn		; 16ee:06f0	c4 6f
-		bcc fwd_1702		; 16f0:06f2	90 10
+		bcc fwd_1702	; 16f0:06f2	90 10
 		cpy llen		; 16f2:06f4	cc 04 d0
-		bcs fwd_1705		; 16f5:06f7	b0 0e
+		bcs fwd_1705	; 16f5:06f7	b0 0e
 b_16f7:
-		lda buffer,y		; 16f7:06f9	b9 77 ce
-		sta buffer+1,y		; 16fa:06fc	99 78 ce
-		dey 		; 16fd:06ff	88
+		lda buffer,y	; 16f7:06f9	b9 77 ce
+		sta buffer+1,y	; 16fa:06fc	99 78 ce
+		dey 			; 16fd:06ff	88
 		cpy arisgn		; 16fe:0700	c4 6f
 		bpl b_16f7		; 1700:0702	10 f5
 fwd_1702:
@@ -1146,36 +1152,36 @@ fwd_1702:
 fwd_1705:
 		ldy arisgn		; 1705:0707	a4 6f
 		lda #space		; 1707:0709	a9 20
-		sta buffer,y		; 1709:070b	99 77 ce
-		rts 		; 170c:070e	60
+		sta buffer,y	; 1709:070b	99 77 ce
+		rts 			; 170c:070e	60
 
 goto170d:
-		sta sub_1755+1		; 170d:070f	8d 56 17
-		stx sub_1755+2		; 1710:0712	8e 57 17
-		lda dscpnt+2		; 1713:0715	a5 52
-		clc 		; 1715:0717	18
+		sta sub_1755+1	; 170d:070f	8d 56 17
+		stx sub_1755+2	; 1710:0712	8e 57 17
+		lda dscpnt+2	; 1713:0715	a5 52
+		clc 			; 1715:0717	18
 		adc #$08		; 1716:0718	69 08
-		sta dscpnt+2		; 1718:071a	85 52
+		sta dscpnt+2	; 1718:071a	85 52
 		ldx #$01		; 171a:071c	a2 01
 		ldy $03f8		; 171c:071e	ac f8 03
-		dey 		; 171f:0721	88
-		jsr sub_1c8f		; 1720:0722	20 8f 1c
+		dey 			; 171f:0721	88
+		jsr sub_1c8f	; 1720:0722	20 8f 1c
 sub_1723:
 		ldx linnum		; 1723:0725	a6 14
-		dex 		; 1725:0727	ca
-		cpx linnum+1		; 1726:0728	e4 15
-		bcs out_szDone		; 1728:072a	b0 24
-		inx 		; 172a:072c	e8
-		jsr sub_1b97		; 172b:072d	20 97 1b
+		dex 			; 1725:0727	ca
+		cpx linnum+1	; 1726:0728	e4 15
+		bcs out_szDone	; 1728:072a	b0 24
+		inx 			; 172a:072c	e8
+		jsr sub_1b97	; 172b:072d	20 97 1b
 		ldx index		; 172e:0730	ae 0f d0
-		beq fwd_1744		; 1731:0733	f0 11
-		dex 		; 1733:0735	ca
+		beq fwd_1744	; 1731:0733	f0 11
+		dex 			; 1733:0735	ca
 		cpx llen		; 1734:0736	ec 04 d0
-		bcs fwd_1744		; 1737:0739	b0 0b
+		bcs fwd_1744	; 1737:0739	b0 0b
 		lda index		; 1739:073b	ad 0f d0
-		jsr sub_1755		; 173c:073e	20 55 17
+		jsr sub_1755	; 173c:073e	20 55 17
 		ldx linnum		; 173f:0741	a6 14
-		jsr sub_1b9c		; 1741:0743	20 9c 1b
+		jsr sub_1b9c	; 1741:0743	20 9c 1b
 fwd_1744:
 		ldx linnum			; 1744:0746	a6 14
 		cpx linnum+1		; 1746:0748	e4 15
@@ -1526,9 +1532,17 @@ fwd_198d:
 		jmp goto190b		; 1994:0996	4c 0b 19
 
 szTooBig:
-		ascii "tOO bIG. cAN'T rEPLACE."
+		byte upper+$14	; "t"
+		ascii "OO "
+		byte upper+$02	; "b"
+		ascii "IG. "
+		byte upper+$03	; "c"
+		ascii "AN'T "
+		byte upper+12	; "r"
+		ascii "EPLACE."
 							; 1997:0999	tbl-19ad
-		byte $0d,$00		; 19ae:09b0	tbl-19af
+		byte ImageReturn
+		byte $00			; 19ae:09b0	tbl-19af
 
 goto19b0:
 		ldx linnum+1		; 19b0:09b2	a6 15
@@ -1648,9 +1662,13 @@ fwd_1a7c:
 len_NoChange:
 		byte $0d			; 1a86:0a88	tbl-1a86
 sNoChange:
-		ascii "(nO cHANGE.)"
+		ascii "("
+		byte upper+$0e	; n
+		ascii "O "
+		byte upper+$03	; c
+		ascii "HANGE.)"
 							; 1a87:0a89	tbl-1a92
-		byte $0d			; 1a93:0a95	tbl-1a93
+		byte ImageReturn	; 1a93:0a95
 
 	; another duplicate message (sort of)
 
@@ -1658,18 +1676,20 @@ len_CmdExit:
 		byte $0d			; 1a94:0a96	tbl-1a94
 
 sCmdExit:
-		ascii "cOMMAND"
+		ascii upper+$03	; c
+		ascii "OMMAND"
 							; 1a95:0a97	tbl-1aa0
 		byte colon
-		ascii "eXIT"
-		byte $0d		; 1aa1:0aa3	tbl-1aa1
+		byte upper+$05 ; e
+		ascii "XIT"
+		byte ImageReturn	; 1aa1:0aa3	tbl-1aa1
 
 ; orphaned code?
 		ldx #$0b		; 1aa2:0aa4	a2 0b
 		jmp sub_OutXdels; 1aa4:0aa6	4c 8d 10
 
 sub_ReturnKey:
-		jsr sub_1bab	; 1aa7:0aa9	20 ab 1b
+		jsr sub_GetChar		; 1aa7:0aa9	20 ab 1b
 		cmp #return		; 1aaa:0aac	c9 0d
 		beq fwd_1ab1	; 1aac:0aae	f0 03
 		jmp goto1cf2	; 1aae:0ab0	4c f2 1c
@@ -1831,7 +1851,7 @@ sub_1ba6:
 
 	; seems to be part of a "get character" routine
 	; main irq routine #$17 - wait for .x seconds?
-sub_1bab:
+sub_GetChar:
 		lda #$17		; 1bab:0bad	a9 17
 		jmp usetbl1		; 1bad:0baf	4c 03 cd
 
@@ -2225,71 +2245,88 @@ sBuildDate:
 		ascii "50"
 		byte upper+$10	; "P"
 
-		; $ff fill bytes
+NewTextPatch:
+	; has output "Clear Text[KK]Are You Sure [y/N]? "
+	;	lda #period		; to show space was printed
+	;	jsr sub_outChar
+	;	jsr sub_outCR
+	; for now...
+		jsr sub_AreYouSure
+		bcs DoNewText
+		rts
 
-filler1:
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e0b:0e0d	tbl-1eff
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e15:0e17
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e1f:0e21
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e29:0e2b
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e33:0e35
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e3d:0e3f
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e47:0e49
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e51:0e53
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e5b:0e5d
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e65:0e67
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e6f:0e71
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e79:0e7b
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e83:0e85
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e8d:0e8f
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1e97:0e99
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ea1:0ea3
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1eab:0ead
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1eb5:0eb7
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ebf:0ec1
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ec9:0ecb
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ed3:0ed5
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1edd:0edf
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ee7:0ee9
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ef1:0ef3
-		byte $ea,$ea,$ea,$ea,$ea						; 1efb:0efd
+DoNewText:
+	; todo: get character, compare to "y"/"n",
+	; print "Yes"/"No"
+			
+	; moved from old NewText routine:
+	; this is when the buffer gets nuked
+	;	jsr sub_ReturnKey	; 150b:050d	20 a7 1a
+		ldx stackptr		; 150e:0510	ae 47 11
+		txs 				; 1511:0513	9a
+		jmp clearbuf		; 1512:0514	4c 31 10
 
-	; must be a patch
+sub_AreYouSure:
+		ldx #<szAreYouSure
+		ldy #>szAreYouSure
+		jsr sub_outzString
+	; get character:
+		jsr sub_GetChar		; 1297:0299	20 ab 1b
+	;	sta brdrchar		; 129a:029c	8d dc 12
+	; returns with char typed in a:
+	; assume anything but Y is "no":
+		cmp upper+$19	; y
+		bne SayNo
 
+SayNo:
+		ldx #<szNo
+		ldy #>szNo
+		jsr sub_outzString
+	; clear carry for "no":
+		clc
+		rts
+
+SayYes:
+		ldx #<szYes
+		ldy #>szYes
+		jsr sub_outzString
+	; set carry for "yes":
+		sec
+		rts
+
+szAreYouSure:
+		byte ImageReturn,ImageReturn
+		byte upper+$01	; a
+		ascii "RE "
+		byte upper+$19	; y
+		ascii "OU "
+		byte upper+$13	; s
+		ascii "URE [y/"
+		byte upper+$0e	; n
+		ascii "]? "
+		byte $00
+
+szYes:
+		byte upper+$19	; y
+		ascii "ES."
+		byte ImageReturn
+		byte $00
+
+szNo:
+		byte upper+$0e	; n
+		ascii "O."
+		byte ImageReturn
+		byte $00
+
+		align $100,$ea		; fill with $ea to $1eff
+
+	; must be a patch:
+	; not sure why it needs to be on a page boundary,
+	; but I'll keep it that way.
 sub_1f00:
 		dex 		; 1f00:0f02	ca
 		stx llen	; 1f01:0f03	8e 04 d0
 		rts 		; 1f04:0f06	60
 
-	; filler: ends at $1ffd
-
-filler2:
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f05:0f07	tbl-1ffd
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f0f:0f11
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f19:0f1b
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f23:0f25
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f2d:0f2f
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f37:0f39
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f41:0f43
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f4b:0f4d
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f55:0f57
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f5f:0f61
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f69:0f6b
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f73:0f75
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f7d:0f7f
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f87:0f89
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f91:0f93
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1f9b:0f9d
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fa5:0fa7
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1faf:0fb1
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fb9:0fbb
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fc3:0fc5
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fcd:0fcf
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fd7:0fd9
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1fe1:0fe3
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1feb:0fed
-		byte $ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea,$ea	; 1ff5:0ff7
-		byte $ea
-		nop 		; 1000:1000:6	ea
-		nop 		; 1001:1001:6	ea
+		align $100,$ea		; fill with $ea to $1fff
 {endasm}
