@@ -665,7 +665,7 @@ fwd_13f9:
 fwd_13fa:
 		jmp goto1cf2		; 13fa:03fc	4c f2 1c
 
-		.area 14,$00		; *** free space ***
+		.area 15,$00		; *** free space ***
 		
 szReplaceWith:
 		byte upper+$12 ; r
@@ -840,16 +840,17 @@ pMCIread:
 
 		; .Clear Text (TODO: want confirmation!)
 pNewText:
-	; 10 bytes:
-	; get # of lines in editor:
-		lda #$ffff
+	; keep this 10 bytes:
 		jmp NewTextPatch
 		nop
 		nop
 		nop
-		nop		
+		nop
+		nop
+		nop
+		nop
 		
-	; 10 bytes:
+	; 10 bytes (moved to NewTextPatch):
 ;		jsr sub_ReturnKey	; 150b:050d	20 a7 1a
 ;		ldx stackptr		; 150e:0510	ae 47 11
 ;		txs 				; 1511:0513	9a
@@ -2246,6 +2247,14 @@ sBuildDate:
 		byte upper+$10	; "P"
 
 NewTextPatch:
+	; print "Clear Text"
+		ldx #<szClearText
+		ldy #>szClearText
+		jsr sub_outzString
+	; this should backspace immediately, RTS if no text in buffer
+		jsr sub_ReturnKey
+	; FIXME: get # of lines in editor (not sure which memory location):
+	;	lda $ffff
 	; has output "Clear Text[KK]Are You Sure [y/N]? "
 	;	lda #period		; to show space was printed
 	;	jsr sub_outChar

@@ -1,0 +1,72 @@
+{number:1}
+	goto {:100}:rem: gosub2000:goto100
+{:20}
+	input b$:on-(b$<"0"or b$>"1")goto{:20}:return
+{:100}
+	restore:read n:dim s$(n),m$(n):for i=1 to n:read s$(i),m$(i):next
+	print"{clear}{$08}{white}{$0e}{down} Image 1.2 Modem Configuration{down}"
+	for i=1 to n:print"  "right$(str$(i),2)" -- "m$(i):next
+	input"{down} Modem Type";b:if b<1 or b>n then end
+	if b=n then gosub{:700}
+{:140}
+	input"{down}Device Of Etc. Disk";dv%:if dv%<7 or dv%>32 then{:140}
+	input"{down}Drive/LU Of Etc. Disk";dr:if dr<0 or dr>9 then{:140}
+	dr$=mid$(str$(dr),2,1)+":"
+	print"{clear}{down:3}{yellow}  Please Insert Your Etc. Disk In"
+	print"  Device"dv%",Drive"dr:print"{down}{white}  Then Hit RETURN"
+	poke 198,.:wait 198,255
+	close 15:close 2:open 15,dv%,15:open 2,dv%,2,dr$+"e.data"
+	print# 15,"p{$02} "chr$(.)"{$01}":print# 15,"p{$02} "chr$(.)"{$01}":print# 2,s$(b):close 2:close 15:end
+{:700}
+	print"{clear}Customized Modem Type: ":print:print"Select Baud Rate: "
+	print"0 =  300 : 1 = 1200 : 2 = 2400"
+	print"3 = 4800 : 4 = 9600 : 5 = 19200"
+{:710}
+	input b$:a=val(b$):on-(a<0 or a>5)goto{:710}:bd$=mid$(str$(a+1),2,1)
+	print:print"0 = Escape Codes : 1 = DTR Hang Up? ":gosub{:20}:b2$="E"
+	if b$="1"then b2$="D"
+	print:print"0 = Auto Answer : 1 = Manual (ATA)":gosub{:20}:b3$="A"
+	if b$="1"then b3$="M"
+	print:print"0 = ATH : 1 = No ATH (hang up)":gosub{:20}:b4$="H"
+	if b$="1"then b4$="N"
+	print:print"0 = Local Off Hook : 1 = Not":gosub{:20}:b5$="H"
+	if b$="1"then b5$="N"
+	print:print"0 = ath0 : 1 = ath ":gosub{:20}:b6$="H"
+	if b$="1"then b6$="N"
+	print:print"0 = Hangup in Modem Reset : 1 = Not":gosub{:20}:b7$="0"
+	if b$="1"then b7$=" "
+{:840}
+	print:print"Value for ATV (1, 2, 3, 4)":input b8$:if b8$<"1"or b8$>"4"then{:840}
+	print:print"DTR: 0=Normal, 1=Reversed":gosub{:20}:b9$="N":if b$="1"then b9$="R"
+	mt$=bd$+b2$+b3$+b4$+b5$+b7$+b6$+b8$+b9$:print mt$:print:print"Correct? "
+{:880}
+	get g$:if g$=""then{:880}
+	on-(g$="n"or g$="N")goto{:700}:s$(n)=mt$:return
+	data 16
+	data"2EANN N1N","1670  (Old Model)"
+	data"2EAHH H2N","1670a (New Model)"
+	data"2EMHH0H1N","Hayes 1200 (ATA)"
+	data"2DAHH0H1N","Hayes 1200 (DTR)"
+	data"2DMHH0H1N","Hayes 1200 (ATA/DTR)"
+	data"2DMHH0H1R","Hayes 1200 (ATA/Reverse DTR)"
+	data"3DMHH0H1N","Hayes 2400 (ATA/DTR)"
+	data"3DMHH0H1R","Hayes 2400 (ATA/Reverse DTR)"
+	data"3DMHH0H4N","Supra 2400"
+	data"3EMHN0H4N","Aprotek 2400"
+	data"5DMHH0H1N","Hayes 9600 (ATA/DTR)"
+	data"5DMHH0H1R","Hayes 9600 (ATA/Reverse DTR)"
+	data"5DMHH0H4N","Supra 9600 (ATA/DTR/V4)"
+	data"6DMHH0H1N","Hayes 19.2k(ATA/DTR)"
+	data"6DMHH0H4N","Hayes 19.2k(ATA/DTR/V4)"
+	data"XXXXXXXXX","Customized"
+{number:2000}
+{:2000}
+	print"{clear}{down:2}{right:2}If you are using a 14.4k modem and"
+	print"are not sure of the result codes, then"
+	print"select the Hayes 19.2k (ATA/DTR), but "
+	print"if you are certain that an ATV4 will  "
+	print"not produce any undesired result codes"
+	print"then Hayes 19.2k(ATA/DTR/V4) is the   "
+	print"preferred choice.  Be sure to run the "
+	print"modem setup1.2a file to set up your   "
+	print"modem!  Press any Key to go on:":poke 198,0:wait 198,1:get a$:return
