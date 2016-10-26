@@ -1,0 +1,36 @@
+Shadowrun variables:
+
+Lines 61 and 12 do not exist
+
+mo   : moves
+
+o(0) : 
+o(1) : # of players in game
+o(2) : room #
+o(3) : player credits
+o(4) : pass cards found
+o(5) : player health
+o(6) : player class  1: Decker  2: Merc  3: St Mage
+o(7) : player number
+o(8) : 
+o(9) : opponent's current health
+o(10): opponent's max health
+o(11): ?
+
+a$(33): items in room:
+a$(26)="y" - called Ares helicopter
+a$(27)=" 3"- correct microchip
+'	"a"=active security droid, "n"=no
+	
+player log format:
+create: a$=na$+r$+d1$+r$+" 15"+r$+" "+an$+r$+" 0"+r$+" 0"+r$+" 10"+r$+" 25"+r$
+read  : 	input# 2,lp$,o(5),o(6),o(4),o(2),o(3):if d1$>lp$ then if ac%=9 then {:169}
+			Create:		Read into:
+handle			na$		lp$
+last play		d1$		o(5)
+player health		15		o(6)
+player class		an$		o(4)
+room #			0		o(2)
+player credits		0		o(3)
+					10
+					25

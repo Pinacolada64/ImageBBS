@@ -1,0 +1,320 @@
+	rs=.:am=1:nf=.:close 2:close 5:on f1 goto{:200},{:202},{:250}:goto{:100}
+{:2}
+	&,52,2,3:a=a%:&,52,4,3:a=a+a%:&,52,6,3:a=a+a%:return
+{:7}
+	dr=5:gosub 1009:a$=dr$+"+.modem":&,7,dv%,1
+	a=5:goto 1736
+{:9}
+	return
+	ti$="000000":return
+	&,22,x*6:return
+{:36}
+	a=-(peek(1063)=250):return
+{:64}
+	poke 2042,.:poke 53248,1:&"{clear}{f6:2}{$ce}ow {$cc}oading {$c9}{$cd}{$c1}{$c7}{$c5} {$d4}erm!{f6}":a$="t":goto 1016
+{:65}
+	gosub{:66}:poke 2033,.:return
+{:66}
+	b=1:gosub{:36}:on-(a=.)goto{:80}:a$="{yellow} {$c3}learing {$cc}ine":gosub{:270}:goto 910
+{:80}
+	gosub 901:goto 995
+{:90}
+	a$="{$ce}{$cd}auto":f1=2:goto 1016
+{:91}
+	&"{f6:2}{$d3}{$d9}{$d3}{$d4}{$c5}{$cd} {$d2}{$c5}{$d3}{$c5}{$d2}{$d6}{$c5}{$c4} {$c6}{$d2}{$cf}{$cd}{f6}3{$c1}{$cd} {$d4}{$cf} 4{$c1}{$cd} {$d4}{$d2}{$d9} {$c3}{$c1}{$cc:2}{$c9}{$ce}{$c7} {$c2}{$c1}{$c3}{$cb}.{f6}{pound}w2":goto{:250}
+{:100}
+	poke 2033,.:&"{f6}{pound}b1":&,22,5:gosub 1914:gosub 1915:a$="{green} {$c3}onnected":gosub{:270}:&,25
+	&,52,16,1:&,52,17,1:gosub{:2}:if a=.then:&,52,4,4
+	&,52,10,3:fl=-(a%=1):poke 53251,4:poke 2042,.:dr=5:a=3:gosub 1003
+	if zz then nl=1:&"{f6:2}":&,52,16,1:goto{:120}
+	q%=qb:&"{f6:2}{$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}{$c5}{$c4} {$c1}{$d4} {pound}%q {$c2}{$c1}{$d5}{$c4}.{f6}":gosub 1093:gosub 1372
+	&,52,3,3:if qb>300 or a%=.then{:110}
+	&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} 300 {$c2}{$c1}{$d5}{$c4} {$c3}{$c1}{$cc:2}{$c5}{$d2}{$d3} {$c1}{$c3:2}{$c5}{$d4}{$d0}{$c5}{$c4}":goto{:202}
+{:110}
+	poke 53251,2:&"{f6}{$d0}{$cc}{$c5}{$c1}{$d3}{$c5} {$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} {$c2}{$c1}{$c3}{$cb}{$d3}{$d0}{$c1}{$c3}{$c5} ({$c4}{$c5}{$cc}{$c5}{$d4}{$c5}){f6}{$cb}{$c5}{$d9} {$c6}{$cf}{$d2} {$c3}/{$c7} {$c4}{$c5}{$d4}{$c5}{$c3}{$d4}: {pound}b1"
+{:112}
+	&,4:a=peek(780)and 127:if a=.and peek(1063)=250 and tr%then{:112}
+	if nf then on-(a=1)goto{:90}:if rs then on-(mid$(d1$,8,2)="03")goto{:91}
+	nl=-(a=20):&,52,16,1-nl:b$="{$c1}{$d3}{$c3}{$c9:2}":if nl then b$="{$c3}ommodore {$c7}raphics":&"{pound}k7"
+	&"{f6:2}{rvrs on} {pound}$b {rvrs off}{pound}k0 {$cd}ode {$cf}n. {pound}q0{f6:2}":if tr%<1 then{:250}
+	if nl=.then gosub{:500}
+	a=.:gosub{:759}:on a goto{:202}
+	poke 53251,3-(qb=300)
+	dr=1:a$="s.login"+str$(nl)+",s,r":gosub 1011:&,12,2:close 2
+{:120}
+	pw$="":&"{f6:2}{$c8}it {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}/{$c5}{$ce}{$d4}{$c5}{$d2}: {pound}b1{pound}g1{pound}v7{f6}":if tr%<1 then{:250}
+	poke 53252,20:k=.:i%=an$="{$c9}"and zz:id=i%:on i%goto{:150}
+	if an$<>"{$c1}"then a$="s.start"+str$(nl):dr=1:gosub 1075
+{:126}
+	poke 53252,20:ac%=16:id=.
+	&"{f6}{$c5}nter{$a0}{$d9}our {$c8}andle {$cf}r{f6}{pound}v5 {$c9}{$c4} {$ce}umber.{f6:2}{pound}b1: {pound}i1":if tr%<1 then{:250}
+	dd$=an$:on-(dd$="{$d2}{$c5}{$d3}")-(dd$="{$ce}{$c5}{$d7}")*2 goto{:897},{:278}
+	if val(an$)then dd$=cc$+an$:goto{:148}
+	i=len(dd$):b$=left$(dd$,1):c$=right$(dd$,1):if left$(dd$,len(cc$))=cc$then{:148}
+	if i<5 or i>20 or b$<"{$c1}"or c$<"{$c1}"or b$>"{$da}"or c$>"{$da}"then id=.:goto{:158}
+	gosub 1046:if i then id=i:goto{:150}
+	&"{f6:2} {f5}{pound}v7{f5}{f6} {$ce}ot{$a0}{$c6}ound {$c9}n {$d5}ser {$c6}iles.{f6:2}":if fl then{:280}
+	&"{$c4}o {$d9}ou {$d7}ish {$d4}o{$a0}{$c1}pply {$c6}or{$a0}{$c1}n{f6}{$c1}ccount {$d7}ith {$d4}hat{$a0}{$c8}andle?: "
+	gosub 1902:if a then f1=1:g$=dd$:dd$="{$ce}{$c5}"+"{$d7}":goto{:897}
+{:144}
+	ac%=16:k=k+1:if k>4 then{:202}
+	on i%goto{:150}:&"{f6:2}{$c5}nter {f5}{$ce}{$c5}{$d7}{f5} {$c9}f {$d9}ou {$c8}ave {$ce}o {$cc}ogin {$c9}{$c4}.{f6}":goto{:126}
+{:148}
+	id=int(val(mid$(dd$,len(cc$)+1,4))):if id<1 or id>ur then id=.:goto{:158}
+{:150}
+	&"{f6}{$d0}lease {$c5}nter{$a0}{$d9}our{f6}{pound}v5 {$d0}assword.{f6:2}{pound}b1: ":&,6:if tr%=.then{:250}
+	z$=an$:on-(z$<>"")goto{:670}:on i%goto{:156}:id=.:goto{:156}
+{:154}
+	&"{f6:2}{$d4}hat {$c1}ccount {$c8}as {$c2}een {$c4}eleted.{f6}":goto{:144}
+{:156}
+	if pw$=z$and len(na$)>4 and i%then{:160}
+	if pw$=z$and t$=c$and z$<>""and c$<>""then{:160}
+{:158}
+	&"{f6:2}{$cc}ogin {$ce}ot {$d6}alid.":on-(id<>.and i%=.)gosub{:682}:goto{:144}
+{:160}
+	&"{up}{$cc}ogin {$c3}omplete!                        {f6:2}":if i%=.then a$="on":goto 1016
+	ac%=val(i1$):na$=mid$(i1$,2):co%=1:ll%=40:ul=1:lf=.:le=100:poke 53251,101
+	ph$=mid$(i2$,2,14):em=val(left$(i2$,1)):ld$=d1$:d5$=d1$:ct%=1:tc%=1:cr=1000
+	&,52,20,em
+	rn$=mid$(i2$,16):for i=1 to 4:poke 827+i,asc(mid$(i3$,i,1)):next:ff$="":ll$="":i=.
+{:168}
+	i=i+1:a$=mid$(rn$,i,1):if a$<>" "then ff$=ff$+a$:goto{:168}
+	ll$=mid$(rn$,i+1):ag$=mid$(i3$,5):fl$=fl$(ac%):dd$=cc$+"1":&"{f6:2}"
+	gosub 1375:dr=5:a=1:gosub 1003:gosub 1374:print"{home}{down}"spc(6)" "na$" "
+	b$="{left:4}":ch$=co$:an$=d5$:&,15:print spc(6)an$:print spc(6)rn$:d5$=lt$
+	print"{home}{down}"spc(32)dd$:print spc(31)ct%"{left}"tc%:print spc(35)ac%
+	print spc(35)ll%"{left}"b$ul;b$lf;b$nl;b$em:print"{home}{down:4}"spc(6)ph$:print spc(31)ur
+	jn$="11111111111111111111111111111"+"1"
+	for i=1 to 10:st(i)=.:next:a%=st(24):if a%=.then:&"{cyan}{$ce}o {$cd}ail.":a=.:goto{:186}
+	&"{$cd}ail {$d7}aiting: {pound}%a{f6:2}{$d2}ead {$ce}ow?: ":gosub 1902
+{:186}
+	on a+1 goto 1812:a$="{$c5}"+"{$cd}":goto 1016
+{:200}
+	gosub 1678:b$=ff$:&"{f6:2} {$c2}ye {pound}$b!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
+{:202}
+	gosub{:7}:a$="{lt. red} {$cc}ogoff":gosub{:270}:on-(ac%=16)goto{:250}:gosub{:65}
+	i=t1:gosub{:660}:if a<i then a=a+1440
+	gosub 1060:i=a-i:st(10)=i:x=10:gosub 1026:x=21:gosub 1025:x=37:gosub 1025
+	for x=1 to 11:gosub 1026:next:close 2:if i%then{:218}
+	a$="":if st(4)then a$=" {$d0}osts:"+str$(st(4))+r$
+	if st(5)then a$=a$+" {$d2}esp :"+str$(st(5))+r$
+	if st(3)then a$=a$+" {$cd}ail :"+str$(st(3))+r$
+	if st(1)then a$=a$+" {$c6}dbk :"+str$(st(1))+r$
+	l$=a$:c$=right$(d1$,4):a=val(c$):if a>8e3 then a=a-8e3
+	c$=str$(a):c$=left$(c$,len(c$)-2)+":"+right$(c$,2)+r$
+	a$=a$+" {$cf}ff------------:"+c$+left$(ak$,25):gosub 1095:on i%goto{:220}
+{:218}
+	on i%goto{:220}:x=2:gosub 1530:gosub 1070:close 2
+{:220}
+	d3$=na$
+	gosub 1063:x=1:gosub 1001:print# 2,ca+1:x=17:gosub 1001:print# 2,d3$
+	x=19:gosub 1001:print# 2,d1$:close 2:an$=d1$:&,15:d2$=an$
+{:250}
+	f1=.:&,28:&"{clear}":gosub{:7}:dr=5:a=2:gosub 1003:a=3:gosub 1003:on-(ac%=16)gosub{:65}
+	ak$=" {$c0:38}"+"{f6}":pf=.
+	lc=.:em=.:zz=.:gs=.:cf=.:cr=.:lf=1:nl=.:ul=.:le=.:pm=1:c9=.
+	gosub{:2}:if a=.then:&,52,2,4
+	i%=.:ac%=16:dc%=.:ct%=.:tc%=.:u$="":sy$="":ba$="":na$="":ph$="":id=.
+	poke 830,3:poke 832,.:poke 53248,.:&,52,16,1:&,52,17,1:&,52,18,0:&,52,19,0
+	dr=2:a$="nm.list,s,r":gosub 1011:close 2:if e%=.then nm=1
+	&,28:gosub 1093:gosub 1914:for j=217 to 242:poke j,peek(j)or 128:next:dr=3:gosub 1079
+	if pt%then print"{home}{down}{rvrs on}{white}{$d0}":print"{rvrs on}{white}{$d2}":print"{rvrs on}{white}{$c9}":print"{rvrs on}{white}{$cd}":print"{rvrs on}{white}{$c5}"
+	gosub 1374:gosub{:650}:on tf gosub{:660}
+{:262}
+	gosub{:770}:gosub{:690}:on a goto{:264},{:64},{:264},{:880},{:881},{:264}
+{:264}
+	gosub 995:c=a:a=.:lt$=d1$:on zz goto{:100}
+	a$="{yellow} {$d2}ing {$c4}etected":gosub{:270}:a$="{white} {$c1}nswered":gosub{:270}:poke 53248,.
+	gosub 950:on f2 goto{:100}:goto{:262}
+{:270}
+	z$=a$:a$="{rvrs off}               ":gosub{:272}:a$=z$
+{:272}
+	gosub{:276}:print"{rvrs on}"spc(5)a$" {white}":return
+{:274}
+	a$="{lt. red} {$d3}ystem {$c9}dle":goto{:270}
+{:276}
+	print"{home}{down:4}":return
+{:278}
+	if fl=.then{:897}
+{:280}
+	&"{f6:2}{$d3}orry, {$ce}o{$a0}{$ce}ew{$a0}{$d5}sers{$a0}{$c1}re {$c2}eing{f6}{$c1}ccepted {$c1}t {$d4}his {$d4}ime.{f6:2}":goto{:126}
+{:282}
+	x=37:gosub{:284}:g=e:h=f:x=21
+{:284}
+	e=st(x):f=st(x+1):l=e+f:if l=.then return
+	if e=.then f=100:return
+	if f=.then e=100:return
+	e=int(e/l*100+.5):f=100-e:return
+{:292}
+	poke 2042,.:poke 53248,1:&"{lt. blue}{clear}":poke 53248,.:goto{:274}
+{:500}
+	&,52,18,0:&,52,19,0:&,52,17,1:nl=0
+	&"{$c4}o you {$d7}ant {$c1}{$ce}{$d3}{$c9} {$c3}olor? ":gosub 1902:b=a:if a then:&,52,18,1
+	&"{$c4}o {$d9}ou {$d7}ant {$c9}{$c2}{$cd} {$c7}raphics? ":gosub 1902:if a then:&,52,19,1
+	if a=1 and b=1 then nl=1
+	return
+{:610}
+	gosub{:292}:poke 53248,1:a$="r":gosub 1064:on sgn(e%)goto{:618}:sh=.:a$="{clear}{f6}"
+{:612}
+	lp=1:&:on rc goto{:620}:&,2,2:b$=mid$(a$,2,1):if b$="{$c0}"then b$=a$:a$="{pound}q0{pound}$b{yellow}"
+	if b$="{$d5}"then b$=a$:a$="{white}{pound}$b{yellow}"
+	on-(st=.)goto{:612}:&:&"{f6:2}{pound}q0{$d0}ress {$c1}ny {$cb}ey: {pound}g1"
+{:618}
+	close 2:poke 53248,.:on f3 goto{:860},{:820},{:850}
+{:620}
+	&"{f6}{$c1}borted.{f6}":goto{:618}
+{:650}
+	print"{home}{down}{rvrs on}"spc(6)" "d3$" "r$spc(6)d2$r$spc(6)d6$:print"{down}"spc(31)ur:return
+{:660}
+	a$=d1$:gosub 1520:t1=a:return
+{:670}
+	gosub 1065:x=id:gosub 1001:input# 2,na$,pw$,ff$,ll$,ph$,ld$,ac%,ct%:if i%then{:156}
+	input# 2,tc%,co%,ll%,ul,lf,em,dc,uc,bd,bu,cr,ps,rp,d5$,fl$,jn$:close 2
+	&,52,17,lf:&,52,20,em:co$=co$(co%):rn$=ff$+" "+ll$:if na$="{up arrow}"or na$="{$d2}{$c5}{$d3}"then{:154}
+	&"{f6:2}{$c1}dditional {$c9}nformation:":a=int(rnd(1)*5)+1:on a goto{:675},{:676},{:677},{:678}
+	p$="{f6}{$c6}{$c9}{$d2}{$d3}{$d4} name ":t$=ff$:goto{:679}
+{:675}
+	p$="{f6}{$cc}{$c1}{$d3}{$d4} name ":t$=ll$:goto{:679}
+{:676}
+	p$="{f6}{$c1}{$d2}{$c5}{$c1} {$c3}{$cf}{$c4}{$c5} (???){$d8:3}-{$d9:4} ":t$=mid$(ph$,2,3):goto{:679}
+{:677}
+	p$="{f6}{$c4}{$c9}{$c1}{$cc}{$c9}{$ce}{$c7}{$a0}{$d0}{$d2}{$c5}{$c6}{$c9}{$d8} ({$d8:3})/???-{$d9:4} ":t$=mid$(ph$,7,3):goto{:679}
+{:678}
+	p$="{f6}{$cc}{$c1}{$d3}{$d4}{$a0}{$c6}{$cf}{$d5}{$d2}{$a0}{$c4}{$c9}{$c7}{$c9}{$d4}{$d3} ({$d8:3})/{$d9:3}-???? ":t$=right$(ph$,4)
+{:679}
+	gosub 1006:c$=an$:goto{:156}
+{:682}
+	a$="e.telecheck,s,a":dr=3:gosub 1011:if e%=.then{:684}
+	a$="e.telecheck,s,w":dr=3:gosub 1011
+{:684}
+	print# 2,na$r$id;r$d1$r$ac%r$ph$r$rn$r$co$:tt$=pw$:if id=1 then pw$="{$d0}rivate"
+	print# 2,r$"{lt. green}{$c6}ailed {$d3}ecurity {$c3}heck. ({$c1}ttempt"str$(k+1)")"r$r$"{lt. red}"ak$
+	if z$<>tt$then print# 2,"{lt. green}{$d0}assword:{yellow}"pw$" {cyan}({f5}"z$"{f5} {$d7}as {$c5}ntered)"r$
+	if c$<>t$then print# 2,p$:print# 2,"{lt. green}"t$" {cyan}({f5}"an$"{f5} {$d7}as {$c5}ntered)"r$
+	print# 2,"{lt. red}"ak$:print# 2,"{up arrow}":close 2:return
+{:690}
+	poke 53280,11:poke 53265,27:return
+{:700}
+	gosub{:292}:print"{home}{down:7}  {$c5}nter {$c3}urrent {$c4}ate/{$d4}ime:{down}"
+{:702}
+	an$=" {$c4}ay   :"+left$(d1$,1):gosub{:742}:if a<1 or a>7 then{:702}
+	gosub{:740}:poke 52935,a:print
+{:706}
+	an$=" {$cd}onth :"+mid$(d1$,4,2):gosub{:742}:if a<1 or a>12 then{:706}
+	gosub{:740}:poke 52936,a:print
+{:710}
+	an$=" {$c4}ate  :"+mid$(d1$,6,2):gosub{:742}:if a<1 or a>31 then{:710}
+	gosub{:740}:poke 52937,a:print
+{:714}
+	an$=" {$d9}ear  :"+mid$(d1$,2,2):gosub{:742}:if a<1 or a>99 then{:714}
+	gosub{:740}:poke 52938,a:print
+	b$="a":a=val(mid$(d1$,8,2)):if a>79 then a=a-80:b$="p"
+{:720}
+	an$=" {$c8}our  :"+mid$(str$(a),2):gosub{:742}:if a<1 or a>12 then{:720}
+	gosub{:740}:b=a:print
+{:724}
+	an$=" {$cd}in.  :"+mid$(str$(val(mid$(d1$,10,2))),2):gosub{:742}:if a<.or a>59 then{:724}
+	a=a-sgn(a):gosub{:740}:c=a:print
+{:728}
+	an$=" {$c1}/{$d0}   :"+b$:gosub{:742}:if an$<>"a"and an$<>"p"then{:728}
+	print:if(an$="p"and b<>18)or(an$="a"and b=18)then b=b or 128
+	input"{down}  {$cf}{$cb}";an$:if left$(an$,1)<>"y"then{:700}
+	poke 56331,b:poke 56330,c:poke 56329,89:poke 56328,.:tf=.
+	gosub{:660}:an$=d1$:&,15:d2$=an$
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:gosub{:650}:goto{:770}
+{:740}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:742}
+	z$=mid$(an$,9):print"{up}"an$:input"{up}{right:6}";an$:a=val(an$):if an$=""then an$=z$
+	return
+{:750}
+	gosub{:292}:poke 53248,1:poke 53252,10
+{:751}
+	&"{clear}{f6}{$d3}ystem {$d0}assword{f6:2}[{$c1}]ll {$c3}alls, [{$cf}]ne {$c3}all or [{$ce}]one? ":gosub 1007
+	a=-(a$="{$ce}")-(a$="{$cf}")*2-(a$="{$c1}")*3:on a+1 goto{:751}
+	l2=a-1:&mid$("{$ce}one{$cf}ne {$c1}ll",l2*4+1,4):if l2=.then a$="e.pass":dr=3:gosub 1024
+	on a goto{:758}:p$="":&"{pound}w1{clear}{f6:2}{$c5}nter {$d0}assword":gosub 1006:l2$=an$:if an$=""then{:758}
+	a$="e.pass":gosub 1023:print# 2,l2:print# 2,l2$:close 2
+{:758}
+	poke 53248,.:poke 53252,.:on f3 goto{:860},{:820},{:850}
+{:759}
+	a$="e.pass,s,r":dr=3:gosub 1011:on-(e%<>.)goto{:9}:input# 2,l2:input# 2,l2$:close 2
+{:760}
+	&"{f6}{$d3}ystem {$d2}eserved {$d4}his {$c3}all.{f6:2}{$d0}assword: ":&,6:a=a+1:if an$<>l2$and a<3 then{:760}
+	on-(an$=l2$)goto{:764}:&"{f6:2}{$d3}orry, {$d0}assword {$c9}nvalid.":a=1:return
+{:764}
+	&"{f6:2}{$d0}assword {$c1}ccepted.":l2=l2+(l2=1):a=.:if l2 then return
+	a$="e.pass":dr=3:goto 1024
+{:770}
+	gosub 914:on f3 gosub{:860},{:820},{:850}
+{:772}
+	fl=.:gosub{:690}:ti$="000000"
+{:774}
+	on tf gosub{:800}:&,52,11,3:if ti>1e3 and a%=.then fl=1:poke 53280,240:poke 53265,11
+	if ti>5e4 then gosub 901:gosub 995:goto{:772}
+{:778}
+	gosub 1915:if zz then gosub 920:a=1:return
+	sys 49152:a$="":if peek(198)then get a$
+	if a$<>""then fl=2:poke 198,.:gosub{:690}
+	if val(a$)then on val(a$)gosub{:700},{:820},{:850},{:860},1372,901,{:750},{:610}:goto{:792}
+	if a$="{back arrow}"then a=2:return
+	if a$="+"then a$="m1":gosub 980:mf=1:goto{:792}
+	if nm$<>mid$(d1$,8,2)and mid$(d1$,10,2)=>"30"then nm=1
+	if a$="-"then a$="m0":gosub 980:mf=.:goto{:792}
+	gosub{:804}:if(mid$(am$,2,6)<>mid$(d1$,2,6)and tf=.and am=1)or a$="{$c1}"and f4>=0 then a=4:return
+	if a$="{pound}"then a$="a":gosub 980:a=6:return
+	if(nm=1 and tf=.and nf=1)or a$="{$ce}"then a=5:return
+	if a$="{$d4}"then poke 53258,16-peek(53258):goto{:792}
+	k=k+(k>.):on-(a$=" "or k=1)goto{:770}:on-(a$<>""and(a$<"{f1}"or a$>"{f8}"))gosub{:870}
+{:792}
+	a$="":&,4:a=sgn(peek(780)):on a goto{:9}:on fl goto{:778},{:772}:goto{:774}
+{:800}
+	gosub{:276}:if q then print"{rvrs on}";
+	print spc(5)"{yellow}   {$d3}{$c5}{$d4}{$a0}{$d4}{$c9}{$cd}{$c5}!   {rvrs off}":q=1-q:return
+{:804}
+	f4=val(mid$(d1$,8,2)):f4=f4+12*(f4=12)+80*(f4=92):f4=f4+68*(f4>80):return
+{:820}
+	gosub{:292}:f3=2:poke 53248,1
+	&"{clear}{f6} {rvrs on}{yellow}  {$c2}.{$c1}.{$d2}.  {white} {$cc}ast   {$cc}og  {$c3}urrent {$d3}ystem "
+	&"{f6} {rvrs on}{yellow}  {$d3}tats   {white} {$c3}all  {$d4}otal  {$d4}otal  {$d4}otal  ":restore
+	for i=1 to 6:read b$:a%=st(i):b%=st(i+11):c%=st(i+22):d%=st(i+29)
+	&"{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c  {pound}%d {rvrs on} ":next
+	a%=st(7):b%=st(18):c%=st(36)
+	&"{f6} {rvrs on}{$c4}ownloads {rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b    {yellow}{$ce}/{$c1}{white}  {pound}%c {rvrs on} "
+	a%=st(8):b%=st(19):c%=st(29)
+	&"{f6} {rvrs on}{$ce}ew {$d5}sers {rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c    {yellow}{$ce}/{$c1}{white} {rvrs on} "
+	a%=st(9):b%=st(20):&"{f6} {rvrs on}{$c3}alls/{$cc}og {rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on} %  {$cc}og   {$d4}ot  "
+	a%=st(10):b%=st(21):gosub{:282}:c%=e:d%=g:b$="{$d5}sed":gosub{:848}:a%=st(11)
+	b%=st(22):c%=f:d%=h:b$="{$c9}dle":gosub{:848}:&"{f6} {rvrs on}{pound}o {pound}o {cyan}{f6}":poke 53248,.:goto{:274}
+{:848}
+	&"{f6} {rvrs on}{$d4}ime {pound}$b {rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}"+left$(b$,1)+":{rvrs off} {pound}#3{pound}# {pound}%c%  {pound}%d% {rvrs on} ":return
+{:850}
+	f3=3:gosub{:292}:print"{home}{down:8}{rvrs on}{white}{right} {$c2}locks {$c6}ree {$cf}n {$d3}ystem {$c4}isks:":restore
+{:852}
+	read a$:if a$<>"*"then{:852}
+	print:for i=1 to 6:bf=bf(i):read a$
+	print"{yellow} "a$" {$c4}isk"tab(15)":{white}"bf:next:return
+{:860}
+	f3=1:gosub{:292}:poke 2042,1:return
+{:870}
+	gosub{:292}:print"{home}{down:8}{rvrs on}{white}{right:6} {$d3}ystem {$c9}dle {$c3}ommands:":k=50
+	print"{rvrs on}{yellow}{$cb}ey"tab(5)"{$c6}unction"tab(21)"{$cb}ey"tab(26)"{$c6}unction{cyan}"
+	print" 1"tab(5)"{$d3}et {$d4}ime"tab(21)" {back arrow}"tab(26)"{$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$d4}erm"
+	print" 2 "tab(5)"{$c2}.{$c1}.{$d2}. {$d3}creen"tab(21)" {pound} "tab(26)"{$cd}anual {$c1}nswer"
+	print" 3 "tab(5)"{$c2}locks {$c6}ree"tab(21)" + "tab(26)"{$d3}peaker {$cf}n"
+	print" 4 "tab(5)"{$c3}lock"tab(21)" - "tab(26)"{$d3}peaker {$cf}ff"
+	print" 5 "tab(5)"{$d5}pdate {$cd}emory"tab(22)"{$d4}"tab(26)"{$c9}nvert {$c3}{$c4}"
+	print" 6 "tab(5)"{$d2}eset {$cd}odem"tab(21)"(sp) {$d3}how {$d3}creen"
+	print" 7 "tab(5)"{$d3}et {$d0}assword"tab(21)" {$c1} "tab(26)"{$c1}utomaint"
+	print" 8 "tab(5)"{$d2}eview {$cc}og":return
+{:880}
+	gosub{:292}:poke 53248,1:a$="am":goto 1016
+{:881}
+	gosub{:292}:poke 53248,1:a$="{$ce}{$cd}auto":f1=1:goto 1016
+	data"{$c6}eedback  ","{$d3}ysop {$cd}ail","{$d5}sers {$cd}ail","{$d0}osts     "
+	data"{$d2}esponses ","{$d5}ploads   ","{$c4}ownloads ","{$ce}ew {$d5}sers "
+	data"{$c3}alls/{$cc}og ","{$d4}ime {$d5}sed ","{$d4}ime {$c9}dle "
+	data*,"{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}-{$c6}ile","{$d5}ser"
+{:897}
+	a$="nu":goto 1016
+	copr.1989 new image 08/28/90

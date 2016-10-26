@@ -1,0 +1,566 @@
+' don't forget to convert uppercase letters in quotes to {$c1...$da}
+' so Image BBS is happy!
+
+{number:1}
+	rem +.shadowrun
+	goto {:158}
+
+{:sub.read_file}
+	dr=1:a$="s.s1 "+a$:gosub 1011:if e%=. then:&,12,2
+	close 2:return
+
+{:sub.open_playerlog}
+	dr=3:a$="e.s1 pl":goto 1011
+
+{:sub.12} ' 12
+' fixme
+	&"12: no such line":return
+	
+{:sub.hit_space} ' 32
+	s%=1-s%:&"{pound}{back arrow}15"+mid$("{rvrs on}{rvrs off}",s%+1,1)+"hit space{f6}{up}":&,22,10:on -(sh=.) or tr%>1 goto {:sub.hit_space}:return
+
+{:msg.time_up}
+' i don't think this subroutine should automatically save stats unless tr%<1
+	&"{f6:2}{lt. red}{rvrs on}TIME IS UP!":if tr%<1 then gosub {:sub.save_stats}:goto 1811
+	return
+
+{:61}
+' fixme
+	&"61: no such line":goto 1811
+	
+{:sub.reticule_keypress} ' 74
+	gosub {:sub.reticule}:&"{pound}g1{pound}v7{f6}":return
+
+{:sub.yes_no} ' 75
+	&" [Y/N]? ":gosub {:sub.reticule}
+{:keypress} '76
+' checks for timeout, prevents non-Y/N keypresses:
+	&"{pound}g1":if tr%>1 then on -(an$<>"Y" and an$<>"N") goto {:keypress}:&"{pound}v7{f6}"
+	return
+
+' orphaned line?
+	for i=. to a-1:a$(i)="":next:return
+
+' get stats:
+{:92} ' 92
+	input# 2,lp$,o(5),o(6),o(4),o(2),o(3)
+	if d1$>lp$ then on -(ac%=9) goto {:169}:&"{rvrs on}{red}You've already played today! Beat it!{f6}":goto 1811
+{:97}
+	&"{f6}The matrix did not identify you as a{f6}Shadowrunner.{f6:2}"
+	if x=o(1) then:&"All jobs taken. Try again another day.{f6}":goto 1811
+	&"Register":gosub {:sub.yes_no}:if tr%<1 then {:msg.time_up}
+	if an$="N" then:&"{f6}Come back when you're ready.{f6}":goto 1811
+' instructions:
+	a$="in":gosub {:sub.read_file}:gosub {:sub.hit_space}:gosub {:102}:goto {:103} ' <- duplicate code in 104
+{:102}
+	&"{f6}[1] Decker{f6}[2] Merc{f6}[3] Street Mage":return
+{:103}
+	&"{f6}Examine Class [1-3 or RETURN] ":gosub {:sub.reticule_keypress}:on tr%+1 goto {:msg.time_up}:if an$=r$ then {:108}
+	if an$<"1"or an$>"3"then:&"{pound}f1":gosub {:102}:goto {:103}
+	a$="c"+an$:gosub {:sub.read_file}:gosub {:sub.hit_space}:&"{pound}u0":gosub {:102}:goto {:103} ' <- duplicate code
+{:108}
+	&"{pound}f1Select your class, "+na$+".{f6}":gosub {:102}
+	&"{f6}Select class [1-3] ":gosub {:sub.reticule_keypress}:if tr%<1 then {:msg.time_up}
+	if an$<"1"or an$>"3" then {:108}
+	&"{pound}v7{f6:2}Creating your stats..."
+	gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+	x=o(.):gosub 1001:a$(.)="a":o(7)=o(.)
+	a$=na$+r$+d1$+r$+" 15"+r$+" "+an$+r$+" 0"+r$+" 0"+r$+" 10"+r$+" 25"+r$
+	print# 2,a$:close 2:goto {:162}
+
+{:sub.show_stats}
+	&"{pound}f1{gray3}{pound}$z{red} - {gray3}Creds:"+str$(o(3))+"{red} - {gray3}Passcards: {rvrs on}"
+	if(1 and o(4))=1 then:&"{blue}B"
+	if(2 and o(4))=2 then:&"{yellow}Y"
+	if(4 and o(4))=4 then:&"{green}G"
+	if(8 and o(4))=8 then:&"{red}R"
+	if(16 and o(4))=16 then:&"{white}W"
+	&"{f6}{gray3}Condition: {lt. red}{$ab}{rvrs on}":gosub {:sub.your_health_msg}:&" {gray3}Level: "
+	a$="1":if o(2)>7 then a$="2":if o(2)>17 then a$="3":if o(2)>24 then a$="4"
+	&:&"{f6}Turns Left:"+str$(mo)+" {red}- {gray3}Time Left:"+str$(tr%)+" minutes{f6}{$a3}{pound}o{$a3}{pound}o{$a3}{f6}
+	if tr%<1 then {:msg.time_up}
+	return
+
+{:sub.save_stats}
+'	&"{f6}Saving your stats...":dr=3:a$="e.s1 pl":gosub 1011:if e%then:&:goto 1811
+	&"{f6}Saving your stats..."
+	gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+{:140}
+	if o(5)<. then o(5)=.
+	a$=na$+r$+d1$+r$+str$(o(5))+r$+str$(o(6))+r$+str$(o(4))+r$+str$(o(2))+r$
+	a$=a$+str$(o(3))+r$
+	x=o(.):gosub 1001:print# 2,a$:gosub 1012:if e% then:&:goto 1811
+	return
+{:146} ' 146
+' delete player
+'	a$="dt":gosub {:sub.read_file}:o(6)=.:dr=3:a$="e.s1 pl":gosub 1011:if e% then:&:goto 1811
+	a$="dt":gosub {:sub.read_file}:o(6)=.:gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+	x=o(7):gosub 1001:print# 2,"{up arrow}":return
+{:148}
+	if o(10)<>1 then:&"{f6}{pound}$x Won The Battle!":goto {:151}
+'	a%=int(o(8)/2):o(3)=o(3)+a%:&"{f6}{pound}b1You Defeated {pound}$x!"
+	a%=o(8)/2:o(3)=o(3)+a%:&"{f6}{pound}b1You Defeated {pound}$x!"
+	&"{f6}{pound}%a Credits Awarded.{pound}w2":if o(3)>250 then o(3)=250
+{:151}
+	if o(6)<>3 or o(5)=15 then return
+	&"{pound}f1{f6}{white}Your Condition: {lt. red}{$ab}{red}":gosub {:sub.your_health_msg}:&"{f6}Use Healing Magic [Y/N]? "
+	gosub {:sub.reticule_keypress}:if an$="N" then return
+'	a%=int(rnd(1)*(15-o(5))):if a%>6 then a%=6
+	a%=rnd(1)*(15-o(5)):if a%>6 then a%=6
+	&"{f6}You Were Able To Heal {pound}%a Notches.{pound}w2{f6}":o(5)=o(5)+a%:return
+{:no_turns_left}
+' no turns left:
+	a$="nt":gosub {:sub.read_file}:goto {:140}
+
+' start game:
+{:158}
+	cm$="{rvrs off}{lt. blue}Shadow Run":gosub 1360
+	dim a$(27),o(11):o(1)=10:mo=25:a$="tt":gosub {:sub.read_file}:gosub {:sub.hit_space}:&"{pound}u0
+	a$="op":gosub {:sub.read_file}:a$="win":gosub {:sub.read_file}:gosub {:sub.hit_space}
+'	gosub {:90}
+{:90}
+	&"{pound}f1{cyan}Loading map":dr=1:a$="s.s1 mp":gosub 1011:for a=1 to 27:input# 2,a$(a):&"."
+	next:close 2 ' :&"{f6}":return
+
+	&"{f6}Pulling Your Character Sheet..."
+{:162}
+'	dr=3:a$="e.s1 pl":gosub 1011:if e% then:&:goto 1811
+	gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+' search for bbs user, get player #:
+	for x=1 to o(1):gosub 1001:&,2,2:if na$=a$ then o(7)=x:goto {:92}
+' original code?
+'	if na$=a$ then o(.)=x:x=o(1)
+	if na$=a$ then o(.)=x:x=o(1):next:goto {:166}:rem {:166} was 169
+	&".":next:&"{f6}":goto {:169}
+{:166}
+	o(11)=o(5)
+	if o(11)=. or a$(o(11))="a" then next:goto ' fixme
+	a$(o(11))="t"+str$(x)
+{:169}
+	close 2:if o(6)=. then {:97}
+	if o(6)>. then z$="Decker":if o(6)>1 then z$="Merc":if o(6)>2 then z$="St Mage"
+{:173}
+	a$="im":gosub {:sub.read_file}
+	goto {:decrement_moves} 
+{:176}
+	o(2)=.:o(11)=o(11)-1:gosub {:sub.show_stats}:a$="ot":gosub {:sub.read_file}
+	&"{red}Enter Choice: "
+{:178}
+	gosub {:sub.reticule_keypress}:if tr%<1 then gosub {:sub.save_stats}:goto 1811
+	if an$<"1" or an$>"5" then {:178}
+'	if an$="3" then a$="c"+mid$(str$(o(6)),1):gosub {:sub.read_file}:goto {:173}
+	if an$="3" then a$="c"+an$:gosub {:sub.read_file}:goto {:173}
+	if an$="1" then {:185}
+	if an$="2" then {:523}
+	if an$="4" then:&"{pound}f1":a$="in":gosub {:sub.read_file}:gosub {:sub.hit_space}:goto {:173}
+' quit?
+' new: ask are you sure?
+	if an$="5" then:&"{f6:2}Exit Game{f6}":gosub {:sub.are_you_sure}:on -(an$="Y") gosub {:sub.save_stats}:goto 1811
+{:185}
+	if a$(.)<>"a" then {:191}
+{:186}
+	o(2)=.:gosub {:sub.show_stats}:a$="fb":gosub {:sub.read_file}:&"Hit a Key to Battle {pound}g1{f6}"
+	o(10)=5:o(9)=5:x$="The Robot":o(8)=4.1:gosub {:sub.449}:if o(5)<1 then{:146}
+	gosub {:148}:a$(.)="n"
+{:191}
+	o(2)=.:gosub {:sub.573}
+{:192} ' 192
+	gosub {:sub.show_stats}:a$="r1":gosub {:sub.read_file}
+	a=4:gosub {:sub.571}
+	on a goto {:room_1},{:room_3},{:176}
+	&"{f6}Nothing Found.{pound}w2{f6}":goto {:191}
+{:room_1}' 198
+	o(2)=1
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r2":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_2},{:191}
+	gosub {:545}:goto {:room_1}
+{:room_2} ' 206
+	o(2)=2
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r3":gosub {:sub.read_file}
+	a=2:gosub {:sub.enter_number}
+	if a=1 then{:room_1} 
+	if a=2 and(o(4)and 1)=1 then:&"{f6}Nothing.{pound}w2{f6}":goto {:room_2}
+	if a=2 then:&"{f6}{blue}{pound}b1Blue Pass Card Found!{pound}w2{f6}":o(4)=o(4)or 1:goto {:room_2}
+	goto {:sub.save_stats} 
+{:room_3} ' 216
+	o(2)=3
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r4":gosub {:sub.read_file}
+	a=4:gosub {:sub.571} 
+	on a goto {:191},{:room_5},{:room_4}
+	&"You find a map.{pound}w2{f6}":a$="m1":gosub {:sub.read_file}:gosub {:sub.hit_space}:goto {:room_3}
+{:room_4} ' 225
+	o(2)=4
+	gosub {:sub.573} 
+	if(o(4)and 16)=.then:&"{f6}{pound}b1WHITE Card Key needed to enter!{pound}w2{f6}":goto {:room_3}
+	gosub {:sub.show_stats}:a$="ct":gosub {:sub.read_file}:&"Enter Account Number: {pound}i0"
+' fixme: that doesn't seem right
+	if an$=""then gosub {:sub.save_stats}
+	dr=1:a$="s.s1 nu":gosub 1011:&,2,2:close 2
+	if a$<>an$then:&"{f6}{pound}b1Access Denied!{pound}w2{f6}":goto {:room_3}
+	if a$(o(2))<>"y"then:&"{f6}{pound}b1Account Closed!{pound}w2{f6}":goto {:room_3}
+	&"{f6}Drawing Credits...":o(3)=o(3)+30:a$(o(2))="n"
+	if o(3)>250 then o(3)=250
+	&"{pound}w2{f6}":goto {:room_3}
+{:room_5} ' 236
+	o(2)=5
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="cp":gosub {:sub.read_file}:a=4:gosub {:sub.571}
+	on a goto {:room_6},{:room_7},{:room_3}
+	if o(6)<>1 then:&"{f6}Nothing a Non-Decker Could Use.{pound}w2{f6}":goto {:room_5}
+	gosub {:sub.matrix_port}:goto {:room_5}
+{:room_6}
+	gosub {:sub.show_stats}:dr=1:a$="el":gosub {:sub.read_file}:a=4:gosub {:sub.enter_number}:if sh then{:497}
+	if a=val(b$)then:&"{f6}You Step Back Out.{pound}w2{f6}":goto {:497}
+	if a=1 then gosub {:sub.new_level}:goto {:room_5}
+	if a=2 and(o(4)and 1)=1 then gosub {:sub.new_level}:goto {:room_8}
+	if a=3 and(o(4)and 2)=2 then gosub {:sub.new_level}:goto {:room_18}
+	if a=4 and(o(4)and 4)=4 then gosub {:sub.new_level}:goto {:room_25}
+	&"{f6}You Don't Have The Pass Card{f6}For Level"+str$(a)+"!{pound}b1{pound}w2{f6}"
+	goto {:497}
+{:sub.new_level}
+	&"{f6}The doors close...{pound}w2{f6}In a few seconds, they reopen."
+	&"{f6:2}Welcome To Level"+str$(a)+"!{pound}w2{f6}":return
+{:room_7} ' 253
+	o(2)=7
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r5":gosub {:sub.read_file}
+	a=2:gosub {:sub.571} 
+	if a=1 then{:room_5} 
+	if rnd(1)<.3 then:&"{f6}Can't find anything.{pound}w2{f6}":goto {:room_7}
+	&"{f6}After searching for a while you find{f6}this paper...{pound}w2{f6}"
+	gosub {:sub.list_players}:goto {:room_7}
+{:room_8} ' 263
+	o(2)=8
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r6":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_6},{:room_9}
+	&"{f6}You take a look at that newspaper...{pound}w2{f6}":a$="nw":gosub {:sub.read_file}:&"{pound}u0":goto {:room_8}
+{:room_9} ' 271
+	o(2)=9
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="ca":gosub {:sub.read_file}:a=5:gosub {:sub.571}
+	on a goto {:room_13},{:room_12},{:room_10},{:room_8}
+	if o(3)<10 or o(5)>13 then:&"{f6}Nothing.{pound}w2{f6}":goto {:room_9}
+	&"{pound}f1{f6}You walk over to the Food Server."
+	&"{f6}A Drink (10 Credits) Will Heal Two{f6}Notches.{f6}"
+	&"{f6}Have A Drink":gosub {:sub.yes_no}:if tr%<1 then {:msg.time_up}
+	if an$="N" then {:room_9}
+	o(5)=o(5)+2:o(3)=o(3)-10:&"{f6}You gulp it down.{pound}w2{f6}":goto {:room_9}
+{:room_10} ' 281
+	o(2)=10
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r7":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_9},{:room_11}
+	if(o(4)and 2)=2 then:&"{f6}Nothing.{pound}w2{f6}":goto {:room_10}
+	&"{f6}{yellow}{pound}b1Yellow Pass Card Found!{pound}w2{f6}":o(4)=o(4)or 2:goto {:room_10}
+{:room_11} ' 291
+	o(2)=11
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r8":gosub {:sub.read_file}
+	a=2:gosub {:sub.571}
+	if a=1 then{:room_10} 
+	if a$(o(2))<>"y"then:&"{f6}You don't see anything.{pound}w2{f6}":goto {:room_11}
+	a$(o(2))="n":&"{f6}You find 7 credits!{pound}w2{f6}":o(3)=o(3)+7:goto {:room_11}
+{:room_12} ' 300
+	o(2)=12
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="r9":gosub {:sub.read_file}
+	a=2:gosub {:sub.571}
+	if a=1 then{:room_9} 
+	if(o(4)and 16)=16 then:&"{f6}Nothing.{pound}w2{f6}":goto {:room_12}
+	&"{f6}{white}{pound}b1White Pass Card Found!{pound}w2{f6}":o(4)=o(4)or 16:goto {:room_12}
+{:room_13} ' 309
+	o(2)=13
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="ra":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_9},{:room_14}
+	&"{pound}f1{f6}You a find paper with these numbers...{f6:2}"
+	dr=1:a$="s.s1 nu":gosub 1011:input# 2,a$,a$:&:&"{f6}":&,2,2:&:&"{f6}"
+	close 2:goto {:room_13}
+{:room_14} ' 319
+	o(2)=14
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="rb":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_15},{:room_13}
+	&"{f6}Nothing{f1} it's just an empty room.{pound}w2{f6}":goto {:room_14}
+{:room_15} ' 326
+	o(2)=15
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="s.s1 rd":gosub {:sub.read_file}
+	a=3:gosub {:sub.571} 
+	on a goto {:room_16},{:room_14}
+	&"{f6}Your turns today have been reset!{pound}w2{f6}":mo=25:goto {:room_15}
+{:room_16} ' 334
+	o(2)=16
+{:335}
+	gosub {:sub.show_stats}:&"{f6}When you step into the room{f1} stun{f6}"
+	&"lasers paralyze your body!{f6:2}You lose your turns for today!{pound}w2{f6}"
+	goto {:140}
+{:room_18} ' 338
+	o(2)=18
+	gosub {:sub.show_stats}:a$="rd":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_6},{:room_19}
+	&"{f6}You find this paper on a desk...{f6}{pound}w2{f6}"
+	a$="pr":gosub {:sub.read_file}:gosub {:sub.hit_space}:goto {:room_18}
+{:room_19} ' 347
+	o(2)=19
+	gosub {:sub.show_stats}:a$="re":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_20},{:room_18}
+	if o(6)<>1 then:&"{f6}Nothing Useful Found.{pound}w2{f6}":goto {:room_19}
+	gosub {:sub.matrix_port}:goto {:room_19}
+{:room_20} ' 356
+	o(2)=20
+	gosub {:sub.show_stats}:a$="rf":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:room_19},{:room_21}
+	&"{pound}f1{f6}You find a microphone hooked up to the{f6}intercom."
+	&"{f6}Enter a one line message to send to the{f6}next Shadowrunner.{f6:2}{pound}i1"
+	if an$="" then:&"You put the mike down, you can't think{f6}of anything to say...{f6}":goto {:room_20}
+	&"{f6}Sending...":dr=3:a$="s.s1 im":gosub 1023
+	print# 2,r$+"You hear "+na$+"'s voice"+r$+"over the intercom."+r$
+	print# 2,"He says{f1} {f5}"+an$+"{f5}":close 2:&"Done!{pound}w2":goto {:room_20}
+{:room_21} ' 369
+	o(2)=21
+	gosub {:sub.show_stats}:a$="rg":gosub {:sub.read_file}
+	a=4:gosub {:sub.571} 
+	on a goto {:room_20},{:room_22},{:room_23}
+	if a$(o(2))<>"y"then:&"{f6}Nothing you want in here.{pound}w2":goto {:room_21}
+	&"{f6}5 free turns!{pound}w2{f6}":a$(o(2))="n":mo=mo+5:goto {:room_21}
+{:room_22} ' 376
+	o(2)=22:mo=mo-1:if mo<1 then {:no_turns_left} 
+	gosub {:sub.show_stats}:a$="rh":gosub {:sub.read_file}
+	a=2:gosub {:sub.571} 
+	if a=1 then{:room_21} 
+	if(o(4)and 4)=4 then:&"{f6}You stop to take a shower.{pound}w2{f6}":goto {:room_22}
+	&"{f6}{green}{pound}b1Green Pass Card Found!{pound}w2{f6}":o(4)=o(4)or 4:goto {:room_22}
+{:room_23} ' 386
+	o(2)=23
+	gosub {:sub.show_stats}:a$="ri":gosub {:sub.read_file}
+	a=3:gosub {:sub.571} 
+	on a goto {:room_24},{:room_21}
+	if(o(4)and 8)=8 then:&"Just a bunch of dusty books.{pound}w2{f6}":goto {:room_23}
+	&"{f6}{red}{pound}b1Red Pass Card Found!{pound}w2{f6}":o(4)=o(4)or 8:goto {:room_23}
+{:room_24} ' 394
+	gosub {:sub.show_stats}:a$="rj":gosub {:sub.read_file}
+	a$(.)="n":goto {:192}
+{:room_25} ' 401
+	o(2)=25
+	gosub {:sub.573} 
+	gosub {:sub.show_stats}:a$="rk":gosub {:sub.read_file}
+	&"{pound}i1"
+	dr=1:a$="s.s1 nu":gosub 1011:for x=1 to 4:&,2,2:next
+	if a$<>an$ then:&"{f6:2}Incorrect Entry.{pound}w2{f6}Going Back To Elevator...{pound}w2{f6}":goto {:room_6}
+	&"{f6}{pound}b1Correct Code!{pound}w2{f6}"
+{:room_26}
+	mo=mo-1:if mo<1 then {:no_turns_left} 
+	gosub {:sub.show_stats}:a$="rl":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	on a goto {:421},{:room_6}
+	if a$(26)="y" then:&"{f6}Nope{f1} nothing.{pound}w2{f6}":goto {:room_26}
+	&"{f6}You go to the phone on the desk and{f6}call for an Ares Dragon (helicopter)"
+	&"{f6}to pick you up from the roof.{pound}w2{f6}":a$(26)="y":goto {:room_26}
+{:421}
+	mo=mo-1:if mo<1 then {:no_turns_left}
+	if (o(4)and 8)<>8 then:&"{f6}Red Card Needed to Enter!{pound}b1{pound}w2{f6}":goto {:room_26}
+	gosub {:sub.show_stats}:a$="rm":gosub {:sub.read_file}
+	a=3:gosub {:sub.571}
+	a$(27)=str$(a)
+	if a$(26)<>"y"then:&"You didn't call an Ares Dragon to get{f6}you!{pound}w2{f6}":goto {:room_26}
+	&"{pound}f1{f6}You climb out through a hatch to the{f6}"
+	&"roof and jump into the Ares Dragon.{pound}w2"
+' correct microchip:
+	if a$(27)=" 3" then a$="co":gosub {:sub.read_file}:goto {:438}
+' wrong microchip:
+ 	a$="wm":gosub {:sub.read_file}
+	o(5)=15:goto {:176}
+{:438}
+	dr=1:a$="s.s1 win,s,a":gosub 1011:print# 2,na$+r$:close 2
+	a$="s.s1 op":gosub 1023:print# 2,"The Microchip was found by:"
+	print# 2,na$+" on {$04}"+d1$+"."+r$+r$:close 2
+	goto {:61}
+{:sub.battle_msg}
+	&"{pound}f1{f6}Battle With {pound}$x{f6:2}{gray3}You     : {lt. red}{$ab}{rvrs on}"
+{:sub.your_health_msg}
+	if o(5)<>15 then:&"{red}":for a=1 to 15-o(5):&" ":next
+	if o(5)then:&"{white}":for a=1 to o(5)
+{:445}
+	&" ":next:&"{rvrs off}{lt. red}{$b3}":return
+{:sub.opponent_health_msg}
+	&"{f6}{gray3}Opponent: {lt. red}{$ab}{rvrs on}":if o(9)<>o(10)then:&"{red}":for a=1 to o(10)-o(9):&" ":next
+	if o(9) then:&"{white}":for a=1 to o(9)
+	goto {:445}
+{:sub.449}
+	o(11)=.:if rnd(1)>.5 then{:457}
+{:450}
+	gosub {:sub.battle_msg}:gosub {:sub.opponent_health_msg}:&"{f6}{pound}$x fires at you.{f6}"
+	a=int(rnd(1)*9)+1:if o(6)=3 then a=a-2
+	if o(8)>a then gosub {:sub.opponent_hits}:&"{f6}":o(5)=o(5)-1:o(11)=o(11)+1:goto {:455}
+	a$="{f6}He Misses.{f6:2}":if rnd(1)>.4 then a$="You dodge the shot."
+	if rnd(1)>.7 then a$="You leap out of the way."
+{:455}
+	&:&"{f6}":if o(5)<1 then o(10)=.:return
+	gosub {:sub.set_number}:if o(11)>=5 and o(5)<o(9)then o(10)=.:return
+{:457}
+	gosub {:sub.battle_msg}:gosub {:sub.opponent_health_msg}:if o(8)=4 then{:533}
+	&"{f6}Hit SPACE to Fire{f6:2}   {gray2}{rvrs on}{$a7}{red}{$a7}{gray2}{$a7}{red}{$a7}{gray2}{$a7}{red}{$a7}{gray2}{$a7}{red}{$a7}{gray2}{$a7}{red}{$a7}{gray2}{$a7}{left:2}":oa=a:a=11
+	goto {:467} 
+{:460}
+	a=1
+{:461}
+	a=a+1:&"{right}":if tr%<1 then o(10)=.:o(5)=o(5)-(5-o(11)):goto {:msg.time_up}
+	if o(6)=1 or o(6)=2 then if sh then a=a-1:goto {:473}
+	if a<11 then{:461}
+	a=10
+{:467}
+	a=a+1:&"{left}":if tr%<1 then o(10)=.:o(5)=o(5)-(5-o(11)):goto {:msg.time_up}
+	if o(6)=1 or o(6)=2 then if rc then{:473}
+	if a<20 then{:467} 
+	goto {:460} 
+{:473}
+	&"{pound}b1{f6:2}{rvrs on}":if a/2<>int(a/2)then o(9)=o(9)-1:&"{red}You hit him!{f6}"
+	if o(9)<1 then o(10)=1:return
+	if a/2=int(a/2)then:&"{gray3}You missed him!"
+	goto {:450} ' :rem gosub488
+{:sub.opponent_hits}
+	a=int(rnd(1)*8)+1:on a goto {:478},{:479},{:480},{:481},{:482},{:483},{:484},{:485}
+{:478}
+	&"{f6}The hit rips off your ear{f6}and some hair.{f6}":return
+{:479}
+	&"{f6}The shot pierces your torso.{f6}":return
+{:480}
+	&"{f6}His blow turns your leg into a bloody{f6}red sausage.{f6}":return
+{:481}
+	&"{f6}His shot slices your Achilles' tendon.{f6}":return
+{:482}
+	&"{f6}The shot turns your chest{f6}into Swiss cheese.{f6}":return
+{:483}
+	&"{f6}When you turn away{f1} he blows{f6}a hole in your back.{f6}":return
+{:484}
+	&"{f6}A couple of slugs from his gun{f6}remove your kneecap.{f6}":return
+{:485}
+	&"{f6}The hit knocks you to the ground.{f6}":return
+{:sub.set_number}
+	a=oa
+{:sub.enter_number} ' 491
+	&"{f6}Enter (1-"+mid$(str$(a),2)+") "
+{:492}
+	&"{pound}g1":if tr%<1 or an$="Q"then {:msg.time_up}:rem escape
+	if val(an$)<1 or val(an$)>a then {:492}
+	&"{pound}v7{f6}":a=val(an$):return
+{:decrement_moves}
+	mo=mo-1:on-(mo<1)goto {:no_turns_left}:if o(2)=. then {:186} ' 186 was 176
+	if a$(o(2))="a" or left$(a$(o(2)),1)="t" then a$(o(2))="n"
+{:497}
+' room dispatch:
+	on o(2) goto {:room_1}, {:room_2}, {:room_3}, {:room_4}, {:room_5}, {:room_6}, {:room_7}, {:room_8}, {:room_9}, {:room_10}, {:room_11}, {:room_12}, {:room_13}, {:room_14}, {:room_15}, {:room_16}, {:335}, {:room_18}, {:room_19}, {:room_20}, {:room_21}, {:room_22}, {:room_23}, {:room_24}, {:room_25}, {:room_26}
+	o(2)=1:goto {:decrement_moves} 
+{:500}
+	&"{pound}f1{f6:2}An Android attacks.{f6}Prepare to begin battle.{pound}w2{f6}"
+	x$="The Android":o(10)=int(rnd(1)*5)+2:o(9)=o(10):o(8)=int(rnd(1)*3)+5
+	if o(8)=4 then o(8)=5
+	gosub {:sub.449}:goto {:148}
+{:504}
+' check for active security droid:
+	if a$(o(2))="a"then gosub {:500}:a$(o(2))="n"
+	if left$(a$(o(2)),1)<>"t" then return
+'	:
+	&"{pound}f1{f6}You see another Shadowrunner!{pound}w2{f6}"
+	gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+' get player in room:
+	x=val(mid$(a$(o(2)),2)):gosub 1001
+' get name and health:
+	&,2,2:x$=a$:input# 2,a$,a$
+	close 2
+' assign max health, current health:
+	o(10)=5:o(9)=(val(a$)/3):&"{f6}He is {pound}$x.{f6:2}"
+	&"{f6}Battle Him":gosub {:sub.yes_no}:if tr%<1 then {:msg.time_up}
+	if an$="Y" then {:517}
+	if rnd(1)>.2 then:&"{f6}You smile at him and walk away.{pound}w2{f6}":return
+	&"{f6}When you turn away he draws{f6}his gun and aims.{pound}w2{f6}"
+{:517}
+' not sure what o(8) is:
+	o(8)=4:gosub {:sub.449}:gosub {:148}:if o(10)=.then a$(o(2))="n":return
+' get player in current room:
+	gosub {:sub.open_playerlog}:x=val(mid$(a$(o(2)),2)):gosub 1001
+' get their credits:
+	for x=1 to 6:&,2,2:next:return
+
+' orphaned line:
+	gosub {:146}:a$(o(2))="n":return
+
+{:523}
+	mo=mo-1:if mo<1 then{:no_turns_left}
+	if o(5)=15 then:&"{f6}You don't need healing!{pound}w2{f6}":goto {:176}
+	if o(3)<5 then:&"{pound}f1{f6}You don't have enough credits!{pound}w2{f6}":goto {:176}
+' street doc:
+	gosub {:sub.show_stats}:a$="sd":gosub {:sub.read_file}
+	a=15-o(5):if a*5>o(3)then a=o(3)/5
+	gosub {:sub.enter_number}:o(5)=o(5)+a:o(3)=o(3)-a*5
+	&"{f6}The next thing you know you're{f6}"
+	&"back in front of the Aztech Building.{pound}w2":goto {:176}
+{:533}
+	&"{f6}Hit SPACE to FIRE{f6:2}      {rvrs on}{gray2} {red}{$a4}{down}{left:2}{red}{$a3}{gray2} {up}{left:2}"
+	b$="{right}{down}{left}{up}":oa=1:a=1
+{:535}
+	&mid$(b$,a,1):gosub {:sub.12}:if sh then o(10)=.:o(5)=o(5)-(5-o(11)):goto {:msg.time_up}
+	if o(6)=1 or o(6)=2 then if rc then{:473}
+	a=a+1:if a=5 then a=1
+	goto {:535} 
+{:sub.scroll_message} ' 541
+	y=len(b$)
+	for a=1 to y:&"{left}"+mid$(b$,a,1)+"{up}{right}{pound}h1{down}":&,22,10:if sh then a=y
+	next:return
+{:545}
+	&"{pound}f1{f6}You see a telephone and you pick it up.{f6:2}This is what you hear{f3}{f6}"
+	dr=1:a$="s.s1 nu":gosub 1011:&,2,2:close 2:an$=d1$:&,15
+	b$="Aztechnology Bank Time: "+right$(an$,8)+". ":gosub {:sub.scroll_message}
+	b$="Temperature is currently 61 degrees.":gosub {:sub.scroll_message}
+	b$=" Skies are cloudy with a slight chance of rain.":gosub {:sub.scroll_message}
+	b$="Your bank account number is "+a$+".":gosub {:sub.scroll_message}
+	b$="Have a nice day!                                        ":gosub {:sub.scroll_message}
+	return
+{:sub.matrix_port}
+	&"{f6}You see a Matrix Port.{f6:2}Plug in":gosub {:sub.yes_no}:if tr%<1 then {:msg.time_up}
+	if an$="N" then return
+	a$="te":gosub {:sub.read_file}:a=6:gosub {:sub.enter_number}:if sh then return
+	if an$<"5" then a$="m"+an$:gosub {:sub.read_file}:goto {:sub.hit_space}
+	if an$="6" then gosub {:sub.list_players}:return
+	if mo<6 then:&"{pound}f1{f6}Not Enough Turns Left!{pound}w2":return
+	&"{pound}f1{f6:2}Turn Off Android Security{f6:2}Your Turns Left Will{f6}"
+	&"Be Reduced To"+str$(mo-5)+".{f6:3}" ' :gosub {:73}:
+{:73}' 73
+	&"Are you sure":gosub {:sub.yes_no}:if tr%<1 then {:msg.time_up}
+	if a$<>"Y" then return
+	&"{f6}Turning Off Security{pound}s1."
+	for a=. to 32:if a$(a)="a" then a$(a)="n":&"."
+	next:&"{pound}s0{f6}":return
+{:sub.list_players} ' 504
+	&"{pound}f1{f6}{gray3}{pound}vj{gray1} {pound}{back arrow}12{rvrs on}Shadowrunners{pound}{back arrow}39{f6}{gray3}{pound}vj{gray2}"
+'	dr=3:a$="e.s1 pl":gosub 1011
+	gosub {:sub.open_playerlog}:if e% then:&:goto 1811
+	for a=1 to o(1):x=a:a%=x:gosub 1001
+' fixme: ^ marks deleted player
+	&,2,2:if a$="{up arrow}" then:&"{f6:2}{pound}w1End Of File.{pound}w1{f6}":a=o(1):goto {:570}
+	&"{pound}#2{pound}# {pound}%a. {pound}$a{f6}":next
+{:570}
+	next:close 2:goto {:sub.set_number}
+{:sub.571}
+	gosub {:sub.enter_number}:if tr%<1 then gosub {:sub.save_stats}
+	return
+{:sub.573}
+	gosub {:504}:if o(5)<1 then {:146}
+	return
+{:sub.reticule} ' 592
+	&"{up}{$b0}{down}{left} {down}{left}{$ad} {$bd}{up}{left} {up}{left}{$ae}{left:2} {left}{down}":return
+{number:999}
+	rem converted from color64 to image by pinacolada
