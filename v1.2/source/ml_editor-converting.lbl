@@ -1,6 +1,7 @@
 {uses:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v1.2\source\equates-1_2.lbl}
 
 {asm}
+{undef:debug}
 orig $1000	; start assembling at $1000
 ; tabs are 4 characters wide
 
@@ -429,9 +430,17 @@ szVersion:
 	; .Abort - TODO: want confirmation!
 pAbort:
 		jsr sub_ReturnKey	; 1267:0269	20 a7 1a
-		lda #$00			; 126a:026c	a9 00
-		ldx #$00			; 126c:026e	a2 00
-		jmp editrts			; 126e:0270	4c 09 10
+		jmp AbortPatch
+		nop
+		nop
+		nop
+		nop
+
+	; 10 bytes - moved to AbortPatch
+;		jsr sub_ReturnKey	; 1267:0269	20 a7 1a
+;		lda #$00			; 126a:026c	a9 00
+;		ldx #$00			; 126c:026e	a2 00
+;		jmp editrts			; 126e:0270	4c 09 10
 
 	; .Border (ask for single character)
 pBorder:
@@ -841,15 +850,15 @@ pMCIread:
 		; .Clear Text (TODO: want confirmation!)
 pNewText:
 	; keep this 10 bytes:
+	; check whether Return is hit:
+		jsr sub_ReturnKey	; 150b:050d	20 a7 1a
+	; if so, proceed:
 		jmp NewTextPatch
 		nop
 		nop
 		nop
 		nop
-		nop
-		nop
-		nop
-		
+
 	; 10 bytes (moved to NewTextPatch):
 ;		jsr sub_ReturnKey	; 150b:050d	20 a7 1a
 ;		ldx stackptr		; 150e:0510	ae 47 11
@@ -940,25 +949,25 @@ szOn:
 		; .Columns
 pColumns:
 		ldx #$00			; 1591:0593	a2 00
-		jsr sub_1c61		; 1593:0595	20 61 1c
+		jsr sub_1c61			; 1593:0595	20 61 1c
 		ldx linnum			; 1596:0598	a6 14
 	; < $51: 81 columns (C= 128, IBM PCs, etc.)
 		cpx #$51			; 1598:059a	e0 51
-		bcs fwd_15a4		; 159a:059c	b0 08
+		bcs fwd_15a4			; 159a:059c	b0 08
 	; 22 columns (for VIC-20)
 		cpx #$16			; 159c:059e	e0 16
-		bcc fwd_15a4		; 159e:05a0	90 04
+		bcc fwd_15a4			; 159e:05a0	90 04
 		dex 				; 15a0:05a2	ca
-		jsr sub_1f00		; 15a1:05a3	20 00 1f
+		jsr sub_1f00			; 15a1:05a3	20 00 1f
 fwd_15a4:
-		ldx #<szSetTo		; 15a4:05a6	a2 b6
-		ldy #>szSetTo		; 15a6:05a8	a0 15
-		jsr sub_outzString	; 15a8:05aa	20 d2 1d
+		ldx #<szSetTo			; 15a4:05a6	a2 b6
+		ldy #>szSetTo			; 15a6:05a8	a0 15
+		jsr sub_outzString		; 15a8:05aa	20 d2 1d
 		ldx llen			; 15ab:05ad	ae 04 d0
 		inx 				; 15ae:05b0	e8
 		txa 				; 15af:05b1	8a
-		jsr sub_outApercent	; 15b0:05b2	20 ba 1b
-		jmp sub_outCR		; 15b3:05b5	4c 77 1d
+		jsr sub_outApercent		; 15b0:05b2	20 ba 1b
+		jmp sub_outCR			; 15b3:05b5	4c 77 1d
 
 szSetTo:
 		byte upper+$13		; "S"
@@ -1065,7 +1074,7 @@ pScale:
 
 		;	this all prints a scale for knowing which column you're in
 		;	(in 40 columns, it'd be nice to extend this out to 80 if
-		;	the caller is in 80 column mode)
+		;	the caller is in 80 column mode - check "llen")
 		;	"          1         2         3"
 		;	"01234567890123456789012345678900123456789"
 l_scale:
@@ -1075,7 +1084,6 @@ l_scale:
 	 	ascii "{pound}{back arrow}202"
 	 	ascii "{pound}{back arrow}303"		; 1663:0665	tbl-1671
 
-t_1672:
 		byte ImageReturn		; 1672:0674	tbl-1672
 
 		; FIXME:
@@ -1108,12 +1116,12 @@ szEditorVersion:
 		ascii "MAGE 1.2 "
 		byte upper+$05
 		ascii "DITOR "
-								; 16a6:06a8
-		ascii "(08/17/06 03"
+						; 16a6:06a8
+		ascii "(12/29/06 08"
 		byte colon
-		ascii "50"
-		byte upper+$10
-		ascii ")"				; 16b7:06b9
+		ascii "36"
+		byte upper+$10			; "p"
+		ascii ")"			; 16b7:06b9
 		byte ImageReturn		; 16c8:06ca
 
 sub_16c9:
@@ -1533,28 +1541,29 @@ fwd_198d:
 		jmp goto190b		; 1994:0996	4c 0b 19
 
 szTooBig:
+					; 1997:0999	tbl-19ad
 		byte upper+$14	; "t"
 		ascii "OO "
 		byte upper+$02	; "b"
 		ascii "IG. "
 		byte upper+$03	; "c"
 		ascii "AN'T "
-		byte upper+12	; "r"
+		byte upper+$12	; "r"
 		ascii "EPLACE."
-							; 1997:0999	tbl-19ad
+
 		byte ImageReturn
-		byte $00			; 19ae:09b0	tbl-19af
+		byte $00		; 19ae:09b0	tbl-19af
 
 goto19b0:
 		ldx linnum+1		; 19b0:09b2	a6 15
 		jsr sub_19d0		; 19b2:09b4	20 d0 19
 		ldx linnum+1		; 19b5:09b7	a6 15
-		cpx linnum			; 19b7:09b9	e4 14
+		cpx linnum		; 19b7:09b9	e4 14
 		beq fwd_19bf		; 19b9:09bb	f0 04
 		dec linnum+1		; 19bb:09bd	c6 15
 		bne goto19b0		; 19bd:09bf	d0 f1
 fwd_19bf:
-		rts 				; 19bf:09c1	60
+		rts 			; 19bf:09c1	60
 
 goto19c0:
 		ldx linnum		; 19c0:09c2	a6 14
@@ -1565,12 +1574,12 @@ goto19c0:
 		inc linnum		; 19cb:09cd	e6 14
 		bne goto19c0		; 19cd:09cf	d0 f1
 fwd_19cf:
-		rts 		; 19cf:09d1	60
+		rts 			; 19cf:09d1	60
 
 sub_19d0:
 		stx arisgn		; 19d0:09d2	86 6f
 		inx 			; 19d2:09d4	e8
-		jsr sub_1b8d	; 19d3:09d5	20 8d 1b
+		jsr sub_1b8d		; 19d3:09d5	20 8d 1b
 		ldx arisgn		; 19d6:09d8	a6 6f
 		jsr sub_1b92	; 19d8:09da	20 92 1b
 		inc arisgn		; 19db:09dd	e6 6f
@@ -1677,9 +1686,9 @@ len_CmdExit:
 		byte $0d			; 1a94:0a96	tbl-1a94
 
 sCmdExit:
-		ascii upper+$03	; c
+		byte upper+$03	; c
 		ascii "OMMAND"
-							; 1a95:0a97	tbl-1aa0
+						; 1a95:0a97	tbl-1aa0
 		byte colon
 		byte upper+$05 ; e
 		ascii "XIT"
@@ -1687,7 +1696,7 @@ sCmdExit:
 
 ; orphaned code?
 		ldx #$0b		; 1aa2:0aa4	a2 0b
-		jmp sub_OutXdels; 1aa4:0aa6	4c 8d 10
+		jmp sub_OutXdels	; 1aa4:0aa6	4c 8d 10
 
 sub_ReturnKey:
 		jsr sub_GetChar		; 1aa7:0aa9	20 ab 1b
@@ -1945,15 +1954,15 @@ szNoRAM:
 		byte upper+6	; F
 		ascii "OR "
 		byte upper+8	; H
-												; 1c35:0c37	tbl-1c56
+					; 1c35:0c37	tbl-1c56
 		ascii "ELP."
-												; 1c53:0c55
-		byte ImageReturn,$00					; 1c57:0c59	tbl-1c58
+					; 1c53:0c55
+		byte ImageReturn,$00	; 1c57:0c59	tbl-1c58
 
 sub_1c59:
 		stx linnum		; 1c59:0c5b	86 14
-		jsr sub_getline	; 1c5b:0c5d	20 2e 1d
-		jmp goto1c66	; 1c5e:0c60	4c 66 1c
+		jsr sub_getline		; 1c5b:0c5d	20 2e 1d
+		jmp goto1c66		; 1c5e:0c60	4c 66 1c
 
 sub_1c61:
 		stx linnum		; 1c61:0c63	86 14
@@ -2241,39 +2250,59 @@ sub_1df5:
 
 sBuildDate:
 	; 15 bytes				; 1dfc:0dfe	tbl-1e0a
-		ascii "08/17/06 03"
+		ascii "12/29/06 08"
 		byte colon
-		ascii "50"
-		byte upper+$10	; "P"
+		ascii "36"
+		byte upper+$10			; "P"
 
 NewTextPatch:
-	; print "Clear Text"
-		ldx #<szClearText
-		ldy #>szClearText
-		jsr sub_outzString
-	; this should backspace immediately, RTS if no text in buffer
-		jsr sub_ReturnKey
 	; FIXME: get # of lines in editor (not sure which memory location):
 	;	lda $ffff
-	; has output "Clear Text[KK]Are You Sure [y/N]? "
+
+	; has output "[K]Clear Text[KK]Are You Sure [y/N]? "
 	;	lda #period		; to show space was printed
 	;	jsr sub_outChar
 	;	jsr sub_outCR
+
 	; for now...
 		jsr sub_AreYouSure
 		bcs DoNewText
+
+sub_outAborted:
+	; no, so print (Aborted.)
+		ldx #<szAborted
+		ldy #>szAborted
+		jsr sub_outzString
 		rts
 
 DoNewText:
-	; todo: get character, compare to "y"/"n",
-	; print "Yes"/"No"
-			
 	; moved from old NewText routine:
 	; this is when the buffer gets nuked
-	;	jsr sub_ReturnKey	; 150b:050d	20 a7 1a
 		ldx stackptr		; 150e:0510	ae 47 11
-		txs 				; 1511:0513	9a
+		txs 			; 1511:0513	9a
 		jmp clearbuf		; 1512:0514	4c 31 10
+
+AbortPatch:
+	; is there text in buffer? ask:
+		jsr sub_AreYouSure
+	; user's response is "no":
+		bcc DontAbort
+
+DoAbort:
+{ifdef:debug}
+; works fine if .New Text not selected beforehand - then it requires
+; .Abort hit 2x - must be addresses pushed on stack somewhere
+		lda #$00
+		sta $d020	; turn border black - means we got here
+{endif}
+		lda #$00		; 126a:026c	a9 00
+		ldx #$00		; 126c:026e	a2 00
+		jmp editrts		; 126e:0270	4c 09 10
+
+DontAbort:
+		jsr sub_outAborted
+	; just a guess... ok, this works
+		jmp keepbuf
 
 sub_AreYouSure:
 		ldx #<szAreYouSure
@@ -2281,11 +2310,19 @@ sub_AreYouSure:
 		jsr sub_outzString
 	; get character:
 		jsr sub_GetChar		; 1297:0299	20 ab 1b
-	;	sta brdrchar		; 129a:029c	8d dc 12
-	; returns with char typed in a:
-	; assume anything but Y is "no":
-		cmp upper+$19	; y
-		bne SayNo
+	; returns with char typed in .a:
+	; knock high bit off (shift-lock)
+		and #%01111111
+
+; {ifdef:debug}
+;		pha
+;		jsr sub_outChar		; do it the Image way
+;		pla
+; {endif}
+
+	; assume anything but y is "no":
+		cmp #'Y'
+		beq SayYes
 
 SayNo:
 		ldx #<szNo
@@ -2304,13 +2341,14 @@ SayYes:
 		rts
 
 szAreYouSure:
-		byte ImageReturn,ImageReturn
+	; "[K]Are You Sure [y/N]? "
+		byte ImageReturn
 		byte upper+$01	; a
 		ascii "RE "
 		byte upper+$19	; y
 		ascii "OU "
 		byte upper+$13	; s
-		ascii "URE [y/"
+		ascii "URE [Y/"
 		byte upper+$0e	; n
 		ascii "]? "
 		byte $00
@@ -2327,6 +2365,13 @@ szNo:
 		byte ImageReturn
 		byte $00
 
+szAborted:
+		ascii "("
+		byte upper+$01	; a
+		ascii "BORTED.)"
+		byte ImageReturn
+		byte $00
+				
 		align $100,$ea		; fill with $ea to $1eff
 
 	; must be a patch:

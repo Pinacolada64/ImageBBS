@@ -94,3 +94,12 @@ found MCI variable table, documented it
 casm 4.0 beta3 released, fixes using labels with pseudo-ops
 no {alpha:} directive, so inverted 'ascii' text works for now
 careful of comments after 'ascii' pseudo-ops, they are assembled too (bug)
+
+30/Dec/2016 13:45
+ml.editor:
+renamed to ml_editor_converting.lbl
+A few string fixups
+.Abort now confirms, doesn't always work after choosing .New Text
+
+equates-1_2.lbl:
+Added more equates notes

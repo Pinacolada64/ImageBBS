@@ -7,7 +7,7 @@
 ; zero-page:
 d6510    = $00
 r6510    = $01
-zp_02    = $02 ; free for use
+zp_02    = $02	; free for use
 adray1   = $03
 adray2   = $05
 charac   = $07
@@ -20,7 +20,7 @@ linnum   = $14
 temppt   = $16
 lastpnt  = $17
 tempst   = $19
-z_index  = $22
+z_index  = $22 ; official name is "index", named so as not to conflict with BBS flag @ $d00f
 resho    = $26
 txttab   = $2b
 vartab   = $2d
@@ -29,8 +29,8 @@ strend   = $31
 fretop   = $33
 frespc   = $35
 memsiz   = $37
-curlin   = $39
-oldlin   = $3b
+curlin   = $39	; ($39) Current BASIC Line Number
+oldlin   = $3b	; ($3b) Previous BASIC Line Number
 oldtxt   = $3d
 datlin   = $3f
 datptr   = $41
@@ -46,8 +46,8 @@ four6    = $53
 jmper    = $54
 numwork  = $57	; 6 bytes
 var      = $61	; Floating point accumulator:
-				; store value of variable for usevar, putvar, zero,
-				; minusone, getarr, putarr, getin, putin, etc.
+			; store value of variable for usevar, putvar, zero,
+			; minusone, getarr, putarr, getin, putin, etc.
 fac2     = $69
 arisgn   = $6f ; arithmetic sign
 fbufpt   = $71
@@ -60,7 +60,7 @@ rndx     = $8b
 status   = $90
 svxt     = $92
 verck    = $93
-syno     = $96
+syno     = $96	; Cassette Block Synchronization Number
 xsav     = $97
 dfltn    = $99
 dfltno   = $9a
