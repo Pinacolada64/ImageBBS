@@ -1,0 +1,87 @@
+2008-12 -- Pinacolada
+
+ECS commands/modules
+
+sub.bar		display BAR stats
+	im=1	60002	press a key
+	im=2	60008	display BAR stats
+
+sub.misc
+	im=1	60006	write user account to disk
+	im=2	60026	read user account from disk
+	im=3	60004	return
+	im=4	60046	request chat
+	im=5	60062	time and date
+	im=6	60068	?
+	im=7	60074	something to do with u.index
+	im=8	60078	"
+	im=9	60082	load a different protocol?
+	im=10	60088	?
+	im=11	60086	u.index stuff
+	im=12	60004	return
+	im=13	60092	switch users
+
+sub.info
+	im=1	60002	something w/first+last name, uses s.m.info
+			edits phone #, 
+	im=2	60030	change password
+	im=3	60068	change system time zone
+	im=4	60074	change user time zone
+	im=5	60072	something time zone related
+	im=6	60078	something time zone related
+
+sub.modem
+
+sub.menus
+
+sub.stats
+
+sub.param2
+	im=1	60002	change last call date
+	im=2	60200	MX Multi-Archival Command System
+
+sub.param1
+	im=1	60004	edit account parameters
+	im=2	60056	?
+	im=3	60002	return (I changed to more prompt)
+	im=4	60094	something about protocols
+	im=5	60096	"
+
+sub.editor
+
+sub.protos
+
+sub.sysdos
+
+sub.handles
+
+sub.display
+
+sub.feedback
+
+IM jump table:
+--------------
+309	GOSUB - load im.emul13
+501	(I)nfo or (P)arameters (EP, at a guess?)
+503	change password
+504	handles?
+505	handles?
+506	unimplemented
+507	unimplemented - changed to STZ, system time zone
+508	unimplemented?
+512	?
+514	handle stuff
+516	change user time zone
+520	change last call date
+521	MX command
+525	BA command
+528	ST command
+533	switch users	(GOSUB)
+534	C		(GOSUB)
+535	T		(GOSUB)
+540	DC
+541	DC also?
+
+Mods:
+-----
+542 NEW	added im=1:gosub440 (WF command)

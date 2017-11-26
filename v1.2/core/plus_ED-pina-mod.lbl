@@ -221,7 +221,7 @@
 	if a=10 then gosub {:142}:goto {:page0}
 
 ' transfer protocol:
-	if a=12 then gosub {:sub:xfer_proto}:goto {:page0}
+	if a=12 then gosub {:sub.xfer_proto}:goto {:page0}
 	
 ' 13/14 - Linefeeds/Expert Mode toggle
 	if a=13 or a=14 then tt$(a)=str$(1-val(tt$(a))):goto {:page0}
@@ -254,11 +254,11 @@
 	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
 	on -(a<1 or a>9) goto {:142}:tt$(10)=str$(a):tz=.:return
 
-{:sub:xfer_proto}
+{:sub.xfer_proto}
 ' 12 - transfer protocol:
 	&"{f6}1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
 	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	on -(a<1 or a>4) goto {:sub:xfer_proto}:tt$(12)=str$(a):tz=.:return
+	on -(a<1 or a>4) goto {:sub.xfer_proto}:tt$(12)=str$(a):tz=.:return
 
 {:148}
 ' deleted (^) or REServed users:
