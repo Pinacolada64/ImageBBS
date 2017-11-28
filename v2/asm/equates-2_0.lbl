@@ -1,237 +1,245 @@
 {asm}
 	; image 2.0 equates
 	;
-	var = $61
-	chrget = $73
-	chrgot = $79
-	ridbe = $29b
-	ridbs = $29c
+	var	= $61
+	chrget	= $73
+	chrgot	= $79
+	ridbe	= $29b
+	ridbs	= $29c
 
-	; time remaining stuff?
-	ten = $dc08
-	scs = $dc09
-	min = $dc0a
-	hrs = $dc0b
+	; cia #2 tod clock stuff
+	ten	= $dc08
+	scs	= $dc09
+	min	= $dc0a
+	hrs	= $dc0b
 	;carrier = $dd01
 	;
 
-	colors= $e8da
+	colors	= $e8da	; flashing chat page color table
 
 	; kernal routines:
 
-	getin = $ffe4
-	chkout= $ffc9
-	chrout= $ffd2
-	clrchn= $ffcc
-	chkin = $ffc6
-	setnam= $ffbd
-	setlfs= $ffba
-	loadf = $ffd5
-	savef = $ffd8
-	readst= $ffb7
-	chrin = $ffcf
-	setmsg= $ff90
-	openf = $ffc0
-	closef= $ffc3
+	getin	= $ffe4
+	chkout	= $ffc9
+	chrout	= $ffd2
+	clrchn	= $ffcc
+	chkin	= $ffc6
+	setnam	= $ffbd
+	setlfs	= $ffba
+	loadf	= $ffd5
+	savef	= $ffd8
+	readst	= $ffb7
+	chrin	= $ffcf
+	setmsg	= $ff90
+	openf	= $ffc0
+	closef	= $ffc3
 
 	; extended basic tokens:
 
-	poketok= 151
-	peektok= 194
-	systok = 158
-	loadtok= 147
-	newtok = 162
+	poketok	= 151	; poke $addr,$val
+	peektok	= 194	; peek($addr)
+	systok	= 158	; sys $addr
+	loadtok	= 147
+	newtok	= 162	; "new <line_num>" erases <line_num> on
 
 	; BASIC routines:
 
-	error = $a437
-	linkprg=$a533
-	gone1 = $a7e7
-	gone2 = $a7ea
-	linget = $a96b
-	frmnum =$ad8a
-	frmevl =$ad9e ; added by pina
-	eval1 = $ae8d
-	parchk =$aef1
-	comma = $aefd
-	chkcom= $aefd
-	synerr =$af08
+	error	= $a437
+	linkprg	= $a533
+	gone1	= $a7e7
+	gone2	= $a7ea
+	linget	= $a96b
+	frmnum	= $ad8a
+	frmevl	= $ad9e ; added by pina
+	eval1	= $ae8d
+	parchk	= $aef1
+	comma	= $aefd
+	chkcom	= $aefd
+	synerr	= $af08
 
-	ptrget1=$b0e7
-	ilqerr =$b248
-	retbyt =$b3a2
-	makerm1=$b475
-	getbytc=$b79b
-	getnum =$b7eb
-	getadr =$b7f7
-	retval =$bc49
+	ptrget1	= $b0e7
+	ilqerr	= $b248
+	retbyt	= $b3a2
+	makerm1	= $b475
+	getbytc	= $b79b
+	getnum	= $b7eb
+	getadr	= $b7f7
+	retval	= $bc49
 
-	syscll =$e130
-	getfile=$e1d4 ; 57812
+	syscll	= $e130
+	getfile	= $e1d4 ; 57812
 
 	; image routines:
 
-	jmptbl = $a000
+	jmptbl	= $a000
 	outastrp= $cd00
-	usetbl1 = $cd03
-	swapper = $cd06
-	swapagn = $cd09
-	trace = $cd0c
-	chkspcl = $cd0f
-	convchr = $cd12
-	buffer = $ce77
-	buf2 = $ce27
+	usetbl1	= $cd03
+	swapper	= $cd06
+	swapagn	= $cd09
+	trace	= $cd0c
+	chkspcl	= $cd0f
+	convchr	= $cd12
+	buffer	= $ce77
+	buf2	= $ce27
 	;
 	; serial # stuff
 	;
-	bsnpre = $02fd
-	bsnval = $02fe
+	bsnpre	= $02fd	; serial # prefix (a/b/g...)
+	bsnval	= $02fe	; serial #
 	;
-	death= $1800
-	prgstart = $1801
-	bmpstart = $2001
-	mmpstart = $3001
-	lmpstart = $4001
-	prgend = $5000
-	imstart = $5001
+	death	= $1800
+	prgstart= $1801
+	bmpstart= $2001
+	mmpstart= $3001
+	lmpstart= $4001
+	prgend	= $5000
+	imstart	= $5001
 	protostart = $c000
-	protoend = $ca80
+	protoend= $ca80
 	;
 	; module line #s/sizes:
 	;
-	mainline = 1000
-	trapline = 2000
-	imodline = 2300
-	immdline = 3000
-	immdsize = $a00
+	mainline= 1000
+	trapline= 2000
+	imodline= 2300
+	immdline= 3000
+	immdsize= $a00
 	;
 	; screen display stuff:
 	;
-	tdisp=$0400+960
-	tcolr=$d800+960
-	sdisp=$0400+920
-	scolr=$d800+920
-	ldisp=$0400+640
-	lcolr=$d800+640
-	adisp=$0400+880
-	acolr=$d800+880
+	tdisp	= $0400+960
+	tcolr	= $d800+960
+	sdisp	= $0400+920
+	scolr	= $d800+920
+	ldisp	= $0400+640
+	lcolr	= $d800+640
+	adisp	= $0400+880
+	acolr	= $d800+880
 	;
-	fkeybuf = 679 ;32
-	emptym0 = 711 ;57
+	fkeybuf	= 679 ;32
+	emptym0	= 711 ;57
 	;
-	cassbuff = 828
-	idlemax =830
-	datebuf = 831 ;11
-	daytbl = 842 ;24
-	tzoneh = 866 ; bbs  time zone hour
-	tzonem = 867 ; bbs  time zone minute
-	uzoneh = 868 ; user time zone hour
-	uzonem = 869 ; user time zone minute
-	wrapbuf = 870 ;80
-	wrapflg = 950
-	modclmn = 951
-	ptrclmn = 952	; printer column?
-	wrapind = 953
-	wrapdmp = 954
-	ptrclm = 955
-	modclm = 956
-	sndtim1 = 957
-	sndtim2 = 958
-	sndwav1 = 959
-	sndwav2 = 960
-	sndwav3 = 961
+	cassbuff= 828
+	idlemax	= 830
+	datebuf	= 831 ;11
+	daytbl	= 842 ;24
+	tzoneh	= 866 ; bbs  time zone hour
+	tzonem	= 867 ; bbs  time zone minute
+	uzoneh	= 868 ; user time zone hour
+	uzonem	= 869 ; user time zone minute
+	wrapbuf	= 870 ;80
+	wrapflg	= 950
+	modclmn	= 951
+	ptrclmn	= 952	; printer column?
+	wrapind	= 953
+	wrapdmp	= 954
+	ptrclm	= 955
+	modclm	= 956
+	sndtim1	= 957
+	sndtim2	= 958
+	sndwav1	= 959
+	sndwav2	= 960
+	sndwav3	= 961
 	sndrept = 962
 	sndtim1a= 963
 	sndtim2a= 964
-	jiffy = 965
-	blnkflag =966	; screen blank flag
-	blnkcntr =967	; screen blank counter
-	ptrlin = 968
-	ptrlinm= 969
-	usrlin = 970
-	usrlinm= 971
+	jiffy	= 965
+	blnkflag= 966	; screen blank flag
+	blnkcntr= 967	; screen blank counter
+	ptrlin	= 968
+	ptrlinm	= 969
+	usrlin	= 970
+	usrlinm	= 971
 	fredmode= 972
-	montbl = 973 ; 36
-	emptym1= 1009 ;1
-	timeset= 1010
-	flag1 = 1011
-	case1 = 1012
-	temp3 = 1015
-	mline = 1016
-	comm = 1017
-	flags = 1018
-	cline = 1019
-	lines = 1022
-	modes = 1023
+	montbl	= 973 ; 36
+	emptym1	= 1009 ;1
+	timeset	= 1010 ; "time has been set" flag
+	flag1	= 1011
+	case1	= 1012
+	temp3	= 1015
+	mline	= 1016
+	comm	= 1017
+	flags	= 1018
+	cline	= 1019
+	lines	= 1022 ; # of lines in text editor buffer
+	modes	= 1023
 	;
 	; garbage collection stuff?
 	;
-	gc = $c000
-	gchide = $e000
-	gclen = 4
+	gc	= $c000
+	gchide	= $e000
+	gclen	= 4
 	;
 	; extended command set stuff:
 	;
-	ecs = $c000
-	ecshide = $e400
-	ecslen = 10
+	ecs	= $c000
+	ecshide	= $e400
+	ecslen	= 10
 	;
 	;screen parameters
 	;
-	mcolor = 646
-	mreverse = 199
-	curptr = 209
-	scnpos = 211
-	sline = 214
-	colptr = 243
-	undchr = 206
-	undcol = 647
-	crsrflg = 204
-	crsrmode = 207
-	scnclm = scnpos
+	mcolor	= 646
+	mreverse= 199
+	curptr	= 209
+	scnpos	= 211
+	sline	= 214
+	colptr	= 243
+	undchr	= 206
+	undcol	= 647
+	crsrflg	= 204
+	crsrmode= 207	; Flag: Was Last Cursor Blink on or off?
+	; This location keeps track of whether, during the current cursor blink,
+	; the character under the cursor was reversed, or was restored to
+	; normal. This location will contain a 0 if the character is reversed,
+	; and a 1 if the character is restored to its non-reversed status.
+
+	scnclm	= scnpos
 	;
-	; message command interpreter variables:
+	; Message Command Interpreter variables:
 	;
-	mjump =$07e8
-	mresult=$07e9
-	mspeed =$07ea
-	mprint =$07eb
-	;mcolor =$07ec
-	;mprtr =$07ed
-	;mreverse=$07ee
-	mci =$07ef
-	mdigits=$07f0
-	carrst =$07f1
-	tsp1 =$07f2
-	tsp2 =$07f3
-	chks =$07f4
-	readmode=$07f6
-	filenum =$07f7
-	tmp5 =$07f8
-	abtchr =$07f9
-	clock =$07fa
-	filetyp =$07fb
-	tmp1 =$07fc
-	tmp2 =$07fd
-	tmp3 =$07fe
-	tmp4 =$07ff
-	;
-	local =$d000
-	case =$d001
-	editor =$d002
-	;tsr =$d003
-	llen =$d004
-	flag =$d005
-	chat =$d006
-	inchat =$d007
-	chatpage=$d008
-	carrier=$d009
-	mxor =$d00a
-	mkolor =$d00b
-	mupcase =$d00c
-	irqcount=$d00d
-	trans =$d00e
-	index =$d00f
+	mjump	= $07e8
+	mresult	= $07e9
+	mspeed	= $07ea
+	mprint	= $07eb
+;	mcolor	= $07ec
+;	mprtr	= $07ed
+;	mreverse= $07ee
+	mci	= $07ef
+	mdigits	= $07f0
+
+	carrst	= $07f1
+	tsp1	= $07f2	; transmit speed lo-byte
+	tsp2	= $07f3	; transmit speed hi-byte
+	chks	= $07f4
+	readmode= $07f6
+	filenum	= $07f7
+	tmp5	= $07f8
+	abtchr	= $07f9
+	clock	= $07fa
+	filetyp	= $07fb
+	tmp1	= $07fc
+	tmp2	= $07fd
+	tmp3	= $07fe
+	tmp4	= $07ff
+
+	; BBS flags
+
+	local	= $d000
+	case	= $d001
+	editor	= $d002
+	;tsr	= $d003
+	llen	= $d004
+	flag	= $d005
+	chat	= $d006
+	inchat	= $d007
+	chatpage= $d008
+	carrier	= $d009
+	mxor	= $d00a
+	mkolor	= $d00b
+	mupcase	= $d00c
+	irqcount= $d00d
+	trans	= $d00e
+	index	= $d00f
 	;
 	tempscn = $1000 ;$140
 	tempscn0= tempscn+000
@@ -242,7 +250,7 @@
 	tempscn5= tempscn+200
 	tempscn6= tempscn+240
 	tempscn7= tempscn+280
-	tempcol = $1140 ;$140
+	tempcol	= $1140 ;$140
 	tempcol0= tempcol+000
 	tempcol1= tempcol+040
 	tempcol2= tempcol+080
@@ -251,76 +259,76 @@
 	tempcol5= tempcol+200
 	tempcol6= tempcol+240
 	tempcol7= tempcol+280
-	emptym3 = $1280 ;96
+	emptym3	= $1280 ;96
 	;
-	idlejif=$12e0
-	idlesec=$12e1
-	idleten=$12e2
-	idlemin=$12e3
-	curdsp =$12e4
-	bar =$12e5
-	tsr2 =$12e6
-	mright =$12e7
-	mleft =$12e8
-	cphase =$12e9
-	key =$12ea
-	shft =$12eb
-	ptrlnfd=$12f0
-	ha577 =$12f1
-	mask =$12f2
-	scnmode=$12f3
-	dflag =$12f4
-	dstat =$12f5
-	cytmp =$12f6
-	interm =$12f7
-	cxsav =$12f8
-	len1 =$12f9
-	passmode=$12fa
-	scnlock =$12fb
-	tmp6 =$12fc
-	tmp7 =$12fd
-	freq =$12fe
+	idlejif	= $12e0
+	idlesec	= $12e1
+	idleten	= $12e2
+	idlemin	= $12e3
+	curdsp	= $12e4
+	bar	= $12e5
+	tsr2	= $12e6
+	mright	= $12e7
+	mleft	= $12e8
+	cphase	= $12e9
+	key	= $12ea
+	shft	= $12eb
+	ptrlnfd	= $12f0
+	ha577	= $12f1
+	mask	= $12f2
+	scnmode	= $12f3
+	dflag	= $12f4
+	dstat	= $12f5
+	cytmp 	= $12f6
+	interm	= $12f7
+	cxsav	= $12f8
+	len1	= $12f9
+	passmode= $12fa
+	scnlock	= $12fb
+	tmp6	= $12fc
+	tmp7	= $12fd
+	freq	= $12fe
 	;
 	; rs232 jump table
 	;
-	rs232 = $0800
-	rsinabl = rs232+ $03
-	rsdisab = rs232+ $06
-	rsget = rs232+ $09
-	rsout = rs232+ $0c
-	rsbaud = rs232+ $0f
-	rschar = rs232+ $12
+	rs232	= $0800
+	rsinabl = rs232 + $03
+	rsdisab = rs232 + $06
+	rsget	= rs232 + $09
+	rsout	= rs232 + $0c
+	rsbaud	= rs232 + $0f
+	rschar	= rs232 + $12
 	;
-	chktbl = $1300 ;$10
-	bartbl = $1310 ;$c0
-	arryptrs=$13d0 ;$10
-	daysofm= $13e0 ;$0c
-	emptym2= $13ec ;$04
-	sndtbl = $13f0 ;$60
-	netalrm= $1450 ;$30
-	tblatc = $1480 ;$80
-	tblcta = $1500 ;$100
-	tblcta1= $1600 ;$20
-	tblcta2= $1620 ;$20
-	tblcta3= $1640 ;$20
-	alarmtb= $1660 ;$80
-	date1 = $16e0 ;$20
-	lobytes =$1700 ;25
-	hibytes =$1719 ;25
-	lobytec =$1732 ;25
-	hibytec =$174b ;25
-	emptym4 =$1764 ;28
-	pmodetbl=$1780 ;$80
+	chktbl	= $1300 ;$10
+	bartbl	= $1310 ;$c0
+	arryptrs= $13d0 ;$10
+	daysofm	= $13e0 ;$0c
+	emptym2	= $13ec ;$04
+	sndtbl	= $13f0 ;$60
+	netalrm	= $1450 ;$30
+	tblatc	= $1480 ;$80
+	tblcta	= $1500 ;$100
+	tblcta1	= $1600 ;$20
+	tblcta2	= $1620 ;$20
+	tblcta3	= $1640 ;$20
+	alarmtb	= $1660 ;$80
+	date1	= $16e0 ;$20
+	lobytes	= $1700 ;25
+	hibytes	= $1719 ;25
+	lobytec	= $1732 ;25
+	hibytec	= $174b ;25
+	emptym4	= $1764 ;28
+	pmodetbl= $1780 ;$80
 	;
-	ribuf = $0b00	; rs232 input buffer
-	robuf = $0b80	; rs232 output buffer
+	ribuf	= $0b00	; rs232 input buffer
+	robuf	= $0b80	; rs232 output buffer
 	;
 	wedgemem= $0c00
-	trapoff =wedgemem+0
-	trapon = wedgemem+3
-	loadprg =wedgemem+6
-	arraysav=wedgemem+9
-	arrayres=wedgemem+12
-	forcegc =wedgemem+15
+	trapoff	= wedgemem+0
+	trapon	= wedgemem+3
+	loadprg	= wedgemem+6
+	arraysav= wedgemem+9
+	arrayres= wedgemem+12
+	forcegc	= wedgemem+15
 	;
 {endasm}
