@@ -1,8 +1,8 @@
-' fixme: displays "a$ = 'a$'"
+' fixme: displays 'a$ = "a$"'
 ' fixme: gets into a loop (space aborts) when displaying integer variables
 
 {number:4000}
-	REM +/lo.varlist
+	REM +/LO.VARLIST
 	poke 53248,1:gosub {:4004}:poke 53248,0:return
 {:4004}
 	&"{clear}{f6} {$d6}ariable {$cc}ist 4.0{f6:2}":x=peek(45)+peek(46)*256:y=x:kk=.
@@ -14,20 +14,32 @@
 	&left$(a$+"   ",4)+"="
 	if t=.then gosub {:4046}
 	if t=1 then a=peek(x+3)+peek(x+2)*256:a=a+65536*(a>32767):&str$(a)
+' string variable:
 	if t=2 then poke y+9,peek(x+2):poke y+10,peek(x+3):poke y+11,peek(x+4):gosub {:4058}
 	if t=3 then:&" ?"
 	if rc then{:4028}
 	&"{f6}":x=x+7:if x<(peek(47)+peek(48)*256)then{:4008}
 {:4028}
+' beginning of arrays:
 	&"{f6:2}    {$c1}rrays:{f6:2}":x=peek(47)+peek(48)*256:sh=.
 {:4030}
+' 0/1: array name
 	a$=chr$(peek(x)and 127):if(peek(x+1)and 127)then a$=a$+chr$(peek(x+1)and 127)
+' depending on which high bits set, integer or string var array
 	if peek(x)>127 and peek(x+1)>127 then a$=a$+"%"
 	if peek(x)<128 and peek(x+1)>127 then a$=a$+"$"
+' 2/3: z = two-byte offset to next element of array
+'   4: (unused here): one-byte value for the number of array dimensions
+'	[e.g., 2 for a two-dimensional array like A(x,y)]
+' 5/6: kk= That byte is followed by pairs of bytes which hold the value of each array
+'	dimension+1 (DIMensioning an array always makes space for 0, so A(0)
+'	can be used).
 	z=peek(x+2)+peek(x+3)*256:kk=peek(x+6)+peek(x+5)*256-1
 	a$=a$+"("+mid$(str$(kk),2)+")"
-	a%=z:&"{pound}$a{pound}{back arrow}10{pound}#5{pound}# {pound}%a {$c2}ytes.{f6}":if rc then{:4044}
-	x=x+z:if x<(peek(49)+peek(50)*256)then{:4030}
+' display variable name (a$), size (a%)
+	a%=z:&"{pound}$a{pound}{back arrow}10{pound}#5{pound}# {pound}%a {$c2}ytes.{f6}":if rc then {:4044}
+' gone past aryend (end of arrays)?
+	x=x+z:if x<(peek(49)+peek(50)*256) then {:4030}
 {:4044}
 	&"{f6:2}":x=fre(.):return
 {:4046}
@@ -39,10 +51,11 @@
 {:4056}
 	&str$(a):return
 {:4058}
+' display string contents:
 	b$="":if a$=""then{:4066}
 	for a=1 to len(a$):an$=mid$(a$,a,1):b=asc(an$):if an$="{pound}"then an$="{pound:2}"
 	if b<32 or(b>127 and b<160)then an$="{pound}r1"+chr$(b+64)+"{pound}r0"
 	b$=b$+an$:next
 {:4066}
 	&"{f5}":&b$:&"{f5}":return
-	rem
+	REM +/LO.VARLIST

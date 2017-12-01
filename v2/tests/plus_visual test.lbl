@@ -1,12 +1,25 @@
 {number:3000}
+{step:2}
+{alpha:invert}
+	REM +.TEST VISUAL ED -- PINACOLADA 27/NOV/2017 15:44
 ' set up "area" window:
-	cm$="VisualEditorTest":gosub 1360
+' uppercase chars must be from $61-$7a range to properly display in screen mask
+	&,18,1:cm$="{$76}isual{$65}ditor{$74}est":gosub 1360
+	&"{pound}q0{f6}{pound}r1Ctrl-V{pound}r0 outputs lines typed so far"
+	&"{f6}{pound}r1Ctrl-X{pound}r0 exits"
+	&"{f6}Press any key to begin: {pound}g1{pound}f1":&,18,0
 ' show "s.visual":
 	a$="visual":gosub 1350
 ' load "++ visual":
-	a$="visual":gosub 1750:if e%=. then:&,16
+	a$="visual":gosub 1750:if e% then:&:goto {:finish}
+' start visual editor:
+	&,16
 ' show editor lines (kk does not track # of lines in editor):
+' visual.s: lines = $03fe (perhaps # of lines in editor?)
+	kk=peek($03fe):if kk then:&str$(kk)+" lines entered.{f6}"
 	if kk then for x=1 to kk:&"{pound}#3{pound}!x: "+tt$(x)+"{f6}":next
-	goto 1811
-	rem pinacolada 12/Jun/2016 19:59
+{:finish}
+' restore screen mask
+	&,18,1:goto 1811
+	REM +.TEST VISUAL ED -- PINACOLADA 27/NOV/2017 15:44
 	

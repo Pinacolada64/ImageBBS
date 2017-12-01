@@ -1,6 +1,8 @@
-# exclude any EditPad Pro __history folder:
-*/__history/*
-
+# EditPad Pro files:
+# exclude any __history folder and its contents:
+__history
+# exclude project files:
+*.epp
 # exclude disk images:
 *.[dD](64|71|81)
 

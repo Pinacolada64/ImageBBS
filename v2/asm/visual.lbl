@@ -1,6 +1,6 @@
 orig $c000
 {asm}
-{include:\Documents and Settings\User\My Documents\C64\Image BBS\v2\equates-2_0.lbl}
+{include:\Documents and Settings\User\My Documents\C64\Image BBS\v2\asm\equates-2_0.lbl}
 
 ; assemble with casm 4.0
 
