@@ -12,8 +12,7 @@
 	scs	= $dc09
 	min	= $dc0a
 	hrs	= $dc0b
-	;carrier = $dd01
-	;
+;	carrier = $dd01
 
 	colors	= $e8da	; flashing chat page color table
 
@@ -84,8 +83,8 @@
 	;
 	; serial # stuff
 	;
-	bsnpre	= $02fd	; serial # prefix (a/b/g...)
-	bsnval	= $02fe	; serial #
+	bsnpre	= $02fd	; 765 serial # prefix (a/b/g...)
+	bsnval	= $02fe	; 766 serial # lo byte, +1=hi byte
 	;
 	death	= $1800
 	prgstart= $1801
@@ -161,7 +160,7 @@
 	comm	= 1017
 	flags	= 1018
 	cline	= 1019
-	lines	= 1022 ; # of lines in text editor buffer
+	lines	= 1022 ; $03F8 # of lines in text editor buffer
 	modes	= 1023
 	;
 	; garbage collection stuff?
