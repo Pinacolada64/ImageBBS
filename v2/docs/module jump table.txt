@@ -1,0 +1,136 @@
+2017-11 -- Pinacolada
+2008-12 -- Pinacolada
+
+ECS commands/modules
+
+im.bar
+	im=1	60002	press a key
+	im=2	60008	display BAR stats
+
+im.comm1
+	im=1	60002	LD - Change last date
+	im=2	60100	LG - View daily log
+	im=3	60200	CM - Credit Mall
+	im=4	60300	just return
+
+im.comm2
+	im=1	60002	MT - Mini term
+
+im.disp
+	im=1	60004	Display user's stats
+	im=2	60100	Display idle screen mask
+	im=3	60200	Display online screen mask
+	im=4	60300	Display online user's stats
+	im=5	60310	Display device/drive numbers
+		60350	Display I/O progress screen
+			(like im.screens)
+im.editor
+	im=1	60082	WF related stuff
+	im=2	60088	WF related stuff
+
+im.feedback
+			F - Feedback related stuff
+
+im.info
+	im=1	60002	EP - Edit account info: first/last name,
+			phone number, password, time zone
+			(see "s.m.info")
+	im=2	60030	PW - change password
+	im=3	60068	change system time zone
+	im=4	60074	TZ - change user time zone
+	im=5	60072	something time zone related
+	im=6	60078	something time zone related
+
+im.local
+	im=1	60002	AC - Add credits to online user
+	im=2	60006	?? - Read "s.menu 4" (local mode commands)
+	im=3	60008	?
+	im=4	60010	RD - Prompt for SEQ file to display
+	im=5	60016	BF - Display blocks free
+	im=6	60018	RP - Prompt for PRG file to display
+	im=7	60026	ZZ - Toggle local mode
+	im=8	60032	Something about mail/netmail files
+
+im.menus
+			Menu display stuff
+
+im.misc
+	im=1	60002	QM - QuickMail ("Notepad")
+	im=2	60066	PS - Personal Signature setup
+	im=3	60076	Another entry point for above
+			*These both are buggy*
+
+im.misc2
+	im=1	60006	write user account to disk
+	im=2	60026	read user account from disk
+	im=3	60004	return
+	im=4	60046	C - request chat
+	im=5	60062	T - time and date
+	im=6	60068	?
+	im=7	60074	something to do with u.index
+	im=8	60078	"
+	im=9	60082	PR - load a different protocol?
+	im=10	60088	?
+	im=11	60086	u.index stuff
+	im=12	60004	return
+	im=13	60092	RE - switch users
+
+im.nodes
+	im=1	60002	Node List/Net Map
+
+im.param2
+	im=1	60002	LD - change last call date
+	im=2	60200	MX - Multi-Archival Command System
+
+im.params
+	im=1	60004	EP - edit account parameters (uses "s.m.params")
+	im=2	60056	AT - change graphics modes
+			*** Looks like modes can be cycled through with "AT+"
+			*** and "AT-", and directly select mode x with "ATx"
+	im=3	60002	return
+	im=4	60094	PR - change transfer protocols
+	im=5	60096	"
+
+im.screens	Display transfer progress screen
+	im=1	60022	Display sub-board device/drive
+	im=2	60024	Display other device/drive
+
+im.select
+
+im.stats
+	im=1	60002	ST - user stats, access flags, etc.
+
+im.trans
+	im=1	60100	Send a file
+	im=2	60200	Receive a file
+	im=3	60300	Receive multiple files?
+	im=4	60400	?
+	im=5	60500	return
+	im=6	60500	return
+
+IM jump table: (This is Jack's renumbered IM)
+--------------
+309	GOSUB - load im.emul13
+501	(I)nfo or (P)arameters (EP, at a guess?)
+503	change password
+504	handles?
+505	handles?
+506	unimplemented
+507	unimplemented - changed to STZ, system time zone
+508	unimplemented?
+512	?
+514	handle stuff
+516	change user time zone
+520	change last call date
+521	MX command
+525	BA command
+528	ST command
+533	switch users	(GOSUB)
+534	C		(GOSUB)
+535	T		(GOSUB)
+540	DC
+541	DC also?
+
+Mods:
+-----
+542 NEW	added im=1:gosub440 (WF command)

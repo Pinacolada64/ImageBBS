@@ -1,36 +1,42 @@
 ' break.lbl
-{asm}break:	lda #$27
-		sta $d011
-		ldy #0
-		lda 0
-		jsr hex
-		lda 1
-		jsr hex
-		tsx
-		txa
-		jsr hex
-break2: pla
-		jsr hex
-		tsx
-		cpx #$ff
-		bne break2
-		byte 2
-		;
-hex:	pha
-		lsr
-		lsr
-		lsr
-		lsr
-		jsr hex1
-		pla
-hex1:	and #$0f
-		ora #$30
-		cmp #$3a
-		bcc hex2
-		adc #$06
-hex2:	sta $0400,y
-		lda #1
-		sta $d800,y
-		iny
-		rts
+{asm}break:
+	lda #$27
+	sta $d011
+
+	ldy #0
+	lda 0
+	jsr hex
+	lda 1
+	jsr hex
+	tsx
+	txa
+	jsr hex
+break2:
+	pla
+	jsr hex
+	tsx
+	cpx #$ff
+	bne break2
+	; byte 2
+	;
+hex:
+	pha
+	lsr
+	lsr
+	lsr
+	lsr
+	jsr hex1
+	pla
+hex1:
+	and #$0f
+	ora #$30
+	cmp #$3a
+	bcc hex2
+	adc #$06
+hex2:
+	sta $0400,y
+	lda #1
+	sta $d800,y
+	iny
+	rts
 {endasm}

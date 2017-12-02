@@ -1,4 +1,7 @@
 {number:60000}
+{crunch:on}
+{alpha:invert}
+{step:2}
 	on im goto {:60002}:return
 {:60002}
 	gosub 1634:&"{clear}{f6}{cyan}{rvrs on} {$c3}urrent {$d3}tatus: {f6}"
@@ -23,21 +26,28 @@
 	a%=ps:&"{pound}{back arrow}39 {white}{rvrs on} {$d4}otal {$d0}osts :{rvrs off}{lt. green} {pound}%a"
 	a%=rp:&"{f6}{white}{rvrs on} {$d4}otal {$d2}esp. :{rvrs off}{yellow} {pound}%a{f6}":gosub {:60076}:if a=.then{:60074}
 	&"{f6}{lt. red}{rvrs on}{$d9}ou {$c8}ave:{f6}":f=0
-	a=1:gosub 1004:if a then:&"{f6}{yellow}{$ce}on-{$d7}eed {$d3}tatus":f=1
-	a=3:gosub 1004:if a then:&"{f6}{lt. green}{$c6}ull {$cd}aintenance":f=1
-	a=4:gosub 1004:if a then:&"{f6}{yellow}{$d0}ost/{$d2}espond {$c3}apability":f=1
-	a=5:gosub 1004:if a then:&"{f6}{lt. green}{$ce}ormal {$d5}/{$c4} {$c1}ccess":f=1
-	a=7:gosub 1004:if a then:&"{f6}{yellow}{$d5}nlimited {$c3}redits":f=1
-	a=8:gosub 1004:if a then:&"{f6}{lt. green}{$d2}emote {$cd}aintenance {$c1}ccess":f=1
-	a=9:gosub 1004:if a then:&"{f6}{yellow}{$c5}-{$cd}ail {$c1}ccess":f=1
-	a=10:gosub 1004:if a then:&"{f6}{lt. green}{$d5}ser {$cc}ist {$c1}ccess":f=1
-	a=11:gosub 1004:if a then:&"{f6}{yellow}{$c2}.{$c1}.{$d2}. {$c1}nd {$cc}og {$c1}ccess":f=1
-	a=12:gosub 1004:if a then:&"{f6}{lt. green}{$d3}ub {$cd}aintenance {$c1}ccess":f=1
-	a=13:gosub 1004:if a then:&"{f6}{yellow}{$c6}ile {$cd}aintenance {$c1}ccess":f=1
-	a=14:gosub 1004:if a then:&"{f6}{lt. green}{$cd}{$c3}{$c9} {$c1}ccess":f=1
-	a=15:gosub 1004:if a then:&"{f6}{yellow}{$d0}rime {$d4}ime {$c4}ownload {$c3}apability":f=1
+	a=1:a$="{$ce}on-{$d7}eed {$d3}tatus":gosub {:sub.color}
+	a=3:a$="{$c6}ull {$cd}aintenance":gosub {:sub.color}
+	a=4:a$="{$d0}ost/{$d2}espond {$c3}apability":gosub {:sub.color}
+	a=5:a$="{$ce}ormal {$d5}/{$c4} {$c1}ccess":gosub {:sub.color}
+	a=7:a$="{$d5}nlimited {$c3}redits":gosub {:sub.color}
+	a=8:a$="{$d2}emote {$cd}aintenance {$c1}ccess":gosub {:sub.color}
+	a=9:a$="{$c5}-{$cd}ail {$c1}ccess":gosub {:sub.color}
+	a=10:a$="{$d5}ser {$cc}ist {$c1}ccess":gosub {:sub.color}
+	a=11:a$="{$c2}.{$c1}.{$d2}. {$c1}nd {$cc}og {$c1}ccess":gosub {:sub.color}
+	a=12:a$="{$d3}ub {$cd}aintenance {$c1}ccess":gosub {:sub.color}
+	a=13:a$="{$c6}ile {$cd}aintenance {$c1}ccess":gosub {:sub.color}
+	a=14:a$="{$cd}{$c3}{$c9} {$c1}ccess":gosub {:sub.color}
+	a=15:a$="{$d0}rime {$d4}ime {$c4}ownload {$c3}apability":gosub {:sub.color}
 	if f=0 then:&"{f6}{white}{$cd}inimal {$c1}ccess"
 {:60074}
 	&"{f6}":return
 {:60076}
 	&"{f6:2}{white} {$cd}ore?: ":gosub 1902:&"{clear}{cyan}":return
+' added by pina: normalize alternating colors
+' if not all flags are set, you could get 2 lines in the same color, and that simply won't do
+' "f and 1" returns 1 if an odd number, 0 if even, then displays the appropriate color
+{:sub.color}
+	gosub 1004:if a then f=f+1:&"{f6}"+mid$("{lt. green}{yellow}",(f and 1)+1,1)+a$
+	return
+	

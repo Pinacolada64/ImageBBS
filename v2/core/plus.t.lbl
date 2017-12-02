@@ -1,5 +1,7 @@
 {number:3000}
-	gosub 2100:dim s%(24,100):goto {:3100}
+{alpha:invert}
+{step:2}
+	gosub 2100:dim s%(24,100):goto{:3100}
 {:3002}
 	l$="{$c0:35}":return
 {:3004}
@@ -13,17 +15,17 @@
 {:3012}
 	a%=mn%-bl%:b=bl:&"{f6}{pound}!f {$c6}iles {$d4}ransfered{f1} {pound}!b {$c2}ytes.{f6} {$d4}ransfer {$d4}ime: {pound}%a.{f6}":return
 {:3014}
-	gosub {:3022}:&,18,0:&"{clear}{pound}q0{pound}$b{$d4}erminal {$cd}ode.{f6} ({f5}{$c3}=/{$c3}{$d4}{$d2}{$cc}{f5} {$c5}xits){f6:2}":&,10:goto {:3120}
+	gosub{:3022}:&,18,0:&"{clear}{pound}q0{pound}$b{$d4}erminal {$cd}ode.{f6} ({f5}{$c3}=/{$c3}{$d4}{$d2}{$cc}{f5} {$c5}xits){f6:2}":&,10:goto{:3120}
 {:3016}
 	&"{clear}{f6:2}{lt. blue}{$d4}ransfer {$c3}omplete!{f6}":&,25:return
 {:3022}
-	&,52,16,3:b$=mid$("{$d0}{$c1}{$d3}{$c3}{$c9:2} ",a%+1):&,52,18,3:on a%+1 goto {:3024}:b$="{$c1}{$ce}{$d3}{$c9}  "
+	&,52,16,3:b$=mid$("{$d0}{$c1}{$d3}{$c3}{$c9:2} ",a%+1):&,52,18,3:on a%+1 goto{:3024}:b$="{$c1}{$ce}{$d3}{$c9}  "
 {:3024}
 	&,52,19,3:c$=mid$("{$c3}{$c9}",a%+1,1)+"{$c2}{$cd}":return
 {:3026}
-	&"300{f6}":qb=300:&,41,0:goto {:3032}
+	&"300{f6}":qb=300:&,41,0:goto{:3032}
 {:3028}
-	&"1200{f6}":qb=1200:&,41,2:goto {:3032}
+	&"1200{f6}":qb=1200:&,41,2:goto{:3032}
 {:3030}
 	&"2400{f6}":qb=2400:&,41,3
 {:3032}
@@ -36,7 +38,7 @@
 {:3040}
 	&,52,16,bl%:return
 {:3042}
-	gosub {:3002}:&"{clear}{yellow} {$b0}{pound}$l{$c0}{$ae}{f6}"
+	gosub{:3002}:&"{clear}{yellow} {$b0}{pound}$l{$c0}{$ae}{f6}"
 	&" {yellow}{$dd}{cyan}{rvrs on}{pound}{back arrow}"+right$(str$(int(120-len(b$)/2)),2)
 	&"{pound}$b{pound}{back arrow}38{yellow}{rvrs off}{$dd}{f6}{yellow} {$ad}{pound}$l{$c0}{$bd}{f6}":return
 {:3048}
@@ -45,14 +47,14 @@
 	poke 53248,1:poke 53251,101:&,52,16,0:&,52,16,3:nl=a%:tt$="t":a=.:gosub 1667
 	&"{clear}":an$="*{$c9}mage {$d4}erm 1.3*":&,9:&"{f6:2}"
 	&,52,2,4:d1%=8:d2%=.:poke 53252,40:kk=mf:mf=1
-	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%:gosub {:3010}:gosub {:3242}
+	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%:gosub{:3010}:gosub{:3242}
 	dr=1:a$="s.starlink":gosub 1011:dt$(0)="":nn$(0)="":us$="":ps$="":sf%=.
 	if e%then{:3118}
 	&,2,2:dt$(0)=a$:nn$(0)="{$d4}{$d9}{$cd}{$ce}{$c5}{$d4}":sf%=1
 	&"{$d3}tarlink {$d5}ser {$c1}ccount:{pound}i0":us$=an$
 	&"{$d3}tarlink {$d0}assword    :{pound}i0":ps$=an$
 {:3118}
-	close 2:gosub {:3400}
+	close 2:gosub{:3400}
 {:3120}
 	poke 53252,40:&,18,1
 	&,69,0,17,"  1) {$d4}erminal {$cd}ode    6) {$d5}pload         ",$8f
@@ -61,8 +63,8 @@
 	&,69,0,20,"  4) {$d0}hone {$c2}ook       9) {$cd}ulti-{$c4}ownload ",$8f
 	&,69,0,21,"  5) {$c4}isconnect       0) {$d2}eturn {$d4}o {$c2:2}{$d3}  ",$8f
 	&"{f6:2}{lt. blue}{$d4}erm {$cf}ption:{white} {pound}g1{pound}v7{f6}"
-	gosub {:3006}:on a goto {:3014},{:3150},{:3200},{:3350},{:3300},{:3474},{:3476},{:3502},{:3556}
-	on-(an$="0")goto {:3568}:goto {:3120}
+	gosub{:3006}:on a goto{:3014},{:3150},{:3200},{:3350},{:3300},{:3474},{:3476},{:3502},{:3556}
+	on-(an$="0")goto{:3568}:goto{:3120}
 {:3150}
 	&,69,0,17,"  1) {$d3}end {$c4}isk {$c3}ommand                  ",$8f
 	&,69,0,18,"  2) {$d6}iew {$c4}isk {$c4}irectory                ",$8f
@@ -70,29 +72,29 @@
 	&,69,0,20,"  4) {$d3}et {$c4}evice,{$c4}rive                   ",$8f
 	&,69,0,21,"                                        ",$8f
 	&"{f6:2}{lt. blue}{$c4}{$cf}{$d3} {$cf}ption:{white} {pound}g1{pound}v7{f6}"
-	gosub {:3006}:on a goto {:3164},{:3166},{:3168},{:3182}:goto {:3120}
+	gosub{:3006}:on a goto{:3164},{:3166},{:3168},{:3182}:goto{:3120}
 {:3164}
-	&"{f6}{lt. blue}{$c4}isk {$c3}ommand: {pound}i0":gosub 1500:dr=0:gosub 1010:print# 15,an$:x=2:gosub {:3004}:gosub 1012:&:gosub {:3004}:goto {:3150}
+	&"{f6}{lt. blue}{$c4}isk {$c3}ommand: {pound}i0":gosub 1500:dr=0:gosub 1010:print# 15,an$:x=2:gosub{:3004}:gosub 1012:&:gosub{:3004}:goto{:3150}
 {:3166}
-	&"{lt. blue}":gosub 1008:gosub 1089:x=5:gosub {:3004}:goto {:3150}
+	&"{lt. blue}":gosub 1008:gosub 1089:x=5:gosub{:3004}:goto{:3150}
 {:3168}
-	&"{f6}{lt. blue}{$c6}ilename: {pound}i0":on-(an$="")goto {:3150}:f$=an$
+	&"{f6}{lt. blue}{$c6}ilename: {pound}i0":on-(an$="")goto{:3150}:f$=an$
 	&"{f6} ({$d3})eq {$cf}r ({$d0})rg?: {pound}g1{pound}v7{f6}":if an$<>"{$d3}"and an$<>"{$d0}"then an$="{$d3}"
-	t$=chr$(asc(an$)-128):gosub 1008:gosub 1470:on-(t$="s")goto {:3180}:x%=pr:pr=-2
+	t$=chr$(asc(an$)-128):gosub 1008:gosub 1470:on-(t$="s")goto{:3180}:x%=pr:pr=-2
 	dr=5:gosub 1010:a$=dr$+"++ read":&,7,dv%,2:gosub 1012:if e%or t$<>"p"then{:3178}
 	a$=f$+","+t$+",r":gosub 1011:&"{lt. blue}":&,16,0,80:close 2
 {:3178}
-	a=x%:gosub 1667:goto {:3150}
+	a=x%:gosub 1667:goto{:3150}
 {:3180}
-	a$=f$:gosub 1075:goto {:3150}
+	a$=f$:gosub 1075:goto{:3150}
 {:3182}
 	a%=d1%:&"{f6}{lt. blue}{$d5}/{$c4} {$c4}evice# : {pound}%a{f6}{$ce}ew {$c4}evice#?: {pound}i1{f6}":a=val(an$)
-	if a>0 and a<7 then dr=a:gosub 1009:d1%=dv%:d2%=val(dr$):goto {:3192}
+	if a>0 and a<7 then dr=a:gosub 1009:d1%=dv%:d2%=val(dr$):goto{:3192}
 	if a=>7 and a<=15 then d1%=a
 	a%=d2%:&"{$d5}/{$c4} {$c4}rive#  : {pound}%a{f6}{$ce}ew {$c4}rive#? : {pound}i1":a=val(an$)
 	if an$<>""and a=>.then d2%=val(an$)
 {:3192}
-	goto {:3150}
+	goto{:3150}
 {:3200}
 	&,69,0,17,"  1) {$d4}ranslation      6) {$cc}ine {$c6}eeds     ",$8f
 	&,69,0,18,"  2) {$c7}raphics {$cd}ode    7) {$c6}unction {$cb}eys  ",$8f
@@ -100,60 +102,89 @@
 	&,69,0,20,"  4) {$c2}aud {$d2}ate                          ",$8f
 	&,69,0,21,"  5) {$d0}ulse/{$d4}one {$c4}ial                    ",$8f
 	&"{f6:2}{lt. blue}{$d0}aram {$cf}ption:{white} {pound}g1{pound}v7{f6}"
-	gosub {:3006}:on a goto {:3214},{:3224},{:3228},{:3230},{:3234},{:3238},{:3256}:goto {:3120}
+	gosub{:3006}:on a goto{:3214},{:3224},{:3228},{:3230},{:3234},{:3238},{:3256}:goto{:3120}
 {:3214}
-	&"{f6}{lt. blue}{$c1}vailable {$cd}odes:{f6:2} 1. {$d0}{$c5}{$d4}{$c1}{$d3}{$c3}{$c9:2}{f6} 2. {$c1}{$d3}{$c3}{$c9:2}{f6} 3. {$c1}{$ce}{$d3}{$c9}{f6:2}{$d7}hich?: {pound}g1{pound}v7{f6}":gosub {:3006}
+	&"{f6}{lt. blue}{$c1}vailable {$cd}odes:{f6:2} 1. {$d0}{$c5}{$d4}{$c1}{$d3}{$c3}{$c9:2}{f6} 2. {$c1}{$d3}{$c3}{$c9:2}{f6} 3. {$c1}{$ce}{$d3}{$c9}{f6:2}{$d7}hich?: {pound}g1{pound}v7{f6}":gosub{:3006}
 	if a<1 or a>3 then{:3200}
-	&,52,16,0:&,52,18,0:on-(a=3)goto {:3220}:&,52,16,a-1:on-(a-1=1)goto {:3222}:&,52,19,0:goto {:3222}
+	&,52,16,0:&,52,18,0:on -(a=3) goto {:3220}:&,52,16,a-1:on -(a-1=1) goto {:3222}:&,52,19,0:goto {:3222}
 {:3220}
 	&,52,16,1:&,52,18,1
 {:3222}
-	goto {:3200}
+	goto{:3200}
 {:3224}
 	&"{f6}{lt. blue} ({$c3}){$c2}{$cd} {$cf}r ({$c9}){$c2}{$cd} {$c7}raphics?: {pound}g1{pound}v7{f6}":a=-(an$="{$c9}")
-	&,52,19,a:goto {:3200}
+	&,52,19,a:goto{:3200}
 {:3228}
 ' change transfer protocol:
-	gosub 1666:x=4:gosub {:3004}:goto {:3200}
+' possibly running out of RAM by loading "im.params"
+' quick hack: transplant relevant lines here
+'	gosub 1666:x=4:gosub{:3004}:goto{:3200}
+	gosub {:60082}:goto {:3200}
+{:60082}
+	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>.then{:60088}
+{:60084}
+	&"{f6}{$c1}vailable {$d0}rotocols:{f6:2}":for i=1 to x:a%=i:a$=mid$(tt$(i),10)
+	lp=1:&"{pound}%a) {pound}$a{pound}{back arrow}39 ":next:&"{f6:2}--> {pound}g1":a=val(an$)
+{:60088}
+	if a>.and a<=x then lp=1:&mid$(tt$(a),10):if a<x or b%=.then ul=a-1
+	if an$="{f2}"then a$="protos":gosub 1350:goto {:60084}
+	a=-a*(a>.):return
+{:60094}
+	&,52,4,3:on a% goto 1603:gosub {:60082}:goto {:60098}
+{:60096}
+	gosub {:60106}:a=ul+1:if a%then a=x
+{:60098}
+	on a+1 goto 1603:if b%=1 and a=x then a=2:goto 1738
+	a$=tt$(a):f=val(mid$(a$,7,1)):nb=val(mid$(a$,8,1)):d4$=mid$(a$,10):pr=-1
+	dr=5:gosub 1010:a$=dr$+"++ "+left$(a$,6):&,7,dv%,2:&,16,4,f:return
+{:60104}
+	gosub {:60106}:a$=mid$(tt$(ul+1),10):&,11:return
+{:60106}
+	&,11:b%=.:dr=1:a$="s.m.protos,s,r":gosub 1011:x=.:if e%then:&:return
+{:60108}
+	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=.then{:60108}
+	&,52,4,3:if zz=1 or a%=1 then x=x+1:tt$(x)="copier00 {$c3}opier":b%=1
+	close 2:return
+
 {:3230}
-	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub {:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub {:3004}:goto {:3200}
-	on a gosub {:3028},{:3030},{:3026}:x=5:gosub {:3004}:goto {:3200}
+	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub{:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub{:3004}:goto{:3200}
+	on a gosub{:3028},{:3030},{:3026}:x=5:gosub{:3004}:goto{:3200}
 {:3234}
 	a=-(tt$="t"):b$=mid$("{$d4}one {$d0}ulse",a*5+1,5):tt$="t":if a then tt$="p"
-	&"{f6}{lt. blue}{$c4}ial {$cd}ode: {pound}$b{f6}":x=5:gosub {:3004}:goto {:3200}
+	&"{f6}{lt. blue}{$c4}ial {$cd}ode: {pound}$b{f6}":x=5:gosub{:3004}:goto{:3200}
 {:3238}
 	&,52,17,2:&,52,17,3:b$=mid$("ffn ",a%*2+1,2):&"{f6}{$cc}inefeeds: {$cf}{pound}$b{f6}"
-	x=5:gosub {:3004}:goto {:3200}
+	x=5:gosub{:3004}:goto{:3200}
 {:3242}
-	a$="e.termkeys":dr=3:gosub 1011:goto {:3246}
+	a$="e.termkeys":dr=3:gosub 1011:goto{:3246}
 {:3244}
-	a$="e.fkeys":dr=3:gosub 1011:goto {:3246}
+	a$="e.fkeys":dr=3:gosub 1011:goto{:3246}
 {:3246}
-	if e%then for i=1 to 8:tt$(i)="":next:goto {:3252}
+	if e%then for i=1 to 8:tt$(i)="":next:goto{:3252}
 	for i=1 to 8:&,2,2:if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
 	tt$(i)=a$:next:close 2
 {:3252}
 	f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4):f5$=tt$(5)
 	f6$=tt$(6):f7$=tt$(7):f8$=tt$(8):return
 {:3256}
-	gosub {:3242}:cf=.
+	gosub{:3242}:cf=.
 {:3258}
 	&"{f6}{$c6}unction {$cb}ey {$c5}ditor{f6}{pound}vj":for i=1 to 8:a$=left$(tt$(i),35):a%=i
 	&"{lt. blue}{$c6}{pound}#1{pound}%a{blue}) {white}{pound}$a{f6}":i=i+rc*n:next
 	&"{white}{pound}vj{$c5}{lt. blue}dit {$d7}hich{blue}?{white} {pound}g1":a=val(an$):if a<1 or a>8 then{:3270}
 	&"{pound}v7{f6}":w$=tt$(a):p$="{$c6}"+chr$(48+a)+" ({f5}{back arrow}{f5} = {$d2}{$c5}{$d4}{$d5}{$d2}{$ce})":poke 53252,75:pl=0:&,1,32
 	if an$<>""then tt$(a)=an$:cf=1
-	goto {:3258}
+	goto{:3258}
 {:3270}
 	&"{$d1}uit{f6}":if cf=.then{:3200}
 	&"{f6}{$d3}ave {$c3}hanges?: ":gosub 1902:if a=.then{:3200}
 	a$="e.termkeys":dr=3:gosub 1023:for i=1 to 8:print# 2,tt$(i):next
-	close 2:gosub {:3242}:goto {:3200}
+	close 2:gosub{:3242}:goto{:3200}
 {:3300}
-	&"{f6}{$c8}anging {$d5}p....":x=3:gosub 4000:x=3:gosub {:3004}:goto {:3120}
+	&"{f6}{$c8}anging {$d5}p....":x=3:gosub 4000:x=3:gosub{:3004}:goto{:3120}
 {:3302}
-	gosub {:3010}:print# 131,"ate0v0":&,22,20:x=9:gosub 4000
-	r=1:a$=tt$+dt$(0):b$=nn$(0):gosub {:3036}:gosub {:3406}:t=200:if b<>1 then{:3350}
+	gosub{:3010}:print# 131,"ate0v0":&,22,20:x=9:gosub 4000
+	r=1:a$=tt$+dt$(0):b$=nn$(0):gosub{:3036}:gosub{:3406}:t=200:if b<>1 then{:3350}
 	print# 131,chr$(97);:&,22,5:&"a"
 {:3308}
 	t=t-1:&,4:a=peek(780)and 127:if a<>88 and a<>120 and t>0 then{:3308}
@@ -167,13 +198,13 @@
 	if a=0 and x>0 then{:3312}
 	t=.:print# 131,us$":"mid$(str$(f%),2)";"ps$
 {:3324}
-	&,4:a=peek(780):a$=chr$(a):if a then:&:t=.:goto {:3324}
+	&,4:a=peek(780):a$=chr$(a):if a then:&:t=.:goto{:3324}
 	t=t+1:if t<100 then{:3324}
 	t=.:&,22,10:print# 131,"d "f$
 {:3330}
-	&,4:a=peek(780):a$=chr$(a):if a then:&:t=.:goto {:3330}
+	&,4:a=peek(780):a$=chr$(a):if a then:&:t=.:goto{:3330}
 	t=t+1:if t<100 then{:3330}
-	gosub {:3040}:goto {:3014}
+	gosub{:3040}:goto{:3014}
 {:3336}
 	&"{clear}{f6:2}":a=val(mid$(an$,2,2)):if a$=an$then:&"{$c5}dit {$d7}hich? {pound}i1":a=val(an$)
 	if a<1 or a>th then{:3350}
@@ -181,7 +212,7 @@
 	p$="{$c2:2}{$d3} {$ce}umber":pl=1:poke 53252,14:w$=dt$(a):&,1,32:if an$<>""then dt$(a)=an$
 	if sf%then p$="{$d3}tarlink  ":pl=1:poke 53252,5:w$=str$(f%(a))
 	if sf%then:&,1,32:if an$<>""then f%(a)=val(an$)
-	goto {:3350}
+	goto{:3350}
 {:3350}
 	&,18,0:a=.:s$="                                "
 	for i=1 to 20:&,60,1,32,s%(1,i),b$:b$=left$(b$+s$,32)
@@ -189,43 +220,43 @@
 	tt$(i)="  "+a$+" "+b$+c$+"  ":&,69,0,i+1,tt$(i),3:next:x=1
 {:3358}
 	&,69,0,x+1,tt$(x),1:&"{home}> {pound}g1"
-	if an$="{up}"then:&,69,0,x+1,tt$(x),3:x=x-1-20*(x=1):goto {:3358}
-	if an$="{down}"then:&,69,0,x+1,tt$(x),3:x=x+1+20*(x=20):goto {:3358}
-	goto {:3120}
+	if an$="{up}"then:&,69,0,x+1,tt$(x),3:x=x-1-20*(x=1):goto{:3358}
+	if an$="{down}"then:&,69,0,x+1,tt$(x),3:x=x+1+20*(x=20):goto{:3358}
+	goto{:3120}
 	&,69,0,24,"{$c5}nter:#,{$c4}ial,{$c5}dit,{$cc}oad,{$d3}ave? {pound}i1":a$=left$(an$,1)
-	on-(an$="{$c4}")-2*(an$="{$cc}")-3*(an$="{$d3}")-4*(a$="{$c5}")goto {:3388},{:3392},{:3394},{:3336}
+	on-(an$="{$c4}")-2*(an$="{$cc}")-3*(an$="{$d3}")-4*(a$="{$c5}")goto{:3388},{:3392},{:3394},{:3336}
 	a=val(an$):if a<1 or a>th then{:3120}
 	if dt$(a)=""then{:3350}
-	an$=tt$+dt$(a):b$=nn$(a):gosub {:3042}:z$=an$
-	if f%(a)and sf%<>0 then bl=a:&"{f6}{lt. blue} {$d5}se {$d3}tarlink? ":gosub 1902:c=a:a=bl:on c goto {:3442}
+	an$=tt$+dt$(a):b$=nn$(a):gosub{:3042}:z$=an$
+	if f%(a)and sf%<>0 then bl=a:&"{f6}{lt. blue} {$d5}se {$d3}tarlink? ":gosub 1902:c=a:a=bl:on c goto{:3442}
 {:3378}
-	gosub {:3010}:print# 131,"ate0v0":x=9:gosub 4000
+	gosub{:3010}:print# 131,"ate0v0":x=9:gosub 4000
 	&"{f6}{lt. blue} {$c1}uto {$d2}edial?: ":gosub 1902:r=a:&"{f6:2}":a%=.:an$=z$
 	a%=a%+1
-	&"{f6}{$d0}ress {f5}{$c3}={f5} to {$c1}bort{f6:2}":a$=an$:gosub {:3036}:gosub {:3406}:&,18,0:gosub {:3040}:goto {:3014}
-	goto {:3350}
+	&"{f6}{$d0}ress {f5}{$c3}={f5} to {$c1}bort{f6:2}":a$=an$:gosub{:3036}:gosub{:3406}:&,18,0:gosub{:3040}:goto{:3014}
+	goto{:3350}
 {:3388}
-	b$="{$c4}ial {$ce}umber":gosub {:3042}:gosub {:3452}:on-(an$="")goto {:3350}:f$=an$:if sf%then{:3446}
+	b$="{$c4}ial {$ce}umber":gosub{:3042}:gosub{:3452}:on-(an$="")goto{:3350}:f$=an$:if sf%then{:3446}
 {:3390}
-	an$=tt$+f$:goto {:3378}
+	an$=tt$+f$:goto{:3378}
 {:3392}
-	&"{$cc}oading {$d0}honebook{f6}":gosub {:3400}:goto {:3350}
+	&"{$cc}oading {$d0}honebook{f6}":gosub{:3400}:goto{:3350}
 {:3394}
 	&"{$d3}aving {$d0}honebook{f6}":a$="s.phone":dr=1:gosub 1023
 	for i=1 to th:print# 2,mid$(str$(f%(i)+1e5),2);left$(nn$(i)+s$,16)dt$(i)
-	next:close 2:goto {:3350}
+	next:close 2:goto{:3350}
 {:3400}
 	th=40:dr=3:gosub 1010:a$=dr$+"e.phone":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
 	if e%then s%(0,0)=0
 	return
 {:3406}
 	print# 131,"atd"a$:&"{$c4}ialing...{pound}$b{f6}"
-	&,22,5:t=400:b=.:gosub {:3420}:on a goto {:3418}
+	&,22,5:t=400:b=.:gosub{:3420}:on a goto{:3418}
 {:3410}
-	t=t-1:on-(t<0)goto {:3414}:gosub {:3420}:on a goto {:3418}:&,4:b=val(chr$(peek(780)and 127))
-	gosub {:3422}:on b goto {:3414},{:3416}:goto {:3410}
+	t=t-1:on-(t<0)goto{:3414}:gosub{:3420}:on a goto{:3418}:&,4:b=val(chr$(peek(780)and 127))
+	gosub{:3422}:on b goto{:3414},{:3416}:goto{:3410}
 {:3414}
-	print# 131:&,22,20:on r goto {:3406}:b=.
+	print# 131:&,22,20:on r goto{:3406}:b=.
 {:3416}
 	b=1:return
 {:3418}
@@ -233,9 +264,9 @@
 {:3420}
 	a=-(peek(653)=2 or rc>0 or t<0):return
 {:3422}
-	on b goto {:3424},{:3426},{:3428},{:3430},{:3432},{:3434},{:3436}:return
+	on b goto{:3424},{:3426},{:3428},{:3430},{:3432},{:3434},{:3436}:return
 {:3424}
-	&,4:b=peek(780)and 127:on-(b=48)goto {:3438}:goto {:3440}
+	&,4:b=peek(780)and 127:on-(b=48)goto{:3438}:goto{:3440}
 {:3426}
 	&"{$d2}ing...":b=0:return
 {:3428}
@@ -253,20 +284,20 @@
 {:3440}
 	&"{$c3}onnect 300{f6}":&,41,0:b=2:return
 {:3442}
-	gosub {:3468}:if b then{:3378}
-	f%=f%(a):f$=right$(dt$(a),7):goto {:3302}
+	gosub{:3468}:if b then{:3378}
+	f%=f%(a):f$=right$(dt$(a),7):goto{:3302}
 {:3446}
 	&"{$d5}se {$d3}tarlink? ":gosub 1902:if a=.then{:3390}
 	&"{$d3}tarlink {$ce}ode: {pound}i1":f%=val(a$):if f%=.then{:3390}
-	goto {:3302}
+	goto{:3302}
 {:3452}
 	&"{white}{$d0}hone {$ce}umber{blue}:{white} {pound}i1{f6}":return
 	&"{$c2}aud {$d2}ate (+,- {$d4}o {$c3}hange){f6}:":a=qb
 {:3456}
-	a%=300:gosub {:3466}:a%=1200:gosub {:3466}:a%=2400:gosub {:3466}:&"{pound}g1"
+	a%=300:gosub{:3466}:a%=1200:gosub{:3466}:a%=2400:gosub{:3466}:&"{pound}g1"
 	if an$="+"then a=a-900*(a=300)-1200*(a=1200)+2100*(a=2400)
 	if an$="-"then a=a+1200*(a=2400)+900*(a=1200)-2100*(a=300)
-	if an$<>r$then:&"{pound}ho":goto {:3456}
+	if an$<>r$then:&"{pound}ho":goto{:3456}
 	&"{f6}":return
 {:3466}
 	&"{pound}#4{pound}#  {pound}r"+chr$(48-(a=a%))+"{pound}%a{rvrs off}":return
@@ -275,26 +306,26 @@
 	b=val(mid$(d1$,8,2)):if b>6 and b<87 and b<>12 then b=1:return
 	b=.:return
 {:3474}
-	x=1:goto {:3478}
+	x=1:goto{:3478}
 {:3476}
 	x=2
 {:3478}
 	poke 53252,16:&"{f6}{$c6}ilename?: {pound}i0":f$=an$
 	&"{f6}({$d0})rg or ({$d3})eq?: {pound}g1{pound}v7{f6}":t$=chr$(asc(an$)and 127)
 	if f$=""or(t$<>"p"and t$<>"s")then{:3014}
-	a$=f$+","+t$:on x goto {:3486},{:3492}:goto {:3120}
+	a$=f$+","+t$:on x goto{:3486},{:3492}:goto{:3120}
 {:3486}
-	b$=a$:a$=b$+",r":dr=0:gosub 1011:if e%then close 2:goto {:3500}
+	b$=a$:a$=b$+",r":dr=0:gosub 1011:if e%then close 2:goto{:3500}
 	a$=b$:poke 2043,1:if right$(a$,1)<>"p"then poke 2043,2
-	an$=a$:gosub {:3034}:&,16,0:close 2:poke 670,peek(669):goto {:3498}
+	an$=a$:gosub{:3034}:&,16,0:close 2:poke 670,peek(669):goto{:3498}
 {:3492}
 	b$=a$:a$=b$+",w":dr=0:gosub 1011
-	a$=b$:if e%then close 2:goto {:3500}
-	an$=a$:gosub {:3034}:&,16,1:close 2:for x=1 to 700:next:poke 668,peek(667)
+	a$=b$:if e%then close 2:goto{:3500}
+	an$=a$:gosub{:3034}:&,16,1:close 2:for x=1 to 700:next:poke 668,peek(667)
 {:3498}
-	gosub {:3016}:a=rc:&"{f6}{pound}!a {$c2}ytes{f6}{pound}%a {$c7}ood {$c2}lks{f6}{pound}%b {$c2}ad {$c2}lks{f6}"
+	gosub{:3016}:a=rc:&"{f6}{pound}!a {$c2}ytes{f6}{pound}%a {$c7}ood {$c2}lks{f6}{pound}%b {$c2}ad {$c2}lks{f6}"
 {:3500}
-	x=3:gosub {:3004}:goto {:3014}
+	x=3:gosub{:3004}:goto{:3014}
 {:3502}
 	dr=0:gosub 1010
 	&"{f6}{lt. blue}{$d0}attern: ":gosub 1499:b$="*"
@@ -303,48 +334,48 @@
 	close 1:open 1,dv%,0,"$"+dr$+an$:s=.:bl=.:f%=1:c%=.:sh=.:rc=.
 	&"{f6:2} [{$d9}]es [{$ce}]o [{$c5}]very [{$d3}]tart [{$c1}]bort{f6}{pound}vj{f6}":get#1,a$,a$:&,8,1,1:lp=1:&"{pound}$a{f6}"
 {:3514}
-	&,8,1,1:s=st:if mid$(a$,7,1)="b"then b$=a$:&"{f6}{pound}$b{f6}":goto {:3528}
+	&,8,1,1:s=st:if mid$(a$,7,1)="b"then b$=a$:&"{f6}{pound}$b{f6}":goto{:3528}
 	b%=val(a$):f$=mid$(a$,8):t$=mid$(a$,26,1):g$=t$
 	for i=2 to 17:if mid$(f$,i,1)=qt$then f$=left$(f$,i-1)
-	next:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5}":on bl goto {:3526}:&"{pound}{back arrow}32?: {pound}g1":a$=an$
+	next:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5}":on bl goto{:3526}:&"{pound}{back arrow}32?: {pound}g1":a$=an$
 	x=-(a$="{$d9}")-2*(a$="{$d3}")-3*(a$="{$c1}")-4*(a$="{$c5}"):&mid$("{$ce}o   {$d9}es  {$d3}tart{$c1}bort{$c5}very",x*5+1,5)
-	bl=-(a$="{$c5}"):on x+1 goto {:3530},{:3526},{:3528},{:3528},{:3526}
+	bl=-(a$="{$c5}"):on x+1 goto{:3530},{:3526},{:3528},{:3528},{:3526}
 {:3526}
-	b$=f$+","+t$:tt$(f%)=b$:c%=c%+b%:f%=f%+1:goto {:3530}
+	b$=f$+","+t$:tt$(f%)=b$:c%=c%+b%:f%=f%+1:goto{:3530}
 {:3528}
 	s=1:if x=3 then f%=1
 {:3530}
 	&"{f6}"
 	if rc or sh then bl=.
-	on-(s=.and f%<101)goto {:3514}:close 1:f%=f%-1:on-(f%<1)goto {:3120}
+	on-(s=.and f%<101)goto{:3514}:close 1:f%=f%-1:on-(f%<1)goto{:3120}
 	bl%=mn%:bl=.:&"{f6:2}{$d2}eady {$d4}o {$d3}end {pound}#0{pound}%f {$c6}iles.{f6}"
-	&"{f6} {$d0}ress {white}{rvrs on}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{rvrs off}{lt. blue} {$d4}o {$c2}egin: {pound}g1{f6}":f=1:bb%=0:gosub {:3542}:gosub {:3016}:gosub {:3012}
-	x=4:gosub {:3004}:goto {:3014}
+	&"{f6} {$d0}ress {white}{rvrs on}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{rvrs off}{lt. blue} {$d4}o {$c2}egin: {pound}g1{f6}":f=1:bb%=0:gosub{:3542}:gosub{:3016}:gosub{:3012}
+	x=4:gosub{:3004}:goto{:3014}
 {:3542}
 	an$=tt$(f):&,15,2:a$=an$+",r":dr=0:gosub 1011:if e%then{:3548}
 {:3544}
-	x=1:gosub {:3034}:&,16,2:&,22,10:&,16,0:gosub {:3048}:if b=.then{:3552}
-	&,22,10:on-(f>=f%)goto {:3554}:f=f+1:bl=bl+rc:goto {:3542}
+	x=1:gosub{:3034}:&,16,2:&,22,10:&,16,0:gosub{:3048}:if b=.then{:3552}
+	&,22,10:on-(f>=f%)goto{:3554}:f=f+1:bl=bl+rc:goto{:3542}
 {:3548}
-	close 2:on-(f=f%)goto {:3550}:for x=f to f%-1:tt$(x)=tt$(x+1):next
+	close 2:on-(f=f%)goto{:3550}:for x=f to f%-1:tt$(x)=tt$(x+1):next
 {:3550}
-	f%=f%-1:f=f-1:goto {:3544}
+	f%=f%-1:f=f-1:goto{:3544}
 {:3552}
 	bb%=1:b=0:f=f-1
 {:3554}
 	an$="":&,16,2:a%=f:return
 {:3556}
 	&"{clear}{f6:3}{$cd}ulti-{$c4}ownload: {$d7}aiting {$c6}or {$d3}tart...{f6}"
-	f=.:bl%=mn%:bl=.:gosub {:3560}:gosub {:3016}:gosub {:3012}:x=4:gosub {:3004}:goto {:3014}
+	f=.:bl%=mn%:bl=.:gosub{:3560}:gosub{:3016}:gosub{:3012}:x=4:gosub{:3004}:goto{:3014}
 {:3560}
-	on-(f=>100)goto {:3566}:&,16,3:on-(an$="")goto {:3566}:f=f+1:tt$(f)=an$:a$=an$+",w":dr=0:gosub 1011:if e%then f=f-1:goto {:3566}
-	x=2:gosub {:3034}:&,16,1:gosub {:3048}:if b=.then a$=left$(tt$(f),len(tt$(f))-2):f=f-1:goto 1024
-	tt$(f)=chr$(b and 255)+chr$(b/256)+tt$(f):bl=bl+rc:goto {:3560}
+	on-(f=>100)goto{:3566}:&,16,3:on-(an$="")goto{:3566}:f=f+1:tt$(f)=an$:a$=an$+",w":dr=0:gosub 1011:if e%then f=f-1:goto{:3566}
+	x=2:gosub{:3034}:&,16,1:gosub{:3048}:if b=.then a$=left$(tt$(f),len(tt$(f))-2):f=f-1:goto 1024
+	tt$(f)=chr$(b and 255)+chr$(b/256)+tt$(f):bl=bl+rc:goto{:3560}
 {:3566}
 	print# 131,"{$18:3}";:return
 {:3568}
 	&"{f6}{lt. blue} ({$d2})eset {$cf}r ({$cc})ink {$c2:2}{$d3}?: {pound}g1{pound}v7{f6}":f1=3:if an$="{$cc}"then f1=.
-	gosub {:3244}:on-(i%or id=1)goto {:3572}:poke 53248,0:ac%=16:mf=kk:a$="lo":goto 1016
+	gosub{:3244}:on-(i%or id=1)goto{:3572}:poke 53248,0:ac%=16:mf=kk:a$="lo":goto 1016
 {:3572}
 	gosub 1073:goto 1811
 	rem +.t
