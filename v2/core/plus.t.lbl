@@ -3,6 +3,7 @@
 {:3002}
 	l$="{$c0:35}":return
 {:3004}
+' wait x tenths of a second?
 	&,22,x*5:return
 {:3006}
 	a=abs(int(val(an$)))
@@ -112,6 +113,7 @@
 	&"{f6}{lt. blue} ({$c3}){$c2}{$cd} {$cf}r ({$c9}){$c2}{$cd} {$c7}raphics?: {pound}g1{pound}v7{f6}":a=-(an$="{$c9}")
 	&,52,19,a:goto {:3200}
 {:3228}
+' change transfer protocol:
 	gosub 1666:x=4:gosub {:3004}:goto {:3200}
 {:3230}
 	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub {:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub {:3004}:goto {:3200}
