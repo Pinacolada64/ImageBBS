@@ -1,4 +1,4 @@
-###Image BBS v2.0
+# Image BBS v2.0
 
 This is the development branch for Image BBS v2.
 
