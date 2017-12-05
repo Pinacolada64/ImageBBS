@@ -2,6 +2,7 @@
 {alpha:invert}
 {step:2}
 {crunch:on}
+' todo: make +.t modular: +.t.options, perhaps
 	gosub 2100:dim s%(24,100):goto{:3100}
 {:3002}
 	l$="{$c0:35}":return
@@ -39,6 +40,7 @@
 {:3040}
 	&,52,16,bl%:return
 {:3042}
+' center b$
 	gosub{:3002}:&"{clear}{yellow} {$b0}{pound}$l{$c0}{$ae}{f6}"
 	&" {yellow}{$dd}{cyan}{rvrs on}{pound}{back arrow}"+right$(str$(int(120-len(b$)/2)),2)
 	&"{pound}$b{pound}{back arrow}38{yellow}{rvrs off}{$dd}{f6}{yellow} {$ad}{pound}$l{$c0}{$bd}{f6}":return
@@ -107,9 +109,10 @@
 	gosub{:3006}:on a goto{:3214},{:3224},{:3228},{:3230},{:3234},{:3238},{:3256}:goto{:3120}
 {:sub.update_params}
 	&,69,20,19,left$(d4$+"                  ",18),$8f
-	&,69,19,20,left$(str$(qb)+"    ",4),$8f
+	&,69,19,20,left$(str$(qb)+"    ",5),$8f
 	return
 {:3214}
+' use im.params, im=2
 	&"{f6}{lt. blue}{$c1}vailable {$cd}odes:{f6:2} 1. {$d0}{$c5}{$d4}{$c1}{$d3}{$c3}{$c9:2}{f6} 2. {$c1}{$d3}{$c3}{$c9:2}{f6} 3. {$c1}{$ce}{$d3}{$c9}{f6:2}{$d7}hich?: {pound}g1{pound}v7{f6}":gosub{:3006}
 	if a<1 or a>3 then{:3200}
 	&,52,16,0:&,52,18,0:on -(a=3) goto {:3220}:&,52,16,a-1:on -(a-1=1) goto {:3222}:&,52,19,0:goto {:3222}
@@ -125,7 +128,7 @@
 ' possibly running out of RAM by loading "im.params"
 ' quick hack: transplant relevant lines here
 '	gosub 1666:x=4:gosub{:3004}:goto{:3200}
-	gosub {:60082}:goto {:3200}
+	gosub {:60082}:gosub {:sub.update_params}:goto {:3200}
 {:60082}
 	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>.then{:60088}
 {:60084}
@@ -136,14 +139,14 @@
 	if an$="{f2}"then a$="protos":gosub 1350:goto {:60084}
 	a=-a*(a>.):return
 {:60094}
+' Local Mode (No Modem IO)?
 	&,52,4,3:on a% goto 1603:gosub {:60082}:goto {:60098}
 {:60096}
 	gosub {:60106}:a=ul+1:if a%then a=x
 {:60098}
 	on a+1 goto 1603:if b%=1 and a=x then a=2:goto 1738
 	a$=tt$(a):f=val(mid$(a$,7,1)):nb=val(mid$(a$,8,1)):d4$=mid$(a$,10):pr=-1
-	dr=5:gosub 1010:a$=dr$+"++ "+left$(a$,6):&,7,dv%,2:&,16,4,f
-	gosub {:sub.update_params}:return
+	dr=5:gosub 1010:a$=dr$+"++ "+left$(a$,6):&,7,dv%,2:&,16,4,f:return
 {:60104}
 	gosub {:60106}:a$=mid$(tt$(ul+1),10):&,11:return
 {:60106}
@@ -152,7 +155,6 @@
 	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=.then{:60108}
 	&,52,4,3:if zz=1 or a%=1 then x=x+1:tt$(x)="copier00 {$c3}opier":b%=1
 	close 2:return
-
 {:3230}
 	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub{:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub{:3004}:goto{:3200}
 	on a gosub{:3028},{:3030},{:3026}:x=5:gosub{:3004}:goto{:3200}
@@ -213,25 +215,33 @@
 	t=t+1:if t<100 then{:3330}
 	gosub{:3040}:goto{:3014}
 {:3336}
-	&"{clear}{f6:2}":a=val(mid$(an$,2,2)):if a$=an$then:&"{$c5}dit {$d7}hich? {pound}i1":a=val(an$)
+' edit phonebook entry:
+	&"{f6:2}":a=val(mid$(an$,2,2)):if a$=an$then:&"{$c5}dit {$d7}hich? {pound}i1":a=val(an$)
 	if a<1 or a>th then{:3350}
 	p$="{$c2:2}{$d3} {$ce}ame  ":pl=.:poke 53252,16:w$=nn$(a):&,1,32:if an$<>""then nn$(a)=an$
 	p$="{$c2:2}{$d3} {$ce}umber":pl=1:poke 53252,14:w$=dt$(a):&,1,32:if an$<>""then dt$(a)=an$
 '	if sf%then p$="{$d3}tarlink  ":pl=1:poke 53252,5:w$=str$(f%(a))
 '	if sf%then:&,1,32:if an$<>""then f%(a)=val(an$)
-	goto{:3350}
+'	goto{:3350}
 {:3350}
 ' phone book stuff:
-	&,18,0:a=.:s$="                                "
-	for i=1 to 20:&,60,1,32,s%(1,i),b$:b$=left$(b$+s$,32)
+	&,18,0:&"{pound}f1":a=. ':s$="                                "
+' get bbs name from struct:
+	for i=1 to 20:&,60,1,32,s%(1,i),b$ ':b$=left$(b$+s$,32)
+' not sure what this is about:
 	a$=right$(str$(i),2):c$=" ":if s%(0,i)then c$="*"
-	tt$(i)="  "+a$+" "+b$+c$+"  ":&,69,0,i+1,tt$(i),3:next:x=1
+'	tt$(i)="  "+a$+" "+b$+c$+"  ":&,69,0,i+1,tt$(i),3:next:x=1
+	tt$(i)="  "+a$+" "+b$+c$+"  ":&tt$(i)+"{f6}":next:x=1
 {:3358}
-	&,69,0,x+1,tt$(x),1:&"{home}> {pound}g1"
-	if an$="{up}"then:&,69,0,x+1,tt$(x),3:x=x-1-20*(x=1):goto{:3358}
-	if an$="{down}"then:&,69,0,x+1,tt$(x),3:x=x+1+20*(x=20):goto{:3358}
+' cursor driven menu. kind of neat, but I don't know what purpose it serves
+'	&,69,0,x+1,tt$(x),1:&"{home}> {pound}g1"
+'	if an$="{up}"then:&,69,0,x+1,tt$(x),3:x=x-1-20*(x=1):goto{:3358}
+'	if an$="{down}"then:&,69,0,x+1,tt$(x),3:x=x+1+20*(x=20):goto{:3358}
 '	goto{:3120}
-	&,69,0,24,"{$c5}nter:#,{$c4}ial,{$c5}dit,{$cc}oad,{$d3}ave? {pound}i1":a$=left$(an$,1)
+' Enter: #, Dial, Edit, Load, Save? []
+'	&,69,0,24,"{$c5}nter:#,{$c4}ial,{$c5}dit,{$cc}oad,{$d3}ave? {pound}i1":a$=left$(an$,1)
+	&"{$c5}nter: #, {$c4}ial, {$c5}dit, {$cc}oad, {$d3}ave? {pound}i1":a$=left$(an$,1)
+' dial, load, save, edit:
 	on -(an$="{$c4}")-2*(an$="{$cc}")-3*(an$="{$d3}")-4*(a$="{$c5}") goto {:3388},{:3392},{:3394},{:3336}
 	a=val(an$):if a<1 or a>th then{:3120}
 	if dt$(a)=""then{:3350}
@@ -250,8 +260,9 @@
 {:3392}
 	&"{$cc}oading {$d0}honebook{f6}":gosub{:3400}:goto{:3350}
 {:3394}
-	&"{$d3}aving {$d0}honebook{f6}":a$="s.phone":dr=1:gosub 1023
-	for i=1 to th:print# 2,mid$(str$(f%(i)+1e5),2);left$(nn$(i)+s$,16)dt$(i)
+' why does it save s.phone?
+	&"{$d3}aving {$d0}honebook{f6}" ':a$="s.phone":dr=1:gosub 1023
+'	for i=1 to th:print# 2,mid$(str$(f%(i)+1e5),2);left$(nn$(i)+s$,16)dt$(i)
 	next:close 2:goto{:3350}
 {:3400}
 	th=40:dr=3:gosub 1010:a$=dr$+"e.phone":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
@@ -335,6 +346,7 @@
 {:3500}
 	x=3:gosub{:3004}:goto{:3014}
 {:3502}
+' could we use im.select here?
 	dr=0:gosub 1010
 	&"{f6}{lt. blue}{$d0}attern: ":gosub 1499:b$="*"
 	for i=1 to len(an$):if mid$(an$,i,1)="*"then b$=""
@@ -373,6 +385,7 @@
 {:3554}
 	an$="":&,16,2:a%=f:return
 {:3556}
+' im.trans, im=3
 	&"{clear}{f6:3}{$cd}ulti-{$c4}ownload: {$d7}aiting {$c6}or {$d3}tart...{f6}"
 	f=.:bl%=mn%:bl=.:gosub{:3560}:gosub{:3016}:gosub{:3012}:x=4:gosub{:3004}:goto{:3014}
 {:3560}

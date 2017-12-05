@@ -126,7 +126,7 @@ Last updated 25/Dec/2008 16:43
 	
 	GetStruc: get string from structure
 	Usage:	&,60,1,<#_of_bytes>,array(a,b),string$
-	Example:
+	Example:&,60,1,50,jm%(5,fd%(i)),a$ - im.menus
 	
 	LoadStruc: load structure from disk
 	Usage:	&,60,2,0,array(a,b),"<filename>",<device>
@@ -146,11 +146,11 @@ Last updated 25/Dec/2008 16:43
 	GetDate: get date string from structure (BCD)
 	Usage:	&,60,5,array(a,b),<string>
 
-		arry(a,b)	starting element
+		array(a,b)	starting element
 		string$		the date string
 	
-	DoScan: Scan structures (yikes)
-	Usage:	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
+	DoScan	Scan structures (yikes)
+	Usage	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
 
 	<number>	# of structures to scan
 	<command>
@@ -162,11 +162,11 @@ Last updated 25/Dec/2008 16:43
 			5	date   CMP, >=
 	a(a,b)		starting flags element
 	b(a,b)		starting object element
-	<l>		unknown
+	<l>		unknown, perhaps field width?
 	<bits>		the bits to set if true
 	<test>		the object to test for
-		ilen	1	$61
-		istr	2	$62
+				ilen	1	$61
+				istr	2	$62
 
 		from i.UD:
 	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
@@ -175,25 +175,28 @@ Last updated 25/Dec/2008 16:43
 		(assuming &,60,7 at least)
 		no syntax info that I can see
 	
-	scannums
+	scannums	purpose unknown
+		returns a%
 	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
 
-	num	number of items in struct
-	siz	
-	acs
-	a(a,b)
-	a%(a)
-	start
+	num	cols in struct?
+	siz	field width?
+	acs	access level
+	a(a,b)	row,col array?
+	a%(a)	?
+	start	element to start scanning from?
 
-	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
+	Example:
+dim fd%(50),jm%(29,49)
+&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:ifa%=.thenreturn
+
+60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
 		(sub.menus)
-
 	
 	scansum
 	Usage:	&,60,9,num,siz,a(a,b)
-
 	
-	cpystruc
+	cpystruc	Copy field in struct to another field?
 	Usage:	&,60,10,size,a1(a,b),a2(a,b)
 
 	
@@ -217,18 +220,18 @@ Last updated 25/Dec/2008 16:43
 &,68	struct
 &,69	dispstr
 
-	&,69,<column>,<row>,<text>,$8c or 1 ($8x = reverse color x)
-	&,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
-	sub.display is a good example of this
-	a$="display":gosub74
-	im=1-5:gosub60000
+	&,69,<column>,<row>,<text>,<color>
+	Example: &,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
+		sub.display is a good example of this
+		<column>/<row> begins at 0
+		<color> is 1-16, $8x is reverse color x
 
 &,70	cursposn
 	&,70,.,n/2+8.5:&"{white}"
 
 &,71	cursmenu
 
-"menu.s" is source for ++ 2 (cursor menu)
+"menu.s" is source for "++ 2" (cursor menu)
 	(from source:)
 ; 0 - # entries
 ; 1 - item type character
@@ -243,4 +246,4 @@ Last updated 25/Dec/2008 16:43
 
 &,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.
 
-lm=a%+1 [return value?]
+lm=a%+1 [returns a% value, probably which item was selected]

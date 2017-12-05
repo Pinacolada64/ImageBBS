@@ -3,7 +3,7 @@
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
 
-{include:equates20.lbl}
+{include:C:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v2\asm\equates-2_0.lbl}
 orig $c000
 {asm}
 ;
@@ -50,9 +50,11 @@ xx03:
 xx06:
 	jmp disabl
 xx09:
-	jmp @rsget ; renamed to @rsget - rns (rsget defined in equates20.lbl)
+; search for local "rsget" label instead of the global one defined in
+; equates-2_0.lbl:
+	jmp >@rsget 
 xx0c:
-	jmp @rsout ; renamed to @rsout - rns (rsout defined in equates20.lbl)
+	jmp >@rsout
 xx0f:
 	jmp setbaud
 ;
@@ -92,9 +94,9 @@ oldchr:
 	byte $24
 	word nchrin
 ; todo: try uncommenting this
-;oldout:
-;	byte $26
-;	word nchrout
+oldout:
+	byte $26
+	word nchrout
 oldget:
 	byte $2a
 	word ngetin
@@ -375,10 +377,10 @@ setbaud3:
 	sta control
 	rts
 ; TODO: try uncommenting this
-;nchrout:
-;	jsr disabl
-;	jsr oldout
-;	jmp inable
+nchrout:
+	jsr disabl
+	jsr oldout
+	jmp inable
 ;
 nopen:
 	jsr disabl
@@ -403,4 +405,5 @@ nchrin:
 ; from "fast assembler":
 ; last:
 ; next pass:close 8:print last-first "bytes."
+{info:last-first bytes.}
 {endasm}
