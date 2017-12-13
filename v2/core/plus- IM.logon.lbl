@@ -106,6 +106,7 @@
 {:4160}
 	c$="":&"{f6}{lt. green}{$c4}ays {$d4}o {$c1}ctivate? (1-7/{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}={$c1}{$cc:2}){f6}>{white} {pound}i1":f=.
 {:4162}
+' 133=Image ","
 	if an$<>""then:&,15,6,133:x=val(a$):if x>.and x<8 then f=2^x or f:goto {:4162}
 	c$=right$(str$(f+1000),3)
 	&"{f6}{green}{$cd}onth {$d4}o {$c1}ctivate? (1-12/{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}={$c1}{$cc:2}){f6}>{white} {pound}i1":f=val(an$)

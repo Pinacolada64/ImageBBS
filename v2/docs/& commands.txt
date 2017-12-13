@@ -6,11 +6,11 @@ Last updated 25/Dec/2008 16:43
 
 &[,0]	out a$
 &,1	inline
-&,2,x	disk file input (x=channel #)
+&,2,x	disk file input (x=channel #) -> a$
 &,3,x	read file from disk, x=logical file #
 &,4	get byte from modem
 &,5	get version
-&,6	password input
+&,6	password input -> an$
 
 &,7,<device>[,segment] - load file
 	dskio.s has segment info:
@@ -45,7 +45,9 @@ Last updated 25/Dec/2008 16:43
 &,11,x	clear array
 &,12	newuser (nonabortable file read?)
 &,13	inchr
-&,14,x,y	dumparray (x=array #, y=# of elements: im#39)
+&,14,x,y
+	dumparray (x=array #, y=# of elements: im#39)
+	im: 1074
 
 &,15[,0]:&an$ displays verbose date
 &,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
@@ -54,11 +56,14 @@ Last updated 25/Dec/2008 16:43
 &,15,3	[The Chief mentions this in a post, unsure of purpose]
 &,15,4	[The Chief mentions this in a post, unsure of purpose]
 
-&,15,6,140 [line 312 of im, unsure of purpose]
+&,15,6,x I think this chops a string wherever it finds chr$(x) -> a, an$
+	im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
+	im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
+		[133=f1, Image ","]
 
 &,16	sys49152
 &,17	sys49155
-&,18	setmode (screen mask)
+&,18,x	setmode (screen mask) x=0: off, 1=on
 &,19	get version
 &,20	get version
 &,21	get version
@@ -66,7 +71,7 @@ Last updated 25/Dec/2008 16:43
 &,23	xgetin
 &,24	xchrout1
 
-&,25,x,y
+&,25,x,y	sound
 	[y=# of times to repeat]
 &,25,0  beep
 &,25,1	ding
@@ -91,8 +96,11 @@ Last updated 25/Dec/2008 16:43
 &,41	setbaud
 
 &,42	ecs
-&,42,1	apparently kills ECS defs in memory (through experience)
-&,42,4	seen in line 3106 of IM
+	im 1860 f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
+&,42,1	kills ECS defs in memory?
+	im 1804	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+
+&,42,4	seen in line 3106 of IM, loads "e.ecs.main"
 
 &,43	chatchk
 &,44	trace
@@ -105,7 +113,10 @@ Last updated 25/Dec/2008 16:43
 &,51	outmod
 &,52,x,y	(&,52,$hex,y allowed)
 	chkflags
+		x=0: clear	x=2: toggle		x=4: move litebar to y
+		x=1: set	x=3: read -> a%
 &,53	logoff
+		im: 1003 &,53,a
 &,54	useeditr
 &,55	output
 &,56	chatmode
@@ -165,18 +176,14 @@ Last updated 25/Dec/2008 16:43
 	<l>		unknown, perhaps field width?
 	<bits>		the bits to set if true
 	<test>		the object to test for
-				ilen	1	$61
-				istr	2	$62
 
-		from i.UD:
-	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	i.UD:	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	+.GF:	3166 &,60,6,s%(0,0),0,s%(0,1),s%(1,1),80,1,2^ac%
+
+	sort:
+	+/lo-tt maint: &,60,7,0,a$(p+1,i),n-p
 	
-	sort
-		(assuming &,60,7 at least)
-		no syntax info that I can see
-	
-	scannums	purpose unknown
-		returns a%
+	scannums	purpose unknown		returns a%
 	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
 
 	num	cols in struct?
@@ -186,19 +193,30 @@ Last updated 25/Dec/2008 16:43
 	a%(a)	?
 	start	element to start scanning from?
 
-	Example:
-dim fd%(50),jm%(29,49)
-&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:ifa%=.thenreturn
+Example:
+	dim fd%(50),jm%(29,49)
+	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
 
-60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
-		(sub.menus)
-	
+im.feedback:
+	a%=0:if fb%(0,0)>0 then:&,60,8,fb%(0,0),60,1,fb%(11,1),ff%(1),1
+im.menus:
+	60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
++.GF:		
+	3168: rn=a%:if rn then:&,60,8,s%(0,0),80,1,s%(0,1),e%(1),1
++.lo:
+	3304: &,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
+
 	scansum
 	Usage:	&,60,9,num,siz,a(a,b)
 	
 	cpystruc	Copy field in struct to another field?
 	Usage:	&,60,10,size,a1(a,b),a2(a,b)
 
++/IM.logon:
+	4326 if x<>fb%(.,.)then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
+
++/GF-add:
+	3324 if x<>cm%(0,0)then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
 	
 	scanstr
 	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
@@ -208,10 +226,12 @@ dim fd%(50),jm%(29,49)
 	Usage:	&,60,13,count,size,a$,a%(a,b),b$
 
 
-&,61,x,y
+&,61,col,row
 	poscrsr
+im: 4006 &,38:&,61,.,8:print"&,37:goto 1812:":end
+
 &,62,b,c
-	settim
+	settim: b=hour, c=min? im: ~3184
 &,63	inline1
 &,64	convstr
 &,65	convert

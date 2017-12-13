@@ -66,12 +66,12 @@ im.misc2
 	im=3	60004	return
 	im=4	60046	C - request chat
 	im=5	60062	T - time and date
-	im=6	60068	?
+	im=6	60068	write user account data
 	im=7	60074	something to do with u.index
-	im=8	60078	"
+	im=8	60078	rewrite "u.index"
 	im=9	60082	PR - load a different protocol?
 	im=10	60088	?
-	im=11	60086	u.index stuff
+	im=11	60086	Load "++ index", search for user in "u.index"?
 	im=12	60004	return
 	im=13	60092	RE - switch users
 

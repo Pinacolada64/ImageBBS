@@ -3,43 +3,38 @@
 
 				Object filename	Purpose
 				--------------- -------
-2    "3way.s"           prg	++ 3way		No idea what this is for
-22   "++ 4.s"           prg	++ 4 		REL file indexer
-3    "array.s"          prg	Standalone	copy/restore array pointers
+	Assembler stuff
 16   "asm900827"        prg			use this to assemble, understands DUP
 9    "asm.doc"          seq			docs for assembler
-16   "asm"              prg			older version of the assembler
-28   "banner.s"         prg	Standalone	sys $8000 gives big clock display
-1    "blank.s"          prg	Standalone	screen blanking?
-1    "boot 2.0/A1"      prg
-1    "boot 2.0/b1"      prg
-2    "break.s"          prg	Standalone	Output info when BRK instruction hit
-7    "break2.s"         prg	ml.break	Same as break3; this at least prints stuff
-4    "break3.s"         prg	ml.break	Dupe of break2.s?
-     "break4.s"  Modified version of break2.s	sys 52992; poke 828,0:sys 828 to start
-						JAMs CPU
-29   "build.s"          prg	ml 2.0		links modules into "ml 2.0" (was ml.s)
 1    "c64eq.s"          prg	Standalone	C64 equates
-4    "calls.s"          prg	Build req
-6    "chatmode.s"       prg	chatmode	seems incomplete. save chat logs?
-28   "chrio.s"          prg	Build req	character output routines
-15   "clock.s"          prg	++ clock	big digits on idle screen
-3    "clrar.s"          prg	Standalone	Clear arrays
-2    "convert.s"        prg	Standalone	?
-11   "dskio.s"          prg	Build req	has offsets for various load types/disk dir
-21   "dtoi.s"           prg	Standalone?	date to integer conversion
-3    "dumpm.s"          prg	Standalone	dump memory
-7    "ecsed.s"          prg	ml.ecsedit	Extended Command Set editing
-22   "ecs.s"            prg   	ml.ecs		Extended Command Set source
-4    "editor.ld.s"      prg	bd.editor.ld	Load text editor from beneath ROM?
-83   "editor.s"         prg	ml.editor	line editor
 10   "equ12.s"          prg	Standalone	Image 1.2 equates
 18   "equ13.s"          prg	Standalone	Image 1.3 equates
 22   "equat.s"          prg	Build req	Image 2.0 equates
-3    "extra.s"          prg	ml.extra	sys $8000, echoes keystrokes until STOP hit
+3    "ml revisions"     seq			log of ML revisions
+
+	Pre-build requirements
+83   "editor.s"         prg	ml.editor	line editor
+11   "gc.s"             prg   	ml.gc		garbage collection
+
+	Build requirements
+29   "build.s"          prg	ml 2.0		links modules into "ml 2.0" (was ml.s)
+13   "varbl.s"          prg	Build req	Handle variables
+4    "calls.s"          prg	Build req	inline, clrarr, sound, inline0, convstr, convert, copyrite
+28   "chrio.s"          prg	Build req	character output routines
+11   "dskio.s"          prg	Build req	has offsets for various load types/disk dir
+
+	Support files
+7    "image.s"          prg	image 2.0	create boot splash screen (needs charset/font files)
+
+22   "++ 4.s"           prg	++ 4 		REL file indexer
+1    "boot 2.0/A1"      prg
+1    "boot 2.0/b1"      prg
+15   "clock.s"          prg	++ clock	big digits on idle screen
+7    "ecsed.s"          prg	ml.ecsedit	Extended Command Set editing
+22   "ecs.s"            prg   	ml.ecs		Extended Command Set source
+4    "editor.ld.s"      prg	bd.editor.ld	Load text editor from beneath ROM?
 32   "fast.s"           prg	fast.1541	1541 accelerator (dupe of kwload.s?)
 2    "fnarr.s"          prg	Standalone	find arrays
-11   "gc.s"             prg   	ml.gc		garbage collection
 15   "ibasmath.s"       prg	Standalone	math routines
 4    "iboot-a1.s"       prg  			serialized ml?
 4    "iboot-b1.s"       prg  	
@@ -47,10 +42,6 @@
 4    "iboot-b505.s"     prg  
 4    "iboot-b955.s"     prg  
 4    "iboot.s"          prg	boot 2.0
-7    "image.s"          prg	image 2.0	create boot splash screen (needs charset/font files)
-52   "inline.s"         prg	ml.inline	term, chat, movie/normal/unabortable file read, more...
-						*** Line links fixed, bad line number 1566 corrected to 1590
-						*** Still an undefined label: 
 33   "intro.s"          prg	Build req	initialize ML. Tables: months, days, char xlation.
 						*** fixed duplicate labels "loop" and "..." (fixme)
 50   "irqhn.s"          prg	Build req	IRQ handler; local screen mask output, function keys (C= + fkey?)
@@ -63,29 +54,19 @@
 10   "miscl.s"          prg	Build req	handle structures, calculated GOTO, cursor menu
 100  "ml 2.0/A1"        prg
 100  "ml 2.0/b1"        prg
-2    "ml patcher"       prg
-3    "ml revisions"     seq			log of ML revisions
-14   "ml.rk.s"          prg	Standalone	phone number/date manipulation
 12   "modem.s"          prg	Build req	check lightbar, ansi output
-2    "movem.s"          prg	Standalone	move memory
-7    "nums.s"           prg	Standalone	idle screen clock numbers (part of clock.s?)
-8    "pak.s"            prg	Standalone	compression routines. uses "jmp.list,s" as test
 12   "path.s"           prg	++ path		path stuff for networking
 4    "pmode.s"          prg	bd.pmodes	printmode definitions (assemble @ $1780)
 34   "++ post.s"        prg	++ post		Turbo-REL file
 65   "punter2.s"        prg	++ punter	Punter file transfer protocol
 61   "punter.s"         prg	++ punter	Punter file transfer protocol
-10   "remote.s"         prg	ml.remote	possibly remote control BBS? Lots of wedges
 2    "rs232.s"          prg	ml.rs232	Needs ml.rs232/user & ml.rs232/swift
 18   "rs232/swift.s"    prg   	ml.rs232/swift	SwiftLink RS232
 19   "rs232/user.s"     prg	ml.rs232/user	User-port RS232
 1    "rspatch.s"        prg	ml.rspatch	?
-2    "sendbyte.s"       prg	sendbyte.o	Test of sending byte, I guess
 7    "serial.s"         prg			serialization routines, missing label "rand"
-2    "setup.s"          prg			log off and set baud rate  
 28   "shdlr.s"          prg	Build req	screen handler: mask, trace mode, memory free
-2    "sntbl.s"          prg	Standalone	sound table (part of intro.s)
-6    "sort.s"           prg	++ sort		
+6    "sort.s"           prg	++ sort		Sort 1-dimensional string arrays, "++ sort text" shows this
 32   "sound.s"          prg			a memory dump of a directory listing with some intriguing filenames
 16   "strio.s"          prg	Build req	string output
 41   "struct.s"         prg	ml.struct	structure stuff
@@ -94,15 +75,46 @@
 24   "swap2.s"          prg	ml.swap2	term, chatmode, btmvar, convert, sound
 20   "swap3.s"          prg	ml.swap3	read0, newuser, relread, convdate, copyrite, time zone
 31   "swap4.s"          prg	ml.swap4	structure commands (+ some documentation) + date table
-14   "swap5.s"          prg			Search for an$ in file
+14   "swap5.s"          prg			Comment says "Search for an$ in file"
 3    "swapr.s"          prg	Standalone
 17   "t1.rs232.s"       prg	ml.rs232
-2    "tod.s"            prg	Standalone	CIA TOD clock stuff, displays time @ home position, does not update properly
-28   "trans.s"          prg	Standalone	dupe of banner.s? clock #'s, sys $8000
 18   "t.rs232.s"        prg	ml.rs232
 				ml.rs232/user	userport RS232 ML
-13   "varbl.s"          prg	Build req	Handle variables
 16   "visual.s"         prg	ml.visual	code for a visual editor
 22   "wedge.s"          prg	ml.wedge	set up wedge for extended peek/poke/new/sys tokens
 40   "wxmodem.s"        prg	++ 1		windowed xmodem, some line corruption
 51   "xmodemcrc.s"      prg	++ 1		XMODEM-crc source; some line corruption
+
+	Tests
+2    "3way.s"           prg	++ 3way		No idea what this is for
+3    "array.s"          prg	Standalone	copy/restore array pointers
+28   "banner.s"         prg	Standalone	sys $8000 gives big clock display
+1    "blank.s"          prg	Standalone	screen blanking?
+2    "break.s"          prg	Standalone	Output info when BRK instruction hit
+7    "break2.s"         prg	ml.break	Same as break3; this at least prints stuff
+4    "break3.s"         prg	ml.break	Dupe of break2.s?
+     "break4.s"  Modified version of break2.s	sys 52992; poke 828,0:sys 828 to start. JAMs CPU, shows some info
+6    "chatmode.s"       prg	chatmode	seems incomplete. save chat logs?
+3    "clrar.s"          prg	Standalone	Clear arrays
+2    "convert.s"        prg	Standalone	Test of something, displays char typed on screen
+21   "dtoi.s"           prg	Standalone?	date to integer conversion
+3    "dumpm.s"          prg	Standalone	dump memory
+3    "extra.s"          prg	ml.extra	sys $8000, echoes keystrokes until STOP hit
+52   "inline.s"         prg	ml.inline	term, chat, movie/normal/unabortable file read, more...
+						*** Line links fixed, bad line number 1566 corrected to 1590
+						*** Still an undefined label: 
+14   "ml.rk.s"          prg	Standalone	phone number/date manipulation
+2    "movem.s"          prg	Standalone	move memory
+7    "nums.s"           prg	Standalone	idle screen clock numbers (part of clock.s?)
+8    "pak.s"            prg	Standalone	compression routines. uses "jmp.list,s" as test
+10   "remote.s"         prg	ml.remote	possibly remote control BBS? Lots of wedges
+2    "sendbyte.s"       prg	sendbyte.o	Test of sending byte, I guess
+2    "setup.s"          prg			log off and set baud rate  
+2    "sntbl.s"          prg	Standalone	sound table (part of intro.s)
+2    "tod.s"            prg	Standalone	CIA TOD clock stuff, displays time @ home position, does not update properly
+28   "trans.s"          prg	Standalone	dupe of banner.s? clock #'s, sys $8000
+
+	Binaries
+2    "ml patcher"       prg
+
+	Pina's contributions

@@ -14,6 +14,7 @@
 {:60020}
 	an$=tt$(i):gosub {:60022}:goto {:60024}
 {:60022}
+' 58=":", 13=<Return>
 	&,15,6,58:dv%=val(a$):&,15,6,58:dr$=a$+":":&,15,6,13:f$=a$:return
 {:60024}
 	close 15:close 2:open 15,dv%,15:open 2,dv%,2,dr$+f$+b$:gosub 1012
