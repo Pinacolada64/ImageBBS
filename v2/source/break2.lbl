@@ -14,6 +14,23 @@
 ; 65352	      $FF48
 ; Main IRQ/BRK Interrupt Entry Point
 
+; FF48: 48        PHA		; push .a
+; FF49: 8A        TXA		; .x -> .a
+; FF4A: 48        PHA		; push .x
+; FF4B: 98        TYA		; .y -> .a
+; FF4C: 48        PHA		; push .y
+; FF4D: BA        TSX		; put stack ptr in .x
+; FF4E: BD 04 01  LDA $0104,X   ; 6510 Hardware Stack Area
+
+; 256-266 $100-$10A Work Area for Floating Point to String Conversions
+
+;				; put something in .a...
+; FF51: 29 10     AND #$10	; reduce to $01-10?
+; FF53: F0 03     BEQ $FF58
+; FF55: 6C 16 03  JMP ($0316)   ; Vector: BRK Instruction Interrupt Address
+
+; current address left in .a, apparently
+
 ; Anytime the BRK instruction is encountered or an IRQ interrupt occurs,
 ; this routine will be executed. The routine first saves the .A, .X,
 ; and .Y registers on the stack, and then tests the BRK bit of the

@@ -1,0 +1,108 @@
+12/13/2007
+==========
+
+To build ML 2.0 (build.s -- runs off drive 8)
+
+=== START ===
+Pre-build requirements:
+
+Source file:	Builds:		OK?
+===================================
+equat.s		---
+wedge.s		ml.wedge	Yes
+editor.s	ml.editor	Yes
+gc.s		ml.gc		Yes
+ecs.s		ml.ecs		Yes
+struct.s	ml.struct	Yes
+swap1.s		ml.swap1	Yes
+swap2.s		ml.swap2	Yes
+swap3.s		ml.swap3	Yes
+
+Source file:	Builds:		Requires
+================================================
+rs232/user.s	ml.rs232/user
+rs232/swift.s	ml.rs232/swift
+
+		- ORG $C000 -
+rs232.s		ml.rs232	ml.rs232/user
+(2 blocks)	(6 blocks)	ml.rs232/swift
+
+		- ORG $4300 -
+t1.rs232.s	ml.rs232
+(17 blocks)	(719 bytes)
+(probably the best choice for now)
+
+		- ORG $4300 -
+		(handles 300,600,1200,2400)
+t.rs232.s	ml.rs232
+(18 blocks)	(719 bytes)
+
+image.s		image 2.0	scn.imagelogo
+				col.imagelogo
+				chr.imagelogo
+
+build.s calls:
+================
+jmptb.s
+strio.s
+mcicm.s
+chrio.s
+dskio.s
+irqhn.s
+setup.s
+varbl.s
+miscl.s
+shdlr.s
+modem.s
+calls.s
+intro.s
+
+===== END ======
+
+Other files:
+ml patcher.s	ml patcher
+ecsed.s		ml.ecsed
+ecs.s		ml.ecs
+
+Errors:
+inline.s:	Not build requirement? Seems pretty major
+	syntax in 1566 (non-existant - bad line # bytes, fixed)
+
+=======
+Build d1$ to change century prefix:
+
+build.s: 3440
+
+irqhn.s: dispd3 is where '19' century prefix is defined (build d1$)
+fkey is also handling function keys here - f-keys broken
+
+boot date in bcd format (line 3500)
+$01 $12 $09 $90
+also ml.rk.s
+	* change 19 to 20 in line 1350
+	* 1920: buff1 should be dbuff1
+	* sys 32768
+	* 1340: dbuff1: year, month, date, hour, minute, day-of-week
+			dec	hex		 dec
+	saved as "ml.rk.s-y2k" on 20ml-src.d81, exported it to "mods/"
+	
+equat.s:
+fkeybuf = 679 ; 32
+datebuf = 831 ; 11
+daytbl  = 842 ; 24
+montbl  = 973 ; 36
+
+chrio.s:
+	3400 ldx keybuf,x
+
+image.s:
+- builds "image 2.0" - splash screen
+
+	3340 date2: Wed Feb 14, 1990 12:25 PM
+	  date1fmt: Sat Dec  9, 1990 12:00 AM EST
+
+4/Jun/2016 9:44
+dtoi.s - broken, reassemble with c64list, add some indication of what's going on
+not 100% sure whether the results are as expected
+
+dumpm.s - unit test, it seems, dump var mem to disk?

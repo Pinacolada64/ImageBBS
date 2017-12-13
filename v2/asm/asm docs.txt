@@ -81,3 +81,12 @@ print $d000
 
 print %01001
 9
+
+f1: "list    -    "
+f2: run
+f3: :<left>
+f4: <return><cursor up><5 right> (reposition cursor after line number)
+f5: rnm (renumber lines)
+f6: auto (line auto-numbering)
+f7: byte
+f8: word

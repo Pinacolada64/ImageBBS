@@ -1,4 +1,6 @@
 {asm}
+; to include:
+; {uses:\%userprofile%\My Documents\C64\Image BBS\image-bbs\v2\asm\equates-2_0.lbl}
 	; image 2.0 equates
 	;
 	var	= $61
@@ -226,7 +228,7 @@
 	local	= $d000
 	case	= $d001
 	editor	= $d002
-	;tsr	= $d003
+	tsr	= $d003 ; needed by inline.s
 	llen	= $d004
 	flag	= $d005
 	chat	= $d006
