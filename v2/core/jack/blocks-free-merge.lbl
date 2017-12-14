@@ -1,0 +1,29 @@
+{number:4430}
+{:4430}
+{alpha:upper}
+{crunch:on}
+{step:2}
+' i/lo-idle
+	F3=3:POKE 53248,1:POKE 2042,.:&"{f6:2} {rvrs on}{cyan} {$c2}LOCKS {$c6}REE {$cf}N {$d3}YSTEM {$c4}ISKS {f6:2}"
+' 3x2 display:
+'      System: xxxxx  Directory: xxxxx  '
+'        Mail: xxxxx  Plus-File: xxxxx  '
+'    Etcetera: xxxxx       User: xxxxx  '
+
+'	A$="{lt. red} {pound}$B {gray3}{$c4}ISK{white}:{pound}{back arrow}15{pound}$C{f6}{lt. red} {pound}$B {gray3}{$c4}ISK{white}:{pound}{back arrow}15{pound}$F{f6}":DR=1
+'	B$="{$d3}YSTEM":D$="{$cd}AIL":GOSUB{:4438}:B$="{$c5}TC.":D$="{$c4}IR.":GOSUB{:4438}
+'	B$="{$d0}ROGRAM":D$="{$d5}SER":GOSUB{:4438}:&"{f6:2}":POKE 53248,.:GOTO{:4040}
+' pina fix!
+	dr=1
+	b$="  {$d3}ystem":d$="{$c4}irectory":gosub{:4438}
+	b$="    {$cd}ail":d$="{$d0}lus-{$c6}ile":gosub{:4438}
+	b$="{$c5}tcetera":d$="     {$d5}ser":gosub{:4438}:&"{f6:2}":poke 53248,.:goto 4040
+'{:4438}
+'	C$=STR$(BF(DR)):F$=STR$(BF(DR+1)):DR=DR+2:&:RETURN
+{:4438}
+	' get blocks free, set digits to print and leading spaces
+	b=bf(dr):f=bf(dr+3):dr=dr+1:&"{pound}#5{pound}# " 
+	' b$: 1st column, b: blocks free
+	& "{pound}{back arrow}03{cyan}{pound}$b: {white}{pound}!b"
+	' d$: 2nd column, f: blocks free
+	& "{pound}{back arrow}21{cyan}{pound}$d: {white}{pound}!f{f6}":return

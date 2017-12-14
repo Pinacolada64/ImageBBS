@@ -1,0 +1,166 @@
+' Image BBS 2.0 IM line number translation: (from "im.emul13")
+' from jlf to al's IM lines
+
+' the goal of this is to automate line # changes between jack's renumbered IM
+' module vs. Al's IM module and make backporting certain features/modules less
+' of a hassle. This needs work.
+
+' jack's IM does need more line numbers wrapped in {:label}s for this to work.
+
+' regex to swap columns between "im-diffs.txt" & add c64list assign:
+' ^(\d+)\t(\d+) -> {assign:\2\t=\1}\t'
+
+' 5/6/1996 - Jack L. Followay (jlf)
+' :
+' :	9/21/1994 - New Image Software (nis)
+' :	:
+' :	:		1/2/1999 - im.emul13 (emu)
+' :	:		:
+'assign:<label>=<line_number>
+'assign:jack's =current im lines
+'	ordered by IM line #
+{assign:1	=1001}	' Position REL pointer (gosub 1002)
+{assign:10	=1002}	' Position REL pointer
+		'1003	' 1003 -> 2426	?
+{assign:11	=1004}	' Get user flag #a in fl$
+{assign:	=1005}	' Get upper/lowercase input -> an$
+{assign:6	=1006}	' Get stacked command, uppercase input -> an$
+{assign:7	=1007}	' Get uppercase character -> an$
+		'1008
+{assign:2	=1009}	' Get device/drive of system drive 'dr'
+{assign:3	=1010}	' Close/reopen command channel
+{assign:4	=1011}	' Open file 'a$' on logical file# 2
+{assign:5	=1012}	' check error channel
+{assign:6	=1013}	' jlf: command stacking/input prompt
+		'1014
+{assign:70	=1015}	' 1015 -> 1012	Load plus file
+{assign:71	=1016}	' 1016 -> 3000	*** main entry point to load plus file ***
+			' 		nis: Load "+."+a$ plus-file
+			' 		jlf: Load "i."+a$, goto 3000
+{assign:84	=1019}	'  		calculate a=minutes left, pt%=prime time, return
+{assign:18	=1023}	' 
+{assign:19	=1024}	' 
+{assign:16	=1025}	' 
+{assign:17	=1026}	' 
+{assign:36	=1027}	' 
+{assign:30	=1060}	' 
+{assign:31	=1061}	' 
+{assign:32	=1062}	' 
+{assign:33	=1063}	' 
+{assign:34	=1064}	' 
+{assign:35	=1065}	' 
+{assign:37	=1068}	' 
+{assign:38	=1069}	' 
+{assign:39	=1074}	' 
+{assign:13	=1075}	' 
+{assign:14	=1076}	' 
+{assign:61	=1079}	' 
+{assign:62	=1081}	' 
+{assign:60	=1085}	' 
+{assign:82	=1093}	' 
+{assign:83	=1094}	' 
+{assign:50	=1095}	' 
+{assign:51	=1096}	' 
+{assign:310	=1260}	' 
+{assign:9	=1360}	' nis: display 'an$' in Area window
+{assign:360	=1450}	' 
+{assign:50	=1490}	' 
+{assign:85	=1678}	' 
+{assign:302	=1700}	' 
+{assign:28	=1750}	' 
+{assign:300	=1811}	' 
+{assign:300	=1812}	' 
+{assign:93	=1901}	' jlf: Ask "Are you sure? "
+{assign:94	=1902}	' jlf: default to no
+{assign:97	=1904}	' jlf: print "yes/no"
+{assign:96	=1907}	' 
+{assign:12	=1914}	' Reset MCI defaults
+{assign:92	=1920}	' 
+{assign:330	=1930}	' 
+{assign:390	=1980}	' 
+
+---	8	1008 -> return	jlf: remove
+				emu: device/drive prompt
+				emu: set drive 5 (plus files)
+1014		1014 -> 1015	Display a$ in "area" window, set system drive
+		1020 -> 18
+{assign:13	=1075}	' 			Clear screen...
+{assign:14	=1076}	' 			...and read file in a$
+'	15			close logical file #2
+{assign:18	=1023}	' 			scratch and rewrite SEQ file a$ (gosub 1024)
+{assign:19	=1024}	' 			Scratch a$
+{assign:16	=1025}	' 			read/increment Board Activity Register stat #i
+{assign:17	=1026}	' 			write stat #x back to e.stats
+---	20-27			jlf: remove
+---	28-29			jlf: Load protocol "++ "+a$
+{assign:30	=1060}	' 			Open "e.stats"
+{assign:31	=1061}	' 			Open "e.access"
+{assign:32	=1062}	' 			Open mail file "m."+tt$+",s,"+a$
+{assign:33	=1063}	' 			open "e.data"
+{assign:34	=1064}	' 			&,52,$2e,3 Automaintenance active/logging related
+{assign:35	=1065}	' 			open "u.config"
+	36			Append or write "e."+b$+",s,"+a$
+	37			Append or write "e."+b$ (gosub 36)
+	38			Write user data to lfn#2
+	39			Dump array tt$() to open lfn#2
+---	40-47			jlf: Redirect to 440-447
+	50			Check if instant logon used: if so, RETURN
+{assign:51	=1096}	' 			log a$ to daily log
+	52			check Prt "print log entries" lightbar enabled
+	53			check if printer online
+	54			print a$ to printer
+	60			check for dir space?
+{assign:61	=1089}	' 			check blocks free on drive 'dr'
+	62			check Lt.Kernal HD blocks free?
+	63			...same...
+	64			blocks free check for other devices
+	65			update bf() array
+	66			return blocks free in 'a'
+	70			set plus file drive
+	71			...load "i."+a$ module, goto 3000
+	72			set plus file drive
+	73			...load "i/"+a$ module, goto 4000
+	74			set plus file drive, load "sub."+a$ module, gosub 60000
+	75			something to do with activity queue
+	76			jlf: set up i.* module load
+	77			jlf: set up i/* module load
+	78			jlf: set up sub.* module load
+	79			jlf: display "L:"+a$ in Area window, load module
+	80			load module in z$?
+	82			Clear some arrays
+	83			Clear another array
+{assign:85	=1678}	' 			Leave feedback
+
+	92			Display ">>Canceled!"
+	93			Display "Are You Sure?: "
+	94			Display "[No]", wait for keypress 
+{assign:95	=1901}	' 			Display "Are you sure? "
+{assign:96	=1902}	' 			Display "Yes" or "No"
+	97			Display yes/no response chosen
+{assign:314	=1264}	' 			Display p$+an$
+{assign:315	=1265}	' 			Display hs$() array of commands
+
+{assign:200	=1811}	' 			Main prompt
+
+{assign:440	=1604}	' 			Load editor
+{assign:370	=1870}	' 			Display b$+": O[ff|n]"
+1871				Get user flag 'b', gosub 1870, toggle flag 'b'
+1900				Prompt for +.file to load, run if found
+{assign:12	=1904}	' 			Reset output defaults
+1915				Display time left
+{assign:242	=1920}	' 			Display "Aborted!"
+
+---	300			jlf: load "i.main"
+	302			jlf: load "i.lo"
+
+{assign:304	=2100}	' -308			DIMension 1.2 style arrays
+
+{assign:1000	=1000}	'1000	1000 -> 2004
+
+		2414 -> 2500	load "im.bar"
+		24xx -> 2500	load "im.screens"
+		2426 -> 43	load "im.display"
+		2428 -> 47	load "im.info"
+
+Al's "+/GF-maint":
+{assign:3	=1902}	' 	Yes/no questions

@@ -57,8 +57,10 @@
 	if pr<>4 then gosub {:60086}:b%=.
 	&,16,6:return
 {:60086}
+' load "++ index", open cmd channel, get highest user #?
 	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:uh=a%:return
 {:60088}
+' 1065: open u.config
 	gosub {:60086}:gosub 1065:&,16:close 2
 	i=a%:return
 {:60092}
@@ -70,6 +72,7 @@
 	gosub 1065:x=i:gosub 1001:&,2,2:if a$="{up arrow}"then:&"{f6}{$c4}eleted {$c9}{$c4}!{f6:2}":goto {:60094}
 	id=i:gosub {:60026}:goto 1073
 {:60104}
+' check post/respond flag:
 	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60114}
 {:60108}
