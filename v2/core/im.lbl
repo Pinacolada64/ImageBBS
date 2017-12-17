@@ -712,7 +712,7 @@
 ' adjust console clock for 20xx:
 	poke $16ec,$32:poke $16ed,$30
 ' set time/display IM revision (omit time zone):
-	d1$="61712158828":an$=d1$:&,15:an$=left$(an$,26):& "{$c9}{$cd} {$d2}evision: {pound}v7{$cd}{f6}"
+	d1$="71712178130":an$=d1$:&,15:an$=left$(an$,26):& "{$c9}{$cd} {$d2}evision: {pound}v7{$cd}{f6}"
 	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
 	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
 {:3080}
@@ -839,19 +839,24 @@
 ' fixme: ur=1: is this wrong? should it be 2?
 	x=1:gosub {:1001}:print# 2,tt$:x=2:gosub {:1001}:print# 2,"{up arrow}":ur=1:close 2:&"{$c4}one!{f6}"
 ' insert user #1 into u.index:
-	&"{f6}{$c3}reating {f5}u.index{f5}....":an$=tt$(1):gosub {:1038}:&"{$c4}one!{f6}"
-	close 2:&"{f6}{$c3}reating {f5}e.stats{f5}...."
+' al's method (sets to 141), would use 1023 instead of s0:, but that is only for seq files:
+'	&"{f6}{$c3}reating {f5}u.index{f5}....":an$=tt$(1):gosub {:1038}:close 2:&"{$c4}one!{f6}"
+	&"{f6}{$c3}reating {f5}u.index{f5}....":dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$
+' jack's method (tested, correctly sets to 1):
+	a%(0)=1:a%(1)=1:&,60,3,0,a%(0),4,a$,dv%:close 15:&"{$c4}one!{f6}"
+	&"{f6}{$c3}reating {f5}e.stats{f5}...."
 	dr=3:a$="e.stats,l,"+chr$(10):gosub {:1011}
 	for x=1 to 40:gosub {:1001}:print# 2,"0":next:close 2:&"{$c4}one!{f6}"
 ' added ur=2 and more rel positioning (which jack's i.su/config does)
 	&"{f6}{$c3}reating {f5}e.data{f5}....":ur=2
 	dr=3:a$="e.data,l,"+chr$(31):gosub {:1011}:x=1:gosub {:1001}:print# 2,"0"
-' ur was "2"
+' ur was hard-coded "2", now writes variable ur:
 	for x=2 to 11:gosub {:1001}:print# 2,"{up arrow}":next:x=12:gosub {:1001}:print# 2,ur
 	for x=13 to 16:gosub {:1001}:print# 2,"{up arrow}":next:x=17:gosub {:1001}:print# 2,"{$ce}{$cf}{$c2}{$cf}{$c4}{$d9}"
 	x=18:gosub {:1001}:print# 2,"{$d0}{$c1}{$d3:2}":x=19:gosub {:1001}:print# 2,d1$
 	x=20:gosub {:1001}:print# 2," 0 , 0 , 0":for x=21 to 30:gosub {:1001}:print# 2,"{up arrow}":next
-	x=31:gosub {:1001}:print# 2,"2"
+' next available user account:
+	x=31:gosub {:1001}:print# 2,ur
 	for x=32 to 34:gosub {:1001}:print# 2,"{up arrow}":next:x=35:gosub {:1001}:print# 2,d1$
 	x=36:gosub {:1001}:print# 2,"0":x=37:gosub {:1001}:print# 2,y%
 	x=38:gosub {:1001}:print# 2,"0":for x=39 to 42:gosub {:1001}:print# 2,"{up arrow}":next
