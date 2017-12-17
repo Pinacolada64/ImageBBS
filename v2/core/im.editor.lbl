@@ -76,6 +76,7 @@
 {:60098}
 	poke 2031,0:dr=1:a$="s.menu 3":gosub 1075:goto {:60088}
 {:60100}
+' enter editor: a=0, 1, 2
 	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:60092}
 {:60102}
 	b%=kk-1:if an$="q"then{:60070}
