@@ -67,9 +67,13 @@
 {number:1038}
 ' add user to u.index:
 	im=8:goto {:2400}
+' 1039: QM - QuickMail
 	im=1:goto {:2401}
+' 1040
 	im=9:goto {:2400}
+' 1041: TT - top ten list
 	im=2:goto {:2401}
+' 1042: PS - personal signatures
 	im=3:goto {:2401}
 {:1045}
 {number:1045}
@@ -77,13 +81,13 @@
 	im=11:goto {:2400}
 ' 1046
 	im=10:goto {:2400}
-' 1047
+' 1047: ME - Exchange ID with another user (sysop only)
 	im=13:goto {:2400}
 ' 1048
 	pr$="":im$="":lm$="":return
-' 1049
+' 1049 ' ST - User statistics
 	im=1:goto {:2412}
-' 1050
+' 1050 ' BA - Board Activity Register
 	im=1:goto {:2414}
 {:1060}
 {number:1060}
@@ -136,8 +140,9 @@
 	a=val(a$)*a:bf=a:goto {:1400}
 	a$="{black},u,w":gosub {:1011}:close 2
 	a$="{black}":gosub {:1024}:a=-sgn(e%):return
-{number:1088}
+{number:1088} ' BF - blocks free
 	im=5:goto {:2404}
+' 1089: DR - disk directory
 	gosub {:1470}:on a goto {:1995}:&"{f6}{$d0}attern: ":gosub {:1499}
 	close 1:open 1,dv%,.,"$"+dr$+an$:&"{f6}":&,8,1:close 1:return
 {:1093}
@@ -161,6 +166,7 @@
 {number:1196}
 	if dv%=lk%then print# 15,"l800"
 	return
+' 1198: TZ - change user's time zone
 	im=4:goto {:2428}
 {:1200}
 {number:1200}
@@ -190,33 +196,35 @@
 	a$=z$:goto {:1016}
 {number:1305}
 	im=3:goto {:2404}
-{number:1318}
+{number:1318} ' EM - email
 	br=.:mm=.:a=9:gosub {:1004}:on-(a<>.)goto {:1301}:x=4:gosub {:1980}:goto {:1812}
 {:1320}
 {number:1320}
-' is "disable U/D section?" enabled?
+' &,52,14,3: is "Disable U/D Section" enabled?
 	&,52,14,3:if a%then x=1:gosub {:1980}:goto {:1812}
 	gosub {:1019}:a=5:gosub {:1004}:b=a:a=15:gosub {:1004}
-' is "disallow double calls?" enabled?
+' &,52,15,3: is "300 Baud U/D Lockout" enabled?
 	&,52,15,3:if b=.or(pt%and a=.)or(a%<>.and qb<1200)then x=4:gosub {:1980}:goto {:1812}
 {:1323}
 {number:1323}
 	f1=.:a$=z$+str$(nl):gosub {:1350}:a$=z$:goto {:1301}
-{number:1330}
+{number:1330} ' ZZ - local mode
 	im=7:goto {:2404}
 {number:1332}
 	im=8:goto {:2404}
-{number:1335}
+{number:1335} ' VERSION - BBS version, ML date/revision
 	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}":return
 {number:1340}
+' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
 {number:1342}
 	on-(z$="{$d5}{$c4}"or z$="{$d5}{$d8}")goto {:1320}:goto {:1323}
 {:1345}
 {number:1345}
 	gosub {:1351}:goto {:1812}
-{number:1348}
+{number:1348} ' NU - New User rules/etc.
 	a$="new user":goto {:1350}
+' 1349: CF - BBS configuration
 	a$="config"
 {:1350}
 {number:1350}
@@ -224,20 +232,25 @@
 {:1351}
 {number:1351}
 	im=1:goto {:2430}
+' 1352: ?? - local mode commands menu
 	im=2:goto {:2404}
 	dr=1:a$="s.menu 3":goto {:1075}
+' 1354: RD - read a SEQ file
 	im=4:goto {:2404}
 {:1360}
 {number:1360}
-' fixme: strings can be up to 22 chars now
-' new: clear cm$ area, specify color of title in c
-	if peek(17139)=. then:&,69,4,21,"{space:23}",$85:if cm$<>"" then:&,69,4,21,cm$,$80+c
+' &,69,<col>,<row>,"string",$color ($8x=reverse) (0-based)
+' fixed: strings can be up to 21 chars now
+' maybe: clear cm$ area, specify color of title in c ($80+c)
+' to clear Area: cm$="":gosub 1360
+	if peek(17139)=. then:&,69,4,21,"{space:23}",$8c:if cm$<>"" then:&,69,5,21,left$(cm$,21),$8c
 	return
 {:1370}
 {number:1370}
 	&,69,c,22,right$(str$(a+1e5),b),$81:return
 {number:1372}
 	&,40
+' check free memory:
 	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
 	a=ca:b=5:c=2:gosub {:1370}:a=cn:b=3:c=10:goto {:1370}
 {number:1375}
@@ -245,19 +258,19 @@
 {:1376}
 {number:1376}
 	an$=a$:&,9:return
-	a$="                ":goto {:1376}
+	a$="{space:16}":goto {:1376}
 {:1400}
 {number:1400}
 	for a=1 to 6:if dv%(a)=dv%and dr%(a)=val(dr$)then bf(a)=bf
 {number:1402}
 	next:a=bf:return
-{number:1450}
+{number:1450} ' DC - DOS command
 	gosub {:1470}:on a goto {:1995}:&"{f6}{$c4}isk {$c3}ommand?: ":poke 53252,58
 {number:1452}
 	gosub {:1499}:z$=an$:if z$=""or z$="@"then gosub {:1010}:gosub {:1012}:&:return
 	b$=left$(z$,1):if b$="n"or b$="s"then gosub {:1901}:if a=.then return
 	gosub {:1010}:print# 15,z$:gosub {:1012}:&:return
-{number:1460}
+{number:1460} ' CA - Credit Add (sysop only)
 	im=1:goto {:2404}
 {:1470}
 {number:1470}
@@ -292,8 +305,10 @@
 {number:1603}
 	return
 {number:1604}
+' load im.editor, start with empty buffer
 	im=1:goto {:2402}
 {number:1610}
+' load im.editor, preserve existing buffer
 	im=2:goto {:2402}
 {:1630}
 {number:1630}
@@ -306,40 +321,43 @@
 	if ac%<>ao%then fl$=a$:ao%=ac%
 	a=6:gosub {:1004}:le=(a+1)*10:a=16:gosub {:1004}:poke 830,a:a=20:gosub {:1004}:da%=a
 	return
+' 1640: C - chat request
 	im=4:goto {:2400}
-{number:1642}
+{number:1642} ' LD - last date
 	im=1:goto {:2408}
-{number:1644}
+{number:1644} ' LG - BBS activity log
 	im=2:goto {:2408}
-{number:1646}
+{number:1646} ' EX - exchange credits for time?
 	im=3:goto {:2408}
 {number:1648}
 	im=4:goto {:2408}
-{number:1650}
+{number:1650} ' TM - Mini Term
+' BBS reports "unknown command", even though local mode enabled
+' and command active
 	im=1:goto {:2410}
 {number:1652}
 	im=2:goto {:2410}
 {number:1654}
 	im=3:goto {:2410}
-{number:1656}
+{number:1656} ' T - time/date
 	im=5:goto {:2400}
-{number:1660}
+{number:1660} ' EP - Edit Parameters
 	&"{f6}{$c5}dit ({$c9})nfo or ({$d0})arameters? {pound}g1{pound}v7{f6}":a=-(an$="{$d0}")-2*(an$="{$c9}")
 {number:1661}
 	im=1:on a goto {:2406},{:2428}:return
-{number:1662}
+{number:1662} ' AT - change graphics translation
 	im=2:goto {:2406}
-{number:1664}
+{number:1664} ' PW - change password
 	im=2:goto {:2428}
-{number:1666}
+{number:1666} ' PR - change transfer protocol
 	im=4:goto {:2406}
 {number:1667}
 	im=5:goto {:2406}
-{number:1668}
+{number:1668} ' RL - clears strings?
 	im$="":pr$="":lm$="":return
-{number:1670}
+{number:1670} ' RP - read program
 	im=6:goto {:2404}
-{number:1678}
+{number:1678} ' F - feedback
 	b=.:o$="{$c6}eedback":&"{f6}{$cc}eave {pound}$o?: ":gosub {:1902}:if a=.then return
 {number:1680}
 	dr=3:gosub {:1079}:if a<35 then{:1978}
@@ -453,10 +471,13 @@
 {number:1871}
 	a=val(mid$(uf$,b,1)):gosub {:1870}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1)
 	return
-{number:1880}
+{number:1880} ' XP - eXPert mode
 	a=em:b$="{$c5}xpert":gosub {:1870}:em=a:&,52,20,2:return
+' 1881: PM - Prompt Mode
 	a=pm:b$="{$d0}rompt":gosub {:1870}:pm=a:return
+' 1882: MP - More Prompt
 	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub {:1871}:&,52,34,a:return
+' 1883: MN - Menu Mode
 	b=3:b$="{$cd}enu":gosub {:1871}:&,52,44,a:return
 	b=4:b$="{$d5}ndefined":gosub {:1871}:&,52,44,a:return
 	poke 970,mp%:&"{f6}":return
@@ -622,7 +643,7 @@
 ' load module in a$, minus "+/" prefix:
 	lm$=a$+"":dr=5:gosub {:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
 {number:2900}
-{:2900}
+{:2900} ' MM - memory usage
 	a=45:b=43:a$="{$d0}rogram":gosub {:2910}
 {number:2901}
 	a=47:b=45:a$="{$d6}ariables":gosub {:2910}
@@ -643,7 +664,9 @@
 {:2912}
 	q$="":on-(ll%<42)goto {:1603}:for r=1 to int((ll%-42)/2):q$=q$+" ":next:return
 {number:2999}
+{crunch:off}
 	copr. 1994 new image 9/21/94
+{crunch:on}
 {number:3000}
 ' setup
 {:3000}
@@ -689,7 +712,7 @@
 ' adjust console clock for 20xx:
 	poke $16ec,$32:poke $16ed,$30
 ' set time/display IM revision (omit time zone):
-	d1$="31712138220":an$=d1$:&,15:an$=left$(an$,26):& "{$c9}{$cd} {$d2}evision: {pound}v7{f6}"
+	d1$="61712158828":an$=d1$:&,15:an$=left$(an$,26):& "{$c9}{$cd} {$d2}evision: {pound}v7{$cd}{f6}"
 	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
 	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
 {:3080}
@@ -984,4 +1007,5 @@
 {:4092}
 {number:4092}
 	gosub {:1065}:x=1:gosub {:1001}:&,2,2:i1$=a$:close 2:return
+{crunch:off}
 	copr. 1994 new image 9/21/94
