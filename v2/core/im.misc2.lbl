@@ -2,7 +2,7 @@
 {step:2}
 {alpha:upper}
 {crunch:on}
-' - removed unneeded im entry point
+' + re-added Top Ten list code
 ' - removed code in PS graphical menu causing a loop
 ' + subroutined writing tt$() array with 1074 im call
 ' + PS non-C/G menu goes to correct line #
@@ -10,14 +10,15 @@
 ' + defined s$="Signature" (used 12 times)
 ' + changed MCI gets to inputs where appropriate
 ' + load existing signature rather than start new every time
-	lg=1:on im goto {:60002},{:60066}:return
+' im=1: QuickMail, im=2: Top Ten, im=3: Personal Signatures
+	on im goto {:60002},{:60054},{:60066}:return
 {nice:100}
 {:60002}
-	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
+	lg=1:fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60012}
 	&"{f6}{pound}v5 {$ce}ote{$d0}ad.{f6:2}"
 {:60006}
-	p$="":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60012}
+	p$="{$c8}andle":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60012}
 	on tr%+1 goto {:60048}:on-(an$="")goto {:60048}:gosub 1046:x=i:if x then nn$=an$:goto {:60020}
 	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}{$ce}ot {$c6}ound.{f6}":goto {:60006}
 {:60012}
@@ -28,9 +29,12 @@
 {:60018}
 	&"{f6}{lt. green}{$c8}andle: {rvrs on}":&nn$:&"{f6}{yellow}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1907:if a=.then{:60002}
 {:60020}
-	y=i:dr=2:gosub 1079:on-(a<20)goto {:60044}:gosub 1085:if a then gosub 1980:goto {:60048}
+	y=i:dr=2:gosub 1079:if a<20 then x=2:gosub 1980:goto {:60046}
+' check for directory space:
+	gosub 1085:if a then gosub 1980:goto {:60048}
+' fl=1: send to another user
 	on fl goto {:60030}
-	poke 53252,30:&"{f6}":&"{$d3}ubject: ":pl=.:&,1,5:if an$="" then an$="{$ce}ote":&"{up}{pound}{back arrow}12{pound}v7{f6}"
+	poke 53252,30:&"{f6}{$d3}ubject: ":pl=.:&,1,5:if an$="" then an$="{$ce}ote":&"{up}{pound}{back arrow}12{pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:if tr%<1 or kk=. then {:60048}
 {:60030}
 	&"{f6}{$c6}iling {$cd}ail {$c6}or "+nn$+"..."
@@ -41,8 +45,6 @@
 	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
 	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
 	x=25:on z gosub 1025:close 2:gosub 1081:goto {:60046}
-{:60044}
-	x=2:gosub 1980
 {:60046}
 	&"{f6:2}{$d3}end to another user? ":gosub 1902:if a then fl=1:goto {:60006}
 {:60048}
@@ -56,6 +58,15 @@
 	print# 2,"{cyan}{$cf}n  :{white} {$04}"+hr$
 	print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}"
 	close 2:return
+{nice:100}
+{:60054}	' Top Ten list
+	&"{clear}{pound}v5's {$d4}op {$d4}en {$d5}sers!{f6:2}"
+	dr=3:a$="e.top ten,s,r":gosub 1011:if e% then:&"{f6:2}{$ce}o list (key) {pound}g1":goto{:60062}
+{:60058}
+	&,3,2:s=st:if s=. then{:60058}
+{:60062}
+	return
+
 {nice:100}
 {:60066}
 	cm$="{$d0}ersonal {$d3}ignatures":gosub 1360:dr=1:a$="s.ps":gosub 1075:s$="{$d3}ignature"
@@ -127,7 +138,7 @@
 ' check for/open existing file (a$="ps.<#><handle>"):
 	gosub {:sub.set_filename}:gosub 1011
 ' no existing file, start w/empty buffer:
-	if e% then close 2:&"Empty buffer{f6}":gosub 1604:goto {:save}
+	if e% then close 2:gosub 1604:goto {:save}
 ' load existing file:
 	kk=1:&"{f6}{$cc}oading..."
 {:load}
@@ -138,7 +149,7 @@
 	close 2:gosub {:sub.msg_enter_signature}:gosub 1610
 {:save}
 ' no lines entered, or aborted:
-' kk=2:printstr$(kk)" "left$("lines",4-(kk<0))" "
+' kk=2:printstr$(kk)" "left$("lines",4-(kk<0))" " (handled by im.editor)
 	if kk=. then gosub 1920:goto {:60080}
 ' scratch existing filename:
 	&"{f6}{white}{$c6}iling {pound}$s #{pound}!b...":gosub {:sub.set_filename}:gosub 1023
@@ -160,7 +171,7 @@
 {:sub.msg_enter_signature}
 	&"{f6}{green}{$c7}et {$d2}eady {$d4}o {$c5}nter {$d9}our {pound}$s:{f6}":return
 {nice:10}
-	REM FIXES BY PINACOLADA - 12/15/2017
+	REM FIXES BY PINACOLADA - 12/18/2017
 	REM IM.MISC2
 {crunch:off}
 	copr. 1994 new image 9/28/94

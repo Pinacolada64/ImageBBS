@@ -1,10 +1,10 @@
 	ON IM GOTO{:60002},{:60004},{:60008},{:60054},{:60064}:RETURN
-{:60002}
+{:60002}	' save a level of variables, define/clear them
 	&,28,1:GOSUB{:60004}:&,27:RETURN
-{:60004}
+{:60004}	' define Image 1.2 arrays
 	DIM BB$(31),DT$(61),ED$(61),NN$(61)
 	DIM A%(61),C%(61),D%(61),E%(31),F%(61),AC%(31),SO%(31):RETURN
-{:60008}
+{:60008}	' quick mail
 	FL=.:A=9:GOSUB 1004:IF A=.THEN X=4:GOTO 1980
 	X=ABS(VAL(MID$(AN$,3))):IF X THEN:&"{f6:2}":GOTO{:60018}
 {:60012}
@@ -37,7 +37,7 @@
 	&"{f6:2}{$d3}END TO ANOTHER USER? ":GOSUB 1902:IF A THEN FL=1:GOTO{:60012}
 {:60052}
 	RETURN
-{:60054}
+{:60054}	' Top Ten list
 	&"{clear}{pound}V5'S {$d4}OP {$d4}EN {$d5}SERS!!{f6:2}"
 	DR=3:A$="E.TOP TEN,S,R":GOSUB 1011:IF E%THEN:&"{f6:2}{$ce}O LIST (KEY) {pound}G1":GOTO{:60062}
 {:60058}
