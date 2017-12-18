@@ -9,7 +9,8 @@ Last updated 25/Dec/2008 16:43
 &,2,x	disk file input (x=channel #) -> a$
 &,3,x	read file from disk, x=logical file #
 &,4	get byte from modem
-&,5	get version
+&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
+	im 1335: "Image BBS 64 V1.3.1: 12/29/91  1:18p"
 &,6	password input -> an$
 
 &,7,<device>[,segment] - load file
@@ -117,7 +118,7 @@ Last updated 25/Dec/2008 16:43
 		x=1: set	x=3: read -> a%
 &,53	logoff
 		im: 1003 &,53,a
-&,54	useeditr
+&,54,x	useeditr
 &,55	output
 &,56	chatmode
 &,57	relread

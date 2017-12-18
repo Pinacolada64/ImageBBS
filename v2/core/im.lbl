@@ -933,7 +933,7 @@
 	print# 2,tt$(x+20):next:close 2
 	&"{f6}{$c4}one {$d7}ith {f5}e.data{f5}{f6}":return
 {:3426}
-	&"{$d7}riting new {f5}bd,data{f5}{f6}"
+	&"{$d7}riting new {f5}bd.data{f5}{f6}"
 	open 2,dv%,2,bd$+"bd.data,s,w":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3080}
 	if po$=""then po$="{$cd}ain: "
 	print# 2,dv%(3);r$;dr%(3);r$;po$;r$

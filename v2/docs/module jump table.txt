@@ -25,7 +25,7 @@ im.disp
 		60350	Display I/O progress screen
 			(like im.screens)
 im.editor
-	im=1	60082	WF related stuff
+	im=1	60082	WF related stuff - start with empty editor?
 	im=2	60088	WF related stuff
 
 im.feedback
