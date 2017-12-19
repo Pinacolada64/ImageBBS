@@ -1,12 +1,16 @@
 {number:4000}
-	rem automaint main module
+{step:2}
+{crunch:on}
+{alpha:upper}
+	REM AUTOMAINT MAIN MODULE
 	z$=left$(am$,1)
-	gosub {:4094}:rem update daily stats
-	gosub {:4078}:rem totals at end of log
-	rem gosub 846:rem weekly log routines
-	gosub {:4046}:rem daily log routines
-	gosub {:4018}:rem read e.data from disk
-	gosub {:4032}:rem compute idle time
+	gosub {:4094}:REM UPDATE DAILY STATS
+	gosub {:4078}:REM TOTALS AT END OF LOG
+' testing this:
+	gosub {:4070}:REM WEEKLY LOG ROUTINES
+	gosub {:4046}:REM DAILY LOG ROUTINES
+	gosub {:4018}:REM READ E.DATA FROM DISK
+	gosub {:4032}:REM COMPUTE IDLE TIME
 	close 2:return
 {:4018}
 	&"{f6}{yellow}{$d2}eading {f5}e.data{f5}{f6}":gosub 1063:if e%then close 2:&"{rvrs on}{lt. red}{f5}e.data{f5}{$a0}{$ce}ot {$c6}ound{f6}":return
@@ -38,11 +42,13 @@
 	gosub 1060:for x=12 to 22:st(x)=.:gosub 1026:next:gosub 1026:close 2
 {:4064}
 	&"{f6:2}{$cc}og {$d2}estarted.{f6:2}":t$=am$:am$=d1$+"":return
+{:4066}
 	k$=mid$(d1$,4,2)+"/"+mid$(d1$,6,2)+"/"+mid$(d1$,2,2):a$="log"+k$:return
 	gosub {:4062}:&"{f6}{brown}{$c1}rchiving {$d7}eekly {$cc}og{f6}"
+{:4070}
 	dr=3:gosub 1010:print# 15,"r"+dr$+a$+"=e.logweek":close 15
 {:4072}
-	&"{f6}{gray1}{$d3}tarting {$ce}ew {$d7}eekly {$cc}og{f6}":gosub {:4062}
+	&"{f6}{gray1}{$d3}tarting {$ce}ew {$d7}eekly {$cc}og{f6}":gosub {:4066}:gosub {:4062}
 	a$="e.logweek,s,w":dr=3:gosub 1011:print# 2,"{$d7}eekly {$cc}og {$d2}estarted "+k$+r$
 	close 2:goto {:4042}
 {:4078}
@@ -59,4 +65,6 @@
 	dr=3:a$="e.daily stats,l,p":gosub 1011:x=int(val(z$)):gosub 1001
 	a$="":for i=12 to 22:a$=a$+str$(st(i))+r$:next:print# 2,d1$r$a$;:close 2
 	return
+{crunch:off}
+	REM +/LO.AUTOMAINT - 12/18/2017
 	copr. 1990 new image 12-26-90
