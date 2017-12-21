@@ -149,6 +149,7 @@
 {number:1093}
 	for i=1 to 4:&,11,i:next
 	&,11,.:return
+' 1095: log a$ to disk unless using immediate login:
 	on i%goto {:1603}:gosub {:1490}
 {:1096}
 {number:1096}
@@ -239,12 +240,15 @@
 	im=4:goto {:2404}
 {:1360}
 {number:1360}
+' peek(17139)=0: screen mask on
 ' &,69,<col>,<row>,"string",$color ($8x=reverse) (0-based)
-' fixed: strings can be up to 21 chars now
-' maybe: clear cm$ area, specify color of title in c ($80+c)
+' fixed: strings can be up to 21 chars now (assuming no idle timer displayed)
+' fixed: clear cm$ area
+' fixed: lines are short enough to edit on c64
+' maybe: specify color of title in c ($80+c)
 ' to clear Area: cm$="":gosub 1360
-	if peek(17139)=. then:&,69,4,21,"{space:23}",$8c:if cm$<>"" then:&,69,5,21,left$(cm$,21),$8c
-	return
+	on -(peek(17139)=1) goto {:1603}:&,69,4,21,"{space:23}",$8c
+	on -(cm$="") goto {:1603}:&,69,5,21,left$(cm$,21),$8c:return
 {:1370}
 {number:1370}
 	&,69,c,22,right$(str$(a+1e5),b),$81:return
