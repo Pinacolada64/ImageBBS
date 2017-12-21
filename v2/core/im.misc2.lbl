@@ -41,7 +41,7 @@
 	if lg then fd$="{$cc}ocal {$d1}uick{$cd}ail":gosub {:60050}
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
 '	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
-	print# 2,na$r$id;r$d1$:gosub 1074
+	print# 2,na$r$id;r$d1$r$tt$(0):gosub 1074
 	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
 	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
 	x=25:on z gosub 1025:close 2:gosub 1081:goto {:60046}
