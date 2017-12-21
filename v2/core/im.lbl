@@ -767,11 +767,7 @@
 	x=48:gosub {:1001}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}":x=49:gosub {:1001}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
 	x=51:gosub {:1001}:&,2,2:cc$=a$
 	x=58:gosub {:1001}:&,2,2:nc=val(a$)
-<<<<<<< HEAD
 ' 3160
-=======
-' 3160:
->>>>>>> 0520bf86780cc4f680d968a9ea18ff7ac3ead0a0
 ' y%: 1=cmd clock, 2=ltk clock, 3=last automaint timestamp
 ' gosub {:3170} - set clock
 	on y% gosub {:3348},{:3358},{:3360}:gosub {:3170}
@@ -906,12 +902,8 @@
 	gosub {:3364}:sys 49155:goto {:3362}
 {:3360}
 ' get time from last Auto-Maint timestamp:
-<<<<<<< HEAD
 ' disk input was already done in 3140, copy am$
 	z$=am$:poke 1010,1:return
-=======
-	gosub 1063:x=35:gosub 1001:&,2,2:z$=a$:close 2:poke 1010,1:return
->>>>>>> 0520bf86780cc4f680d968a9ea18ff7ac3ead0a0
 {:3362}
 	z$="":for a=49159 to 49169:z$=z$+chr$(peek(a)):next:poke 1010,1:return
 {:3364}
