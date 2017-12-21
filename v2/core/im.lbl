@@ -214,7 +214,10 @@
 {number:1332}
 	im=8:goto {:2404}
 {number:1335} ' VERSION - BBS version, ML date/revision
-	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}":return
+	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}"
+{:1336}
+' IM date also displayed at boot time
+	an$="41712208900":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -713,10 +716,10 @@
 	dim tt$(254),dv%(36),dr%(36),co$(9),hs$(10),bf(6),st(38),im$(5),pf$(10)
 	dim ec%(19,24),es%(3,49),ei%(50):restore:for i=1 to 9:read a$:co$(i)=a$+"":next
 	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
-' adjust console clock for 20xx:
+' adjust console clock year to 20xx:
 	poke $16ec,$32:poke $16ed,$30
-' set time/display IM revision (omit time zone):
-	d1$="71712178130":an$=d1$:&,15:an$=left$(an$,26):& "{$c9}{$cd} {$d2}evision: {pound}v7{$cd}{f6}"
+' display IM revision (omit time zone):
+	gosub {:1336}
 	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
 	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
 {:3080}
@@ -758,12 +761,16 @@
 	df%=3:x=40:gosub {:1001}:&,2,2:a=val(a$):if a>.and a<16 then df%=a
 	x=41:gosub {:1001}:&,2,2:a=val(a$):if a$<>""then close 4:open 4,4,a
 	x=42:gosub {:1001}:&,2,2:a=val(a$):if a then poke 17136,a
+' record 35: last automaint date
 	x=35:gosub {:1001}:&,2,2:an$=a$:&,15:d6$=an$+"{$cd}":x=45:gosub {:1001}:&,2,2:tz$=a$
 	x=47:gosub {:1001}:&,2,2:bn$=a$
 	x=48:gosub {:1001}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}":x=49:gosub {:1001}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
 	x=51:gosub {:1001}:&,2,2:cc$=a$
 	x=58:gosub {:1001}:&,2,2:nc=val(a$)
-	on y%gosub {:3348},{:3358},{:3366}:gosub {:3170}
+' 3160
+' y%: 1=cmd clock, 2=ltk clock, 3=last automaint timestamp
+' gosub {:3170} - set clock
+	on y% gosub {:3348},{:3358},{:3360}:gosub {:3170}
 	poke 970,.:poke 971,23:mp$=" ...{$cd}ore? ({$d9}/n) "+"":im=5:gosub {:2428}:gosub {:3200}
 	gosub {:1060}:for x=1 to 38:gosub {:1001}:&,2,2:st(x)=val(a$):next:close 2
 	an$=am$:lt$=am$:tk$=left$(am$,1):gosub {:3210}
@@ -771,12 +778,11 @@
 	a$=z$:gosub {:1520}:t1=a:an$=z$:&,15:d2$=an$+"{$cd}":for i=54272 to i+24:poke i,.:next
 	f1=3:&,27,1:a$="lo":goto {:1016}
 {:3170}
-	a=val(mid$(z$,1,1)):gosub {:3184}:poke 52935,a
+	a=val(left$(z$,1)):gosub {:3184}:poke 52935,a
 	a=val(mid$(z$,2,2)):gosub {:3184}:poke 52938,a
 	a=val(mid$(z$,4,2)):gosub {:3184}:poke 52936,a
 	a=val(mid$(z$,6,2)):gosub {:3184}:poke 52937,a
-	b=val(mid$(z$,8,2))                                                   
-	c=val(mid$(z$,10,2))
+	b=val(mid$(z$,8,2)):c=val(mid$(z$,10,2))
 	&,62,b,c:b=b+80*((b=92)-(b=12))+12*((b=93)or(b=13)):&,58,b,.:return
 {:3184}
 	a=16*int(a/10)+a-int(a/10)*10:return
@@ -882,23 +888,26 @@
 	lp=1:&"{$cd}essage {$c2}ases and {$d5}/{$c4}{$a0}{$cc}ibraries {$c3}an {$c2}e {$c3}onfigured {$c2}y using {$d4}he "
 	lp=1:&"{f5}+.reledit{f5} {$d5}tility.  {f5}{$d2}{$c5}{f5} {$c3}ommand.{f6:2}  {$ce}{$c5}{$d7} {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$d3}{$cf}{$c6}{$d4}{$d7}{$c1}{$d2}{$c5}{f6:2}":return
 {:3348}
-' get time from creative micro designs device's real-time clock:
-	print# 15,"t-ra":&,2,15
+' 3356: get time from creative micro designs device's real-time clock:
+	close 15:open 15,dv%,15:print# 15,"t-ra":&,2,15
 	z$=left$(a$,2):a=-(z$="su")-2*(z$="mo")-3*(z$="tu")-4*(z$="we")-5*(z$="th")
 	a=a-6*(z$="fr")-7*(z$="sa"):z$=mid$(str$(a),2,1)+mid$(a$,12,2)+mid$(a$,6,2)
 	a=-80*(mid$(a$,24,1)="p")+val(mid$(a$,15,2))
-	z$=z$+mid$(a$,9,2)+right$("0"+mid$(str$(a),2),2)+mid$(a$,18,2):poke 1010,1:return
+' 3364:
+	z$=z$+mid$(a$,9,2)+right$("0"+mid$(str$(a),2),2)+mid$(a$,18,2):poke 1010,1
+' 3365:
+	close 15:return
 {:3358}
-' get time from ltk clock:
+' get time from Lt.Kernal clock:
 	gosub {:3364}:sys 49155:goto {:3362}
 {:3360}
-	gosub {:3364}:sys 49155:goto {:3362}
-' set clock via last Auto-Maint timestamp:
-	rem:gosub 1063:x=35:gosub 1001:&,2,2:d1$=a$:close2:poke1010,1:return
+' get time from last Auto-Maint timestamp:
+' disk input was already done in 3140, copy am$
+	z$=am$:poke 1010,1:return
 {:3362}
 	z$="":for a=49159 to 49169:z$=z$+chr$(peek(a)):next:poke 1010,1:return
 {:3364}
-' load ltk ml:
+' load Lt.Kernal ml:
 	dr=5:gosub {:1010}:a$=dr$+"swr.ml":&,7,dv%,2:return
 {:3366}
 	gosub {:3364}:sys 49152:sys 49155:goto {:3362}
@@ -943,10 +952,20 @@
 	print# 2,dv%(3);r$;dr%(3);r$;po$;r$
 	print# 2,"2.0 {$c9}mage {$d6}2.0 {$c3}opyright 1994 {$ce}ew {$c9}mage {$d3}oftware":close 2:close 15
 	&"{f6}{$c3}onversion {$c3}omplete!!":return
+
 {:3438}
-	&"{$c3}lock {$d3}etting:{f6:2} 1. {$cd}anually{f6} 2. {$c3}{$cd}{$c4} {$c2}oot {$c4}evice{f6} 3. {$cc}t{$cb} {$d0}ort 1{f6}"
-	&" 4. {$cc}t{$cb} {$d0}ort 2{f6:2}[> {pound}i1{f6:2}":y%=val(an$)-1:if y%<.or y%>3 then y%=.
+' Clock Setting:
+'
+' 1. CMD boot device
+' 2. Lt.Kernal
+' 3. Last AutoMaint timestamp
+'
+' [> _
+	&"{$c3}lock {$d3}etting:{f6:2} 1. {$c3}{$cd}{$c4} boot device{f6} 2. {$cc}t.{$cb}ernal{f6} 3. {$cc}ast {$c1}uto{$cd}aint timestamp{f6:2}"
+{:3440}
+	&"[> {pound}i1":y%=int(val(an$)):if y%<1 or y%>3 then:&"{up}":goto {:3440}
 	return
+
 	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
 	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
 	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
