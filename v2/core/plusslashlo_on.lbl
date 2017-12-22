@@ -106,4 +106,5 @@
 	if a then ld$=d5$
 	return
 {crunch:off}
+	REM +/LO.ON - 12/20/2017 - PRIME TIME DISPLAY FIX
 	copr. 1994 new image 11/14/94
