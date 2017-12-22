@@ -217,7 +217,7 @@
 	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}"
 {:1336}
 ' IM date also displayed at boot time
-	an$="41712208900":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
+	an$="51712218211":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -757,7 +757,7 @@
 	x=17:gosub {:1001}:&,2,2:d3$=a$:x=18:gosub {:1001}:&,2,2:pp$=a$
 	x=19:gosub {:1001}:&,2,2:z$=a$:x=20:gosub {:1001}:input# 2,p1%,p2%,p3%
 	x=35:gosub {:1001}:&,2,2:am$=a$:x=36:gosub {:1001}:&,2,2:mc=val(a$)
-	x=37:gosub {:1001}:y%=val(an$):x=38:gosub {:1001}:&,2,2:lk%=val(a$)
+	x=37:gosub {:1001}:&,2,2:y%=val(a$):x=38:gosub {:1001}:&,2,2:lk%=val(a$)
 	df%=3:x=40:gosub {:1001}:&,2,2:a=val(a$):if a>.and a<16 then df%=a
 	x=41:gosub {:1001}:&,2,2:a=val(a$):if a$<>""then close 4:open 4,4,a
 	x=42:gosub {:1001}:&,2,2:a=val(a$):if a then poke 17136,a
