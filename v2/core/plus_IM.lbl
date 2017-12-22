@@ -1,4 +1,7 @@
 {number:3000}
+{step:2}
+{crunch:on}
+{alpha:upper}
 	zz%=8:pr$="":lm$="":&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%:fl=.
 {:3002}
 	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2:if fl then return
@@ -234,5 +237,6 @@
 '	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
 '	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
+{crunch:off}
 	copr. 1994 new image 10/19/94
-	rem 171221 x-tec
+	REM 171221 X-TEC

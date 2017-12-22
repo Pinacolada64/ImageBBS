@@ -1,34 +1,60 @@
 {number:4000}
+{step:2}
+{crunch:on}
+{alpha:upper}
 	y$="{$c3}onnect":x$="{$c3}ommand"
 	v=1.3:vn$="900610":r$=chr$(13):gosub{:4104}:return
 {:4004}
-	close 2:open 2,dv%,2,dr$+"nm.nodes":goto 1012
+' just these 2 {:4004}s - could replace with "gosub {:open_nm.nodes}"
+' btw: when calling 1011, close 2 is performed there
+'	close 2:open 2,dv%,2,dr$+"nm.nodes":goto 1012
 {:4006}
-	gosub{:4004}:input# 2,n:return
-{:4008}
-	close 2:open 2,dv%,2,dr$+"nm.nodes,l,"+chr$(100):return
-{:4010}
+'	gosub{:4004}:input# 2,n:return
+	gosub{:open_nm.nodes}:input# 2,n:return
+{:make_nm.nodes}
+' 4008: create "nm.nodes":
+	dr=2:a$="nm.nodes,l,"+chr$(100):goto 1011
+{:open_nm.nodes}
 	dr=2:a$="nm.nodes":goto 1011
 {:4012}
-	gosub{:4010}:input# 2,n:return
-	dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
+	gosub{:open_nm.nodes}:input# 2,n:return
+' no reference to this line:
+'	dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
+
+{:open_nm.config}
+	dr=2:a$="nm.config":goto 1011
+' not going to subroutine making nm.create - that is opened/written on lfn#3,
+' most Image SEQ routines use lfn#2
+{:open_nm.create}
+	dr=2:a$="nm.create":goto 1011
+{:open_nm.connect}
+	dr=2:a$="nm.connect":goto 1011
+{:make_nm.connect}
+' nm.connect is opened/written on lfn#2
+	dr=2:a$="nm.connect,l,"+chr$(100):goto 1011
+{number:4022}
 {:4022}
 	if x then x=x+1:gosub 1001:input# 2,z$:return
+{number:4026}
 {:4026}
+' node list:
 	gosub{:4012}
 	for i=1 to n:a%=i:x=i+1:gosub 1001:input# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
 	i=i+rc*n:next:close 2:return
-	gosub{:4012}:if a<1 or a>n then 32
+' no reference to this line:
+'	gosub{:4012}:if a<1 or a>n then 32
+{number:4034}
 {:4034}
 	x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
 	x=a%:gosub{:4022}:f$=z$:x=b%:gosub{:4022}:g$=z$:x=c%:gosub{:4022}:h$=z$:x=d%:gosub{:4022}:i$=z$
 	close 2:return
+{number:4056}
 {:4056}
 	&"{$c4}estination {$ce}ode (?={$cc}ist):{pound}i1":if an$="{f2}"then gosub{:4026}:goto{:4056}
 {:4058}
 	a$=an$:a%=val(a$):if a%<1 or a%>n then:&,16,2
 	if a%=0 then a=0:a$="":return
-	gosub{:4010}
+	gosub{:open_nm.nodes}
 	a=a%:goto{:4034}
 {:4066}
 	&"{lt. blue}{$ce}ode {blue}({cyan}?{blue}={lt. blue}{$cc}ist{blue},{cyan}{$c1}{blue}={lt. blue}{$c1}dd{blue}):{white}{pound}i1":if an$="{f2}"then gosub{:4026}:goto{:4066}
@@ -36,7 +62,7 @@
 {:4070}
 	pr=-1:dr=5:gosub 1010:a$=dr$+"++ path":&,7,dv%,2:if e%then:&:return
 	gosub{:4086}:if e%=0 then return
-	gosub{:4010}:if e%then:&:goto{:4084}
+	gosub{:open_nm.nodes}:if e%then:&:goto{:4084}
 	close 3:open 3,dv%,3,dr$+"nm.nodelist,p,w":print# 3,chr$(0)chr$(194);
 	input# 2,n:print# 3,chr$(n);:if n=0 then{:4084}
 	for i=1 to n:x=i+1:gosub 1001:input# 2,a$,b$,b$,b$,b$,a,b,c,d
@@ -53,18 +79,21 @@
 	x=3:z$="":for i=0 to 9:z$=z$+tt$(i)+r$:next:goto{:4098}
 {:4094}
 	x=4:z$=ct$+r$+st$+r$:goto{:4098}
-	x=6:z$=a1$+r$+a2$+r$+a3$+r$:goto{:4098}
+	x=6:z$=a1$+r$+a2$+r$+a3$+r$ ' :goto{:4098}
 {:4098}
-	dr=2:a$="nm.config":gosub 1011:gosub 1001:print# 2,z$;:gosub 1001:close 2:return
-	&"{$c3}onfiguration {$c5}rror!{f6}":goto 1812
-	close 2:&:&"{f6}{$d0}ress a key:{pound}g1{f6}"
+	gosub {:open_nm.config}:gosub 1001:print# 2,z$;:gosub 1001:close 2:return
+' no reference to this line:
+'	&"{$c3}onfiguration {$c5}rror!{f6}":goto 1812
+'	close 2:&:&"{f6}{$d0}ress a key:{pound}g1{f6}"
+{number:4104}
 {:4104}
 	if zz=0 then:&"{f6}{$d3}orry, {$d4}his is a {$d3}{$d9}{$d3}{$cf}{$d0} {$cf}{$ce}{$cc}{$d9} program.{f6:2}":return
 	gosub{:4510}:if e%then return
 	a$=nn$:&"{clear}{f6}{white} {$ce}et {$c3}onfig{f6:2}{lt. blue} {$ce}ode {pound}%n{blue}:{white} {pound}$a{f6:2}"
 	on lm goto{:4130},{:4178},{:4294},{:4456},{:4330},{:4240},{:4474}:return
+{number:4130}
 {:4130}
-	dr=2:a$="nm.config":gosub 1011:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$
+	gosub {:open_nm.config}:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$
 	x=4:gosub 1001:&,2,2:ct$=a$:&,2,2:st$=a$:close 2
 {:4134}
 	&"{clear}{f6}{white}   {$cc}ocal {$c9}nfo{f6:2}"
@@ -94,7 +123,7 @@
 	p$="{$d3}tate":w$=st$:q=2:gosub{:4618}:pl=1:&,1,32:if an$<>""then st$=an$:tz=1
 	on tz gosub{:4094}:return
 {:4178}
-	dr=2:a$="nm.config":gosub 1011:x=2:gosub 1001
+	gosub {:open_nm.config}:x=2:gosub 1001
 	&,2,2:br%=val(a$):&,2,2:h0$=a$:&,2,2:h1$=a$:&,2,2:h2$=a$:close 2
 {:4182}
 	&"{clear}{f6}{white}   {$cd}odem {$d3}pecifications{f6:2}"
@@ -167,7 +196,7 @@
 {:4292}
 	dr=2:a$="nm.forward,l,.":gosub 1011:&,2,2:l=val(a$):return
 {:4294}
-	dr=2:a$="nm.config":gosub 1011:if e%then:&:goto{:4326}
+	gosub {:open_nm.config}:if e%then:&:goto{:4326}
 	x=3:gosub 1001:for i=0 to 9:&,2,2:if len(a$)<>4 then a$="2306"
 	tt$(i)=a$:next:close 2
 {:4300}
@@ -265,17 +294,17 @@
 	a$=tt$(6):b$=tt$(9):&"{cyan}6. {lt. blue}{$d4}oday:     {white}{pound}$a{f6}{cyan}   {lt. blue}{$cc}ast {$c3}all: {white}{$04}"+b$+"{f6}"
 	a$=tt$(7):b$=tt$(8):&"{cyan}7. {lt. blue}{$cd}inutes:   {white}{pound}$a{f6}{cyan}   {lt. blue}{$d3}ince:     {white}{$04}"+b$+"{f6}"
 	&"{f6:2}":return
-	dr=2:a$="nm.connect":gosub 1011:if e%=0 then return
-	dr=2:a$="nm.nodes":gosub 1011:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.connect}:if e%=0 then return
+	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
 	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
-	next:close 2:dr=2:a$="nm.connect,l,"+chr$(100):gosub 1011:for x=1 to 4:gosub 1001
+	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
 	print# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:next
 	x=5:gosub 1001:print# 2,0:gosub 1001:x=1:gosub 1001:return
 {:4456}
 	&"{f6:2} {$cd}aking {f5}nm.create{f5}..."
 	dr=2:gosub 1010:print# 15,"s"dr$"nm.create"
-	close 3:open 3,dv%,3,dr$+"nm.create,s,w":gosub 1012:if e%then{:4472}
+	close 3:open 3,dv%,3,dr$+"nm.create,s,w":gosub 1012:if e% then {:4472}
 	gosub{:4006}
 	for a=n to 1 step-1:x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
 	print# 3,a;r$a$r$b$r$c$r$d$r$o%and 1;r$a%r$b%r$c%r$d%
@@ -293,7 +322,7 @@
 {:4484}
 	k=8:m$="{$ce}et {$c7}raffiti"
 {:4486}
-	dr=2:a$="nm.config":gosub 1011:if e%then close 2:return
+	gosub {:open_nm.config}:if e%then close 2:return
 	for i=1 to 8:tt$(i)="{up arrow}":next
 	x=k:gosub 1001:&,2,2:tt$(1)=a$:if st=0 then for i=2 to 8:&,2,2:tt$(i)=a$:next
 {:4492}
@@ -309,19 +338,23 @@
 	if a%<8 then for i=a%to 7:tt$(i)=tt$(i+1):next
 	tt$(8)="{up arrow}":return
 {:4510}
-	dr=2:a$="nm.config":gosub 1011:if e%then close 2:goto{:4516}
+	gosub {:open_nm.config}:if e%then close 2:goto{:4516}
 	&,2,2:nn=val(a$):&,2,2:&,2,2:&,2,2:close 2
 	if a$<>vn$then:&"{f6:2}{$d6}ersion {$cd}ismatch! {$d2}un {f5}+.{$ce}{$cd}/convert{f5}{f6:2}":e%=1:return
 {:4516}
-	dr=2:a$="nm.nodes":gosub 1011:if e%=0 then:&,2,2:n=val(a$):goto{:4548}
-	dr=2:a$="nm.create,s,r":gosub 1011:if e%then{:4544}
+	gosub {:open_nm.nodes}:if e%=0 then:&,2,2:n=val(a$):goto {:4548}
+	gosub {:open_nm.create}:if e% then {:4544}
 	&"{f6}{$c3}reating {f5}nm.nodes{f5} file..."
 	input# 2,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st:close 2
-	gosub{:4008}:n=0
+' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
+' record length doesn't hurt after it's created
+	gosub{:open_nm.nodes}:n=0
 	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
 	if a>n then n=a:x=1:gosub 1001:print# 2,n
 	close 2:close 3:open 3,dv%,3,dr$+"nm.create,s,r"
-	gosub{:4008}:n=0
+' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
+' record length doesn't hurt after it's created
+	gosub{:open_nm.nodes}:n=0
 {:4534}
 	input# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
 	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
@@ -334,10 +367,10 @@
 {:4548}
 	gosub{:4070}:if e%then return
 	if nn then{:4574}
-	dr=2:a$="nm.nodes":gosub 1011:&,2,2:n=val(a$):close 2
+	gosub {:open_nm.nodes}:&,2,2:n=val(a$):close 2
 	&"{f6}{$c5}nter the {$ce}ode # you were assigned: {pound}i1":nn=val(an$)
 	if nn<1 or nn>n then e%=1:return
-	dr=2:a$="nm.config":gosub 1011:if e%then{:4562}
+	gosub {:open_nm.config}:if e%then{:4562}
 	&,2,2:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$:gosub{:4088}:goto{:4574}
 {:4562}
 	dr=2:a$="nm.config,l,z":gosub 1011
@@ -347,22 +380,22 @@
 	x=4:gosub 1001:print# 2,"{up arrow}"r$"{up arrow}"
 	x=1:gosub 1001:close 2
 {:4574}
-	dr=2:a$="nm.nodes":gosub 1011:x=nn+1:gosub 1001:&,2,2:nn$=a$:close 2
+	gosub {:open_nm.nodes}:x=nn+1:gosub 1001:&,2,2:nn$=a$:close 2
 	n%=nn:goto{:4070}
 {:4578}
-	dr=2:a$="nm.connect":gosub 1011:if e%=0 then{:4592}
-	dr=2:a$="nm.nodes":gosub 1011:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.connect}:if e%=0 then{:4592}
+	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
 	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
-	next:close 2:dr=2:a$="nm.connect,l,"+chr$(100):gosub 1011:for x=1 to 4:gosub 1001
+	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
 	print# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:next
 	x=5:gosub 1001:print# 2,0:gosub 1001:x=1:gosub 1001:return
 {:4592}
-	dr=2:a$="nm.nodes":gosub 1011:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
 	x=nn+1:gosub 1001:&,2,2:nn$=a$:dt$(0)=a$
 	&,2,2:&,2,2:&,2,2:&,2,2:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:x=a%(i)+1:dt$(i)="":if x>1 then gosub 1001:&,2,2:dt$(i)=a$
-	next:close 2:dr=2:a$="nm.connect":gosub 1011:if e%then close 2:return
+	next:gosub {:open_nm.connect}:if e%then close 2:return
 	for x=1 to 4:gosub 1001:b$=""
 {:4604}
 	&,2,2:b$=b$+a$+r$:on-(st=0)goto{:4604}:nn$(x)=b$:next
@@ -374,4 +407,4 @@
 	gosub 1001:print# 2,nn$(x);:next:gosub 1001:return
 {:4618}
 	poke 53252,q:return
-	rem x-tec 171221
+	rem "+.im/NETMAIL" -- X-TEC 171221
