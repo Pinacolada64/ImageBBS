@@ -28,15 +28,14 @@
 	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ocal {$c9}nfo"
 	&,16,.,34,m%(.,2),"{$c2}","","{$cd}odem {$d3}pecs"
 	&,16,.,34,m%(.,3),"{$c3}","","{$c3}alling {$c8}ours"
-	&,16,.,34,m%(.,4),"{$c4}","","{$c3}onnections"
-	&,16,.,34,m%(.,5),"{$c5}","","{$cd}ail {$c6}orwards"
-	&,16,.,34,m%(.,6),"{$c6}","","{$d3}tarlink"
+	&,16,.,34,m%(.,4),"{$c4}","","{$cd}ake nm.create"
+	&,16,.,34,m%(.,5),"{$c5}","","{$c3}onnections"
+	&,16,.,34,m%(.,6),"{$c6}","","{$c6}wd. {$cc}ist"
 	&,16,.,34,m%(.,7),"{$c7}","","{$ce}etwall/{$c7}rf"
 	&,16,.,34,m%(.,8),"{$c8}","","{$d1}uit"
 {:3062}
 	n=8:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
-	&"{lt. red}{$d4}hat function is not yet supported.{pound}w1":goto {:3062}
-	a$="netmail":gosub {:3182}:goto {:3062}
+	a$="netmail":gosub{:3182}:fl=1:gosub{:3002}:fl=.:goto{:3062}
 {:3068}
 	&,28,1:n=5:dim m%(16,n),tx$(60),fb%(29,15),a%(60):if tr%<1 then{:3006}
 	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ogin {$cd}ods"
@@ -236,3 +235,4 @@
 '	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 	copr. 1994 new image 10/19/94
+	rem 171221 x-tec
