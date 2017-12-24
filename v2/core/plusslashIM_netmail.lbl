@@ -2,47 +2,66 @@
 {step:2}
 {crunch:on}
 {alpha:upper}
-	y$="{$c3}onnect":x$="{$c3}ommand"
-	v=1.3:vn$="900610":r$=chr$(13):gosub{:4104}:return
+
+' (this is +.NM/config renamed)
+' removed: r$ is defined in "im"
+' added: some file open subroutines
+' fixed: adding a netmail forward causes the node list to be displayed twice, before confirmation
+' added: "Configuration Error" subroutine (4100)
+' changed: {:4330}, {:4332}, {:4344} - subroutined "net connects editor" message
+
+{:4000}
+	y$="{$c3}onnect":x$="{$c3}ommand":rem "+/im.NETMAIL"
+{:4002}
+	v=1.3:vn$="900610":gosub {:4104}:return
 {:4004}
-' just these 2 {:4004}s - could replace with "gosub {:open_nm.nodes}"
-' btw: when calling 1011, close 2 is performed there
-'	close 2:open 2,dv%,2,dr$+"nm.nodes":goto 1012
-{:4006}
-'	gosub{:4004}:input# 2,n:return
-	gosub{:open_nm.nodes}:input# 2,n:return
-{:make_nm.nodes}
-' 4008: create "nm.nodes":
-	dr=2:a$="nm.nodes,l,"+chr$(100):goto 1011
 {:open_nm.nodes}
 	dr=2:a$="nm.nodes":goto 1011
-{:4012}
-	gosub{:open_nm.nodes}:input# 2,n:return
-' no reference to this line:
-'	dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
+{:4006} ' get node count
+	gosub {:4004}:input# 2,n:return
+{:4008}	' create "nm.nodes"
+{:make_nm.nodes}
+	dr=2:a$="nm.nodes,l,"+chr$(100):goto 1011
 
+' duplicates:
+' 4010 dr=2:a$="nm.nodes":goto1011
+' 4012 gosub4010:input#2,n:return
+
+' no references to:
+' 4014 f$="nm.list":gosub{:4016}:print# 2,tt$:close 2:return
+' 4016 dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
+' 4018
+' 4020
+
+' so I've replaced them with file open subroutines:
+' 4010:
 {:open_nm.config}
 	dr=2:a$="nm.config":goto 1011
 ' not going to subroutine making nm.create - that is opened/written on lfn#3,
 ' most Image SEQ routines use lfn#2
+' 4012:
 {:open_nm.create}
 	dr=2:a$="nm.create":goto 1011
+' 4014:
 {:open_nm.connect}
 	dr=2:a$="nm.connect":goto 1011
+' 4016:
 {:make_nm.connect}
 ' nm.connect is opened/written on lfn#2
 	dr=2:a$="nm.connect,l,"+chr$(100):goto 1011
+
 {number:4022}
 {:4022}
 	if x then x=x+1:gosub 1001:input# 2,z$:return
-{number:4026}
+' 4024: this looks like it needs to be here:
+	z$="{f2:3}":return
+' otherwise it continues into... the node list subroutine:
 {:4026}
-' node list:
-	gosub{:4012}
+	gosub{:4006}
 	for i=1 to n:a%=i:x=i+1:gosub 1001:input# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
 	i=i+rc*n:next:close 2:return
-' no reference to this line:
-'	gosub{:4012}:if a<1 or a>n then 32
+' this line can never be reached:
+' 4032	gosub{:4006}:if a<1 or a>n then 32
 {number:4034}
 {:4034}
 	x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
@@ -54,7 +73,7 @@
 {:4058}
 	a$=an$:a%=val(a$):if a%<1 or a%>n then:&,16,2
 	if a%=0 then a=0:a$="":return
-	gosub{:open_nm.nodes}
+	gosub {:open_nm.nodes}
 	a=a%:goto{:4034}
 {:4066}
 	&"{lt. blue}{$ce}ode {blue}({cyan}?{blue}={lt. blue}{$cc}ist{blue},{cyan}{$c1}{blue}={lt. blue}{$c1}dd{blue}):{white}{pound}i1":if an$="{f2}"then gosub{:4026}:goto{:4066}
@@ -62,7 +81,7 @@
 {:4070}
 	pr=-1:dr=5:gosub 1010:a$=dr$+"++ path":&,7,dv%,2:if e%then:&:return
 	gosub{:4086}:if e%=0 then return
-	gosub{:open_nm.nodes}:if e%then:&:goto{:4084}
+	gosub {:open_nm.nodes}:if e%then:&:goto{:4084}
 	close 3:open 3,dv%,3,dr$+"nm.nodelist,p,w":print# 3,chr$(0)chr$(194);
 	input# 2,n:print# 3,chr$(n);:if n=0 then{:4084}
 	for i=1 to n:x=i+1:gosub 1001:input# 2,a$,b$,b$,b$,b$,a,b,c,d
@@ -79,19 +98,22 @@
 	x=3:z$="":for i=0 to 9:z$=z$+tt$(i)+r$:next:goto{:4098}
 {:4094}
 	x=4:z$=ct$+r$+st$+r$:goto{:4098}
-	x=6:z$=a1$+r$+a2$+r$+a3$+r$ ' :goto{:4098}
+' fixme: this line can't be reached (might be old netmail forwarding code):
+'	x=6:z$=a1$+r$+a2$+r$+a3$+r$ ' :goto{:4098}
+{number:4098}
 {:4098}
 	gosub {:open_nm.config}:gosub 1001:print# 2,z$;:gosub 1001:close 2:return
-' no reference to this line:
-'	&"{$c3}onfiguration {$c5}rror!{f6}":goto 1812
-'	close 2:&:&"{f6}{$d0}ress a key:{pound}g1{f6}"
+{:config_error}
+	&"{$c3}onfiguration {$c5}rror!{f6}":&:return
+' this line can't be reached:
+' 4102	close 2:&:&"{f6}{$d0}ress a key:{pound}g1{f6}"
 {number:4104}
 {:4104}
 	if zz=0 then:&"{f6}{$d3}orry, {$d4}his is a {$d3}{$d9}{$d3}{$cf}{$d0} {$cf}{$ce}{$cc}{$d9} program.{f6:2}":return
 	gosub{:4510}:if e%then return
 	a$=nn$:&"{clear}{f6}{white} {$ce}et {$c3}onfig{f6:2}{lt. blue} {$ce}ode {pound}%n{blue}:{white} {pound}$a{f6:2}"
-	on lm goto{:4130},{:4178},{:4294},{:4456},{:4330},{:4240},{:4474}:return
-{number:4130}
+{number:4128}
+	on lm goto{:4130},{:4178},{:4294},{:4456},{:4332},{:4240},{:4474}:return
 {:4130}
 	gosub {:open_nm.config}:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$
 	x=4:gosub 1001:&,2,2:ct$=a$:&,2,2:st$=a$:close 2
@@ -160,6 +182,7 @@
 	q=15:gosub{:4618}:&"{$ce}ew {pound}$x: {pound}i0":if an$<>""then h2$=an$:goto{:4090}
 	return
 {:4240}
+' netmail forwarding:
 	&"{f6}":gosub{:4292}
 	&"{clear}{f6} {white}{$c5}-{$cd}ail {$c6}orwarding{f6:2}":if l=0 then gosub{:4266}:goto{:4252}
 	for i=1 to l:x=i+1:gosub 1001:input# 2,a$,b$,c$:d$=b$+" @ ":if b$=a$then d$=""
@@ -218,18 +241,20 @@
 	b=b+12*(b=12):if right$(an$,1)="{$d0}"then b=b+12
 	a$=right$(str$(100+b),2):return
 {:4330}
-	gosub{:4578}:if e%then return
+	&"{clear}{f6}{white} {$ce}et {pound}$ys {$c5}ditor:{f6:2}":return
 {:4332}
-	&"{clear}{f6}{white} {$ce}et {pound}$ys {$c5}ditor:{f6:2}"
+' net connects editor:
+	gosub {:4330}:gosub {:4578}:if e% then {:config_error}
+{:4334}
 	&"{cyan} 1. {lt. blue}{$c5}dit {$d3}tandard {pound}$ys{f6}{cyan} 2. {lt. blue}{$c5}dit {$d3}hort-{$c3}uts{f6}"
-	&"{f6}{lt. blue}{$d7}hich?{white} {pound}g1{f6}":a=val(an$):if a then on a gosub{:4340},{:4342}:goto{:4332}
+	&"{f6}{lt. blue}{$d7}hich?{white} {pound}i1":a=val(an$):if a then on a gosub{:4340},{:4342}:goto{:4332}
 	close 2:return
 {:4340}
 	k=0:m=4:goto{:4344}
 {:4342}
 	x=5:gosub 1001:&,2,2:m=val(a$):k=5
 {:4344}
-	&"{clear}{f6}{white} {$ce}et {pound}$ys {$c5}ditor:{f6:2}":z=-(k>0 and m<56):on-(m=0)goto{:4348}
+	gosub {:4330}:z=-(k>0 and m<56):on-(m=0)goto{:4348}
 	for i=1 to m:x=i+k:gosub 1001:a%=i:&,2,2:&"{cyan}{pound}#2{pound}# {pound}%a){lt. blue} {pound}$a   ":next
 {:4348}
 	a$="":if z then a$=" ({$c1}={$c1}dd) "
@@ -247,7 +272,7 @@
 {:4366}
 	gosub 1001:a$="":for i=1 to 9:a$=a$+tt$(i)+r$:next:print# 2,a$;:gosub 1001:return
 {:4368}
-	gosub{:4430}:&"{f6}{lt. blue} {$c5}dit {$d7}hich? {cyan}({$c1}={$c1}ll) {white}{pound}g1":on-(an$="{$c1}")goto{:4380}:b=val(an$)
+	gosub{:4430}:&"{f6}{lt. blue} {$c5}dit {$d7}hich? {cyan}({$c1}={$c1}ll) {white}{pound}i1":on-(an$="{$c1}")goto{:4380}:b=val(an$)
 	if b then gosub{:4378}:goto{:4368}
 	if tt$(1)<>"{f8}"or k=0 then{:4366}
 	if x-k<m and m>1 then for j=x-k to m-1:x=j+k+1:gosub{:4364}:x=j+k:gosub{:4366}:next
@@ -257,7 +282,12 @@
 {:4380}
 	gosub{:4360}:for b=1 to 6:gosub{:4378}:next:goto{:4368}
 {:4382}
+{def:debug}
+{ifdef:debug}
+	if k=0 then:&"k=0: key{pound}g1{f6}":return	
+{else}
 	if k=0 then return
+{endif}
 	q=3:gosub{:4618}:p$="{$ce}ode":w$=tt$(1):pl=1:&,1,32:if len(an$)=3 then tt$(1)=an$
 	if an$="{f8}"then tt$(1)=an$
 	return
@@ -295,7 +325,7 @@
 	a$=tt$(7):b$=tt$(8):&"{cyan}7. {lt. blue}{$cd}inutes:   {white}{pound}$a{f6}{cyan}   {lt. blue}{$d3}ince:     {white}{$04}"+b$+"{f6}"
 	&"{f6:2}":return
 	gosub {:open_nm.connect}:if e%=0 then return
-	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.nodes}:if e% then {:config_error}
 	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
 	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
@@ -348,13 +378,13 @@
 	input# 2,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st:close 2
 ' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
 ' record length doesn't hurt after it's created
-	gosub{:open_nm.nodes}:n=0
+	gosub {:open_nm.nodes}:n=0
 	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
 	if a>n then n=a:x=1:gosub 1001:print# 2,n
 	close 2:close 3:open 3,dv%,3,dr$+"nm.create,s,r"
 ' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
 ' record length doesn't hurt after it's created
-	gosub{:open_nm.nodes}:n=0
+	gosub {:open_nm.nodes}:n=0
 {:4534}
 	input# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
 	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
@@ -384,14 +414,14 @@
 	n%=nn:goto{:4070}
 {:4578}
 	gosub {:open_nm.connect}:if e%=0 then{:4592}
-	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.nodes}:if e% then {:config_error}
 	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
 	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
 	print# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:next
 	x=5:gosub 1001:print# 2,0:gosub 1001:x=1:gosub 1001:return
 {:4592}
-	gosub {:open_nm.nodes}:if e%then:&"{$c3}onfig {$c5}rror!":&:return
+	gosub {:open_nm.nodes}:if e% then {:config_error}
 	x=nn+1:gosub 1001:&,2,2:nn$=a$:dt$(0)=a$
 	&,2,2:&,2,2:&,2,2:&,2,2:for i=1 to 4:&,2,2:a%(i)=val(a$):next
 	for i=1 to 4:x=a%(i)+1:dt$(i)="":if x>1 then gosub 1001:&,2,2:dt$(i)=a$
@@ -407,4 +437,5 @@
 	gosub 1001:print# 2,nn$(x);:next:gosub 1001:return
 {:4618}
 	poke 53252,q:return
-	rem "+.im/NETMAIL" -- X-TEC 171221
+{crunch:off}
+	rem "+/im.NETMAIL" -- X-TEC 171221
