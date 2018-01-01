@@ -57,7 +57,7 @@ Image BBS 2.0 IM line number translation:
 	52			check Prt "print log entries" lightbar enabled
 	53			check if printer online
 	54			print a$ to printer
-	60			check for dir space?
+1088	60			check for dir space?
 1089	61			check blocks free on drive 'dr'
 	62			check Lt.Kernal HD blocks free?
 	63			...same...
@@ -79,11 +79,11 @@ Image BBS 2.0 IM line number translation:
 	83			Clear another array
 1678	85			Leave feedback
 
-	92			Display ">>Canceled!"
-	93			Display "Are You Sure?: "
-	94			Display "[No]", wait for keypress 
-1901	95			Display "Are you sure? "
-1902	96			Display "Yes" or "No"
+1920	92			Display ">>Canceled!"
+1901	93			Display "Are You Sure?: "
+1902	94			Display "[No]", wait for keypress 
+	95			Display "Are You Sure?: "
+	96			Display "No", wait for key
 	97			Display yes/no response chosen
 1264	314			Display p$+an$
 1265	315			Display hs$() array of commands
@@ -128,6 +128,7 @@ Image BBS 2.0 IM line number translation:
 1360	9
 1450	360
 1490	50
+1603	99	general purpose RETURN
 1678	85
 1700	302
 1750	28

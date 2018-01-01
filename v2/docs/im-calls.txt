@@ -69,6 +69,7 @@ IM 9/21/1994 calls
 	Display "Are You Sure?: "
 	Display "[No]", wait for keypress 
 
+1260	Handle ^? command history
 1264	Display p$+an$
 1265	Display hs$() array of commands
 
