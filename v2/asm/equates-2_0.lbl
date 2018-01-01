@@ -208,7 +208,7 @@
 	mci	= $07ef
 	mdigits	= $07f0
 
-	carrst	= $07f1
+	carrst	= $07f1 ; 2033: modem carrier status
 	tsp1	= $07f2	; transmit speed lo-byte
 	tsp2	= $07f3	; transmit speed hi-byte
 	chks	= $07f4

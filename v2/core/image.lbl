@@ -1,0 +1,196 @@
+	mm=peek(829):p1$="":goto{:300}
+{:1}
+	goto{:10}:&,22,1:goto{:10}
+{:2}
+	dv%=dv%(dr):dr$=mid$(str$(dr%(dr)),2)+":":d3%=dr%(dr):return
+{:3}
+	close 15:gosub{:2}:open 15,dv%,15:return
+{:4}
+	close 2:gosub{:3}:open 2,dv%,2,dr$+a$
+{:5}
+	input# 15,e%,e$,t%,s%:a$="{f6}{$d3}tatus:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+{:6}
+	an$=uu$:on-(an$<>"")gosub{:310}:on-(an$<>"")goto{:314}:pl=1:&,1:goto{:310}
+{:7}
+	&"{pound}g1":a$=an$:return
+{:8}
+	gosub{:7}:a=-(an$="{$d9}"):a$=mid$("{$d9}es{$ce}o",4-a*3,3):&"{pound}$a{f6}":return
+{:9}
+	&,69,4,21,left$(" "+cm$+"               ",16),$8c:return
+{:10}
+	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
+{:11}
+	a=val(mid$(fl$,a,1)):return
+{:12}
+	poke 53253,0:poke 2024,.:poke 2031,.:poke 53260,.:&"{pound}u0{pound}q"+chr$(df%+48):return
+{:13}
+	&"{clear}"
+	a$=a$+",s,r":gosub{:4}:if e%=0 then:&,3,2
+	close 2:return
+	gosub{:1}:input# 2,st(x):st(x)=st(x)+i
+	gosub{:1}:print# 2,st(x):return
+{:20}
+	dr=5
+{:21}
+	cm$=a$+"":gosub{:9}:gosub{:3}:if a$=pr$then e%=0:return
+	load dr$+"i."+a$,dv%,mm:pr$=cm$:lm$="":goto{:5}
+{:23}
+	gosub{:20}:goto 3000
+	a$=z$:y$=pr$:gosub{:23}:a$=y$:on-(lc<>1)goto{:20}:return
+	a$=z$:goto{:23}
+	gosub{:21}:f1=sgn(e%):goto 3000
+	on-(lm$=a$)goto 5000:dr=5:gosub{:3}:lm$=a$+"":load dr$+"i."+a$,dv%:goto 5000
+	dr=5:gosub{:3}:if"++ "+a$=ml$then e%=0:return
+	ml$="++ "+a$:a$=dr$+ml$:&,7,dv%,2:goto{:5}
+	dr=3:a$="e.stats":goto{:4}
+	dr=3:a$="e.access":goto{:4}
+	dr=2:a$="m."+left$(tt$,13)+",s,"+a$:goto{:4}
+	dr=3:a$="e.data":goto{:4}
+{:34}
+	dr=3:a$="e.log"+left$(lt$,am)+",s,"+a$:goto{:4}
+	dr=6:a$="u.config":goto{:4}
+	a$="sub.editor":goto{:74}
+	a$="sub.handles":goto{:74}
+	a$="sub.protos":goto{:74}
+	a$="sub.display":goto{:74}
+	if i%then return
+	c$=a$:a$="a":gosub{:34}:if e%=0 then print# 2,c$
+	close 2:a$=c$:an$=c$:a=a%:&,52,13,3:b=a%:a%=a:if b=0 then return
+	open 16,4,15:close 16:if st then return
+	print# 4,a$:return
+	a$="{black},u,w":gosub{:4}:close 2:print# 15,"s"dr$"{black}":a=-sgn(e%):return
+	if dr<7 then if bf(dr)>-1 then gosub{:2}:a=bf(dr):bf=a:return
+	gosub{:3}:on-(dv%<>lk%)goto{:64}:a$=dr$:if dr$="10:"then a$="a"
+	a=2:print# 15,"lg"left$(a$,1):input# 15,e%,a$,a$,a$,a$,a$:goto{:65}
+{:64}
+	a=1:close 2:open 2,dv%,0,"$"+dr$+"{black}":get#2,a$,a$:&,8,2,1:&,8,2,1:close 2
+{:65}
+	a=val(a$)*a:bf=a:for a=1 to 6:if dv%(a)=dv%and dr%(a)=val(dr$)then bf(a)=bf
+	next:a=bf:return
+{:70}
+	dr=5
+	on-(pr$<>a$)gosub{:76}:goto 3000
+	dr=5
+	on-(p1$<>a$)gosub{:77}:goto 4000
+{:74}
+	dr=5
+	on-(p2$<>a$)gosub{:78}:goto 5000
+{:76}
+	pr$=a$+"":p1$="":p2$="":goto{:79}
+{:77}
+	p1$=a$+"":p2$="":goto{:79}
+{:78}
+	p2$=a$+""
+{:79}
+	gosub{:3}:load dr$+"i."+a$,dv%:return
+{:80}
+	a$=z$:y$=p1$:gosub{:70}:a$=y$:on-(lc<>1)goto{:70}:return
+	dr=5:gosub{:3}:if a$=ml$then e%=0:return
+	ml$=a$+"":a$=dr$+"++ "+ml$:&,7,dv%,2:goto{:5}
+{:200}
+	on tr%+1 goto{:240}:&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,0
+	&,52,30,3:on a%gosub{:330}
+	cm$=p$:gosub{:9}:s=.:sh=.:gosub{:12}
+	poke 970,0:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
+	mm=2:gosub 3000:&"{f6}{$d4}- {pound}$b{$cd}":if tr%<100 then a%=tr%:&" - {pound}%a {$cd}in. {$cc}eft"
+	if zz then a%=usr(0):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
+	&"{f6:2}":poke 53252,38:gosub{:6}
+	cm$=left$(p$,11)+":"+left$(an$,4):gosub{:9}:cm$=p$
+	on tr%+1 goto{:240}:if an$=""then{:250}
+	gosub{:220}:if f4 then gosub{:304}:on-(f4=1.1)-2*(f4=1.2)-3*(f4=1.3)goto{:270},{:268},{:234}
+	on rs goto{:200}:mm=1:goto 3000
+{:220}
+	on-(ac%<>ao%)gosub{:320}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
+	&,52,20,3:em=a%:&,52,5,3:zz=a%
+	x=1:rq=.:rs=1
+	f4=.:gosub{:280}:if a%then{:260}
+	on-(a$="{$cf}"or(lc=1 and a$="{$d1}"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
+{:230}
+	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub{:8}:if a=0 then return
+	f4=1.3:return
+{:234}
+	cd%=0:if mid$(z$,2,1)<>"%"then ld$=lt$
+	if right$(an$,1)="!"then f1=2:goto{:302}
+	f1=1:goto{:302}
+{:240}
+	&"{f6}{$d3}orry, {$d4}ime {$cc}imit {$c5}xceeded.{f6}":mm=3:gosub 3000:f1=2:goto{:302}
+	f1=.:&"{f6} {$c1}borted!{f6}":goto{:200}
+{:250}
+	dr=1:a$="s.menu"+str$(lc):goto{:13}
+{:260}
+	if ef%and 8 then:&"{f6}{$d3}orry, that function is temporarily disabled.{f6}":return
+	if ec%<0 and cr+ec%<0 then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":return
+	cr=cr+ec%:if ep$=""or id=1 then{:264}
+	&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$<>ep$then:&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":return
+{:264}
+	f4=0:on ec+1 goto{:265},{:266},{:267},{:268}:return
+{:265}
+	z$=ef$:f4=1.1:&,28,1:return
+{:266}
+	f4=1.2:&,28,1:return
+{:267}
+	z$=ef$:goto{:80}
+{:268}
+	goto{:400}
+{:270}
+	a$=z$:goto{:70}
+{:280}
+	&,26,40,25,2^ac%,ec%(0,0),an$:on-(a%=0)goto{:284}:x=a%-1
+	ef%=ec%(0,x):ec=(ef%/2)and 7:el%=ec%(7,x)
+	&,60,1,16,ec%(7,x),ef$:&,60,1,10,ec%(15,x),ep$:ec%=ec%(2,x):return
+{:284}
+	&,26,8,50,2^ac%,es%(0,0),z$:on-(a%=0)goto{:288}:x=a%-1
+	ef%=ec%(0,x):ec=(ef%/2)and 7
+	&,60,1,2,es%(3,x),ef$:ec%=es%(2,x):el%=0:ep$=""
+{:288}
+	return
+{:300}
+	&,28,1:a$="main":goto{:70}
+{:302}
+	&,28,1:mm=0:a$="lo":goto{:70}
+{:304}
+	&,28,1:gosub{:306}:&,27:return
+{:306}
+	dim bb$(31),dt$(61),ed$(61),nn$(61)
+	dim a%(61),c%(61),d%(61),e%(31),f%(61),ac%(31),so%(31):return
+{:310}
+	on-(an$="{f8}{f2}")goto{:315}
+	if left$(an$,1)="{f8}"then an$=hs$(10-val(mid$(an$,2,1))):goto{:314}
+	&,15,6,140:uu$=an$:an$=a$
+	for ct=1 to 9:hs$(ct)=hs$(ct+1):next:hs$(10)=an$:return
+{:314}
+	&p$+": {pound}v7{f6}":return
+{:315}
+	for ct=1 to 10:a%=10-ct:a$=hs$(ct):&"{f8}{pound}%a: {pound}$a{f6}":next:an$="":uu$="":return
+{:320}
+	dr=3:a$="e.access":gosub{:4}:x=ac%+1:gosub{:1}:&,2,2:ag$=a$:&,2,2:close 2
+	if len(fl$)<len(a$)then fl$=fl$+mid$(a$,len(fl$)+1)
+	if len(fl$)>len(a$)then fl$=a$
+	if ac%<>ao%then fl$=a$:ao%=ac%
+	a=6:gosub{:11}:le=(a+1)*10:a=16:gosub{:11}:poke 830,a:a=20:gosub{:11}:da%=a
+	return
+{:330}
+	dr=3:a$="e.macros":gosub{:4}
+	if e%=0 then:&,2,2:a=val(a$):&"{f6:2}":x=int(rnd(1)*a)+2:gosub{:1}:&,3,2
+	close 2:return
+	dr=3:gosub{:3}:&,60,2,0,ec%(0,0),dr$+"e.ecs-long",dv%
+	&,60,2,0,ec%(0,0),dr$+"e.ecs-short",dv%:return
+{:350}
+	a=int(val(mid$(an$,3,2))):if a>0 then if a<7 then dr=a:goto{:353}
+	if a<7 or a>15 then a=8
+	&,15,6,133:d2%=val(an$):d1%=a:dr=0:dv%(0)=d1%:dv%(2)=d2%
+{:353}
+	gosub{:3}:close 15:a=-(st<>.):return
+	gosub{:350}:on a goto{:368}:poke 53252,58:&"{f6}{$c4}isk {$c3}ommand?: {pound}i0":&,15,2
+	z$=an$:if z$=""or z$="@"then gosub{:3}:gosub{:5}:&:return
+	b$=left$(z$,1):if b$="n"or b$="s"then:&"{$c1}re you sure? ":gosub{:8}:if a=0 then return
+	gosub{:3}:print# 15,z$:gosub{:5}:&:return
+{:368}
+	&"{$c4}evice not present!{f6}":return
+{:400}
+	return
+	poke 22,25:for i=2 to peek(152):close peek(603):next:poke 2031,0
+	x=peek(780):y=peek(781)+peek(782)*256
+	&,11:&,28,1:poke 53248,0:mm=2
+	a$=pr$:b$=p1$:c$=p2$:&"[{$c5}rr {pound}!x,{$cc}ine {pound}!y,{pound}$a,{pound}$b,{pound}$c]{f6}"
+	dr$=mid$(str$(dr%(5)),2)+":":dv%=dv%(5):load dr$+"im",dv%,mm

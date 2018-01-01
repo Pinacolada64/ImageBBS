@@ -142,7 +142,7 @@ rem 2a) within c64_filename, change "_" to ".":
 set c64_filename=%c64_filename:_=.%
 if DEBUG == 1 echo [_ -^> .]: %c64_filename%
 
-rem 2b) within dos_basename, change "plus" to "+":
+rem 2b) within c64_filename, change "plus" to "+":
 set c64_filename="%c64_filename:plus=+%"
 if DEBUG == 1 echo plus -^> +: c64_filename = %c64_filename%
 

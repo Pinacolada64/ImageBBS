@@ -65,7 +65,7 @@
 {:60058}
 	&,3,2:s=st:if s=. then{:60058}
 {:60062}
-	return
+	close 2:return
 
 {nice:100}
 {:60066}
@@ -149,7 +149,7 @@
 	close 2:gosub {:sub.msg_enter_signature}:gosub 1610
 {:save}
 ' no lines entered, or aborted:
-' kk=2:printstr$(kk)" "left$("lines",4-(kk<0))" " (handled by im.editor)
+' kk=2:printstr$(kk)" "left$("lines",4-(kk<>1))" used." (now handled by im.editor)
 	if kk=. then gosub 1920:goto {:60080}
 ' scratch existing filename:
 	&"{f6}{white}{$c6}iling {pound}$s #{pound}!b...":gosub {:sub.set_filename}:gosub 1023
