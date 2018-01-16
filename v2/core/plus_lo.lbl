@@ -1,4 +1,5 @@
-{alpha:upper} ' {$c1} = A
+{def:debug}	' for "e.idle <am$>" debug log
+{alpha:upper}	' {$c1} = A
 {number:3000}
 {crunch:on}
 {step:2}
@@ -62,14 +63,14 @@
 ' &,52,3,3: block 300 baud callers?
 	a%=.:if qb<1200 then:&,52,3,3
 	tr%=5:if a%then:&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} 300 {$c2}{$d0}{$d3} {$c3}{$c1}{$cc:2}{$d3} {$c1}{$c3:2}{$c5}{$d0}{$d4}{$c5}{$c4}{f6}":goto {:3266}
-	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
-	rem iftr%>.anda=21then3070
-	rem ifa=6thennl=2:&,52,16,.:&"{f6}{$c9}mage {$d4}erm {$c4}etected.{f6}":goto 3090
+	REM PRINT#131,"{STOP}"CHR$(.)CHR$(.);:&,22,10:&,4:A=PEEK(780)AND127
+	REM IFTR%>.ANDA=21THEN3070
+	REM IFA=6THENNL=2:&,52,16,.:&"{F6}{$C9}MAGE {$D4}ERM {$C4}ETECTED.{F6}":GOTO 3090
 {:3076}
 	&"{f6}{$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} {$c2}{$c1}{$c3}{$cb}{$d3}{$d0}{$c1}{$c3}{$c5} ({$c4}{$c5}{$cc}{$c5}{$d4}{$c5}){f6}{$cb}{$c5}{$d9}: ":&,52,16,.:&"{pound}b1":&,52,16,1
 {:3078}
 	&,4:a=peek(780)and 127:if(peek(2033)and 128)<>128 or tr%<1 then{:3266}
-' &,52,28,3: NetMail enable
+' &,52,28,3: NetMail enable, received ctrl-a for network transfer:
 	&,52,28,3:if a%then on-(a=1)goto {:3042}
 	if a=13 then{:3076}
 	on-(a<>8 and a<>127 and a<>20)goto {:3078}
@@ -163,7 +164,7 @@
 	a$="{$d0}hone {$ce}umber":gosub {:3214}:on-(t<1)goto {:3204}:ph$=an$:if an$=""then{:3196}
 	na$="{$c8}{$c5}{$cc}{$d0}"+"":pw$="{$ce}{$cf}{$ce}{$c5}"+"":ld$=d1$:ac%=0:dt%=0:tc%=0:co%=1:ll%=40:id=0
 	ul=1:lf=1:em=.:dc=.:uc=.:bd=.:bu=.:cr=.:ps=.:rp=.:d5$=d1$:fl$=fl$(ac%)
-	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then{:3226}
+	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then {:3226}
 {:3204}
 	&"{f6:2}{$d3}orry, {$d5}nable {$d4}o {$cc}og {$d9}ou {$c9}n...{f6:2}":goto {:3262}
 {:3206}
@@ -207,12 +208,15 @@
 
 ' log off:
 {:3256}
-' &,52,$22 - email check at logon?
-	gosub 1678:&,52,$22:b$=ff$
-	&"{f6:2} {$c2}ye {pound}$b!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
-	if i%or k%then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
+' immediate mode (i%=1) or console login (k%=1?) opt-outs
+' &,52,$22 - More Prompt On? assumed ,0 (clear) parameter?
+' 1678: leave feedback only if not local or console login:
+	&,52,$22:if i%=. and k%=. then gosub 1678
+' don't read logoff screen if user logged on in instant/console mode:
+	if i%=. and k%=. then:&"{f6:2} {$c2}ye{f1} "+ff$+"{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
+	if i% or k% then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
 {:3262}
-	a$="{$cc}ogoff":gosub {:3026}:&,52,$22:on-(ac%=16)goto {:3266}
+	a$="{$cc}ogoff":gosub {:3026}:if ac%=16 then {:3266}
 	if i%=.then a$="off":gosub {:3358}
 {:3266}
 	a=.:gosub 1003:b$="logoff":x=10:gosub {:3480}:&,52,4:&,52,5:gosub {:3004}:gosub {:3032}
@@ -228,7 +232,10 @@
 	poke 830,3:poke 53248,.:&,52,16,1:&,52,17,1:&,52,18,.:&,52,19,.
 	&,28,1:gosub 1093:gosub 1914:for j=217 to 242:poke j,peek(j)or 128:next:dr=3:gosub 1079
 	gosub 1063:x=37:gosub 1001:&,2,2:l2=val(left$(a$,1)):l2$=mid$(a$,2):close 2
-	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}{$c5}"
+' this was corrected & moved to im.disp
+'	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}{$c5}"
+' keep line #s in sync:
+	:
 	gosub 1374:gosub {:3496}
 	if peek(1010)then a$=d1$:gosub 1520:t1=a
 	goto {:3370}
@@ -385,7 +392,14 @@
 {:3480}
 	p=x:gosub 1060:i=t1:t1=mn%:i=t1-i:i=i-1440*(i<.):st(x)=i:gosub 1026
 	if i then x=x+11:gosub 1025:x=x+16:gosub 1025
+' logs to "e.idle <day>" log, with:
+' d1$ "idle" (x=10) or "used" (x<>10) i b$
+{ifdef:debug}
+	c$="e.idle "+left$(am$,1)+",s"
+{else}
+' original:
 	on 1 goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
+{endif}
 	dr=3:a$=c$+",a":gosub 1011:if e%then a$=c$+",w":gosub 1011
 	print# 2,d1$;" ";mid$("idleused",1-4*(p=10),4);i;b$:close 2
 {:3490}
@@ -407,3 +421,5 @@
 	&,69,31,20,left$(str$(qb)+"         ",9),$8c
 	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
 	goto 1374
+	rem +.LO - 1/15/2018 PINACOLADA
+	
