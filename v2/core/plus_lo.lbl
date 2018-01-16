@@ -396,7 +396,7 @@
 ' d1$ "idle" (x=10) or "used" (x<>10) i b$
 {ifdef:debug}
 	c$="e.idle "+left$(am$,1)+",s"
-{else}
+{else} 
 ' original:
 	on 1 goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
 {endif}
