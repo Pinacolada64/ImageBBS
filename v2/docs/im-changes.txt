@@ -2,6 +2,8 @@
 
 1336	Updated IM release date from "61712298044" to "11712318447"
 
+1530	Sounds: Use existing "return" from 1603
+
 	--- Logoff ---
 1690	Save 43+ bytes, new subroutine at 1702
 1694-
@@ -43,8 +45,8 @@
 
 3192	Blocks free: Neatened message output.
 
-3202-	gosub 3456	More config file loading logic overhaul.
-3210	
+3202-	gosub 3456
+3210	More config file loading logic overhaul.
 
 	--- New BBS setup ---
 3250	Replaced shift-space with space in output
@@ -102,10 +104,12 @@
 4092	Removed. Added to 4050
 
 +.lo, im.disp:
-	Change display color from 1 to $8c, properly erases uh/ur and qb previous value
+	Change display color from 1 (non-reversed white) to $8c (reversed med. gray)
+	Properly erases uh/ur and qb previous value
 +.lo:
-3026-	Quick hack, but it'll do.
-3028	Redirect 3026 to 1360
+3026-	Redirect 3026 to 1360
+3028	Quick hack, but it'll do.
 
 im.editor:
 60094	"0 Lines Used." / "1 Line Used." / ">1 Lines Used."
+Can make an Image ModMaker patch file, not worth uploading a new version for a 1-line change.
