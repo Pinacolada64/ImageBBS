@@ -113,3 +113,27 @@
 im.editor:
 60094	"0 Lines Used." / "1 Line Used." / ">1 Lines Used."
 Can make an Image ModMaker patch file, not worth uploading a new version for a 1-line change.
+
+
+
+Ok, let me check. I think I had a note a
+bout that, but let me double check.
+
+It should read st(x)=st(x)+i
+
+Everything before that needs to be taken
+ out.
+
+Oh. it's input#2,st(x)... kill that?
+
+Yeah, what was happening is when NM/auto
+ ran, it moved data from e.stats records
+ to the wrokg places line record 26 numb
+ers got moved to record 33 and 27 moved
+to 34 and soo on. Also when midinght aut
+omaint ran, it did the same to other rec
+ords.
+
+Oh, ick. That is bad. I will change that
+ and make a note of it in my "im fixes"
+file. One sec.

@@ -46,7 +46,8 @@
 	gosub {:1010}:print# 15,"s"dr$a$:return
 {:1025}
 ' x-tec removed "gosub 1001" here - lets SB/WF/VF save now
-	input# 2,st(x):st(x)=st(x)+i
+' 1/17/2018: remove "input# 2,st(x):" -  breaks +/NM.maint
+	st(x)=st(x)+i
 {:1026}
 	gosub {:1001}:print# 2,st(x):return
 {:1027}
@@ -104,6 +105,7 @@
 	dr=6:a$="u.config":goto {:1011}
 {number:1067}
 	cm$=a$:gosub {:1360}:gosub {:1014}:f1=sgn(e%):goto {:3000}
+' 1068: append or write e.b$:
 	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
 ' 1069: write user account data:
 	print# 2,na$r$id;r$d1$r$ac%r$ph$r$rn$r$co$r$ad$:return
@@ -264,6 +266,7 @@
 	&,40
 ' check free memory:
 	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
+' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
 	a=ca:b=5:c=2:gosub {:1370}:a=cn:b=3:c=10:goto {:1370}
 {number:1375}
 	a$=co$(co%):co$=a$
@@ -277,6 +280,7 @@
 {number:1402}
 	next:a=bf:return
 {number:1450} ' DC - DOS command
+' 1470: evaluate DCdv,dr command line
 	gosub {:1470}:on a goto {:1995}:&"{f6}{$c4}isk {$c3}ommand?: ":poke 53252,58
 {number:1452}
 	gosub {:1499}:z$=an$:if z$=""or z$="@"then gosub {:1010}:gosub {:1012}:&:return
@@ -339,7 +343,9 @@
 	im=1:goto {:2408}
 {number:1644} ' LG - BBS activity log
 	im=2:goto {:2408}
-{number:1646} ' EX - exchange credits for time?
+{number:1646} ' EX? - exchange credits for time
+' im.comm1
+' +.lo: at login, if caller is on last call for today, but has credits, can buy another call
 	im=3:goto {:2408}
 {number:1648}
 	im=4:goto {:2408}
@@ -746,7 +752,7 @@
 {:3080}
 	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$=d1$
 ' to init SwiftLink, use &,16,1
-	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,.
+	gosub {:sub.init_rs232_interface}
 {:3084}
 	dv%=z%:&"{f6}{cyan}{$d2}eading {$c3}onfig {$c4}ata...":close 2:close 15:open 15,dv%,15
 	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3084}
@@ -770,11 +776,13 @@
 	&"{$c1}larm {$d4}able":&,7,dv%,9:gosub {:1012}:gosub {:sub.status}
 {:nm_times}
 ' todo: check if "nm.config" exists first?
-	dr=2:a$=dr$+"nm.times":gosub {:1011}:close 2:if e% then {:fkeys}
+' check for presence of "nm.times": if not present, don't crash with ?load error
+' fixme: larry said this caused his bbs to not run network transfers :(
+	dr=2:a$="nm.times":gosub {:1011}:close 2:if e% then {:fkeys}
 	&"{$ce}etwork {$c1}larm {$d4}able":&,7,dv%,12:gosub {:1012}:gosub {:sub.status}
 '	&"{$ce}etwork {$c1}larm {$d4}able: ":a$=dr$+"nm.times":&,7,dv%,12:gosub {:1012}:gosub {:sub.status}
 {:fkeys}
-	dr=3:a$="e.fkeys,s,r":gosub {:1011}:if e% then {:3128}
+	dr=3:a$="e.fkeys":gosub {:1011}:if e% then {:3128}
 	&"{$c6}unction {$cb}eys":for i=1 to 8:&,2,2:if right$(a$,1)="{back arrow}" then a$=left$(a$,len(a$)-1)+r$
 	tt$(i)=a$:next:f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
 	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8):gosub {:sub.done}
@@ -1063,6 +1071,23 @@
 	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
 	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
 	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
+
+{nice:10}
+{:sub.init_rs232_interface}
+' user port: &,16,0
+' SwiftLink: &,16,1
+	dr=3:a$="e.i.modem":gosub 1011:if e% then:&"{$c4}efaulting to ":x=.:goto {:init}
+{:4020}
+	x=1:gosub 1001:&,2,2:mt$=a$:x=val(mid$(mt$,11,1)
+'	:&,2,2:in$=a$:&,2,2:m$=a$:&,2,2:au$=a$
+{:init}
+	close 2:if x<>1 then x=.
+' Initializing SwiftLink ML...
+	&"{f6}{$c9}nitializing "
+{:init}	
+	&mid$("user port{$d3}wift{$cc}ink",(x+1)*9-8,9)+" {$cd}{$cc}..."
+	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,x:return
+
 {crunch:off}
 	copr. 1994 new image 9/21/94
 {crunch:on}

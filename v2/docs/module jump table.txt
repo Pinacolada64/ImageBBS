@@ -56,17 +56,16 @@ im.menus
 
 im.misc2
 	im=1	60002	QM - QuickMail ("Notepad")
-	im=2	60066	PS - Personal Signature setup
-	im=3	60076	Another entry point for above
-			*These both are buggy*
+	im=2	60066	TT - Top Ten users
+	im=3	60076	PS - Personal Signature setup
 
 im.misc
-	im=1	60006	write user account to disk
-	im=2	60026	read user account from disk
+	im=1	60006	write user account to disk from variables
+	im=2	60026	read user account from disk into variables
 	im=3	60004	return
 	im=4	60046	C - request chat
 	im=5	60062	T - time and date
-	im=6	60068	write user account data
+	im=6	60068	?
 	im=7	60074	something to do with u.index
 	im=8	60078	rewrite "u.index"
 	im=9	60082	PR - load a different protocol

@@ -1,12 +1,23 @@
 {number:3000}
-	rem +.numbersquare automaint 8/19/94
-	rem:ifval(left$(d1$,1)<>1thenreturn
+{step:2}
+{crunch:on}
+	REM "+/LO.NUM SQU" (NUMBERSQUARE AUTOMAINT) 8/19/94
+' run on Sundays:
+	REM:IFVAL(LEFT$(D1$,1))<>1THENRETURN
 	cm$="{$ce}umbersquare {$c1}utomaint":gosub 1360
 	dr=3:a$="e.num squ,s,r":gosub 1011:if e%then close 2:return
 	&,2,2:w$=a$:&,2,2:close 2:an$=w$:gosub 1046:y=i:if i=.then return
+' add this to i.misc? im=3
+' used when program needs to modify something in user account
+' then immediately write it back... replaces for...next loops,
+' but there is the size/delay of loading im.misc2...
 	x=i:gosub 1065:gosub 1001:for i=1 to 24:&,2,2:tt$(i)=a$:next
 	tt$(19)=str$(val(tt$(19))+100):a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next
 	gosub 1001:print# 2,a$:close 2:dr=3:a$="e.num squ":gosub 1024
+' wish: use im.misc, im=3 (currently unused) flag to pass email parameters
+'	im=3:na$="SENDER":id=.:nn$="RECIPIENT":tt$(.)="[Winner]"
+'gosub {:60132} (RETURNs)
+
 	a$="{yellow} {rvrs on}"+w$+r$+" {cyan}{$d7}eekly {$ce}umbersquare {$d7}inner"+r$+"{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095
 	z=1:tt$=w$:a$="w":gosub 1062:if e%then a$="a":z=.:gosub 1062
 	print# 2,"{$d7}eekly {$ce}umbersquare {$d7}inner"r$;0;r$;d1$;r$;"[{$c3}ongratulations]"r$
@@ -16,13 +27,13 @@
 	if y=1 then gosub 1025
 	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
 	x=25:on z gosub 1025:close 2:return
-	rem
-	rem by:
-	rem    port commodore
-	rem    (801-423-2734)
-	rem
-	rem        nissa
-	rem
-	rem   august, 19, 1994
-	rem
-	rem numbersquare automaint
+	REM
+	REM BY:
+	REM    PORT COMMODORE
+	REM    (801-423-2734)
+	REM
+	REM        NISSA
+	REM
+	REM   AUGUST, 19, 1994
+	REM
+	REM NUMBERSQUARE AUTOMAINT

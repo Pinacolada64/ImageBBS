@@ -1,4 +1,4 @@
-{def:debug}	' for "e.idle <am$>" debug log
+{def:idle_logging}' for "e.idle <am$>" debug log
 {alpha:upper}	' {$c1} = A
 {number:3000}
 {crunch:on}
@@ -92,7 +92,7 @@
 {:3106}
 	dr=1:a$="s.login"+str$(nl):gosub 1076:pw$="":k=0
 {:3108}
-' 32: Enable Mail Check at Logon:
+' &,52,32,3: Enable Mail Check at Logon:
 	poke 53252,20:ac%=16:id=.:&,52,32,3:if a%=.then{:3116}
 	&"{f6:2}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}/{$c5}{$ce}{$d4}{$c5}{$d2} to {$cc}og {$cf}n, or{f6}"
 	&"{f5}{$cd}{f5} to just check mail: {pound}g1":if tr%<1 then{:3266}
@@ -105,7 +105,7 @@
 	if i<4 or i>20 or b$<"{$c1}"or b$>"{$da}"then id=.:goto {:3160}
 	gosub 1046
 	if i then id=i:&"{f6}{lt. blue}{$d9}our {$c9}{$c4}# is {white}{pound}!i. {lt. blue}{$d5}se {$c9}t {$c6}or {$c1}{f6}{$c6}aster {$cc}ogon!{f6}":goto {:3144}
-' 10: Disallow New Users
+' &,52,10,3: Disallow New Users
 	&"{f6:2} {f5}{pound}v7{f5}{f6} {$ce}ot{$a0}{$c6}ound.{f6:2}":&,52,10,3:if a%then{:3164}
 	&"{$c4}o {$d9}ou {$d7}ish {$d4}o{$a0}{$c1}pply {$c6}or{$a0}{$c1}n{f6}{$c1}ccount {$d7}ith {$d4}hat{$a0}{$c8}andle?: "
 	gosub 1902:if a then f1=1:g$=dd$:dd$="{$ce}{$c5}"+"{$d7}":goto {:3332}
@@ -129,7 +129,7 @@
 {:3160}
 	&"{f6:2}{$cc}ogin {$ce}ot {$d6}alid.":on-(id<>.and i%=.)gosub {:3216}:goto {:3136}
 {:3162}
-' 10: Disallow New Users
+' &,52,10,3: Disallow New Users
 	&,52,10,3:if a%=.then{:3332}
 {:3164}
 	&"{f6:2}{$d3}orry, {$ce}o{$a0}{$ce}ew{$a0}{$d5}sers{$a0}{$c1}re {$c2}eing{f6}{$c1}ccepted {$c1}t {$d4}his {$d4}ime.{f6:2}":goto {:3108}
@@ -199,9 +199,8 @@
 	&,28,1:goto {:3250}
 {:3250}
 ' instant logon (4):
-' if user hasn't called before: open e.stats, increment record #8 (new users)
-	on-(tc%>1)goto {:3252}:gosub 1060:i=1:x=8:gosub 1025:close 2
-{:3252}
+' if user hasn't called before (tc%=1): open e.stats, increment record #8 (new users)
+	if tc%=1 then gosub 1060:i=1:x=8:gosub 1025:close 2
 	a$="mail":gosub {:3362}:if a then gosub 2100:a$="{$c5}"+"{$cd}":goto 1016
 	goto 1811
 ' end of instant logon
@@ -213,7 +212,7 @@
 ' 1678: leave feedback only if not local or console login:
 	&,52,$22:if i%=. and k%=. then gosub 1678
 ' don't read logoff screen if user logged on in instant/console mode:
-	if i%=. and k%=. then:&"{f6:2} {$c2}ye{f1} "+ff$+"{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
+	if i%=. and k%=. then:&"{f6:2} {$c2}ye{f1} "+ff$+"!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
 	if i% or k% then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
 {:3262}
 	a$="{$cc}ogoff":gosub {:3026}:if ac%=16 then {:3266}
@@ -275,7 +274,10 @@
 	on-(e%=1)goto {:3334}:if tr%>.then{:3226}
 {:3334}
 	ac%=16:goto {:3266}
+
 {:3336}
+' start extra automaint modules:
+' todo: move this to +/lo.automaint
 	gosub 2100:br=.:a$="e.maintmods,s,r":dr=3:gosub 1011:if e%then{:3352}
 	&,2,2:br=val(a$):on-(br<1)goto {:3352}:dim lm$(br),mt$(br)
 	for i=1 to br:&,2,2:lm$(i)=a$:&,2,2:mt$(i)=a$:next:close 2:rk=1
@@ -284,22 +286,28 @@
 	a$=mid$(mt$(rk),4,2):b=mid$(d1$,4,2)=a$or a$="00"
 	a$=mid$(mt$(rk),6,2):c=mid$(d1$,6,2)=a$or a$="00"
 	if a and b and c then a$=lm$(rk):gosub {:3356}
-	rk=rk+1:on-(rk<=br)goto {:3342}:goto {:3352}
+	rk=rk+1:if rk<=br then {:3342}
 {:3352}
 	close 2:&,28,1:am$=d1$+"":gosub 1063:x=35:gosub 1001:print# 2,am$:close 2
 	gosub {:3004}:goto {:3266}
+' end extra automaint modules
+
 {:3356}
-	lm$="lo/"+a$:on peek(17139)+1 gosub {:3026}:goto {:3366}
+' automaint modules:
+	lm$="lo/"+a$:goto {:3366}
 {:3358}
 	gosub {:3364}:goto {:3004}
 {:3360}
-	lm$="lo-"+a$:on tr%+1 goto {:3368}:on peek(17139)+1 gosub {:3026}:goto {:3366}
+' login modules:
+	lm$="lo-"+a$:on tr%+1 goto {:3368}:goto {:3366}
 {:3362}
 	if tr%<1 then return
 {:3364}
-	lm$="lo."+a$:gosub {:3026}
+' login or system idle modules:
+	lm$="lo."+a$
 {:3366}
-	dr=5:gosub 1010:a$=dr$+"+/"+lm$:load a$,dv%:goto 4000
+' 3026 -> 1360, display a$ -> cm$ in Area window:
+	gosub {:3026}:dr=5:gosub 1010:a$=dr$+"+/"+lm$:load a$,dv%:goto 4000
 {:3368}
 	return
 {:3370}
@@ -382,7 +390,7 @@
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} {$c3}alls/{$cc}og  {pound}#3{pound}# {pound}%x {gray1} {f6}"
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} {$ce}ew {$d5}sers  {pound}#3{pound}# {pound}%w {gray1} {f6}"
 	&"{pound}{back arrow}23{gray1}{rvrs on}                {f6}{up}{cyan}"
-	dr=3:a$="e.last,s,r":gosub 1011:on-(e%<>.)goto {:3478}
+	dr=3:a$="e.last,s,r":gosub 1011:if e then {:3478}
 	for x=1 to 10:&,2,2:on-(len(a$)<11)goto {:3476}:an$=a$:&,15
 	&"{f6} "+left$(an$,6)+", "+right$(an$,7)+"{$cd} "+mid$(a$,12)
 {:3476}
@@ -393,20 +401,32 @@
 	p=x:gosub 1060:i=t1:t1=mn%:i=t1-i:i=i-1440*(i<.):st(x)=i:gosub 1026
 	if i then x=x+11:gosub 1025:x=x+16:gosub 1025
 ' logs to "e.idle <day>" log, with:
-' d1$ "idle" (x=10) or "used" (x<>10) i b$
-{ifdef:debug}
-	c$="e.idle "+left$(am$,1)+",s"
+' d1$        "idle" (p=10) 
+'         or "used" (p<>10)
+'                  i
+'                    b$
+' 31801168108 used 1 logoff
+' 31801168108 idle 0 modem reset
+' 31801168108 idle 0 modem reset
+' 31801168121 idle 12 modem reset
+' 31801168122 idle 0 connect
+{ifdef:idle_logging}
+' 1068: append or write e.b$:
+'	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
+' preserve b$ in c$:
+	c$=b$:b$="idle "+left$(am$,1):gosub 1068:b$=c$
 {else} 
 ' original:
 	on 1 goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
-{endif}
 	dr=3:a$=c$+",a":gosub 1011:if e%then a$=c$+",w":gosub 1011
+{endif}
 	print# 2,d1$;" ";mid$("idleused",1-4*(p=10),4);i;b$:close 2
 {:3490}
 	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
 	an$=left$("{$d5}="+mid$(str$(z%),2)+" {$c9}="+mid$(str$(y%),2)+"     ",10)
 	&,69,14,22,an$,$81:return
 {:3496}
+' turn screen mask on
 	&,18,1
 	an$=d3$:&,15,1:&,69,5,17,an$,$8c
 	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,l2$,$8c
@@ -420,6 +440,7 @@
 '	&,69,31,21,"         ",1:&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),1
 	&,69,31,20,left$(str$(qb)+"         ",9),$8c
 	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
+' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
 	goto 1374
 	rem +.LO - 1/15/2018 PINACOLADA
 	

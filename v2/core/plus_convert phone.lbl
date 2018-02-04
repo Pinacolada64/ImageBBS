@@ -20,7 +20,7 @@
 ' 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ; 48
 ' 00 00 00 00 00   i wonder what bytes 1-4 mean   ; 53
 
-' &,60,0,<width>,<2d_array%(col,row)>,<string$> put string into structure
+' &,60,0,<bytes>,array%(<col>,<row>),<string$> put string into structure
 
 ' store flags & bbs name:
 	&,2,2:N=N+1:S%(0,N)=VAL(MID$(A$,2,5)):&,60,0,32,S%(1,N),MID$(A$,7,16)

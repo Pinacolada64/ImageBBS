@@ -216,7 +216,7 @@
 	filenum	= $07f7
 	tmp5	= $07f8
 	abtchr	= $07f9
-	clock	= $07fa
+	clock	= $07fa ; 2042
 	filetyp	= $07fb
 	tmp1	= $07fc
 	tmp2	= $07fd

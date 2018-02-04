@@ -46,18 +46,20 @@ Last updated 25/Dec/2008 16:43
 &,11,x	clear array
 &,12	newuser (nonabortable file read?)
 &,13	inchr
-&,14,x,y
-	dumparray (x=array #, y=# of elements: im#39)
+&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
+	dumparray (x=array # [,y=# of elements]: im#39)
 	im: 1074
 
-&,15[,0]:&an$ displays verbose date
+&,15[,0]	an$=":&an$ displays verbose date
 &,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 	Changes all uppercase to mixed case
 &,15,2	converts encoded f-key characters into readable characters
+	+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
 &,15,3	[The Chief mentions this in a post, unsure of purpose]
 &,15,4	[The Chief mentions this in a post, unsure of purpose]
 
-&,15,6,x I think this chops a string wherever it finds chr$(x) -> a, an$
+&,15,6,x	Split an$ into an$ and a$ if it finds chr$(x)
+		-> an$ [chr$(x)] an$
 	im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
 	im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
 		[133=f1, Image ","]
