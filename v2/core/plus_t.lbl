@@ -1,6 +1,9 @@
 {number:3000}
 {step:2}
 {crunch:on}
+{alpha:invert}
+
+{undef:use_term_dialer}
 ' ISSUE: address:port dials ok on cmd line, but doesn't if dialed from phonebok
 ' FIXED: run through &,15,2 (or GOSUB 1500) to un-translate ":"
 ' FIXED: phone book struct load/edit/save + modify flag
@@ -8,18 +11,27 @@
 	gosub 2100:dim s%(24,100):goto {:3100}
 {:3002}
 	l$="{$c0:35}":return
+' does not work:
+'	l$="{pound}o{$c0}{$c0:16}":return
 {:sub.delay}
-' wait x tenths of a second?
+' wait x tenths of a second
 	&,22,x*5:return
 {:3006}
-	a=abs(int(val(an$)))
-	return
+	a=abs(int(val(an$))):return
+{:sub.prompt_unsaved_changes}
+' tz: for phonebook; f-keys are 'cf'
+' f$="Save/Load"
+' There Are Unsaved Changes. Save/Load?: [Yes]
+' returns a=0: no, a=1: yes
+	&"{$d4}here {$c1}re {$d5}nsaved {$c3}hanges. {pound}$f?: ":gosub 1907:return
+
 {:3010}
 	a=val(left$(mt$,1)):a=a+(a=1):&,41,a:qb=2^a*300:return
 {:3012}
 	a%=mn%-bl%:b=bl:&"{f6}{pound}!f {$c6}iles {$d4}ransfered{f1} {pound}!b {$c2}ytes.{f6} {$d4}ransfer {$d4}ime: {pound}%a.{f6}":return
-{:3014}
-	gosub {:sub.show_gfx_mode}:&,18,0:&"{clear}{pound}q0{pound}$b{$d4}erminal {$cd}ode.{f6} ({f5}{$c3}=/{$c3}{$d4}{$d2}{$cc}{f5} {$c5}xits){f6:2}":&,10:goto {:3120}
+{:term_mode}
+' PASCII Terminal Mode. (C= + CTRL Exits)
+	gosub {:sub.show_gfx_mode}:&,18,0:&"{clear}{pound}q0{pound}$b{$d4}erminal {$cd}ode. ({$c3}= + {$c3}{$d4}{$d2}{$cc} {$c5}xits){f6:2}":&,10:goto {:main_menu}
 {:3016}
 	&"{clear}{f6:2}{lt. blue}{$d4}ransfer {$c3}omplete!{f6}":&,25:return
 {:sub.clear_modified_flag}
@@ -40,6 +52,7 @@
 {:3032}
 	print# 131,"at":&,22,5:return
 {:3034}
+' display SB/UD/UX/GF drive info?
 	goto 2104
 {:sub.save_ascii_state}
 ' save current state of ASCII translation; if it's off, enable it
@@ -57,24 +70,25 @@
 {:3100}
 	poke 53248,1:poke 53251,101:&,52,16,0:&,52,16,3:nl=a%:tt$="t":a=.:gosub 1667
 	&"{clear}":an$="*{$c9}mage {$d4}erm 1.3*":&,9:&"{f6:2}"
+' fixme: mf/kk seems to be unused
 	&,52,2,4:d1%=8:d2%=.:poke 53252,40:kk=mf:mf=1
 	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%:gosub {:3010}:gosub {:3242}
 ' tz=0: unmodified phone book
-	gosub {:3400}:tz=.
+	gosub {:sub.load_phonebook}:tz=.
 {number:3120}
-{:3120}
+{:main_menu}
 ' set line length to 40, turn screen mask on
 	poke 53252,40:&,18,1
 {:3122}
 	a$="s.menu t1":dr=1:gosub 1076
 ' 4=phone book
-	gosub {:3006}:on a goto {:3014}, {:3150}, {:3200}, {:3350}, {:3300}, {:3474}, {:3476}, {:3502}, {:3556}
+	gosub {:3006}:on a goto {:term_mode}, {:3150}, {:3200}, {:show_phonebook}, {:disconnect}, {:3474}, {:3476}, {:3502}, {:3556}
 	on-(an$="0")goto {:3568}:goto {:3122}
 {number:3150}
 {:3150}
 ' DOS options
 	a$="s.menu t2":dr=1:gosub 1076
-	gosub {:3006}:on a goto {:3164},{:3166},{:3168},{:3182}:goto {:3120}
+	gosub {:3006}:on a goto {:3164},{:3166},{:3168},{:3182}:goto {:main_menu}
 {number:3164}
 {:3164}
 ' 1500: &,15,2
@@ -108,7 +122,7 @@
 {:3200}
 ' terminal parameters:
 	a$="s.menu t3":dr=1:gosub 1076
-	gosub {:3006}:on a goto {:3214}, {:3224}, {:3228}, {:3230}, {:3234}, {:3238}, {:3256}:goto {:3120}
+	gosub {:3006}:on a goto {:3214}, {:3224}, {:3228}, {:3230}, {:3234}, {:3238}, {:3256}:goto {:main_menu}
 {number:3214}
 {:3214}
 ' todo: make this into a subroutine, use it to set phone book entry graphics type?
@@ -124,10 +138,30 @@
 	&"{f6}{lt. blue} ({$c3}){$c2}{$cd} {$cf}r ({$c9}){$c2}{$cd} {$c7}raphics?: {pound}g1{pound}v7{f6}":a=-(an$="{$c9}")
 	&,52,19,a:goto {:3200}
 {:3228}
+' change transfer protocol
 	gosub 1666:x=4:gosub {:sub.delay}:goto {:3200}
 {:3230}
-	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub {:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub {:sub.delay}:goto {:3200}
-	on a gosub {:3028},{:3030},{:3026}:x=5:gosub {:sub.delay}:goto {:3200}
+'	&"{f6}{lt. blue}(3)00,(1)200,(2)400: {pound}g1":gosub {:3006}:if a<1 or a>3 then:&"{$ce}o {$c3}hange{f6}":x=5:gosub {:sub.delay}:goto {:3200}
+'	on a gosub {:3028},{:3030},{:3026}:x=5:gosub {:sub.delay}:goto {:3200}
+' reason for the x=... is on-gosub cannot deal with an expression resolving to 0. 
+' crashes if a<>1-3 and "on a gosub" is used. wanted to just have 1 {:sub.delay} call
+
+' 1 inputa:x=-(a=1)-2*(a=2)-3*(a=3):ifx=.thenprint"bad value"
+' 2 onxgosub10,20,30:print"loop":goto1
+' 10 print10:return
+' 20 print20:return
+' 30 print30:return
+' 
+' print -(0)-2*(-1)-3*(0)
+'  2
+
+' originally written like this, but line too long to edit on the '64:
+'	&"{f6}{lt. blue}(3)00, (1)200, (2)400: {pound}g1":gosub {:3006}:x=-(a=1)-2*(a=2)-3*(a=3):on x gosub {:3028}, {:3030}, {:3026}:if x=. then:&"{$ce}o {$c3}hange{f6}"
+'	x=5:gosub {:sub.delay}:goto {:3200}
+
+' a lot of fussing for little payoff, but I was feeling pedantic
+	&"{f6}{lt. blue}(3)00, (1)200, (2)400: {pound}g1":gosub {:3006}:x=-(a=1)-2*(a=2)-3*(a=3):if x=. then:&"{$ce}o {$c3}hange{f6}"
+	on x gosub {:3028}, {:3030}, {:3026}:x=5:gosub {:sub.delay}:goto {:3200}
 {:3234}
 	a=-(tt$="t"):b$=mid$("{$d4}one {$d0}ulse",a*5+1,5):tt$="t":if a then tt$="p"
 	&"{f6}{lt. blue}{$c4}ial {$cd}ode: {pound}$b{f6}":x=5:gosub {:sub.delay}:goto {:3200}
@@ -160,14 +194,16 @@
 	a$="e.termkeys":dr=3:gosub 1023:for i=1 to 8:print# 2,tt$(i):next
 	close 2:gosub {:3242}:goto {:3200}
 {number:3300}
-{:3300}
-	&"{f6}{$c8}anging {$d5}p...":x=3:gosub 4000:x=3:gosub {:sub.delay}:goto {:3120}
+{:disconnect}
+	&"{f6}{$c8}anging {$d5}p...":x=3:gosub 4000:x=3:gosub {:sub.delay}:goto {:main_menu}
 {:3302}
 	gosub {:3010}:print# 131,"ate0v0":&,22,20:x=9:gosub 4000
 ' x=6: dial b$=name, c$=phone #, baud rate b (6=14400)
-	r=1:gosub {:sub.save_ascii_state}:gosub {:sub.dial}:t=200:if b<>1 then {:3350}
+'	return a=0: no connection, a=1: connected
+'	r=1:gosub {:sub.save_ascii_state}:gosub {:sub.dial}:t=200:if b<>1 then {:show_phonebook}
+	r=1:gosub {:sub.save_ascii_state}:gosub {:sub.dial}:if a=. then {:show_phonebook}
 ' 97="A"
-	print# 131,chr$(97);:&,22,5:&"a"
+	t=200:print# 131,chr$(97);:&,22,5:&"a"
 {:3308}
 ' 88="x", 120="X"
 	t=t-1:&,4:a=peek(780)and 127:if a<>88 and a<>120 and t>0 then{:3308}
@@ -192,27 +228,28 @@
 	&,4:a=peek(780):a$=chr$(a):if a then:&:t=.:goto {:3330}
 	t=t+1:if t<100 then{:3330}
 ' dupe
-	gosub {:sub.restore_ascii_state}:goto {:3014}
+	gosub {:sub.restore_ascii_state}:goto {:term_mode}
 {:3336}
 ' edit phonebook entry
 ' can enter E1 to edit entry #1, or E <Return> to be prompted:
 	&"{f6}":a=val(mid$(an$,2,2)):if a$=an$ then:&"{$c5}dit {$d7}hich? {pound}i1":a=val(an$)
-	if a<1 or a>20 then{:3350}
+	if a<1 or a>20 then{:show_phonebook}
 '	p$="{$c2:2}{$d3} {$ce}ame  ":pl=.:poke 53252,16:w$=nn$(a):&,1,32:if an$<>""then nn$(a)=an$
 
 '	PutStruc: put string into structure
 '	Usage	&,60,0,<bytes>,array%(<col>,<row>),<string>
 '	Example:&,60,0,11,lm%(2,x),a$
 
-' tz=1: modified flag
+' tz=1: phonebook modified flag
 ' edit/store BBS name: get struct into w$, store from an$
 	p$="{$c2:2}{$d3} {$ce}ame  ":pl=.:&,60,1,16,s%(1,a),w$:poke 53252,16:&,1,32
 	if an$<>"" then:&,60,0,16,s%(1,a),an$:tz=1
 ' edit/store phone number: get struct into w$, store from an$
-	p$="{$c2:2}{$d3} {$ce}umber":pl=1:&,60,1,14,s%(17,a),w$:poke 53252,14:&,1,32
+' need to allow uppercase/lowercase input (pl=.); uppercase letters result in AT command errors
+	p$="{$c2:2}{$d3} {$ce}umber":pl=.:&,60,1,14,s%(17,a),w$:poke 53252,14:&,1,32
 	if an$<>"" then:&,60,0,14,s%(17,a),an$:tz=1
 {number:3350}
-{:3350}
+{:show_phonebook}
 ' display phone book
 ' turn screen mask off
 	&"{clear}":&,18,0:a=. ':s$="                                "
@@ -237,49 +274,56 @@
 	&"{$c5}nter: #, {$c4}ial, {$c5}dit, {$cc}oad, {$d3}ave? {pound}i1":a$=left$(an$,1)
 ' dial, load, save, edit
 	on -(an$="{$c4}")-2*(an$="{$cc}")-3*(an$="{$d3}")-4*(a$="{$c5}") goto {:3388}, {:3392}, {:3394}, {:3336}
-	a=val(an$):if a<1 or a>20 then{:3120}
+	a=val(an$):if a<1 or a>20 then{:main_menu}
 ' get bbs name: empty entry?
-	&,60,1,16,s%(1,a),b$:if b$="" then {:3350}
+	&,60,1,16,s%(1,a),b$:if b$="" then {:show_phonebook}
 	gosub {:sub.frame_b$}
-' get phone #: a$
-	&,60,1,14,s%(17,a),a$
-' tt$=dial type ([p]ulse or [t]one). un-translate :
-	an$=tt$+a$:&,15,2:z$=an$
+' get phone #: an$
+	&,60,1,14,s%(17,a),an$
+{:3376}
+' &,15,2: un-translate an$ (mainly ':' if any).
+' removed tt$=dial type ([p]ulse or [t]one): interferes with +/modem dialing (assumes atdT) . 
+	&,15,2:c$=an$
 {:3378}
 ' x=9:gosub 4000 - get char from modem until send/recv buffer empty
 	gosub {:3010}:print# 131,"ate0v0":x=9:gosub 4000
-	&"{f6}{lt. blue} {$c1}uto {$d2}edial?: ":gosub 1902:r=a:a%=. ':c$=an$:an$=z$:&"{f6:2}{pound}$z "
+	&"{f6}{lt. blue} {$c1}uto {$d2}edial?: ":gosub 1902:r=a ':c$=an$:an$=z$:&"{f6:2}{pound}$z "
+' sub.choose_baud_rate returns with a%=300/1200/2400, b=1-3
+	gosub {:sub.choose_baud_rate}:a%=.
 ' attempt?
-	a%=a%+1
-' sub.choose_baud_rate returns with b=1-3
-	gosub {:sub.choose_baud_rate}
+{:redial}
+' Attempt #xx: Press "C=" to Abort
+	a%=a%+1:&"{$c1}ttempt #{pound}%a: {$d0}ress {f5}{$c3}={f5} to {$c1}bort"
 ' x=6: dial b$=name, c$=address, b=baud rate (1=300, 2=1200, 3=2400)
-	&"{f6}{$d0}ress {f5}{$c3}={f5} to {$c1}bort{f6:2}":gosub {:sub.save_ascii_state}:gosub {:sub.dial}:&,18,0:gosub {:sub.restore_ascii_state}:goto {:3014}
-'	goto {:3350}
+' returns a=1: connection a=0: no connection
+	gosub {:sub.save_ascii_state}:gosub {:sub.dial}:if a then:&,18,0:gosub {:sub.restore_ascii_state}:goto {:term_mode}
+	on r goto {:redial}:goto {:show_phonebook}
 {:3388}
 ' dial # not in phone book:
 ' 3042: frame b$
-' 3452: ask address:port (returns c$=address)
-	b$="{$c4}ial {$d4}elnet":gosub {:sub.frame_b$}:gosub {:sub.ask_address}:if fl=. then {:3350}
-	b$="{$d5}nlisted {$ce}umber":goto {:3378}
+' 3452: ask address:port (returns an$=address)
+	b$="{$c4}ial {$d4}elnet":gosub {:sub.frame_b$}:gosub {:sub.ask_address}:if fl=. then {:show_phonebook}
+	b$="{$d5}nlisted {$ce}umber":goto {:3376}
 {:3392}
-	&"{$cc}oading {$d0}honebook{f6}":gosub {:3400}:goto {:3350}
+	gosub {:sub.load_phonebook}:goto {:show_phonebook}
 {:3394}
+' called with goto from main menu, but gosub'ed at quit, so wrapper thing:
+	gosub {:sub.save_phonebook}:goto {:show_phonebook}
+{:sub.save_phonebook}
 ' scratch existing e.phone:
 	&"{$d3}aving {$d0}honebook":a$="e.phone":dr=3:gosub 1024
 '	for i=1 to th:print# 2,mid$(str$(f%(i)+1e5),2);left$(nn$(i)+s$,16)dt$(i)
-'	next:close 2:goto {:3350}
-' s%(0,0) = # of entries
-	s%(0,0)=20:a$=dr$+a$
-' save struct, clear modified flag if saved successfully:
-	&,60,3,0,s%(0,0),5050,a$,dv%:gosub 1012:&:gosub {:sub.clear_modified_flag}:goto {:3350}
+'	next:close 2:goto {:show_phonebook}
+	
+' s%(0,0) = # of entries. save struct, clear modified flag if saved successfully:
+	s%(0,0)=20:a$=dr$+a$:&,60,3,0,s%(0,0),5050,a$,dv%:gosub 1012:&:gosub {:sub.clear_modified_flag}:return
 
 {number:3400}
-{:3400}
+{:sub.load_phonebook}
+' There Are Unsaved Changes. Load?: [No]
+	if tz then f$="{$cc}oad":gosub {:sub.prompt_unsaved_changes}:if a=. then return
 ' load struct:
-' Unsaved Changes, Are You Sure?: [No]
-	if tz then:&"{$d5}nsaved {$c3}hanges, ":gosub 1901:if a=. then 1920
-	dr=3:gosub 1010:a$=dr$+"e.phone":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
+	&"{$cc}oading {$d0}honebook":dr=3:gosub 1010:a$=dr$+"e.phone":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
 ' unsaved changes and couldn't load phone book? keep tz=1. otherwise don't modify tz
 ' tz=1:e%=.:tz=tz and -(e%<>.):? tz - try playing with various values of e% and tz,
 ' 	watch how that affects tz
@@ -289,10 +333,15 @@
 	return
 {:sub.dial}
 ' x=6: dial b$=name, c$=phone #, baud rate b (6=14400)
-	&"{$c8}it {$d9}our {$c3}= {$d5}pon {$c3}onnecting{f6}"
-	x=6:gosub 4000:&,22,5:t=400:b=.:gosub {:3420}:on a goto {:3418}
+'	&"{$c8}it {$d9}our {$c3}= {$d5}pon {$c3}onnecting{f6}"
+'	x=6:gosub 4000:&,22,5:t=400:b=.:gosub {:3420}:on a goto {:3418}
+' dialer returns a=0 if no connection, a=1 if connection made
+	x=6:gosub 4000:&,22,5:return
+
+{ifdef:use_term_dialer}
 {:3410}
 	t=t-1:on-(t<0)goto {:3414}:gosub {:3420}:on a goto {:3418}:&,4:b=val(chr$(peek(780)and 127))
+' b=0: loop, b=1: error (return to dialer), b=2: connect
 	gosub {:sub.modem_response}:on b goto {:3414},{:3416}:goto {:3410}
 {:3414}
 	print# 131:&,22,20:on r goto {:sub.dial}:b=.
@@ -326,13 +375,19 @@
 	&"{$c3}onnect 300{f6}":&,41,0:b=2:return
 '	gosub {:3468}:if b then {:3378}
 '	f%=f%(a):f$=right$(dt$(a),7):goto {:3302}
-{number:3446}
+{endif}
+
+{:sub.ask_save_phonebook}
+' new subroutine, since unsaved changes checked for when exiting terminal
+	if tz then f$="{$d3}ave":gosub {:sub.prompt_unsaved_changes}:if a then gosub {:sub.save_phonebook} 
+	return
+
 {:sub.ask_address}
-' returns c$ if input non-blank
+' returns an$, fl=1 if input non-blank
 ' input address to dial: "Enter PH#: ", added &,15,2 to untranslate :
 	an$="":&"{white}{$c5}nter address[{f3}port #]: {pound}i0"
 ' fl=1 for non-empty address
-	fl=abs(an$<>""):if fl then:&,15,2:c$=an$
+	fl=abs(an$<>""):if fl then:&,15,2
 	return
 '	&"{white}{$c5}nter {$d0}ort {pound}i0{f6}":f$=f$+an$:an$=f$:return
 {:sub.choose_baud_rate}
@@ -365,8 +420,8 @@
 {:3478}
 	poke 53252,16:&"{f6}{$c6}ilename?: {pound}i0":f$=an$
 	&"{f6}({$d0})rg or ({$d3})eq?: {pound}g1{pound}v7{f6}":t$=chr$(asc(an$)and 127)
-	if f$=""or(t$<>"p"and t$<>"s")then{:3014}
-	a$=f$+","+t$:on x goto {:3486},{:3492}:goto {:3120}
+	if f$=""or(t$<>"p"and t$<>"s")then{:term_mode}
+	a$=f$+","+t$:on x goto {:3486},{:3492}:goto {:main_menu}
 {:3486}
 	b$=a$:a$=b$+",r":dr=0:gosub 1011:if e%then close 2:goto {:3500}
 	a$=b$:poke 2043,1:if right$(a$,1)<>"p"then poke 2043,2
@@ -374,11 +429,11 @@
 {:3492}
 	b$=a$:a$=b$+",w":dr=0:gosub 1011
 	a$=b$:if e%then close 2:goto {:3500}
-	an$=a$:gosub {:3034}:&,16,1:close 2:for x=1 to 700:next:poke 668,peek(667)
+	an$=a$:gosub {:3034}:&,16,1:close 2:&,22,5:poke 668,peek(667)
 {:3498}
 	gosub {:3016}:a=rc:&"{f6}{pound}!a {$c2}ytes{f6}{pound}%a {$c7}ood {$c2}lks{f6}{pound}%b {$c2}ad {$c2}lks{f6}"
 {:3500}
-	x=3:gosub {:sub.delay}:goto {:3014}
+	x=3:gosub {:sub.delay}:goto {:term_mode}
 {:3502}
 	dr=0:gosub 1010
 	&"{f6}{lt. blue}{$d0}attern: ":gosub 1499:b$="*"
@@ -398,12 +453,11 @@
 {:3528}
 	s=1:if x=3 then f%=1
 {:3530}
-	&"{f6}"
-	if rc or sh then bl=.
-	on-(s=.and f%<101)goto {:3514}:close 1:f%=f%-1:on-(f%<1)goto {:3120}
+	&"{f6}":if rc or sh then bl=.
+	on-(s=.and f%<101)goto {:3514}:close 1:f%=f%-1:on-(f%<1)goto {:main_menu}
 	bl%=mn%:bl=.:&"{f6:2}{$d2}eady {$d4}o {$d3}end {pound}#0{pound}%f {$c6}iles.{f6}"
 	&"{f6} {$d0}ress {white}{rvrs on}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{rvrs off}{lt. blue} {$d4}o {$c2}egin: {pound}g1{f6}":f=1:bb%=0:gosub {:3542}:gosub {:3016}:gosub {:3012}
-	x=4:gosub {:sub.delay}:goto {:3014}
+	x=4:gosub {:sub.delay}:goto {:term_mode}
 {:3542}
 	an$=tt$(f):&,15,2:a$=an$+",r":dr=0:gosub 1011:if e%then{:3548}
 {:3544}
@@ -419,18 +473,23 @@
 	an$="":&,16,2:a%=f:return
 {:3556}
 	&"{clear}{f6:3}{$cd}ulti-{$c4}ownload: {$d7}aiting {$c6}or {$d3}tart...{f6}"
-	f=.:bl%=mn%:bl=.:gosub {:3560}:gosub {:3016}:gosub {:3012}:x=4:gosub {:sub.delay}:goto {:3014}
+	f=.:bl%=mn%:bl=.:gosub {:3560}:gosub {:3016}:gosub {:3012}:x=4:gosub {:sub.delay}:goto {:term_mode}
 {:3560}
 	on -(f=>100) goto {:3566}:&,16,3:on -(an$="") goto {:3566}:f=f+1:tt$(f)=an$:a$=an$+",w":dr=0:gosub 1011:if e% then f=f-1:goto {:3566}
 	x=2:gosub {:3034}:&,16,1:gosub {:3048}:if b=.then a$=left$(tt$(f),len(tt$(f))-2):f=f-1:goto 1024
 	tt$(f)=chr$(b and 255)+chr$(b/256)+tt$(f):bl=bl+rc:goto {:3560}
 {:3566}
+' 3 ctrl-x's
 	print# 131,"{$18:3}";:return
 {:3568}
-	f1=.
+' trap unsaved phonebook changes:
+	f1=.:if tz then f$="{$d1}uit":gosub {:sub.prompt_unsaved_changes}:if a then gosub {:sub.save_phonebook}
+' hang up - todo: make subroutine:
+	&"{f6}{$c8}anging {$d5}p...":x=3:gosub 4000:x=3:gosub {:sub.delay}
+' 3244: reload e.fkeys
 	gosub {:3244}:on -(i% or id=1) goto {:3572}:poke 53248,0:ac%=16:mf=kk:a$="lo":goto 1016
 {:3572}
 	gosub 1073:goto 1811
 {crunch:off}
 	rem COPR. 1991 NEW IMAGE
-	rem +.T - X-TEC & PINACOLADA - 1/18/2018
+	rem +.T - X-TEC & PINACOLADA - 2/06/2018
