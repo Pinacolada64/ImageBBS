@@ -1,4 +1,5 @@
 {quoter:32=space} ' make runs of spaces easier to read
+{undef:swiftlink} ' for switching to swiftlink rs232, not ready yet
 {crunch:on}
 {alpha:upper}
 
@@ -221,7 +222,7 @@
 	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}"
 {:1336}
 ' IM date also displayed at boot time
-	an$="11712318447":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
+	an$="51802081140":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -255,10 +256,8 @@
 ' fixed: lines are short enough to edit on c64
 ' maybe: specify color of title as $80+c, for reverse text)
 ' to clear Area: cm$="":gosub 1360
-	on -(peek(17139)=1) goto {:1603}:&,69,4,21,"{space:23}",$8c
-'	on -(cm$="") goto {:1603}:&,69,5,21,left$(cm$,21),$8c ' ~ 39 bytes
-	if cm$<>"" then:&,69,5,21,left$(cm$,21),$8c ' ~ 33 bytes
-	return ' +4 bytes
+	if peek(17139)=. then:&,69,4,21," "+left$(cm$+"{space:21}",21)+" ",$8c
+	return
 {:1370}
 {number:1370}
 	&,69,c,22,right$(str$(a+1e5),b),$81:return
@@ -280,7 +279,6 @@
 {number:1402}
 	next:a=bf:return
 {number:1450} ' DC - DOS command
-' 1470: evaluate DCdv,dr command line
 	gosub {:1470}:on a goto {:1995}:&"{f6}{$c4}isk {$c3}ommand?: ":poke 53252,58
 {number:1452}
 	gosub {:1499}:z$=an$:if z$=""or z$="@"then gosub {:1010}:gosub {:1012}:&:return
@@ -290,6 +288,7 @@
 	im=1:goto {:2404}
 {:1470}
 {number:1470}
+' 1470: evaluate DCdv,dr command line
 	a=int(val(mid$(an$,3,2))):if a>.then if a<7 then dr=a:goto {:1474}
 	if a<7 or a>15 then a=8
 {:1472}
@@ -345,7 +344,7 @@
 	im=2:goto {:2408}
 {number:1646} ' EX? - exchange credits for time
 ' im.comm1
-' +.lo: at login, if caller is on last call for today, but has credits, can buy another call
+' todo: +.lo: at login, if caller is on last call for today, but has credits, can buy another call
 	im=3:goto {:2408}
 {number:1648}
 	im=4:goto {:2408}
@@ -448,8 +447,9 @@
 {:1806}
 {number:1806}
 	if ep$=""or id=1 then return
-	cr=cr-ec%:&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$=ep$then return
-	&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":ec=.:return
+' change: subtract credits only after correct password
+	&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$=ep$ then cr=cr-ec%:return
+	&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":ec=.
 {:1810}
 {number:1810}
 	return
@@ -459,7 +459,7 @@
 {:1812}
 {number:1812}
 	&,28,1:on tr%+1 goto {:1698}:gosub {:1072}:if lc<>1 then lc=1:gosub {:1093}:sy$=""
-' $19: is "Trc right side" (undefined) enabled? (does nothing regardless)
+' &,52,$19,3: is "Trc right side" (undefined) enabled? (does nothing regardless)
 	&,52,$19,3:on a%gosub {:1810}:if pf then a$="{$c7}{$c6}":goto {:1016}
 {:1814}
 {number:1814}
@@ -467,6 +467,7 @@
 	gosub {:1850}:on f4 goto {:1842}:on rs goto {:1812}
 {number:1820}
 	if zz and an$="{$d2}"then gosub {:2100}:goto {:1900}
+' "TEST": loads "image", renumbered/RAM-light version of "im"
 	if an$="{$d4}{$c5}{$d3}{$d4}"then{:1200}
 {number:1840}
 	x=1:on-(a$="{$d1}")-(a$="{f2}")*2 goto {:1694},{:1345}
@@ -596,7 +597,8 @@
 	&,28,1:gosub {:2110}:&,27:return
 {number:2102}
 	goto {:2110}
-' display SB/UD/UX/GF drive info?
+{number:2104}
+' display SB/UD/UX/GF drive info? called from +.t
 	im=4:goto {:2426}
 ' display file transfer info:
 	im=5:goto {:2426}
@@ -751,8 +753,12 @@
 	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
 {:3080}
 	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$=d1$
+{ifdef:swiftlink}
 ' to init SwiftLink, use &,16,1
 	gosub {:sub.init_rs232_interface}
+{else}
+	&"{$cc}oading {$d2}{$d3}232 {$c4}river...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,0
+{endif}
 {:3084}
 	dv%=z%:&"{f6}{cyan}{$d2}eading {$c3}onfig {$c4}ata...":close 2:close 15:open 15,dv%,15
 	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3084}
@@ -768,27 +774,33 @@
 ' fixed: on brand new BBS, a% was set to 141 (^)
 	gosub {:1045}:uh=a%:&"{pound}%a "+left$("{$d5}sers",4-(a%<>1))+"{f6}"
 	dr=3:gosub {:1010}
-	&"{f6}{$c5}{$c3}{$d3} {$c4}efs":a$=dr$+"e.ecs.main":&,42,4:gosub {:1012}:gosub {:sub.status}
-	&"{$d0}rint {$cd}ode {$c4}efs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:1012}:gosub {:sub.status}
-	&"{$cc}ight{$c2}ar {$c4}efs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:1012}:gosub {:sub.status}
-'	&"{$c1}larm {$d4}able: ":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:1012}:gosub {:sub.status}
-	a$=dr$+"e.alarms":gosub {:1011}:close 2:if e% then {:nm_times}
-	&"{$c1}larm {$d4}able":&,7,dv%,9:gosub {:1012}:gosub {:sub.status}
+	&"{f6}{$c5}{$c3}{$d3} {$c4}efs":a$=dr$+"e.ecs.main":&,42,4:gosub {:sub.status}
+	&"{$d0}rint {$cd}ode {$c4}efs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
+	&"{$cc}ightbar {$c4}efs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
+'	&"{$c1}larm {$d4}able":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
+' fixme: also not ready:
+	f$="e.alarms":gosub {:sub.check_for_file}:if e%=62 then {:nm_times}
+' a$ gets overwritten by DOS status
+	a$=dr$+f$:&"{$c1}larm {$d4}able":&,7,dv%,9:gosub {:sub.status}
 {:nm_times}
 ' todo: check if "nm.config" exists first?
 ' check for presence of "nm.times": if not present, don't crash with ?load error
 ' fixme: larry said this caused his bbs to not run network transfers :(
-	dr=2:a$="nm.times":gosub {:1011}:close 2:if e% then {:fkeys}
-	&"{$ce}etwork {$c1}larm {$d4}able":&,7,dv%,12:gosub {:1012}:gosub {:sub.status}
-'	&"{$ce}etwork {$c1}larm {$d4}able: ":a$=dr$+"nm.times":&,7,dv%,12:gosub {:1012}:gosub {:sub.status}
+	dr=2:gosub {:1009}:f$="nm.times":gosub {:sub.check_for_file}:if e%=62 then {:fkeys}
+	&"{$ce}etwork {$c1}larm {$d4}able":a$=dr$+f$:&,7,dv%,12:gosub {:sub.status}
 {:fkeys}
-	dr=3:a$="e.fkeys":gosub {:1011}:if e% then {:3128}
-	&"{$c6}unction {$cb}eys":for i=1 to 8:&,2,2:if right$(a$,1)="{back arrow}" then a$=left$(a$,len(a$)-1)+r$
+' f-key functionality is broken, so making this file optional
+	dr=3:gosub {:1009}:f$="e.fkeys":gosub {:sub.check_for_file}:if e%=62 then {:3132}
+' a$ gets overwritten by DOS status
+	&"{$c6}unction {$cb}eys":a$=dr$+f$:gosub {:1011}:for i=1 to 8:&,2,2
+{number:3127}
+	if right$(a$,1)="{back arrow}" then a$=left$(a$,len(a$)-1)+r$
+{number:3128}
 	tt$(i)=a$:next:f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
 	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8):gosub {:sub.done}
 ' 3132
-{:3128}
-	close 2:gosub {:1063}:if e%then close 2:gosub {:3192}:goto {:3128}
+{:3132}
+	close 2:gosub {:1063}:if e%then close 2:gosub {:3192}:goto {:3132}
 	x=1:gosub {:1001}:&,2,2:ca=val(a$):x=12:gosub {:1001}:&,2,2:ur=val(a$)-1
 	x=17:gosub {:1001}:&,2,2:d3$=a$:x=18:gosub {:1001}:&,2,2:pp$=a$
 	x=19:gosub {:1001}:&,2,2:z$=a$:x=20:gosub {:1001}:input# 2,p1%,p2%,p3%
@@ -1060,18 +1072,26 @@
 	return
 
 {:sub.done}
-	&"{pound}{back arrow}33{$c4}one.{f6}":return
+'	&"{pound}{back arrow}33{$c4}one.{f6}":return
+	b$="{$c4}one.":goto {:status.2}
 
 {:sub.status}
 ' "OK.", "Error!"
-	a$="{lt. green}{$cf}{$cb}.":if e% then a$="{lt. red}{$c5}rror!"
-	&"{pound}{back arrow}33{pound}$a{pound}q0{f6}":return
+	gosub {:1012}:b$="{lt. green}{$cf}{$cb}.":if e% then b$="{lt. red}{$c5}rror!{f6}{white}{pound}{back arrow}05{pound}$a"
+{:status.2}
+	&"{pound}{back arrow}33{pound}$b{pound}q0{f6}":return
 
+{:sub.check_for_file}
+' check for file f$: returns 62=file not found, 63=file exists
+	gosub {:1010}:print# 15,"r"+dr$+f$+"="+f$:goto {:1012}
+	
 {nice:10}
 	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
 	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
 	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
 
+{ifdef:swiftlink}
+' experimental
 {nice:10}
 {:sub.init_rs232_interface}
 ' user port: &,16,0
@@ -1087,6 +1107,7 @@
 {:init}	
 	&mid$("user port{$d3}wift{$cc}ink",(x+1)*9-8,9)+" {$cd}{$cc}..."
 	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,x:return
+{endif}
 
 {crunch:off}
 	copr. 1994 new image 9/21/94
