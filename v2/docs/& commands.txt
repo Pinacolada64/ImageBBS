@@ -59,7 +59,7 @@ Last updated 25/Dec/2008 16:43
 &,15,4	[The Chief mentions this in a post, unsure of purpose]
 
 &,15,6,x	Split an$ into an$ and a$ if it finds chr$(x)
-		-> an$ [chr$(x)] an$
+		-> an$ [chr$(x)] a$
 	im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
 	im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
 		[133=f1, Image ","]
