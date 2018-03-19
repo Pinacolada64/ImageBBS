@@ -61,12 +61,11 @@ szImage12 .byte $05,$0e	; 02ed 05 0e
 	; don't know what these bytes are: filler?
 		rol $fffe,x		; 02fa 3e fe ff
 
-	; lo byte of BBS serial number
-seriallo .byte $c1		; 02fd   c1
-	; hi byte of BBS serial number
-serialhi .byte $01		; 02fe   01
-	; null byte to align code with vectors we'll modify
-		.byte $00		; 02ff   00
+	; BBS serial # prefix ($C1="A"...$C7="G")
+	; as assembled, this BBS is "A0001"
+bsnpre	.byte $c1		; 02fd   c1
+	; BBS serial # value
+bsnval .word $0001		; 02fe   01 00
 	; stamdard IERROR vector
 IERROR	.word $e38b		; 0300   8b e3
 	; where code will next be executed after load finishes
