@@ -1657,7 +1657,8 @@ a9a5:09a7:1   60		rts
 a9a6:09a8:1   tbl-a9ad spclchar .text ",:"
 				.byte 34
 				.text "*?="
-				.byte 13				.text "^"
+				.byte 13
+				.text "^"
 
 a9ae:09b0:1   c9 85    sub_a9ae cmp #$85
 a9b0:09b2:1   90 11		bcc skipa9c3
@@ -2925,13 +2926,13 @@ b3a0:13a2:1			.byte $f5
 b3a1:13a3:1   tbl-b3a1 lbl_b3a1 .byte $07
 
 b3a2:13a4:1			.byte $e5,$42,$e6,$42
-			;	.text "åBæB"
+			;	.text "Ã¥BÃ¦B"
 
 b3a6:13a8:1	       lbl_b3a6 .byte $aa
-			;	.text "ª"
+			;	.text "Âª"
 
 b3a7:13a9:1   tbl-b3d1 lbl_b3a7 .byte $d2,$b3
-			;	.text "³Ò³"
+			;	.text "Â³Ã’Â³"
 
 b3aa:13ac:1   tbl-b3f9 litebar	.text " Sys "
 b3af:13b1:1			.text " Acs "
@@ -4324,7 +4325,8 @@ c106:2108:1   a9 00		lda #$00
 c108:210a:1   8d 86 02		sta color
 c10b:210d:1   6c 02 03 		jmp (imain)
 
-c10e:2110:1   	       tablc10e .text " run"				.byte 13  ; keyboard buffer?
+c10e:2110:1   	       tablc10e .text " run"
+				.byte 13  ; keyboard buffer?
 
 c113:2115:1   4c 03 5f lbl_c113	jmp $5f03
 
@@ -5262,7 +5264,7 @@ cee7:2ee9:1   tbl-cef5 blddate	.text "12/30/99 09:45P"
 
 cef6:2ef8:1   tbl-cef9 tablcef6 .byte $81,$19,$99,$99
 
-cefa:2efc:1   tbl-cefc tablcefa .byte $9a ' "š"
+cefa:2efc:1   tbl-cefc tablcefa .byte $9a ' "Âš"
 				.byte $00
 cefc:2efe:1			.byte $00
 
