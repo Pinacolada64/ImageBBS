@@ -1,4 +1,4 @@
-{alpha:invert}
+{alpha:upper}
 ' an adaptation of "+.menuedit" to:
 ' a) learn how structs work
 ' b) add additional keys to idle screen
@@ -130,10 +130,15 @@
 ' edit:
 	poke 53252,2:&"{$c5}dit #{pound}i1{f6}":x=val(an$):if x<0 or x>wc%(0,0) then {:3108}
 {:3122}
+'   Item #{pound}!x:
+'[K]eypress..: [None]
+'[L]M Value..: 1
+'[F]ilename..: +/lo.<filename>
+'[T]ext......:
 	&"{clear}   Item #{pound}!x:{f6:2}"
-	&"[K]eypress..: ":z=wc%(0,x):if z then:&chr$(z)
+	&"[K]eypress..: ":z=wc%(0,x):if z then:&chr$(z):goto {:3128}
 	if z=. then:&"[None]"
-
+{:3128}
 '	if wc%(.,i) then b$=chr$(wc%(.,i)):&,60,1,16,wc%(8,i),c$
 	z=wc%(1,x)
 	&"{f6}[L]M Value..: {pound}!z{f6}"
@@ -142,7 +147,7 @@
 	&"[F]ilename..: +/lo.{pound}$a{f6}"
 	
 	&,60,1,16,wc%(8,x),a$
-	&"[T]itle.....: {pound}$a{f6}"
+	&"[T]ext......: {pound}$a{f6}"
 	&"[Q]uit{f6}"
 '	{$d1} Q   {$cb} K   {$cc} L   {$c6} F   {$d4} T
 	

@@ -1,4 +1,13 @@
 {number:4000}
+{step:2}
+{crunch:on}
+' x=1: reset modem
+' x=3: hang up (ath or toggle dtr)
+' x=6: 4102 dial b$=name, c$=phone #, b=baud rate (6=14400)
+'	return a=0: no connection, a=1: connected
+' x=8: send at command in a$
+' x=9: get char from modem until buffer empty
+' x=10: set BPS rate
 	on x goto {:4002},{:4018},{:4026},{:4036},{:4050},{:4102},{:4090},{:4156},{:4176},{:4024}
 {:4002}
 	if val(mt$)=0 then return
@@ -6,6 +15,7 @@
 	get#131,a$:gosub {:4024}:gosub {:4176}:m$="z":t=50:gosub {:4156}
 	m$="e0v0":if mid$(mt$,7,1)="{$c8}"then m$=m$+"h":if mid$(mt$,6,1)="0"then m$=m$+"0"
 	m$=m$+"x"+mid$(mt$,8,1)+"m"+chr$(mf+48)+"b"+mid$(mt$,10,1)
+' &,52,43,3 - right Mnt: Modem answer disabled
 	gosub {:4014}:on-(t=0)goto {:4004}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"{$c1}"then a=48
 	m$="s0="+chr$(a)+"s2=27s7=25":gosub {:4014}:on-(t=0)goto {:4004}:&,22,10:goto {:4176}
 {:4014}
@@ -36,7 +46,7 @@
 {:4054}
 	&,4:a=peek(780)and 127:on-(a<>0)goto {:4052}:t=t+1:on-(t<100)goto {:4054}:return
 {:4056}
-	a=1:on b+1 goto {:4060},{:4166},{:4058},{:4062},{:4060},{:4168},{:4060},{:4060},{:4060},{:4060},{:4170}
+	a=1:on b+1 goto {:4060}, {:4166}, {:4058}, {:4062}, {:4060}, {:4168}, {:4060}, {:4060}, {:4060}, {:4060}, {:4170}
 {:4058}
 	&,52,43,3:on-(mid$(mt$,3,1)="{$cd}"and a%=0)gosub {:4090}:a=2:return
 {:4060}
@@ -48,27 +58,31 @@
 {:4100}
 	a=sgn(peek(2033)and 128):return
 {:4102}
+' dial number/string:
+' 4180: set baud rate
+' 4156: send/echo at command
 	&,52,16,1:x=b:gosub {:4180}:&"{f6}{lt. blue}{$c4}ialing {pound}$b: {pound}$c{f6}":a$="dt"+c$:gosub {:4156}
 {:4104}
+' check for c= key to abort
 	if peek(653)and 2 then{:4128}
-	on a goto {:4122}:x=-(b=1)-2*(b=5)-3*(b=10):if x then{:4124}
-	on b goto {:4022},{:4112},{:4114},{:4116},{:4120},{:4118},{:4120},{:4116},{:4116},{:4126},{:4112},{:4112}
+	on a goto {:4122}:x=-(b=1)-2*(b=5)-3*(b=10):if x then {:4124}
+	on b goto {:4022}, {:4112}, {:4114}, {:4116}, {:4120}, {:4118}, {:4120}, {:4116}, {:4116}, {:4126}, {:4112}, {:4112}
 {:4110}
 	gosub {:4158}:goto {:4104}
 {:4112}
-	&"{$d2}ing...":goto {:4110}
+	&"ring{f6:2}":goto {:4110}
 {:4114}
-	&"{$ce}o {$c3}arrier{f6}":goto {:4126}
+	&"no carrier{f6}":goto {:4126}
 {:4116}
-	&"{$c5}rror{f6}":goto {:4126}
+	&"error{f6}":goto {:4126}
 {:4118}
-	&"{$ce}o {$c4}ial{$d4}one{f6}":&,22,100:goto {:4126}
+	&"no dialtone{f6}":&,22,100:goto {:4126}
 {:4120}
-	&"{$c2}usy{f6}":goto {:4126}
+	&"busy{f6}":goto {:4126}
 {:4122}
-	&"{$ce}o {$c3}onnection{f6}":goto {:4126}
+	&"no answer{f6}":goto {:4126}
 {:4124}
-	&,22,10:gosub {:4180}:q%=qb:&"{$c3}onnect {pound}%q{f6}":&,22,10:a=1:return
+	&,22,10:gosub {:4180}:q%=qb:&"connect {pound}%q{f6}":&,22,10:a=1:return
 {:4126}
 	gosub {:4026}:&,22,30:a=0:return
 {:4128}
@@ -81,10 +95,14 @@
 	&,69,31,20,str$(qb),$8c
 	&,22,5:goto {:4176}
 {:4154}
-	return:z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
+' c$ could be either "Sent", "Recv", or "Dialing"
+' save local mode state, enable it, output string, restore state
+	z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
 {:4156}
 	poke 667,.:poke 668,.:c$="{$d3}ent":a$="at"+a$:print# 131,a$:gosub {:4154}
 {:4158}
+' get modem response code
+' return b=code, a$=string
 	a$="":t=250
 {:4160}
 	&,4:a=peek(780)and 127:if a then t=200:a$=right$(a$+chr$(a),32)
@@ -108,5 +126,5 @@
 	qb=19200:&,41,6:goto {:4148}
 {:4180}
 	on x goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:goto {:4166}
-	rem +/modem
-	rem copyright 1991 new image 1/7/91
+	REM +/MODEM
+	REM COPYRIGHT 1991 NEW IMAGE 1/7/91

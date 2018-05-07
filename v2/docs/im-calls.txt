@@ -1,0 +1,106 @@
+Image BBS 2.0
+IM 9/21/1994 calls
+
+1000	rem
+1001	Position REL pointer (gosub 1002)
+1002	Position REL pointer
+1004	Get user flag #a in fl$
+1005	Uppercase/lowercase input an$
+1006	Uppercase input an$
+1007	Get uppercase character: an$
+1008	Device/drive prompt
+1009	Get device/drive of system drive dr
+1010	Close/reopen command channel
+1011	Open file a$ on logical file# 2
+1012	check error channel
+1013
+1014	Display a$ in "area" window, set system drive
+1015	Load plus file
+1016	*** main entry point to load plus file ***
+	Load "+."+a$ plus-file
+1019	calculate a=minutes left, pt%=prime time
+	
+1914	Reset MCI defaults?
+1075	Clear screen...
+1076	...and read file in a$
+	close logical file #2
+1023	scratch and rewrite SEQ file a$ (gosub 1024)
+1024	Scratch a$
+1025	add i to Board Activity Register stat #x
+1026	write stat #x back to "e.stats"
+
+*** im.* functions, called with GOTO?
+1034	
+1038	add user to u.index
+1060	Open "e.stats"
+1061	Open "e.access"
+1062	Open mail file "m."+tt$+",s,"+a$
+1063	open "e.data"
+1064	&,52,$2e,3 Automaintenance active/logging related
+1065	open "u.config"
+	Append or write "e."+b$+",s,"+a$
+	Write user data to lfn#2
+	Dump array tt$() to open lfn#2
+	Check if instant logon (i%) used: if so, RETURN
+1096	log a$ to daily log
+	check Prt "print log entries" lightbar enabled
+	check if printer online
+	print a$ to printer
+	check for dir space?
+1089	check blocks free on drive 'dr'
+	check Lt.Kernal HD blocks free?
+	...same...
+	blocks free check for other devices
+	update blocks free bf() array
+	return blocks free in a
+	set plus file drive
+	set plus file drive
+	...load "i/"+a$ module, goto 4000
+	set plus file drive, load "sub."+a$ module, gosub 60000
+	something to do with activity queue
+	load module in z$?
+	Clear some arrays
+	Clear another array
+1678	Leave feedback
+
+	Display "Are You Sure?: "
+	Display "[No]", wait for keypress 
+
+1260	Handle ^? command history
+1264	Display p$+an$
+1265	Display hs$() array of commands
+
+1360	Display cm$ in Area window
+1500	gosub	"un-translate" an$ of Image-encoded function keys
+1604	Load editor
+
+1811	Main prompt
+
+1870	Display b$+": O[ff|n]"
+1871	Get user flag 'b', gosub 1870, toggle flag 'b'
+1900	Prompt for +.file to load, run if found
+1904	Reset output defaults
+
+1901	Display "Are you sure? "
+1902	Display "Yes" or "No"
+	Display yes/no response chosen
+
+1915	Display time left
+1920	Display "Aborted!"
+
+2100	DIMension 1.2 style arrays
+
+=== Jack's "im" ===
+	Append or write "e."+b$ (gosub 36)
+	...load "i."+a$ module, goto 3000
+1920	Display ">>Canceled!"
+	load "im.bar"
+	load "im.screens"
+	load "im.display"
+	load "im.info"
+---	load "i.main"
+	load "i.lo"
+
+Other modules:
+Al's "+/GF-maint":
+1902	3	Yes/no questions

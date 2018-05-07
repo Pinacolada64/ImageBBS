@@ -1,4 +1,5 @@
-Image BBS 2.0 IM line number translation:
+Image BBS 2.0
+IM line number translation:
 (from "im.emul13")
 
 9/21/1994 - New Image Software (nis)
@@ -7,19 +8,19 @@ Image BBS 2.0 IM line number translation:
 :	:
 :	:	1/2/1999 - im.emul13 (emu)
 :	:	:
-1000	1000	goto 2004
-1001	1	goto 1		Position REL pointer (gosub 1002)
-1002	10	goto 10		Position REL pointer
-1003	2426	goto 2426	?
-1004	11	goto 11		Get user flag #a in fl$
-1005		goto 1028	Uppercase/lowercase input: an$
-1006	6	goto 6		Uppercase input: an$
-1007	7	goto 7		Get uppercase character: an$
-1008	8	goto 1008	jlf: remove
-				emu: device/drive prompt, return
-1009	2	goto 2		Get device/drive of system drive 'dr'
-1010	3	goto 3		Close/reopen command channel
-1011	4	goto 4		Open file 'a$' on logical file# 2
+1000	1000	1000 -> 2004
+1001	1	1001 -> 1	Position REL pointer (gosub 1002)
+1002	10	1002 -> 10	Position REL pointer
+---	2426	1003 -> 2426	?
+1004	11	1004 -> 11	Get user flag #a in fl$
+1005		1005 -> 1028	Uppercase/lowercase input: an$
+1006	6	1006 -> 6	Uppercase input: an$
+1007	7	1007 -> 7	Get uppercase character: an$
+---	8	1008 -> return	jlf: remove
+				emu: device/drive prompt
+1009	2	1009 -> 2	Get device/drive of system drive 'dr'
+1010	3	1010 -> 3	Close/reopen command channel
+1011	4	1011 -> 4	Open file 'a$' on logical file# 2
 1012	5	1012 -> 5	check error channel
 1013	6->310	1013 -> 1014	jlf: command stacking/input prompt
 				emu: set drive 5 (plus files)
@@ -30,15 +31,14 @@ Image BBS 2.0 IM line number translation:
 				jlf: Load "i."+a$, goto 3000
 1019	84	1019 -> return	calculate a=minutes left, pt%=prime time?
 		1020 -> 18
-1023	18			scratch and rewrite SEQ file a$ (gosub 1024)
-1024	19			Scratch a$
-1025	16			read/increment Board Activity Register stat #i
-1026	17			write stat #x back to e.stats
-1027	36
 	12			Reset MCI defaults?
 1075	13			Clear screen...
 1076	14			...and read file in a$
 	15			close logical file #2
+1023	18			scratch and rewrite SEQ file a$ (gosub 1024)
+1024	19			Scratch a$
+1025	16			read/increment Board Activity Register stat #i
+1026	17			write stat #x back to e.stats
 ---	20-27			jlf: remove
 ---	28-29			jlf: Load protocol "++ "+a$
 1060	30			Open "e.stats"
@@ -57,7 +57,7 @@ Image BBS 2.0 IM line number translation:
 	52			check Prt "print log entries" lightbar enabled
 	53			check if printer online
 	54			print a$ to printer
-1088	60			check for dir space?
+	60			check for dir space?
 1089	61			check blocks free on drive 'dr'
 	62			check Lt.Kernal HD blocks free?
 	63			...same...
@@ -79,11 +79,11 @@ Image BBS 2.0 IM line number translation:
 	83			Clear another array
 1678	85			Leave feedback
 
-1920	92			Display ">>Canceled!"
-1901	93			Display "Are You Sure?: "
-1902	94			Display "[No]", wait for keypress 
-	95			Display "Are You Sure?: "
-	96			Display "No", wait for key
+	92			Display ">>Canceled!"
+	93			Display "Are You Sure?: "
+	94			Display "[No]", wait for keypress 
+1901	95			Display "Are you sure? "
+1902	96			Display "Yes" or "No"
 	97			Display yes/no response chosen
 1264	314			Display p$+an$
 1265	315			Display hs$() array of commands
@@ -98,48 +98,42 @@ Image BBS 2.0 IM line number translation:
 1904	12			Reset output defaults
 1915				Display time left
 1920	242			Display "Aborted!"
-1930		goto330
-1980		goto390
 
 ---	300			jlf: load "i.main"
 	302			jlf: load "i.lo"
 
 2100	304-308			DIMension 1.2 style arrays
+	IM jump table: (This is Jack's renumbered IM)
+	--------------
+	309	GOSUB - load im.emul13
+	501	(I)nfo or (P)arameters (EP, at a guess?)
+	503	change password
+	504	handles?
+	505	handles?
+	506	unimplemented
+	507	unimplemented - changed to STZ, system time zone
+	508	unimplemented?
+	512	?
+	514	handle stuff
+	516	change user time zone
+	520	change last call date
+	521	MX command
+	525	BA command
+	528	ST command
+	533	switch users	(GOSUB)
+	534	C		(GOSUB)
+	535	T		(GOSUB)
+	540	DC
+	541	DC also?
+
+Mods:
+-----
+542 NEW	added im=1:gosub440 (WF command)
 
 		2414 -> 2500	load "im.bar"
 		24xx -> 2500	load "im.screens"
 		2426 -> 43	load "im.display"
 		2428 -> 47	load "im.info"
-
-1065	35
-1068	37
-1069	38
-1074	39
-1075	13
-1076	14
-1079	61
-1081	62
-1085	60
-1093	82
-1094	83
-1095	50
-1096	51
-1260	310
-1360	9
-1450	360
-1490	50
-1603	99	general purpose RETURN
-1678	85
-1700	302
-1750	28
-1811	300
-1812	300
-1901	93
-1902	94
-1904	97
-1907	96
-1914	12
-1920	92
 
 Al's "+/GF-maint":
 1902	3	Yes/no questions

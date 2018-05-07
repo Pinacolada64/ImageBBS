@@ -1,3 +1,6 @@
+{alpha:upper}
+{crunch:on}
+{step:2}
 {number:4000}
 	&"{f6}{green}{rvrs on}{$cc}oading {$d0}arameters{rvrs off}{white}...":f4=.:on cd%gosub {:4150}:cd%=1
 	a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}"
@@ -31,7 +34,9 @@
 	f1=.:pt%=.:a=1:gosub 1003
 	gosub 1019:&,52,7,3:if a%then pt%=1-pt%:if p1%<1 then p1%=30
 	if pt%=.then{:4062}
-	print"{home}{down}{rvrs on}{white}{$d0}":print"{rvrs on}{white}{$d2}":print"{rvrs on}{white}{$c9}":print"{rvrs on}{white}{$cd}":print"{rvrs on}{white}{$c5}":if g<p1%then{:4062}
+' prime time enabled: this gets overwritten by screen mask load later. has been moved to im.disp
+'	print"{home}{down}{rvrs on}{white}{$d0}":print"{rvrs on}{white}{$d2}":print"{rvrs on}{white}{$c9}":print"{rvrs on}{white}{$cd}":print"{rvrs on}{white}{$c5}":if g<p1%then{:4062}
+	if g<p1% then {:4062}
 	a%=p1%:tr%=a%
 	&"{f6}{$ce}ote - {$c9}t {$c9}s {$ce}ow {$d0}rime {$d4}ime -{f6}{$c1}{$cc:2} {$c3}allers {$c1}re {$cc}imited {$d4}o {pound}%a {$cd}inutes!{f6:2}"
 {:4062}
@@ -100,4 +105,6 @@
 	lp=1:&"that time? ":gosub 1907
 	if a then ld$=d5$
 	return
+{crunch:off}
+	REM +/LO.ON - 12/20/2017 - PRIME TIME DISPLAY FIX
 	copr. 1994 new image 11/14/94

@@ -1,4 +1,6 @@
 {asm}
+; to include:
+; {uses:\%userprofile%\My Documents\C64\Image BBS\image-bbs\v2\asm\equates-2_0.lbl}
 	; image 2.0 equates
 	;
 	var	= $61
@@ -206,7 +208,7 @@
 	mci	= $07ef
 	mdigits	= $07f0
 
-	carrst	= $07f1
+	carrst	= $07f1 ; 2033: modem carrier status
 	tsp1	= $07f2	; transmit speed lo-byte
 	tsp2	= $07f3	; transmit speed hi-byte
 	chks	= $07f4
@@ -214,7 +216,7 @@
 	filenum	= $07f7
 	tmp5	= $07f8
 	abtchr	= $07f9
-	clock	= $07fa
+	clock	= $07fa ; 2042
 	filetyp	= $07fb
 	tmp1	= $07fc
 	tmp2	= $07fd
@@ -226,7 +228,7 @@
 	local	= $d000
 	case	= $d001
 	editor	= $d002
-	;tsr	= $d003
+	tsr	= $d003 ; needed by inline.s
 	llen	= $d004
 	flag	= $d005
 	chat	= $d006

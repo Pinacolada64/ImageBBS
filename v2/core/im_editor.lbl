@@ -1,4 +1,7 @@
 {number:60000}
+{step:2}
+{alpha:upper}
+{crunch:on}
 	on im goto {:60082},{:60088}:return
 {:60002}
 	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
@@ -12,11 +15,13 @@
 	&"{pound}{back arrow}20{gray3}{$c9}n {$cd}emory  : {yellow}{pound}%b{f6}{gray3}{$d2}emaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}{$c6}ree {$cd}emory: {yellow}{pound}%z"
 	&"{lt. green}{f6:2}":return
 {:60016}
+' reset mci defaults, exit
 	p$=pu$:goto 1914
 {:60018}
 	pu$=p$:v$="":return
 {:60020}
 	poke 53249,0:poke 1016,kk:poke 1018,4:poke 1019,kk
+' &,52,31,3: MCI Disable in Editor
 	poke 1023,87:a=14:gosub 1004:&,52,31,3:if a%=0 then poke 1023,87+a*8
 	pl=.:poke 1022,le+1:gosub 1372:a=int((z%-300)/79)+1:if le>a then poke 1022,a+1
 	poke 53252,ll%-2:if zz then poke 1022,254
@@ -71,11 +76,12 @@
 {:60092}
 	kk=peek(1016):on a goto {:60094},{:60102},{:60098}:&"{f6:2}":b%=kk-1:kk=.:goto {:60016}
 {:60094}
-	poke 2031,0:b%=kk-1:&"{f6}{pound}%b {$cc}ines {$d5}sed.{f6}":if kk=1 then a=0:goto {:60092}
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b "+left$("{$cc}ines",4-(b%<>1))+" {$d5}sed.{f6}":if kk=1 then a=0:goto {:60092}
 	b%=kk:goto {:60016}
 {:60098}
 	poke 2031,0:dr=1:a$="s.menu 3":gosub 1075:goto {:60088}
 {:60100}
+' enter editor: a=0, 1, 2
 	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:60092}
 {:60102}
 	b%=kk-1:if an$="q"then{:60070}

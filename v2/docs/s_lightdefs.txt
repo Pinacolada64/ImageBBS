@@ -1,0 +1,128 @@
+Sys-L Sysop Available To Chat
+Sys-R Background Page Enable
+Acs-L Edit User's Access
+Acs-R Disable 300 Baud
+Loc-L Local Mode (No Modem IO)
+Loc-R ZZ (Pseudo-Local) Mode
+Tsr-L Edit User's Time
+Tsr-R Prime Time
+Cht-L Enter/Exit Chat Mode
+Cht-R Disable Modem Input
+New-L Disallow New Users
+New-R Enable Screen Blank
+Prt-L Print Spooling
+Prt-R
+U/D-L Disable U/D Section
+U/D-R 300 Baud U/D Lockout
+Asc-L ASCII Translation
+Asc-R Line Feed After Returns
+Ans-L ANSI Color Enable
+Ans-R ANSI Graphics Enable
+Exp-L Expert Mode Enable
+Exp-R Disallow Double Calls
+Unv-L No Immediate U/D Credits
+Unv-R Allow Auto-Logoff
+Trc-L On-Screen Trace Enable
+Trc-R
+Bel-L Local Bells Enable
+Bel-R Local Beeps Disable
+Net-L NetMail Enable
+Net-R NetMail Trigger
+Mac-L Macros On/Off
+Mac-R MCI Disable in Editor
+Chk-L Enable MailCheck At Logon
+Chk-R Excessive Chat Logoff
+Mor-L More Prompt On
+Mor-R More Prompt Not Available
+Frd-L Full-color Read Disable
+Frd-R
+Sub-L Message Bases Closed (SB)
+Sub-R Files Section Closed (GF)
+Res-L System Reserved (Default PW)
+Res-R Network Reserve
+Mnt-L
+Mnt-R Modem Answer Disabled
+Mnu-L Is User in Menu Mode?
+Mnu-R Are Menus available on BBS?
+$2E-L
+$2E-R
+$30-L
+$30-R
+$32-L
+$32-R
+$34-L
+$34-R
+$36-L
+$36-R
+$38-L
+$38-R
+$3A-L
+$3A-R
+$3C-L
+$3C-R
+$3E-L
+$3E-R
+$40-L
+$40-R
+$42-L
+$42-R
+$44-L
+$44-R
+$46-L
+$46-R
+$48-L
+$48-R
+$4A-L
+$4A-R
+$4C-L
+$4C-R
+$4E-L
+$4E-R
+$50-L
+$50-R
+$52-L
+$52-R
+$54-L
+$54-R
+$56-L
+$56-R
+$58-L
+$58-R
+$5A-L
+$5A-R
+$5C-L
+$5C-R
+$5E-L
+$5E-R
+$60-L
+$60-R
+$62-L
+$62-R
+$64-L
+$64-R
+$66-L
+$66-R
+$68-L
+$68-R
+$6A-L
+$6A-R
+$6C-L
+$6C-R
+$6E-L
+$6E-R
+At1-L Default Alarm 1 Enable
+At1-R Default Alarm 1 Trigger
+At2-L Default Alarm 2 Enable
+At2-R Default Alarm 2 Trigger
+At3-L Default Alarm 3 Enable
+At3-R Default Alarm 3 Trigger
+At4-L Default Alarm 4 Enable
+At4-R Default Alarm 4 Trigger
+At5-L Default Alarm 5 Enable
+At5-R Default Alarm 5 Trigger
+At6-L Default Alarm 6 Enable
+At6-R Default Alarm 6 Trigger
+At7-L Default Alarm 7 Enable
+At7-R Default Alarm 7 Trigger
+At8-L Default Alarm 8 Enable
+At8-R Default Alarm 8 Trigger

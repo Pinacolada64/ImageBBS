@@ -1,0 +1,139 @@
+12/31/2017 IM changes:
+
+1336	Updated IM release date from "61712298044" to "11712318447"
+
+1530	Sounds: Use existing "return" from 1603
+
+	--- Logoff ---
+1690	Save 43+ bytes, new subroutine at 1702
+1694-
+1695	Combine into 1694
+1702	New message subroutine
+1704	New RETURN
+
+1805	changed "on -(ec%=.) goto 1806:b%=ec%..."
+	to	"if ec then b%=ec%..."
+
+1930	are main prompt macros enabled?
+	changed on a% gosub 1931:return	' 10 bytes
+	to	if a%=. then return	'  7 bytes
+
+1989	'Unknown Command. Enter "?" For Help' - added "."
+
+2900	MM: Extra CR before "Program" for appearance's sake
+
+3062	Remove setting LK%
+3092	Remove setting LK%
+
+3106	User count: Print "User" or "Users"
+
+3110,
+3112,	Remove ": ", gosub 3456
+3114,   	Also:
+3116	Rework logic of loading config files: Some are unnecessary/broken.
+  .	Open before &,7 load. Skip if not found. Output "OK." or "Error!"
+  .	if it *is* a needed config file. ("e.fkeys"/"nm.times" skippable.)
+  .	
+3132	add "close 2" to beginning of line
+
+3138	Clock set method reads from record #37: "&,2,2:y%=val(a$)"	
+3146	Printer secondary address: change
+	"if a$<>"" then ..." to
+	"if a then ..."
+
+3160	Clock set: Untangled spaghetti code
+
+3192	Blocks free: Neatened message output.
+
+3202-	gosub 3456
+3210	More config file loading logic overhaul.
+
+	--- New BBS setup ---
+3250	Replaced shift-space with space in output
+
+3288,
+3292,
+3296,
+3302,
+3366	gosub 3456
+
+3338	Create "e.access" - Output loses "."
+
+3346	Create daily log: 2 gosub 3456's
+
+3348-	Slightly different message text.
+3352
+
+	--- Clock set ---
+3354	CMD clock T-RA close 15 moved here
+3362	Add GOSUB new time set flag subroutine
+3364-
+3366	LtK clock spaghetti code untangled
+3368	
+3370	New time set flag subroutine
+3372-
+3374	LtK clock code moved to 3366-3368
+
+3444	New BBS setup: "Conversion complete!!" loses "!"
+
+	--- New BBS setup: get clock set method ---
+3446-	Split 3446 into 3446-3447, change text to "Set Clock From:"
+3450
+
+	--- New subroutines ---
+3454	Print "Done."
+3456-
+3458	Print "OK." or "Error!" depending on if file is found or not
+
+	--- Error-checking ---
+4020-
+4022	Replace with gosub 1027 to handle e.errlog append/write
+
+4044	on a% goto 4050:if (peek(2033)and 1)=. then 4050
+		combine into:
+4044	if a% or (peek(2033)and 1)=. then 4050
+
+4050	if (a%=1) or i% or id=1 then 4068
+		combine into:	(removed "gosub 4092")
+4050	on -(a%=1 or i% or id=1) goto 4068:gosub 1065:x=1:gosub 1001:
+		input#2,i1$
+
+4060	for...close 2: Replaced with "gosub 1074" to write s.errmail
+	Saves ~30 bytes.
+
+4092	Removed. Added to 4050
+
++.lo, im.disp:
+	Change display color from 1 (non-reversed white) to $8c (reversed med. gray)
+	Properly erases uh/ur and qb previous value
++.lo:
+3026-	Redirect 3026 to 1360
+3028	Quick hack, but it'll do.
+
+im.editor:
+60094	"0 Lines Used." / "1 Line Used." / ">1 Lines Used."
+Can make an Image ModMaker patch file, not worth uploading a new version for a 1-line change.
+
+
+
+Ok, let me check. I think I had a note a
+bout that, but let me double check.
+
+It should read st(x)=st(x)+i
+
+Everything before that needs to be taken
+ out.
+
+Oh. it's input#2,st(x)... kill that?
+
+Yeah, what was happening is when NM/auto
+ ran, it moved data from e.stats records
+ to the wrokg places line record 26 numb
+ers got moved to record 33 and 27 moved
+to 34 and soo on. Also when midinght aut
+omaint ran, it did the same to other rec
+ords.
+
+Oh, ick. That is bad. I will change that
+ and make a note of it in my "im fixes"
+file. One sec.

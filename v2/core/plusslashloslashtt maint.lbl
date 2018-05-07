@@ -1,23 +1,31 @@
 {number:4000}
+{step:2}
+{crunch:on}
+{alpha:upper}
 	a$=" {$d2}estart {$d4}op {$d4}en {$cc}ist":gosub 1095:&,27,2:gosub {:4002}:&,28,2:return
 {:4002}
-	&,11:n=20:dim a$(n,8):gosub 1065:x=0:p=n:m=mn%
+	&,11:n=20:dim a$(n,8):gosub 1065:x=0:p=n:m=mn%:ct=.
 {:4004}
 	&"{f6}{$d2}eading    "
 {:4006}
-	x=x+1:x%=x:&"{pound}h3{pound}#3{pound}# {pound}%x":on-(x>ur)goto {:4014}
+	x=x+1:x%=x:&"{pound}h3{pound}#3{pound}# {pound}%x":if x>ur then {:4014}
 	gosub 1001:&,2,2:on-(a$="{$d2}{$c5}{$d3}"or a$="{up arrow}")goto {:4006}:an$=a$:&,15,1
 	for i=2 to 9:&,2,2:next:i=1:gosub {:4030}:for i=10 to 14:&,2,2:next
-	for i=2 to 8:&,2,2:gosub {:4030}:next:p=p-1:on-(p>0)goto {:4006}
+	for i=2 to 8:&,2,2:gosub {:4030}:next:p=p-1:if p>0 then {:4006}
 {:4014}
 	&" {$d3}orting"
 	for i=1 to 8:&".":&,60,7,0,a$(p+1,i),n-p:next:p=n-10
 	on-(x=<ur)goto {:4004}:m=mn%-m:if m<0 then m=m+1440
 	&"{f6}{$c5}lapsed {$d4}ime: {pound}!m {$cd}inutes{f6}"
-	&"{f6}{cyan}{$c3}reating {$d4:2} {$c6}ile...":a$="e.top ten":dr=3:gosub 1023
+' scratch old file:
+	a$="e.top ten":dr=3:gosub 1010:print#15,"s"dr$a$:gosub 1012
+' not enough users? log it, quit:
+	if ct<10 then close 2:a$="{lt. red} {$ce}ot enough users!{f6}":gosub 1095:return
+' otherwise, create new file:
+	&"{f6}{cyan}{$c3}reating {$d4:2} {$c6}ile...":a$="w":b$="e.top ten":gosub 1027
 	print# 2,"{$d4}op {$d4}en {$d5}sers"r$"{$04}"d1$r$:for i=1 to 8
 	on i gosub {:4101},{:4102},{:4103},{:4104},{:4105},{:4106},{:4107},{:4108}
-	print# 2,"{f6}{$c8}it {$c1} {$cb}ey > {pound}g1{clear}{f6}{lt. blue} {$d4}otal "b$"{f6}  #{pound}{back arrow}09{$d5}ser{f6} {pound}o{$c0}{pound}o{$c0}"
+	print# 2,"{f6}{$c8}it {$c1} {$cb}ey > {pound}g1{clear}{f6}{lt. blue} {$d4}otal "b$"{f6}  #{pound}{back arrow}09{$d5}ser{f6} {pound}vj"
 	for j=n to n-9 step-1:print# 2,a$(j,i):next:next:close 2:return
 {:4030}
 	a$(p,i)=right$("       "+mid$(str$(val(a$)),2),7)+"{pound}{back arrow}10"+an$:return
@@ -37,3 +45,5 @@
 	b$="{$d0}osts":return
 {:4108}
 	b$="{$d2}esponses":return
+	REM >10 USER FIX BY PINACOLADA - 12/18/2017
+	REM "+/LO/TT MAINT"

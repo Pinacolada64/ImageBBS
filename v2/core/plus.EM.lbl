@@ -1,5 +1,4 @@
 {number:3000}
-{number:3000}
 ' 28: NetMail Enable
 	ms=1:&,52,28,3:nf=a%:lg=1:gosub {:3360}:goto {:3062}
 {:3002}

@@ -21,6 +21,7 @@
 	lp=1:&"1.3{f6:2}":return
 {:3024}
 	&"{f6}{$c7}rabbed {$cd}essages:{f6:2}"
+' 13=<Return>
 	for i=1 to ng:an$=tt$(i):&,15,6,13
 	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
 	return
@@ -78,6 +79,7 @@
 	if a<ng then for i=a to ng-1:tt$(i)=tt$(i+1):a%(i)=a%(i+1):f%(i)=f%(i+1):next
 	tt$(ng)="":ng=ng-1
 	if sb=val(left$(an$,2))then{:3138}
+' 13=<Return>
 	&,15,6,13:a$=left$(a$,16):b$=right$(str$(sb),2)+mid$(a$,3):dr=0:gosub 1010
 	fr$=mid$(str$(f),2)+":"
 	if a%=d1%and f%=d2%then print# 15,"r"dr$b$"="a$:goto {:3138}

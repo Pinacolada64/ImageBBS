@@ -25,7 +25,7 @@ im.disp
 		60350	Display I/O progress screen
 			(like im.screens)
 im.editor
-	im=1	60082	WF related stuff
+	im=1	60082	WF related stuff - start with empty editor?
 	im=2	60088	WF related stuff
 
 im.feedback
@@ -54,24 +54,24 @@ im.local
 im.menus
 			Menu display stuff
 
-im.misc
-	im=1	60002	QM - QuickMail ("Notepad")
-	im=2	60066	PS - Personal Signature setup
-	im=3	60076	Another entry point for above
-			*These both are buggy*
-
 im.misc2
-	im=1	60006	write user account to disk
-	im=2	60026	read user account from disk
+	im=1	60002	QM - QuickMail ("Notepad")
+	im=2	60066	TT - Top Ten users
+	im=3	60076	PS - Personal Signature setup
+
+im.misc
+	im=1	60006	write user account to disk from variables
+	im=2	60026	read user account from disk into variables
 	im=3	60004	return
 	im=4	60046	C - request chat
 	im=5	60062	T - time and date
 	im=6	60068	?
 	im=7	60074	something to do with u.index
-	im=8	60078	"
-	im=9	60082	PR - load a different protocol?
+	im=8	60078	rewrite "u.index"
+	im=9	60082	PR - load a different protocol
 	im=10	60088	?
-	im=11	60086	u.index stuff
+	im=11	60086	Load "++ index", open cmd channel, do something with
+			"u.index", a% -> uh
 	im=12	60004	return
 	im=13	60092	RE - switch users
 
@@ -108,29 +108,3 @@ im.trans
 	im=5	60500	return
 	im=6	60500	return
 
-IM jump table: (This is Jack's renumbered IM)
---------------
-309	GOSUB - load im.emul13
-501	(I)nfo or (P)arameters (EP, at a guess?)
-503	change password
-504	handles?
-505	handles?
-506	unimplemented
-507	unimplemented - changed to STZ, system time zone
-508	unimplemented?
-512	?
-514	handle stuff
-516	change user time zone
-520	change last call date
-521	MX command
-525	BA command
-528	ST command
-533	switch users	(GOSUB)
-534	C		(GOSUB)
-535	T		(GOSUB)
-540	DC
-541	DC also?
-
-Mods:
------
-542 NEW	added im=1:gosub440 (WF command)

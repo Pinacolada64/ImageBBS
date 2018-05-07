@@ -6,11 +6,12 @@ Last updated 25/Dec/2008 16:43
 
 &[,0]	out a$
 &,1	inline
-&,2,x	disk file input (x=channel #)
+&,2,x	disk file input (x=channel #) -> a$
 &,3,x	read file from disk, x=logical file #
 &,4	get byte from modem
-&,5	get version
-&,6	password input
+&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
+	im 1335: "Image BBS 64 V1.3.1: 12/29/91  1:18p"
+&,6	password input -> an$
 
 &,7,<device>[,segment] - load file
 	dskio.s has segment info:
@@ -45,20 +46,27 @@ Last updated 25/Dec/2008 16:43
 &,11,x	clear array
 &,12	newuser (nonabortable file read?)
 &,13	inchr
-&,14,x,y	dumparray (x=array #, y=# of elements: im#39)
+&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
+	dumparray (x=array # [,y=# of elements]: im#39)
+	im: 1074
 
-&,15[,0]:&an$ displays verbose date
+&,15[,0]	an$=":&an$ displays verbose date
 &,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 	Changes all uppercase to mixed case
 &,15,2	converts encoded f-key characters into readable characters
+	+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
 &,15,3	[The Chief mentions this in a post, unsure of purpose]
 &,15,4	[The Chief mentions this in a post, unsure of purpose]
 
-&,15,6,140 [line 312 of im, unsure of purpose]
+&,15,6,x	Split an$ into an$ and a$ if it finds chr$(x)
+		-> an$ [chr$(x)] a$
+	im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
+	im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
+		[133=f1, Image ","]
 
 &,16	sys49152
 &,17	sys49155
-&,18	setmode (screen mask)
+&,18,x	setmode (screen mask) x=0: off, 1=on
 &,19	get version
 &,20	get version
 &,21	get version
@@ -66,7 +74,7 @@ Last updated 25/Dec/2008 16:43
 &,23	xgetin
 &,24	xchrout1
 
-&,25,x,y
+&,25,x,y	sound
 	[y=# of times to repeat]
 &,25,0  beep
 &,25,1	ding
@@ -91,8 +99,11 @@ Last updated 25/Dec/2008 16:43
 &,41	setbaud
 
 &,42	ecs
-&,42,1	apparently kills ECS defs in memory (through experience)
-&,42,4	seen in line 3106 of IM
+	im 1860 f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
+&,42,1	kills ECS defs in memory?
+	im 1804	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+
+&,42,4	seen in line 3106 of IM, loads "e.ecs.main"
 
 &,43	chatchk
 &,44	trace
@@ -105,8 +116,11 @@ Last updated 25/Dec/2008 16:43
 &,51	outmod
 &,52,x,y	(&,52,$hex,y allowed)
 	chkflags
+		x=0: clear	x=2: toggle		x=4: move litebar to y
+		x=1: set	x=3: read -> a%
 &,53	logoff
-&,54	useeditr
+		im: 1003 &,53,a
+&,54,x	useeditr
 &,55	output
 &,56	chatmode
 &,57	relread
@@ -126,7 +140,7 @@ Last updated 25/Dec/2008 16:43
 	
 	GetStruc: get string from structure
 	Usage:	&,60,1,<#_of_bytes>,array(a,b),string$
-	Example:
+	Example:&,60,1,50,jm%(5,fd%(i)),a$ - im.menus
 	
 	LoadStruc: load structure from disk
 	Usage:	&,60,2,0,array(a,b),"<filename>",<device>
@@ -146,11 +160,11 @@ Last updated 25/Dec/2008 16:43
 	GetDate: get date string from structure (BCD)
 	Usage:	&,60,5,array(a,b),<string>
 
-		arry(a,b)	starting element
+		array(a,b)	starting element
 		string$		the date string
 	
-	DoScan: Scan structures (yikes)
-	Usage:	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
+	DoScan	Scan structures (yikes)
+	Usage	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
 
 	<number>	# of structures to scan
 	<command>
@@ -162,40 +176,50 @@ Last updated 25/Dec/2008 16:43
 			5	date   CMP, >=
 	a(a,b)		starting flags element
 	b(a,b)		starting object element
-	<l>		unknown
+	<l>		unknown, perhaps field width?
 	<bits>		the bits to set if true
 	<test>		the object to test for
-		ilen	1	$61
-		istr	2	$62
 
-		from i.UD:
-	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	i.UD:	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	+.GF:	3166 &,60,6,s%(0,0),0,s%(0,1),s%(1,1),80,1,2^ac%
+
+	sort:
+	+/lo-tt maint: &,60,7,0,a$(p+1,i),n-p
 	
-	sort
-		(assuming &,60,7 at least)
-		no syntax info that I can see
-	
-	scannums
+	scannums	purpose unknown		returns a%
 	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
 
-	num	number of items in struct
-	siz	
-	acs
-	a(a,b)
-	a%(a)
-	start
+	num	cols in struct?
+	siz	field width?
+	acs	access level
+	a(a,b)	row,col array?
+	a%(a)	?
+	start	element to start scanning from?
 
-	Example:60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
-		(sub.menus)
+Example:
+	dim fd%(50),jm%(29,49)
+	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
 
-	
+im.feedback:
+	a%=0:if fb%(0,0)>0 then:&,60,8,fb%(0,0),60,1,fb%(11,1),ff%(1),1
+im.menus:
+	60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
++.GF:		
+	3168: rn=a%:if rn then:&,60,8,s%(0,0),80,1,s%(0,1),e%(1),1
++.lo:
+	3304: &,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
+
 	scansum
 	Usage:	&,60,9,num,siz,a(a,b)
-
 	
-	cpystruc
+	cpystruc	Copy field in struct to another field?
 	Usage:	&,60,10,size,a1(a,b),a2(a,b)
 
++/IM.logon:
+	4326 if x<>fb%(.,.)then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
+
++/GF-add:
+	3324 if x<>cm%(0,0)then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
 	
 	scanstr
 	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
@@ -205,10 +229,12 @@ Last updated 25/Dec/2008 16:43
 	Usage:	&,60,13,count,size,a$,a%(a,b),b$
 
 
-&,61,x,y
+&,61,col,row
 	poscrsr
+im: 4006 &,38:&,61,.,8:print"&,37:goto 1812:":end
+
 &,62,b,c
-	settim
+	settim: b=hour, c=min? im: ~3184
 &,63	inline1
 &,64	convstr
 &,65	convert
@@ -217,18 +243,18 @@ Last updated 25/Dec/2008 16:43
 &,68	struct
 &,69	dispstr
 
-	&,69,<column>,<row>,<text>,$8c or 1 ($8x = reverse color x)
-	&,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
-	sub.display is a good example of this
-	a$="display":gosub74
-	im=1-5:gosub60000
+	&,69,<column>,<row>,<text>,<color>
+	Example: &,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
+		sub.display is a good example of this
+		<column>/<row> begins at 0
+		<color> is 1-16, $8x is reverse color x
 
 &,70	cursposn
 	&,70,.,n/2+8.5:&"{white}"
 
 &,71	cursmenu
 
-"menu.s" is source for ++ 2 (cursor menu)
+"menu.s" is source for "++ 2" (cursor menu)
 	(from source:)
 ; 0 - # entries
 ; 1 - item type character
@@ -243,4 +269,4 @@ Last updated 25/Dec/2008 16:43
 
 &,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.
 
-lm=a%+1 [return value?]
+lm=a%+1 [returns a% value, probably which item was selected]

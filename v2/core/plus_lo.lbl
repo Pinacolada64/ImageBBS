@@ -1,10 +1,13 @@
-' alpha:upper = ($c1} = A
+{def:idle_logging}' for "e.idle <am$>" debug log
+{alpha:upper}	' {$c1} = A
 {number:3000}
+{crunch:on}
+{step:2}
 	q$="":am=1:k%=.:rs=.:close 2:close 5:on f1 goto {:3256},{:3262},{:3266},{:3333}:goto {:3050}
 {:3002}
-' 2: changing user's access?
-' 4: pseudo-local mode?
-' 6: changing user's time remaining?
+' &,52,2,3: changing user's access?
+' &,52,4,3: pseudo-local mode?
+' &,52,6,3: changing user's time remaining?
 	&,52,2,3:a=a%:&,52,4,3:a=a+a%:&,52,6,3:a=a+a%:return
 {:3004}
 	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%
@@ -22,8 +25,11 @@
 {:3024}
 	a=-((peek(2033)and 128)=128):return
 {:3026}
-	&,69,4,21,"               ",1
-	&,69,5,21,a$,1:return
+' redirect to 1360. just a quick hack, change 3026 to 1360 later
+	cm$=a$:gosub 1360
+	return
+'	&,69,4,21,"               ",1
+'	&,69,5,21,a$,1:return
 {:3030}
 	gosub {:3496}:a$="{$d3}ystem {$c9}dle":goto {:3026}
 {:3032}
@@ -54,17 +60,17 @@
 	on-(an$="{$c9}")goto {:3300}:&"{$ce}ormal{f6}":goto {:3106}
 {:3064}
 	q%=qb:&"{f6:2}{pound}%q {$c2}{$d0}{$d3} {$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}{$c9}{$cf}{$ce} {$c3}{$cf}{$ce}{$c6}{$c9}{$d2}{$cd}{$c5}{$c4}.{f6}":gosub 1093:gosub 1372
-' 3: block 300 baud callers?
+' &,52,3,3: block 300 baud callers?
 	a%=.:if qb<1200 then:&,52,3,3
 	tr%=5:if a%then:&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} 300 {$c2}{$d0}{$d3} {$c3}{$c1}{$cc:2}{$d3} {$c1}{$c3:2}{$c5}{$d0}{$d4}{$c5}{$c4}{f6}":goto {:3266}
-	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
-	rem iftr%>.anda=21then3070
-	rem ifa=6thennl=2:&,52,16,.:&"{f6}{$c9}mage {$d4}erm {$c4}etected.{f6}":goto 3090
+	REM PRINT#131,"{STOP}"CHR$(.)CHR$(.);:&,22,10:&,4:A=PEEK(780)AND127
+	REM IFTR%>.ANDA=21THEN3070
+	REM IFA=6THENNL=2:&,52,16,.:&"{F6}{$C9}MAGE {$D4}ERM {$C4}ETECTED.{F6}":GOTO 3090
 {:3076}
 	&"{f6}{$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} {$c2}{$c1}{$c3}{$cb}{$d3}{$d0}{$c1}{$c3}{$c5} ({$c4}{$c5}{$cc}{$c5}{$d4}{$c5}){f6}{$cb}{$c5}{$d9}: ":&,52,16,.:&"{pound}b1":&,52,16,1
 {:3078}
 	&,4:a=peek(780)and 127:if(peek(2033)and 128)<>128 or tr%<1 then{:3266}
-' 28: NetMail enable
+' &,52,28,3: NetMail enable, received ctrl-a for network transfer:
 	&,52,28,3:if a%then on-(a=1)goto {:3042}
 	if a=13 then{:3076}
 	on-(a<>8 and a<>127 and a<>20)goto {:3078}
@@ -74,8 +80,8 @@
 	&"{$c4}o you {$d7}ant {$c1}{$ce}{$d3}{$c9} {$c3}olor? ":gosub 1907:&,52,18,a:b=a
 	&"{$c4}o {$d9}ou {$d7}ant {$c9}{$c2}{$cd} {$c7}raphics? ":gosub 1907:&,52,19,a:if a and b then nl=2:poke 951,80
 {:3096}
-' 41: Network reserved?
-' 40: System reserved?
+' &,52,41,3: Network reserved?
+' &,52,40,3: System reserved?
 	&,52,41,3:on a%goto {:3046}:&,52,40,3:on 1-a%goto {:3106}
 	a=.:b$="":if l2=.then b$="{$d4}emporarily "
 {:3100}
@@ -86,7 +92,7 @@
 {:3106}
 	dr=1:a$="s.login"+str$(nl):gosub 1076:pw$="":k=0
 {:3108}
-' 32: Enable Mail Check at Logon:
+' &,52,32,3: Enable Mail Check at Logon:
 	poke 53252,20:ac%=16:id=.:&,52,32,3:if a%=.then{:3116}
 	&"{f6:2}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}/{$c5}{$ce}{$d4}{$c5}{$d2} to {$cc}og {$cf}n, or{f6}"
 	&"{f5}{$cd}{f5} to just check mail: {pound}g1":if tr%<1 then{:3266}
@@ -99,7 +105,7 @@
 	if i<4 or i>20 or b$<"{$c1}"or b$>"{$da}"then id=.:goto {:3160}
 	gosub 1046
 	if i then id=i:&"{f6}{lt. blue}{$d9}our {$c9}{$c4}# is {white}{pound}!i. {lt. blue}{$d5}se {$c9}t {$c6}or {$c1}{f6}{$c6}aster {$cc}ogon!{f6}":goto {:3144}
-' 10: Disallow New Users
+' &,52,10,3: Disallow New Users
 	&"{f6:2} {f5}{pound}v7{f5}{f6} {$ce}ot{$a0}{$c6}ound.{f6:2}":&,52,10,3:if a%then{:3164}
 	&"{$c4}o {$d9}ou {$d7}ish {$d4}o{$a0}{$c1}pply {$c6}or{$a0}{$c1}n{f6}{$c1}ccount {$d7}ith {$d4}hat{$a0}{$c8}andle?: "
 	gosub 1902:if a then f1=1:g$=dd$:dd$="{$ce}{$c5}"+"{$d7}":goto {:3332}
@@ -123,7 +129,7 @@
 {:3160}
 	&"{f6:2}{$cc}ogin {$ce}ot {$d6}alid.":on-(id<>.and i%=.)gosub {:3216}:goto {:3136}
 {:3162}
-' 10: Disallow New Users
+' &,52,10,3: Disallow New Users
 	&,52,10,3:if a%=.then{:3332}
 {:3164}
 	&"{f6:2}{$d3}orry, {$ce}o{$a0}{$ce}ew{$a0}{$d5}sers{$a0}{$c1}re {$c2}eing{f6}{$c1}ccepted {$c1}t {$d4}his {$d4}ime.{f6:2}":goto {:3108}
@@ -158,7 +164,7 @@
 	a$="{$d0}hone {$ce}umber":gosub {:3214}:on-(t<1)goto {:3204}:ph$=an$:if an$=""then{:3196}
 	na$="{$c8}{$c5}{$cc}{$d0}"+"":pw$="{$ce}{$cf}{$ce}{$c5}"+"":ld$=d1$:ac%=0:dt%=0:tc%=0:co%=1:ll%=40:id=0
 	ul=1:lf=1:em=.:dc=.:uc=.:bd=.:bu=.:cr=.:ps=.:rp=.:d5$=d1$:fl$=fl$(ac%)
-	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then{:3226}
+	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then {:3226}
 {:3204}
 	&"{f6:2}{$d3}orry, {$d5}nable {$d4}o {$cc}og {$d9}ou {$c9}n...{f6:2}":goto {:3262}
 {:3206}
@@ -193,21 +199,23 @@
 	&,28,1:goto {:3250}
 {:3250}
 ' instant logon (4):
-' if user hasn't called before: open e.stats, increment record #8 (new users)
-	on-(tc%>1)goto {:3252}:gosub 1060:i=1:x=8:gosub 1025:close 2
-{:3252}
+' if user hasn't called before (tc%=1): open e.stats, increment record #8 (new users)
+	if tc%=1 then gosub 1060:i=1:x=8:gosub 1025:close 2
 	a$="mail":gosub {:3362}:if a then gosub 2100:a$="{$c5}"+"{$cd}":goto 1016
 	goto 1811
 ' end of instant logon
 
 ' log off:
 {:3256}
-' &,52,$22 - email check at logon?
-	gosub 1678:&,52,$22:b$=ff$
-	&"{f6:2} {$c2}ye {pound}$b!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
-	if i%or k%then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
+' immediate mode (i%=1) or console login (k%=1?) opt-outs
+' &,52,$22 - More Prompt On? assumed ,0 (clear) parameter?
+' 1678: leave feedback only if not local or console login:
+	&,52,$22:if i%=. and k%=. then gosub 1678
+' don't read logoff screen if user logged on in instant/console mode:
+	if i%=. and k%=. then:&"{f6:2} {$c2}ye{f1} "+ff$+"!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
+	if i% or k% then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
 {:3262}
-	a$="{$cc}ogoff":gosub {:3026}:&,52,$22:on-(ac%=16)goto {:3266}
+	a$="{$cc}ogoff":gosub {:3026}:if ac%=16 then {:3266}
 	if i%=.then a$="off":gosub {:3358}
 {:3266}
 	a=.:gosub 1003:b$="logoff":x=10:gosub {:3480}:&,52,4:&,52,5:gosub {:3004}:gosub {:3032}
@@ -223,7 +231,10 @@
 	poke 830,3:poke 53248,.:&,52,16,1:&,52,17,1:&,52,18,.:&,52,19,.
 	&,28,1:gosub 1093:gosub 1914:for j=217 to 242:poke j,peek(j)or 128:next:dr=3:gosub 1079
 	gosub 1063:x=37:gosub 1001:&,2,2:l2=val(left$(a$,1)):l2$=mid$(a$,2):close 2
-	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}{$c5}"
+' this was corrected & moved to im.disp
+'	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}{$c5}"
+' keep line #s in sync:
+	:
 	gosub 1374:gosub {:3496}
 	if peek(1010)then a$=d1$:gosub 1520:t1=a
 	goto {:3370}
@@ -233,7 +244,7 @@
 ' instant logon (1):
 	&"{$c9}nstant{f6:2}":&,27,2:dim fb%(29,15),ff%(15):dr=3:gosub 1010
 	&,60,2,.,fb%(.,.),dr$+"e.sysoplist",dv%:gosub 1012:if e%then{:3318}
-' 4: Local Mode (No Modem IO)
+' &,52,4,3: Local Mode (No Modem IO)
 	&,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
 	if a%=.then{:3318}
 	for i=1 to a%:x=ff%(i):&,60,1,20,fb%(1,x),an$:&,15,1:b%=fb%(.,x)
@@ -263,7 +274,10 @@
 	on-(e%=1)goto {:3334}:if tr%>.then{:3226}
 {:3334}
 	ac%=16:goto {:3266}
+
 {:3336}
+' start extra automaint modules:
+' todo: move this to +/lo.automaint
 	gosub 2100:br=.:a$="e.maintmods,s,r":dr=3:gosub 1011:if e%then{:3352}
 	&,2,2:br=val(a$):on-(br<1)goto {:3352}:dim lm$(br),mt$(br)
 	for i=1 to br:&,2,2:lm$(i)=a$:&,2,2:mt$(i)=a$:next:close 2:rk=1
@@ -272,22 +286,28 @@
 	a$=mid$(mt$(rk),4,2):b=mid$(d1$,4,2)=a$or a$="00"
 	a$=mid$(mt$(rk),6,2):c=mid$(d1$,6,2)=a$or a$="00"
 	if a and b and c then a$=lm$(rk):gosub {:3356}
-	rk=rk+1:on-(rk<=br)goto {:3342}:goto {:3352}
+	rk=rk+1:if rk<=br then {:3342}
 {:3352}
 	close 2:&,28,1:am$=d1$+"":gosub 1063:x=35:gosub 1001:print# 2,am$:close 2
 	gosub {:3004}:goto {:3266}
+' end extra automaint modules
+
 {:3356}
-	lm$="lo/"+a$:on peek(17139)+1 gosub {:3026}:goto {:3366}
+' automaint modules:
+	lm$="lo/"+a$:goto {:3366}
 {:3358}
 	gosub {:3364}:goto {:3004}
 {:3360}
-	lm$="lo-"+a$:on tr%+1 goto {:3368}:on peek(17139)+1 gosub {:3026}:goto {:3366}
+' login modules:
+	lm$="lo-"+a$:on tr%+1 goto {:3368}:goto {:3366}
 {:3362}
 	if tr%<1 then return
 {:3364}
-	lm$="lo."+a$:gosub {:3026}
+' login or system idle modules:
+	lm$="lo."+a$
 {:3366}
-	dr=5:gosub 1010:a$=dr$+"+/"+lm$:load a$,dv%:goto 4000
+' 3026 -> 1360, display a$ -> cm$ in Area window:
+	gosub {:3026}:dr=5:gosub 1010:a$=dr$+"+/"+lm$:load a$,dv%:goto 4000
 {:3368}
 	return
 {:3370}
@@ -310,13 +330,13 @@
 {:3388}
 	if ti>36000 then gosub {:3040}
 	if mn%<>t1%then t1%=mn%
-' 41: Network Reserve
-' 40: System Reserved (Default PW)
+' &,52,41,3: Network Reserve
+' &,52,40,3: System Reserved (Default PW)
 	&,52,41,3:z%=a%:&,52,40,3:z%=z%+2*a%:if z%<>kk then gosub {:3496}
-' 4: Local Mode (No Modem IO)
+' &,52,4,3: Local Mode (No Modem IO)
 	&,52,4,3:zz=a%:if zz then x=4:gosub 4000:a=1:return
 	if(peek(1010)>.and mid$(am$,2,6)<>mid$(d1$,2,6))then a=4:return
-' 29: NetMail Trigger
+' &,52,29,3: NetMail Trigger
 	&,52,29,3:if peek(1010)>.and a%then a=5:return
 	poke 646,14:sys 49152:a$="":if peek(198)then get a$
 	if a$=""then{:3414}
@@ -370,7 +390,7 @@
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} {$c3}alls/{$cc}og  {pound}#3{pound}# {pound}%x {gray1} {f6}"
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} {$ce}ew {$d5}sers  {pound}#3{pound}# {pound}%w {gray1} {f6}"
 	&"{pound}{back arrow}23{gray1}{rvrs on}                {f6}{up}{cyan}"
-	dr=3:a$="e.last,s,r":gosub 1011:on-(e%<>.)goto {:3478}
+	dr=3:a$="e.last,s,r":gosub 1011:if e then {:3478}
 	for x=1 to 10:&,2,2:on-(len(a$)<11)goto {:3476}:an$=a$:&,15
 	&"{f6} "+left$(an$,6)+", "+right$(an$,7)+"{$cd} "+mid$(a$,12)
 {:3476}
@@ -380,23 +400,47 @@
 {:3480}
 	p=x:gosub 1060:i=t1:t1=mn%:i=t1-i:i=i-1440*(i<.):st(x)=i:gosub 1026
 	if i then x=x+11:gosub 1025:x=x+16:gosub 1025
+' logs to "e.idle <day>" log, with:
+' d1$        "idle" (p=10) 
+'         or "used" (p<>10)
+'                  i
+'                    b$
+' 31801168108 used 1 logoff
+' 31801168108 idle 0 modem reset
+' 31801168108 idle 0 modem reset
+' 31801168121 idle 12 modem reset
+' 31801168122 idle 0 connect
+{ifdef:idle_logging}
+' 1068: append or write e.b$:
+'	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
+' preserve b$ in c$:
+	c$=b$:b$="idle "+left$(am$,1):gosub 1068:b$=c$
+{else} 
+' original:
 	on 1 goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
 	dr=3:a$=c$+",a":gosub 1011:if e%then a$=c$+",w":gosub 1011
+{endif}
 	print# 2,d1$;" ";mid$("idleused",1-4*(p=10),4);i;b$:close 2
 {:3490}
 	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
 	an$=left$("{$d5}="+mid$(str$(z%),2)+" {$c9}="+mid$(str$(y%),2)+"     ",10)
 	&,69,14,22,an$,$81:return
 {:3496}
+' turn screen mask on
 	&,18,1
-	an$=d3$:&,15,1:&,69,5,17,an$,1
-	&,69,5,18,d2$,1:&,69,5,19,d6$,1:&,69,5,20,l2$,1
-' 41: Network Reserve
-	&,52,41,3:&,69,31,17," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),1:kk=a%
-' 40: System Reserved (Default PW)
-	&,52,40,3:&,69,31,18," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),1:kk=kk+2*a%
-	if l2=.then:&,69,31,19," {$cf}ne     ",1
-	if l2>.then:&,69,31,19," {$c1}ll     ",1
-	&,69,31,20,"         ",1:&,69,31,20,str$(qb),1
-	&,69,31,21,"         ",1:&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),1
+	an$=d3$:&,15,1:&,69,5,17,an$,$8c
+	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,l2$,$8c
+' &,52,41,3: Network Reserve
+	&,52,41,3:&,69,31,17," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),$8c:kk=a%
+' &,52,40,3: System Reserved (Default PW)
+	&,52,40,3:&,69,31,18," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),$8c:kk=kk+2*a%
+	if l2=.then:&,69,31,19," {$cf}ne     ",$8c
+	if l2>.then:&,69,31,19," {$c1}ll     ",$8c
+'	&,69,31,20,"         ",1:&,69,31,20,str$(qb),1
+'	&,69,31,21,"         ",1:&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),1
+	&,69,31,20,left$(str$(qb)+"         ",9),$8c
+	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
+' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
 	goto 1374
+	rem +.LO - 1/15/2018 PINACOLADA
+	

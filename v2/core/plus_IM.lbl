@@ -1,4 +1,7 @@
 {number:3000}
+{step:2}
+{crunch:on}
+{alpha:upper}
 	zz%=8:pr$="":lm$="":&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%:fl=.
 {:3002}
 	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2:if fl then return
@@ -28,15 +31,14 @@
 	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ocal {$c9}nfo"
 	&,16,.,34,m%(.,2),"{$c2}","","{$cd}odem {$d3}pecs"
 	&,16,.,34,m%(.,3),"{$c3}","","{$c3}alling {$c8}ours"
-	&,16,.,34,m%(.,4),"{$c4}","","{$c3}onnections"
-	&,16,.,34,m%(.,5),"{$c5}","","{$cd}ail {$c6}orwards"
-	&,16,.,34,m%(.,6),"{$c6}","","{$d3}tarlink"
+	&,16,.,34,m%(.,4),"{$c4}","","{$cd}ake nm.create"
+	&,16,.,34,m%(.,5),"{$c5}","","{$c3}onnections"
+	&,16,.,34,m%(.,6),"{$c6}","","{$c6}wd. {$cc}ist"
 	&,16,.,34,m%(.,7),"{$c7}","","{$ce}etwall/{$c7}rf"
 	&,16,.,34,m%(.,8),"{$c8}","","{$d1}uit"
 {:3062}
 	n=8:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
-	&"{lt. red}{$d4}hat function is not yet supported.{pound}w1":goto {:3062}
-	a$="netmail":gosub {:3182}:goto {:3062}
+	a$="netmail":gosub{:3182}:fl=1:gosub{:3002}:fl=.:goto{:3062}
 {:3068}
 	&,28,1:n=5:dim m%(16,n),tx$(60),fb%(29,15),a%(60):if tr%<1 then{:3006}
 	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ogin {$cd}ods"
@@ -149,7 +151,7 @@
 	for i=a to n:tt$(i)=tt$(i+1):next:goto {:3198}
 {:3238}
 	&"{$c5}dit{f6:2}"
-	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then 3938
+	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then {:3198}
 	b$=(left$(tt$(a),3)):c$=mid$(tt$(a),5)
 	poke 53252,4:w$=b$:p$="{$c9}{$c4}":pl=1:&,1,32:if an$<>""then b$=an$
 	poke 53252,5:w$=c$:p$="{$c3}redits":pl=.:&,1,32:if an$<>""then c$=an$
@@ -213,16 +215,28 @@
 	return
 {:3328}
 	&"{f6}{$ce}o {$c3}hanges {$cd}ade - {$c1}borted!{f6:2}":return
+
+{:sub.menu_header}
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	return
+
 {:3330}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	gosub {:sub.menu_header}
+'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}":return
+
 {:3336}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	gosub {:sub.menu_header}
+'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,42,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {:3342}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	gosub {:sub.menu_header}
+'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
+{crunch:off}
 	copr. 1994 new image 10/19/94
+	REM 171221 X-TEC

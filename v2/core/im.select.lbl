@@ -30,6 +30,7 @@
 {:60030}
 	&"{f6}":if kk=0 then:&"{$ce}o files selected.{f6}":return
 	d$="":if co%>2 then d$="k"
+' 58=":"
 	t=0:for i=1 to kk:an$=tt$(i):&,15,6,58:a%=val(a$):t=t+a%
 	d$="{$c2}lks":if co%>2 then d$="{$cb}":a%=int(a*254/1024)
 	&"{white}{pound}!i){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%a {pound}$d{pound}{back arrow}15{cyan}{f5}{pound}v7{f5}{f6}":next
@@ -50,6 +51,7 @@
 	next:an$=an$+b$:&"{f6}":close 1:open 1,dv%,0,"$"+dr$+an$
 	get#1,a$,a$:&,8,1,1:&"{pound}$a{f6:2}":y$="":return
 {:60110}
+' 34="
 	&,8,1,1:t$=mid$(a$,26,1):an$=a$:&,15,6,34:b%=val(a$):if an$=""then return
 	a%=b%:d$="":if co%>2 then a%=a%*254/1024:d$="k"
 	&,15,6,34:f$=a$+","+t$:&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":return

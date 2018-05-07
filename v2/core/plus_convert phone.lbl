@@ -1,0 +1,32 @@
+{number:3000}
+	&,28,1:DIMS%(24,100):GOSUB{:3002}:GOTO1812
+{:3002}
+	N=0:DR=1:A$="S.PHONE,S,R":GOSUB1011:IFE%THEN:&:RETURN
+{:3004}
+' s.phone
+' col:  7               23
+' 123456[   width 16   ][  width 13 ]
+' 100000Port Commodore  1 801 4232734
+'  ===== <- 5 bytes=starlink id. "1" byproduct of writing "1e5+<id>"
+
+' e.phone		$83 $4d $00 $28
+' +53 byte record	131  77  00  40
+
+'			 $834d  $0028 
+'			 33613     40
+' record 0:
+' 83 4d 00 28 00 00 00 00 00 00 00 00 00 00 00 00 ; 16
+' 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ; 32
+' 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ; 48
+' 00 00 00 00 00   i wonder what bytes 1-4 mean   ; 53
+
+' &,60,0,<bytes>,array%(<col>,<row>),<string$> put string into structure
+
+' store starlink id s%(0,n) & bbs name s%(1,n):
+	&,2,2:N=N+1:S%(0,N)=VAL(MID$(A$,2,5)):&,60,0,32,S%(1,N),MID$(A$,7,16)
+' store phone number s%(17,n):
+	&,60,0,14,S%(17,N),MID$(A$,23):ON-(ST=0)GOTO{:3004}:CLOSE2
+' s%(0,0) = # of entries
+	S%(0,0)=N:DR=3:GOSUB1010:A$=DR$+"E.PHONE"
+' save struct:
+	&,60,3,0,S%(0,0),5050,A$,DV%:GOSUB1012:&:RETURN

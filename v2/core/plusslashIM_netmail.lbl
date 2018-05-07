@@ -1,0 +1,441 @@
+{number:4000}
+{step:2}
+{crunch:on}
+{alpha:upper}
+
+' (this is +.NM/config renamed)
+' removed: r$ is defined in "im"
+' added: some file open subroutines
+' fixed: adding a netmail forward causes the node list to be displayed twice, before confirmation
+' added: "Configuration Error" subroutine (4100)
+' changed: {:4330}, {:4332}, {:4344} - subroutined "net connects editor" message
+
+{:4000}
+	y$="{$c3}onnect":x$="{$c3}ommand":rem "+/im.NETMAIL"
+{:4002}
+	v=1.3:vn$="900610":gosub {:4104}:return
+{:4004}
+{:open_nm.nodes}
+	dr=2:a$="nm.nodes":goto 1011
+{:4006} ' get node count
+	gosub {:4004}:input# 2,n:return
+{:4008}	' create "nm.nodes"
+{:make_nm.nodes}
+	dr=2:a$="nm.nodes,l,"+chr$(100):goto 1011
+
+' duplicates:
+' 4010 dr=2:a$="nm.nodes":goto1011
+' 4012 gosub4010:input#2,n:return
+
+' no references to:
+' 4014 f$="nm.list":gosub{:4016}:print# 2,tt$:close 2:return
+' 4016 dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
+' 4018
+' 4020
+
+' so I've replaced them with file open subroutines:
+' 4010:
+{:open_nm.config}
+	dr=2:a$="nm.config":goto 1011
+' not going to subroutine making nm.create - that is opened/written on lfn#3,
+' most Image SEQ routines use lfn#2
+' 4012:
+{:open_nm.create}
+	dr=2:a$="nm.create":goto 1011
+' 4014:
+{:open_nm.connect}
+	dr=2:a$="nm.connect":goto 1011
+' 4016:
+{:make_nm.connect}
+' nm.connect is opened/written on lfn#2
+	dr=2:a$="nm.connect,l,"+chr$(100):goto 1011
+
+{number:4022}
+{:4022}
+	if x then x=x+1:gosub 1001:input# 2,z$:return
+' 4024: this looks like it needs to be here:
+	z$="{f2:3}":return
+' otherwise it continues into... the node list subroutine:
+{:4026}
+	gosub{:4006}
+	for i=1 to n:a%=i:x=i+1:gosub 1001:input# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:next:close 2:return
+' this line can never be reached:
+' 4032	gosub{:4006}:if a<1 or a>n then 32
+{number:4034}
+{:4034}
+	x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	x=a%:gosub{:4022}:f$=z$:x=b%:gosub{:4022}:g$=z$:x=c%:gosub{:4022}:h$=z$:x=d%:gosub{:4022}:i$=z$
+	close 2:return
+{number:4056}
+{:4056}
+	&"{$c4}estination {$ce}ode (?={$cc}ist):{pound}i1":if an$="{f2}"then gosub{:4026}:goto{:4056}
+{:4058}
+	a$=an$:a%=val(a$):if a%<1 or a%>n then:&,16,2
+	if a%=0 then a=0:a$="":return
+	gosub {:open_nm.nodes}
+	a=a%:goto{:4034}
+{:4066}
+	&"{lt. blue}{$ce}ode {blue}({cyan}?{blue}={lt. blue}{$cc}ist{blue},{cyan}{$c1}{blue}={lt. blue}{$c1}dd{blue}):{white}{pound}i1":if an$="{f2}"then gosub{:4026}:goto{:4066}
+	goto{:4058}
+{:4070}
+	pr=-1:dr=5:gosub 1010:a$=dr$+"++ path":&,7,dv%,2:if e%then:&:return
+	gosub{:4086}:if e%=0 then return
+	gosub {:open_nm.nodes}:if e%then:&:goto{:4084}
+	close 3:open 3,dv%,3,dr$+"nm.nodelist,p,w":print# 3,chr$(0)chr$(194);
+	input# 2,n:print# 3,chr$(n);:if n=0 then{:4084}
+	for i=1 to n:x=i+1:gosub 1001:input# 2,a$,b$,b$,b$,b$,a,b,c,d
+	print# 3,left$(a$+"---",3)chr$(0)chr$(a)chr$(b)chr$(c)chr$(d);:next
+{:4084}
+	close 3:close 2
+{:4086}
+	dr=2:gosub 1010:a$=dr$+"nm.nodelist":&,16:goto 1012
+{:4088}
+	x=1:z$=str$(nn)+r$+str$(af%)+r$+pn$+r$+vn$+r$:goto{:4098}
+{:4090}
+	x=2:z$=str$(br%)+r$+h0$+r$+h1$+r$+h2$+r$:goto{:4098}
+{:4092}
+	x=3:z$="":for i=0 to 9:z$=z$+tt$(i)+r$:next:goto{:4098}
+{:4094}
+	x=4:z$=ct$+r$+st$+r$:goto{:4098}
+' fixme: this line can't be reached (might be old netmail forwarding code):
+'	x=6:z$=a1$+r$+a2$+r$+a3$+r$ ' :goto{:4098}
+{number:4098}
+{:4098}
+	gosub {:open_nm.config}:gosub 1001:print# 2,z$;:gosub 1001:close 2:return
+{:config_error}
+	&"{$c3}onfiguration {$c5}rror!{f6}":&:return
+' this line can't be reached:
+' 4102	close 2:&:&"{f6}{$d0}ress a key:{pound}g1{f6}"
+{number:4104}
+{:4104}
+	if zz=0 then:&"{f6}{$d3}orry, {$d4}his is a {$d3}{$d9}{$d3}{$cf}{$d0} {$cf}{$ce}{$cc}{$d9} program.{f6:2}":return
+	gosub{:4510}:if e%then return
+	a$=nn$:&"{clear}{f6}{white} {$ce}et {$c3}onfig{f6:2}{lt. blue} {$ce}ode {pound}%n{blue}:{white} {pound}$a{f6:2}"
+{number:4128}
+	on lm goto{:4130},{:4178},{:4294},{:4456},{:4332},{:4240},{:4474}:return
+{:4130}
+	gosub {:open_nm.config}:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$
+	x=4:gosub 1001:&,2,2:ct$=a$:&,2,2:st$=a$:close 2
+{:4134}
+	&"{clear}{f6}{white}   {$cc}ocal {$c9}nfo{f6:2}"
+	a%=af%:a$=pn$:b$=ct$:c$=st$
+	&"{cyan} 1. {lt. blue}{$ce}et {$c1}ccess {blue}:{white}{pound}%a{f6}"
+	&"{cyan} 2. {lt. blue}{$d0}assword   {blue}:{white}{pound}$a{f6}"
+	&"{cyan} 3. {lt. blue}{$c3}ity       {blue}:{white}{pound}$b{f6}"
+	&"{cyan} 4. {lt. blue}{$d3}tate      {blue}:{white}{pound}$c{f6}"
+	&"{f6:2}{lt. blue}-->{white}{pound}g1":a=val(an$):if a=>1 and a<=4 then on a gosub{:4150},{:4160},{:4166},{:4172}:goto{:4134}
+	return
+{:4150}
+	&"{f6:2} {$ce}{$cd} {$c1}ccess:{f6:2}":tz=0
+	for i=0 to 9:a%=i:a=sgn(af%and 2^i):a$=mid$("{$ce}{$d9}",a+1,1)
+	&"{$c7}roup #{pound}%a ({pound}$a)? {pound}g1":if an$="{$d9}"or an$="{$ce}"then a=-(an$="{$d9}"):tz=1
+	af%=(af%and not 2^i)or(a*2^i):gosub 1904:next
+	on tz gosub{:4088}:return
+{:4160}
+	&"{f6:2} {$ce}et {$d0}assword:{f6:2}":tz=0
+	p$="{$d0}assword":w$=pn$:q=16:gosub{:4618}:pl=1:&,1,32:if an$<>""then pn$=an$:tz=1
+	on tz gosub{:4088}:return
+{:4166}
+	&"{f6:2} {$c3}ity:{f6:2}":tz=0
+	p$="{$c3}ity":w$=ct$:q=25:gosub{:4618}:pl=0:&,1,32:if an$<>""then ct$=an$:tz=1
+	on tz gosub{:4094}:return
+{:4172}
+	&"{f6:2} {$d3}tate:{f6:2}":tz=0
+	p$="{$d3}tate":w$=st$:q=2:gosub{:4618}:pl=1:&,1,32:if an$<>""then st$=an$:tz=1
+	on tz gosub{:4094}:return
+{:4178}
+	gosub {:open_nm.config}:x=2:gosub 1001
+	&,2,2:br%=val(a$):&,2,2:h0$=a$:&,2,2:h1$=a$:&,2,2:h2$=a$:close 2
+{:4182}
+	&"{clear}{f6}{white}   {$cd}odem {$d3}pecifications{f6:2}"
+	a%=br%:a$=h0$:b$=h1$:c$=h2$
+	&"{cyan} 1. {lt. blue}{$cd}ax {$c2}aud {$d2}ate{blue}:{white}{pound}%a{f6}"
+	&"{cyan} 2. {lt. blue}{$cf}ff-{$c8}ook {$c3}md {blue}:{white}{pound}$a{f6}"
+	&"{cyan} 3. {lt. blue}{$cf}n-{$c8}ook {$c3}md  {blue}:{white}{pound}$b{f6}"
+	&"{cyan} 4. {lt. blue}{$c4}ial {pound}$x {blue}:{white}{pound}$c{f6}"
+	&"{f6:2}{lt. blue}-->{white}{pound}g1":a=val(an$):if a=>1 and a<=4 then on a gosub{:4198},{:4212},{:4222},{:4232}:goto{:4182}
+	return
+{:4198}
+	&"{f6:2} {$cd}ax {$c2}aud {$d2}ate:{f6}"
+	&"{f6} 1.  300":if br%=300 then:&"<-"
+	&"{f6} 2. 1200":if br%=1200 then:&"<-"
+	&"{f6} 3. 2400":if br%=2400 then:&"<-"
+	&"{f6:2} > {pound}g1":if an$<"1"or an$>"3"then return
+	a=val(an$):b=-300*(a=1)-1200*(a=2)-2400*(a=3):if br%=b then return
+	br%=b:goto{:4090}
+{:4212}
+	&"{f6:2} {$cd}odem {$cf}ff-{$c8}ook {pound}$x:{f6:2}"
+	a$=h0$:&"{$c3}urrent {pound}$x: {f5}{pound}$a{f5}{f6}"
+	q=15:gosub{:4618}:&"{$ce}ew {pound}$x: {pound}i0":if an$<>""then h0$=an$:goto{:4090}
+	&"{f6}{$d2}emove {$cf}ff-{$c8}ook {pound}$x? ":gosub 1902:if a then h0$="":goto{:4090}
+	return
+{:4222}
+	&"{f6:2} {$cd}odem {$cf}n-{$c8}ook {pound}$x:{f6:2}"
+	a$=h1$:&"{$c3}urrent {pound}$x: {f5}{pound}$a{f5}{f6}"
+	q=15:gosub{:4618}:&"{$ce}ew {pound}$x: {pound}i0":if an$<>""then h1$=an$:goto{:4090}
+	&"{f6}{$d2}emove {$cf}n-{$c8}ook {pound}$x? ":gosub 1902:if a then h1$="":goto{:4090}
+	return
+{:4232}
+	&"{f6:2} {$cd}odem {$c4}ial {pound}$x:{f6:2}"
+	a$=h2$:&"{$c3}urrent {pound}$x: {f5}{pound}$a{f5}{f6}"
+	q=15:gosub{:4618}:&"{$ce}ew {pound}$x: {pound}i0":if an$<>""then h2$=an$:goto{:4090}
+	return
+{:4240}
+' netmail forwarding:
+	&"{f6}":gosub{:4292}
+	&"{clear}{f6} {white}{$c5}-{$cd}ail {$c6}orwarding{f6:2}":if l=0 then gosub{:4266}:goto{:4252}
+	for i=1 to l:x=i+1:gosub 1001:input# 2,a$,b$,c$:d$=b$+" @ ":if b$=a$then d$=""
+	if a$="{up arrow}"then:&"{cyan}#{pound}#2{pound}# {pound}%a {white}({$c5}mpty){f6}":next:goto{:4252}
+	if a$<>b$then c$=b$+"{lt. blue} @ {white}"+c$
+	a%=x-1:&"{cyan}#{pound}#2{pound}# {pound}%a {white}{pound}$a {lt. blue}{$d4}o {white}{pound}$c{f6}":next
+{:4252}
+	close 2:q=20:gosub{:4618}
+	a%=l:&"{f6}{white}{pound}%a {lt. blue}{$c6}orwards {blue}[{cyan}{$c1}{lt. blue}dd{blue}, {cyan}{$c4}{lt. blue}elete{blue}, {cyan}{$c5}{lt. blue}dit{blue}, {cyan}{$d1}{lt. blue}uit{blue}]{white}? {pound}g1"
+	x=-(an$="{$c1}")-2*(an$="{$c4}"and l>0)-3*(an$="{$c5}"and l>0)
+	if x then on x gosub{:4262},{:4268},{:4278}:goto{:4240}
+	gosub{:4292}:goto{:4266}
+{:4262}
+	&"{$c1}dd{f6:2}":gosub{:4284}:if a=0 then return
+	gosub{:4292}:l=l+1:x=l+1:gosub 1001:print# 2,a1$r$a2$r$a3$
+{:4266}
+	x=1:gosub 1001:print# 2,l;r$:gosub 1001:close 2:return
+{:4268}
+	&"{$c4}elete{f6:2}{$d7}hich #? {pound}i1":z=val(an$):if z<1 or z>l then return
+	gosub{:4292}:l=l-1:if z=l+1 then{:4276}
+	for i=z+2 to l+2:x=i:gosub 1001:input# 2,a1$,a2$,a3$:x=i-1:gosub 1001
+	print# 2,a1$r$a2$r$a3$:next:x=1:gosub 1001:print# 2,l;r$:return
+{:4276}
+	goto{:4266}
+{:4278}
+	&"{$c5}dit{f6:2}{$d7}hich #? {pound}i1":z=val(an$):if z<1 or z>l then return
+	gosub{:4284}:if a=0 then return
+	gosub{:4292}:x=z+1:gosub 1001:print# 2,a1$r$a2$r$a3$:gosub 1001:close 2:return
+{:4284}
+	a=0:&"{$c8}andle {$c8}ere :{pound}i1":a1$=an$:if an$=""then return
+	&"{$c8}andle {$d4}here:{pound}i1":a2$=an$:if an$=""then a2$=a1$:a$=a1$:&"({pound}$a {$c1}ssumed){f6}"
+	gosub{:4056}:a3$=a$:a$=a1$:b$=a2$:c$=a3$
+	&"{f6}{$c6}orward {pound}$a'{$d3} {$cd}ail {$d4}o{f6}{pound}$b {$c1}t {pound}$c{f6:2}{$c3}orrect?" :goto 1902
+{:4292}
+	dr=2:a$="nm.forward,l,.":gosub 1011:&,2,2:l=val(a$):return
+{:4294}
+	gosub {:open_nm.config}:if e%then:&:goto{:4326}
+	x=3:gosub 1001:for i=0 to 9:&,2,2:if len(a$)<>4 then a$="2306"
+	tt$(i)=a$:next:close 2
+{:4300}
+	&"{clear}{f6} {$ce}et {$c3}all {$d4}imes {$c5}ditor:{f6:2}":for i=0 to 9:a%=i:a$=tt$(i)
+	b%=val(left$(a$,2)):c%=val(right$(a$,2))
+	b$="{$c1}":if b%>11 then b%=b%-12:b$="{$d0}"
+	c$="{$c1}":if c%>11 then c%=c%-12:c$="{$d0}"
+	b%=b%-12*(b%=0):c%=c%-12*(c%=0)
+	&"{pound}%a) {pound}#2{pound}# {pound}%b:00 {pound}$b{$cd} to {pound}#2{pound}# {pound}%c:59 {pound}$c{$cd}{f6}":next
+	&"{f6} {$c3}hange {$d7}hich? {pound}g1":a=val(an$):if an$<"0"or an$>"9"then{:4092}
+	&"{pound}v7{f6:2}"
+	q=3:gosub{:4618}
+	a$="{$d3}tart":gosub{:4324}:if a$<>""then tt$(a)=a$+mid$(tt$(a),3)
+	a$="{$c5}nd":gosub{:4324}:if a$<>""then tt$(a)=left$(tt$(a),2)+a$
+	goto{:4300}
+{:4324}
+	&"{pound}$a {$c8}our: {pound}i1":b=val(an$):if an$=""or b<0 or b>23 then a$="":return
+{:4326}
+	b=b+12*(b=12):if right$(an$,1)="{$d0}"then b=b+12
+	a$=right$(str$(100+b),2):return
+{:4330}
+	&"{clear}{f6}{white} {$ce}et {pound}$ys {$c5}ditor:{f6:2}":return
+{:4332}
+' net connects editor:
+	gosub {:4330}:gosub {:4578}:if e% then {:config_error}
+{:4334}
+	&"{cyan} 1. {lt. blue}{$c5}dit {$d3}tandard {pound}$ys{f6}{cyan} 2. {lt. blue}{$c5}dit {$d3}hort-{$c3}uts{f6}"
+	&"{f6}{lt. blue}{$d7}hich?{white} {pound}i1":a=val(an$):if a then on a gosub{:4340},{:4342}:goto{:4332}
+	close 2:return
+{:4340}
+	k=0:m=4:goto{:4344}
+{:4342}
+	x=5:gosub 1001:&,2,2:m=val(a$):k=5
+{:4344}
+	gosub {:4330}:z=-(k>0 and m<56):on-(m=0)goto{:4348}
+	for i=1 to m:x=i+k:gosub 1001:a%=i:&,2,2:&"{cyan}{pound}#2{pound}# {pound}%a){lt. blue} {pound}$a   ":next
+{:4348}
+	a$="":if z then a$=" ({$c1}={$c1}dd) "
+	q=2:gosub{:4618}:&"{f6:2}{cyan}{$c5}dit/{$d6}iew {$d7}hich{pound}$a?{white} {pound}i1":if tr%<1 or an$=""then return
+	if z and an$="{$c1}"then{:4358}
+	a=val(an$):if a=>1 and a<=m then x=a+k:gosub{:4364}:gosub{:4368}:goto{:4344}
+	return
+{:4358}
+	m=m+1:x=5:gosub 1001:print# 2,m:x=k+m:gosub{:4360}:gosub{:4380}:goto{:4344}
+{:4360}
+	tt$(1)="{f8}":tt$(2)="{f2}":tt$(3)="-------":tt$(4)="":tt$(5)="0000000":tt$(6)="0"
+	tt$(7)="0":tt$(8)=d1$:tt$(9)=d1$:return
+{:4364}
+	gosub 1001:for i=1 to 9:&,2,2:tt$(i)=a$:next:return
+{:4366}
+	gosub 1001:a$="":for i=1 to 9:a$=a$+tt$(i)+r$:next:print# 2,a$;:gosub 1001:return
+{:4368}
+	gosub{:4430}:&"{f6}{lt. blue} {$c5}dit {$d7}hich? {cyan}({$c1}={$c1}ll) {white}{pound}i1":on-(an$="{$c1}")goto{:4380}:b=val(an$)
+	if b then gosub{:4378}:goto{:4368}
+	if tt$(1)<>"{f8}"or k=0 then{:4366}
+	if x-k<m and m>1 then for j=x-k to m-1:x=j+k+1:gosub{:4364}:x=j+k:gosub{:4366}:next
+	m=m-1:x=5:gosub 1001:print# 2,m:gosub 1001:return
+{:4378}
+	&"{f6:2}{pound}q0":on b goto{:4382},{:4390},{:4394},{:4404},{:4410},{:4422},{:4426}:return
+{:4380}
+	gosub{:4360}:for b=1 to 6:gosub{:4378}:next:goto{:4368}
+{:4382}
+{def:debug}
+{ifdef:debug}
+	if k=0 then:&"k=0: key{pound}g1{f6}":return	
+{else}
+	if k=0 then return
+{endif}
+	q=3:gosub{:4618}:p$="{$ce}ode":w$=tt$(1):pl=1:&,1,32:if len(an$)=3 then tt$(1)=an$
+	if an$="{f8}"then tt$(1)=an$
+	return
+{:4390}
+	q=16:gosub{:4618}:p$="{$d0}assword":w$=tt$(2):pl=1:&,1,32:if an$<>""then tt$(2)=an$
+	return
+{:4394}
+	&"{f5}-{f5}={$ce}o {$c3}all,0-9={$c4}efined,{f5}+{f5}=24 {$c8}ours:{f6}":b$=tt$(3)
+	for i=1 to 7:a$=mid$("{$d3}un{$cd}on{$d4}ue{$d7}ed{$d4}hu{$c6}ri{$d3}at",i*3-2,3):z$=mid$(b$,i,1)
+	&"{pound}$a ({pound}$z): {pound}g1":f=(an$="+"or an$="-"or(an$=>"0"and an$<="9"))
+	if f then b$=left$(b$,i-1)+an$+mid$(b$,i+1)
+	lp=1:&mid$(b$,i,1):next:tt$(3)=b$:return
+{:4404}
+	q=20:gosub{:4618}:p$="{$c4}ial {$d0}refix":w$=tt$(4):pl=1:&,1,32:if an$<>""then tt$(4)=an$
+	if an$=""then:&"{$d2}emove {$c4}ial {$d0}refix? ":gosub 1902:if a then tt$(4)=""
+	return
+{:4410}
+	&"{$c3}alls/{$c4}ay:{f6}{f5}#{f5}=# of {$c3}alls, {f5}+{f5}={$c9}nfinite:{f6}":b$=tt$(5)
+	for i=1 to 7:a$=mid$("{$d3}un{$cd}on{$d4}ue{$d7}ed{$d4}hu{$c6}ri{$d3}at",i*3-2,3):z$=mid$(b$,i,1)
+	&"{pound}$a ({pound}$z): {pound}g1":f=(an$="+"or(an$=>"0"and an$<="9"))
+	if f then b$=left$(b$,i-1)+an$+mid$(b$,i+1)
+	lp=1:&mid$(b$,i,1):next:tt$(5)=b$:return
+	return
+{:4422}
+	&"{$d2}eset {$c3}alls {$d4}oday? ":gosub 1902:if a then tt$(6)="0"
+	return
+{:4426}
+	&"{$d2}eset {$cd}inutes? ":gosub 1902:if a then tt$(7)="0":tt$(8)=d1$
+	return
+{:4430}
+	a$=tt$(1):b$=tt$(2):&"{clear}{f6:2}{cyan}1. {lt. blue}{$ce}ode:      {white}{pound}$a{f6}{cyan}2. {lt. blue}{$d0}assword:  {white}{f5}{pound}$b{f5}{f6}"
+	a$=tt$(3):b$=tt$(4):&"{cyan}3. {lt. blue}{$c8}ours:     {white}{pound}$a{f6}{cyan}4. {lt. blue}{$d0}refix:    {white}{pound}$b{f6}"
+	a$=tt$(5):&"{cyan}5. {lt. blue}{$c3}alls/{$c4}ay: {white}{pound}$a{f6}"
+	a$=tt$(6):b$=tt$(9):&"{cyan}6. {lt. blue}{$d4}oday:     {white}{pound}$a{f6}{cyan}   {lt. blue}{$cc}ast {$c3}all: {white}{$04}"+b$+"{f6}"
+	a$=tt$(7):b$=tt$(8):&"{cyan}7. {lt. blue}{$cd}inutes:   {white}{pound}$a{f6}{cyan}   {lt. blue}{$d3}ince:     {white}{$04}"+b$+"{f6}"
+	&"{f6:2}":return
+	gosub {:open_nm.connect}:if e%=0 then return
+	gosub {:open_nm.nodes}:if e% then {:config_error}
+	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
+	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
+	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
+	print# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:next
+	x=5:gosub 1001:print# 2,0:gosub 1001:x=1:gosub 1001:return
+{:4456}
+	&"{f6:2} {$cd}aking {f5}nm.create{f5}..."
+	dr=2:gosub 1010:print# 15,"s"dr$"nm.create"
+	close 3:open 3,dv%,3,dr$+"nm.create,s,w":gosub 1012:if e% then {:4472}
+	gosub{:4006}
+	for a=n to 1 step-1:x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	print# 3,a;r$a$r$b$r$c$r$d$r$o%and 1;r$a%r$b%r$c%r$d%
+	next:close 2:close 3
+	&"{$c4}one!{pound}w1{f6}":return
+{:4472}
+	close 3:&"{f6:2}{$c5}rror {$c3}reating {$c6}ile {f5}nm.create{f5}.{f6}":return
+{:4474}
+	&"{clear}{f6}{white} {$ce}et{$d7}all/{$ce}et{$c7}rf {pound}$ys {$c5}ditor:{f6:2}"
+	&"{cyan} 1. {lt. blue}{$c5}dit {$ce}etwall {pound}$ys{f6}{cyan} 2. {lt. blue}{$c5}dit {$ce}et {$c7}raffiti {pound}$ys{f6}"
+	&"{f6}{lt. blue}{$d7}hich?{white} {pound}g1{f6}":a=val(an$):if a then on a gosub{:4482},{:4484}:goto{:4474}
+	return
+{:4482}
+	k=7:m$="{$ce}et{$d7}all":goto{:4486}
+{:4484}
+	k=8:m$="{$ce}et {$c7}raffiti"
+{:4486}
+	gosub {:open_nm.config}:if e%then close 2:return
+	for i=1 to 8:tt$(i)="{up arrow}":next
+	x=k:gosub 1001:&,2,2:tt$(1)=a$:if st=0 then for i=2 to 8:&,2,2:tt$(i)=a$:next
+{:4492}
+	&"{clear}{f6}{white} {pound}$m {pound}$ys:{f6:2}":for i=1 to 8:a$=tt$(i):a%=i:&"{cyan} {pound}%a. {lt. blue}{pound}$a{f6}":next
+	&"{f6}{lt. blue}{$d7}hich? {pound}g1":a=val(an$):if a then on-(a<9)gosub{:4498}:goto{:4492}
+	a$="":for i=1 to 8:a$=a$+tt$(i)+r$:next:x=k:gosub 1001:print# 2,a$;:close 2:return
+{:4498}
+	a%=a:poke 53252,7:&"{$c5}nter {pound}$y {pound}%a: {pound}i1"
+	if an$=""or an$="{f8}"then:&"{$c4}elete #{pound}%a? ":gosub 1902:on a goto{:4506}:return
+	if an$<>""then tt$(a%)=an$
+	return
+{:4506}
+	if a%<8 then for i=a%to 7:tt$(i)=tt$(i+1):next
+	tt$(8)="{up arrow}":return
+{:4510}
+	gosub {:open_nm.config}:if e%then close 2:goto{:4516}
+	&,2,2:nn=val(a$):&,2,2:&,2,2:&,2,2:close 2
+	if a$<>vn$then:&"{f6:2}{$d6}ersion {$cd}ismatch! {$d2}un {f5}+.{$ce}{$cd}/convert{f5}{f6:2}":e%=1:return
+{:4516}
+	gosub {:open_nm.nodes}:if e%=0 then:&,2,2:n=val(a$):goto {:4548}
+	gosub {:open_nm.create}:if e% then {:4544}
+	&"{f6}{$c3}reating {f5}nm.nodes{f5} file..."
+	input# 2,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st:close 2
+' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
+' record length doesn't hurt after it's created
+	gosub {:open_nm.nodes}:n=0
+	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	if a>n then n=a:x=1:gosub 1001:print# 2,n
+	close 2:close 3:open 3,dv%,3,dr$+"nm.create,s,r"
+' this was {:4008} (make_nm.nodes), although opening a REL file with (the same)
+' record length doesn't hurt after it's created
+	gosub {:open_nm.nodes}:n=0
+{:4534}
+	input# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
+	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	if a>n then n=a:x=1:gosub 1001:print# 2,n
+	if s=.then{:4534}
+	close 2:close 3:print# 15,"s"dr$"nm.nodelist":goto{:4548}
+{:4544}
+	&"{$ce}o {f5}nm.create{f5} file found!{f6}{$d0}lease contact your {$ce}et{$d7}ork{f6}{$c1}dministrator.{f6}"
+	e%=1:return
+{:4548}
+	gosub{:4070}:if e%then return
+	if nn then{:4574}
+	gosub {:open_nm.nodes}:&,2,2:n=val(a$):close 2
+	&"{f6}{$c5}nter the {$ce}ode # you were assigned: {pound}i1":nn=val(an$)
+	if nn<1 or nn>n then e%=1:return
+	gosub {:open_nm.config}:if e%then{:4562}
+	&,2,2:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$:gosub{:4088}:goto{:4574}
+{:4562}
+	dr=2:a$="nm.config,l,z":gosub 1011
+	x=1:gosub 1001:print# 2,nn;r$1022;r$"{f2}"r$vn$
+	x=2:gosub 1001:print# 2,300;r$r$r$"atdt"
+	x=3:gosub 1001:a$="":for i=0 to 9:a$=a$+"2306"+r$:next:print# 2,a$;
+	x=4:gosub 1001:print# 2,"{up arrow}"r$"{up arrow}"
+	x=1:gosub 1001:close 2
+{:4574}
+	gosub {:open_nm.nodes}:x=nn+1:gosub 1001:&,2,2:nn$=a$:close 2
+	n%=nn:goto{:4070}
+{:4578}
+	gosub {:open_nm.connect}:if e%=0 then{:4592}
+	gosub {:open_nm.nodes}:if e% then {:config_error}
+	x=nn+1:gosub 1001:for i=1 to 5:&,2,2:next:for i=1 to 4:&,2,2:a%(i)=val(a$):next
+	for i=1 to 4:tt$(i)="{up arrow}":if a%(i)then x=a%(i)+1:gosub 1001:&,2,2:tt$(i)=a$
+	next:gosub {:make_nm.connect}:for x=1 to 4:gosub 1001
+	print# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:next
+	x=5:gosub 1001:print# 2,0:gosub 1001:x=1:gosub 1001:return
+{:4592}
+	gosub {:open_nm.nodes}:if e% then {:config_error}
+	x=nn+1:gosub 1001:&,2,2:nn$=a$:dt$(0)=a$
+	&,2,2:&,2,2:&,2,2:&,2,2:for i=1 to 4:&,2,2:a%(i)=val(a$):next
+	for i=1 to 4:x=a%(i)+1:dt$(i)="":if x>1 then gosub 1001:&,2,2:dt$(i)=a$
+	next:gosub {:open_nm.connect}:if e%then close 2:return
+	for x=1 to 4:gosub 1001:b$=""
+{:4604}
+	&,2,2:b$=b$+a$+r$:on-(st=0)goto{:4604}:nn$(x)=b$:next
+	b$=r$+"{f2}"+r$+"-------"+r$+r$+"-------"+r$+"0"+r$+"0"+r$+d1$+r$+d1$+r$
+	for i=1 to 4:for j=1 to 4
+	if left$(nn$(j),3)=dt$(i)and i<>j then a$=nn$(i):nn$(i)=nn$(j):nn$(j)=a$
+	next:next:for x=1 to 4:if dt$(x)=""then nn$(x)="{up arrow}"+b$
+	if dt$(x)<>left$(nn$(x),3)then nn$(x)=dt$(x)+b$
+	gosub 1001:print# 2,nn$(x);:next:gosub 1001:return
+{:4618}
+	poke 53252,q:return
+{crunch:off}
+	rem "+/im.NETMAIL" -- X-TEC 171221
