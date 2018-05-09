@@ -4,7 +4,7 @@
 	REM +.TEST VISUAL ED -- PINACOLADA 27/NOV/2017 15:44
 ' set up "area" window:
 ' uppercase chars must be from $61-$7a range to properly display in screen mask
-	&,18,1:cm$="{$76}isual{$65}ditor{$74}est":gosub 1360
+	&,18,1:cm$="{$76}isual {$65}ditor {$74}est":gosub 1360
 	&"{pound}q0{f6}{pound}r1Ctrl-V{pound}r0 outputs lines typed so far"
 	&"{f6}{pound}r1Ctrl-X{pound}r0 exits"
 	&"{f6}Press any key to begin: {pound}g1{pound}f1":&,18,0
