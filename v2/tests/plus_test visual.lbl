@@ -1,7 +1,0 @@
-{number:3000}
-	cm$="{$76}isual{$65}ditor{$74}est":gosub 1360
-	a$="visual":gosub 1350
-	a$="visual":gosub 1750:if e%=.then:&,16
-	if kk then for x=1 to kk:&"{pound}#3{pound}!x: "+tt$(x)+"{f6}":next
-	goto 1811
-	rem pinacolada 12/jun/2016 19:59
