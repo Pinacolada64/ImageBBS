@@ -13,9 +13,9 @@ Image BBS 2.0 IM line number translation:
 1003	2426	goto 2426	?
 1004	11	goto 11		Get user flag #a in fl$
 1005		goto 1028	Uppercase/lowercase input: an$
-1006	6	goto 6		Uppercase input: an$
+1006	6	goto 6		Command stacking, return uppercase input: an$
 1007	7	goto 7		Get uppercase character: an$
-1008	8	goto 1008	jlf: remove
+1008	8 -> 96	goto 1008	jlf: remove [rns: I think it should be goto 96]
 				emu: device/drive prompt, return
 1009	2	goto 2		Get device/drive of system drive 'dr'
 1010	3	goto 3		Close/reopen command channel
@@ -40,7 +40,7 @@ Image BBS 2.0 IM line number translation:
 1076	14			...and read file in a$
 	15			close logical file #2
 ---	20-27			jlf: remove
----	28-29			jlf: Load protocol "++ "+a$
+1750	28-29			jlf: Load protocol "++ "+a$
 1060	30			Open "e.stats"
 1061	31			Open "e.access"
 1062	32			Open mail file "m."+tt$+",s,"+a$
@@ -52,14 +52,14 @@ Image BBS 2.0 IM line number translation:
 	38			Write user data to lfn#2
 	39			Dump array tt$() to open lfn#2
 ---	40-47			jlf: Redirect to 440-447
-	50			Check if instant logon used: if so, RETURN
-1096	51			log a$ to daily log
+1095	50			Check if instant logon used: if so, RETURN
+1096	51			...otherwise, log a$ to daily log
 	52			check Prt "print log entries" lightbar enabled
 	53			check if printer online
 	54			print a$ to printer
 1088	60			check for dir space?
 1089	61			check blocks free on drive 'dr'
-	62			check Lt.Kernal HD blocks free?
+1079	62			check Lt.Kernal HD blocks free?
 	63			...same...
 	64			blocks free check for other devices
 	65			update bf() array
@@ -83,7 +83,7 @@ Image BBS 2.0 IM line number translation:
 1901	93			Display "Are You Sure?: "
 1902	94			Display "[No]", wait for keypress 
 	95			Display "Are You Sure?: "
-	96			Display "No", wait for key
+1907	96	8 -> 96		Display "[Yes]", wait for keypress
 	97			Display yes/no response chosen
 1264	314			Display p$+an$
 1265	315			Display hs$() array of commands
@@ -101,14 +101,17 @@ Image BBS 2.0 IM line number translation:
 1930		goto330
 1980		goto390
 
----	300			jlf: load "i.main"
-	302			jlf: load "i.lo"
+1811?	300			jlf: load "i.main"
+1700	302			nis: load "+.lo"
+				jlf: load "i.lo"
 
 2100	304-308			DIMension 1.2 style arrays
 
 		2414 -> 2500	load "im.bar"
 		24xx -> 2500	load "im.screens"
-		2426 -> 43	load "im.display"
+1666	442			nis: load "im.params"
+				jlf: load "im.protos"
+	443	2426 -> 43	load "im.display"
 		2428 -> 47	load "im.info"
 
 1065	35
