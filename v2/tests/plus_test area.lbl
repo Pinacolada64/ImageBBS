@@ -28,7 +28,7 @@
 {quoter:$da="Z"}
 ' other ranges of uppercase characters will display wrong with &,69
 {number:3000}
-	rem +.area test
+	rem +.TEST AREA
 	a=peek(17139):&"{S}creen mask (17139)={pound}!a{f6}"
 	&"{C}lear area display":cm$="":gosub {:sub.update_area}
 	cm$=" {S}ystem {A}uto{M}aint ":c=5
