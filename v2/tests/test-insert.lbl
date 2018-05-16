@@ -1,0 +1,21 @@
+' test insert into sig list
+{alpha:upper}
+{step:2}
+' xx=sig #   x3%(0,xx)=entry count (j)
+	dim x3%(10,10):xx=1:j=9:x3%(0,xx)=j
+' set up dummy values:
+	for x=1 to j:x3%(x,xx)=x:next
+	gosub {:show_array}
+' value to be inserted:
+	input "insert which";an$:a=val(an$):if a<1 or a>999 then stop
+' where to insert it:
+	input "insert where";an$:b=val(an$):if b<1 or b>j then stop
+' update count j:
+	j=j+1:x3%(0,xx)=j
+' make room (move a...j to a+1...j+1):
+	for i=j to b step -1:x3%(i,xx)=x3%(i-1,xx):next
+' insert a into b:
+	x3%(b,xx)=a:gosub {:show_array}
+	end
+{:show_array}
+	for x=1 to j:print "x3%("x","xx")="x3%(x,xx):next:return
