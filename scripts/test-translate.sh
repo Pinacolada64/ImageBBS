@@ -26,7 +26,9 @@ function translate_filename()
 	echo "Step 3: $test"
 }
 
-input_lbl="plusslashMM_load.lbl"
+disk_image=$2
+
+input_lbl=$1 # "plusslashMM_load.lbl"
 input_prg=${input_lbl//.lbl/.prg}		# change .lbl extension to .prg
 
 translate_filename "$input_lbl" # "+/MM.load.lbl"
@@ -38,12 +40,17 @@ echo "input_lbl=$input_lbl"
 echo "C64_FILE=$C64_FILE"
 
 # quote filenames since some have spaces in them
-echo "wine c64list3_05.exe $input_lbl -prg -ovr"
-echo "c1541 \"image 2_0.d81\" \
+echo "wine c64list3_05.exe \"$input_lbl\" -prg -ovr"
+echo "c1541 \"$disk_image\" \
 -del \"$C64_FILE\" \
 -write \"$input_prg\" \"$C64_FILE\""
 
-echo "Setting 'use_slashes' to 0."
-use_slashes=0
-translate_filename "slashslashslash_" # "---."
-FILE=$test; echo $FILE
+wine c64list3_05.exe \"$input_lbl\" -prg -ovr
+c1541 "$disk_image" \
+-del "$C64_FILE" \
+-write "$input_prg" "$C64_FILE"
+
+# echo "Setting 'use_slashes' to 0."
+# use_slashes=0
+# translate_filename "slashslashslash_" # "---."
+# FILE=$test; echo $FILE
