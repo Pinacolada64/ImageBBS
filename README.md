@@ -11,4 +11,6 @@ When converting .prg files, use `-alpha:upper`.
 
 Check out our [wiki in progress](https://github.com/Pinacolada64/ImageBBS/wiki).
 
+[Need tcpser source?](https://github.com/FozzTexx/tcpser)
+
 Want to telnet to some Image BBSes? Our network has 13 nodes! Check out the [Commodore BBS Outpost](cbbsoutpost.servebbs.com/index.php)!
