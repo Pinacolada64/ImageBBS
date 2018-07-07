@@ -1,0 +1,55 @@
+{number:4000}
+{step:2}
+	&,27,2:dim x1%(17,60),x2%(60),x3%(60,2)
+	lm=1:on mm gosub{:4100},{:4100}:&,28,2:return
+{:4004}
+	&,15,6,133:r=abs(int(val(a$))):return
+{:4006}
+	dr=3:gosub 1010:&,60,2,0,x1%(0,0),dr$+"e.{$d3}iglist",dv%:goto 1012
+{:4008}
+	dr=3:gosub 1010:&,60,2,0,x3%(0,0),dr$+"e.{$d3}iglist"+str$(sg),dv%:goto 1012
+{:4010}
+	lp=1:&"{$d3}orry, that function is temporarily not available.":return
+{number:4100}
+{:4100}
+	q=.:a=12:gosub 1004:b=a:a=8:gosub 1004:if a+b then q=1
+	gosub{:4006}:if e%<>0 or x1%(0,0)=0 then{:4142}
+	xx=-(sy$="{$d5}/{$c4}")-2*(sy$="{$d5}/{$d8}"):f=4096+2^xx
+	&,60,6,x1%(0,0),0,x1%(0,1),x1%(1,1),36,4096,2^ac%
+	&,60,6,x1%(0,0),5,x1%(0,1),x1%(0,1),36,8192,f
+	&,60,6,x1%(0,0),7,x1%(0,1),x1%(0,1),36,16384,id
+	&,60,8,x1%(0,0),36,8192+16384,x1%(0,1),x2%(1),1:x2%(0)=a%:if a%=0 then{:4142}
+	on-(r<>0)goto{:4120}:if a%=1 then r=1:goto{:4120}
+{:4116}
+	&"{f6}{white} ##  {$d3}{$c9}{$c7} {$ce}ame{f6:2}":for i=1 to x2%(0):a%=i:x=x2%(i):&,60,1,30,x1%(3,x),b$
+	&"{white}{pound}#3{pound}# {pound}%a  {cyan}{pound}$b{f6}":next:&"{white}{f6}":p$="{$d7}hich {$d3}{$c9}{$c7}?":gosub 1006:gosub{:4004}
+{:4120}
+	if r<1 or r>x2%(0)then{:4164}
+	sg=x2%(r):r=0:so%=x1%(2,sg):&,60,1,30,x1%(3,sg),s$
+	sg$=s$:gosub{:4008}:bz=0:if e%then{:4140}
+	bz=x3%(0,xx):if bz<1 then{:4140}
+	if bz>30 then bz=30
+	for b=1 to bz:e%(b)=x3%(b,xx):next
+	b$=sg$:&"{f6}{$d7}elcome to the {pound}$b {$d3}{$c9}{$c7}!{f6}"
+	dr=1:a$="s.{$d3}ig"+str$(sg)+str$(nl):gosub 1076
+	dr=6:a$="u.config":gosub 1011:x=so%:gosub 1001:&,2,2:close 2
+	b$=an$:an$=a$:&,15,1:&"{f6}{$d9}our {$d3}{$c9}{$c7} {$c8}ost here is {pound}v7.{f6}":an$=b$:goto{:4148}
+{:4140}
+	&"{f6}{$d4}his {$d3}{$c9}{$c7} has no "+sy$+" {$c2}oards.{f6:2}":sg=0:bz=0:goto{:4116}
+{:4142}
+	sg=0:close 2:dr=3:a$="e."+sy$:gosub 1011:if e%then{:4010}
+	&,2,2:bz=val(a$):close 2:if bz>30 then bz=30
+	for i=1 to bz:e%(i)=i:next
+{:4148}
+	dr=3:a$="e."+sy$:gosub 1011:if e%then{:4010}
+	ba$="":oc$="":b=0:for s=1 to bz:x=e%(s)+1:gosub 1001:&,2,2:&,2,2:a=val(a$)
+	&,2,2:if((a and 2^ac%)=0)then{:4162}
+	b=b+1:ac%(b)=a:bb$(b)=a$:&,2,2:a=abs(int(val(a$))):so%(b)=a+(a=0)
+	&,2,2:dv%(b+6)=val(a$):&,2,2:dr%(b+6)=val(a$):e%(b)=e%(s)
+	d$="0":if(so%(b)=id)or(so%=id)or q then d$="1"
+	ba$=ba$+d$:&,2,2:oc$=oc$+mid$(str$(val(a$)),2)
+{:4162}
+	next:close 2:bz=b:on-(bz=0 and sg>0)goto{:4140}
+{:4164}
+	lm=0:return
+	rem +.mm.LOAD 2.0 -> 1.3

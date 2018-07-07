@@ -1,0 +1,35 @@
+	ON MM GOTO{:3010},{:3004},{:3006}
+{:3002}
+	&,28,1:&,11:LC=1:&,27,1:SY$="":GOTO 200
+{:3004}
+	P$=PO$:RETURN
+{:3006}
+	RETURN
+{:3010}
+	IF ZZ AND AN$="{$d2}"THEN{:3030}
+	IF VAL(AN$)THEN GOSUB{:3020}:IF A$<>""THEN UU$=A$:GOTO{:3002}
+	REM IFAN$="{$ce}{$cf}{$d2}{$cd}"THENMM=0:GOTO2006
+	GOSUB 90:&"{f6}{lt. red}{pound}VJ{lt. blue} {rvrs on} {$d5}NKNOWN {$c3}OMMAND. {$c5}NTER {f5}?{f5} {$c6}OR {$c8}ELP. {f6}{lt. red}{pound}VJ":GOTO{:3002}
+{:3020}
+	A%=VAL(AN$):A$="{up arrow}":IF A%<1 OR A%>4 THEN RETURN
+	DR=3:A$="E.MACS":GOSUB 4:A$="{up arrow}":IF E%=0 THEN X=ID*4-4+A%:GOSUB 1:&,2,2
+	CLOSE 2:RETURN
+{:3030}
+	&,52,$30,3:ON A%+1 GOTO{:3032}
+	GOSUB 304:POKE 53252,14:&"{f6:2}{$d2}UN: +.{pound}I0":A$=AN$:ON-(A$="")GOTO{:3002}:GOTO 1016
+{:3032}
+	GOSUB 304:&"{f6:2}{lt. blue}{$d7}HICH {$c3}LASS{cyan}? ({lt. blue}3{cyan},{lt. blue}4{cyan},{lt. blue}5{cyan}): {white}{pound}G1":A=VAL(AN$):IF A<3 OR A>5 THEN A
+	&MID$(STR$(A),2)+"{f6}":C=A-2:POKE 53252,14:&"{f6}{lt. blue}{$d2}UN{cyan}: {white}I":&MID$("./",C,1)
+	IF C=3 THEN:&".SUB.":POKE 53252,10
+	&"{pound}I0":C$=AN$:ON-(C$="")GOTO{:3002}:ON-(C=3)GOTO{:3046}:&"{f6}{lt. blue}{$c4}EVICE{cyan}, {lt. blue}{$c4}RIVE{cyan}: {white}{pound}I1"
+	A=INT(VAL(LEFT$(AN$,2))):IF A>.AND A<7 THEN DR=A:GOTO{:3046}
+	IF A<7 OR A>29 THEN DR=5:GOTO{:3046}
+	&,15,6,133:D2%=VAL(AN$):D1%=A:DR=.:DV%(.)=D1%:DV%(2)=D2%:GOSUB 3:CLOSE 15
+	IF A<>.THEN X=6:GOSUB 390:GOTO{:3002}
+{:3046}
+	&"{f6}{lt. blue}{$c5}NTER {$d6}ALUE FOR "+MID$("MMLMIM",C*2-1,2)+"{cyan}: {white}{pound}I1"
+	A$=C$:ON C-1 GOTO{:3048},{:3050}:MM=VAL(AN$):GOTO 71
+{:3048}
+	LM=VAL(AN$):GOSUB 73:GOTO{:3002}
+{:3050}
+	IM=VAL(AN$):GOSUB 74:GOTO{:3002}

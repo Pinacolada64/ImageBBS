@@ -1,0 +1,135 @@
+{number:4000}
+{step:2}
+' +.MM.maint -- This is backported from Jack's 2.0 version
+	rem +.mm.MAINT
+	on -(q=.) goto {:4032}:zz%=0:gosub {:4010}:lc=-(lc=5)-(lc=9)*2:f1=3:tz=1:goto {:4034}
+{:4004}
+	b=abs(val(a$)):f2=int(-10*b*(b<1)):if f2 then a$=mid$(a$,4)
+	zz%=-(right$(a$,1)="{up arrow}")-2*(right$(a$,1)="?"):a$=left$(a$,len(a$)+(zz%<>.)):return
+{:4008}
+	a=abs(int(val(an$))):return
+{:4010}
+	v$=" {$d3}ubop ":h$="{$c2}oard"
+	return
+{:4014}
+	&"{f6:2}({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$cb}eep {$d3}ame){f6}":return
+{:4016}
+	a$=bb$(bn):gosub{:4004}:p$=sy$+"#"+mid$(str$(bn),2)+":{f6}"+a$:cm$=p$:return
+{:4018}
+	on lc+1 goto{:4020},{:4024},{:4024}
+{:4020}
+	a=(f2 and 3):a=a+(a>.):b$=mid$("{$d3}td {$c1}non{$ce}-{$c1}n",1+a*4,4)
+{:4022}
+	a=-((f2 and 4)=4):return
+{:4024}
+	a=(f2 and 3):b$=mid$("{$c3}red{$c4}{$cf}-{$c3}{$c6}ree{$c4}{$cf}-{$c6}",1+a*4,4):goto{:4022}
+{:4026}
+	bb$(bn)="":on f2+1 goto{:4028}:bb$(bn)="."+mid$(str$(f2),2,1)+"."
+{:4028}
+	bb$(bn)=bb$(bn)+xx$+mid$("{up arrow}?",zz%-3*(zz%=0),1):return
+{:4030}
+	b=.:for i=.to 9:a%=i:&"{$c7}roup #{pound}%a?: ":gosub 1907:b=b+2^i*a:next:a=b:return ' 1907=8
+{:4032}
+	v$="":m$="":return
+{:4034}
+	tz=1:e=1:a$="e."+sy$:dr=3:gosub 1011:x=e%(bn)+1:gosub 1001:&,2,2:yy$=a$:close 2 ' 1011=4, 1001=1
+{:4036}
+	lm=.:&"{clear}{f6:2}{$cd}aint {$cf}ptions:{f6:2}1) {$c5}dit {pound}$h {$c5}ntry {$c6}iles{f6}2) {$c5}dit {pound}$h {$c4}etail":gosub{:4144}
+	&"{f6:2} : {pound}g1{pound}v7{f6}":gosub{:4008}:on-(a>lm)goto{:4040}:lm=-(a=3):on a goto{:4046},{:4062},{:4046},{:4156}
+{:4040}
+	r=bn:on (tz and e) goto {:4032}:dr=3:a$="e."+sy$:gosub 1011:x=e%(bn)+1:gosub 1001 ' 1011=4, 1001=1
+	a$=yy$+r$+str$(ac%(bn))+r$+bb$(bn)+r$+str$(so%(bn))+r$+str$(dv%(bn+6))+r$
+	a$=a$+str$(dr%(bn+6))+r$+mid$(oc$,bn,1):print# 2,a$:close 2:goto{:4032}
+{:4046}
+	&"{clear}{f6:2}{$c5}dit {$c5}ntry {$c6}iles:{f6:2}1) {$c1}{$d3}{$c3}{$c9:2}{f6}2) {$c3}/{$c7}{f6:2} : {pound}g1{pound}v7{f6}"
+	gosub{:4008}:on-(a<1 or a>2)goto{:4036}:a=a-1:on-(lm=1)goto{:4148}
+	kk=1:dr=1:o$="s."+sy$+str$(e%(bn))+str$(a)
+{:4051}
+	a$=o$+",s,r":gosub 1011:if e% then:&:goto {:4056} ' 1011=4
+	&"{f6:2}{$cc}oading {$d4}ext...{f6:2}"
+{:4054}
+	&,2,2:if a$<>"{up arrow}"and kk<101 then tt$(kk)=a$:kk=kk+1:&".":goto{:4054}
+{:4056}
+	close 2:im=2:gosub 1604:gosub {:4010}:on -(kk=.) goto {:4036} ' 1604=440
+	&"{f6:2}{$d3}aving...":dr=1:gosub 1010:print# 15,"s"dr$o$:a$=o$+",s,r":gosub 1011 ' 1010=3, 1011=4
+	for x=1 to kk-1:print# 2,tt$(x):&".":next:print# 2,"{up arrow}":close 2
+	&,11,.:goto{:4036}
+{:4062}
+	poke 53252,38:gosub{:4016}:&"{clear}{f6}{$c4}etails - {pound}$p:{f6:2}":b$="":if zz%then b$=" ({$ce}et{$d3}ub)"
+	a$=bb$(bn):gosub{:4004}:xx$=a$:a%=ac%(bn):&" 1) {$ce}ame  : {pound}$a{pound}$b{f6} 2) {$c1}ccess: {pound}%a"
+	a=1-val(mid$(oc$,bn,1)):&"{f6} 3) {$cf}pen? : ":gosub{:4200}
+	gosub{:4018}:&" 4) {$d4}ype  : {pound}$b{f6} 5) {$d0}swd? : ":gosub{:4200}:&" 6) {$d0}swd  : ":&yy$
+	if zz=.and so%<>id then{:4078}
+	b$="{$ce}one":if so%(bn)>.then b$=cc$+mid$(str$(so%(bn)),2)
+	on-(zz=.)goto{:4078}:a%=dv%(bn+6):&"{f6} 7){pound}$v: {pound}$b{f6} 8) {$c4}evice: {pound}%a"
+	b$=str$(dr%(bn+6)):&"{f6} 9) {$c4}rive :{pound}$b"
+{:4078}
+	&"{f6:2}{$cd}aint: {pound}g1{pound}v7{f6}":gosub{:4008}:if a<1 or a>9 then{:4036}
+	on a goto{:4082},{:4088},{:4102},{:4120},{:4136},{:4138}:on-(id=so%and a=7)goto{:4096}:on a-zz*6 goto{:4096},{:4108},{:4114}
+{:4082}
+	gosub{:4014}:pl=.:p$="{pound}$h {$ce}ame":w$=xx$:poke 53252,27:&,1,32
+	if len(an$)>2 and an$<>xx$then xx$=an$:tz=.:gosub{:4026}
+	goto{:4062}
+{:4088}
+	gosub{:4014}:pl=1:p$="{$c1}ccess {$c3}ode":w$=mid$(str$(ac%(bn)),2):&,1,32:gosub{:4008}
+	if an$="{f2}"then gosub{:4030}
+	if an$<>""and a>.and a<1024 then ac%(bn)=a:tz=.
+	goto{:4062}
+{:4096}
+	gosub{:4014}:p$="{$d3}ubop {$c9}{$c4}:"+cc$:w$=mid$(str$(so%(bn)),2):&,1,32:if an$=""then{:4062}
+	gosub{:4008}:if a<1 or a>ur then a=-1
+	so%(bn)=a:tz=.:goto{:4062}
+{:4102}
+	a=bn
+	a$=mid$(str$(-val(mid$(oc$,a,1))+1),2):oc$=left$(oc$,a-1)+a$+mid$(oc$,a+1)
+	e=1-e:goto{:4062}
+{:4108}
+	gosub{:4014}:p$="{$c4}evice":w$=mid$(str$(dv%(bn+6)),2):&,1,32:gosub{:4008}
+	if a<33 and a>6 and a<>dv%(bn+6)then dv%(bn+6)=a:tz=.
+	goto{:4062}
+{:4114}
+	gosub{:4014}:poke 53252,3:p$="{$c4}rive":w$=mid$(str$(dr%(bn+6)),2):&,1,32:gosub{:4008}
+	if an$=""or val(an$)<0 or val(an$)=dr%(bn+6)then{:4062}
+	dr%(bn+6)=val(an$):tz=.:goto{:4062}
+{:4120}
+	on lc+1 goto{:4122},{:4128},{:4128}
+{:4122}
+	&"{clear}{f6}{$d4}ype :{f6} (1) {$d3}tandard{f6} (2) {$c1}nonymous{f6} (3) {$ce}on-{$c1}nonymous{f6:2}{$d4}ype : {pound}g1{pound}v7{f6}"
+	a=val(an$):if a<1 or a>3 then{:4062}
+	a=-a*(a<>1):f2=(f2 and 4)or a:tz=.:gosub{:4026}:goto{:4062}
+{:4128}
+	&"{clear}{f6}{$d4}ype :{f6} (1) {$d3}tandard ({$c3}red){f6} (2) {$c4}ownload {$cf}nly ({$c3}red){f6}"
+	&" (3) {$d3}tandard ({$c6}ree){f6} (4) {$c4}ownload {$cf}nly ({$c6}ree){f6:2}{$d4}ype : {pound}g1{pound}v7{f6}"
+	a=val(an$):if a<1 or a>4 then{:4062}
+	a=a-1:f2=(f2 and 4)or a:tz=.:gosub{:4026}:goto{:4062}
+{:4136}
+	a=-4*((f2 and 4)<>4):f2=(f2 and 3)or a:tz=.:gosub{:4026}:goto{:4062}
+{:4138}
+	gosub{:4014}:pl=1:p$="{$d0}assword":w$=yy$:poke 53252,14:&,1,32
+	if len(an$)>2 and an$<>yy$then tz=.:yy$=an$
+	goto{:4062}
+{:4144}
+	gosub{:4152}:if lm>2 then:&"{f6}3) {$c5}dit {$d3}{$c9}{$c7} {$c5}ntry {$c6}iles{f6}4) {$c5}dit {$d3}{$c9}{$c7} {$c4}etails"
+	return
+{:4148}
+	kk=1:dr=1:o$="s.{$d3}ig"+str$(sg)+str$(a):goto{:4051}
+{:4152}
+	lm=2:if sg then a=8:gosub 1004:lm=2-2*(a>0 or so%=id) ' 1004=11
+	return
+{:4156}
+	&"{f6:2}{$c5}dit {$d3}{$c9}{$c7} {$c4}etails:{f6:2}":dr=3:a$="e.{$d3}ig":gosub 1011:x=sg+1:gosub 1001:&,2,2 ' 1011=4, 1001=1
+	&,2,2:zz%=val(a$):&,2,2:xx%=val(a$)
+	p$="{$d3}{$c9}{$c7} {$ce}ame":w$=sg$:a=27:b=.:gosub{:4172}:sg$=an$
+	p$="{$d3}{$c9}{$c7} {$c1}ccess":c=zz%:a=4:b=1:gosub{:4172}:a=val(an$):if an$="{f2}"then gosub{:4030}
+	if a>0 and a<1024 then zz%=a
+	a=8:gosub 1004:if a then p$="{$d3}ig{$cf}p":c=so%:a=4:b=1:gosub{:4172}:so%=val(an$) ' 1004=11
+	x=sg+1:gosub 1001:a$=sg$+r$+str$(zz%)+r$+str$(xx%)+r$+str$(so%) ' 1001=1
+	print# 2,a$:close 2:goto{:4034}
+{:4172}
+	if b then w$=mid$(str$(c),2)
+	poke 53252,a:poke 53249,b:b$=w$:pl=b:&,1,32:&"{f6}":if an$=""then an$=b$
+	return
+	copr.1990 new image 12/13/90
+{number:4200}
+{:4200}
+	a$=mid$("{$d9}es{$ce}o",4-a*3,3):return

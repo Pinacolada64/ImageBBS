@@ -1,0 +1,89 @@
+{number:4000}
+{step:2}
+' probably the only function used here is AS (Apply SubOp)
+	on mm goto{:4016},{:4024},{:4042},{:4070},{:4106}
+{:4002}
+	return
+{:4004}
+	z=1:a$="w":gosub 32:if e%then z=.:a$="a":gosub 32
+	print# 2,na$r$id;r$d1$r$c$
+	for x=1 to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
+	gosub 30:i=1:x=3:gosub 16:x=14:gosub 16:x=32:gosub 16:x=25:on z gosub 16
+	if y=1 then for x=2 to 24 step 11:gosub 16:next:x=31:gosub 16
+	close 2:return
+{:4016}
+	if so%(bn)>1 then:&"{f6}{$d3}orry, {$d4}his "+sy$+" {$c2}oard {$c8}as {$c1} {$d3}ub{$cf}p.{f6}":return
+	&"{f6}{$d0}lease leave a few words explaining why{f6}you think you should be the {$d3}ub{$cf}p"
+	&" of{f6}this "+sy$+" {$c2}oard{f6:2}"
+	c$="[{$d3}ub{$cf}p {$c1}pplication]"+r$+r$+"{$d2}{$c5}: "+bb$(bn)+r$+r$:goto{:4032}
+{:4024}
+	on-(sg=.)goto{:4002}:x=so%:gosub{:4112}:tt$=a$
+	if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then:&"{f6:2}{$c1}ccount deleted!{f6}":return
+	an$=tt$:&,15,1:&"{f6:2}{$d3}end {$cd}ail {$d4}o {pound}v7?: ":gosub 8:if a=0 then return
+	&"{f6:2}{$d3}ig{$cf}p {$c6}eedback:{f6}":c$="[{$d3}ig{$cf}p {$c6}bck: "+bb$(bn)+"]"
+{:4032}
+	on-(sg=.)goto{:4036}:x=so%:gosub{:4112}:tt$=a$
+	if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then:&"{f6:2}{$c1}ccount {$c4}eleted!{f6}":goto{:4040}
+{:4036}
+	im=1:gosub 440:on kk+1 goto{:4002}:an$=tt$:&,15,1:o$="{$c6}eedback {$d4}o "+an$+"...."
+	&"{f6:2}{$c6}iling {pound}$o":gosub{:4004}:&"{f6:2}":if lm<>1 then return
+{:4040}
+	c$="{$c6}eedback to "+mid$(i1$,2):gosub{:4110}:gosub{:4114}:return
+{:4042}
+	if q<1 then return
+	p$="":&"{f6:2}{$c5}nter {$c8}andle {$cf}r {$c9}{$c4}# {$cf}f {$d5}ser{f6:2}":gosub 6:x=abs(val(an$)):if x then{:4050}
+	im=1:gosub 441:x=i:if x then nn$=an$:goto{:4056}
+	&"{f6:2}{f5}{pound}v7{f5} {$ce}ot {$c6}ound.{f6}":return
+{:4050}
+	if x<1 or x>ur or x=id then{:4054}
+	gosub 35:gosub 1:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"{$d2}{$c5}{$d3}"then{:4056}
+{:4054}
+	&"{f6:2}{$c9}nvalid {$c1}ccount!{f6}":return
+{:4056}
+	&"{f6}{$c8}andle: ":&nn$:&"{f6:2}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 8:if a=.then return
+	&"{f6}{$c1}dd {$c8}ow {$cd}any {$c3}redits (500 {$cd}ax)?: {pound}i1":if tr%<1 then return
+	a=abs(int(val(left$(mid$(an$,2),4)))):if a<1 or a>500 then return
+	gosub 35:gosub 1:for kk=1 to 24:&,2,2:tt$(kk)=a$:next
+	tt$(19)=str$(val(tt$(19))+a):gosub 1
+	a$=tt$(1):for kk=2 to 24:a$=a$+r$+tt$(kk):next:print# 2,a$:close 2
+	a=.:&,11:x=.:return
+{:4070}
+	a%=abs(int(val(mid$(an$,3)))):if a%<1 or a%>ur then return
+	gosub 35:x=a%:gosub 1:&,2,2:if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then close 2:return
+	&"{f6:2}{lt. green}{$c8}andle   : {pound}$a ({$d5}{$c9}{$c4}#{pound}%a)"
+	&,2,2:&,2,2:b$=a$:&,2,2:b$=b$+" "+a$:&,2,2:c$=a$
+	a=8:gosub 11:if a then:&"{f6}{$d2}eal {$ce}ame: {pound}$b"
+	a$="{f6}{$d0}hone #  : {pound}$c":a=8:gosub 11
+	if a=0 then c$=mid$(c$,2,3):a$="{f6}{$c1}rea {$c3}ode: {pound}$c"
+	&:for kk=6 to 10:&,2,2:next:b$=co$(val(a$)):&"{f6}{$c3}omputer : {pound}$b"
+	for kk=11 to 15:&,2,2:next:a%=val(a$):&,2,2:b%=val(a$)
+	&,2,2:c%=val(a$):&,2,2:d%=val(a$):&,2,2:b$=a$
+	&,2,2:f%=val(a$):&,2,2:g%=val(a$):&,2,2:c$=a$:&,2,2:d$=a$:close 2
+	&"{f6}{$cc}ast {$c3}all: {$04}"+c$
+	a=8:gosub 11:if a=0 and so%<>id then if q<1 or left$(sy$,1)<>"{$d5}"then:&"{f6}":goto{:4100}
+	a$="{f6}{$c3}redits  :{pound}$b":if mid$(d$,7)="1"then a$="{f6}{$c3}redits  : {$d5}nlimited ({pound}$b)"
+	&:&"{f6:2} {pound}%b {$d5}ploads{f1} {pound}%a {$c4}ownloads{f6} {pound}%d {$c2}lks {$d5}{$cc}'ed{f1} {pound}%c {$c2}lks {$c4}{$cc}'ed"
+{:4100}
+	a=8:gosub 11:on-(a=1 or so%=id)goto{:4102}:if q<1 or sy$<>"{$d3}ub"then{:4104}
+{:4102}
+	&"{f6} {pound}%f {$d0}osts{f1} {pound}%g {$d2}esponses"
+{:4104}
+	&"{f6:2}":return
+{:4106}
+	on-(sg=.)goto{:4002}:x=so%:gosub{:4112}:if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then close 2:return
+	an$=a$:&,15,1:b%=x:lp=1:&"{f6:2}{$d5}ser {$c9}{$c4}#{pound}%b{f1} {pound}v7 {$c9}s {$d9}our {$d3}{$c9}{$c7} {$c8}ost":return
+{:4110}
+	for x=kk-1 to 1 step-1:tt$(x+1)=tt$(x):next:kk=kk+1:tt$(1)=c$:return
+{:4112}
+	gosub 35:gosub 1:&,2,2:close 2:return
+{:4114}
+	&"{f6:2}{$c6}iling {pound}$o...{f6:2}"
+	b$="e.fback":a$=b$+",s,a":gosub 4:if e%then a$=b$+",s,w":gosub 4
+	print# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)
+	for x=1 to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2:&,11
+	gosub 30:i=1:x=1:gosub 16:x=12:gosub 16:x=23:gosub 16:x=30:gosub 16:close 2
+	return
+	a=abs(int(val(left$(mid$(an$,2),4)))):return
+{crunch:off}
+	copyright 1991 new image 08/15/91
+	rem +.mm.SUBOP 2.0 -> 1.3 2018-05-09

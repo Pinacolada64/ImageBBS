@@ -1,0 +1,20 @@
+Files needed:
+
+2.0 filename	1.3 filename	C64List filename	Status
+=========================================================================
+i.UD		+.UD		plus_UD.lbl
+i/UD.edit	+.UD.edit	plus_UD_edit.lbl	(unfinished)
+i/MM.load	+.MM.load	plus_MM_load.lbl
+i/MM.maint	+.MM.maint	plus_MM_maint.lbl
+i/MM.ud-sort	+.MM.ud-sort	plus_MM_ud-sort.lbl	(no work needed)
+i/MM.subop	+.MM.subop	plus_MM_subop.lbl	(work in progress)
+
+Run +.reledit, create a U/D, create a SIG containing that U/D.
+Run "+.convert sig" to convert SIG to "e.Sig,p" (the struct format)
+Should return "00:ok:00:00" status.
+Now you have:
+"e.Sig"
+"e.Siglist"
+"e.Sig 1"
+Run +.sigedit - Should see 1 SIG defined.
+List doesn't display the name of the U/D.

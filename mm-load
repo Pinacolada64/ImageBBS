@@ -1,0 +1,40 @@
+wine c64list3_05.exe plus_MM_load.lbl -prg:plus_MM_load.prg -ovr -verbose
+-------------------------------------------------------------------------------
+                C64List (v3.05XPBeta) Copyright 2006-2016 Jeff Hoag
+-------------------------------------------------------------------------------
+Reading file plus_MM_load.lbl
+Loading C64 BASIC file from lbl formatted file: plus_MM_load.lbl
+Auto line renumbering initiated at 4000.
+Warning: Line 1010 was referenced but it does not exist
+Warning: Line 1012 was referenced but it does not exist
+Warning: Line 1010 was referenced but it does not exist
+Warning: Line 1012 was referenced but it does not exist
+Warning: Line 1004 was referenced but it does not exist
+Warning: Line 1004 was referenced but it does not exist
+Warning: Line 1006 was referenced but it does not exist
+Warning: Line 1076 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1001 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1011 was referenced but it does not exist
+Warning: Line 1001 was referenced but it does not exist
+Load successful
+Saving in prg format: plus_MM_load.prg
+Encountered: 0 Errors; 13 Warnings
+C64List finished.
+c1541 test-disk.d64 \
+-del +.UD +.UD.edit +.MM.load +.MM.maint +.MM.subop +.MM.ud-sort \
+-write plus_MM_load.prg +.UD +.UD.edit +.MM.load +.MM.maint +.MM.subop +.MM.ud-sort
+deleting `+.UD' on unit 0
+remove name='+.ีฤ', len=4 (5), type= 0.
+deleting `+.UD.edit' on unit 0
+remove name='+.ีฤ.EDIT', len=9 (10), type= 0.
+deleting `+.MM.load' on unit 0
+remove name='+.ออ.LOAD', len=9 (10), type= 0.
+deleting `+.MM.maint' on unit 0
+remove name='+.ออ.MAINT', len=10 (11), type= 0.
+deleting `+.MM.subop' on unit 0
+remove name='+.ออ.SUBOP', len=10 (11), type= 0.
+deleting `+.MM.ud-sort' on unit 0
+remove name='+.ออ.UD-SORT', len=12 (13), type= 0.
+Makefile:52: recipe for target 'plus_MM_load.prg' failed
