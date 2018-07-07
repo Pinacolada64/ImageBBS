@@ -1,0 +1,191 @@
+orig $c000
+; "++ 2", file copier for image 1.3 - assemble with "casm"
+; note: "++ copier" does not overwrite "im.disp" screen mask (buffer at $0400)
+	jmp c009	; $c000  4c 09 c0
+	jmp c0e2	; $c003  4c e2 c0
+	jmp c128        ; $c006  4c 28 c1
+c009:
+	lda #$ff        ; $c009  a9 ff
+	sta c145	; $c00b  8d 45 c1
+	sta c146	; $c00e  8d 46 c1
+	sta c147	; $c011  8d 47 c1
+c014:
+	jsr c0b0	; $c014  20 b0 c0
+	lda #$00	; $c017  a9 00
+	sta c148	; $c019  8d 48 c1
+c01c:
+	ldx #$03	; $c01c  a2 03
+	jsr $ffc6	; $c01e  20 c6 ff
+	ldy #$00	; $c021  a0 00
+	ldx #$00	; $c023  a2 00
+c025:
+	stx c0df	; $c025  8e df c0
+	jsr $ffcf	; $c028  20 cf ff
+	ldx $90		; $c02b  a6 90
+	beq c03a	; $c02d  f0 0b
+	cpx #$40	; $c02f  e0 40
+	beq c03a	; $c031  f0 07
+	cpx c0df	; $c033  ec df c0
+	bne c025	; $c036  d0 ed
+	beq c06b	; $c038  f0 31
+c03a:
+	sta $0518,y	; $c03a  99 18 05	; screen ram
+	iny		; $c03d  c8
+	lda c145	; $c03e  ad 45 c1
+	bne c04e	; $c041  d0 0b
+	lda c146	; $c043  ad 46 c1
+	bne c04b	; $c046  d0 03
+	dec c147	; $c048  ce 47 c1
+c04b:
+	dec c146	; $c04b  ce 46 c1
+c04e:
+	dec c145	; $c04e  ce 45 c1
+	lda c145	; $c051  ad 45 c1
+	ora c146	; $c054  0d 46 c1
+	ora c147	; $c057  0d 47 c1
+	bne c063	; $c05a  d0 07
+	lda #$01	; $c05c  a9 01
+	sta c148	; $c05e  8d 48 c1
+	bne c06b	; $c061  d0 08
+c063:
+	cpy #$fe	; $c063  c0 fe
+	beq c06b	; $c065  f0 04
+	cpx #$00	; $c067  e0 00
+	beq c025	; $c069  f0 ba
+c06b:
+	sty c0e0	; $c06b  8c e0 c0
+	stx c0df	; $c06e  8e df c0
+	jsr $ffcc	; $c071  20 cc ff
+	ldx #$02	; $c074  a2 02
+	jsr $ffc9	; $c076  20 c9 ff
+	ldy #$00	; $c079  a0 00
+	ldx #$00	; $c07b  a2 00
+c07d:
+	lda $0518,y	; $c07d  b9 18 05	; screen ram
+c080:
+	stx c0e1	; $c080  8e e1 c0
+	jsr $ffd2	; $c083  20 d2 ff
+	ldx $90		; $c086  a6 90
+	beq c091	; $c088  f0 07
+	cpx c0e1	; $c08a  ec e1 c0
+	bne c080	; $c08d  d0 f1
+	beq c097	; $c08f  f0 06
+c091:
+	iny		; $c091  c8
+	cpy c0e0	; $c092  cc e0 c0
+	bne c07d	; $c095  d0 e6
+c097:
+	jsr $ffcc	; $c097  20 cc ff
+	jsr c149	; $c09a  20 49 c1
+	lda c0df	; $c09d  ad df c0
+	ora $90		; $c0a0  05 90
+	bne c0ac	; $c0a2  d0 08
+	lda c148	; $c0a4  ad 48 c1
+	bne c0ac	; $c0a7  d0 03
+	jmp c01c	; $c0a9  4c 1c c0
+c0ac:
+	rts		; $c0ac  60
+	brk		; $c0ad  00
+	brk		; $c0ae  00
+	brk		; $c0af  00
+c0b0:
+	ldx #$07	; $c0b0  a2 07
+c0b2:
+	jsr $e9ff	; $c0b2  20 ff e9
+	inx		; $c0b5  e8
+c0bc:
+	cpx #$16	; $c0b6  e0 16
+	bne c0b2	; $c0b8  d0 f8
+	ldy #$00	; $c0ba  a0 00
+	lda #$03	; $c0bc  a9 03
+	sta $d918,y	; $c0be  99 18 d9	; color ram
+	iny		; $c0c1  c8
+	bne c0bc	; $c0c2  d0 f8
+	ldy #$09	; $c0c4  a0 09
+c0c6:
+	lda c0d5,y	; $c0c6  b9 d5 c0
+	sta $0748,y	; $c0c9  99 48 07	; screen ram
+	lda #$01	; $c0cc  a9 01
+	sta $db48,y	; $c0ce  99 48 db	; color ram
+	dey		; $c0d1  88
+	bpl c0c6	; $c0d2  10 f2
+	rts		; $c0d4  60
+c0d5:
+sz_blks:
+; "blks: 0000" ; 's'tring, 'z'ero-terminated
+	byte $42,$4c,$4b,$53,$3a,$20,$30,$30,$30,$30
+c0df:
+	byte $00
+			; $c0d5  42
+      ; jmp $534b	; $c0d6  4c 4b 53
+      ; nop		; $c0d9  3a
+      ; jsr $3030	; $c0da  20 30 30
+      ; bmi $c10f	; $c0dd  30 30
+      ; brk		; $c0df  00
+c0e0:
+	brk		; $c0e0  00
+c0e1:
+	brk		; $c0e1  00
+c0e2:
+	ldx #$03	; $c0e2  a2 03
+	jsr $ffc6	; $c0e4  20 c6 ff
+	lda #$00	; $c0e7  a9 00
+	sta c145	; $c0e9  8d 45 c1
+	sta c146	; $c0ec  8d 46 c1
+	sta c147	; $c0ef  8d 47 c1
+c0f2:
+	jsr $ffe4	; $c0f2  20 e4 ff
+	inc c145	; $c0f5  ee 45 c1
+	bne c102	; $c0f8  d0 08
+	inc c146	; $c0fa  ee 46 c1
+	bne c102	; $c0fd  d0 03
+	inc c147	; $c0ff  ee 47 c1
+c102:
+	lda $90		; $c102  a5 90
+	beq c0f2	; $c104  f0 ec
+	jsr $ffcc	; $c106  20 cc ff
+	ldx #$02	; $c109  a2 02
+	jsr $ffc9	; $c10b  20 c9 ff
+	lda c145	; $c10e  ad 45 c1
+	jsr $ffd2	; $c111  20 d2 ff
+	lda c146	; $c114  ad 46 c1
+	jsr $ffd2	; $c117  20 d2 ff
+	lda c147	; $c11a  ad 47 c1
+	jsr $ffd2	; $c11d  20 d2 ff
+	jsr $ffcc	; $c120  20 cc ff
+	lda #$03	; $c123  a9 03
+	jmp $ffc3	; $c125  4c c3 ff
+c128:
+	ldx #$03	; $c128  a2 03
+	jsr $ffc6	; $c12a  20 c6 ff
+	jsr $ffe4	; $c12d  20 e4 ff
+	sta c145	; $c130  8d 45 c1
+	jsr $ffe4	; $c133  20 e4 ff
+	sta c146	; $c136  8d 46 c1
+	jsr $ffe4	; $c139  20 e4 ff
+	sta c147	; $c13c  8d 47 c1
+	jsr $ffcc	; $c13f  20 cc ff
+	jmp c014	; $c142  4c 14 c0
+c145:
+	brk		; $c145  00
+c146:
+	brk		; $c146  00
+c147:
+	brk		; $c147  00
+c148:
+	brk		; $c148  00
+c149:
+	ldx #$51	; $c149  a2 51
+	ldy #$03	; $c14b  a0 03
+c14d:
+	inc $0700,x	; $c14d  fe 00 07	; color ram
+	lda $0700,x	; $c150  bd 00 07
+	cmp #$3a	; $c153  c9 3a
+	bne c160	; $c155  d0 09
+	lda #$30	; $c157  a9 30
+	sta $0700,x	; $c159  9d 00 07	; color ram
+	dex		; $c15c  ca
+	dey		; $c15d  88
+	bpl c14d	; $c15e  10 ed
+c160:
+	rts		; $c160  60

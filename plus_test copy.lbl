@@ -1,0 +1,37 @@
+' +.test copy:
+' test "++ copier" &,16,x params
+{number:3000}
+{step:2}
+	REM +.TEST COPY
+	a$="copier":gosub 1750
+	open 2,9,2,"++ 2,p,w"
+	open 3,8,3,"++ 2,p,r"
+	&"0=copy, 1=scan, 3/4=?{f6}"
+	&"&,16,{pound}i1":an=int(val(an$)):if an<. or an>4 then {:3014}
+	an$="++ 2,p":im=5:x=an+1:gosub 2105:&,16,an
+	&"{up:2}Hit a key: {pound}g1"
+' v this line will print on Good/Bad/Bytes line otherwise
+{:3014}
+	close 3:close 2:&"{up:2}Hit a key: {pound}g1":im=1:gosub 2105:goto 1811
+
+' 0 = Sending, inc Good
+' 1 =
+' 2 = copying, inc Good
+' 3 = no particular result
+
+' 1 for x=0 to 4
+' 2 x$="Send":ifx>1tHx$="Receiv":ifx>2tHx$="Copy":ifx>3tHx$="Scann"
+' 3 printx;x$"ing":next
+'
+'  0 Sending
+'  1 Sending
+'  2 Receiving
+'  3 Copying
+'  4 Scanning
+' 0: copy
+
+' Run: +.test copy
+' 0=copy, 1=scan...4=?
+' &,16,1
+
+' Good: 00000  Bad: 00000  Bytes: 000179
