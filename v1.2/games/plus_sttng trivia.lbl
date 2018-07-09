@@ -13,34 +13,53 @@
 	REM
 	REM PORTED TO IMAGE BBS BY RYAN "PINACOLADA" SHERWOOD
 	REM FOR CAPTAIN SULU'S "SYSTEM ONE" BBS
-	gosub {:10000}
+{:open_score}
 ' open score file:
-'	close 2:open 2,8,2,"t3.file,s,r":input# 15,e,e$,e1,e2:if e=62 then close 2:gosub{:7521}
-	close 2:dr=3:gosub 1010:a$="e.sttng trivia":gosub 1011:if e%=62 then close 2:gosub {:7521}
+	close 2:dr=3:gosub 1010:a$="e.sttng trivia":gosub 1011:if e%=. then {:read_score}
+{:7521}
+' establish new score file:
+'	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," ":print# 2," ":return
+	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2," 0":print# 2,"NOBODY":goto {:open_score}
+
+{:read_score}
 ' ch$: champion name
 '  n$: user name?
 ' sc$: score
 ' gosub 1: output p$
 '	t3=1:ch$="":sc$="":input# 2,sc$:input# 2,ch$:close 2:if n$=ch$ then {:7531}
-	t3=1:&,2,2:sc=val(a$):input# 2,ch$:close 2:if n$=ch$ then {:7531}
+	&,2,2:sc=val(a$):input# 2,ch$:close 2:if na$<>ch$ then {:start}
+{:7531}
+' you are current champion
+'	p$="{clear}{f6:8} {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb}, {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}{f6}":gosub 1
+'	p$="{f6} {$d9}ou are the current {$cc}{$c5}{$c1}{$c4}{$c5}{$d2}{f6}":gosub 1
+' "You are the current leader in the game."
+' "Let someone else play!"
+	&"{f6} {$d9}ou are the current leader of the game."
+'	p$="{f6} of this section!{f6}":gosub 1:gosub 3960:gosub 3960
+	&"{f6}  {$cc}et someone else play!{f6}":goto 1811
+
+{:start}
 	&"{clear}{f6:8} {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb}, {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce} {$d4}{$d2}{$c9}{$d6}{$c9}{$c1}{f6:2}"
 	&"{f6:2}  {$d4}he {$c3}urrent {$cc}eader {$c9}s: "+ch$+"{f6:2}"
 '	p$="{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+sc$+"{f6:2}":gosub 1:gosub 3960:gosub 3960
 	&"{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+sc$+"{f6:2}"
+
 	tq=30:rem tq=number of questions
 ' months data must be in main module
 '	c1=0:w=0:restore:for zz=1 to 12:read zz$:next:rem skip months
+' c1=correct answers, w=wrong answers
 	c1=0:w=0:restore
 	for i1=1 to tq:read q1$,a1$,a2$,a3$,a4$,c$
 	&"{clear}{f6}"+str$(i1)+". "+q1$
-' incorporate question letter into strings:
+' put question letters here instead of with every question:
 '	p$="{f6:2}     "+a1$:gosub 1:p$="{f6}     "+a2$:gosub 1:p$="{f6}     "+a3$:gosub 1
 	&"{f6:2}     {$c1}) "+a1$+"{f6}     {$c2}) "+a2$+"{f6}     {$c3}) "+a3$
 
 '	p$="{f6}     "+a4$:gosub 1:p$="{f6:2}     {$d1}) {$d1}uit":gosub 1
-	&"{f6}     {$c4}) "+a4$+"{f6:2}     {$d1}) {$d1}uit"
+	&"{f6}     {$c4}) "+a4$+"{f6:2}     {$d1}) {$d1}uit{f6:2}"
 '	p$="{f6:2}     {$c1}nswer :":gosub 1:gosub 180
-	&"{f6:2}     {$c1}nswer: ":gosub 1006
+' uppercase input only:
+	p$="     {$c1}nswer":gosub 1006
 '	if b$="{$d1}"then p$="{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":gosub 1:gosub 3960:goto 1220
 ' confirm on quit, for goodness sake!
 	if an$="{$d1}" then gosub 1902:if a then:&"{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":goto 1811
@@ -50,6 +69,7 @@
 	c1=c1+1:&"{f6:2}     {$d4}hat is correct!{f6}"
 {:7251}
 	next
+' pc=percent correct
 	pc=c1/tq:tc=pc*100
 '	p$="{clear}  {f6:2}":gosub 1:for i1=1 to 38:p$="-":gosub 1:next
 	&"{clear}  {f6:2}{pound}vj{f6}"
@@ -65,6 +85,7 @@
 '	p$="{f6:2} {$d9}ou occasionally watch {$d3}tar {$d4}rek.":gosub 1:goto{:7371}
 	&"{f6:2} {$d9}ou occasionally watch {$d3}tar {$d4}rek.":goto {:7371}
 {:7341}
+' all 30 correct!
 '	p$="{f6:2} {$d9}ou got all"+str$(tq)+" questions correct!":gosub 1
 	&"{f6:2} {$d9}ou got all"+str$(tq)+" questions correct!"
 '	p$="{f6:2} {$d9}ou are a true '{$d4}rekker' beyond any{f6} doubt.":gosub 1
@@ -89,6 +110,8 @@
 	if tc<sc then:&"{f6:2} by {pound}%v points. "
 '	if tc<val(sc$)then p$="{f6:3}  {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue...":gosub 1:gosub 180:goto{:7511}
 	if tc<sc then:&"{f6:3}  {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue: {pound}g1":goto {:7511}
+
+' new champion!
 '	p$="{clear}{f6:5} {$c8}ey {$d7}e {$c8}ave {$c1} {$ce}ew {$cc}eader{f6:2}      {$c9}n {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb},":gosub 1
 	&"{clear}{pound}n5 {$c8}ey, {$d7}e {$c8}ave {$c1} {$ce}ew {$cc}eader{f6:2}      {$c9}n {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb},"
 '	p$="{f6:2}         {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}":gosub 1
@@ -99,30 +122,27 @@
 	&"{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!"
 '	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
 ' scratch and reopen for write:
-	dr=3:a$="e.sttng trivia":gosub 1027
-	print# 2,str$(tc):print# 2,n$:close 2
-' FIXME: why duplicate this?
+' tc=total correct
+' na$=user name
 '	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
-	print# 2,tc:print# 2,n$:close 2
+'	print# 2,tc:print# 2,n$:close 2
+	dr=3:a$="e.sttng trivia":gosub 1027
+	print# 2,str$(tc):print# 2,na$:close 2
+
+' give 'em some credits:
+	cr=cr+100:&"{$d9}ou get 100 credits!{f6}"
+' acknowledge in log:
+	a$="Current Champion"
 {:7511}
 '	p$="{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!":gosub 1:gosub 3960:gosub 3960:goto {:7561}
-	&"{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!":goto {:7561}
+	&"{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!":goto 1811
 
-{:7521}
-' establish new score file:
-'	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," ":print# 2," ":return
-	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," 0":print# 2," CAPTAIN SULU":return
+{:10000}
+' log gameplay to e.log:
+' Played "Star Trek: The Next Generation"
+' Trivia!
+	a$="{cyan} {$d0}layed {f5}{yellow}{$d3}tar {$d4}rek: {$d4}he {$ce}ext {$c7}eneration{f5}{f6} {cyan}{$d4}rivia!":gosub 1095:close 2:return
 
-{:7531}
-	p$="{clear}{f6:8} {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb}, {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}{f6}":gosub 1
-'	p$="{f6} {$d9}ou are the current {$cc}{$c5}{$c1}{$c4}{$c5}{$d2}{f6}":gosub 1
-	&"{f6} {$d9}ou are the current {$cc}{$c5}{$c1}{$c4}{$c5}{$d2}{f6}":gosub 1
-'	p$="{f6} of this section!{f6}":gosub 1:gosub 3960:gosub 3960
-	&"{f6} of this section!{f6}"
-' give 'em some credits
-	cr=cr+100:&"{$d9}ou get 100 credits!{f6}"
-{:7561}
-	d$="8":f$="trivia":goto 5740
 	rem data questions
 	rem **** question 1 ****
 '	data "{$d7}ho is the new '{$ce}umber {$cf}ne'?                "
@@ -305,7 +325,7 @@
 	data "information"
 	data "weapons","{$c1}"
 	rem **** question 18 ****
-' I'm not sure what to change "saline" to...
+' I'm not sure how to fix this question...
 	data "{$d7}hat was the shape of the saline        life form?"
 ' 	data "{$c1}) crystal"
 ' 	data "{$c2}) diamond"
@@ -443,24 +463,7 @@
 	data "ignorance"
 	data "cold-blooded","{$c1}"
 ' I would argue their lobes, but...
-{:10000}
-' log gameplay to e.log:
-'	rem ** is printer on-line **
-'	gosub 3880
-'	if peek(1017)=0 then goto{:10100}
-'	close 15:open 15,8,15,"i0"
-'	close 8:open 8,8,8,"0:log,s,a":gosub{:10060}
-'	if e1<>0 then{:10070}
-'	p$=tm$+" "+n$+" {$d0}laying {$d3}{$d4} - {$ce}ext  {$c7}eneration!":print# 8,p$:goto{:10070}
-	a$=" "+na$+" {$d0}laying {$d3}{$d4} - {$ce}ext {$c7}eneration!":print# 8,p$:goto{:10070}
 
-{:10060}
-	input# 15,e1,e1$,e2$,e3$:return
-{:10070}
-	close 8:close 15:return
-{:10100}
-	close 1:open 1,4,7:print# 1,tm$+" {$d0}laying {$d3}{$d4} - {$ce}ext {$c7}eneration!"
-	close 1:return
 {number:998}
 	REM "STAR TREK: THE NEXT GENERATION" TRIVIA
 	REM FOR "SYSTEM ONE" BBS, 7/8/2018
