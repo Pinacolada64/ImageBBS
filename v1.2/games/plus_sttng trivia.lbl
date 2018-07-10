@@ -1,3 +1,4 @@
+{alpha:upper}
 {number:1}
 	REM +.STTNG TRIVIA
 {number:2}
@@ -47,7 +48,7 @@
 {:show_score}
 	&"{f6:2}  {$d4}he {$c3}urrent {$cc}eader {$c9}s: "+ch$+"{f6:2}"
 '	p$="{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+sc$+"{f6:2}":gosub 1:gosub 3960:gosub 3960
-	&"{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+str$(sc)+"{f6:2}"
+	&"{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+str$(sc)+"{pound}w3"
 
 	tq=30:rem tq=number of questions
 ' months data must be in main module
@@ -55,6 +56,7 @@
 ' c1=correct answers, w=wrong answers
 	c1=0:w=0:restore
 	for i1=1 to tq:read q1$,a1$,a2$,a3$,a4$,c$
+{:ask_question}
 	&"{clear}{f6}"+str$(i1)+". "+q1$
 ' put question letters here instead of with every question:
 '	p$="{f6:2}     "+a1$:gosub 1:p$="{f6}     "+a2$:gosub 1:p$="{f6}     "+a3$:gosub 1
@@ -64,14 +66,14 @@
 	&"{f6}     {$c4}) "+a4$+"{f6:2}     {$d1}) {$d1}uit{f6:2}"
 '	p$="{f6:2}     {$c1}nswer :":gosub 1:gosub 180
 ' 1006: uppercase input only:
-	p$="     {$c1}nswer":gosub 1006
+	p$="     {$c1}nswer":gosub 1006:if tr%<1 then i1=tq:goto {:7251}
 '	if b$="{$d1}"then p$="{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":gosub 1:gosub 3960:goto 1220
 ' confirm on quit, for goodness sake!
-	if an$="{$d1}" then gosub 1902:if a then:&"{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":goto 1811
+	if an$="{$d1}" then gosub 1901:on a+1 goto {:ask_question}:&"{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":goto 1811
 '	if b$<>c$ then p$="{f6:2}     {$d3}orry, {$c9}ncorrect!{f6}":gosub 1:gosub 3960:w=w+1:goto{:7251}
-	if an$<>c$ then:&"{f6:2}     {$d3}orry, {$c9}ncorrect!{f6}":w=w+1:goto {:7251}
+	if an$<>c$ then:&"{f6:2}     {$d3}orry, {$c9}ncorrect!{pound}w3{f6}":w=w+1:goto {:7251}
 '	c1=c1+1:p$="{f6:2}     {$d4}hat is correct!{f6}":gosub 1:gosub 3960
-	c1=c1+1:&"{f6:2}     {$d4}hat is correct!{f6}"
+	c1=c1+1:&"{f6:2}     {$d4}hat is correct!{pound}w3{f6}"
 {:7251}
 	next
 ' pc=percent correct
@@ -128,7 +130,7 @@
 '	p$="{f6:2}         {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}":gosub 1
 	&"{f6:2}         {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}"
 '	p$="{f6:2}      {$d7}ith "+str$(tc)+" points.{f6}":gosub 1:gosub 3960:gosub 3960
-	&"{f6:2}      {$d7}ith "+str$(tc)+" points.{f6}"
+	&"{f6:2}      {$d7}ith"+str$(tc)+" points.{f6}"
 
 {:write_score}
 '	p$="{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!":gosub 1
@@ -139,7 +141,7 @@
 ' na$=user name
 '	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
 '	print# 2,tc:print# 2,n$:close 2
-	dr=3:a$="e.sttng trivia":gosub 1027
+	dr=3:a$="e.sttng trivia":gosub 1020
 	print# 2,str$(tc):print# 2,na$:close 2
 
 {:7511}
@@ -398,7 +400,7 @@
 	data "none of the above","{$c3}"
 ' http://memory-alpha.wikia.com/wiki/11001001_(episode)
 	REM **** QUESTION 24 ****
-	data "{$d7}ho didn't want to change when       {$d2}iker was given the gift of {$d1}?"
+	data "{$d7}ho didn't want to change when          {$d2}iker was given the gift of {$d1}?"
 ' 	data "{$c1}) {$c4}ata"
 ' 	data "{$c2}) {$cc}aforge"
 ' 	data "{$c3}) {$d7}esley {$c3}rusher"
@@ -424,7 +426,7 @@
 '	data "{$c2}) {$c1} {$d3}paceship"
 '	data "{$c3}) {$c1}n {$c9}dol"
 '	data "{$c4}) {$c1}n {$c5}ntity","{$c4}"
-	data "{$c9}n the episode with the planet where{f6}love is free, what was {f5}{$c7}od{f5}?"
+	data "{$c9}n the episode with the planet          where love is free, what was {f5}{$c7}od{f5}?"
 	data "{$c7}od"
 	data "a spaceship"
 	data "an idol"
@@ -446,7 +448,7 @@
 ' 	data "{$c2}) football"
 ' 	data "{$c3}) baseball"
 ' 	data "{$c4}) hockey","{$c1}"
-	data "{$c9}n that same episode, what were they    playing?"
+	data "{$c9}n that same episode, what were         they playing?"
 	data "catch"
 	data "football"
 	data "baseball"
@@ -468,13 +470,13 @@
 ' 	data "{$c2}) power-based"
 ' 	data "{$c3}) ignorance"
 ' 	data "{$c4}) cold-blooded","{$c1}"
-	data "{$d7}hat is the most distinctive feature of the {$c6}erengis?"
+	data "{$d7}hat is the most distinctive            feature of the {$c6}erengis?"
 	data "greed"
 	data "power-based"
 	data "ignorance"
 	data "cold-blooded","{$c1}"
 ' I would argue their lobes, but...
 
-{number:998}
+{number:997}
 	REM "STAR TREK: THE NEXT GENERATION" TRIVIA
 	REM FOR "SYSTEM ONE" BBS, 7/8/2018
