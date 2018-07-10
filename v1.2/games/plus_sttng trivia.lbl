@@ -27,7 +27,7 @@
 {:7521}
 ' establish new score file:
 '	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," ":print# 2," ":return
-	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2," 0":print# 2,"NOBODY":goto {:open_score}
+	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2,0:print# 2,"NOBODY":goto {:open_score}
 
 {:read_score}
 ' ch$: champion name
@@ -135,14 +135,13 @@
 {:write_score}
 '	p$="{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!":gosub 1
 	&"{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!"
-'	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
 ' scratch and reopen for write:
 ' tc=total correct
 ' na$=user name
 '	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
+	dr=3:a$="e.sttng trivia":gosub 1023
 '	print# 2,tc:print# 2,n$:close 2
-	dr=3:a$="e.sttng trivia":gosub 1020
-	print# 2,str$(tc):print# 2,na$:close 2
+	print# 2,tc:print# 2,na$:close 2
 
 {:7511}
 '	p$="{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!":gosub 1:gosub 3960:gosub 3960:goto {:7561}
@@ -279,7 +278,7 @@
 ' 	data "{$c2}) {$c5}nterprise {$c9:2}"
 ' 	data "{$c3}) {$c7}rissam"
 ' 	data "{$c4}) none of the above","{$c4}"
-	data "{$d7}hat is the name of the {$c5}nterprise's    sister ship?"
+	data "{$d7}hat is the {$c5}nterprise's sister ship    named?"
 	data "{$d5}{$d3:2} {$c5}xcelsior"
 	data "{$d5}{$d3:2} {$c5}nterprise {$c9:2}"
 	data "{$d5}{$d3:2} {$c7}rissom"
