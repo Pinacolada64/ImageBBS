@@ -18,8 +18,9 @@
 
 ' intro
 '	p$="{clear}{f6:8} {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb}, {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}{f6}":gosub 1
-	&"{clear}{pound}n8 {$d3}tar {$d4}rek, {$d4}he {$ce}ext {$c7}eneration{f6}"
-	&"{$d4}rivia{f6}"
+' ----+----+----+----+----+----+----+----+
+' "Star Trek: The Next Generation" Trivia
+	&"{clear}{pound}n8 {f5}{$d3}tar {$d4}rek, {$d4}he {$ce}ext {$c7}eneration{f5} {$d4}rivia{f6}"
 
 {:open_score}
 ' open score file:
@@ -27,7 +28,7 @@
 {:7521}
 ' establish new score file:
 '	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," ":print# 2," ":return
-	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2,0:print# 2,"NOBODY":goto {:open_score}
+	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2,0:print# 2,"nobody":goto {:open_score}
 
 {:read_score}
 ' ch$: champion name
@@ -50,7 +51,7 @@
 '	p$="{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+sc$+"{f6:2}":gosub 1:gosub 3960:gosub 3960
 	&"{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+str$(sc)+"{pound}w3"
 
-	tq=30:rem tq=number of questions
+	tq=30:REM TQ=NUMBER OF QUESTIONS
 ' months data must be in main module
 '	c1=0:w=0:restore:for zz=1 to 12:read zz$:next:rem skip months
 ' c1=correct answers, w=wrong answers
