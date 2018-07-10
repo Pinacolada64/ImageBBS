@@ -1,0 +1,16 @@
+   Your tournament has gone well up to this point.  Now your greatest rival,
+Duke Mumford, boasts that his champion is the best in the land.  He further
+states he is willing to pit his champion against yours, with the winner to
+get the loser's champion.
+
+   You feel you have little choice but to accept, so, with not a little
+anticipation, you wait for the joust to begin.
+
+   On the first pass, both Nobles score glancing blows, but neither is
+unseated.  Unfortunately on the second pass, Duke Mumford's champion scores a
+solid blow, leaving your champion on the ground, coughing in the dust!  You
+have lost!
+
+You lose 1 Noble!
+
+               <Press any Key>\g1

@@ -1,0 +1,10 @@
+    The wreckage your lookouts have spotted appears to be from a merchantman.
+A broken mast, splintered planks, and a large number of crates drift by.
+
+    Noticing that some of the crates appear to be intact, you order them
+hauled aboard.
+
+    Upon closer examination, you discover they are full of exports.  In fact,
+you end up with 5 tons of good Exports!
+
+               <Press any Key>\g1

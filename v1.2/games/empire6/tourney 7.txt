@@ -1,0 +1,13 @@
+   Your champion is Greystoke, and though he is a boastful Noble, he is
+also a winner!  Now one of your rivals approaches, and asks if you feel
+like a small wager.  Feeling your champion can defeat his, and knowing
+you had a poor harvest this year, you suggest the wager be in bushels of
+grain.  He accepts!
+   Now it is time for the match!  The trumpets sound, and the two Nobles
+charge!  With a crash of armor and shields, they meet!  True to his form,
+your champion struts away, leaving his opponent gasping for air, in the
+dust!  You have won!
+
+You win 7,000 bushels of grain!
+               <Press any Key>\g1
+ 

@@ -1,0 +1,11 @@
+   You have landed on a mist-shrouded island.  You send your troops out to
+explore.
+   As your forces begin to spread out, you hear a blood-curdling scream!  One
+of your men drops, with an arrow through his neck!
+   More arrows fly through the air, taking their toll.  You order your men
+back to the ships, as waves of cannibals emerge from the thick brush.
+Other cannibals are headed for your ships, in dugout canoes.
+
+   You finally beat off the cannibals but suffer some losses!
+
+               <Press any Key>\g1

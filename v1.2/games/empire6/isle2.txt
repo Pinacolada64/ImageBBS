@@ -1,0 +1,10 @@
+   You have anchored in a cove of a barren, mist-shrouded island.  The
+island is dominated by a large, cone-shaped mountain.
+   As you explore the island, the ground begins to rumble!  Quickly, you
+order everyone back to your ships. But before you can leave the cove,
+the top of the mountain explodes!
+   Rock and molten lava are thrown in the air, as the volcano erupts!
+
+   Your flotilla is damaged in the eruption!
+
+            <Press any Key>\g1

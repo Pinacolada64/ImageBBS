@@ -1,0 +1,14 @@
+    The wreckage your lookouts have spotted appears to be from several
+ships.  As you drift by, you see a broken mast, splintered planks,
+demolished crates, and an occasional body!
+
+    Not seeing anything of value, you are about to give the order to resume
+course, when a lookout gives a warning!
+
+    You look in the direction he is pointing, and see a large water spout,
+heading directly toward you!  You order full sail, in an attempt to get
+out of its way, but too late!
+
+    The water spout slams into your flotilla, doing considerable damage!
+
+               <Press any Key>\g1

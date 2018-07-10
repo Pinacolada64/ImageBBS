@@ -1,0 +1,529 @@
+	GOSUB{:50005}:A$="":GOTO 9050
+{:45000}
+	POKE C(23),1:GOSUB 300:POKE C(23),0:GOTO 390
+{:50005}
+	AUTO {$fe}$:GOSUB 481:IF PEEK(116)=1 THEN POKE 116,0:GOSUB{:50445}:GOTO{:50020}
+	REM
+	SYS C(40),2:GOSUB{:50070}
+{:50020}
+	GOSUB{:50065}:SU$="":SYS C(41),1:RETURN
+{:50030}
+	POKE C(23),1:GOSUB 300:POKE C(23),.:GOTO 390
+{:50035}
+	GOSUB 3640
+{:50040}
+	GOSUB 110:IF P=.AND(A$<"0"OR A$>"{$da}")THEN{:50040}
+	IF P THEN 360
+	GOTO 160
+{:50055}
+	A=INT(X/256):.PRINT# 15,"P{$02}"+CHR$(X-A*256)CHR$(A)"{$01}":RETURN
+{:50060}
+	.CLOSE 2:.OPEN 2,DV,2,DR$+A$:RETURN
+{:50065}
+	FOR VX=1 TO 1E3:NEXT:RETURN
+{:50070}
+	DIM SW(15),X(30),K(30),U$(15),S(15):M=3:M2=30:GOSUB{:51770}:GOSUB{:51905}
+	GOSUB 481:F$="{$ba}EMP.INTRO":GOSUB 205:F$="{$ba}EMP.FAME":GOSUB 203:GOSUB 510
+	IF ER=.THEN{:50095}
+	GOSUB 505:EW$(1)="{$c5}{$cd}{$d0}{$d4}{$d9}":EW$(2)=DA$:EW$(3)="0":EW$(4)="0":GOSUB{:50090}:GOTO{:50100}
+{:50090}
+	F$=F$+",S,W":GOSUB 203:.PRINT# 8,EW$(1)CR$EW$(2)CR$EW$(3)CR$EW$(4):GOTO 505
+{:50095}
+	.INPUT# 8,EW$(1),EW$(2),EW$(3),EW$(4):GOSUB 505
+{:50100}
+	IF EW$(1)="{$c5}{$cd}{$d0}{$d4}{$d9}"THEN A$=CR$+"{f5}{$d4}HE {$cb}ING IS {$c4}EAD":SYS C(.):EW$(1)="{$d3}{$d9}{$d3}{$cf}{$d0}":GOTO{:50140}
+	GOSUB{:51770}:A$=CR$+"{f5}{$cc}ONG {$cc}IVE {$d4}HE {$cb}ING, "+EW$(1):SYS C(.)
+	A$=CR$+"{f5}{$c9}N {$d0}OWER {$d3}INCE "+EW$(2):SYS C(.)
+	A$=CR$+"{f5}{$d4}OTAL {$c3}REDITS {$c5}ARNED: "+EW$(3):SYS C(.)
+	IF EW$(1)<>NA$OR VAL(EW$(4))=.THEN{:50140}
+	A$=CR$+"{f5}{$d9}OU {$d2}ECEIVE "+EW$(4)+" {$c3}REDITS!":SYS C(.):X=INT(VAL(EW$(4))/1)
+	PU=PU+X:EW$(4)="0":.PRINT# 15,"S"+DR$+F$:GOSUB{:50090}:A$=STR$(X):GOSUB 8004
+	REM{$12}UPDATE NEWS FILES
+{:50140}
+	F$="{$ba}EMP.NEWS1":GOSUB 203:GOSUB 510:IF ER THEN.CLOSE 8:GOTO{:50160}
+	SYS C(5):.CLOSE 8:IF MID$(TX$,1,8)=DA$THEN{:50195}
+	.PRINT# 15,"S"+DR$+"{$ba}EMP.NEWS2
+	.PRINT# 15,"R"+DR$+"{$ba}EMP.NEWS2="+DR$+"{$ba}EMP.NEWS1
+{:50160}
+	.OPEN 8,DV,8,DR$+"{$ba}EMP.NEWS1,S,W
+	.PRINT# 8,DA$" {$c1}CTIVITY:"CR$:GOSUB 505
+	IF EW$(1)="{$c5}{$cd}{$d0}{$d4}{$d9}"THEN{:50195}
+	X=VAL(EW$(4)):X=X+20:EW$(4)=STR$(X)
+	X=VAL(EW$(3)):X=X+20:EW$(3)=STR$(X)
+	F$="{$ba}EMP.FAME":.PRINT# 15,"S"+DR$+F$:F$=F$+",S,W":GOSUB 203
+	.PRINT# 8,EW$(1)+CR$+EW$(2)+CR$+EW$(3)+CR$+EW$(4):GOSUB 505
+{:50195}
+	J=.:A$="{$ba}EMPIRE II STATS":GOSUB{:50060}:FOR X=1 TO M2:GOSUB{:50055}:.INPUT# 2,A$
+	IF A$<>"EMPTY"THEN J=J+1
+	NEXT:.CLOSE 2:IF J<11 THEN M=5
+	IF J>10 AND J<21 THEN M=6
+	IF J>20 THEN M=7
+	REM{$12}EMPIRE MSG
+	F$="{$ba}EMP.MSG":GOSUB 203:GOSUB 510:IF ER THEN.CLOSE 8:GOTO{:50255}
+	SYS C(5):I$=LEFT$(TX$,PEEK(142)):SYS C(5):F$=LEFT$(TX$,PEEK(142)):.CLOSE 8
+	GOSUB{:51770}:A$=CR$+"{f5}{$cc}AST {$d7}ORDS {$c6}ROM "+I$+"..."+CR$:SYS C(.)
+	I$=LEFT$("{yellow}--------------------------------------",LEN(F$)+1)
+	A$=I$+CR$+"{f5}"+F$+CR$+I$+"{f5}":SYS C(.)
+	REM{$12}RESET
+{:50255}
+	X=1:A$="{$ba}EMPIRE II STATS":GOSUB{:50060}:GOSUB 510:IF ER>20 THEN{:50305}
+	GOTO{:50320}
+{:50265}
+	IF RN>1 THEN{:50460}
+	A$=CR$+"{f5}{$d2}ESET [{$d9}/{$ce}] ":SYS C(1):GOSUB 1010:IF P THEN GOSUB 360
+	SYS C(.):ON-(P=225)GOTO{:51415}:IF A$<>"{$d9}"THEN{:50460}
+{:50280}
+	A$=CR$+"{f1}{$c3}REATING {$d9}OUR {$c5}MPIRE...{f3}":SYS C(.)
+	.PRINT# 15,"S"+DR$+"{$ba}EMP.NEWS*
+	X=1:A$="{$ba}EMPIRE II STATS,L,"+CHR$(200):GOSUB{:50060}
+	FOR X=1 TO M2:GOSUB{:50060}:GOSUB{:50055}:.PRINT# 2,"EMPTY"CR$"0
+	NEXT:.CLOSE 2:RETURN
+{:50305}
+	.CLOSE 2:IF RN=1 THEN{:50280}
+	A$=CR$+"{$07}{lt. red}{$c5}MPIRE {$c3}LOSED!":GOTO 160
+	REM{$12}NEW PLAYER
+{:50320}
+	GOSUB{:50055}:.INPUT# 2,A$:ON-(A$=NA$)GOTO{:50400}:X=X+1:IF X<=M2 THEN{:50320}
+	IF RN=E0%THEN.CLOSE 2:A$=CR$+"{$07}{lt. red}{$d9}OU {$c3}ANNOT {$d2}EGISTER {$c1}T {$d4}HIS {$d4}IME!":GOTO 160
+	A$=CR$+"{f5}{$c1} {$ce}EW {$d0}LAYER!":SYS C(.):X=1
+{:50335}
+	GOSUB{:50055}:.INPUT# 2,A$:R1=X:ON-(A$="EMPTY")GOTO{:50355}
+	X=X+1:IF X<=M2 THEN{:50335}
+	.CLOSE 2:A$="{lt. red}{$c5}{$cd}{$d0}{$c9}{$d2}{$c5} {$c6}{$d5}{$cc:2}{green}":GOSUB 8004:A$=CR$+"{f5}{$d9}OU {$d7}ILL {$c8}AVE {$d4}O {$d7}AIT {$d5}NTIL
+	A$=A$+CR$+"{$c1}NOTHER {$d0}LAYER {$c4}IES!"+CR$+"{f5}{$c3}HECK {$c2}ACK {$d3}OON!":GOTO 160
+{:50355}
+	A=INT(RND(1)*300):A$=NA$+CR$+"5000"+CR$+"10000"+CR$+"0"+CR$+"0"+CR$
+	A$=A$+"3"+CR$+"0"+CR$+"0"+CR$+"2"+CR$+"0"+CR$+"1"+CR$+"0"+CR$+"0"+CR$
+	A$=A$+"0"+CR$+"0"+CR$+"0"+CR$+"20000"+CR$+"5000"+CR$+STR$(A+2000)+CR$
+	I$=STR$(A+500)+CR$+"40"+CR$+"0"+CR$+"0"+CR$+"50"+CR$+"0"+CR$+"0"+CR$
+	I$=I$+"0"+CR$+"0"+CR$+DA$+CR$+"0"
+	X=R1:GOSUB{:50055}:.PRINT# 2,A$I$
+	A$=CR$+"{$07}{f5}{$d7}ELCOME TO {$c5}MPIRE {$c9:2} {f1}{$c4}{$c5}{$cc}{$d5}{$d8}{$c5}!!{f3}":SYS C(.)
+	A$=C2$+"{f5}{$d7}ITH {f5}{$d4}OURNEYS, {f5}{$d1}UESTS,{f5} AND":SYS C(1)
+	A$=CR$+"{f5}{$c1}LTERATIONS, {f5}{$c2}Y  {blue}{$d8}{lt. blue}{$c5}{$d6}{cyan}{$c9}{lt. blue}{$cf}{$d5}{blue}{$d3}{f5}!!":SYS C(.)
+	GOSUB{:50055}:.INPUT# 2,A$
+	REM{$12}GET PLAYER STATS
+{:50400}
+	R1=X:.INPUT# 2,X(2),X(3),X(4),X(5),X(6),X(7),X(8)
+	.INPUT# 2,X(9),X(10),X(11),X(12),X(13),X(14),X(15),X(16)
+	.INPUT# 2,X(17),X(18),X(19),X(20),X(21),X(22),X(23)
+	.INPUT# 2,X(24),X(25),X(26),X(27),X(28),U1$(2),X(29):.CLOSE 2
+{:50420}
+	IF U1$(2)<>DA$THEN U1$(2)=DA$:X(29)=.
+	F$="{$ba}EMP.ATK":GOSUB 203:GOSUB 510:IF ER THEN.CLOSE 8:GOTO{:50440}
+	.INPUT# 8,X:.CLOSE 8
+	ON-(X=NU)GOTO{:50445}:.PRINT# 15,"S"+DR$+"{$ba}EMP.ATK
+{:50440}
+	F$="{$ba}EMP.ATK,S,W":GOSUB 203:.PRINT# 8,NU:.CLOSE 8
+{:50445}
+	A=INT(TM-TI/3600):GOSUB{:51770}:A$=CR$+"{f5}{rvrs on}{$d4}IME  {$d2}EMAINING:{rvrs off}"+STR$(A):SYS C(.)
+	GOSUB{:51770}:A$="{f5}{rvrs on}{$d0}LAYS {$d2}EMAINING:{rvrs off}"+STR$(M-X(29)):SYS C(.)
+	REM{$12}MAIN PROMPT
+{:50460}
+	DX=.:A$="":SYS C(.):GOSUB 155:SU$="{$07}{lt. red}{$d9}OU {$cf}NLY {$c8}AVE":GOSUB 155:GOSUB{:51760}
+	A$="{f5}{rvrs on}{$c5}{$cd}{$d0}{$c9}{$d2}{$c5} {$c9:2}{rvrs off}":SYS C(1):GOSUB{:51770}:A$=" {f5}[?={$cd}{$c5}{$ce}{$d5}] {f5}{$c3}{$cf}{$cd:2}{$c1}{$ce}{$c4}? ":SYS C(1)
+	GOSUB{:50035}:IF P THEN{:51415}
+	ON-(A$="{$d1}")-(A$="{$c3}")*2-(A$="{$da}")*3-(A$="{$c9}")*4 GOTO{:51415},{:50705},{:50265},{:51915}
+	ON-(A$="{$c8}")GOTO{:51795}
+	ON-(A$="{$d4}")-(A$="{$cc}")*2-(A$="{$ce}")*3 GOSUB{:50510},{:50660},{:50500}
+	ON-(A$="{$d9}")-(A$="{$d6}")*2-(A$="{$ba}")*3 GOSUB{:50525},{:51520},{:52000}
+	ON-(A$<>"?")GOTO{:50460}:F$="{$ba}EMP.MENU1":GOSUB 210:GOTO{:50460}
+	REM{$12}NEWS
+{:50500}
+	GOSUB{:51760}:A$=C2$+"{f5}-{$d4}{$c8}{$c5} {$c2}{$c1}{$d4:2}{$cc}{$c5} {$ce}{$c5}{$d7}{$d3}-":SYS C(.):GOSUB{:51770}
+	F$="{$ba}EMP.NEWS2":GOSUB 210:GOSUB{:51770}:F$="{$ba}EMP.NEWS1":GOTO 210
+{:50510}
+	GOSUB{:51770}:IF LV<9 THEN RETURN
+	X(29)=X(29)-1:RETURN
+	REM{$12}PLAYER STATS
+{:50525}
+	GOSUB 155:GOSUB{:51770}:GOSUB{:51490}:IF MC>40 THEN GOSUB{:56300}:GOTO 160
+	SP$="                      ":A$="{f5}{rvrs on}  - {$c5}{$cd}{$d0}{$c9}{$d2}{$c5} {$c9:2} -   {$d0}{$cc}{$c1}{$d9}{$d3} {$d2}{$c5}{$cd}{$c1}{$c9}{$ce}{$c9}{$ce}{$c7}:"+STR$(M-X(29))+" {rvrs off}":SYS C(.)
+	GOSUB{:51770}:A$=CR$+"{f5}"+NA$+SP$
+	A$=LEFT$(A$,23)+"{$c1}{$c3}{$d2}{$c5}{$d3}    -"+STR$(X(2)):SYS C(.)
+	A$="{f5}{$c7}{$cf}{$cc}{$c4}     -"+LEFT$(STR$(X(3))+SP$,11)+"{$d2}{$c1}{$d4}{$c9}{$ce}{$c7}   -"+STR$(X(4)):SYS C(.)
+	A$="{f5}{$d0}{$c1}{$cc}{$c1}{$c3}{$c5}   -"+LEFT$(STR$(10*X(5))+"%"+SP$,11)+"{$c6}{$cf}{$d2}{$d4}{$d3}    -"+STR$(X(13)):SYS C(.)
+	A$="{f5}{$c6}{$cf}{$d5}{$ce}{$c4}{$d2}{$c9}{$c5}{$d3}-"+LEFT$(STR$(X(9))+SP$,11)+"{$c3}{$c1}{$ce:2}{$cf}{$ce}{$d3}  -"+STR$(X(14)):SYS C(.)
+	A$="{f5}{$cd}{$c9}{$cc:2}{$d3}    -"+LEFT$(STR$(X(8))+SP$,11)+"{$d3}{$c8}{$c9}{$d0}{$d9}{$c1}{$d2}{$c4}{$d3}-"+STR$(X(10)):SYS C(.)
+	A$="{f5}{$cd}{$c1}{$d2}{$cb}{$c5}{$d4}{$d3}  -"+LEFT$(STR$(X(7))+SP$,11)+"{$d3}{$c8}{$c9}{$d0}{$d3}    -"+STR$(X(12)):SYS C(.)
+	A$="{f5}{$d3}{$d4}{$c1}{$c2}{$cc}{$c5}{$d3}  -"+LEFT$(STR$(X(11))+SP$,11)+"{$d4}{$c9}{$cd}{$c2}{$c5}{$d2}   -"+STR$(X(16)):SYS C(.)
+	GOSUB{:51770}:A$=CR$+"{f5}{rvrs on}{$c5}{$cd}{$d0}{$c9}{$d2}{$c5} {$c9:2}  {$cd}{$c1}{$c9}{$ce}{$cc}{$c1}{$ce}{$c4}   {$c9}{$d3}{$cc}{$c1}{$ce}{$c4}    {$c6}{$cc}{$c5:2}{$d4}{rvrs off}"+CR$
+	SYS C(.):SP$="         ":GOSUB{:51770}
+	A$="{f5}{$ce}{$cf}{$c2}{$cc}{$c5}{$d3}    -"+LEFT$(STR$(X(6))+SP$,9)+"-"+LEFT$(" 0"+SP$,9)
+	A$=A$+"-"+STR$(S(3)):SYS C(.)
+	A$="{f5}{$d3}{$cf}{$cc}{$c4}{$c9}{$c5}{$d2}{$d3}  -"+LEFT$(STR$(X(21))+SP$,9)+"-"+LEFT$(STR$(X(22))+SP$,9)
+	A$=A$+"-"+STR$(S(6)):SYS C(.)
+	A$="{f5}{$d3}{$c5}{$d2}{$c6}{$d3}     -"+LEFT$(STR$(X(19))+SP$,9)+"-"+LEFT$(STR$(X(20))+SP$,9)+"-"
+	A$=A$+STR$(S(2)):SYS C(.)
+	A$="{f5}{$c7}{$d2}{$c1}{$c9}{$ce}     -"+LEFT$(STR$(X(17))+SP$,9)+"-"+LEFT$(STR$(X(18))+SP$,9)+"-"
+	A$=A$+STR$(S(1)):SYS C(.)
+	A$="{f5}{$c8}{$cf}{$d2}{$d3}{$c5}{$d3}    -"+LEFT$(STR$(X(23))+SP$,9)+"-"+LEFT$(STR$(X(24))+SP$,9)
+	A$=A$+"-"+STR$(S(7)):SYS C(.)
+	A$="{f5}{$c5}{$d8}{$d0}{$cf}{$d2}{$d4}{$d3}   -"+LEFT$(STR$(X(15))+SP$,9)+"-"+LEFT$(STR$(X(26))+SP$,9)
+	A$=A$+"-"+STR$(S(5)):SYS C(.)
+	A$="{f5}{$d3}{$d0}{$c9}{$c3}{$c5}{$d3}    -"+LEFT$(" 0"+SP$,9)+"-"+LEFT$(STR$(X(25))+SP$,9)
+	A$=A$+"-"+STR$(S(8)):GOTO 160
+	REM{$12}LIST PLAYERS
+{:50660}
+	GOSUB 155:GOSUB{:51770}:SP$=".........................."
+	A$=C2$+"{rvrs on}{f5}# {$c5}{$cd}{$d0}{$c5}{$d2}{$cf}{$d2}'{$d3} {$ce}{$c1}{$cd}{$c5}     {$c1}{$c3}{$d2}{$c5}{$d3}   {$d2}{$c1}{$d4}{$c9}{$ce}{$c7}"+CR$:SYS C(.)
+	X=1:A$="{$ba}EMPIRE II STATS":GOSUB{:50060}
+{:50675}
+	GOSUB{:51770}:GOSUB{:50055}:.INPUT# 2,A$,B$:IF A$="EMPTY"THEN{:50690}
+	.INPUT# 2,F$,I$:A$="{f5}"+LEFT$(MID$(STR$(X),2)+" "+A$+SP$,21)+LEFT$(B$+SP$,9)
+	A$=A$+I$:SYS C(.)
+{:50690}
+	GOSUB 110:IF P OR A$=" "THEN A$=CR$+"{f5}{up arrow}P"+CR$:SYS C(.):X=M2+1
+	X=X+1:ON-(X<=M2)GOTO{:50675}:.CLOSE 2:RETURN
+	REM{$12}HARVEST
+{:50705}
+	GOSUB{:51770}:IF X(29)>M-1 THEN{:50420}
+	X(29)=X(29)+1:Z(1)=INT(X(2)*2.7*RND(1)+X(19)*7.5*RND(1)+X(8)*99*RND(1))
+	IF Z(1)>(X(2)+X(19))*4 THEN Z(1)=(X(2)+X(19))*4
+	X(17)=X(17)+Z(1)
+	Z(2)=INT((X(13)*RND(1))+(X(20)*RND(1))+(X(24)*RND(1))+(RND(1)*X(2)))
+	X(18)=X(18)+Z(2):Z(3)=INT(RND(1)*(X(24)/3)+10):X(24)=X(24)+Z(3)
+	Z(4)=INT(RND(1)*(X(23)/5)):X(23)=X(23)-Z(4)
+	A$=C2$+"{f5}{rvrs on}{$d0}RODUCTION {$d2}EPORT":SYS C(.)
+	A$=CR$+"{f5}{$d4}HE {$cd}AINLAND {$c8}ARVESTED"+STR$(Z(1))+" {$c2}USHELS":SYS C(.)
+	A$="{$c1}ND {$cc}OST"+STR$(Z(4))+" {$c8}ORSES":SYS C(.)
+	A$=CR$+"{f5}{$d4}HE {$c9}SLAND {$c8}ARVESTED"+STR$(Z(2))+" {$c2}USHELS":SYS C(.)
+	A$="{$c1}ND {$c7}AINED"+STR$(Z(3))+" {$c8}ORSES":SYS C(.)
+	REM{$12}ACRES
+	X=USR(40)+15:J=USR(12)+5
+{:50775}
+	GOSUB{:51770}:A$=C2$+"{f5}{$d9}OU {$cf}WN"+STR$(X(2))+" {$c1}CRES":GOSUB{:50930}:IF P THEN{:51415}
+	ON-(A$="{$c2}")-(A$="{$d3}")*2-(A$="{$c3}")*3 GOTO{:50790},{:50815},{:50845}
+	ON-(A$="{$d9}")GOSUB{:50525}:GOTO{:50775}
+{:50790}
+	A$=C2$+"{f5}{$d4}HE {$ce}OMADS {$d7}ILL {$d3}ELL {$d4}HEIR {$cc}AND"+CR$
+	A$=A$+"{$c6}OR $"+STR$(X)+" {$d0}ER {$c1}CRE":GOSUB{:50920}:IF P THEN{:51415}
+	K=VAL(I$):IF K<1 THEN{:50775}
+	IF X(3)<(K*X)THEN A$=CR$+SU$+" $"+STR$(X(3)):SYS C(.):GOTO{:50790}
+	X(3)=X(3)-(K*X):X(2)=X(2)+K:A$=CR$+"{f5}{$c2}OUGHT!":SYS C(.):GOTO{:50845}
+{:50815}
+	A$=C2$+"{f5}{$d4}HE {$c8}UNS {$d7}ILL {$c2}UY {$d9}OUR {$cc}AND"+CR$
+	A$=A$+"{$c6}OR $"+STR$(J)+" {$d0}ER {$c1}CRE":GOSUB{:50925}:IF P THEN{:51415}
+	K=VAL(I$):IF K<1 THEN{:50775}
+	IF K>X(2)-1 THEN A$=CR$+SU$+STR$(X(2))+" {$c1}CRES":SYS C(.):GOTO{:50815}
+	X(2)=X(2)-K:X(3)=X(3)+(J*K):A$=CR$+"{f5}{$d3}OLD!":SYS C(.)
+	REM{$12}GRAIN
+{:50845}
+	GOSUB{:51770}:X=(X(19)*5)+(X(21)*8+1)
+	A$=C2$+"{$d3}ERFS AND {$c1}RMY {$d2}EQUIRE"+STR$(X)+" {$c2}USHELS!":SYS C(1)
+	X=USR(4)+3
+	J=USR(5)+1
+{:50855}
+	A$=CR$+"{f5}{$d9}OU {$c8}AVE"+STR$(X(17))+" {$c2}USHELS {$cf}F {$c7}RAIN":GOSUB{:50930}:IF P THEN{:51415}
+	ON-(A$="{$c2}")-(A$="{$d3}")*2-(A$="{$c3}")*3 GOTO{:50870},{:50895},{:50940}
+	ON-(A$="{$d9}")GOSUB{:50525}:GOTO{:50855}
+{:50870}
+	A$=C2$+"{f5}{$d4}HE {$c6}ARMERS {$d7}ILL {$d3}ELL {$d4}HEIR {$c7}RAIN"+CR$
+	A$=A$+"{$c6}OR $"+STR$(X)+" {$d0}ER {$c2}USHEL":GOSUB{:50920}:IF P THEN{:51415}
+	K=VAL(I$):IF K<1 THEN{:50855}
+	IF X(3)<(K*X)THEN A$=CR$+SU$+" $"+STR$(X(3)):SYS C(.):GOTO{:50870}
+	X(3)=X(3)-(K*X):X(17)=X(17)+K:A$=CR$+"{f5}{$c2}OUGHT!":SYS C(.):GOTO{:50940}
+{:50895}
+	A$=C2$+"{f5}{$d4}HE {$cd}ARKET {$cd}ASTER {$d7}ILL {$c2}UY {$d9}OUR {$c7}RAIN"+CR$
+	A$=A$+"{$c6}OR $"+STR$(J)+" {$d0}ER {$c2}USHEL":GOSUB{:50925}:IF P THEN{:51415}
+	K=VAL(I$):IF K<1 THEN{:50855}
+	IF K>X(17)THEN A$=CR$+SU$+STR$(X(17))+" {$c2}USHELS":SYS C(.):GOTO{:50895}
+	X(17)=X(17)-K:X(3)=INT(X(3)+(K*J)):A$=CR$+"{f5}{$d3}OLD!":SYS C(.):GOTO{:50940}
+{:50920}
+	A$=A$+C2$+"{f5}{$c2}UY -> ":SYS C(1):GOTO{:50030}
+{:50925}
+	A$=A$+C2$+"{f5}{$d3}ELL -> ":SYS C(1):GOTO{:50030}
+{:50930}
+	A$=A$+C2$+"{f5}[{$c2}]UY {f5}[{$d3}]ELL {f5}[{$c3}]ONTINUE {f5}":SYS C(1):GOTO{:50035}
+	REM{$12}FEED SERFS
+{:50940}
+	PR=X(19)*5:A$=C2$+"{f5}{$d4}HE {$d3}ERFS {$ce}EED"+STR$(PR)+" {$c2}USHELS":SYS C(.)
+	A$=CR$+"{f5}{$c7}IVE {$d4}HEM {$c8}OW {$cd}ANY? [{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}="+MID$(STR$(PR),2)+"]"+C2$+"{f5}>
+	SYS C(1):GOSUB{:50030}:IF I$<>""THEN{:50965}
+	I$=STR$(PR):A$="{up}"+I$
+	SYS C(.)
+{:50965}
+	MH=INT(VAL(I$)):IF P THEN{:51050}
+	IF MH>X(17)THEN A$=CR$+SU$+STR$(X(17))+" {$c2}USHELS":SYS C(.):GOTO{:50940}
+	ON-(MH<.OR(MH=.AND LEFT$(I$,1)<>"0"))GOTO{:50940}:X(17)=X(17)-MH
+	REM{$12}FEED ARMIES
+{:50985}
+	MR=X(21)*8+1:A$=C2$+"{f5}{$d9}OUR {$c1}RMY {$ce}EEDS"+STR$(MR)+" {$c2}USHELS":SYS C(.)
+	A$=CR$+"{f5}{$c7}IVE {$d4}HEM {$c8}OW {$cd}ANY? [{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}="+MID$(STR$(MR),2)+"]"+C2$+"{f5}>
+	SYS C(1):GOSUB{:50030}:IF I$<>""THEN{:51010}
+	I$=STR$(MR):A$="{up}"+I$
+	SYS C(.)
+{:51010}
+	MX=INT(VAL(I$)):IF P THEN{:51050}
+	IF MX>X(17)THEN A$=CR$+SU$+STR$(X(17))+" {$c2}USHELS":SYS C(.):GOTO{:50985}
+	ON-(MX<.OR(MX=.AND LEFT$(I$,1)<>"0"))GOTO{:50985}
+	X(17)=INT(X(17)-MX):IF X(17)<.THEN X(17)=.
+	REM{$12}STATUS REPORT
+	GOSUB{:51770}:A$=C2$+"{rvrs on}{f5}{$c3}ENSUS {$d2}EPORT: {$cd}AINLAND   {$c9}SLAND"+CR$:SYS C(.)
+	X=MH/PR:K=MX/MR:J=.:IF X<1 THEN J=INT((PR-MH)/5)-INT(RND(1)*(PR-MH)/5+30)
+	J=J*ABS(J>.):IF X>.8 OR X>RND(1)THEN{:51090}
+{:51050}
+	A$=C2$+"{f5}{$d9}OUR {$c5}MPIRE {$c9}S {$c4}EVESTATED {$c2}Y {$c1} {$c8}ORDE {$cf}F {$d3}TARVING {$d3}ERFS!":SYS C(.)
+	A=X(7):GOSUB{:51085}:X(7)=A:A=X(8):GOSUB{:51085}
+	X(8)=A:A=X(9):GOSUB{:51085}:X(9)=A:A=X(10)
+	GOSUB{:51085}:X(10)=A:X(21)=.:X(3)=.:X(17)=.
+	FR=1:X(6)=INT(X(6)/2):X(2)=INT(X(2)/2)
+	X(19)=INT(X(19)/2):F$="{$ba}EMP.NEWS1,A":GOSUB 203
+	.PRINT# 8,"{f5}"+NA$+" {$d7}AS {$cf}VERRUN {$c2}Y {$d3}ERFS":.CLOSE 8:GOTO{:51205}
+{:51085}
+	A=A-INT(RND(1)*A):RETURN
+{:51090}
+	Z(1)=INT(RND(1)*(X(19)/10)+30):Z(2)=INT(RND(1)*(X(20)/12)+10)
+	Z(3)=INT(RND(1)*(X(19)/12)+10):Z(4)=INT(RND(1)*(X(20)/12)+10)
+	Z(5)=INT(RND(1)*(X(19)/15)+10):Z(6)=Z(3)+Z(5)-J-Z(1):Z(7)=Z(4)-Z(2)
+	I$="           ":X$="{green}{$c7}AINS{white}":F$=X$:IF Z(6)<.THEN X$="{red}{$cc}OSES{white}"
+	IF Z(7)<.THEN F$="{red}{$cc}OSES{white}"
+	A$="{f5}{$d3}ERFS {$d3}TARVED   {white}"+STR$(J):SYS C(.)
+	A$="{f5}{$ce}EWBORN {$d3}ERFS   {white}"+LEFT$(STR$(Z(3))+I$,11)+STR$(Z(4)):SYS C(.)
+	A$="{f5}{$ce}ATURAL {$c4}EATHS  {white}"+LEFT$(STR$(Z(1))+I$,11)+STR$(Z(2)):SYS C(.)
+	A$="{f5}{$c9}MMIGRATION     {white}"+STR$(Z(5)):SYS C(.)
+	A$="{f5}{$ce}ET {$c3}ENSUS "+X$+LEFT$(STR$(ABS(Z(6)))+I$,6)+F$+STR$(ABS(Z(7)))
+	SYS C(.):X(19)=X(19)+Z(6):X(19)=X(19)*ABS(X(19)>.)
+	X(20)=X(20)+Z(7)
+	A$=CR$+"{f5}{rvrs on}{$d4}OTAL {$d0}OPULATION{rvrs off}{white}"+LEFT$(STR$(X(19))+I$,11)+STR$(X(20)):SYS C(.)
+	FR=.:ON-(MX=>MR)GOTO{:51170}:FR=1:X=INT(RN(.)*X(21)):X(27)=X(27)+X
+	X(21)=X(21)-X:A$=CR$+"{f5}{$d9}OUR {$c1}RMY {$c9}S {$cf}N {$d3}TRIKE":SYS C(.)
+	IF X>.THEN A$=CR$+"{f5}"+MID$(STR$(X),2)+" {$cf}F {$d9}OUR {$cd}EN {$ca}OIN {$d4}HE {$d2}EBELS":SYS C(.)
+{:51170}
+	X=INT((RND(1)*3)*(RND(1)*X(19)))
+	IF X(2)<1E4 THEN A$=C2$+"{f5}{$d2}ECEIVE $"+STR$(X)+" {$c9}N {$d4}AXES":SYS C(.):X(3)=X(3)+X
+	ON-(X(13)=.)GOTO{:51205}:X=INT((RND(1)*(X(20)+X(22)))*(X(12)+1)/X(13))
+	A$=CR$+"{f5}{$cb}ING {$cd}IDAS {$d4}AXES {$d9}OUR {$c9}SLAND $"+STR$(X):SYS C(.)
+	IF X<X(3)THEN X(3)=X(3)-X:GOTO{:51205}
+	IF X>X(3)THEN A$=CR$+"{f5}{$07}{$d9}OU {$c4}ON'T {$c8}AVE {$d4}HE {$c3}ASH!"+CR$+"{$cc}OSE 1 {$c6}ORT
+	SYS C(.):X(13)=X(13)-1
+{:51205}
+	IF X(23)<=X(11)*50 THEN{:51225}
+	X=INT(RND(1)*(X(23)-(X(11)*50))+1):X(23)=X(23)-X:X(27)=X(27)+X
+	A$=CR$+"{f5}{$d2}EBELS {$d3}TEAL"+STR$(X)+" {$c8}ORSES":SYS C(.)
+	REM{$12}INVESTMENTS
+{:51225}
+	A$(1)="{$d3}OLDIER":A$(2)="{$cd}ARKET":A$(3)="{$cd}ILL":A$(4)="{$d0}ALACE
+	A$(5)="{$c6}OUNDRY":A$(6)="{$d3}HIPYARD":A$(7)="{$ce}OBLE":A$(8)="{$d3}HIP
+	A$(9)="{$d3}TABLE":SW(1)=10:SW(2)=1E3:SW(3)=2E3:SW(4)=1E4:SW(5)=7E3
+	SW(6)=8E3:SW(7)=25E3:SW(8)=5E3:SW(9)=1E4
+{:51245}
+	GOSUB{:51770}:A$=C2$+"{f5}{$c7}OLD {$d2}ESERVE:{f5}"+STR$(X(3)):SYS C(1)
+	A$=CR$+"{f5}{$c9}NVESTMENT? {f5}[1-9,0={$ce}ONE,?={$cc}IST] {f5}":SYS C(1)
+	GOSUB{:50035}:IF P THEN{:51415}
+	IF A$="?"THEN F$="{$ba}EMP.MENU2":GOSUB 210:GOTO{:51245}
+	TK=INT(VAL(A$)):IF A$="{$d9}"THEN GOSUB{:50525}:GOTO{:51245}
+	IF A$="0"THEN A$="MDL.EMP.DELX2":GOTO 9050
+	IF TK<1 OR TK>9 THEN{:51245}
+	IF TK>1 THEN{:51295}
+	IF(X(6)*20)-X(21)<(X(9)*40)-X(21)THEN J=(X(6)*20)-X(21):GOTO{:51290}
+	IF(X(6)*20)-X(21)=>(X(9)*40)-X(21)THEN J=(X(9)*40)-X(21)
+{:51290}
+	IF J<.THEN J=.
+{:51295}
+	A$=C2$+"{f5}{$c9}TEM: "+A$(TK)+" - {$d0}RICE: $"+STR$(SW(TK))+C2$+"{f5}{$c2}UY {$c8}OW {$cd}ANY? "
+	IF TK=1 THEN A$=A$+" [{$cd}AX:"+STR$(J)+"] "
+	SYS C(1):GOSUB{:50030}:IF P THEN{:51415}
+	IF LEN(I$)>4 THEN{:51295}
+	X=INT(VAL(I$)):IF X<1 THEN{:51245}
+	K=X*SW(TK)
+	IF K>X(3)THEN A$=C2$+SU$+" $"+STR$(X(3)):SYS C(.):GOTO{:51295}
+	ON TK GOTO{:51335},{:51350},{:51355},{:51360},{:51375},{:51380},{:51385},{:51395},{:51390}
+{:51335}
+	IF(X+X(21))/20>X(6)THEN A$=C2$+SU$+STR$(X(6))+" {$ce}OBLES":SYS C(.):GOTO{:51245}
+	IF(X+X(21))/40>X(9)THEN A$=C2$+SU$+STR$(X(9))+" {$c6}OUNDRIES":SYS C(.):GOTO{:51245}
+	X(21)=X(21)+X:GOSUB{:51405}:A$=A$+STR$(X(21))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51350}
+	X(7)=X(7)+X:GOSUB{:51405}:A$=A$+STR$(X(7))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51355}
+	X(8)=X(8)+X:GOSUB{:51405}:A$=A$+STR$(X(8))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51360}
+	IF X(5)+X>10 THEN A$=C2$+"{$07}{lt. red}100% {$cd}AX!":SYS C(.):GOTO{:51245}
+	X(5)=X(5)+X:GOSUB{:51405}:A$=A$+STR$(X(5)*10)+"% {$cf}F {$d4}HE "+A$(TK)
+	X(6)=X(6)+X:A$=A$+CR$+"{$c1}ND"+STR$(X(6))+" {$ce}OBLES":SYS C(.):GOTO{:51245}
+{:51375}
+	X(9)=X(9)+X:GOSUB{:51405}:A$=A$+STR$(X(9))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51380}
+	X(10)=X(10)+X:GOSUB{:51405}:A$=A$+STR$(X(10))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51385}
+	X(6)=X(6)+X:GOSUB{:51405}:A$=A$+STR$(X(6))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51390}
+	X(11)=X(11)+X:GOSUB{:51405}:A$=A$+STR$(X(11))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51395}
+	IF X(12)+X>X(10)THEN A$=CR$+"{lt. red}{$d9}OU {$ce}EED {$cd}ORE {$d3}HIPYARDS!":SYS C(.):GOTO{:51245}
+	X(12)=X(12)+X:GOSUB{:51405}:A$=A$+STR$(X(12))+" "+A$(TK)+"S":SYS C(.):GOTO{:51245}
+{:51405}
+	X(3)=X(3)-(SW(TK)*X):A$=CR$+"{f5}{$d9}OU {$ce}OW {$c8}AVE":RETURN
+	REM{$12}QUIT
+{:51415}
+	A$=C2$+"{f5}{$d1}UITING...":SYS C(.)
+	IF X(2)=5E3 AND X(17)=2E4 AND X(3)=1E4 AND X(21)=40 THEN I$="EMPTY"+CR$+"0":GOTO{:51485}
+	GOSUB{:51435}:A$=C2$+"{f5}{$d0}LAYS {$d2}EMAINING:"+STR$(M-X(29)):SYS C(.)
+	GOSUB{:51490}:A$=STR$(X(2))+"-{$c1}CRES"+STR$(X(4))+"-{$d2}ATING":GOTO 8004
+{:51435}
+	I$=NA$+CR$+STR$(X(2))+CR$+STR$(X(3))+CR$+STR$(X(4))
+	I$=I$+CR$+STR$(X(5))+CR$+STR$(X(6))+CR$+STR$(X(7))
+	I$=I$+CR$+STR$(X(8))+CR$+STR$(X(9))+CR$+STR$(X(10))
+	I$=I$+CR$+STR$(X(11))+CR$+STR$(X(12))+CR$+STR$(X(13))
+	I$=I$+CR$+STR$(X(14))+CR$+STR$(X(15))+CR$+STR$(X(16))
+	I$=I$+CR$+STR$(X(17))+CR$+STR$(X(18))+CR$+STR$(X(19))
+	I$=I$+CR$+STR$(X(20))+CR$+STR$(X(21))
+	I$=I$+CR$+STR$(X(22))+CR$+STR$(X(23))+CR$+STR$(X(24))
+	I$=I$+CR$+STR$(X(25))+CR$+STR$(X(26))+CR$+STR$(X(27))
+	I$=I$+CR$+STR$(X(28))+CR$+DA$+CR$+STR$(X(29))
+{:51485}
+	A$="{$ba}EMPIRE II STATS":GOSUB{:50060}:X=R1:GOSUB{:50055}:.PRINT# 2,I$:.CLOSE 2:RETURN
+{:51490}
+	REM{$12}CALC RATINGS
+	X(4)=INT((X(2)/1E3)+(X(3)/1E5)+X(5)+(X(6)/10))
+	X(4)=X(4)+INT((X(7)/10)+(X(8)/10)+(X(10)/10)+(X(11)/10))
+	X(4)=X(4)+INT((X(13)/10)+(X(19)/1E3)+(X(20)/1E3))
+	RETURN
+	REM{$12}VIEWER
+{:51520}
+	IF RN>3 THEN RETURN
+{:51525}
+	A$="{clear}{$0c}"+C2$+"{f5}{$c5}MPIRE {$c9:2} {$d3}TATS {$d6}IEWER/{$c5}DITOR":SYS C(.)
+{:51530}
+	A$=CR$+"{f5}{$c5}NTER {$d2}ECORD # (1-"+MID$(STR$(M2),2)+") >":SYS C(1)
+	GOSUB 310:GOSUB 610:IF P OR I=.THEN RETURN
+	I=VAL(I$)
+	IF I<1 OR I>M2 THEN{:51530}
+	A$="{$ba}EMPIRE II STATS":GOSUB{:50060}:X=I:GOSUB{:50055}
+	.INPUT# 2,K$:IF K$="EMPTY"THEN GOSUB{:50055}:.CLOSE 2:A$=CR$+"{lt. red}{$c5}{$cd}{$d0}{$d4}{$d9}":SYS C(.):GOTO{:51530}
+	.INPUT# 2,X(2),X(3),X(4),X(5),X(6),X(7),X(8)
+	.INPUT# 2,X(9),X(10),X(11),X(12),X(13),X(14),X(15),X(16)
+	.INPUT# 2,X(17),X(18),X(19),X(20),X(21),X(22),X(23)
+	.INPUT# 2,X(24),X(25),X(26),X(27),X(28),U2$(2),X(29):GOSUB{:50055}:.CLOSE 2
+{:51575}
+	GOSUB 155:J=30:F$="                        "
+	A$="{red}{rvrs on} {$ce}) {$ce}AME     :{rvrs off}{white} "+K$:SYS C(.)
+	A$="{red}{rvrs on} 2) {$c1}CRES    :{rvrs off}{white}"+STR$(X(2)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on} 3) {$c7}OLD     :{rvrs off}{white}"+STR$(X(3))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on} 4) {$d2}ATING   :{rvrs off}{white}"+STR$(X(4))+F$,J):SYS C(1)
+	A$="{red}{rvrs on} 5) {$d0}ALACE   :{rvrs off}{white}"+STR$(X(5)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on} 6) {$ce}OBLES   :{rvrs off}{white}"+STR$(X(6))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on} 7) {$cd}ARKETS  :{rvrs off}{white}"+STR$(X(7))+F$,J):SYS C(1)
+	A$="{red}{rvrs on} 8) {$cd}ILLS    :{rvrs off}{white}"+STR$(X(8)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on} 9) {$c6}OUNDRYS :{rvrs off}{white}"+STR$(X(9))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}10) {$d3}HIPYARDS:{rvrs off}{white}"+STR$(X(10))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}11) {$d3}TABLES  :{rvrs off}{white}"+STR$(X(11)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}12) {$d3}HIPS    :{rvrs off}{white}"+STR$(X(12))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}13) {$c6}ORTS    :{rvrs off}{white}"+STR$(X(13))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}14) {$c3}ANNONS  :{rvrs off}{white}"+STR$(X(14)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}15) {$c5}XPORTS-{$cd}:{rvrs off}{white}"+STR$(X(15))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}16) {$d4}IMBER   :{rvrs off}{white}"+STR$(X(16))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}17) {$c7}RAIN  -{$cd}:{rvrs off}{white}"+STR$(X(17)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}18) {$c7}RAIN  -{$c9}:{rvrs off}{white}"+STR$(X(18))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}19) {$d3}ERFS  -{$cd}:{rvrs off}{white}"+STR$(X(19))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}20) {$d3}ERFS  -{$c9}:{rvrs off}{white}"+STR$(X(20)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}21) {$c1}RMIES -{$cd}:{rvrs off}{white}"+STR$(X(21))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}22) {$c1}RMIES -{$c9}:{rvrs off}{white}"+STR$(X(22))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}23) {$c8}ORSES -{$cd}:{rvrs off}{white}"+STR$(X(23)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}24) {$c8}ORSES -{$c9}:{rvrs off}{white}"+STR$(X(24))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}25) {$d3}PICES   :{rvrs off}{white}"+STR$(X(25))+F$,J):SYS C(1)
+	A$="{red}{rvrs on}26) {$c5}XPORTS-{$c9}:{rvrs off}{white}"+STR$(X(26)):SYS C(.)
+	A$=LEFT$("{red}{rvrs on}27) {$d2}EBELS   :{rvrs off}{white}"+STR$(X(27))+F$,J):SYS C(1)
+	A$=LEFT$("{red}{rvrs on}28) {$d5}NUSED   :{rvrs off}{white}"+STR$(X(28))+F$,J):SYS C(1)
+	A$="{red}{rvrs on} {$c4}) {$c4}ATE     :{rvrs off}{white} "+U2$(2)+CR$+"{red}{rvrs on}29) {$d0}LAYS    :{rvrs off}{white}"+STR$(X(29)):SYS C(.)
+	A$=CR$+"{$04}{rvrs on}{$c5}DITOR /=QUIT{rvrs off}: {$04}":SYS C(1):GOSUB{:45000}:IF P THEN RETURN
+	IF I$="{$ce}"THEN{:54000}
+	IF I$="{$c4}"THEN{:54010}
+	IF I$="/"THEN GOSUB{:55000}:GOTO{:51525}
+	XT(9)=INT(VAL(I$)):A$=CR$+"{$04}{$cf}LD {$d6}ALUE: "+STR$(X(XT(9))):SYS C(.)
+{:51735}
+	A$=CR$+"{$04}{rvrs on}{$ce}EW {$d6}ALUE{rvrs off}: ":SYS C(1):GOSUB{:45000}:IF P THEN RETURN
+	IF(VAL(I$))>99999 THEN{:51735}
+	X(XT(9))=INT(VAL(I$)):GOTO{:51575}
+	RETURN
+	RETURN
+	RETURN
+	RETURN
+{:51760}
+	RETURN
+	RETURN
+{:51770}
+	RETURN
+	RETURN
+	RETURN
+{:51795}
+	AUTO ON:X=(USR(12)+1)
+	ON X GOTO{:51810},{:51815},{:51825},{:51830},{:51840},{:51845},{:51855},{:51860},{:51870},{:51875},{:51885},{:51890}
+{:51810}
+	F$="{$ba}TOURNEY 1":GOSUB 205:X(2)=X(2)+100:GOTO{:51900}
+{:51815}
+	F$="{$ba}TOURNEY 2":GOSUB 205:X(2)=X(2)-100:IF X(2)<101 THEN X(2)=.
+	GOTO{:51895}
+{:51825}
+	F$="{$ba}TOURNEY 3":GOSUB 205:X(3)=X(3)+1000:GOTO{:51900}
+{:51830}
+	F$="{$ba}TOURNEY 4":GOSUB 205:X(3)=X(3)-1000:IF X(3)<1001 THEN X(3)=.
+	GOTO{:51895}
+{:51840}
+	F$="{$ba}TOURNEY 5":GOSUB 205:X(6)=X(6)+1:GOTO{:51900}
+{:51845}
+	F$="{$ba}TOURNEY 6":GOSUB 205:X(6)=X(6)-1:IF X(6)<2 THEN X(6)=1
+	GOTO{:51895}
+{:51855}
+	F$="{$ba}TOURNEY 7":GOSUB 205:X(17)=X(17)+7000:GOTO{:51900}
+{:51860}
+	F$="{$ba}TOURNEY 8":GOSUB 205:X(17)=X(17)-7000:IF X(17)<7001 THEN X(17)=.
+	GOTO{:51895}
+{:51870}
+	F$="{$ba}TOURNEY 9":GOSUB 205:X(10)=X(10)+1:X(2)=X(2)+100:GOTO{:51900}
+{:51875}
+	F$="{$ba}TOURNEY 10":GOSUB 205:X(10)=X(10)-1:IF X(10)<2 THEN X(10)=.
+	X(2)=X(2)-100:IF X(2)<101 THEN X(2)=.
+	GOTO{:51895}
+{:51885}
+	F$="{$ba}TOURNEY 11":GOSUB 205:X(16)=X(16)+2:GOTO{:51900}
+{:51890}
+	F$="{$ba}TOURNEY 12":GOSUB 205:X(16)=X(16)-2:IF X(16)<3 THEN X(16)=.
+{:51895}
+	AUTO {$fe}$:A$=C2$+"{f5}{$d4}OUGH {$cc}UCK!!":SYS C(.):B=.:GOTO{:50705}
+{:51900}
+	AUTO {$fe}$:A$=C2$+"{f1}{$d9}OUR {$cc}ADY IS {$c9}MPRESSED!!{f3}":SYS C(.):B=.:GOTO{:50705}
+{:51905}
+	F$="{$ba}EMP.TITLE":GOSUB 210:FOR X=1 TO 1000:NEXT
+	RETURN
+{:51915}
+	AUTO ON:F$="{$ba}EMPIRE DOCS":GOSUB 210:F$="{$ba}EMP.DOCS2":GOSUB 210:AUTO {$fe}$:GOTO{:50460}
+{:52000}
+	IF LV=9 THEN X(28)=X(28)+1
+	RETURN
+{:54000}
+	A$=CR$+"{$04}{rvrs on}{$ce}EW {$ce}AME{rvrs off}: "SYS C(1):GOSUB{:45000}:IF P THEN RETURN
+	K$=I$:GOTO{:51575}
+{:54010}
+	A$=CR$+"{$04}{rvrs on}{$ce}EW {$cc}AST {$c4}ATE{rvrs off}: ":SYS C(1):GOSUB{:45000}:IF P THEN RETURN
+	U2$(2)=I$:GOTO{:51575}
+{:55000}
+	I$=K$+CR$+STR$(X(2))+CR$+STR$(X(3))+CR$+STR$(X(4))
+	I$=I$+CR$+STR$(X(5))+CR$+STR$(X(6))+CR$+STR$(X(7))
+	I$=I$+CR$+STR$(X(8))+CR$+STR$(X(9))+CR$+STR$(X(10))
+	I$=I$+CR$+STR$(X(11))+CR$+STR$(X(12))+CR$+STR$(X(13))
+	I$=I$+CR$+STR$(X(14))+CR$+STR$(X(15))+CR$+STR$(X(16))
+	I$=I$+CR$+STR$(X(17))+CR$+STR$(X(18))+CR$+STR$(X(19))
+	I$=I$+CR$+STR$(X(20))+CR$+STR$(X(21))
+	I$=I$+CR$+STR$(X(22))+CR$+STR$(X(23))+CR$+STR$(X(24))
+	I$=I$+CR$+STR$(X(25))+CR$+STR$(X(26))+CR$+STR$(X(27))
+	I$=I$+CR$+STR$(X(28))+CR$+U2$(2)+CR$+STR$(X(29))
+	A$="{$ba}EMPIRE II STATS":GOSUB{:50060}:X=R1:GOSUB{:50055}:.PRINT# 2,I$:.CLOSE 2:RETURN
+{:56300}
+	SP$="                      ":A$="{clear}"+"{f5}{rvrs on}  - {$c5}{$cd}{$d0}{$c9}{$d2}{$c5} {$c9:2} -       {$d0}{$cc}{$c1}{$d9}{$d3} {$d2}{$c5}{$cd}{$c1}{$c9}{$ce}{$c9}{$ce}{$c7}:"+STR$(M-X(29))+"          {$cd}{$c1}{$c9}{$ce}{$cc}{$c1}{$ce}{$c4}    {$c3}{$cf}{$cc}{$cf}{$ce}{$d9}     {$c6}{$cc}{$c5:2}{$d4}{rvrs off}":SYS C(.)
+	GOSUB{:51770}:A$=CR$+LEFT$("{f5}"+NA$+SP$,22)+"{$c1}{$c3}{$d2}{$c5}{$d3}    -"+STR$(X(2))
+	A$=LEFT$(A$+SP$,40)+"    {$ce}{$cf}{$c2}{$cc}{$c5}{$d3}    -"+LEFT$(STR$(X(6))+SP$,9)+"-"+LEFT$(" 0"+SP$,9)+"-"+STR$(S(3)):SYS C(.):A$=""
+	A$="{f5}{$c7}{$cf}{$cc}{$c4}     -"+LEFT$(STR$(X(3))+SP$,11)+"{$d2}{$c1}{$d4}{$c9}{$ce}{$c7}   -"+STR$(X(4))
+	A$=LEFT$(A$+SP$,40)+"   {$d3}{$cf}{$c9}{$cc}{$c4}{$c9}{$c5}{$d2}{$d3} -"+LEFT$(STR$(X(21))+SP$,9)+"-"+LEFT$(STR$(X(22))+SP$,9)+"-"+STR$(S(6)):SYS C(.):A$=""
+	A$="{f5}{$d0}{$c1}{$cc}{$c1}{$c3}{$c5}   -"+LEFT$(STR$(10*X(5))+"%"+SP$,11)+"{$c6}{$cf}{$d2}{$d4}{$d3}    -"+STR$(X(13))
+	A$=LEFT$(A$+SP$,40)+"   {$d3}{$c5}{$d2}{$c6}{$d3}     -"+LEFT$(STR$(X(19))+SP$,9)+"-"+LEFT$(STR$(X(20))+SP$,9)+"-"+STR$(S(2)):SYS C(.):A$=""
+	A$="{f5}{$cd}{$c1}{$d2}{$cb}{$c5}{$d4}{$d3}  -"+LEFT$(STR$(X(7))+SP$,11)+"{$c3}{$c1}{$ce:2}{$cf}{$ce}{$d3}  -"+STR$(X(14))
+	A$=LEFT$(A$+SP$,40)+"   {$c7}{$d2}{$c1}{$c9}{$ce}     -"+LEFT$(STR$(X(17))+SP$,9)+"-"+LEFT$(STR$(X(18))+SP$,9)+"-"+STR$(S(1)):SYS C(.):A$=""
+	A$="{f5}{$cd}{$c9}{$cc:2}{$d3}    -"+LEFT$(STR$(X(8))+SP$,11)+"{$d3}{$c8}{$c9}{$d0}{$d9}{$c1}{$d2}{$c4}{$d3}-"+STR$(X(10))
+	A$=LEFT$(A$+SP$,40)+"   {$c8}{$cf}{$d2}{$d3}{$c5}{$d3}    -"+LEFT$(STR$(X(23))+SP$,9)+"-"+LEFT$(STR$(X(24))+SP$,9)+"-"+STR$(S(7)):SYS C(.):A$=""
+	A$="{f5}{$c6}{$cf}{$d5}{$ce}{$c4}{$d2}{$c9}{$c5}{$d3}-"+LEFT$(STR$(X(9))+SP$,11)+"{$d3}{$c8}{$c9}{$d0}{$d3}    -"+STR$(X(12))
+	A$=LEFT$(A$+SP$,40)+"   {$c5}{$d8}{$d0}{$cf}{$d2}{$d4}{$d3}   -"+LEFT$(STR$(X(15))+SP$,9)+"-"+LEFT$(STR$(X(26))+SP$,9)+"-"+STR$(S(5)):SYS C(.):A$=""
+	A$="{f5}{$d3}{$d4}{$c1}{$c2}{$cc}{$c5}{$d3}  -"+LEFT$(STR$(X(11))+SP$,11)+"{$d4}{$c9}{$cd}{$c2}{$c5}{$d2}   -"+STR$(X(16))
+	A$=LEFT$(A$+SP$,40)+"   {$d3}{$d0}{$c9}{$c3}{$c5}{$d3}    -"+LEFT$(" 0"+SP$,9)+"-"+LEFT$(STR$(X(25))+SP$,9)+"-"+STR$(S(8)):SYS C(.):A$=""
+	RETURN
+	SCRATCH"-MDL.EMP.DELX1":RENAME"MDL.EMP.DELX1"TO"-MDL.EMP.DELX1":DSAVE"MDL.EMP.DELX1

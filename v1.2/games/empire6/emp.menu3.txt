@@ -1,0 +1,34 @@
+\EB BBBA A BBAA 
+\X\MA\
+_____________________
+   LOADING DOCK MENU   
+   
+ MAINLAND.................ISLAND  
+ ------------------------------- 
+ (1) Grain      -      Grain (1) 
+ (2) Serfs      -      Serfs (2) 
+ (3) Nobles     -   Soldiers (3) 
+ (4) Navigators -     Horses (4)  
+ (5) Spices     -    Exports (5)  
+ (6) Ship Stats - Ship Stats (6) 
+ (0) Sail       -       Sail (0) 
+ -----(Y)our Current Stats------ 
+  
+_                       _
+
+\X\MB\
+                   _____________________
+                      LOADING DOCK MENU   
+                      
+                    MAINLAND.................ISLAND  
+                    ------------------------------- 
+                    (1) Grain      -      Grain (1) 
+                    (2) Serfs      -      Serfs (2) 
+                    (3) Nobles     -   Soldiers (3) 
+                    (4) Navigators -     Horses (4)  
+                    (5) Spices     -    Exports (5)  
+                    (6) Ship Stats - Ship Stats (6) 
+                    (0) Sail       -       Sail (0) 
+                    -----(Y)our Current Stats------ 
+                     
+                   _                       _

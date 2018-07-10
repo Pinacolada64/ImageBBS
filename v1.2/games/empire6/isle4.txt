@@ -1,0 +1,11 @@
+   You have anchored in a cove of a mist-shrouded island.  You send a
+party of Nobles and Soldiers ashore to explore.
+   With your forces halfway to shore, you hear the crack of muskets! 
+Looking towards the entrance to the cove, you see a small vessel exiting
+the thick mist.
+   It is a pirate ship!  The pirates have caught you off guard!
+
+   Your forces are severely damaged before they can regroup and drive the
+pirates off!
+
+               <Press any Key>\g1

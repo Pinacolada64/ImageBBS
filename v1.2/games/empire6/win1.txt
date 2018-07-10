@@ -1,0 +1,21 @@
+
+    You have heard that a band of pirates has been raiding the area
+recently, causing much strife to the poor serfs in your dominion.  
+Thus it is with a stout heart and a sharp sword that you determine to
+rid your kingdom of these pests once and for all.
+
+    After a meeting with your nobles, you decide that the best route of
+invasion would be through a secret tunnel which one of your spies
+discovered about a month ago.  It leads into a storage room to the
+north of the pirates' main cave.
+
+    This course determined, your hardy band sets out for the cave less
+than a week later.  You arrive at the secret tunnel and, after checking
+for sentries, enter the passage.
+
+   Your invasion is swift and merciless, and the pirate camp is soon under
+your control.  Flushed with victory, your band counts the treasure which
+you have received.
+
+   You gain 30,000 gold!!
+               <Press any Key>\g1

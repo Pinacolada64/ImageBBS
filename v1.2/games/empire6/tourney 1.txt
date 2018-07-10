@@ -1,0 +1,15 @@
+   For some time now you have been planning for your tournament.  Now,
+the compliments of your guests make the preparations all worthwhile.
+
+   Count Graznick, one of your rivals, approaches you and suggests that a
+small wager would make the upcoming joust more interesting.  You agree,
+and decide the winner gets a parcel of land along the common border your
+two kingdoms share.
+
+   It is now time for the joust.  The trumpets sound, and the two knights
+urge their steeds forward.  With a crash of armor they meet!  You rise to
+your feet with a cheer as Count Graznick's champion is knocked to the
+ground!
+
+You win 100 acres!!!
+               <Press any Key>\g1

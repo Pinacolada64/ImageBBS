@@ -1,0 +1,24 @@
+    The mystical bird city.... is it a child's tale or does it really exist?
+You finally decide to search for it in the small hope that it does exist.
+
+    You and your men journey through the Endless Forest, a great sprawling
+wood that lies to the west.  The city is rumored to lie in that general
+direction.
+
+    It takes you days to penetrate the dense foliage, but, eventually, you
+arrive in the heart of the forest.... The sight that greets you defies all
+description.
+
+    Towers soar high above the ground and beautiful winding airways glisten in
+the sun...  You are ushered immediately into the presence of the High King of
+the Bird-Men: Lazarus!
+
+    He stares at you compassionately. "So, you are the sad creatures with no
+wings...  What a sad life you must live, unable to soar the skies, to feel the
+wind at your back and the sun on your shoulders...  I would learn more of your
+world...  Take four of my Captains...  May they serve you well!  Goodbye,
+Wingless Ones!"
+
+    You gain 4 Nobles!
+
+               <Press any Key>\g1
