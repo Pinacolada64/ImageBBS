@@ -1,9 +1,9 @@
 # Appendix: System Commands Quick Reference
 
-## Lightbar Functions
+## Lightbar Keys
 
 Key            Purpose
-------------   ----------------------------------
+------------   -------------------------------------------------------
 `f1`           Toggle screen mask on/off
 `f2` or `f4`   Toggle lightbar page
 `f3`           Move white highlight left, switch pages if necessary
@@ -105,9 +105,11 @@ Command   Purpose
 `?  `       Help menu
 `AT `       C/G-ASCII-ANSI graphics mode toggle
 `BA `       Board Activity Register
+`BB `       Bulletin board listings
 `C  `       Chat request
-`CF `       System information
-`EP `       Edit Parameters
+`CF `       System configuration & information
+`EM `       E-Mail
+`EP `       Edit terminal parameters
 `EX `       Credit exchange
 `F  `       Feedback
 `LD `       Last call date
@@ -119,13 +121,21 @@ Command   Purpose
 `O%!`       Log off: save last call date, log off immediately
 `PM `       Prompt mode
 `Q  `       Quit to main level
+`SB `       Sub-boards (message bases)
 `ST `       Status (statistics, flags)
 `SY `       Sayings
 `T  `       Time and date
+`UL `       User list
+`VB `       Voting booth
 `XP `       Expert mode
 `ZZ `       Pseudo-local mode
 
 ## Local Mode Commands
+
+_dv,dr_ stands for _device,drive_. Here you can either specify:
+
+* an Image system drive from 1-6, like `BF6`
+* a device from 7-31, a comma, and a drive from 0-255, like `DC10,3`
 
 Command      Purpose
 ------------ ------------------------------------------------------------------
@@ -134,7 +144,7 @@ Command      Purpose
 `BF`_dv,dr_  Blocks free
 `CD`         Change device number
 `CP`         File copier
-`DC`         DOS command
+`DC`_dv,dr_  DOS command
 `ECS`        Extended Command Set editor
 `ED`         User account editor
 `R`          Run a +.file
@@ -144,17 +154,6 @@ Command      Purpose
 
 ## Subsystems
 
-### Shared Commands
-
-These commands are commonly used among different subsystems, therefore
-listed here. An _item_ could be a post in a sub-board, file in an U/D or U/X
-library, news item in the News Files section, or RLE (Run-length Encoded)
-graphics file.
-
-Some commands (`About`, for example) are common among subsystems, but list
-different information about each item. They are listed in the appropriate
-section along with what information they show.
-
 ### Command Ranges
 
 Some commands accept an optional parameter, denoted as _x_. This means you can
@@ -162,39 +161,67 @@ specify _ranges_ of items to perform the command on. Specifying _x_ acts on
 item _x_. Specifying _x-_ acts on item _x_ to the last item.  Specifying _x-y_
 acts on items _x_ through _y_.
 
-----------------------------------------------------------------------------
+### Shared Commands
+
+These commands are shared between different subsystems, therefore listed here.
+An _item_ could be a post in a sub-board, file in an U/D or U/X library, news
+item in the News Files section, or RLE (Run-length Encoded) graphics file.
+
+Some commands (`About`, for example) are shared between subsystems, but list
+different information about each item. They are listed in the appropriate
+section along with what information they show.
+
+-------------------------------------------------------------------------------
 Command       Purpose
-------------  --------------------------------------------------------------
-_x_           Move to sub-board #_x_
+------------  -----------------------------------------------------------------
+_x_           Move to sub-board #_x_, or act on item #_x_
 
-`< << >> >`   Move to first, previous, next, last library in a SIG[^1]
+`<`, `<<`,    Move to first, previous, next, last library in a SIG[^1]
+`>>`, `>`
 
-`L`_x_        List items
+`A`_x_        About item
 
-`A`_x_        About items
+`AS`          Apply to be SubOp
 
-`RA RN`       Read new items: new in all libraries, new in current library
-
-`SA SN S`_x_  Scan items: new in all libraries, new in current library,
-              new from #_x_ on
+`E`_x_        Edit item
 
 `K`_x_        Kill item
 
-`E`_x_        Edit item
-----------------------------------------------------------------------------
+`L`_x_        List items
+
+`M`           Mail SubOp
+
+`N`           Name of current sub-board
+
+`RA`, `RN`    Read new items: in all libraries, in current library
+
+`SA`, `SN`,   Scan new items: in all libraries, in current library,
+`S`_x_        new from #_x_ on
+-------------------------------------------------------------------------------
 
 [^1]: _SIG_, short for "Special Interest Group," is a way of grouping
 related items into a directory or library which can be navigated through.
 
 ### Message Bases
 
+-------------------------------------------------------------------------------
 Command           Purpose
-------------      ---------------------------------------------------
+------------      -------------------------------------------------------------
 `P`               Post new bulletin (prefix title with `^` to freeze)
-`S`_x_ `SA`, `SN` Scan bulletins
-`A`_x_            About bulletins: list author, number of replies
+
+`R`_x_            Read bulletin
+
+`S`_x_ `SA`,      Scan bulletins (list bulletin number, status, number of
+`SN`              responses, and title)
+
+`A`_x_            About bulletins: list subject, author (and node name if
+                  networked), date/time of first & latest responses, number of
+                  replies
+
 `K`_x_            Kill a thread
+
 `RA`, `RN`        Read bulletins
+----------------------------------------------------------------------------
 
 <!-- `\^_<title>_`  Freeze bulletins: allow/disallow replies -->
 
@@ -204,57 +231,95 @@ This menu is only available if the user's `P`rompt `M`ode is enabled.
 
 Command        Purpose
 ------------   -------------------------------------------------------
+`?`            Command menu
 _x_            Read from response #_x_
 `F`            Toggle frozen status (if frozen, no replies possible)
 `K`            Kill post, if no responses
 `O`            Read entire bulletin over
 `P`            Send private e-mail to original poster
 `Q`, `/`       Quit `RN` or `RA` read function
-
+`R`            Respond to bulletin
 `Return`       Continue to next bulletin
 
 #### Message Bases, SubOp Commands
 
-These commands are only available to SubOps or Sysops.
+These commands are only available to SubOps or Sysops:
 
 -------------------------------------------------------------------------------
 Command        Purpose
 ------------   -------------------------------------------------------
-`KO`           Kill from response #_x_
+`KA`_x_        Kill all responses from #_x_
 
-`Z`            Edit board details: device/drive, entry screens, etc.
+`KO`_x_        Kill old responses from #_x_
 
+`Z`            Edit board details: name, type, device/drive, entry screens,
+               etc.
 -------------------------------------------------------------------------------
 
 ## Upload/Download/Exchange
 
+-------------------------------------------------------------------------------
 Command      Purpose
 ------------ -----------------------------------------------------------
 `D `         Download single file
+
 `DM`         Download multiple files
+
 `E`_x_       Edit directory entry details
+
 `K`_x_       Kill file (remove from directory, optionally scratch file)
+
 `L`_x_       List files
+
 `PR`         Change protocol
+
 `R`_x_       Read sequential/program files
+
+`S`_x_       Scan file: show directory entry #, block count, download count,
+             "filename,type"
+
+`SS`         Sorted scan: sort by size, download count, or alphabetically
+
 `U `         Upload single file
+
 `UM`         Upload muliple files
+
 `V`_x_       Validate file
-`Z`          Subop menu
+
+`VN`         Validate new files
+
+`Z`          Edit board details: entry file, title, type, open/closed status,
+             access level required, device/drive, SubOp
+
 `??`         Copy/move files *fixme*
+
 `$`          U/X: Get directory
+-------------------------------------------------------------------------------
 
 ### U/D About menu
 
+-------------------------------------------------------------------------------
 Command      Purpose
------------- -----------------------------------------------------------
-`E `         Edit file (if original uploader or subop): Blocks
-`D `         Download file
-`N `         Next file
-`L `         Last file
-`M `         Mail uploader
-`Return`     Exit
+------------ ------------------------------------------------------------------
+`C `         Read/add file comment
 
+`D `         Download file
+
+`E `         Edit file (if original uploader or subop): Blocks, name, computer
+             type
+
+`N `         Next file
+
+`L `         Last file
+
+`M `         Mail uploader
+
+`U`          Un-validate file (if uploader or SubOp)
+
+`V`          Validate file (if uploader or SubOp)
+
+`Return`     Exit
+-------------------------------------------------------------------------------
 
 ## Electronic Mail
 
@@ -279,18 +344,20 @@ Command      Purpose
 `R`_x_       Read news file
 `Return`     Read next news file
 `K`_x_       Kill news file
-`E`_x_       Edit news file (can update news date here)
+`E`_x_       Edit news file (can update date of news here)
 `L`_x_       List news file
 
 ## Movie/Plus/RLE/Text File Libraries
 
 Command      Purpose
----------    ----------------------
+---------    -----------------------------
 `MF`         Movie file library
 `NF`         News file library
 `PF`         Plus file library
 `RF`         RLE file library
 `TF`         Text file library
+`UD`         Upload/Download file library
+`UX`         User Exchange file library
 
 Command      Purpose
 ---------    ------------------------------------------------------------------
@@ -320,6 +387,7 @@ Command      Purpose
 
 Command      Purpose
 ---------    -----------------------------------------------------
+`?`          Command menu
 _x_          Vote on (or view results if voted on) for topic #_x_
 `A`          Add topic
 `E`          Edit topic
@@ -338,6 +406,8 @@ Command   Purpose
 ------------------------------------------------------------------------------
 Command   Purpose
 --------- ------------------------------------------------------------------
+`.?`      Help file
+
 `.A`      Abort text entry
 
 `.B`      Border around text
@@ -386,16 +456,42 @@ Command      Purpose
 ---------    ----------------------
 `.G`         Get file from disk
 `.P`         Put file to disk
-`.U`         Un-.Border text
+`.U`         Un-`.B`order text
 `.!`         DOS command
 `.$`         Disk directory
 `.&`         Read (display) file
 
 ## Control keys
 
+These commands can be typed at most prompts, and within the text editor when
+entering text, or in `.E`dit mode. Try them!
+
+-------------------------------------------------------------------------------
 Command      Purpose
----------    ------------------------------------------
-`Ctrl-A`     A
+---------    ------------------------------------------------------------------
+`Delete`     Move back one character
+
+`Ctrl-B`     Delete to beginning of line
+
+`Ctrl-D`     Delete character under cursor
+
+`Ctrl-I`     Insert character under cursor
+
+`Ctrl-N`     Move forward to end of line
+
+`Ctrl-O`     Duplicate all text on current line
+
+`Ctrl-U`     Re-type one character from buffer
+
+`Ctrl-V`     Verify text in buffer (re-print input)
+
+`Ctrl-W`     Delete previous word
+
+`Ctrl-X`     Abort input (prints a British pound sign on Commodore equipment,
+             or a backslash on ASCII terminals)
+
+`Ctrl-Y`     Re-type word from buffer (move forward one word)
+-------------------------------------------------------------------------------
 
 ## Message Command Interpreter Commands
 

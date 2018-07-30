@@ -1922,7 +1922,7 @@ command line for tcpser means “use serial port 0, use incoming port
 with the following string, log events at level 7, and show incoming and
 outgoing RS232 and TCPI/IP traffic.”
 
-*tcpser -d /dev/ttyS0 -p 6400 -s 19200 -i"e0v0h0x4&C1&D2&K3" -l7 -tSsiI*
+`tcpser -d /dev/ttyS0 -p 6400 -s 19200 -i"e0v0h0x4&C1&D2&K3" -l7 -tSsiI`
 
 ### <span id="anchor-277"></span>Using the VICE emulator
 
@@ -1931,23 +1931,23 @@ using a user port modem. So while the BBS will answer, it won't
 necessarily hang up properly if a user should disconnect midway through
 their call.
 
-Here, the *-d* parameter is replaced by *-v*, which is the port VICE is
+Here, the `-d` parameter is replaced by `-v`, which is the port VICE is
 listening on in its RS232 settings. Here is a command line to try:
 
-*tcpser -i “e0v0” -s 2400 -v 25232 -p 6400*
+`tcpser -i “e0v0” -s 2400 -v 25232 -p 6400`
 
 If you're using a high-speed expansion port interface, you can increase
-the *-s* value to something more appropriate.
+the `-s` value to something more appropriate.
 
 <span id="anchor-278"></span>tcpser4j
 -------------------------------------
 
 This is the same thing as tcpser, except written in Java. You configure
 it via an XML file (there is a well-documented sample file included),
-then have the included .bat (Windows batch) or .sh (Linux shell script)
+then have the included `.bat` (Windows batch) or `.sh` (Linux shell script)
 file reference that XML configuration file.
 
-<span id="anchor-279"></span>Leif Bloomquist's *BBS Server*
+<span id="anchor-279"></span>Leif Bloomquist's _BBS Server_
 -----------------------------------------------------------
 
 This is a Windows program designed to allow a real Commodore 64 to run
@@ -1956,39 +1956,39 @@ Image BBS.
 If you use this program and you have trouble getting the BBS to answer,
 here's some information from Larry “X-TEC” Hedman:
 
-Jeff, I experienced the same problems you described when I started using
+> Jeff, I experienced the same problems you described when I started using
 BBS Server with an Omnitronix RS232 interface plugged into the modem
 port. I never could get it to work at any of the 2400 baud settings but
 1200 baud works fine and connections say connected at 1200 baud but in
 actuality, the speed is much faster.
 
-On my Image 1.0 version, I am using the Avatex 1200 *+.modem* file. If
+> On my Image 1.0 version, I am using the Avatex 1200 *+.modem* file. If
 using 1.2a I think I used the 1670 modem file but you can try any of the
 1200 baud modem files until you find one that works. In BBS Server, you
 must build and use the TelBBS Standard Cable as described in the docs.
 
-On the Comms page, set for *1200,N,8,1*. Set the serial cable type to
+> On the Comms page, set for *1200,N,8,1*. Set the serial cable type to
 option 1 and click on ***Set Defaults***. You should have check marks
 for *Enable hardware flow control* and *ATE1 (local Echo)* set by
 default.
 
-On the Connecting page set checkmarks on *Raise DTR when caller
-connects* and *Send RING to BBS when Telnet caller connects*.
+On the _Connecting_ page set checkmarks on `Raise DTR when caller connects` and
+`Send RING to BBS when Telnet caller connects`.
 
-On the Disconnecting page, check *Disconnect if BBS drops DCD*,
-*Disconnect if BBS drops DSR*, *Send NO CARRIER to BBS on disconnect*,
-*and Lower DTR when caller disconnects*.
+On the _Disconnecting_ page, check `Disconnect if BBS drops DCD`,
+`Disconnect if BBS drops DSR`, `Send NO CARRIER to BBS on disconnect`,
+`and Lower DTR when caller disconnects`.
 
-On the Diagnostics page, check mark *Detailed RS-232 Diagnostics
-Logging* and *Detailed Hayes Emulation Logging*. This will give you much
+On the _Diagnostics_ page, check mark `Detailed RS-232 Diagnostics Logging`
+and `Detailed Hayes Emulation Logging`. This will give you much
 information about what is going on with your RS232 communication between
 the PC and the BBS in the Activity Log.
 
-On the Emulation page, checkmark *Allow Outgoing Calls*, *Send this
-string when Telnet session connects: CONNECT*, *Send Winsock error
-messages to Terminal Program* and *Enable Hayes Emulation*.
+On the _Emulation_ page, checkmark `Allow Outgoing Calls`,
+`Send this string when Telnet session connects: CONNECT`,
+`Send Winsock error messages to Terminal Program` and `Enable Hayes Emulation`.
 
-Click on *****S******ave ******C******hanges*** which will take you back
+Click on `Save Changes` which will take you back
 to BBS Server's status page. Make sure the IP address is set for the IP
 of your PC running BBS Server and type in the Telnet Port you will be
 using. The standard port is 23 but using port 23, you will experience
@@ -2000,7 +2000,7 @@ If all that is set up and Image is booted to the call waiting screen,
 you should see red blocks for CTS and DCD and a green block for RTS. At
 that point you should be ready to receive calls. Try connecting to the
 BBS using whatever method you are using, and watch the RX and TX blocks.
-If it doesn't work use a different 1200 baud *+.modem* file until you
+If it doesn't work use a different 1200 baud `+.modem` file until you
 find one that works. Hope this helps.
 
 <span id="anchor-280"></span>*Telnet bridge hardware*
@@ -2283,25 +2283,26 @@ the user is prompted to hit their backspace (delete) key to detect
 whether they are in Commodore color/graphics (hereafter abbreviated as
 "Commodore C/G") mode, or ASCII mode.
 
-Depending on which mode they are in, the file s.login 0 (for ASCII), or
-s.login 1 (for Commodore C/G) is displayed. For simplicity's sake in the
-following references, the character at the end of a filename will refer
-to either the digit 0 (this file is seen by ASCII callers) or *1* (this
+Depending on which mode they are in, the file `s.login 0` (for ASCII), or
+`s.login 1` (for Commodore C/G) is displayed. For simplicity's sake in the
+following references, the character _x_ at the end of a filename will refer
+to either the digit _0_ (this file is seen by ASCII callers) or _1_ (this
 file is seen by Commodore C/G callers).
 
 Then the user is asked to `Press RETURN/ENTER`.  Actually, `A` can
 be typed to abort the start screen; you could mention that in the
 *s.login x* files.
 
-<span id="anchor-337"></span>If `RETURN` is pressed, the program will read the disk file *s.start x*.
+<span id="anchor-337"></span>If `RETURN` is pressed, the program will read the
+disk file `s.start _x_`.
 =====================================================================================================
 
 Next, the BBS instructs the user:
 
-***ENTER YOUR HANDLE OR *******&lt;your board name&gt;******* ID:***
+`ENTER YOUR HANDLE OR _&lt;your board name&gt;_ ID:`
 
 If the user has no account, or makes a mistake entering the information,
-they are instructed to type *NEW*.
+they are instructed to type `NEW`.
 
 If a mistake is made logging in, and if a file called *s.errmail* exists
 on the disk, the contents of this file are sent in an e-mail message to
@@ -2311,16 +2312,16 @@ urge them to change their password.
 
 A file called *e.telecheck* is either created or appended to, which
 contains the login time and date, the missed security question, and the
-correct answer.  This file is viewable using the *VF* (View Feedback)
+correct answer.  This file is viewable using the `VF` (View Feedback)
 sysop utility.
 
-If the user has made four mistakes and has not entered *NEW* they are
+If the user has made four mistakes and has not entered `NEW` they are
 logged off for excessive login attempts.
 
-If the user has a "reserved" account, they can enter *RES* at the prompt
+If the user has a "reserved" account, they can enter `RES` at the prompt
 to enter the RES function of the new user program.
 
-### <span id="anchor-338"></span><span id="anchor-339"></span><span id="anchor-338"></span>Instant Logon
+### Instant Logon
 
 This feature is reserved for the sysop, for it can only be used from the
 console.  It is meant for a fast, easy way for you to log on to your BBS
@@ -2331,14 +2332,14 @@ The main difference from a regular logon is that none of your stats will
 be updated or saved to disk, and your last call date will be set to your
 logon time.
 
-To use the instant logon feature, type *I* at the ***Hit RETURN/ENTER***
+To use the instant logon feature, type `I` at the ***Hit RETURN/ENTER***
 prompt. You are prompted for your password, and immediately taken to the
 main prompt.
 
-### <span id="anchor-340"></span><span id="anchor-319"></span><span id="anchor-340"></span>RES<span id="anchor-341"></span><span id="anchor-340"></span><span id="anchor-319"></span><span id="anchor-340"></span>RES<span id="anchor-342"></span><span id="anchor-340"></span><span id="anchor-319"></span><span id="anchor-340"></span>RES<span id="anchor-341"></span><span id="anchor-340"></span><span id="anchor-319"></span><span id="anchor-340"></span>RES Users
+### <span id="RES-Users">RES Users</span>
 
-A RES user is one that you have set up an account for already using the
-*RS* or *ED* commands on the BBS.  (Perhaps you won't be around to
+A RES, or REServed, user is one that you have set up an account for already
+using the `RS` or `ED` commands on the BBS.  (Perhaps you won't be around to
 validate the user, for example.  See the \\1 section for more
 information.)
 
@@ -2378,12 +2379,12 @@ they are asked a random security question:
 -   Sections of their phone number: 3-digit area code, 3-digit dialing
     prefix, or 4-digit suffix
 
-**xxx-yyy-zzzz is a format used in the USA and Canada; other countries
+> `xxx-yyy-zzzz` is a format used in the USA and Canada; other countries
 have differing formats.  For now, foreign callers can just make up a
-phone number: 000-000-0000 works.  In Image BBS v2.0, this will change:
+phone number: `000-000-0000` works.  In Image BBS v2.0, this will change:
 perhaps be made optional, or at the very least more configurable.  It
 knows whether the sysop is in PAL- or NTSC-land, plus does timezone
-offsets, so maybe that will figure in the equation.**
+offsets, so maybe that will figure into the equation.
 
 This is used as an extra security measure.  If this question is missed,
 the same procedure regarding the *s.errmail* and *e.telecheck* files
@@ -2414,7 +2415,7 @@ on:
 
 Once a user has successfully logged on to the BBS, either remotely or
 locally, as either a new user or a user with a login ID and password
-already, the BBS reads the file entitled s.welcome x, and informs them
+already, the BBS reads the file entitled `s.welcome _x_`, and informs them
 of:
 
 -   what their access group is
@@ -3988,17 +3989,17 @@ forced e-mail is for.
 When reading a forced e-mail file, if either of the last two lines
 contain the single word
 
-ERASEthe forced e-mail file is erased.
+`ERASE`, the forced e-mail file is erased.
 
-OFFthe user is logged off immediately after reading the forced e-mail.
+`OFF`, the user is logged off immediately after reading the forced e-mail.
 
-Note that ERASE and/or OFF must both be entered with all capital
+Note that `ERASE` and/or `OFF` must both be entered with all capital
 letters.
 
 <span id="anchor-516"></span><span id="anchor-517"></span><span id="anchor-516"></span>QLeaving the E-Mail Subsystem
 --------------------------------------------------------------------------------------------------------------------
 
-Type Q or a command that takes you to any other subsystem.
+Type `Q` or a command that takes you to any other subsystem.
 
 If the user has any messages left in their e-mail inbox, they are
 prompted whether they want to delete them.
@@ -4010,14 +4011,12 @@ The news files are structurally different from the other file areas of
 the BBS—such as Movie Files or Program Files—and for that reason they
 are covered separately here.
 
-Typing NF at most prompts takes you to the News File library. Here,
+Typing `NF` at most prompts takes you to the News File library. Here,
 users can re-read BBS news files they see at login, and you can write
 new ones.
 
-If you have "File Maint Access" you will be placed in News-Maint:
-Otherwise, the prompt users see is
-
-News:
+If you have "File Maint Access" you will be placed in `News-Maint:`
+Otherwise, the prompt users see is `News:`.
 
 <span id="anchor-520"></span><span id="anchor-521"></span><span id="anchor-520"></span>AAdding a News Item
 ----------------------------------------------------------------------------------------------------------
@@ -4026,7 +4025,7 @@ To add a file to a directory, you are asked for the title.  This is what
 the user will see when they list news items; it also names the file on
 disk where the news text is stored.
 
-If the filename begins with a \$ (dollar sign), it becomes a "repeating"
+If the filename begins with a `\$` (dollar sign), it becomes a "repeating"
 news file, shown to users each time they log on to the BBS.
 
 All News files are non-abortable the first time they are shown to a
@@ -4036,7 +4035,6 @@ user.
 ---------------------------------------------------------------------------------------------------
 
 <span id="anchor-524"></span>Type the number of a news file (see List) to read that item.
-=========================================================================================
 
 <span id="anchor-525"></span><span id="anchor-526"></span><span id="anchor-525"></span>KxKilling a News File
 ------------------------------------------------------------------------------------------------------------
@@ -4044,17 +4042,17 @@ user.
 A maintenance operation, type K followed by the number of the news file
 you wish to kill.  (fixme: confirmation?)
 
-**Ex** EDITING A FILE
+E*x* EDITING A FILE
 
-If you have maintenance access, type E followed by the number of the
+If you have maintenance access, type `E` followed by the number of the
 entry to edit.  You may then change the information you entered using A:
 (fixme: news file name, whether it's a repeating news item) and the file
 will be loaded into the editor for editing. When the file is re-saved,
 you are given the opportunity to update the date of the file so it again
 appears as a new file.
 
-**Lx** LISTING NEWS FILES
-
+L_x_ LISTING NEWS FILES
+_x_
 Type L or Lx (x is the starting number to list from) at the prompt to
 list all news files available to that access level.  Each is given a
 number, and if you have News-Maint access, you can also see access
