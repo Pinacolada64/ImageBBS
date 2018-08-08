@@ -1,4 +1,4 @@
-# Appendix: System Commands Quick Reference
+# Appendix: Quick Reference
 
 ## Lightbar Keys
 
@@ -97,6 +97,46 @@ Key            Purpose
 `Shift-T` Invert carrier detect logic
 `space`   Redisplay current screen
 `pound`   Manual answer
+
+## User Flags
+
+Flag                        Type    Purpose
+------------------------- --------- -------------------------------------------
+Non-Weed Status           Yes/No    Yes: Group is not deleted from the user log
+                                    after not calling for a specified number of
+                                    months.  (See AutoWeed.)
+Credit Ratio              Numeric   The number of credits awarded (1-9) per
+                                    line written in a post or file block uploaded.
+                                    Default ratio is 1:1.
+Local Maintenance         Yes/No    Yes: Group has access to BBS maintenance
+                                    commands. Only give very trusted users
+                                    access to this.
+Post/Respond Capability   Yes/No    Yes: Group can post messages in message
+                                    bases.
+UD/UX Access              Yes/No    Yes: Group can use upload/download or user
+                                    exchange subsystems.
+Maximum Editor Lines      Numeric   Lines of text (10-100, in multiples of 10:
+                                    0=10, 1=20, 2=30...) group has available to
+                                    write messages, e-mail, or feedback.
+Unlimited DL Credit       Yes/No    Yes: no credit is deducted when files are
+                                    downloaded.
+Remote Maintenance        Yes/No    Yes: can write or remove forced e-mail, view
+                                    feedback, and view system logs.
+E-mail Access             Yes/No    Yes: group can send/receive e-mail.
+User List Access          Yes/No    Yes: group can list BBS users.
+B.A.R./Log Access         Yes/No    Yes: group can view the Board Activity
+                                    Register or daily system logs.
+Sub-board Maintenance     Yes/No    Yes: group can edit or re-configure SIGs or
+                                    sub-boards, and edit or delete other users'
+                                    posts.
+Files Maintenance         Yes/No    Yes: group can edit, validate, award credit
+                                    to users in the U/D section.
+MCI Access                Yes/No    Yes: group has access to the Message
+                                    Command Interpreter.
+UD/UX at Prime Time       Yes/No    Yes: group can upload or download from U/Ds
+                                    or U/Xs during prime time.
+------------------------- --------- -------------------------------------------
+Table: User access flags
 
 ## General Commands
 
@@ -202,7 +242,7 @@ _x_           Move to sub-board #_x_, or act on item #_x_
 [^1]: _SIG_, short for "Special Interest Group," is a way of grouping
 related items into a directory or library which can be navigated through.
 
-### Message Bases
+## Message Bases
 
 -------------------------------------------------------------------------------
 Command           Purpose
@@ -225,7 +265,22 @@ Command           Purpose
 
 <!-- `\^_<title>_`  Freeze bulletins: allow/disallow replies -->
 
-#### End-of-Bulletin Commands
+### SubOp Commands
+
+These commands are only available to SubOps or Sysops:
+
+-------------------------------------------------------------------------------
+Command        Purpose
+------------   -------------------------------------------------------
+`KA`_x_        Kill all responses from #_x_
+
+`KO`_x_        Kill old responses from #_x_
+
+`Z`            Edit board details: name, type, device/drive, entry screens,
+               etc.
+-------------------------------------------------------------------------------
+
+### End-of-Bulletin Commands
 
 This menu is only available if the user's `P`rompt `M`ode is enabled.
 
@@ -241,22 +296,7 @@ _x_            Read from response #_x_
 `R`            Respond to bulletin
 `Return`       Continue to next bulletin
 
-#### Message Bases, SubOp Commands
-
-These commands are only available to SubOps or Sysops:
-
--------------------------------------------------------------------------------
-Command        Purpose
-------------   -------------------------------------------------------
-`KA`_x_        Kill all responses from #_x_
-
-`KO`_x_        Kill old responses from #_x_
-
-`Z`            Edit board details: name, type, device/drive, entry screens,
-               etc.
--------------------------------------------------------------------------------
-
-## Upload/Download/Exchange
+## Upload/Download, User Exchange
 
 -------------------------------------------------------------------------------
 Command      Purpose
@@ -388,11 +428,15 @@ Command      Purpose
 Command      Purpose
 ---------    -----------------------------------------------------
 `?`          Command menu
-_x_          Vote on (or view results if voted on) for topic #_x_
-`A`          Add topic
-`E`          Edit topic
-`K`          Kill topic
-`L`          List topics
+_x_          Vote on (or view results if voted on) topic #_x_
+`A`          Add new vote topic
+`E`_x_       Edit topic #_x_
+`K`_x_       Kill topic #_x_
+`L`          List available topics
+`R`_x_       Reset votes on topic #_x_
+`V`_x_       View who cast what vote on topic #_x_
+`VN`         Vote on all new topics since last call date
+`<`          Move to parent subdirectory
 
 ## User List
 
