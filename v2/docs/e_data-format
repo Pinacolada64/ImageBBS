@@ -1,0 +1,65 @@
+e.data format
+
+ 1 ca
+ 2 ^
+ 3 ^
+ 4 ^
+ 5 ^
+ 6 ^
+ 7 ^
+ 8 ^
+ 9 ^
+10 ^
+11 ^
+12 ur  [Highest user account # -1, written at setup]
+13 ^
+14 ^
+15 ^
+16 ^
+17 d3$ Last caller handle. [NOBODY at system setup.]
+18 pp$ [set to PASS at system setup.]
+19 z$  date/time of last user logoff
+20     prime time info: p1%, p2%, p3%
+21 ^
+22 ^
+23 ^
+24 ^
+25 ^
+26 ^
+27 ^
+28 ^
+29 ^
+30 ^
+31 ur [written at setup]
+32 ^
+33 ^
+34 y1% External CMD device (related to clock set method, #37)
+35 am$ date/time of last log reset [am$ written at setup]
+36 mc  Macro count - +/IM.macros
+37 y%  Clock set device type: 1=CMD, 2=Lt.Kernal, 3=Last Automaint Timestamp [4=External CMD Device, newly added]
+	[formerly system reservation password]
+38 lk% Lt.Kernal device number
+39 ^
+40 df% Default prompt color
+41     Printer secondary address
+42     poke $42f0/17136, line feeds to printer
+43     Password mask character: poke $42f2/17138
+44     Version date: "March 16, 1995  3:43P"
+45 tz$ BBS time zone: "EST0700"
+46 po$ Main prompt text
+47 bn$ BBS name
+48 c1$ Entering chat message
+49 c2$ Exiting chat message
+50     Netsub ID: increments by 1 when net post/response made
+	[setup checks this value before writing over it]
+51 cc$ BBS identifier (WN)
+52     System device/drive
+53     E-Mail device/drive
+54     Etcetera device/drive
+55     Directory device/drive
+56     Plus-File device/drive
+57     User device/drive
+58 nc  Credits for new user
+
+used to be
+37 l2$ 0=none, 1=one, 2=all calls, Reservation PassWord
