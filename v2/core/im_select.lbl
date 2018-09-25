@@ -5,7 +5,7 @@
 ' im=2: get file list from struct (I guess, it has struct commands)
 	kk=0:IF im<1 OR im>2 THEN RETURN
 {:60001}
-	GOSUB{:60010}
+	&"[Y]es [N]o [S]tart [E]very [A]bort{f6}":GOSUB{:60010}
 {:60002}
 	GOSUB{:60030}
 {:60003}
@@ -53,16 +53,23 @@
 	fl=0:RETURN
 {nice:100}
 {:60100}
-	dr=7:GOSUB 1010:CLOSE 15:IF st THEN RETURN
+' this locks up:
+'	dr=7:GOSUB 1010:CLOSE 15:IF st THEN RETURN
+' 1008: ask Device,Drive
+' 1470: evaluate DCdv,dr command line
+	gosub 1008:gosub 1470
 	&"{f6}Pattern: ":GOSUB 1499:b$="*"
 	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
 	NEXT:an$=an$+b$:&"{f6}":CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$
 	GET#1,a$,a$:&,8,1,1:&"{pound}$a{f6:2}":y$="":RETURN
 {:60110}
+' get filetype (t$), check for 1st quote mark, get block size (b%), an$=filename
 	&,8,1,1:t$=MID$(a$,26,1):an$=a$:&,15,6,34:b%=VAL(a$):IF an$=""THEN RETURN
-	a%=b%:d$="":IF co%>2 THEN a%=a%*254/1024:d$="k"
+' duplicate lines:
+'	a%=b%:d$="":IF co%>2 THEN a%=a%*254/1024:d$="k"
 ' &,15,6,34: split an$ on ", returning an$ up to ", a$ after "
-	&,15,6,34:f$=a$+","+t$:&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":RETURN
+'	&,15,6,34:f$=a$+","+t$:&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":RETURN
+	&,15,6,34:goto {:60214}
 {nice:100}
 {:60200}
 	n=0:RETURN
@@ -70,6 +77,7 @@
 {:60210}
 	IF n=>s%(0,0)THEN an$="":RETURN
 	n=n+1:b%=s%(39,n):&,60,1,16,s%(13,n),f$
+{:60214}
 	a%=b%:d$="":IF co%>2 THEN a%=a%*254/1024:d$="k"
 	&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":RETURN
 	rem im.select
