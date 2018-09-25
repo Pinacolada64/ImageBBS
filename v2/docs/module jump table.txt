@@ -96,6 +96,8 @@ im.screens	Display transfer progress screen
 	im=2	60024	Display other device/drive
 
 im.select
+	im=1	60100	get file list from directory
+	im=2	60200	get file list from struct (I guess, it has struct commands)
 
 im.stats
 	im=1	60002	ST - user stats, access flags, etc.
