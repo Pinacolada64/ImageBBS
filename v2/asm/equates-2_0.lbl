@@ -1,6 +1,6 @@
 {asm}
 ; to include:
-; {uses:\%userprofile%\My Documents\C64\Image BBS\image-bbs\v2\asm\equates-2_0.lbl}
+; {uses:..\asm\equates-2_0.lbl}
 	; image 2.0 equates
 	;
 	var	= $61
@@ -68,7 +68,7 @@
 	retval	= $bc49
 
 	syscll	= $e130
-	getfile	= $e1d4 ; 57812
+	getfile	= $e1d4 ; 57812 (print last filename)
 
 	; image routines:
 
@@ -86,7 +86,7 @@
 	; serial # stuff
 	;
 	bsnpre	= $02fd	; 765 serial # prefix (a/b/g...)
-	bsnval	= $02fe	; 766 serial # lo byte, +1=hi byte
+	bsnval	= $02fe	; 766 serial # lo byte, 767=hi byte
 	;
 	death	= $1800
 	prgstart= $1801
@@ -116,22 +116,24 @@
 	lcolr	= $d800+640
 	adisp	= $0400+880
 	acolr	= $d800+880
-	;
-	fkeybuf	= 679 ;32
-	emptym0	= 711 ;57
-	;
+
+; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
+
+	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
+	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
+
 	cassbuff= 828
 	idlemax	= 830
-	datebuf	= 831 ;11
-	daytbl	= 842 ;24
+	datebuf	= 831 ; 11 bytes
+	daytbl	= 842 ; 24 bytes (8*3)
 	tzoneh	= 866 ; bbs  time zone hour
 	tzonem	= 867 ; bbs  time zone minute
 	uzoneh	= 868 ; user time zone hour
 	uzonem	= 869 ; user time zone minute
-	wrapbuf	= 870 ;80
+	wrapbuf	= 870 ; 80 bytes
 	wrapflg	= 950
-	modclmn	= 951
-	ptrclmn	= 952	; printer column?
+	modclmn	= 951 ; user's screen width
+	ptrclmn	= 952 ; printer column?
 	wrapind	= 953
 	wrapdmp	= 954
 	ptrclm	= 955
@@ -149,12 +151,12 @@
 	blnkcntr= 967	; screen blank counter
 	ptrlin	= 968
 	ptrlinm	= 969
-	usrlin	= 970
-	usrlinm	= 971
+	usrlin	= 970   ; mp%: user's screen height?
+	usrlinm	= 971	; how many lines output to modem?
 	fredmode= 972
-	montbl	= 973 ; 36
-	emptym1	= 1009 ;1
-	timeset	= 1010 ; "time has been set" flag
+	montbl	= 973	; 36 bytes (12*3)
+	emptym1	= 1009	; 1 byte
+	timeset	= 1010	; "time has been set" flag
 	flag1	= 1011
 	case1	= 1012
 	temp3	= 1015
@@ -162,7 +164,7 @@
 	comm	= 1017
 	flags	= 1018
 	cline	= 1019
-	lines	= 1022 ; $03F8 # of lines in text editor buffer
+	lines	= 1022 ; $03F8: kk, # of lines in text editor buffer
 	modes	= 1023
 	;
 	; garbage collection stuff?
@@ -177,72 +179,72 @@
 	ecshide	= $e400
 	ecslen	= 10
 	;
-	;screen parameters
+	; screen parameters
 	;
-	mcolor	= 646
-	mreverse= 199
-	curptr	= 209
-	scnpos	= 211
-	sline	= 214
-	colptr	= 243
-	undchr	= 206
-	undcol	= 647
-	crsrflg	= 204
-	crsrmode= 207	; Flag: Was Last Cursor Blink on or off?
+	mreverse= 199	; $c7
+	crsrflg	= 204	; $cc
+	undchr	= 206	; $ce
+	crsrmode= 207	; $cf, Flag: Was Last Cursor Blink on or off?
 	; This location keeps track of whether, during the current cursor blink,
 	; the character under the cursor was reversed, or was restored to
 	; normal. This location will contain a 0 if the character is reversed,
 	; and a 1 if the character is restored to its non-reversed status.
-
+	curptr	= 209	; $d1
+	scnpos	= 211	; $d3, current screen column (0-39)
 	scnclm	= scnpos
+	sline	= 214	; $d6, current screen row (0-24)
+	colptr	= 243	; $f3
+
+	mcolor	= 646	; $0286
+	undcol	= 647	; $0287
 	;
 	; Message Command Interpreter variables:
 	;
-	mjump	= $07e8
-	mresult	= $07e9
-	mspeed	= $07ea
-	mprint	= $07eb
-;	mcolor	= $07ec
-;	mprtr	= $07ed
-;	mreverse= $07ee
-	mci	= $07ef
-	mdigits	= $07f0
+	mjump	= $07e8	; 2024
+	mresult	= $07e9	; 2025
+	mspeed	= $07ea	; 2026
+	mprint	= $07eb	; 2027
+;	mcolor	= $07ec	; 2028
+;	mprtr	= $07ed	; 2029
+;	mreverse= $07ee	; 2030
+	mci	= $07ef	; 2031
+	mdigits	= $07f0	; 2032
 
-	carrst	= $07f1 ; 2033: modem carrier status
-	tsp1	= $07f2	; transmit speed lo-byte
-	tsp2	= $07f3	; transmit speed hi-byte
-	chks	= $07f4
-	readmode= $07f6
-	filenum	= $07f7
-	tmp5	= $07f8
-	abtchr	= $07f9
+	carrst	= $07f1	; 2033: modem carrier status
+	tsp1	= $07f2	; 2034: transmit speed lo-byte
+	tsp2	= $07f3	; 2035: transmit speed hi-byte
+	chks	= $07f4	; 2036
+	readmode= $07f6	; 2038
+	filenum	= $07f7	; 2039
+	tmp5	= $07f8	; 2040
+	abtchr	= $07f9	; 2041
 	clock	= $07fa ; 2042
-	filetyp	= $07fb
-	tmp1	= $07fc
-	tmp2	= $07fd
-	tmp3	= $07fe
-	tmp4	= $07ff
+	filetyp	= $07fb	; 2043
+	tmp1	= $07fc	; 2044
+	tmp2	= $07fd	; 2045
+	tmp3	= $07fe	; 2046
+	tmp4	= $07ff	; 2047
 
 	; BBS flags
 
-	local	= $d000
-	case	= $d001
-	editor	= $d002
-	tsr	= $d003 ; needed by inline.s
-	llen	= $d004
-	flag	= $d005
-	chat	= $d006
-	inchat	= $d007
-	chatpage= $d008
-	carrier	= $d009
-	mxor	= $d00a
-	mkolor	= $d00b
-	mupcase	= $d00c
-	irqcount= $d00d
-	trans	= $d00e
-	index	= $d00f
+	local	= $d000 ; 53248
+	case	= $d001 ; 53249
+	editor	= $d002 ; 53250
+	tsr	= $d003 ; 53251 - needed by inline.s, I think
+	llen	= $d004 ; 53252 - input line length
+	flag	= $d005 ; 53253
+	chat	= $d006 ; 53254
+	inchat	= $d007 ; 53255
+	chatpage= $d008 ; 53256
+	carrier	= $d009 ; 53257
+	mxor	= $d00a ; 53258
+	mkolor	= $d00b ; 53259
+	mupcase	= $d00c ; 53260
+	irqcount= $d00d ; 53261
+	trans	= $d00e ; 53262
+	index	= $d00f ; 53263
 	;
-	tempscn = $1000 ;$140
+	tempscn = $1000 ;$140 bytes
 	tempscn0= tempscn+000
 	tempscn1= tempscn+040
 	tempscn2= tempscn+080
@@ -251,7 +253,7 @@
 	tempscn5= tempscn+200
 	tempscn6= tempscn+240
 	tempscn7= tempscn+280
-	tempcol	= $1140 ;$140
+	tempcol	= $1140	; 4416, $140 bytes
 	tempcol0= tempcol+000
 	tempcol1= tempcol+040
 	tempcol2= tempcol+080
@@ -260,35 +262,36 @@
 	tempcol5= tempcol+200
 	tempcol6= tempcol+240
 	tempcol7= tempcol+280
-	emptym3	= $1280 ;96
+	emptym3	= $1280 ; 4736, 96 bytes
 	;
-	idlejif	= $12e0
-	idlesec	= $12e1
-	idleten	= $12e2
-	idlemin	= $12e3
-	curdsp	= $12e4
-	bar	= $12e5
-	tsr2	= $12e6
-	mright	= $12e7
-	mleft	= $12e8
-	cphase	= $12e9
-	key	= $12ea
-	shft	= $12eb
-	ptrlnfd	= $12f0
-	ha577	= $12f1
-	mask	= $12f2
-	scnmode	= $12f3
-	dflag	= $12f4
-	dstat	= $12f5
-	cytmp 	= $12f6
-	interm	= $12f7
-	cxsav	= $12f8
-	len1	= $12f9
-	passmode= $12fa
-	scnlock	= $12fb
-	tmp6	= $12fc
-	tmp7	= $12fd
-	freq	= $12fe
+	idlejif	= $12e0	; 4832
+	idlesec	= $12e1	; 4833
+	idleten	= $12e2	; 4834
+	idlemin	= $12e3	; 4835
+	curdsp	= $12e4	; 4836
+	bar	= $12e5	; 4837
+	tsr2	= $12e6	; 4838
+	mright	= $12e7	; 4839
+	mleft	= $12e8	; 4840
+	cphase	= $12e9	; 4841
+	key	= $12ea	; 4842
+	shft	= $12eb	; 4843
+
+	ptrlnfd	= $12f0	; 4848 printer linefeed - +/IM.misc has 17136 ($42f0)
+	ha577	= $12f1	; 4849
+	mask	= $12f2	; 4850
+	scnmode	= $12f3	; 4851
+	dflag	= $12f4	; 4852
+	dstat	= $12f5	; 4853
+	cytmp 	= $12f6	; 4854
+	interm	= $12f7	; 4855
+	cxsav	= $12f8	; 4856
+	len1	= $12f9	; 4857
+	passmode= $12fa	; 4858
+	scnlock	= $12fb	; 4859
+	tmp6	= $12fc	; 4860
+	tmp7	= $12fd	; 4861
+	freq	= $12fe	; 4862
 	;
 	; rs232 jump table
 	;
@@ -299,31 +302,31 @@
 	rsout	= rs232 + $0c
 	rsbaud	= rs232 + $0f
 	rschar	= rs232 + $12
-	;
-	chktbl	= $1300 ;$10
-	bartbl	= $1310 ;$c0
-	arryptrs= $13d0 ;$10
-	daysofm	= $13e0 ;$0c
-	emptym2	= $13ec ;$04
-	sndtbl	= $13f0 ;$60
-	netalrm	= $1450 ;$30
-	tblatc	= $1480 ;$80
-	tblcta	= $1500 ;$100
-	tblcta1	= $1600 ;$20
-	tblcta2	= $1620 ;$20
-	tblcta3	= $1640 ;$20
-	alarmtb	= $1660 ;$80
-	date1	= $16e0 ;$20
-	lobytes	= $1700 ;25
-	hibytes	= $1719 ;25
-	lobytec	= $1732 ;25
-	hibytec	= $174b ;25
-	emptym4	= $1764 ;28
-	pmodetbl= $1780 ;$80
-	;
+
+	chktbl	= $1300 ;$10 bytes (8*2 per screen)
+	bartbl	= $1310 ;$c0 bytes
+	arryptrs= $13d0 ;$10 bytes
+	daysofm	= $13e0 ;$0c bytes
+	emptym2	= $13ec ;$04 bytes
+	sndtbl	= $13f0 ;$60 bytes
+	netalrm	= $1450 ;$30 bytes
+	tblatc	= $1480 ;$80 bytes
+	tblcta	= $1500 ;$100 bytes
+	tblcta1	= $1600 ;$20 bytes
+	tblcta2	= $1620 ;$20 bytes
+	tblcta3	= $1640 ;$20 bytes
+	alarmtb	= $1660 ;$80 bytes
+	date1	= $16e0 ;$20 bytes "Thu Sep 13, 2018 02:17 pm pstxxx"
+	lobytes	= $1700 ;25 bytes
+	hibytes	= $1719 ;25 bytes
+	lobytec	= $1732 ;25 bytes
+	hibytec	= $174b ;25 bytes
+	emptym4	= $1764 ;28 bytes
+	pmodetbl= $1780 ;$80 bytes
+
 	ribuf	= $0b00	; rs232 input buffer
 	robuf	= $0b80	; rs232 output buffer
-	;
+
 	wedgemem= $0c00
 	trapoff	= wedgemem+0
 	trapon	= wedgemem+3
@@ -331,5 +334,4 @@
 	arraysav= wedgemem+9
 	arrayres= wedgemem+12
 	forcegc	= wedgemem+15
-	;
 {endasm}

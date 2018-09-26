@@ -133,16 +133,18 @@ iload    = $0330
 
 tbuffer  = $033c ; tape buffer
 idlemax  = $033e ; Maximum idle time allowed
-LineNumberMode	= $03fa	; text editor flag: printing line numbers?
-EditorLines		= $03fe ; Number of lines of text in text editor buffer
-						; (line 1657 in im)
-v_03ff	= $03ff ; unused
+
+lines	= $03f8 ; 1016: kk, # of lines in text editor buffer at save (im: 1206, 1612)
+LineNumberMode	= $03fa	; 1018: text editor flag: printing line numbers? (im: 1600)
+EditorLines	= $03fe ; 1022: le, # of lines of text allowed (by access
+			; flags) in text editor buffer (im: 1601, 1657)
+v_03ff	= $03ff ; 1023: something editor-related
 
 videoram= $0400 ; start of sysop status line
 light	= $04f0 ; lightbar screen ram start
 var_0518= $0518 ; 1st line of sysop screen if mask on
 
-; mci stuff:  
+; mci stuff:
 mjump	= $07e8 ; Number of lines to skip for £J, £E, £D
 mresult = $07e9 ; Result of £A, £T
 mspeed	= $07ea ; Print speed for £S
@@ -150,13 +152,13 @@ mprint	= $07eb
 mcolor	= $07ec
 mprtr	= $07ed
 mreverse= $07ee
-mci		= $07ef
+mci	= $07ef ; 2031 (im, 1614)
 mdigits = $07f0 ; Number of digits for £%
 carrst	= $07f1 ; 2033
 tsp1	= $07f2	; 2034 transmit speed lo byte
 tsp2	= $07f3	; 2035 transmit speed hi byte
 chk_left= $07f4 ; 2036 [official label is "chks"]
-				; Checkmark flag for Lightbar (left side)
+		; Checkmark flag for Lightbar (left side)
 chk_right=$07f5 ; 2037 Checkmark flag for Lightbar (right side)
 readmode= $07f6 ; unabortable file read flag
 filenum = $07f7
@@ -193,17 +195,17 @@ idlesec = $42e1
 idleten = $42e2
 idlemin = $42e3
 curdisp	= $42e4
-bar		= $42e5
+bar	= $42e5
 tsr2	= $42e6
 undchr	= $42e7
 undcol	= $42e8
 cphase	= $42e9
-key		= $42ea
+key	= $42ea
 shft	= $42eb
 ptrpnfd = $42f0
 ha577	= $42f1
 mask	= $42f2 ; 17138 Password mask character
-scnmode	= $42f3
+scnmode	= $42f3 ; 17139 Screen mask mode: 1=off
 dflag	= $42f4
 dstat	= $42f5
 cytemp	= $42f6
@@ -246,10 +248,10 @@ buffer	= $ce77
 
 ; BBS flags
 local	= $d000 ; 53248 Flag for local mode (1=on: if enabled,
-				; nothing is output to modem with usage of &)
+		; nothing is output to modem with usage of &)
 case	= $d001 ; uppercase lock flag (only for non-TurboREL systems): 1=all uppercase
 editor	= $d002 ; flags for &,1
-tsr		= $d003 ; time remaining for caller
+tsr	= $d003 ; time remaining for caller
 llen	= $d004 ; 53252 Number of characters allowed for input.
 				; Line length for &,1 and £Ix MCI command. 
 flag	= $d005 ; found from Image 2.0 source
@@ -265,10 +267,10 @@ trans	= $d00e
 index	= $d00f
 
 ; Time of Day Clock (TOD) registers
-ten		= $dc08
-scs		= $dc09
-min		= $dc0a
-hrs		= $dc0b
+ten	= $dc08
+scs	= $dc09
+min	= $dc0a
+hrs	= $dc0b
 
 carrier = $dd01
 
