@@ -9,6 +9,12 @@
 {:3006}
 	a=abs(int(val(left$(an$,4)))):return
 {:3008}
+' &,60,1,20,s%(15,0),d2$
+'	1: get a string from the struct
+'	20: bytes
+'	s%(x,0): where the field starts?
+'	d2$: string to get
+
 	&,60,1,20,s%(15,0),d2$:&,60,1,30,s%(25,0),p$:if q then p$="({$cd}) "+p$
 	return
 {:3010}

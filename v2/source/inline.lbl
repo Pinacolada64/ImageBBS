@@ -21,15 +21,6 @@ VARPNT	= 71	; $47-$48 Pointer to the Current BASIC Variable Value
 
 nchk1	= $ff	; FIXME: just a guess for now
 
-; usetbl1	= $cd03
-; buffer	= $ce77
-; buf2		= $ce27
-
-CRSR_DOWN	= 17
-CRSR_UP		= 17+128
-CRSR_RIGHT	= 29
-CRSR_LEFT	= 29+128
-
 hc000: jmp inline
 hc003: jmp inline0
 hc006: jmp term
