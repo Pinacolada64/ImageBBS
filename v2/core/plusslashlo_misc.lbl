@@ -1,0 +1,150 @@
+' c64list 3.50: use "-alpha:lazy"
+{number:4000}
+{step:2}
+{quoter:32=space} ' make runs of spaces easier to read
+	rem +/LO.MISC - MISC. IDLE COMMANDS
+	poke 53248,1:on a+1 gosub {:4004}, {:4050}, {:4068}:poke 53248,0:return
+{nice:100}
+
+{:3264}
+	&"{f6:2}{purple}{pound}vj{cyan}   {$d2}emote {$d4}ime {$c5}ditor v2.0{f6}{purple}{pound}vj{cyan}":goto {:3268}
+	a$=d1$:gosub 1520:t1=a:return
+{:3268}
+	&"{f6}{pound}{back arrow}10{cyan}{$c3}urrent {$c4}ate/{$d4}ime is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
+{:3270}
+	p$=" {$c4}ay   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
+	dw$=mid$(str$(val(an$)),2,1)
+{:3274}
+	p$=" {$cd}onth ":w$=mid$(d$,4,2):a=2:gosub {:3310}:if a<1 or a>12 then{:3274}
+	gosub {:3316}:mo$=an$
+{:3278}
+	p$=" {$c4}ate  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
+	gosub {:3316}:dt$=an$
+{:3282}
+	p$=" {$d9}ear  ":w$=mid$(d$,2,2):a=2:gosub {:3310}:if a<1 or a>99 then{:3282}
+	gosub {:3316}:yr$=an$
+	c$="{$c1}":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="{$d0}"
+{:3288}
+	p$=" {$c8}our  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
+	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
+{:3292}
+	p$=" {$cd}in.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
+	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
+{:3296}
+	p$=" {$c1}/{$d0}   ":a=1:gosub {:3310}:on-(an$<>"{$c1}"and an$<>"{$d0}")goto {:3296}:if an$<>v$then tz=1
+	if(an$="{$d0}"and b<>18)or(an$="{$c1}"and b=18)then b=b or 128:gosub {:3318}
+	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10{$d3}etting {$c4}ate/{$d4}ime to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
+																					gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
+	poke 56328,.:poke 1010,1
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:goto {:3326}
+{:3308}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:3310}
+' jack's code:
+	y$=w$:poke 53252,len(y$)
+' display old value
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}$y{f6}"
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}i1":if an$=""then an$=y$
+' replace old value on screen with new, erase prompt, reposition cursor
+	a=val(an$):&"{up:2} {lt. blue}{pound}$b{pound}{back arrow}08{gray3}: {pound}v7{pound}{back arrow}35{f6}{pound}{back arrow}35{f6}{up}":return
+' al's code:
+'	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:on-(an$="")goto {:3314}:&"{f6}"
+'	a=val(an$):tz=(tz or-(a<>val(v$))):return
+{:3314}
+	&"{f6}":an$=v$:a=val(an$):return
+
+{:3316}
+	an$=right$("0"+mid$(str$(val(an$)),2,2),2):return
+{:3318}
+	hr$=right$("0"+mid$(str$(-80*(an$="{$d0}")+val(hr$)),2,2),2):return
+{:3320}
+	a$=dw$+yr$+mo$+dt$+hr$+mn$:return
+{:3322}
+	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
+	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
+{:3326}
+	return
+{:3328}
+	&"{f6}{$ce}o {$c3}hanges {$cd}ade - {$c1}borted!{f6:2}":return
+
+{ifdef:jack}
+{:4004}
+' a=0:
+	&"{clear}{f6:2}  {$c5}nter {$c3}urrent {$c4}ate/{$d4}ime:{f6}"
+{:4006}
+	&"{pound}{back arrow}12[1={$d3}un...7={$d3}at]{f6}{up}"
+	b$="{$c4}ay":w$=left$(d1$,1):gosub {:4046}:if a<1 or a>7 then {:4006}
+	gosub {:4044}:poke 52935,a:dw$=mid$(str$(a),2,1)
+{:4010}
+	b$="{$cd}onth":w$=mid$(d1$,4,2):gosub {:4046}:if a<1 or a>12 then {:4010}
+	gosub {:4044}:poke 52936,a:gosub {:sub.format_digit}:mo$=an$
+{:4014}
+	b$="{$c4}ate":w$=mid$(d1$,6,2):gosub {:4046}:if a<1 or a>31 then {:4014}
+	gosub {:4044}:poke 52937,a:gosub {:sub.format_digit}:dt$=an$
+{:4018}
+	b$="{$d9}ear":w$=mid$(d1$,2,2):gosub {:4046}:if a<1 or a>99 then {:4018}
+	gosub {:4044}:poke 52938,a:gosub {:sub.format_digit}:yr$=an$
+{:4024}
+	c$="{$c1}":w$=mid$(d1$,8,2):a=val(w$):if a>79 then a=a-80:c$="{$d0}"
+	b$="{$c8}our":gosub {:4046}:if a<1 or a>12 then {:4024}
+' b=&,62,b,c
+	b=a
+' add 80 for PM
+	hr$=right$("0"+mid$(str$(-80*(c$="P")+a),2,2),2) ' P={$d0}
+{:4028}
+	b$="{$cd}in.":w$=mid$(d1$,10,2):gosub {:4046}:if a<.or a>59 then {:4028}
+	c=a:gosub {:sub.format_digit}:mn$=an$
+{:4032}
+	b$="{$c1}/{$d0}":w$=c$:gosub {:4046}:if an$<>"{$c1}"and an$<>"{$d0}" then {:4032}
+	if an$="{$d0}"then b=b+80
+' display date/time:
+	a$=dw$+yr$+mo$+dt$+hr$+mn$
+	&"{cyan}{pound}{back arrow}10{$d3}etting {$c4}ate/{$d4}ime to{f6}{pound}{back arrow}05{$04}"+a$+"{f6}"
+' 1907: default to Yes:
+	&"{f6} {lt. blue}{$d3}elect {lt. green}{$d9}es{lt. blue} {$d4}o {$d3}tart {$c3}lock, or{f6} {$d3}elect {lt. green}{$ce}o{lt. blue} {$d4}o {$c3}hange: ":gosub 1907
+	if a=. then {:4004}
+	&,62,b,c:b=b+80*((b=92)-(b=12))+12*((b=93)or(b=13)):&,58,b,0:poke 1010,1
+' 1520: a=mn%
+	a$=d1$:gosub 1520:t1=a ':rem an$=d1$:&,15:d2$=an$+"{$cd}"
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
+{:4044}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:4046}
+	y$=w$:poke 53252,len(y$)
+' display old value
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}$y{f6}"
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}i1":if an$=""then an$=y$
+' replace old value on screen with new, erase prompt, reposition cursor
+	a=val(an$):&"{up:2} {lt. blue}{pound}$b{pound}{back arrow}08{gray3}: {pound}v7{pound}{back arrow}35{f6}{pound}{back arrow}35{f6}{up}":return
+
+{:sub.format_digit}
+	an$=right$("0"+mid$(str$(a),2),2):return
+{endif}
+
+{nice:100}
+' set system password
+' fixed: also improve display in +.lo 3500
+{:4050}
+	&"{clear}{f6}{$d3}ystem {$d0}assword{f6:2}[{$c1}]ll {$c3}alls, [{$cf}]ne {$c3}all or [{$ce}]one? {pound}g1"
+'	on -(an$="{$ce}")-2*(an$="{$cf}")-3*(an$="{$c1}") goto {:4056},{:4058},{:4060}:return
+{:4056}
+'	l2=.:&,52,40,0:&"{$ce}one{f6}":an$="":goto {:4064}
+	if an$="{$ce}" then l2=.:&,52,40,0:&"{$ce}one{f6}":an$="":goto {:4064}
+{:4058}
+'	l2=1:&,52,40,1:&"{$cf}ne{f6}":goto {:4062}
+	if an$="{$cf}" then l2=1:&,52,40,1:&"{$cf}ne{f6}":goto {:4062}
+{:4060}
+'	l2=2:&,52,40,1:&"{$c1}ll{f6}"
+	if an$="{$c1}" then l2=2:&,52,40,1:&"{$c1}ll{f6}":goto {:4062}
+	return
+{:4062}
+	poke 53252,10:&"{f6:2}{$c5}nter {$d0}assword: {pound}i1":if an$="" then {:4050}
+{:4064}
+' l2$="[0|1|2]"+"<password>"
+	l2$=chr$(48+l2)+an$:gosub 1063:x=37:gosub 1001:print# 2,l2$:close 2:return
+{nice:100}
+{:4068}
+' read daily log
+	a$="r":gosub 1064:sh=.:&"{clear}{f6}":if e%=0 then:&,3,2
+	&"{f6:2}{pound}q0{$d0}ress {$c1}ny {$cb}ey {pound}g1":close 2:return
+	rem +/LO.MISC - 2018-09-13 JLF & PINACOLADA
