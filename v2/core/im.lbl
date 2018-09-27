@@ -1,7 +1,7 @@
 {quoter:32=space} ' make runs of spaces easier to read
 {undef:swiftlink} ' for switching to swiftlink rs232, not ready yet
 {crunch:on}
-{alpha:upper}
+{alpha:alt} ' c64list3.50: converts to upper/lowercase quoted strings
 
 {number:0}
 	on peek(829)goto {:3000},{:4000}
@@ -11,7 +11,6 @@
 	gosub {:1002}:&,22,1
 {:1002}
 	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
-{:1003}
 	&,53,a:im=2+a:goto {:2426}
 {:1004}
 	a=val(mid$(fl$,a,1)):return
@@ -21,7 +20,8 @@
 	an$=uu$:on-(an$<>"") gosub {:1260}:on -(an$<>"") goto {:1264}:pl=1:&,1:goto {:1260}
 {:1007}
 	&"{pound}g1":a$=an$:return
-	&"{f6}{$c4}evice,{$c4}rive: {pound}i1":an$="  "+an$:return
+{:1008}
+	&"{f6}Device,Drive: {pound}i1":an$="  "+an$:return
 {:1009}
 	dv%(.)=d1%:dr%(.)=d2%:dv%=dv%(dr):dr$=mid$(str$(dr%(dr)),2)+":":d3%=dr%(dr):return
 {:1010}
@@ -29,7 +29,7 @@
 {:1011}
 	close 2:gosub {:1010}:open 2,dv%,2,dr$+a$
 {:1012}
-	input# 15,e%,e$,t%,s%:a$="{f6}{$d3}tatus:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+	input# 15,e%,e$,t%,s%:a$="{f6}Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
 {:1013}
 	dr=5
 {:1014}
@@ -39,7 +39,7 @@
 	gosub {:1013}:goto {:3000}
 {:1019}
 {number:1019}
-	a=int(mn%/60):pt%=-(a>=p2%and a<p3%)*sgn(p1%):return
+	a=int(mn%/60):pt%=-(a>=p2% and a<p3%)*sgn(p1%):return
 {:1023}
 {number:1023}
 	gosub {:1024}:a$=a$+",s,w":goto {:1011}
@@ -162,6 +162,7 @@
 {:1098}
 {number:1098}
 	cm$=p$:gosub {:1360}:gosub {:1100}
+' TODO: increase cm$ string length (21)
 	cm$=left$(p$,11)+":"+left$(an$,4):gosub {:1360}:cm$=p$:return
 {:1100}
 {number:1100}
@@ -202,7 +203,8 @@
 	a$=z$:goto {:1016}
 {number:1305}
 	im=3:goto {:2404}
-{number:1318} ' EM - email
+{number:1318}
+' EM - email
 	br=.:mm=.:a=9:gosub {:1004}:on-(a<>.)goto {:1301}:x=4:gosub {:1980}:goto {:1812}
 {:1320}
 {number:1320}
@@ -219,15 +221,15 @@
 {number:1332}
 	im=8:goto {:2404}
 {number:1335} ' VERSION - BBS version, ML date/revision
-	&,5:a=lp:lp=1:&"{f6}{$c9}mage {$c2:2}{$d3} 64 {$d6}{pound}!a.{pound}%a: {pound}$a{f6}"
+	&,5:a=lp:lp=1:&"{f6}Image BBS 64 V{pound}!a.{pound}%a: {pound}$a{f6}"
 {:1336}
 ' IM date also displayed at boot time
-	an$="51802081140":&,15:&"{$c9}{$cd} {$d2}evision: "+left$(an$,26)+"{$cd}{f6}":return
+	an$="51808308224":&,15:&"IM Revision: "+left$(an$,26)+"M{f6}":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
 {number:1342}
-	on-(z$="{$d5}{$c4}"or z$="{$d5}{$d8}")goto {:1320}:goto {:1323}
+	on-(z$="{$d5}D"or z$="{$d5}{$d8}")goto {:1320}:goto {:1323}
 {:1345}
 {number:1345}
 	gosub {:1351}:goto {:1812}
@@ -244,7 +246,10 @@
 ' 1352: ?? - local mode commands menu
 	im=2:goto {:2404}
 ' 1353: read text editor menu
+' TODO: integrate this
 	dr=1:a$="s.menu 3":goto {:1075}
+'	a$="menu 3":goto {:1350}
+
 ' 1354: RD - read a SEQ file
 	im=4:goto {:2404}
 {:1360}
@@ -263,15 +268,17 @@
 	&,69,c,22,right$(str$(a+1e5),b),$81:return
 {number:1372}
 	&,40
-' check free memory:
+' 1373: check free memory:
 	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
-' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
+' 1374: screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
 	a=ca:b=5:c=2:gosub {:1370}:a=cn:b=3:c=10:goto {:1370}
 {number:1375}
 	a$=co$(co%):co$=a$
 {:1376}
 {number:1376}
+' display a$ in 16 character message window
 	an$=a$:&,9:return
+' clear message window
 	a$="{space:16}":goto {:1376}
 {:1400}
 {number:1400}
@@ -279,7 +286,7 @@
 {number:1402}
 	next:a=bf:return
 {number:1450} ' DC - DOS command
-	gosub {:1470}:on a goto {:1995}:&"{f6}{$c4}isk {$c3}ommand?: ":poke 53252,58
+	gosub {:1470}:on a goto {:1995}:&"{f6}Disk Command?: ":poke 53252,58
 {number:1452}
 	gosub {:1499}:z$=an$:if z$=""or z$="@"then gosub {:1010}:gosub {:1012}:&:return
 	b$=left$(z$,1):if b$="n"or b$="s"then gosub {:1901}:if a=.then return
@@ -290,7 +297,7 @@
 {number:1470}
 ' 1470: evaluate DCdv,dr command line
 	a=int(val(mid$(an$,3,2))):if a>.then if a<7 then dr=a:goto {:1474}
-	if a<7 or a>15 then a=8
+	if a<7 or a>29 then a=8
 {:1472}
 {number:1472}
 ' 133=Image ","
@@ -306,6 +313,7 @@
 {:1499}
 {number:1499}
 	&"{pound}i0":if an$=""then return
+' 1500: un-translate "special" f-key characters in an$
 {:1500}
 {number:1500}
 	&,15,2:return
@@ -315,7 +323,7 @@
 {:1530}
 {number:1530}
 ' beep x times:
-	&,25,.,x ':return
+	&,25,.,x
 {:1603}
 {number:1603}
 	return
@@ -331,9 +339,9 @@
 {:1634}
 {number:1634}
 	gosub {:1061}:x=ac%+1:gosub {:1001}:&,2,2:ag$=a$:&,2,2:close 2
-	if len(fl$)<len(a$)then fl$=fl$+mid$(a$,len(fl$)+1)
-	if len(fl$)>len(a$)then fl$=a$
-	if ac%<>ao%then fl$=a$:ao%=ac%
+	if len(fl$)<len(a$) then fl$=fl$+mid$(a$,len(fl$)+1)
+	if len(fl$)>len(a$) then fl$=a$
+	if ac%<>ao% then fl$=a$:ao%=ac%
 	a=6:gosub {:1004}:le=(a+1)*10:a=16:gosub {:1004}:poke 830,a:a=20:gosub {:1004}:da%=a
 	return
 ' 1640: C - chat request
@@ -343,14 +351,14 @@
 {number:1644} ' LG - BBS activity log
 	im=2:goto {:2408}
 {number:1646} ' EX? - exchange credits for time
-' im.comm1
-' todo: +.lo: at login, if caller is on last call for today, but has credits, can buy another call
+' load im.comm1
+' TODO: +.lo: at login, if caller is on last call for today, but has credits, can buy another call
 	im=3:goto {:2408}
 {number:1648}
 	im=4:goto {:2408}
 {number:1650} ' TM - Mini Term
-' BBS reports "unknown command", even though local mode enabled
-' and command active
+' FIXME: BBS reports "unknown command", even though local mode enabled
+' and ECS command active
 	im=1:goto {:2410}
 {number:1652}
 	im=2:goto {:2410}
@@ -358,33 +366,48 @@
 	im=3:goto {:2410}
 {number:1656} ' T - time/date
 	im=5:goto {:2400}
-{number:1660} ' EP - Edit Parameters
-	&"{f6}{$c5}dit ({$c9})nfo or ({$d0})arameters? {pound}g1{pound}v7{f6}":a=-(an$="{$d0}")-2*(an$="{$c9}")
+{number:1660}
+' EP - Edit Parameters
+	&"{f6}Edit (I)nfo or (P)arameters? {pound}g1{pound}v7{f6}":a=-(an$="P")-2*(an$="I")
 {number:1661}
 	im=1:on a goto {:2406},{:2428}:return
-{number:1662} ' AT - change graphics translation
+{number:1662}
+' AT - change graphics translation
 	im=2:goto {:2406}
-{number:1664} ' PW - change password
+{number:1664}
+' PW - change password
 	im=2:goto {:2428}
-{number:1666} ' PR - change transfer protocol
+{number:1666}
+' PR - change transfer protocol
 	im=4:goto {:2406}
 {number:1667}
 	im=5:goto {:2406}
-{number:1668} ' RL - clears strings?
+{number:1668}
+' RL - clears strings?
 	im$="":pr$="":lm$="":return
-{number:1670} ' RP - read program
+{number:1670}
+' RP - read program
 	im=6:goto {:2404}
-{number:1678} ' F - feedback
-	b=.:o$="{$c6}eedback":&"{f6}{$cc}eave {pound}$o?: ":gosub {:1902}:if a=.then return
+{number:1678}
+' F - feedback
+	b=.:o$="Feedback":&"{f6}Leave {pound}$o?: ":gosub {:1902}:if a=. then return
 {number:1680}
+' check blocks free; <35?
 	dr=3:gosub {:1079}:if a<35 then{:1978}
 {number:1681}
 	im=1:goto {:2422}
+{number:1698}
+{:sub.logoff_option}
+' 1907 Yes/No defaults to Yes
+	if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub {:1907}
+{number:1704}
+	return
+
 {:1690}
 {number:1690}
 ' logoff options
 ' 12/31/2017: move "if...then...gosub" (43 bytes) to {:sub.logoff_option} (1702)
-'	f4=.:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub {:1907}:if a=.then return
+'	f4=.:if right$(an$,1)<>"!"then:&"{f6:2}Logoff?: ":gosub {:1907}:if a=.then return
 	f4=.:gosub {:sub.logoff_option}:if a=. then return
 {number:1692}
 	f4=1.3:return
@@ -402,13 +425,6 @@
 {:1700}
 {number:1700}
 	a$="lo":goto {:1016}
-{number:1702}
-{:sub.logoff_option}
-' 1907 Yes/No defaults to Yes
-	if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub {:1907}
-{number:1704}
-	return
-
 {number:1736}
 {:1736}
 ' skip loading already loaded protocol
@@ -442,8 +458,8 @@
 	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
 {:1805}
 {number:1805}
-'	on-(ec%=.)goto {:1806}:b%=ec%:if ec%>cr then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":ec=.:return
-	if ec then b%=ec%:if ec%>cr then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":ec=.:return
+'	on-(ec%=.)goto {:1806}:b%=ec%:if ec%>cr then:&"{red}{$ce}ot Enough {$c3}redits!{f6}":ec=.:return
+	if ec then b%=ec%:if ec%>cr then:&"{red}{$ce}ot Enough {$c3}redits!{f6}":ec=.:return
 {:1806}
 {number:1806}
 	if ep$=""or id=1 then return
@@ -468,7 +484,7 @@
 {number:1820}
 	if zz and an$="{$d2}"then gosub {:2100}:goto {:1900}
 ' "TEST": loads "image", renumbered/RAM-light version of "im"
-	if an$="{$d4}{$c5}{$d3}{$d4}"then{:1200}
+	if an$="{$d4}E{$d3}{$d4}"then{:1200}
 {number:1840}
 	x=1:on-(a$="{$d1}")-(a$="{f2}")*2 goto {:1694},{:1345}
 {:1842}
@@ -491,33 +507,55 @@
 	x=1:rq=.:rs=1
 {:1860}
 {number:1860}
+' credit charge or password for using command
 	f4=.:a%=zz:b%=2^ac%:&,42:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto {:1800}
+' 1861: log off
 	if a$="{$cf}"then{:1690}
 {number:1869}
 	rs=.:return
 {:1870}
 {number:1870}
-	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b {$cd}ode: {$cf}{pound}v7{f6}":return
+' fixing "more prompt - messages only":
+' 0=Off, 1=On, 2=Messages Only
+' New Image Software:
+'	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b {$cd}ode: {$cf}{pound}v7{f6}":return ' 55 bytes
+' X-Tec 2018/08/05:
+'	a=1-a:a=abs(a):an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b {$cd}ode: {$cf}{pound}v7{f6}":return ' 62 bytes
+' Pinacolada 2018/08/06:
+'	a=abs(a-1):&"{f6}{pound}$b {$cd}ode: {$cf}"+mid$("ffn",a*2+1,2)+"{f6}":return ' 54 bytes
 {:1871}
 {number:1871}
 	a=val(mid$(uf$,b,1)):gosub {:1870}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1)
 	return
-{number:1880} ' XP - eXPert mode
-	a=em:b$="{$c5}xpert":gosub {:1870}:em=a:&,52,20,2:return
+{number:1880}
+' XP - eXPert mode
+	a=em:b$="Expert":gosub {:1870}:em=a:&,52,20,2:return
 ' 1881: PM - Prompt Mode
-	a=pm:b$="{$d0}rompt":gosub {:1870}:pm=a:return
+'	a=pm:b$="{$d0}rompt":gosub {:1870}:pm=a:return
 ' 1882: MP - More Prompt
-	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub {:1871}:&,52,34,a:return
+' closes issue #15
+' properly set multi-value "Messages Only" prompt mode. load "im.params"
+'	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub {:1871}:&,52,34,a:return
+	im=3:gosub {:2406}:&,52,34,a:return
 ' 1883: MN - Menu Mode
 	b=3:b$="{$cd}enu":gosub {:1871}:&,52,44,a:return
-	b=4:b$="{$d5}ndefined":gosub {:1871}:&,52,44,a:return
+' 1884: commented out (duplicate &,52,44), also Mnu lightbar related. maybe &,52,44,a should be &,52,45,a? -36 bytes
+'	b=4:b$="{$d5}ndefined":gosub {:1871}:&,52,44,a:return
+{number:1885}
 	poke 970,mp%:&"{f6}":return
+{number:1890}
+{:1890}
+' R - Run a plus-file, ask for device/drive:
+	poke 53252,14:&"{f6:2}{$d2}un: +.{pound}i0":b$=an$:on -(b$="") goto {:1812}:gosub {:1008}:gosub {:1470}
 {:1900}
 {number:1900}
-	poke 53252,14:&"{f6:2}{$d2}un: +.{pound}i0":a$=an$:on-(a$="")goto {:1812}:goto {:1016}
+' update Area window, set cm$ for error logging
+	cm$=b$:gosub {:1360}:a$=b$:gosub {:1014}:on e%+1 goto {:3000}:goto {:1906}
+' on 1-(e%=.) goto 1906,3000 ' 19 bytes
+' on e%+1 goto 3000:goto 1906 '16 bytes
 {:1901}
 {number:1901}
-	&"{f6}{$c1}re {$d9}ou {$d3}ure?: "
+	&"{f6}Are {$d9}ou {$d3}ure?: "
 {:1902}
 {number:1902}
 	&"{lt. green}[{gray3}{$ce}o{lt. green}]":gosub {:1007}:&"{pound}h4"
@@ -526,13 +564,15 @@
 {number:1904}
 	a$="{$ce}o":if a then a$="{$d9}es"
 	&:&"{f6}{pound}q0":return
+{:1906}
+{number:1906}
 	pr$="":&:goto {:1812}
 {:1907}
 {number:1907}
 	&"{lt. green}[{gray3}{$d9}es{lt. green}]":gosub {:1007}:a=(a$="{$ce}")+1:&"{pound}h5":goto {:1904}
 {:1908}
 {number:1908}
-' &,52,30,3: are main prompt macros enabled? (fixme: seems superflous here...)
+' &,52,30,3: are main prompt macros enabled? (FIXME: seems superflous here...)
 ' also called from {:1100} gosub {:1908}
 	poke 970,.:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
 	goto {:1915}
@@ -550,7 +590,7 @@
 	return
 {:1920}
 {number:1920}
-	&"{f6} {$c1}borted!{f6}":return
+	&"{f6} Aborted!{f6}":return
 {:1930}
 {number:1930}
 ' 30: are main prompt macros enabled?
@@ -569,13 +609,16 @@
 	&"{f6}":dr=3:a$="e.text":gosub {:1011}:gosub {:1001}:&,2,2:&:close 2:&"{f6}":return
 {number:1982}
 ' directory capacity full?
-	b$="{$c4}isk {$c4}irectory"
+	b$="Disk Directory"
 {:1985}
 {number:1985}
-	&"{f6}{$d3}orry, {pound}$b {$cc}imit {$c5}xceeded.{f6}":return
+	&"{f6}{$d3}orry, {pound}$b {$cc}imit Exceeded.{f6}":return
 {:1989}
 {number:1989}
-	&"{f6:2}{$d5}nknown {$c3}ommand. {$c5}nter {f5}?{f5} {$c6}or {$c8}elp.":return
+	&"{f6:2}{$d5}nknown {$c3}ommand. Enter {f5}?{f5} {$c6}or {$c8}elp.":return
+{:1990}
+{number:1990}
+' BBS node identifiers
 	ni=val(an$):n1$=cc$+mid$(str$(ni),2):b$="-"+n1$:n2$=""
 	if left$(an$,1)="!"then ni=-1:n1$=mid$(an$,2,3):b$=" @ "+n1$
 ' 94=^
@@ -683,9 +726,9 @@
 {number:2901}
 	a=47:b=45:a$="{$d6}ariables":gosub {:2910}
 {number:2902}
-	a=49:b=47:a$="{$c1}rrays":gosub {:2910}
+	a=49:b=47:a$="Arrays":gosub {:2910}
 {number:2903}
-	a=51:b=49:a$="{$c6}ree {$d2}{$c1}{$cd}":gosub {:2910}
+	a=51:b=49:a$="{$c6}ree {$d2}A{$cd}":gosub {:2910}
 {number:2904}
 	a=55:b=51:a$="{$d3}trings":goto {:2910}
 {number:2905}
@@ -736,8 +779,8 @@
 	dim x$,x%
 	dim y$,y%
 	dim z$,z%,zz
-	ac%=16:x=rnd(-ti):hx$="0123456789{$c1}{$c2}{$c3}{$c4}{$c5}{$c6}"+""
-	c3$="{f6}{$d2}eturning {$d4}o {$d4}he {$c5}ditor"+"{f6:2}"
+	ac%=16:x=rnd(-ti):hx$="0123456789A{$c2}{$c3}{$c4}{$c5}{$c6}"+""
+	c3$="{f6}{$d2}eturning {$d4}o {$d4}he Editor"+"{f6:2}"
 	ak$=" {$c0:39}"+"{f6}"
 	r$=chr$(13):nl$=chr$(.):qt$=chr$(34)
 	open 4,4,7:poke 836,1:poke 650,128
@@ -745,22 +788,22 @@
 	dim tt$(254),dv%(36),dr%(36),co$(9),hs$(10),bf(6),st(38),im$(5),pf$(10)
 	dim ec%(19,24),es%(3,49),ei%(50):restore:for i=1 to 9:read a$:co$(i)=a$+"":next
 	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
-' adjust console clock year to 20xx:
-	poke $16ec,$32:poke $16ed,$30
+' adjust console clock year to 2000:
+	poke $16ec,$32:poke $16ed,$30:poke $16ee,$30:poke $16ef,$30
 ' display IM revision (omit time zone):
 	gosub {:1336}
-	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
-	&"{pound}$a {$d3}ystem {$c4}etected.{f6}"
+	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}A{$cc}"
+	&"{pound}$a {$d3}ystem Detected.{f6}"
 {:3080}
 	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$=d1$
 {ifdef:swiftlink}
 ' to init SwiftLink, use &,16,1
 	gosub {:sub.init_rs232_interface}
 {else}
-	&"{$cc}oading {$d2}{$d3}232 {$c4}river...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,0
+	&"{$cc}oading {$d2}{$d3}232 Driver...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,0
 {endif}
 {:3084}
-	dv%=z%:&"{f6}{cyan}{$d2}eading {$c3}onfig {$c4}ata...":close 2:close 15:open 15,dv%,15
+	dv%=z%:&"{f6}{cyan}{$d2}eading {$c3}onfig Data...":close 2:close 15:open 15,dv%,15
 	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3084}
 	input# 2,dv%(3),dr%(3),po$:close 2:restore:if po$=""then po$="{$cd}ain: "
 {:3090}
@@ -774,20 +817,20 @@
 ' fixed: on brand new BBS, a% was set to 141 (^)
 	gosub {:1045}:uh=a%:&"{pound}%a "+left$("{$d5}sers",4-(a%<>1))+"{f6}"
 	dr=3:gosub {:1010}
-	&"{f6}{$c5}{$c3}{$d3} {$c4}efs":a$=dr$+"e.ecs.main":&,42,4:gosub {:sub.status}
-	&"{$d0}rint {$cd}ode {$c4}efs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
-	&"{$cc}ightbar {$c4}efs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
-'	&"{$c1}larm {$d4}able":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
-' fixme: also not ready:
+	&"{f6}E{$c3}{$d3} Defs":a$=dr$+"e.ecs.main":&,42,4:gosub {:sub.status}
+	&"{$d0}rint {$cd}ode Defs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
+	&"{$cc}ightbar Defs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
+'	&"Alarm {$d4}able":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
+' FIXME: also not ready:
 	f$="e.alarms":gosub {:sub.check_for_file}:if e%=62 then {:nm_times}
 ' a$ gets overwritten by DOS status
-	a$=dr$+f$:&"{$c1}larm {$d4}able":&,7,dv%,9:gosub {:sub.status}
+	a$=dr$+f$:&"Alarm {$d4}able":&,7,dv%,9:gosub {:sub.status}
 {:nm_times}
-' todo: check if "nm.config" exists first?
+' TODO: check if "nm.config" exists first?
 ' check for presence of "nm.times": if not present, don't crash with ?load error
-' fixme: larry said this caused his bbs to not run network transfers :(
+' FIXME: larry said this caused his bbs to not run network transfers :(
 	dr=2:gosub {:1009}:f$="nm.times":gosub {:sub.check_for_file}:if e%=62 then {:fkeys}
-	&"{$ce}etwork {$c1}larm {$d4}able":a$=dr$+f$:&,7,dv%,12:gosub {:sub.status}
+	&"{$ce}etwork Alarm {$d4}able":a$=dr$+f$:&,7,dv%,12:gosub {:sub.status}
 {:fkeys}
 ' f-key functionality is broken, so making this file optional
 	dr=3:gosub {:1009}:f$="e.fkeys":gosub {:sub.check_for_file}:if e%=62 then {:3132}
@@ -804,15 +847,18 @@
 	x=1:gosub {:1001}:&,2,2:ca=val(a$):x=12:gosub {:1001}:&,2,2:ur=val(a$)-1
 	x=17:gosub {:1001}:&,2,2:d3$=a$:x=18:gosub {:1001}:&,2,2:pp$=a$
 	x=19:gosub {:1001}:&,2,2:z$=a$:x=20:gosub {:1001}:input# 2,p1%,p2%,p3%
-	x=35:gosub {:1001}:&,2,2:am$=a$:x=36:gosub {:1001}:&,2,2:mc=val(a$)
+' record 35: last automaint date
+	x=35:gosub {:1001}:&,2,2:an$=a$:&,15:d6$=an$+"{$cd}"
+	x=36:gosub {:1001}:&,2,2:mc=val(a$)
 	x=37:gosub {:1001}:&,2,2:y%=val(a$):x=38:gosub {:1001}:&,2,2:lk%=val(a$)
 	df%=3:x=40:gosub {:1001}:&,2,2:a=val(a$):if a>.and a<16 then df%=a
 	x=41:gosub {:1001}:&,2,2:a=val(a$):if a then close 4:open 4,4,a
 	x=42:gosub {:1001}:&,2,2:a=val(a$):if a then poke 17136,a
-' record 35: last automaint date
-	x=35:gosub {:1001}:&,2,2:an$=a$:&,15:d6$=an$+"{$cd}":x=45:gosub {:1001}:&,2,2:tz$=a$
+	x=45:gosub {:1001}:&,2,2:tz$=a$
 	x=47:gosub {:1001}:&,2,2:bn$=a$
-	x=48:gosub {:1001}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}":x=49:gosub {:1001}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
+	x=48:gosub {:1001}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}"
+	x=49:gosub {:1001}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
+' 50: Netsub ID
 	x=51:gosub {:1001}:&,2,2:cc$=a$
 	x=58:gosub {:1001}:&,2,2:nc=val(a$)
 ' 3160
@@ -836,11 +882,11 @@
 	a=16*int(a/10)+a-int(a/10)*10:return
 {:3186}
 	for q=.to 6:bf(q)=-1:next
-	&"{f6}{$d2}eading {$c2}locks {$c6}ree...{f6}":for q=1 to 6:dr=q:gosub {:1079}
-	read b$:&"{f6}{rvrs off} {pound}$b {$c4}isk:{pound}{back arrow}30{pound}!a":next:q=.:return
+	&"{f6}{$d2}eading Blocks {$c6}ree...{f6}":for q=1 to 6:dr=q:gosub {:1079}
+	read b$:&"{f6}{rvrs off} {pound}$b Disk:{pound}{back arrow}30{pound}!a":next:q=.:return
 {:3192}
-	&"{f6:3}{yellow}{$c9}nsert {$c1}ll {$d3}ystem {$c4}isks {$c9}n {$c3}orrect      {$c4}rives, {$c1}nd {$d0}ress {rvrs on} {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {rvrs off}"
-	&" {$cf}r, {f6:2}{$d0}ress (1) {$d4}o {$c3}onfigure {$c1} {$ce}ew {$c2}oard"
+	&"{f6:3}{yellow}{$c9}nsert All {$d3}ystem {$c4}isks {$c9}n {$c3}orrect      {$c4}rives, And {$d0}ress {rvrs on} {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {rvrs off}"
+	&" {$cf}r, {f6:2}{$d0}ress (1) {$d4}o {$c3}onfigure A {$ce}ew {$c2}oard"
 	&"  {$cf}r, {f6}{$d0}ress (2) {$d4}o {$c3}onvert {$c6}rom 1.2/1.2a{f6:2}[> ":gosub {:1007}
 	&"{f6:2}":on-(an$="1")-(an$="2")*2 goto {:3220},{:3368}:return
 {:3200}
@@ -853,41 +899,41 @@
 {:3210}
 	dr=3:a$="e.log"+left$(lt$,1):gosub {:1011}:if e%=.then return
 	dr=3:a$="e.log"+left$(lt$,1):gosub {:1023}:an$=d1$:&,15:d6$=an$
-	a$=" {$cc}{$cf}{$c7} {$d3}{$d4}{$c1}{$d2}{$d4}: "+d6$:print# 2,a$:gosub {:1096}
+	a$=" {$cc}{$cf}{$c7} {$d3}{$d4}A{$d2}{$d4}: "+d6$:print# 2,a$:gosub {:1096}
 	a$=" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}"+"{f6}":print# 2,a$:gosub {:1096}:gosub {:1063}:x=44:gosub {:1001}:print# 2,d6$
 	close 2:gosub {:1060}:for x=12 to 22:st(x)=.:gosub {:1026}:next:st(20)=.:goto {:1026}
 {:3220}
 ' configure new BBS:
 ' d1$=pearl harbor day
 	&"{clear}{f6}{white} {$d0}art {$c9}: {$d3}ysop {$c9}nformation{f6:2}" ':d1$="14112071201"
-	poke 53252,20:w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3}":b$=w$:pl=1:p$="{$d3}ysop {$c8}andle":&,1,32
+	poke 53252,20:w$="{$c9}{$cd}A{$c7}{$c5} {$c2:2}{$d3}":b$=w$:pl=1:p$="{$d3}ysop {$c8}andle":&,1,32
 	if an$=""then an$=b$
 	tt$(1)=an$:&"{f6}":w$="{$d2}{$d5}{$d3}{$c8}":b$=w$:p$="{$d3}ysop {$c6}irst {$ce}ame":&,1,32
 	if an$=""then an$=b$
-	tt$(3)=an$:&"{f6}":w$="{$cc}{$c9}{$cd}{$c2}{$c1}{$d5}{$c7}{$c8}":b$=w$:p$="{$d3}ysop {$cc}ast {$ce}ame":&,1,32
+	tt$(3)=an$:&"{f6}":w$="{$cc}{$c9}{$cd}BA{$d5}{$c7}{$c8}":b$=w$:p$="{$d3}ysop {$cc}ast {$ce}ame":&,1,32
 	if an$=""then an$=b$
 	tt$(4)=an$:&"{f6}":w$="[801] 423-2209":b$=w$:p$="{$d3}ysop {$d0}hone":&,1,32
 	if an$=""then an$=b$
-	tt$(5)=an$:&"{f6}":w$="{$c4}{$c9}{$d4:2}{$cf}":b$=w$:p$="{$d3}ysop {$d0}assword":&,1,32
+	tt$(5)=an$:&"{f6}":w$="D{$c9}{$d4:2}{$cf}":b$=w$:p$="{$d3}ysop {$d0}assword":&,1,32
 	if an$=""then an$=b$
 	tt$(2)=an$:tt$=tt$(1)+r$+tt$(2)+r$+tt$(3)+r$+tt$(4)+r$+tt$(5)+r$+d1$+r$
 	tt$=tt$+"9"+r$:for i=1 to 14:tt$=tt$+"0"+r$:next:tt$=tt$+d1$+r$
 	tt$=tt$+"1411191111111119000090000"
-	&"{clear}{f6} {$d0}art {$c9:2}: {$c4}evice, {$c4}rive {$c3}onfiguration{f6:2}":restore:gosub {:sub.clock_method}
+	&"{clear}{f6} {$d0}art {$c9:2}: Device, Drive {$c3}onfiguration{f6:2}":restore:gosub {:sub.clock_method}
 {:3250}
 	a=.:read a$:if a$<>"*"then{:3250}
 	for i=1 to 6:poke 53252,3:pl=1:read b$
-	w$="8":p$=b$+" {$c4}evice":&,1,32:a=val(an$):if a<7 or a>15 then a=8
-	dv%(i)=a:w$="0":p$=b$+" {$c4}rive":&,1,32:a=val(an$):if a<.or a>254 then a=.
+	w$="8":p$=b$+" Device":&,1,32:a=val(an$):if a<7 or a>15 then a=8
+	dv%(i)=a:w$="0":p$=b$+" Drive":&,1,32:a=val(an$):if a<.or a>254 then a=.
 	dr%(i)=a:&"{f6}":next
 	&"{clear}{f6} {$d0}art {$c9:3}: {$c2:2}{$d3} {$c9}nformation{f6:2}":poke 53252,30:pl=.
-	w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$d6}2.0!":b$=w$:p$="{$c2:2}{$d3} {$ce}ame":&"{f6}":&,1,32
+	w$="{$c9}{$cd}A{$c7}{$c5} {$c2:2}{$d3} {$d6}2.0!":b$=w$:p$="{$c2:2}{$d3} {$ce}ame":&"{f6}":&,1,32
 	if an$=""then an$=b$
-	bn$=an$:w$="{$c9}{$cd}{$c1}{$c7}{$c5} {$cd}{$c1}{$c9}{$ce}":b$=w$:p$="{$cd}ain {$d0}rompt":&"{f6}":&,1,32
+	bn$=an$:w$="{$c9}{$cd}A{$c7}{$c5} {$cd}A{$c9}{$ce}":b$=w$:p$="{$cd}ain {$d0}rompt":&"{f6}":&,1,32
 	if an$=""then an$=b$
-	po$=an$:w$="* {$c5}ntering {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat {$c5}ntry":&"{f6}":&,1,32
+	po$=an$:w$="* Entering {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat Entry":&"{f6}":&,1,32
 	if an$=""then an$=b$
-	c1$=an$:w$="* {$c5}xiting {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat {$c5}xit":&"{f6}":&,1,32
+	c1$=an$:w$="* Exiting {$c3}hat {$cd}ode *":b$=w$:p$="{$c3}hat Exit":&"{f6}":&,1,32
 	if an$=""then an$=b$
 	c2$=an$:w$="100":b$=w$:p$="{$ce}ew {$d5}ser {$c3}redits":&"{f6}":&,1,32:if an$=""then an$=b$
 	nc=val(an$):&"{f6}{$c3}reating {f5}bd.data{f5}...."
@@ -895,11 +941,11 @@
 	print# 2,"2.0 {$c9}mage {$d6}2.0 {$c3}opyright 1994 {$ce}ew {$c9}mage {$d3}oftware":close 2:close 15
 	gosub {:sub.done}:&"{f6}{$c3}reating {f5}u.config{f5}...."
 	dr=6:a$="u.config,l,"+chr$(254):gosub {:1011}
-' fixme: ur=1: is this wrong? should it be 2?
+' FIXME: ur=1: is this wrong? should it be 2?
 	x=1:gosub {:1001}:print# 2,tt$:x=2:gosub {:1001}:print# 2,"{up arrow}":ur=1:close 2:gosub {:sub.done}
 ' insert user #1 into u.index:
 ' al's method (sets to 141), would use 1023 instead of s0:, but that is only for seq files:
-'	&"{f6}{$c3}reating {f5}u.index{f5}....":an$=tt$(1):gosub {:1038}:close 2:&"{$c4}one!{f6}"
+'	&"{f6}{$c3}reating {f5}u.index{f5}....":an$=tt$(1):gosub {:1038}:close 2:&"Done!{f6}"
 ' jack's method (tested, correctly sets to 1):
 	&"{f6}{$c3}reating {f5}u.index{f5}....":dr=6:gosub {:1010}:a$=dr$+"u.index":print# 15,"s"a$
 	a%(0)=1:a%(1)=1:&,60,3,0,a%(0),4,a$,dv%:close 15:gosub {:sub.done}
@@ -911,8 +957,8 @@
 	dr=3:a$="e.data,l,"+chr$(31):gosub {:1011}:x=1:gosub {:1001}:print# 2,"0"
 ' "ur" was hard-coded "2":
 	for x=2 to 11:gosub {:1001}:print# 2,"{up arrow}":next:x=12:gosub {:1001}:print# 2,ur
-	for x=13 to 16:gosub {:1001}:print# 2,"{up arrow}":next:x=17:gosub {:1001}:print# 2,"{$ce}{$cf}{$c2}{$cf}{$c4}{$d9}"
-	x=18:gosub {:1001}:print# 2,"{$d0}{$c1}{$d3:2}":x=19:gosub {:1001}:print# 2,d1$
+	for x=13 to 16:gosub {:1001}:print# 2,"{up arrow}":next:x=17:gosub {:1001}:print# 2,"{$ce}{$cf}B{$cf}{$c4}{$d9}"
+	x=18:gosub {:1001}:print# 2,"{$d0}A{$d3:2}":x=19:gosub {:1001}:print# 2,d1$
 	x=20:gosub {:1001}:print# 2," 0 , 0 , 0":for x=21 to 30:gosub {:1001}:print# 2,"{up arrow}":next
 ' next available user account:
 	x=31:gosub {:1001}:print# 2,ur
@@ -932,7 +978,7 @@
 ' add full access flags/unlimited everything for sysop:
 ' (which jack's i.su/config does)
 	x=10:gosub {:1001}:print# 2,"{$c7}roup 9"+r$+"11111111111111190000"
-	close 2:gosub {:sub.done}:&"{f6}{$d3}tarting {$c4}aily {$cc}og...":gosub {:3210}:gosub {:sub.done}
+	close 2:gosub {:sub.done}:&"{f6}{$d3}tarting Daily {$cc}og...":gosub {:3210}:gosub {:sub.done}
 
 ' My version (move to an external file):
 ' ----+----+----+----+----+----+----+----39
@@ -943,7 +989,7 @@
 ' F5 moves right.)
 ' F7 selects the function on the left; in
 ' this case, you log in to your BBS from
-' "local mode." 
+' "local mode."
 ' Once you are at the main prompt, you
 ' can enter several editors:
 
@@ -958,7 +1004,7 @@
 '     areas. Define access levels, user
 '     permissions, put directories into a
 '     special interest group, and more.
-'     
+'
 
 ' Jack's:
 ' Be sure to enter "IM" once online to
@@ -969,17 +1015,17 @@
 
 '                    - New Image Software
 
-	&"{f6:2}{$c2}e sure to enter {f5}{$c9}{$cd}{f5} once online to{f6}complete the setup/configuration of{f6}"
-	&"your {$c2:2}{$d3}. {$cd}essage bases, {$d5}/{$c4} and {$d5}/{$d8}{f6}libraries can be configured by using{f6}"
-	&"the {f5}{$d2}{$c5}{f5} command from the main prompt.{f6:2}{pound}{back arrow}18{$ce}ew {$c9}mage {$d3}oftware{f6}":lp=1:return
+	&"{f6:2}Be sure to enter {f5}{$c9}{$cd}{f5} once online to{f6}complete the setup/configuration of{f6}"
+	&"your {$c2:2}{$d3}. {$cd}essage bases, {$d5}/D and {$d5}/{$d8}{f6}libraries can be configured by using{f6}"
+	&"the {f5}{$d2}E{f5} command from the main prompt.{f6:2}{pound}{back arrow}18{$ce}ew {$c9}mage {$d3}oftware{f6}":lp=1:return
 
 ' Al's version:
 ' Be sure to enter "IM" once online to complete the setup of your new BBS.
 ' Message bases and U/D libraries are configured with the +.reledit utility ("RE" command).
 ' - New Image Software
-'	lp=1:&"{f6}{$c2}e sure to enter {f5}{$c9}{$cd}{f5} once online to complete the setup of your new {$c2:2}{$d3}."
-'	lp=1:&"{$cd}essage bases and {$d5}/{$c4} libraries are configured with the "
-'	lp=1:&"{f5}+.reledit{f5} utility ({f5}{$d2}{$c5}{f5} command).{f6:2}- {$ce}ew {$c9}mage {$d3}oftware{f6:2}":return
+'	lp=1:&"{f6}Be sure to enter {f5}{$c9}{$cd}{f5} once online to complete the setup of your new {$c2:2}{$d3}."
+'	lp=1:&"{$cd}essage bases and {$d5}/D libraries are configured with the "
+'	lp=1:&"{f5}+.reledit{f5} utility ({f5}{$d2}E{f5} command).{f6:2}- {$ce}ew {$c9}mage {$d3}oftware{f6:2}":return
 
 {:3348}
 ' 3356: get time from creative micro designs device's real-time clock:
@@ -1004,7 +1050,7 @@
 '{:3364}
 ' load Lt.Kernal ml:
 '	dr=5:gosub {:1010}:a$=dr$+"swr.ml":&,7,dv%,2:return
-' fixme: partial duplicate of 3358, no reference to it
+' FIXME: partial duplicate of 3358, no reference to it
 '	gosub {:3364}:sys 49152:sys 49155:goto {:3362}
 
 {:set_time_flag}
@@ -1013,17 +1059,17 @@
 {:3368}
 {number:3376} ' to sync up with older version line #s
 ' convert from 1/2(a)
-' fixme: x-tec says it's broken
-	close 15:open 15,dv%,15,"r"+bd$+"d.data=bd.data"
-	fl=.:&"{f6:2}{$d2}eading {f5}d.data{f5}...":close 2:open 2,dv%,2,bd$+"d.data,s,r":gosub {:1012}
-	if e%then close 2:&"{f6:2}{f5}d.data{f5} not found!! [{$c3}{$cf}{$ce}{$c6}{$c9}{$c7}{$d5}{$d2}{$c5}] ({$cb}ey) {pound}g1":return
+' FIXME: x-tec says it's broken
+	close 15:open 15,dv%,15,"r"+dr$+"d.data=bd.data"
+	fl=.:&"{f6:2}{$d2}eading {f5}d.data{f5}...":close 2:open 2,dv%,2,dr$+"d.data,s,r":gosub {:1012}
+	if e%then close 2:&"{f6:2}{f5}d.data{f5} not found!! [{$c3}{$cf}{$ce}{$c6}{$c9}{$c7}{$d5}{$d2}E] ({$cb}ey) {pound}g1":return
 	for i=1 to 6:input# 2,dv%(i),dr%(i):next
 	&,2,2:cc$=a$:&,2,2:nc=val(a$):&,2,2:&,2,2:&,2,2:bn$=a$:&,2,2:po$=a$:close 2
 	&"{f6:2}":gosub {:sub.clock_method}:&"{f6:2}{$c3}onverting...":for qq=1 to 4:gosub {:3380}:next:return
 {:3380}
 	on qq goto {:3382},{:3406},{:3418},{:3426}
 {:3382}
-	&"{f6}{$c3}onverting {$c1}ccess {$c4}ata...":gosub {:1063}
+	&"{f6}{$c3}onverting Access {$c4}ata...":gosub {:1063}
 	for x=2 to 11:gosub {:1001}:&,2,2:tt$(x)=a$:next
 	for x=21 to 30:gosub {:1001}:&,2,2:tt$(x)=a$:next
 	for i=.to 9:a$=tt$(i+2):tt$(i+2)=mid$(a$,5)
@@ -1046,7 +1092,7 @@
 	&"{$c3}reating {f5}e.access{f5}..."
 	close 2:dr=3:a$="e.access,l,"+chr$(127):gosub {:1011}
 	print# 2,tt$(x+20):next:close 2
-	&"{f6}{$c4}one {$d7}ith {f5}e.data{f5}{f6}":return
+	&"{f6}Done {$d7}ith {f5}e.data{f5}{f6}":return
 {:3426}
 	&"{$d7}riting new {f5}bd.data{f5}{f6}"
 	open 2,dv%,2,bd$+"bd.data,s,w":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3080}
@@ -1063,32 +1109,32 @@
 ' 3. Last AutoMaint timestamp
 '
 ' [> _
-	&"{$d3}et {$c3}lock {$c6}rom:{f6:2} 1. {$c3}{$cd}{$c4} boot device{f6} 2. {$cc}t.{$cb}ernal{f6}"
+	&"{$d3}et {$c3}lock {$c6}rom:{f6:2} 1. {$c3}{$cd}D boot device{f6} 2. {$cc}t.{$cb}ernal{f6}"
 {number:3449}
-	&" 3. {$cc}ast {$c1}uto{$cd}aint timestamp{f6:2}"
+	&" 3. {$cc}ast Auto{$cd}aint timestamp{f6:2}"
 {number:3450}
 {:3450}
 	&"[> {pound}i1":y%=int(val(an$)):if y%<1 or y%>3 then:&"{up}":goto {:3450}
 	return
 
 {:sub.done}
-'	&"{pound}{back arrow}33{$c4}one.{f6}":return
-	b$="{$c4}one.":goto {:status.2}
+'	&"{pound}{back arrow}33Done.{f6}":return
+	b$="Done.":goto {:status.2}
 
 {:sub.status}
 ' "OK.", "Error!"
-	gosub {:1012}:b$="{lt. green}{$cf}{$cb}.":if e% then b$="{lt. red}{$c5}rror!{f6}{white}{pound}{back arrow}05{pound}$a"
+	gosub {:1012}:b$="{lt. green}{$cf}{$cb}.":if e% then b$="{lt. red}Error!{f6}{white}{pound}{back arrow}05{pound}$a"
 {:status.2}
 	&"{pound}{back arrow}33{pound}$b{pound}q0{f6}":return
 
 {:sub.check_for_file}
 ' check for file f$: returns 62=file not found, 63=file exists
 	gosub {:1010}:print# 15,"r"+dr$+f$+"="+f$:goto {:1012}
-	
+
 {nice:10}
-	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
-	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
-	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
+	data"{$c3}ommodore 64","{$c3}ommodore 128","Amiga","Apple/{$c3}omp."
+	data"{$c9}B{$cd}/{$c3}omp.","{$cd}acintosh","Atari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
+	data"*","{$d3}ystem","E-{$cd}ail","Etcetera","Directory","{$d0}lus-{$c6}ile","{$d5}ser"
 
 {ifdef:swiftlink}
 ' experimental
@@ -1096,7 +1142,7 @@
 {:sub.init_rs232_interface}
 ' user port: &,16,0
 ' SwiftLink: &,16,1
-	dr=3:a$="e.i.modem":gosub 1011:if e% then:&"{$c4}efaulting to ":x=.:goto {:init}
+	dr=3:a$="e.i.modem":gosub 1011:if e% then:&"Defaulting to ":x=.:goto {:init}
 {:4020}
 	x=1:gosub 1001:&,2,2:mt$=a$:x=val(mid$(mt$,11,1)
 '	:&,2,2:in$=a$:&,2,2:m$=a$:&,2,2:au$=a$
@@ -1104,7 +1150,7 @@
 	close 2:if x<>1 then x=.
 ' Initializing SwiftLink ML...
 	&"{f6}{$c9}nitializing "
-{:init}	
+{:init}
 	&mid$("user port{$d3}wift{$cc}ink",(x+1)*9-8,9)+" {$cd}{$cc}..."
 	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,x:return
 {endif}
@@ -1116,7 +1162,7 @@
 {number:4000}
 {:4000}
 	&,38:el=y:cm$=cm$+"":p$=p$+"":pr$=pr$+"":im$=im$+"":if x<128 then{:4006}
-	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	a$="{$c6}A{$d4}A{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 	&,38:&,61,.,8:print"&,37:goto 1812:":end
 {:4006}
 {number:4006}
@@ -1125,29 +1171,29 @@
 {number:4008}
 	read a$:if a$<>"errors"then{:4008}
 	&,40:d$="{$c7}{$d5}{$d2}{$d5}":if x>.and x<30 then for k=1 to x:read d$:next
-	a%=x:&"{f6}{lt. red} {$d3}{$d9}{$d3}{$d4}{$c5}{$cd} {$c5}{$d2:2}{$cf}{$d2} #{pound}%a {white}({pound}$d {$c5}{$d2:2}{$cf}{$d2}){f6}":r$=chr$(13)
+	a%=x:&"{f6}{lt. red} {$d3}{$d9}{$d3}{$d4}E{$cd} E{$d2:2}{$cf}{$d2} #{pound}%a {white}({pound}$d E{$d2:2}{$cf}{$d2}){f6}":r$=chr$(13)
 	a$="im":if el=>3000 then a$="+."+pr$:if el=>60000 then a$="im."+im$
 	a=el:&"{lt. blue} {$c9}n {$cc}ine:{gray3}{pound}!a {lt. blue}{$cf}f {gray3}{pound}$a{f6}"
-	&"{f6}{lt. red}{$d2}ecording {$c5}rror, {$d0}lease {$d7}ait...":d$=str$(x)+" ("+d$+" {$c5}{$d2:2}{$cf}{$d2})"
+	&"{f6}{lt. red}{$d2}ecording Error, {$d0}lease {$d7}ait...":d$=str$(x)+" ("+d$+" E{$d2:2}{$cf}{$d2})"
 ' 1027	dr=3:a$="e."+b$+",s,"+a$:goto {:1011}
 	b$="errlog":a$="a":gosub {:1027}:if e% then a$="w":gosub {:1027}
 {:4024}
 {number:4024}
-	print# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)r$"{$c5}rror {$cc}og"r$
-	print# 2,"{$c5}rror :"d$r$"{$cc}ine  :"el;r$"{$c1}rea  : "cm$r$"{$d0}rompt: "p$
+	print# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)r$"Error {$cc}og"r$
+	print# 2,"Error :"d$r$"{$cc}ine  :"el;r$"Area  : "cm$r$"{$d0}rompt: "p$
 	print# 2,"{$d0}rogram: +."pr$:print# 2,"{$cd}odule: +/"lm$:print# 2,"{$c9}{$cd} {$cd}odule: im."im$
 	print# 2,"{$cd}{$cc} {$c6}ile: ++ "ml$" ("d4$")"
 	for i=1 to 10:a$=chr$(58-i):if hs$(i)<>""then print# 2," {f8}"a$": "hs$(i)
 	next:print# 2,"{up arrow}":close 2
-	a$="{$d5}ser  : "+na$+r$+"{$c5}rror :"+d$+r$+"{$cc}ine  :"+str$(b)+r$+"{$d4}ime  : {$04}"+d1$+r$
-	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":gosub {:1096}
+	a$="{$d5}ser  : "+na$+r$+"Error :"+d$+r$+"{$cc}ine  :"+str$(b)+r$+"{$d4}ime  : {$04}"+d1$+r$
+	a$=a$+"{$d0}file : "+pr$+r$+"Area  : "+cm$+r$+".":gosub {:1096}
 	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
 	im$="":is=.:lm$="":pr$="":ml$="":pr=-1:pf=.
 ' &,52,4,3: is "console mode" enabled? (true local login)
 ' peek(2033)=0: carrier status
 	if ac%<>16 then:&,52,4,3:if a% or (peek(2033)and 1)=. then{:4050}
 	a$="lo":f1=2:goto {:1016}
-	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	a$="{$c6}A{$d4}A{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
 {number:4050}
 ' &,52,4,3: is "console mode" enabled? (true local login),
@@ -1162,26 +1208,26 @@
 {number:4054}
 	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=.then{:4054}
 	close 2:tt$=na$:a$="a":gosub {:1062}:if e%then a$="w":gosub {:1062}
-	a$="[{$d3}ystem {$c5}rror ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
+	a$="[{$d3}ystem Error ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
 	gosub {:1074}:close 15
 	gosub {:1060}:i=1:x=14:gosub {:1025}:x=25:gosub {:1025}:x=32:gosub {:1025}:close 2
 ' total: 25 backspaces - original mci commands were "{pound}h9{pound}h9{pound}h7"
-' todo: shorten this
-	&"{pound}h9{pound}h9{pound}h7ed!{f6:2}{white}{$07}{$d9}ou {$c8}ave {$ce}ew {$c5}-{$cd}ail {$d7}aiting:{f6:2}{green}{$d2}ead {$ce}ow? ":gosub {:1902}
-	if a then a$="{$c5}"+"{$cd}":goto {:1016}
+' TODO: shorten this
+	&"{pound}h9{pound}h9{pound}h7ed!{f6:2}{white}{$07}{$d9}ou {$c8}ave {$ce}ew E-{$cd}ail {$d7}aiting:{f6:2}{green}{$d2}ead {$ce}ow? ":gosub {:1902}
+	if a then a$="E"+"{$cd}":goto {:1016}
 {:4068}
 {number:4068}
 	pr$="":goto {:1811}
 	data"errors"
-	data "{$d4}{$cf:2} {$cd}{$c1}{$ce}{$d9} {$c6}{$c9}{$cc}{$c5}{$d3}","{$c6}{$c9}{$cc}{$c5} {$cf}{$d0}{$c5}{$ce}","{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$cf}{$d0}{$c5}{$ce}"
-	data "{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$c6}{$cf}{$d5}{$ce}{$c4}","{$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$cf}{$d4} {$d0}{$d2}{$c5}{$d3}{$c5}{$ce}{$d4}","{$ce}{$cf}{$d4} {$c9}{$ce}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}"
-	data "{$ce}{$cf}{$d4} {$cf}{$d5}{$d4}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}","{$cd}{$c9}{$d3:2}{$c9}{$ce}{$c7} {$c6}{$c9}{$cc}{$c5} {$ce}{$c1}{$cd}{$c5}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$d5}{$cd}{$c2}{$c5}{$d2}"
-	data "{$ce}{$c5}{$d8}{$d4} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c6}{$cf}{$d2}","{$d3}{$d9}{$ce}{$d4}{$c1}{$d8}","{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c7}{$cf}{$d3}{$d5}{$c2}"
-	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$c4}{$c1}{$d4}{$c1}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$d1}{$d5}{$c1}{$ce}{$d4}{$c9}{$d4}{$d9}","{$cf}{$d6}{$c5}{$d2}{$c6}{$cc}{$cf}{$d7}"
-	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$cd}{$c5}{$cd}{$cf}{$d2}{$d9}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$d3}{$d4}{$c1}{$d4}{$c5}{$cd}{$c5}{$ce}{$d4}","{$c2}{$c1}{$c4} {$d3}{$d5}{$c2}{$d3}{$c3}{$d2}{$c9}{$d0}{$d4}"
-	data "{$d2}{$c5}{$c4}{$c9}{$cd}'{$c4} {$c1}{$d2:2}{$c1}{$d9}","{$c4}{$c9}{$d6}{$c9}{$d3}{$c9}{$cf}{$ce} {$c2}{$d9} {$da}{$c5}{$d2}{$cf}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c9}{$d2}{$c5}{$c3}{$d4}"
-	data "{$d4}{$d9}{$d0}{$c5} {$cd}{$c9}{$d3}{$cd}{$c1}{$d4}{$c3}{$c8}","{$d3}{$d4}{$d2}{$c9}{$ce}{$c7} {$d4}{$cf:2} {$cc}{$cf}{$ce}{$c7}","{$c6}{$c9}{$cc}{$c5} {$c4}{$c1}{$d4}{$c1}"
-	data "{$c6}{$cf}{$d2}{$cd}{$d5}{$cc}{$c1} {$d4}{$cf:2} {$c3}{$cf}{$cd}{$d0}{$cc}{$c5}{$d8}","{$c3}{$c1}{$ce}'{$d4} {$c3}{$cf}{$ce}{$d4}{$c9}{$ce}{$d5}{$c5}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$c6}{$d5}{$ce}{$c3}{$d4}{$c9}{$cf}{$ce}"
-	data "{$d6}{$c5}{$d2}{$c9}{$c6}{$d9}","{$cc}{$cf}{$c1}{$c4}","{$c2}{$d2}{$c5}{$c1}{$cb} "
+	data "{$d4}{$cf:2} {$cd}A{$ce}{$d9} {$c6}{$c9}{$cc}{$c5}{$d3}","{$c6}{$c9}{$cc}{$c5} {$cf}{$d0}{$c5}{$ce}","{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$cf}{$d0}{$c5}{$ce}"
+	data "{$c6}{$c9}{$cc}E {$ce}{$cf}{$d4} {$c6}{$cf}{$d5}{$ce}D","D{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$cf}{$d4} {$d0}{$d2}{$c5}{$d3}{$c5}{$ce}{$d4}","{$ce}{$cf}{$d4} {$c9}{$ce}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}"
+	data "{$ce}{$cf}{$d4} {$cf}{$d5}{$d4}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}E","{$cd}{$c9}{$d3:2}{$c9}{$ce}{$c7} {$c6}{$c9}{$cc}E {$ce}A{$cd}{$c5}","{$c9}{$cc:2}{$c5}{$c7}A{$cc} {$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$d5}{$cd}{$c2}{$c5}{$d2}"
+	data "{$ce}E{$d8}{$d4} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c6}{$cf}{$d2}","{$d3}{$d9}{$ce}{$d4}A{$d8}","{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c7}{$cf}{$d3}{$d5}{$c2}"
+	data "{$cf}{$d5}{$d4} {$cf}{$c6} DA{$d4}A","{$c9}{$cc:2}{$c5}{$c7}A{$cc} {$d1}{$d5}A{$ce}{$d4}{$c9}{$d4}{$d9}","{$cf}{$d6}{$c5}{$d2}{$c6}{$cc}{$cf}{$d7}"
+	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$cd}E{$cd}{$cf}{$d2}{$d9}","{$d5}{$ce}D{$c5}{$c6}'D {$d3}{$d4}A{$d4}{$c5}{$cd}{$c5}{$ce}{$d4}","{$c2}A{$c4} {$d3}{$d5}{$c2}{$d3}{$c3}{$d2}{$c9}{$d0}{$d4}"
+	data "{$d2}ED{$c9}{$cd}'D A{$d2:2}A{$d9}","{$c4}{$c9}{$d6}{$c9}{$d3}{$c9}{$cf}{$ce} {$c2}{$d9} {$da}{$c5}{$d2}{$cf}","{$c9}{$cc:2}{$c5}{$c7}A{$cc} {$c4}{$c9}{$d2}{$c5}{$c3}{$d4}"
+	data "{$d4}{$d9}{$d0}E {$cd}{$c9}{$d3}{$cd}A{$d4}{$c3}{$c8}","{$d3}{$d4}{$d2}{$c9}{$ce}{$c7} {$d4}{$cf:2} {$cc}{$cf}{$ce}{$c7}","{$c6}{$c9}{$cc}{$c5} {$c4}A{$d4}A"
+	data "{$c6}{$cf}{$d2}{$cd}{$d5}{$cc}A {$d4}{$cf:2} {$c3}{$cf}{$cd}{$d0}{$cc}{$c5}{$d8}","{$c3}A{$ce}'{$d4} {$c3}{$cf}{$ce}{$d4}{$c9}{$ce}{$d5}{$c5}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$c6}{$d5}{$ce}{$c3}{$d4}{$c9}{$cf}{$ce}"
+	data "{$d6}E{$d2}{$c9}{$c6}{$d9}","{$cc}{$cf}A{$c4}","{$c2}{$d2}{$c5}A{$cb} "
 {crunch:off}
 	copr. 1994 new image 9/21/94

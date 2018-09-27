@@ -1194,4 +1194,4 @@ dl1:
 ; next pass:close 8
 ; print *-$c000 "bytes"
 ; if (*-$c000)>2048 then print "too large!"
-{endasm}
+{endasm}

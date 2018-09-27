@@ -1,25 +1,25 @@
 {number:3000}
 {step:2}
 {crunch:on}
-{alpha:upper}
+\{alpha:alt\}
 	zz%=8:pr$="":lm$="":&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%:fl=.
 {:3002}
 	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2:if fl then return
 	gosub {:3006}:&,28,1:goto 1811
 {:3006}
 	&,28,1:n=14:dim m%(16,n),dt$(60),ed$(60),a%(60):if tr%<1 then return
-	&,16,.,34,m%(.,1),"{$c1}","","{$cd}acros {$c5}ditor"
-	&,16,.,34,m%(.,2),"{$c2}","","{$c3}ommand {$d3}et"
-	&,16,.,34,m%(.,3),"{$c3}","","{$d0}ayroll {$c5}ditor"
-	&,16,.,34,m%(.,4),"{$c4}","","{$cc}ogon {$c5}ditor"
-	&,16,.,34,m%(.,5),"{$c5}","","{$c1}ccess {$c7}roups"
+	&,16,.,34,m%(.,1),"A","","{$cd}acros {$c5}ditor"
+	&,16,.,34,m%(.,2),"B","","{$c3}ommand {$d3}et"
+	&,16,.,34,m%(.,3),"{$c3}","","{$d0}ayroll Editor"
+	&,16,.,34,m%(.,4),"D","","{$cc}ogon {$c5}ditor"
+	&,16,.,34,m%(.,5),"E","","Access {$c7}roups"
 	&,16,.,34,m%(.,6),"{$c6}","","{$c6}ile {$cc}ists"
 	&,16,.,34,m%(.,7),"{$c7}","","{$c6}unction {$cb}eys"
-	&,16,.,34,m%(.,8),"{$c8}","","{$cc}ightbar/{$c1}larms"
+	&,16,.,34,m%(.,8),"{$c8}","","{$cc}ightbar/Alarms"
 	&,16,.,34,m%(.,9),"{$c9}","","{$cd}isc. {$c6}eatures"
 	&,16,.,34,m%(.,10),"{$ca}","","{$cd}odem {$c3}onfig"
 	&,16,.,34,m%(.,11),"{$cb}","","{$d3}et {$d4}ime"
-	&,16,.,34,m%(.,12),"{$cc}","","{$d3}ystem {$c4}rives"
+	&,16,.,34,m%(.,12),"{$cc}","","{$d3}ystem Drives"
 	&,16,.,34,m%(.,13),"{$cd}","","{$ce}etmail {$c3}onfig"
 	&,16,.,34,m%(.,14),"{$ce}","","{$d1}uit"
 	gosub {:3330}:if tr%<1 or lm=n or lm=.then return
@@ -28,11 +28,11 @@
 	return
 {:3044}
 	&,28,1:n=8:dim m%(16,n)
-	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ocal {$c9}nfo"
-	&,16,.,34,m%(.,2),"{$c2}","","{$cd}odem {$d3}pecs"
+	&,16,.,34,m%(.,1),"A","","{$cc}ocal {$c9}nfo"
+	&,16,.,34,m%(.,2),"B","","{$cd}odem {$d3}pecs"
 	&,16,.,34,m%(.,3),"{$c3}","","{$c3}alling {$c8}ours"
-	&,16,.,34,m%(.,4),"{$c4}","","{$cd}ake nm.create"
-	&,16,.,34,m%(.,5),"{$c5}","","{$c3}onnections"
+	&,16,.,34,m%(.,4),"D","","{$cd}ake nm.create"
+	&,16,.,34,m%(.,5),"E","","{$c3}onnections"
 	&,16,.,34,m%(.,6),"{$c6}","","{$c6}wd. {$cc}ist"
 	&,16,.,34,m%(.,7),"{$c7}","","{$ce}etwall/{$c7}rf"
 	&,16,.,34,m%(.,8),"{$c8}","","{$d1}uit"
@@ -41,37 +41,37 @@
 	a$="netmail":gosub{:3182}:fl=1:gosub{:3002}:fl=.:goto{:3062}
 {:3068}
 	&,28,1:n=5:dim m%(16,n),tx$(60),fb%(29,15),a%(60):if tr%<1 then{:3006}
-	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ogin {$cd}ods"
-	&,16,.,34,m%(.,2),"{$c2}","","{$cd}aint {$cd}ods"
-	&,16,.,34,m%(.,3),"{$c3}","","{$d7}all {$c1}ds"
-	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uicklist"
-	&,16,.,34,m%(.,5),"{$c5}","","{$d1}uit"
+	&,16,.,34,m%(.,1),"A","","{$cc}ogin {$cd}ods"
+	&,16,.,34,m%(.,2),"B","","{$cd}aint {$cd}ods"
+	&,16,.,34,m%(.,3),"{$c3}","","{$d7}all Ads"
+	&,16,.,34,m%(.,4),"D","","{$d1}uicklist"
+	&,16,.,34,m%(.,5),"E","","{$d1}uit"
 {:3080}
 	n=5:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
 	a$="logon":gosub {:3182}:fl=1:gosub {:3002}:fl=.:goto {:3080}
 {:3084}
 	&,28,1:n=4:zz%=8:dim am%(3,15),m%(16,n),b$(zz%*16-1),c$(60),a%(60)
-	&"{f6}{$d2}eading {$c3}heckmark {$c4}efinitions...":if tr%<1 then{:3006}
+	&"{f6}{$d2}eading {$c3}heckmark Definitions...":if tr%<1 then{:3006}
 	dr=1:a$="s.lightdefs,s,r":gosub 1011:x=.:if e%then close 2:&:goto {:3092}
-	for x=.to 16*zz%-1:&,2,2:b$(x)=a$:next:close 2:&"{$c4}one{f6}"
+	for x=.to 16*zz%-1:&,2,2:b$(x)=a$:next:close 2:&"Done{f6}"
 {:3092}
-	&,16,.,34,m%(.,1),"{$c1}","","{$cc}ight{$c2}ar {$c4}efs"
-	&,16,.,34,m%(.,2),"{$c2}","","{$c1}larms"
-	&,16,.,34,m%(.,3),"{$c3}","","{$ce}et{$cd}ail {$c1}larms"
-	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uit"
+	&,16,.,34,m%(.,1),"A","","{$cc}ight{$c2}ar {$c4}efs"
+	&,16,.,34,m%(.,2),"B","","Alarms"
+	&,16,.,34,m%(.,3),"{$c3}","","{$ce}et{$cd}ail Alarms"
+	&,16,.,34,m%(.,4),"D","","{$d1}uit"
 {:3100}
 	n=4:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
 	a$="lightbar":gosub {:3182}:goto {:3100}
 {:3104}
 	&,28,1:n=7:zz%=6:dim m%(20,n)
-	a=1:a$="{$d3}ystem":gosub {:3116}:a=2:a$="{$c5}-{$cd}ail":gosub {:3116}
-	a=3:a$="{$c5}tcetera":gosub {:3116}:a=4:a$="{$c4}irectory":gosub {:3116}
+	a=1:a$="{$d3}ystem":gosub {:3116}:a=2:a$="E-{$cd}ail":gosub {:3116}
+	a=3:a$="Etcetera":gosub {:3116}:a=4:a$="Directory":gosub {:3116}
 	a=5:a$="{$d0}rogram":gosub {:3116}:a=6:a$="{$d5}ser":gosub {:3116}
 	&,16,.,42,m%(.,7),"{$c7}","","{$d1}uit":n=7:gosub {:3336}:if tr%<1 or lm=n or lm=.then{:3006}
 	gosub {:3252}:goto {:3104}
 {:3116}
 	b$=right$("   "+str$(dv%(a)),3)+","+mid$(str$(dr%(a)),2)
-	&,16,.,42,m%(.,a),chr$(192+a),"",left$(a$+" {$c4}isk:     ",15)+b$:return
+	&,16,.,42,m%(.,a),chr$(192+a),"",left$(a$+" Disk:     ",15)+b$:return
 {:3120}
 	&,28,1:n=13:dim m%(22,n):gosub 1063:x=38:gosub 1001:&,2,2:lk%=val(a$)
 	x=39:gosub 1001:&,2,2:a%(2)=val(a$):x=40:gosub 1001:&,2,2:a%(3)=val(a$)
@@ -81,24 +81,24 @@
 	x=58:gosub 1001:&,2,2:nc=val(a$):close 2:a$=bd$+"bd.data,s,r":gosub 1011
 	input# 2,a$,b$,po$:close 2:restore:for i=1 to 15:read tt$(i):next:tt$(.)=tt$(3)
 {:3134}
-	&,16,.,46,m%(.,1),"{$c1}","","{$cc}t. {$cb}ernal {$c4}evice: "+str$(lk%)
-	&,16,.,46,m%(.,2),"{$c2}","","{$c1}utoweed {$c3}utoff:   "+str$(a%(2))
-	&,16,.,46,m%(.,3),"{$c3}","","{$c4}efault {$c3}olor:      "+tt$(a%(3))
-	&,16,.,46,m%(.,4),"{$c4}","","{$d0}rinter {$c1}ddress:   "+str$(a%(4))
+	&,16,.,46,m%(.,1),"A","","{$cc}t. {$cb}ernal {$c4}evice: "+str$(lk%)
+	&,16,.,46,m%(.,2),"B","","Autoweed {$c3}utoff:   "+str$(a%(2))
+	&,16,.,46,m%(.,3),"{$c3}","","Default {$c3}olor:      "+tt$(a%(3))
+	&,16,.,46,m%(.,4),"D","","{$d0}rinter Address:   "+str$(a%(4))
 	a$=mid$("{$d9}es{$ce}o",-3*(a%(5)<>10)+1,3)
-	&,16,.,46,m%(.,5),"{$c5}","","{$d0}rinter {$cc}inefeeds:  "+a$
+	&,16,.,46,m%(.,5),"E","","{$d0}rinter {$cc}inefeeds:  "+a$
 	&,16,.,46,m%(.,6),"{$c6}","","{$d0}assword {$cd}asks:     "+mm$
 	&,16,.,46,m%(.,7),"{$c7}","","{$d4}ime {$da}one:          "+left$(tz$,3):a$=po$
 	&,16,.,46,m%(.,8),"{$c8}","","{$cd}ain {$d0}rompt:        "+left$(po$,15)
 	&,16,.,46,m%(.,9),"{$c9}","","{$c2:2}{$d3} {$ce}ame:           "+left$(bn$,15)
-	&,16,.,46,m%(.,10),"{$ca}","","{$d3}ystem {$c9}{$c4}           "+cc$
+	&,16,.,46,m%(.,10),"{$ca}","","{$d3}ystem {$c9}D           "+cc$
 	&,16,.,46,m%(.,11),"{$cb}","","{$ce}ew {$d5}ser {$c3}redits:  "+str$(nc)
 	&,16,.,46,m%(.,12),"{$cc}","","{$c3}hat {$cd}essages"
 	&,16,.,46,m%(.,13),"{$cd}","","{$d1}uit"
 	n=13:gosub {:3342}:a=lm:if tr%<1 or lm=n or lm=.then{:3006}
 	a$="misc":gosub {:3182}:goto {:3134}
-	data"{$d7}hite","{$d2}ed","{$c3}yan","{$d0}urple","{$c7}reen","{$c2}lue","{$d9}ellow","{$cf}range","{$c2}rown"
-	data"{$cc}ight {$d2}ed","{$c4}ark {$c7}ray","{$cd}edium {$c7}ray","{$cc}ight {$c7}reen","{$cc}ight {$c2}lue"
+	data"{$d7}hite","{$d2}ed","{$c3}yan","{$d0}urple","{$c7}reen","Blue","{$d9}ellow","{$cf}range","Brown"
+	data"{$cc}ight {$d2}ed","Dark {$c7}ray","{$cd}edium {$c7}ray","{$cc}ight {$c7}reen","{$cc}ight Blue"
 	data"{$cc}ight {$c7}ray"
 {:3172}
 	a$="ecs":gosub {:3182}:goto {:3006}
@@ -125,13 +125,13 @@
 {:3196}
 	close 2:cf=.
 {:3198}
-	&"{clear}{f6}{gray3}{$d0}ayroll {$c5}ditor{f6}{white}{pound}vj":poke 53252,38
-	if n=.then:&"{yellow}{$ce}o {$c5}ntries.{f6}":goto {:3206}
+	&"{clear}{f6}{gray3}{$d0}ayroll Editor{f6}{white}{pound}vj":poke 53252,38
+	if n=.then:&"{yellow}{$ce}o Entries.{f6}":goto {:3206}
 	for i=1 to n:a%=i:b%=val(left$(tt$(i),3)):c%=val(mid$(tt$(i),5))
-	&"{lt. green}{pound}#2{pound}# {pound}%a{blue}) {lt. green}{$c9}{$c4}{white}{pound}#0{pound}%b{pound}{back arrow}17{pound}#4{pound}# {pound}%c {lt. green}{$c3}redits{f6}":i=i+rc*n:next
+	&"{lt. green}{pound}#2{pound}# {pound}%a{blue}) {lt. green}{$c9}D{white}{pound}#0{pound}%b{pound}{back arrow}17{pound}#4{pound}# {pound}%c {lt. green}{$c3}redits{f6}":i=i+rc*n:next
 {:3206}
-	&"{white}{pound}vj{$c1}{green}dd{blue}/{white}{$c4}{green}elete{blue}/{white}{$c5}{green}dit{blue}/{white}{$d1}{green}uit{blue}: {white}{pound}g1"
-	on-(an$="{$c1}")-2*(an$="{$c4}")-3*(an$="{$c5}")goto {:3220},{:3230},{:3238}
+	&"{white}{pound}vjA{green}dd{blue}/{white}{$c4}{green}elete{blue}/{white}{$c5}{green}dit{blue}/{white}{$d1}{green}uit{blue}: {white}{pound}g1"
+	on-(an$="A")-2*(an$="{$c4}")-3*(an$="{$c5}")goto {:3220},{:3230},{:3238}
 	&"{$d1}uit{f6}":if cf=.then{:3218}
 	&"{f6}{white}{$d3}ave {$c3}hanges? ":gosub 1907:if a=.then{:3218}
 	dr=6:a$="u.payroll":gosub 1023
@@ -139,49 +139,49 @@
 {:3218}
 	goto {:3006}
 {:3220}
-	&"{$c1}dd{f6:2}"
-	poke 53252,4:&"{$c9}{$c4}: {pound}i1":b%=val(an$):if b%<1 or b%>ur then{:3198}
+	&"Add{f6:2}"
+	poke 53252,4:&"{$c9}D: {pound}i1":b%=val(an$):if b%<1 or b%>ur then{:3198}
 	poke 53252,5:&"{$c3}redits: {pound}i1":c%=val(an$):if c%<1 then{:3198}
 	n=n+1:tt$(n)=right$(str$(1000+b%),3)+str$(c%):cf=1
 	goto {:3198}
 {:3230}
-	&"{$c4}elete{f6:2}"
+	&"Delete{f6:2}"
 	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then{:3198}
 	cf=1:n=n-1:if a=n+1 then{:3198}
 	for i=a to n:tt$(i)=tt$(i+1):next:goto {:3198}
 {:3238}
-	&"{$c5}dit{f6:2}"
+	&"Edit{f6:2}"
 	&"{$d7}hich #? {pound}i1":a=val(an$):if a<1 or a>n then {:3198}
 	b$=(left$(tt$(a),3)):c$=mid$(tt$(a),5)
-	poke 53252,4:w$=b$:p$="{$c9}{$c4}":pl=1:&,1,32:if an$<>""then b$=an$
+	poke 53252,4:w$=b$:p$="{$c9}D":pl=1:&,1,32:if an$<>""then b$=an$
 	poke 53252,5:w$=c$:p$="{$c3}redits":pl=.:&,1,32:if an$<>""then c$=an$
 	b%=val(b$):c%=val(c$)
 	tt$(a)=right$(str$(1000+b%),3)+str$(c%):cf=1:goto {:3198}
 {:3252}
-	p$="{gray3}{$c4}evice{white}":w$=mid$(str$(dv%(lm)),2):&,1,32:a=val(an$)
+	p$="{gray3}Device{white}":w$=mid$(str$(dv%(lm)),2):&,1,32:a=val(an$)
 	if an$<>""and a<>dv%(lm)and a>6 and a<32 then tf=1:dv%(lm)=a
-	p$="{gray3}{$c4}rive/{$cc}{$d5}{white}":w$=mid$(str$(dr%(lm)),2):&,1,32:a=val(an$)
+	p$="{gray3}Drive/{$cc}{$d5}{white}":w$=mid$(str$(dr%(lm)),2):&,1,32:a=val(an$)
 	if an$<>""and a<>dr%(lm)and a=>.and a<255 then tf=1:dr%(lm)=a
 	if tf then gosub 1063:x=lm+51:gosub 1001:print# 2,dv%(lm);r$;dr%(lm):close 2
 	return
 {:3264}
-	&"{f6:2}{purple}{pound}vj{cyan}   {$d2}emote {$d4}ime {$c5}ditor v2.0{f6}{purple}{pound}vj{cyan}":goto {:3268}
+	&"{f6:2}{purple}{pound}vj{cyan}   {$d2}emote {$d4}ime Editor v2.0{f6}{purple}{pound}vj{cyan}":goto {:3268}
 	a$=d1$:gosub 1520:t1=a:return
 {:3268}
-	&"{f6}{pound}{back arrow}10{cyan}{$c3}urrent {$c4}ate/{$d4}ime is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
+	&"{f6}{pound}{back arrow}10{cyan}{$c3}urrent Date/{$d4}ime is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
 {:3270}
-	p$=" {$c4}ay   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
+	p$=" Day   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
 	dw$=mid$(str$(val(an$)),2,1)
 {:3274}
 	p$=" {$cd}onth ":w$=mid$(d$,4,2):a=2:gosub {:3310}:if a<1 or a>12 then{:3274}
 	gosub {:3316}:mo$=an$
 {:3278}
-	p$=" {$c4}ate  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
+	p$=" Date  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
 	gosub {:3316}:dt$=an$
 {:3282}
 	p$=" {$d9}ear  ":w$=mid$(d$,2,2):a=2:gosub {:3310}:if a<1 or a>99 then{:3282}
 	gosub {:3316}:yr$=an$
-	c$="{$c1}":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="{$d0}"
+	c$="A":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="{$d0}"
 {:3288}
 	p$=" {$c8}our  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
 	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
@@ -189,9 +189,9 @@
 	p$=" {$cd}in.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
 	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
 {:3296}
-	p$=" {$c1}/{$d0}   ":a=1:gosub {:3310}:on-(an$<>"{$c1}"and an$<>"{$d0}")goto {:3296}:if an$<>v$then tz=1
-	if(an$="{$d0}"and b<>18)or(an$="{$c1}"and b=18)then b=b or 128:gosub {:3318}
-	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10{$d3}etting {$c4}ate/{$d4}ime to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
+	p$=" A/{$d0}   ":a=1:gosub {:3310}:on-(an$<>"A"and an$<>"{$d0}")goto {:3296}:if an$<>v$then tz=1
+	if(an$="{$d0}"and b<>18)or(an$="A"and b=18)then b=b or 128:gosub {:3318}
+	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10{$d3}etting Date/{$d4}ime to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} {$cf}{$cb}?   {lt. green}: "
 	gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
 	poke 56328,.:poke 1010,1
 	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:goto {:3326}
@@ -214,28 +214,28 @@
 {:3326}
 	return
 {:3328}
-	&"{f6}{$ce}o {$c3}hanges {$cd}ade - {$c1}borted!{f6:2}":return
+	&"{f6}{$ce}o {$c3}hanges {$cd}ade - Aborted!{f6:2}":return
 
 {:sub.menu_header}
 	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{rvrs on} {cyan}        {$c3}onfiguration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	return
 
 {:3330}
 	gosub {:sub.menu_header}
 '	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}":return
 
 {:3336}
 	gosub {:sub.menu_header}
 '	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,42,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {:3342}
 	gosub {:sub.menu_header}
 '	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        {$c3}onfiguration {$c5}ditor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+'	&"{rvrs on} {cyan}        {$c3}onfiguration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {crunch:off}
 	copr. 1994 new image 10/19/94
