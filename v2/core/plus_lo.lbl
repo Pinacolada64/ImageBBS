@@ -1,7 +1,8 @@
-{def:idle_logging}' for "e.idle <am$>" debug log
-{alpha:upper}	' {$c1} = A
+{undef:idle_logging}' use x-tec's fix for "e.idle <am$>" debug log
+{alpha:alt}
 {number:3000}
 {crunch:on}
+{quoter:32=space} ' make runs of spaces easier to read
 {step:2}
 	q$="":am=1:k%=.:rs=.:close 2:close 5:on f1 goto {:3256},{:3262},{:3266},{:3333}:goto {:3050}
 {:3002}
@@ -14,6 +15,7 @@
 	a$=dr$+"++ clock":&,7,dv%,2:pr=-1:d4$="{$c3}lock":goto {:3016}
 	return
 {:3010}
+' pick a random password mask character
 	gosub 1063:x=43:gosub 1001:&,2,2:close 2
 	an$=mid$(a$,cn-int(cn/len(a$))*len(a$)+1,1)
 	&,15,2:poke 17138,asc(an$):return
@@ -25,7 +27,7 @@
 {:3024}
 	a=-((peek(2033)and 128)=128):return
 {:3026}
-' redirect to 1360. just a quick hack, change 3026 to 1360 later
+' redirect to 1360. just a quick hack. TODO: change 3026 to 1360
 	cm$=a$:gosub 1360
 	return
 '	&,69,4,21,"               ",1
@@ -48,7 +50,7 @@
 	b$="net send":gosub 2100:x=11:gosub {:3480}:a$="{$ce}{$cd}/auto":f1=1:goto 1016
 {:3046}
 	&"{f6:2}{pound}q0{$d3}orry, {$d4}his {$d3}ystem {$c9}s {$d2}eserved {$c6}or{f6}{$ce}etwork {$cd}aintenance.{f6}"
-	&"{f6}{$d0}lease {$d4}ry {$c1}gain {$cc}ater.{f6}":goto {:3266}
+	&"{f6}{$d0}lease {$d4}ry Again {$cc}ater.{f6}":goto {:3266}
 {:3050}
 	&,52,$22,.:poke 970,.:poke 971,.:gosub {:3036}:poke 53248,.
 	b$="connect":x=11:gosub {:3480}
@@ -56,73 +58,74 @@
 	&,52,16,1:&,52,17,1:gosub {:3002}:if a=.then:&,52,4,4
 	tr%=4:poke 2042,.:gosub {:3496}:gosub {:3010}:on-(zz=.)goto {:3064}:&,52,$22,.
 {:3060}
-	nl=1:&,52,16,.:&"{f6:2}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} for {$ce}ormal, or{f6}{f5}{$c9}{f5} for {$c9}nstant {$cc}ogon: {pound}g1"
+	nl=1:&,52,16,.:&"{f6:2}{$d0}ress {$d2}E{$d4}{$d5}{$d2}{$ce} for {$ce}ormal, or{f6}{f5}{$c9}{f5} for {$c9}nstant {$cc}ogon: {pound}g1"
 	on-(an$="{$c9}")goto {:3300}:&"{$ce}ormal{f6}":goto {:3106}
 {:3064}
-	q%=qb:&"{f6:2}{pound}%q {$c2}{$d0}{$d3} {$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}{$c9}{$cf}{$ce} {$c3}{$cf}{$ce}{$c6}{$c9}{$d2}{$cd}{$c5}{$c4}.{f6}":gosub 1093:gosub 1372
+	q%=qb:&"{f6:2}{pound}%q B{$d0}{$d3} {$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}{$c9}{$cf}{$ce} {$c3}{$cf}{$ce}{$c6}{$c9}{$d2}{$cd}{$c5}{$c4}.{f6}":gosub 1093:gosub 1372
 ' &,52,3,3: block 300 baud callers?
 	a%=.:if qb<1200 then:&,52,3,3
-	tr%=5:if a%then:&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} 300 {$c2}{$d0}{$d3} {$c3}{$c1}{$cc:2}{$d3} {$c1}{$c3:2}{$c5}{$d0}{$d4}{$c5}{$c4}{f6}":goto {:3266}
-	REM PRINT#131,"{STOP}"CHR$(.)CHR$(.);:&,22,10:&,4:A=PEEK(780)AND127
-	REM IFTR%>.ANDA=21THEN3070
-	REM IFA=6THENNL=2:&,52,16,.:&"{F6}{$C9}MAGE {$D4}ERM {$C4}ETECTED.{F6}":GOTO 3090
+	tr%=5:if a%then:&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} 300 B{$d0}{$d3} {$c3}A{$cc:2}{$d3} A{$c3:2}{$c5}{$d0}{$d4}{$c5}{$c4}{f6}":goto {:3266}
+	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
+	rem iftr%>.anda=21then3070
+	rem ifa=6thennl=2:&,52,16,.:&"{f6}{$c9}mage {$d4}erm Detected.{F6}":goto 3090
 {:3076}
-	&"{f6}{$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} {$c2}{$c1}{$c3}{$cb}{$d3}{$d0}{$c1}{$c3}{$c5} ({$c4}{$c5}{$cc}{$c5}{$d4}{$c5}){f6}{$cb}{$c5}{$d9}: ":&,52,16,.:&"{pound}b1":&,52,16,1
+	&"{f6}{$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} BA{$c3}{$cb}{$d3}{$d0}A{$c3}{$c5} ({$c4}E{$cc}{$c5}{$d4}{$c5}){f6}{$cb}{$c5}{$d9}: ":&,52,16,.:&"{pound}b1":&,52,16,1
 {:3078}
 	&,4:a=peek(780)and 127:if(peek(2033)and 128)<>128 or tr%<1 then{:3266}
 ' &,52,28,3: NetMail enable, received ctrl-a for network transfer:
 	&,52,28,3:if a%then on-(a=1)goto {:3042}
 	if a=13 then{:3076}
 	on-(a<>8 and a<>127 and a<>20)goto {:3078}
-	nl=-(a=20):&,52,16,1-nl:b$="{$c1}{$d3}{$c3}{$c9:2}":if nl then b$="{$c3}ommodore {$c7}raphics":&"{pound}k7"
-	&"{f6:2}  {rvrs on} {pound}$b {rvrs off}{pound}k0 {$cd}ode {$c4}etected. {pound}q0{f6:2}":if tr%<1 then{:3266}
+	nl=-(a=20):&,52,16,1-nl:b$="A{$d3}{$c3}{$c9:2}":if nl then b$="{$c3}ommodore {$c7}raphics":&"{pound}k7"
+	&"{f6:2}  {rvrs on} {pound}$b {rvrs off}{pound}k0 {$cd}ode Detected. {pound}q0{f6:2}":if tr%<1 then{:3266}
 	tr%=5:on nl goto {:3096},{:3096}:&,52,18,.:&,52,19,.:&,52,17,1
-	&"{$c4}o you {$d7}ant {$c1}{$ce}{$d3}{$c9} {$c3}olor? ":gosub 1907:&,52,18,a:b=a
-	&"{$c4}o {$d9}ou {$d7}ant {$c9}{$c2}{$cd} {$c7}raphics? ":gosub 1907:&,52,19,a:if a and b then nl=2:poke 951,80
+	&"Do you {$d7}ant A{$ce}{$d3}{$c9} {$c3}olor? ":gosub 1907:&,52,18,a:b=a
+	&"Do {$d9}ou {$d7}ant {$c9}B{$cd} {$c7}raphics? ":gosub 1907:&,52,19,a:if a and b then nl=2:poke 951,80
 {:3096}
 ' &,52,41,3: Network reserved?
 ' &,52,40,3: System reserved?
-	&,52,41,3:on a%goto {:3046}:&,52,40,3:on 1-a%goto {:3106}
-	a=.:b$="":if l2=.then b$="{$d4}emporarily "
+	&,52,41,3:on a%goto {:3046}:&,52,40,3:if a%=. then {:3106}
+	a=.:b$="":if l2=1 then b$="{$d4}emporarily "
 {:3100}
-	&"{f6}{$d3}ystem {pound}$b{$d2}eserved.{f6:2}{$c5}nter {$d0}assword: ":&,6:if an$=l2$then{:3104}
+	&"{f6}{$d3}ystem {pound}$b{$d2}eserved.{f6:2}Enter {$d0}assword: ":&,6:if an$=mid$(l2$,2) then {:3104}
 	&"{f6:2}{$d3}orry, {$d0}assword {$c9}nvalid.":a=a+1:on-(a<3 and tr%>.)goto {:3100}:goto {:3266}
 {:3104}
-	&"{f6:2}{$d0}assword {$c1}ccepted.":if l2=.then:&,52,40,.
+' if system reserved for just one call, clear it, erase password, write to e.data:
+	&"{f6:2}Password Accepted.":if l2=1 then l2=.:&,52,40,.:gosub 1063:l2$="0^":x=37:gosub 1001:print# 2,l2$:close 2
 {:3106}
 	dr=1:a$="s.login"+str$(nl):gosub 1076:pw$="":k=0
 {:3108}
 ' &,52,32,3: Enable Mail Check at Logon:
 	poke 53252,20:ac%=16:id=.:&,52,32,3:if a%=.then{:3116}
-	&"{f6:2}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}/{$c5}{$ce}{$d4}{$c5}{$d2} to {$cc}og {$cf}n, or{f6}"
+	&"{f6:2}{$d0}ress {$d2}E{$d4}{$d5}{$d2}{$ce}/E{$ce}{$d4}E{$d2} to {$cc}og {$cf}n, or{f6}"
 	&"{f5}{$cd}{f5} to just check mail: {pound}g1":if tr%<1 then{:3266}
 	on-(an$="{$c9}")-2*(an$="{$cd}")goto {:3300},{:3298}:&"{$cc}ogon{f6:2}"
 {:3116}
-	&"{f6}{$c5}nter{$a0}{$d9}our {$c8}andle {$cf}r {$cc}ogin {$c9}{$c4}#{f6:2}{pound}b1:{white} {pound}i1":if tr%<1 then{:3266}
-	dd$=an$:on-(dd$="{$d2}{$c5}{$d3}")-(dd$="{$ce}{$c5}{$d7}")*2-(dd$="{$c8}{$c5}{$cc}{$d0}")*3 goto {:3332},{:3162},{:3184}
+	&"{f6}Enter{$a0}{$d9}our {$c8}andle {$cf}r {$cc}ogin {$c9}D#{f6:2}{pound}b1:{white} {pound}i1":if tr%<1 then{:3266}
+	dd$=an$:on-(dd$="{$d2}E{$d3}")-(dd$="{$ce}E{$d7}")*2-(dd$="{$c8}E{$cc}{$d0}")*3 goto {:3332},{:3162},{:3184}
 	if val(an$)then dd$=cc$+an$:goto {:3142}
 	i=len(dd$):b$=left$(dd$,1):if left$(dd$,len(cc$))=cc$then{:3142}
-	if i<4 or i>20 or b$<"{$c1}"or b$>"{$da}"then id=.:goto {:3160}
+	if i<4 or i>20 or b$<"A"or b$>"{$da}"then id=.:goto {:3160}
 	gosub 1046
-	if i then id=i:&"{f6}{lt. blue}{$d9}our {$c9}{$c4}# is {white}{pound}!i. {lt. blue}{$d5}se {$c9}t {$c6}or {$c1}{f6}{$c6}aster {$cc}ogon!{f6}":goto {:3144}
+	if i then id=i:&"{f6}{lt. blue}{$d9}our {$c9}D# is {white}{pound}!i. {lt. blue}{$d5}se {$c9}t {$c6}or A{f6}{$c6}aster {$cc}ogon!{f6}":goto {:3144}
 ' &,52,10,3: Disallow New Users
 	&"{f6:2} {f5}{pound}v7{f5}{f6} {$ce}ot{$a0}{$c6}ound.{f6:2}":&,52,10,3:if a%then{:3164}
-	&"{$c4}o {$d9}ou {$d7}ish {$d4}o{$a0}{$c1}pply {$c6}or{$a0}{$c1}n{f6}{$c1}ccount {$d7}ith {$d4}hat{$a0}{$c8}andle?: "
-	gosub 1902:if a then f1=1:g$=dd$:dd$="{$ce}{$c5}"+"{$d7}":goto {:3332}
+	&"Do {$d9}ou {$d7}ish {$d4}o{$a0}Apply {$c6}or{$a0}An{f6}Account {$d7}ith {$d4}hat{$a0}{$c8}andle?: "
+	gosub 1902:if a then f1=1:g$=dd$:dd$="{$ce}E"+"{$d7}":goto {:3332}
 {:3136}
 	ac%=16:k=k+1:if k>4 then{:3266}
 ' immediate mode (i%):
-	on i%goto {:3144}:lp=1:&"{f6:2}{$c5}nter {f5}{$ce}{$c5}{$d7}{f5} {$c9}f {$d9}ou {$c8}ave {$ce}o {$cc}ogin {$c9}{$c4}, or {f5}{$c8}{$c5}{$cc}{$d0}{f5} {$c9}f "
-	lp=1:&"{$d9}ou {$c1}re {$c8}aving {$d4}rouble{f6}{$cc}ogging {$cf}n.":goto {:3108}
+	on i%goto {:3144}:lp=1:&"{f6:2}Enter {f5}{$ce}E{$d7}{f5} {$c9}f {$d9}ou {$c8}ave {$ce}o {$cc}ogin {$c9}D, or {f5}{$c8}{$c5}{$cc}{$d0}{f5} {$c9}f "
+	lp=1:&"{$d9}ou Are {$c8}aving {$d4}rouble{f6}{$cc}ogging {$cf}n.":goto {:3108}
 {:3142}
 	id=int(val(mid$(dd$,len(cc$)+1,4))):if id<1 or id>ur then id=.:goto {:3160}
 {:3144}
-	&"{f6}{lt. blue}{$d0}lease {$c5}nter{$a0}{$d9}our {$d0}assword.{f6:2}{pound}b1:{white} ":&,6:if tr%=.then{:3266}
+	&"{f6}{lt. blue}{$d0}lease Enter{$a0}{$d9}our {$d0}assword.{f6:2}{pound}b1:{white} ":&,6:if tr%=.then{:3266}
 ' immediate mode (i%):
 	z$=an$:if z$=""then on i%goto {:3160}:id=.:goto {:3160}
-	gosub 1071:if na$="{up arrow}"or na$="{$d2}{$c5}{$d3}"then{:3166}
+	gosub 1071:if na$="{up arrow}"or na$="{$d2}E{$d3}"then{:3166}
 	if i%then on-(pw$=z$)goto {:3170}:goto {:3160}
-	&"{f6:2}{$c1}dditional {$c9}nformation:":a=int(rnd(1)*5)+1:on a gosub {:3174},{:3176},{:3178},{:3180},{:3182}
+	&"{f6:2}Additional {$c9}nformation:":a=int(rnd(1)*5)+1:on a gosub {:3174},{:3176},{:3178},{:3180},{:3182}
 	if p then:&"{f6}{$cf}nly fill in the ?'s.{f6}"
 	gosub 1006:c$=an$
 	if pw$=z$and t$=c$and z$<>""and c$<>""then{:3170}
@@ -132,9 +135,9 @@
 ' &,52,10,3: Disallow New Users
 	&,52,10,3:if a%=.then{:3332}
 {:3164}
-	&"{f6:2}{$d3}orry, {$ce}o{$a0}{$ce}ew{$a0}{$d5}sers{$a0}{$c1}re {$c2}eing{f6}{$c1}ccepted {$c1}t {$d4}his {$d4}ime.{f6:2}":goto {:3108}
+	&"{f6:2}{$d3}orry, {$ce}o{$a0}{$ce}ew{$a0}{$d5}sers{$a0}Are {$c2}eing{f6}Accepted At {$d4}his {$d4}ime.{f6:2}":goto {:3108}
 {:3166}
-	&"{f6:2}{$d4}hat {$c1}ccount {$c8}as {$c2}een {$c4}eleted.{f6}":goto {:3136}
+	&"{f6:2}{$d4}hat Account {$c8}as {$c2}een {$c4}eleted.{f6}":goto {:3136}
 {:3168}
 ' instant logon (2):
 	gosub 1071:if na$="{up arrow}"then{:3060}
@@ -142,50 +145,50 @@
 	&"{up}{$cc}ogin {$c3}omplete!{pound}{back arrow}39{f6:2}":if zz=.then k%=i%:i%=.
 	goto {:3226}
 {:3174}
-	p$="{f6}{$cc}{$c1}{$d3}{$d4} {$ce}ame ":t$=ll$:p=0:return
+	p$="{f6}{$cc}A{$d3}{$d4} {$ce}ame ":t$=ll$:p=0:return
 {:3176}
-	p$="{f6}{$c1}{$d2}{$c5}{$c1} {$c3}{$cf}{$c4}{$c5} ({rvrs on}???{rvrs off}){$d8:3}-{$d8:4} ":t$=mid$(ph$,2,3):p=1:return
+	p$="{f6}A{$d2}{$c5}A {$c3}{$cf}{$c4}{$c5} ({rvrs on}???{rvrs off}){$d8:3}-{$d8:4} ":t$=mid$(ph$,2,3):p=1:return
 {:3178}
-	p$="{f6}{$c4}{$c9}{$c1}{$cc}{$c9}{$ce}{$c7}{$a0}{$d0}{$d2}{$c5}{$c6}{$c9}{$d8} ({$d8:3})/{rvrs on}???{rvrs off}-{$d8:4} ":t$=mid$(ph$,7,3):p=1:return
+	p$="{f6}D{$c9}A{$cc}{$c9}{$ce}{$c7}{$a0}{$d0}{$d2}{$c5}{$c6}{$c9}{$d8} ({$d8:3})/{rvrs on}???{rvrs off}-{$d8:4} ":t$=mid$(ph$,7,3):p=1:return
 {:3180}
-	p$="{f6}{$cc}{$c1}{$d3}{$d4}{$a0}{$c6}{$cf}{$d5}{$d2}{$a0}{$c4}{$c9}{$c7}{$c9}{$d4}{$d3} ({$d8:3})/{$d8:3}-{rvrs on}????{rvrs off} ":t$=right$(ph$,4):p=1:return
+	p$="{f6}{$cc}A{$d3}{$d4}{$a0}{$c6}{$cf}{$d5}{$d2}{$a0}{$c4}{$c9}{$c7}{$c9}{$d4}{$d3} ({$d8:3})/{$d8:3}-{rvrs on}????{rvrs off} ":t$=right$(ph$,4):p=1:return
 {:3182}
 	p$="{f6}{$c6}{$c9}{$d2}{$d3}{$d4} {$ce}ame ":t$=ff$:p=0:return
 {:3184}
 	a$="logon help":gosub 1350
-	lp=1:&"{f6:2}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$cc}og {$cf}n {$d7}ith {$c1} {$d4}emporary {$c1}ccount? ":gosub 1902
+	lp=1:&"{f6:2}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$cc}og {$cf}n {$d7}ith A {$d4}emporary Account? ":gosub 1902
 	if a=.then{:3136}
-	&"{f6}{$cc}ogging {$cf}n {$c6}or {$c8}{$c5}{$cc}{$d0}...{f6}":t=5
+	&"{f6}{$cc}ogging {$cf}n {$c6}or {$c8}E{$cc}{$d0}...{f6}":t=5
 {:3192}
 	a$="{$c6}irst {$ce}ame":gosub {:3214}:on-(t<1)goto {:3204}:ff$=an$:if an$=""then{:3192}
 {:3194}
 	a$="{$cc}ast {$ce}ame":gosub {:3214}:on-(t<1)goto {:3204}:ll$=an$:if an$=""then{:3194}
 {:3196}
 	a$="{$d0}hone {$ce}umber":gosub {:3214}:on-(t<1)goto {:3204}:ph$=an$:if an$=""then{:3196}
-	na$="{$c8}{$c5}{$cc}{$d0}"+"":pw$="{$ce}{$cf}{$ce}{$c5}"+"":ld$=d1$:ac%=0:dt%=0:tc%=0:co%=1:ll%=40:id=0
+	na$="{$c8}E{$cc}{$d0}"+"":pw$="{$ce}{$cf}{$ce}E"+"":ld$=d1$:ac%=0:dt%=0:tc%=0:co%=1:ll%=40:id=0
 	ul=1:lf=1:em=.:dc=.:uc=.:bd=.:bu=.:cr=.:ps=.:rp=.:d5$=d1$:fl$=fl$(ac%)
 	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then {:3226}
 {:3204}
 	&"{f6:2}{$d3}orry, {$d5}nable {$d4}o {$cc}og {$d9}ou {$c9}n...{f6:2}":goto {:3262}
 {:3206}
-	&"{f6:2}{$c5}nter {$c1} {$c2}rief {$cd}essage {$d3}tating {$d7}hy {$d9}ou{f6}{$ce}eed {$c8}elp.{f6}{$ce}{$cf}{$d4}{$c5}: {$c1}borting {$d4}his "
+	&"{f6:2}Enter A {$c2}rief {$cd}essage {$d3}tating {$d7}hy {$d9}ou{f6}{$ce}eed {$c8}elp.{f6}{$ce}{$cf}{$d4}{$c5}: Aborting {$d4}his "
 	&"{$d7}{$c9}{$cc:2} {$cc}og {$d9}ou {$cf}ff.{f6:2}"
 	le=10*(val(mid$(fl$,6,1))+1):gosub 1604:if kk=.then tr%=.:return
 	b$="telecheck":ad$="{$d4}elecheck":gosub 1068:print# 2,"{$c6}orgotten {$d0}assword"r$:goto 1074
 {:3214}
-	poke 53252,15:&"{f6}{$c5}nter {$d9}our {pound}$a:{f6}: {pound}i1":t=t+(an$=""):t=t*-(tr%>.):return
+	poke 53252,15:&"{f6}Enter {$d9}our {pound}$a:{f6}: {pound}i1":t=t+(an$=""):t=t*-(tr%>.):return
 {:3216}
 	b$="telecheck":ad$="{$d4}elecheck":gosub 1068:tt$=pw$:if id=1 then pw$="{$d0}rivate"
-	print# 2,"{lt. green}{$c6}ailed {$d3}ecurity {$c3}heck. ({$c1}ttempt"str$(k+1)")"r$
-	if z$<>tt$then print# 2,"{lt. green}{$d0}assword:{yellow}"pw$" {cyan}({f5}"z$"{f5} {$d7}as {$c5}ntered)"r$
-	if c$<>t$then print# 2,p$:print# 2,"{lt. green}"t$" {cyan}({f5}"an$"{f5} {$d7}as {$c5}ntered)"r$
+	print# 2,"{lt. green}{$c6}ailed {$d3}ecurity {$c3}heck. (Attempt"str$(k+1)")"r$
+	if z$<>tt$then print# 2,"{lt. green}{$d0}assword:{yellow}"pw$" {cyan}({f5}"z$"{f5} {$d7}as Entered)"r$
+	if c$<>t$then print# 2,p$:print# 2,"{lt. green}"t$" {cyan}({f5}"an$"{f5} {$d7}as Entered)"r$
 	print# 2,"{up arrow}":close 2:return
 {:3226}
 ' instant logon (3):
 	a$="on":gosub {:3362}:on f4 goto {:3262}:if i%or k%then{:3250}
 	b$=str$(ca):b=7:a=1:if mn%>719 then a=8:b=9:if mn%>1079 then a=17:b=7
 	an$=ff$:&,15,1:h$=an$
-	gosub 2912:lp=1:g$=mid$("{$cd}orning{$c1}fternoon{$c5}vening",a,b):&"{f6:2}{lt. blue}{pound}$q    {rvrs on} {$c7}ood {pound}$g, {pound}$h! {rvrs off}{f6}"
+	gosub 2912:lp=1:g$=mid$("{$cd}orningAfternoon{$c5}vening",a,b):&"{f6:2}{lt. blue}{pound}$q    {rvrs on} {$c7}ood {pound}$g, {pound}$h! {rvrs off}{f6}"
 	g%=uh:an$=d3$:&,15,1:if d3$=na$then an$="{$d9}ou!"
 	f%=cn:a$="s.welcome"+str$(nl):dr=1:gosub 1076:gosub 1910:for i=1 to 10:st(i)=.:next
 ' 2100: clear vars
@@ -201,22 +204,22 @@
 ' instant logon (4):
 ' if user hasn't called before (tc%=1): open e.stats, increment record #8 (new users)
 	if tc%=1 then gosub 1060:i=1:x=8:gosub 1025:close 2
-	a$="mail":gosub {:3362}:if a then gosub 2100:a$="{$c5}"+"{$cd}":goto 1016
+	a$="mail":gosub {:3362}:if a then gosub 2100:a$="E"+"{$cd}":goto 1016
 	goto 1811
 ' end of instant logon
 
 ' log off:
 {:3256}
-' immediate mode (i%=1) or console login (k%=1?) opt-outs
 ' &,52,$22 - More Prompt On? assumed ,0 (clear) parameter?
+	&,52,$22
+' immediate mode (i%=1) or console login (k%=1?) opt-outs
 ' 1678: leave feedback only if not local or console login:
-	&,52,$22:if i%=. and k%=. then gosub 1678
 ' don't read logoff screen if user logged on in instant/console mode:
-	if i%=. and k%=. then:&"{f6:2} {$c2}ye{f1} "+ff$+"!{f6:2}":a$="s.end"+str$(nl):dr=1:gosub 1076
+	if i%+k%=. then gosub 1678:&"{f6:2} Bye{f1} "+ff$+"!{f6:2}":a$="end"+str$(nl):gosub 1350
 	if i% or k% then:&"{f6}{lt. blue}{$d5}pdate {$d5}ser {$c6}ile?:{white} ":gosub 1902:on a gosub 1070
 {:3262}
 	a$="{$cc}ogoff":gosub {:3026}:if ac%=16 then {:3266}
-	if i%=.then a$="off":gosub {:3358}
+	if i%=. then a$="off":gosub {:3358}
 {:3266}
 	a=.:gosub 1003:b$="logoff":x=10:gosub {:3480}:&,52,4:&,52,5:gosub {:3004}:gosub {:3032}
 	f1=.:&,28,1:gosub {:3496}:on-(ac%=16)gosub {:3032}
@@ -232,9 +235,8 @@
 	&,28,1:gosub 1093:gosub 1914:for j=217 to 242:poke j,peek(j)or 128:next:dr=3:gosub 1079
 	gosub 1063:x=37:gosub 1001:&,2,2:l2=val(left$(a$,1)):l2$=mid$(a$,2):close 2
 ' this was corrected & moved to im.disp
-'	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}{$c5}"
-' keep line #s in sync:
-	:
+'	if pt%then print"{home}{down}{rvrs on}{white}{$d0}{down}{left}{$d2}{down}{left}{$c9}{down}{left}{$cd}{down}{left}E"
+{number:3292}
 	gosub 1374:gosub {:3496}
 	if peek(1010)then a$=d1$:gosub 1520:t1=a
 	goto {:3370}
@@ -248,8 +250,8 @@
 	&,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
 	if a%=.then{:3318}
 	for i=1 to a%:x=ff%(i):&,60,1,20,fb%(1,x),an$:&,15,1:b%=fb%(.,x)
-	&" {white}{pound}!i. {lt. blue}{pound}v7 {cyan}{pound}{back arrow}28({$c9}{$c4}# {pound}#0{pound}%b){f6}":next
-	poke 53252,4:&"{f6}{lt. blue} {$cc}ogon {$d7}hich {$c1}ccount?{white}: {pound}i1"
+	&" {white}{pound}!i. {lt. blue}{pound}v7 {cyan}{pound}{back arrow}28({$c9}D# {pound}#0{pound}%b){f6}":next
+	poke 53252,4:&"{f6}{lt. blue} {$cc}ogon {$d7}hich Account?{white}: {pound}i1"
 	a=val(an$):on-(a<1 or a>a%or tr%<1)goto {:3316}:a=ff%(a):id=fb%(.,a):i%=1
 	&,28,2:on i%and zz goto {:3168}:goto {:3144}
 {:3316}
@@ -257,10 +259,12 @@
 {:3318}
 	id=1:i%=1:&,28,2:goto {:3144}
 {:3320}
+' set time, 3496: update screen mask
 	a$="misc":a=0:gosub {:3358}:gosub {:3496}:goto {:3436}
 {:3322}
 	&"{clear}":b$="automaint":x=11:gosub {:3480}:a$="automaint":gosub {:3364}:goto {:3336}
 {:3324}
+' set password
 	a$="misc":a=1:gosub {:3358}:goto {:3436}
 {:3326}
 	a$="misc":a=2:gosub {:3358}:goto {:3436}
@@ -277,7 +281,7 @@
 
 {:3336}
 ' start extra automaint modules:
-' todo: move this to +/lo.automaint
+' TODO: move this to +/lo.automaint
 	gosub 2100:br=.:a$="e.maintmods,s,r":dr=3:gosub 1011:if e%then{:3352}
 	&,2,2:br=val(a$):on-(br<1)goto {:3352}:dim lm$(br),mt$(br)
 	for i=1 to br:&,2,2:lm$(i)=a$:&,2,2:mt$(i)=a$:next:close 2:rk=1
@@ -315,7 +319,7 @@
 {:3372}
 	c=a:a=.:lt$=d1$:poke 53248,.:goto {:3050}
 {:3374}
-	a$="{$d2}ing {$c4}etected":gosub {:3026}:goto {:3386}
+	a$="{$d2}ing Detected":gosub {:3026}:goto {:3386}
 {:3376}
 	a$="{$c3}onnected":goto {:3026}
 {:3378}
@@ -344,12 +348,13 @@
 	if a$="{$d2}"then b$="reload":x=11:gosub {:3480}:f1=3:pr$="":a$="lo":goto 1016
 	x=val(a$):if x then{:3418}
 	x=-(a$="{$d6}")-2*(a$="{$c3}")-3*(a$="+")-4*(a$="-")-5*(a$="{$d4}")-6*(a$="{pound}")
-	on-(x<>.)goto {:3420}:x=-(a$="{$06}")-2*(a$="{$c1}"):if x then{:3428}
+	on-(x<>.)goto {:3420}:x=-(a$="{$06}")-2*(a$="A"):if x then{:3428}
 {:3414}
 	k=k+(k>.):on-(a$=" "or k=1)goto {:3384}:on-(a$<>""and(a$<"{f1}"or a$>"{f8}"))gosub {:3454}
 {:3416}
 	x=5:gosub 4000:on a goto {:3376},{:3374},{:3378}:goto {:3388}
 {:3418}
+' 7=set reservation password {:3324}
 	on x gosub {:3320},{:3438},{:3440},{:3456},1372,{:3040},{:3324},{:3326}:goto {:3416}
 {:3420}
 	on x gosub {:3328},{:3330},{:3422},{:3424},{:3426},{:3432}:goto {:3416}
@@ -372,10 +377,10 @@
 {:3438}
 	f3=2:gosub {:3036}:im=2:gosub 2414:goto {:3038}
 {:3440}
-	f3=3:gosub {:3036}:&"{f6:2} {rvrs on}{white} {$c2}locks {$c6}ree {$cf}n {$d3}ystem {$c4}isks {f6:2}"
-	a$="{yellow} {pound}$b {$c4}isk:{pound}{back arrow}15{white}{pound}$c{f6}{yellow} {pound}$d {$c4}isk:{pound}{back arrow}15{white}{pound}$f{f6}":dr=1
-	b$="{$d3}ystem":d$="{$c5}-{$cd}ail":gosub {:3452}
-	b$="{$c5}tc.":d$="{$c4}ir.":gosub {:3452}
+	f3=3:gosub {:3036}:&"{f6:2} {rvrs on}{white} Blocks {$c6}ree {$cf}n {$d3}ystem {$c4}isks {f6:2}"
+	a$="{yellow} {pound}$b Disk:{pound}{back arrow}15{white}{pound}$c{f6}{yellow} {pound}$d Disk:{pound}{back arrow}15{white}{pound}$f{f6}":dr=1
+	b$="{$d3}ystem":d$="E-{$cd}ail":gosub {:3452}
+	b$="Etc.":d$="Dir.":gosub {:3452}
 	b$="{$d0}rogram":d$="{$d5}ser":gosub {:3452}
 	poke 2042,.:&"{f6:2}":goto {:3038}
 {:3452}
@@ -399,7 +404,8 @@
 	close 2:goto {:3038}
 {:3480}
 	p=x:gosub 1060:i=t1:t1=mn%:i=t1-i:i=i-1440*(i<.):st(x)=i:gosub 1026
-	if i then x=x+11:gosub 1025:x=x+16:gosub 1025
+' "close 2" fixes issue #33
+	if i then x=x+11:gosub 1025:x=x+16:gosub 1025:close 2
 ' logs to "e.idle <day>" log, with:
 ' d1$        "idle" (p=10) 
 '         or "used" (p<>10)
@@ -415,32 +421,36 @@
 '	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
 ' preserve b$ in c$:
 	c$=b$:b$="idle "+left$(am$,1):gosub 1068:b$=c$
-{else} 
-' original:
-	on 1 goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
+{else}
+' "on i goto..." fixes issue #35
+	on i goto {:3490}:c$="e.idle "+left$(am$,1)+",s"
 	dr=3:a$=c$+",a":gosub 1011:if e%then a$=c$+",w":gosub 1011
 {endif}
 	print# 2,d1$;" ";mid$("idleused",1-4*(p=10),4);i;b$:close 2
 {:3490}
 	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
-	an$=left$("{$d5}="+mid$(str$(z%),2)+" {$c9}="+mid$(str$(y%),2)+"     ",10)
+	an$=left$("U="+mid$(str$(z%),2)+" I="+mid$(str$(y%),2)+"     ",10)
 	&,69,14,22,an$,$81:return
 {:3496}
-' turn screen mask on
-	&,18,1
-	an$=d3$:&,15,1:&,69,5,17,an$,$8c
-	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,l2$,$8c
+' turn screen mask on, display date, set reservation password string (None, or password)
+	&,18,1:an$=d3$:&,15,1:&,69,5,17,an$,$8c:an$="None":if l2 then an$=mid$(l2$,2,10)
+' fix reservation password display (l2$):
+	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,left$(an$+"{space:21}",21),$8c
 ' &,52,41,3: Network Reserve
-	&,52,41,3:&,69,31,17," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),$8c:kk=a%
+	&,52,41,3:&,69,31,17," Res O"+mid$("ff n  ",a%*3+1,3),$8c:kk=a%
 ' &,52,40,3: System Reserved (Default PW)
-	&,52,40,3:&,69,31,18," {$d2}es {$cf}"+mid$("ff n  ",a%*3+1,3),$8c:kk=kk+2*a%
-	if l2=.then:&,69,31,19," {$cf}ne     ",$8c
-	if l2>.then:&,69,31,19," {$c1}ll     ",$8c
+	&,52,40,3:&,69,31,18," Res O"+mid$("ff n  ",a%*3+1,3),$8c:kk=kk+2*a%
+' fix reserved display (l2):
+' print mid$("NoneOne All ",(l2+1)*4-3,4)
+' fixed: 3104 l2$, l2 reset after 1-call reservation
+	&,69,32,19,mid$("NoneOne All ",(l2+1)*4-3,4)+"{space:4}",$8c
+'	if l2=.then:&,69,31,19," {$cf}ne     ",$8c
+'	if l2>.then:&,69,31,19," All     ",$8c
 '	&,69,31,20,"         ",1:&,69,31,20,str$(qb),1
 '	&,69,31,21,"         ",1:&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),1
 	&,69,31,20,left$(str$(qb)+"         ",9),$8c
 	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
 ' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today?)
+' check available RAM:
 	goto 1374
-	rem +.LO - 1/15/2018 PINACOLADA
-	
+	rem +.lo - 2018-09-26 pinacolada
