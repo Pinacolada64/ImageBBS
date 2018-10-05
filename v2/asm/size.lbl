@@ -9,6 +9,7 @@ orig $cf00
 	jsr linkprg	; cf00 20 33 a5
 
 ; patch: no longer reports an inflating block size between runs.
+; fixes issue #2
 ; zero out size counters:
 	lda #$00
 	sta cf97	; hex size?
