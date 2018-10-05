@@ -1,0 +1,97 @@
+v2-reservation:
+
+Files affected:
+im: input at bootup l2,l2$
++.lo: at login (3096-3105), at idle
++/lo.misc: rewritten completely
++/IM.misc module maybe
+
++/IM.time:
+Add setting prime time options
+Move clock set routines here
+
+im:
+diff updates from X-Tec's
+2018-08-30 im-v2-r2.lbl
+2018-08-07 update-1/im.lbl
+
+merge my updates:
+im:
+- 
+- 1336-1337: System clock is now initially set based on IM revision date.
+	That way, if no clock set method defined yet
+	(i.e., a brand-new system), time/date will be sane.
+- 1360: More efficient display of cm$
+- 3140+3150: Combined to read record #35 only once
+- [Setup] Sysop name defaults to JOHN DOE instead of RUSH LIMBAUGH
+- [Setup] Clock set method device/drive displays range, uses MCI input
+
++.lo:
+ Size  Revision
+ 11140 +.lo v2-r2
+-10886 +.lo pina-09-28
+ =====
+   254
+
+- 3010: If no password mask char list, RETURN
+- 3070-3074: remove Image Term detection, may re-add later
+- 3248: removed "goto 3250"
+- 3250: changed "on -(tc%>1) goto 3252:" to "if tc%=1 then"
+- 3258-325...
+?ILLEGAL QUANTITY ERROR 4244 in +.lo after immediate logon
+
+- 3496-3512: Simplified displays of qb, uh, ur
+
++/lo-anagram: "CROISSANT" fix
+
+Things to test:
+- idle logging (how to view?)
+- during system idle, ILLEGAL QUANTITY ERROR (check error log), no line #
+
+im.disp:
+- xxxx: add "PRIME" display if Prime Time
+
+Replace:
+- +/lo-question with original from r2 (questions are blank)
+
+Check:
+- +.VB, see if vote topic title is in all caps
+
+Don't include these updates yet:
+* ud-comment mod
+
+
+* swiftlink
+{ifdef:swiftlink}
+' to init SwiftLink, use &,16,1
+	gosub {:sub.init_rs232_interface}
+{else}
+	&"Loading RS232 Driver...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,.
+{endif}
+
+(goes after drive titles)
+
+{ifdef:swiftlink}
+' experimental
+{nice:10}
+{:sub.init_rs232_interface}
+' user port: &,16,0
+' SwiftLink: &,16,1
+' needs Jack's modemconfig module
+	dr=3:a$="e.i.modem":gosub 1011:if e% then:&"Defaulting to ":x=.:goto {:init}
+{:4020}
+	x=1:gosub 1001:&,2,2:mt$=a$:x=val(mid$(mt$,11,1)
+'	:&,2,2:in$=a$:&,2,2:m$=a$:&,2,2:au$=a$
+{:init}
+	close 2:if x<>1 then x=.
+' Initializing SwiftLink ML...
+	&"{f6}Initializing "
+{:init}
+	&mid$("user portSwiftLink",(x+1)*9-8,9)+" {$cd}{$cc}..."
+	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,x:return
+{endif}
+
++.lo: ' TODO: add lightbar checkmark to disable extra login questions
+instant mode logoff opt-outs: leave feedback, show "s.end+nl"
+
+Add +.CD command to distribution (file not included)
