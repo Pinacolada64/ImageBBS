@@ -847,20 +847,19 @@
 ' fixes issue #5 (User count is set to 141 when new BBS configured)
 	gosub {:1045}:uh=a%:&"{pound}%a "+left$("Users",4-(a%<>1))+"{f6}"
 	dr=3:gosub {:1010}
-	&"{f6}ECS Defs:":a$=dr$+"e.ecs.main":&,42,4:gosub {:sub.status}
-	&"Print Mode Defs:":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
-	&"LightBar Defs:":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
-'	&"Alarm Table:":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
+	&"{f6}ECS Defs":a$=dr$+"e.ecs.main":&,42,4:gosub {:sub.status}
+	&"Print Mode Defs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
+	&"LightBar Defs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
+	&"Alarm Table":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
 ' FIXME: also not ready:
 '	f$="e.alarms":gosub {:sub.check_for_file}:if e%=62 then {:nm_times}
 ' a$ gets overwritten by DOS status
-	a$=dr$+f$:&"Alarm Table":&,7,dv%,9:gosub {:sub.status}
 {:nm_times}
 ' TODO: check if "nm.config" exists first?
 ' check for presence of "nm.times": if not present, don't crash with ?load error
 ' FIXME: larry said this caused his bbs to not run network transfers :(
-	dr=2:gosub {:1009}:f$="nm.times":gosub {:sub.check_for_file}:if e%=62 then {:fkeys}
-	&"Network Alarm Table":a$=dr$+f$:&,7,dv%,12:gosub {:sub.status}
+'	dr=2:gosub {:1009}:f$="nm.times":gosub {:sub.check_for_file}:if e%=62 then {:fkeys}
+	dr=2:gosub {:1009}:&"Network Alarm Table":a$=dr$+"nm.times":&,7,dv%,12:gosub {:sub.status}
 {:fkeys}
 ' f-key functionality is broken, so making this file optional
 	dr=3:gosub {:1009}:f$="e.fkeys":gosub {:sub.check_for_file}:if e%=62 then {:3132}
@@ -912,6 +911,7 @@
 {:3188}
 	for q=.to 6:bf(q)=-1:next
 	&"{f6}Reading Blocks Free...{f6}":for q=1 to 6:dr=q:gosub {:1079}
+{:3192}
 	read b$:&"{f6}{rvrs off} {pound}$b Disk:{pound}{back arrow}30{pound}!a":next:q=.:return
 {:3194}
 	&"{f6:3}{yellow}Insert All System Disks In Correct      Drives, And Press {rvrs on} RETURN {rvrs off}"
@@ -924,7 +924,7 @@
 	for x=. to 7:&,2,2:if len(a$)<>16 then{:3210}
 	for i=1 TO 16:b$=mid$(a$,i,1):&,52,(x)*16+i-1,val(b$):next
 {:3210}
-	next:close 2:gosub {:3456}
+	next:close 2:gosub {:sub.status}
 {:3212}
 	a$="e.log"+left$(lt$,1):gosub {:1011}:if e%=. then return
 	dr=3:a$="e.log"+left$(lt$,1):gosub {:1023}:an$=d1$:&,15:d6$=an$
@@ -995,7 +995,7 @@
 ' next available user account:
 	x=31:gosub {:1001}:print# 2,ur:x=32:gosub {:1001}:print# 2,"{up arrow}"
 	x=33:gosub {:1001}:print# 2,y%:x=34:gosub {:1001}:print# 2,y1%
-	x=35:gosub {:1001}:print# 2,d1$:x=36:gosub {:1001}:print# 2,"0":x=37:gosub {:1001}:print# 2,"{up arrow}"
+	x=35:gosub {:1001}:print# 2,d1$:x=36:gosub {:1001}:print# 2,"0":x=37:gosub {:1001}:print# 2,"0,{up arrow}"
 	x=38:gosub {:1001}:print# 2,"0":for x=39 to 42:gosub {:1001}:print# 2,"{up arrow}":next
 	x=43:gosub {:1001}:print# 2,"X":for x=44 to 46:gosub {:1001}:print# 2,"{up arrow}":next
 	x=47:gosub {:1001}:print# 2,bn$:x=48:gosub {:1001}:print# 2,c1$
@@ -1082,11 +1082,12 @@
 ' get time from last system timestamp:
 ' disk input was already done in 3140, copy am$
 	z$=am$ ':goto {:set_time_flag}
-
 {:set_time_flag}
 {:3370}
 	poke 1010,1:return
-
+{:3372}
+' get time from cmd clock (15 bytes) "mon. xx/xx/xx"+cr?
+	close 15:open 15,y%,15:print# 15,"t-ra":&,2,15:close 15:goto {:3356}
 {:3376}
 '	rem:close15:open15,dv%,15,"r"+bd$+"d.data=bd.data":close 15
 	rem convert from 1.2(a)
