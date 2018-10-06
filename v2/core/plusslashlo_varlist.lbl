@@ -1,4 +1,4 @@
-' fixme: displays 'a$ = "a$"'
+' fixed: displays 'a$ = "a$"'
 ' fixme: gets into a loop (space aborts) when displaying integer variables
 
 {number:4000}
@@ -15,7 +15,7 @@
 	if t=.then gosub {:4046}
 	if t=1 then a=peek(x+3)+peek(x+2)*256:a=a+65536*(a>32767):&str$(a)
 ' string variable:
-	if t=2 then poke y+9,peek(x+2):poke y+10,peek(x+3):poke y+11,peek(x+4):gosub {:4058}
+	if t=2 then poke y+2,peek(x+2):poke y+3,peek(x+3):poke y+4,peek(x+4):gosub {:4058}
 	if t=3 then:&" ?"
 	if rc then{:4028}
 	&"{f6}":x=x+7:if x<(peek(47)+peek(48)*256)then{:4008}

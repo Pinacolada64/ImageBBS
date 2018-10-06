@@ -935,7 +935,6 @@
 {:3222}
 ' configure new BBS:
 	&"{clear}{f6}{white} Part I: Sysop Information{f6:2}" ':d1$="14112071201" ' d1$=pearl harbor day
-	&"{clear}{f6}{white} Part I: Sysop Information{f6:2}"
 	poke 53252,20:w$="IMAGE BBS":b$=w$:pl=1:p$="Sysop Handle":&,1,32
 	if an$="" then an$=b$
 	tt$(1)=an$:&"{f6}":w$="JOHN":b$=w$:p$="Sysop First Name":&,1,32

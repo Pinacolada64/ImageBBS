@@ -472,10 +472,6 @@
 ' print mid$("NoneOne All ",(l2+1)*4-3,4)
 ' fixed: 3104 l2, l2$ reset after 1-call reservation
 	&,69,32,19,mid$("NoneOne All ",(l2+1)*4-3,4)+"{space:4}",$8c
-'	if l2=.then:&,69,31,19," One     ",$8c
-'	if l2>.then:&,69,31,19," All     ",$8c
-'	&,69,31,20,"         ",1:&,69,31,20,str$(qb),1
-'	&,69,31,21,"         ",1:&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),1
 	&,69,31,20,left$(str$(qb)+"         ",9),$8c
 	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
 ' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today)

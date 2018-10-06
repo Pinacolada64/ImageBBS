@@ -16,6 +16,10 @@ ifwhateverthenstop\ngosub{:1001}:goto1001\n"
 
 # TODO: lowercasing keywords, but that will be tricker. maybe use awk/sed
 
+# convert C64List 3.05's "-alpha:upper" to 3.50's "-alpha:alt"
+# this results in infinitely more readable quoted strings
+# sed s/alpha:upper/alpha:alt/g
+
 # echo -e $string | \
 sed s/{\$c1}/A/g | \
 sed s/{\$c2}/B/g | \
@@ -44,8 +48,9 @@ sed s/{\$d8}/X/g | \
 sed s/{\$d9}/Y/g | \
 sed s/{\$da}/Z/g | \
 
-# change "then<condition>" to "then <condition>"
-sed -E s/then\[\^\ \]/then\ /g | \
+# change "(if|then)<condition>" to "(if|then) <condition>"
+# sed -E s/then\[\^\ \]/then\ /g | \
 
 # change "go(to|sub)<xxxx>" to "go(to|sub) <xxxx>"
+# "\^\ " = 'not followed by a space"
 sed -E s/\(goto\|gosub\)\[\^\ \]/\\1\ /g # "goto 1000"

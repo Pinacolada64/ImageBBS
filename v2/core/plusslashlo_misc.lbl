@@ -1,7 +1,7 @@
 {alpha:alt} ' c64list 3.50
 {number:4000}
 {step:2}
-{quoter:32="space"} 	' make runs of spaces easier to read
+{quoter:32="space"}	' make runs of spaces easier to read
 {quoter:$dd="pipe"}	' so | translates properly on the Commodore
 	rem +/lo.misc - misc. idle commands
 	poke 53248,1:on a+1 gosub {:3264},{:4050},{:4068}:poke 53248,0:return
