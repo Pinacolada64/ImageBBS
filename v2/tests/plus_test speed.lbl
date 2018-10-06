@@ -1,20 +1,20 @@
 {number:3000}
 {step:2}
-	&"{$d4}est #1:{$d7}rap {$cf}n{f6}":gosub {:3100}:&"{$cb}ey {pound}g1{f6}"
-	&"{$d4}est #2:{$d7}rap {$cf}ff{f6}":gosub {:3200}:&"{$cb}ey {pound}g1{f6}"
+	&"Test #1:Wrap On{f6}":gosub {:3100}:&"Key {pound}g1{f6}"
+	&"Test #2:Wrap Off{f6}":gosub {:3200}:&"Key {pound}g1{f6}"
 	pr$="":goto 1812
 {number:3100}
 ' $dd08: cia#2 time-of-day clock
 	m=56584:&"{clear}":poke m+3,0:poke m+2,0:poke m+1,0:poke m,0
 	for i=1 to 50:lp=1:&"----------++++++++++----------+++++++++ ":next
 	d%=peek(m):c%=peek(m+1):c%=(c%and 15)+int(c%/16)*10:a=2000/(c%+d%/10)
-	a%=a:b%=(a-a%)*10:&"{pound}%c.{pound}%d {$d3}econds / {pound}%a.{pound}%b {$c3}{$d0}{$d3}{f6}"
+	a%=a:b%=(a-a%)*10:&"{pound}%c.{pound}%d Seconds / {pound}%a.{pound}%b CPS{f6}"
 	return
 {number:3200}
 	m=56584:&"{clear}":poke m+3,0:poke m+2,0:poke m+1,0:poke m,0
 	for i=1 to 50:lp=0:&"----------++++++++++----------+++++++++ ":next
 	d%=peek(m):c%=peek(m+1):c%=(c%and 15)+int(c%/16)*10:a=2000/(c%+d%/10)
-	a%=a:b%=(a-a%)*10:&"{pound}%c.{pound}%d {$d3}econds / {pound}%a.{pound}%b {$c3}{$d0}{$d3}{f6}"
+	a%=a:b%=(a-a%)*10:&"{pound}%c.{pound}%d Seconds / {pound}%a.{pound}%b CPS{f6}"
 	return
-	rem +.TEST SPEED
+	rem +.test speed
 	
