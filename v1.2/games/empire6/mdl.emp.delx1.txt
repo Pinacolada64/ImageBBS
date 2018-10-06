@@ -1,0 +1,432 @@
+
+
+;mdl.emp.delx1.prg ==1c01==
+ 40000 gosub 50005:a$="":goto 9050
+ 45000 poke c(23),1:gosub 300:poke c(23),0:goto 390
+ 50005 auto off:gosub 481:if peek(116)=1then poke 116,0:gosub 50445:goto 50020
+ 50010 rem
+ 50015 sys c(40),2:gosub 50070
+ 50020 gosub 50065:su$="":sys c(41),1:return
+ 50030 poke c(23),1:gosub 300:poke c(23),.:goto 390
+ 50035 gosub 3640
+ 50040 gosub 110:if p=.and (a$<"0"ora$>"Z")then 50040
+ 50045 if pthen 360
+ 50050 goto 160
+ 50055 a=int(x/256):.print#15,"p{CTRL-B}"+chr$(x-a*256)chr$(a)"{CTRL-A}":return
+ 50060 .close 2:.open 2,dv,2,dr$+a$:return
+ 50065 forvx=1to1e3:next:return
+ 50070 dimsw(15),x(30),k(30),u$(15),s(15):m=3:m2=30:gosub 51770:gosub 51905
+ 50075 gosub 481:f$="{SHIFT-@}emp.intro":gosub 205:f$="{SHIFT-@}emp.fame":gosub 203:gosub 510
+ 50080 if er=.then 50095
+ 50085 gosub 505:ew$(1)="EMPTY":ew$(2)=da$:ew$(3)="0":ew$(4)="0":gosub 50090:goto 50100
+ 50090 f$=f$+",s,w":gosub 203:.print#8,ew$(1)cr$ew$(2)cr$ew$(3)cr$ew$(4):goto 505
+ 50095 .input#8,ew$(1),ew$(2),ew$(3),ew$(4):gosub 505
+ 50100 if ew$(1)="EMPTY"then a$=cr$+"{f5}The King is Dead":sys c(.):ew$(1)="SYSOP":goto 50140
+ 50105 gosub 51770:a$=cr$+"{f5}Long Live The King, "+ew$(1):sys c(.)
+ 50110 a$=cr$+"{f5}In Power Since "+ew$(2):sys c(.)
+ 50115 a$=cr$+"{f5}Total Credits Earned: "+ew$(3):sys c(.)
+ 50120 if ew$(1)<>na$orval(ew$(4))=.then 50140
+ 50125 a$=cr$+"{f5}You Receive "+ew$(4)+" Credits!":sys c(.):x=int(val(ew$(4))/1)
+ 50130 pu=pu+x:ew$(4)="0":.print#15,"s"+dr$+f$:gosub 50090:a$=str$(x):gosub 8004
+ 50135 rem {rvon}update news files
+ 50140 f$="{SHIFT-@}emp.news1":gosub 203:gosub 510:if erthen .close 8:goto 50160
+ 50145 sys c(5):.close 8:if mid$(tx$,1,8)=da$then 50195
+ 50150 .print#15,"s"+dr$+"{SHIFT-@}emp.news2
+ 50155 .print#15,"r"+dr$+"{SHIFT-@}emp.news2="+dr$+"{SHIFT-@}emp.news1
+ 50160 .open 8,dv,8,dr$+"{SHIFT-@}emp.news1,s,w
+ 50165 .print#8,da$" Activity:"cr$:gosub 505
+ 50170 if ew$(1)="EMPTY"then 50195
+ 50175 x=val(ew$(4)):x=x+20:ew$(4)=str$(x)
+ 50180 x=val(ew$(3)):x=x+20:ew$(3)=str$(x)
+ 50185 f$="{SHIFT-@}emp.fame":.print#15,"s"+dr$+f$:f$=f$+",s,w":gosub 203
+ 50190 .print#8,ew$(1)+cr$+ew$(2)+cr$+ew$(3)+cr$+ew$(4):gosub 505
+ 50195 j=.:a$="{SHIFT-@}empire ii stats":gosub 50060:forx=1tom2:gosub 50055:.input#2,a$
+ 50200 if a$<>"empty"then j=j+1
+ 50205 next:.close 2:if j<11then m=5
+ 50210 if j>10and j<21then m=6
+ 50215 if j>20then m=7
+ 50220 rem {rvon}empire msg
+ 50225 f$="{SHIFT-@}emp.msg":gosub 203:gosub 510:if erthen .close 8:goto 50255
+ 50230 sys c(5):i$=left$(tx$,peek(142)):sys c(5):f$=left$(tx$,peek(142)):.close 8
+ 50235 gosub 51770:a$=cr$+"{f5}Last Words From "+i$+"..."+cr$:sys c(.)
+ 50240 i$=left$("{yel}--------------------------------------",len(f$)+1)
+ 50245 a$=i$+cr$+"{f5}"+f$+cr$+i$+"{f5}":sys c(.)
+ 50250 rem {rvon}reset
+ 50255 x=1:a$="{SHIFT-@}empire ii stats":gosub 50060:gosub 510:if er>20then 50305
+ 50260 goto 50320
+ 50265 if rn>1then 50460
+ 50270 a$=cr$+"{f5}Reset [Y/N] ":sys c(1):gosub 1010:if pthen gosub 360
+ 50275 sys c(.):on-(p=225)goto 51415:if a$<>"Y"then 50460
+ 50280 a$=cr$+"{f1}Creating Your Empire...{f3}":sys c(.)
+ 50285 .print#15,"s"+dr$+"{SHIFT-@}emp.news*
+ 50290 x=1:a$="{SHIFT-@}empire ii stats,l,"+chr$(200):gosub 50060
+ 50295 forx=1tom2:gosub 50060:gosub 50055:.print#2,"empty"cr$"0
+ 50300 next:.close 2:return
+ 50305 .close 2:if rn=1then 50280
+ 50310 a$=cr$+"{CTRL-G}{lred}Empire Closed!":goto 160
+ 50315 rem {rvon}new player
+ 50320 gosub 50055:.input#2,a$:on-(a$=na$)goto 50400:x=x+1:if x<=m2then 50320
+ 50325 if rn=e0%then .close 2:a$=cr$+"{CTRL-G}{lred}You Cannot Register At This Time!":goto 160
+ 50330 a$=cr$+"{f5}A New Player!":sys c(.):x=1
+ 50335 gosub 50055:.input#2,a$:r1=x:on-(a$="empty")goto 50355
+ 50340 x=x+1:if x<=m2then 50335
+ 50345 .close 2:a$="{lred}EMPIRE FULL{grn}":gosub 8004:a$=cr$+"{f5}You Will Have To Wait Until
+ 50350 a$=a$+cr$+"Another Player Dies!"+cr$+"{f5}Check Back Soon!":goto 160
+ 50355 a=int(rnd(1)*300):a$=na$+cr$+"5000"+cr$+"10000"+cr$+"0"+cr$+"0"+cr$
+ 50360 a$=a$+"3"+cr$+"0"+cr$+"0"+cr$+"2"+cr$+"0"+cr$+"1"+cr$+"0"+cr$+"0"+cr$
+ 50365 a$=a$+"0"+cr$+"0"+cr$+"0"+cr$+"20000"+cr$+"5000"+cr$+str$(a+2000)+cr$
+ 50370 i$=str$(a+500)+cr$+"40"+cr$+"0"+cr$+"0"+cr$+"50"+cr$+"0"+cr$+"0"+cr$
+ 50375 i$=i$+"0"+cr$+"0"+cr$+da$+cr$+"0"
+ 50380 x=r1:gosub 50055:.print#2,a$i$
+ 50385 a$=cr$+"{CTRL-G}{f5}Welcome to Empire II {f1}DELUXE!!{f3}":sys c(.)
+ 50387 a$=c2$+"{f5}With {f5}Tourneys, {f5}Quests,{f5} and ":sys c(1)
+ 50388 a$=cr$+"{f5}Alterations, {f5}By  {blu}X{lblu}EV{cyn}I{lblu}OU{blu}S{f5}!!":sys c(.)
+ 50390 gosub 50055:.input#2,a$
+ 50395 rem {rvon}get player stats
+ 50400 r1=x:.input#2,x(2),x(3),x(4),x(5),x(6),x(7),x(8)
+ 50405 .input#2,x(9),x(10),x(11),x(12),x(13),x(14),x(15),x(16)
+ 50410 .input#2,x(17),x(18),x(19),x(20),x(21),x(22),x(23)
+ 50415 .input#2,x(24),x(25),x(26),x(27),x(28),u1$(2),x(29):.close 2
+ 50420 if u1$(2)<>da$then u1$(2)=da$:x(29)=.
+ 50425 f$="{SHIFT-@}emp.atk":gosub 203:gosub 510:if erthen .close 8:goto 50440
+ 50430 .input#8,x:.close 8
+ 50435 on-(x=nu)goto 50445:.print#15,"s"+dr$+"{SHIFT-@}emp.atk
+ 50440 f$="{SHIFT-@}emp.atk,s,w":gosub 203:.print#8,nu:.close 8
+ 50445 a=int(tm-ti/3600):gosub 51770:a$=cr$+"{f5}{rvon}Time  Remaining:{rvof}"+str$(a):sys c(.)
+ 50450 gosub 51770:a$="{f5}{rvon}Plays Remaining:{rvof}"+str$(m-x(29)):sys c(.)
+ 50455 rem {rvon}main prompt
+ 50460 dx=.:a$="":sys c(.):gosub 155:su$="{CTRL-G}{lred}You Only Have":gosub 155:gosub 51760
+ 50465 a$="{f5}{rvon}EMPIRE II{rvof}":sys c(1):gosub 51770:a$=" {f5}[?=MENU] {f5}COMMAND? ":sys c(1)
+ 50470 gosub 50035:if pthen 51415
+ 50475 on-(a$="Q")-(a$="C")*2-(a$="Z")*3-(a$="I")*4goto 51415,50705,50265,51915
+ 50477 on-(a$="H")goto 51795
+ 50480 on-(a$="T")-(a$="L")*2-(a$="N")*3gosub 50510,50660,50500
+ 50485 on-(a$="Y")-(a$="V")*2-(a$="{SHIFT-@}")*3gosub 50525,51520,52000
+ 50490 on-(a$<>"?")goto 50460:f$="{SHIFT-@}emp.menu1":gosub 210:goto 50460
+ 50495 rem {rvon}news
+ 50500 gosub 51760:a$=c2$+"{f5}-THE BATTLE NEWS-":sys c(.):gosub 51770
+ 50505 f$="{SHIFT-@}emp.news2":gosub 210:gosub 51770:f$="{SHIFT-@}emp.news1":goto 210
+ 50510 gosub 51770:if lv<9then return
+ 50515 x(29)=x(29)-1:return
+ 50520 rem {rvon}player stats
+ 50525 gosub 155:gosub 51770:gosub 51490:if mc>40then gosub 56300:goto 160
+ 50530 sp$="                      ":a$="{f5}{rvon}  - EMPIRE II -   PLAYS REMAINING:"+str$(m-x(29))+" {rvof}":sys c(.)
+ 50535 gosub 51770:a$=cr$+"{f5}"+na$+sp$
+ 50540 a$=left$(a$,23)+"ACRES    -"+str$(x(2)):sys c(.)
+ 50545 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4)):sys c(.)
+ 50550 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13)):sys c(.)
+ 50555 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"CANNONS  -"+str$(x(14)):sys c(.)
+ 50560 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10)):sys c(.)
+ 50565 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"SHIPS    -"+str$(x(12)):sys c(.)
+ 50570 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16)):sys c(.)
+ 50575 gosub 51770:a$=cr$+"{f5}{rvon}EMPIRE II  MAINLAND   ISLAND    FLEET{rvof}"+cr$
+ 50580 sys c(.):sp$="         ":gosub 51770
+ 50585 a$="{f5}NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)
+ 50590 a$=a$+"-"+str$(s(3)):sys c(.)
+ 50595 a$="{f5}SOLDIERS  -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)
+ 50600 a$=a$+"-"+str$(s(6)):sys c(.)
+ 50605 a$="{f5}SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"
+ 50610 a$=a$+str$(s(2)):sys c(.)
+ 50615 a$="{f5}GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"
+ 50620 a$=a$+str$(s(1)):sys c(.)
+ 50625 a$="{f5}HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)
+ 50630 a$=a$+"-"+str$(s(7)):sys c(.)
+ 50635 a$="{f5}EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)
+ 50640 a$=a$+"-"+str$(s(5)):sys c(.)
+ 50645 a$="{f5}SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)
+ 50650 a$=a$+"-"+str$(s(8)):goto 160
+ 50655 rem {rvon}list players
+ 50660 gosub 155:gosub 51770:sp$=".........................."
+ 50665 a$=c2$+"{rvon}{f5}# EMPEROR'S NAME     ACRES   RATING"+cr$:sys c(.)
+ 50670 x=1:a$="{SHIFT-@}empire ii stats":gosub 50060
+ 50675 gosub 51770:gosub 50055:.input#2,a$,b$:if a$="empty"then 50690
+ 50680 .input#2,f$,i$:a$="{f5}"+left$(mid$(str$(x),2)+" "+a$+sp$,21)+left$(b$+sp$,9)
+ 50685 a$=a$+i$:sys c(.)
+ 50690 gosub 110:if pora$=" "then a$=cr$+"{f5}^p"+cr$:sys c(.):x=m2+1
+ 50695 x=x+1:on-(x<=m2)goto 50675:.close 2:return
+ 50700 rem {rvon}harvest
+ 50705 gosub 51770:if x(29)>m-1then 50420
+ 50710 x(29)=x(29)+1:z(1)=int(x(2)*2.7*rnd(1)+x(19)*7.5*rnd(1)+x(8)*99*rnd(1))
+ 50715 if z(1)>(x(2)+x(19))*4then z(1)=(x(2)+x(19))*4
+ 50720 x(17)=x(17)+z(1)
+ 50725 z(2)=int((x(13)*rnd(1))+(x(20)*rnd(1))+(x(24)*rnd(1))+(rnd(1)*x(2)))
+ 50730 x(18)=x(18)+z(2):z(3)=int(rnd(1)*(x(24)/3)+10):x(24)=x(24)+z(3)
+ 50735 z(4)=int(rnd(1)*(x(23)/5)):x(23)=x(23)-z(4)
+ 50740 a$=c2$+"{f5}{rvon}Production Report":sys c(.)
+ 50745 a$=cr$+"{f5}The Mainland  Harvested"+str$(z(1))+" Bushels":sys c(.)
+ 50750 a$="And Lost"+str$(z(4))+" Horses":sys c(.)
+ 50755 a$=cr$+"{f5}The Island  Harvested"+str$(z(2))+" Bushels":sys c(.)
+ 50760 a$="And Gained"+str$(z(3))+" Horses":sys c(.)
+ 50765 rem {rvon}acres
+ 50770 x=usr(40)+15:j=usr(12)+5
+ 50775 gosub 51770:a$=c2$+"{f5}You Own"+str$(x(2))+" Acres":gosub 50930:if pthen 51415
+ 50780 on-(a$="B")-(a$="S")*2-(a$="C")*3goto 50790,50815,50845
+ 50785 on-(a$="Y")gosub 50525:goto 50775
+ 50790 a$=c2$+"{f5}The Nomads Will Sell Their Land "+cr$
+ 50795 a$=a$+"For $"+str$(x)+" Per Acre":gosub 50920:if pthen 51415
+ 50800 k=val(i$):if k<1then 50775
+ 50805 if x(3)<(k*x)then a$=cr$+su$+" $"+str$(x(3)):sys c(.):goto 50790
+ 50810 x(3)=x(3)-(k*x):x(2)=x(2)+k:a$=cr$+"{f5}Bought!":sys c(.):goto 50845
+ 50815 a$=c2$+"{f5}The Huns Will Buy Your Land "+cr$
+ 50820 a$=a$+"For $"+str$(j)+" Per Acre":gosub 50925:if pthen 51415
+ 50825 k=val(i$):if k<1then 50775
+ 50830 if k>x(2)-1then a$=cr$+su$+str$(x(2))+" Acres":sys c(.):goto 50815
+ 50835 x(2)=x(2)-k:x(3)=x(3)+(j*k):a$=cr$+"{f5}Sold!":sys c(.)
+ 50840 rem {rvon}grain
+ 50845 gosub 51770:x=(x(19)*5)+(x(21)*8+1)
+ 50846 a$=c2$+"Serfs and  Army Require"+str$(x)+" Bushels!":sys c(1)
+ 50849 x=usr(4)+3
+ 50850 j=usr(5)+1
+ 50855 a$=cr$+"{f5}You Have"+str$(x(17))+" Bushels Of Grain":gosub 50930:if pthen 51415
+ 50860 on-(a$="B")-(a$="S")*2-(a$="C")*3goto 50870,50895,50940
+ 50865 on-(a$="Y")gosub 50525:goto 50855
+ 50870 a$=c2$+"{f5}The Farmers Will Sell Their Grain"+cr$
+ 50875 a$=a$+"For $"+str$(x)+" Per Bushel":gosub 50920:if pthen 51415
+ 50880 k=val(i$):if k<1then 50855
+ 50885 if x(3)<(k*x)then a$=cr$+su$+" $"+str$(x(3)):sys c(.):goto 50870
+ 50890 x(3)=x(3)-(k*x):x(17)=x(17)+k:a$=cr$+"{f5}Bought!":sys c(.):goto 50940
+ 50895 a$=c2$+"{f5}The Market Master Will Buy Your Grain"+cr$
+ 50900 a$=a$+"For $"+str$(j)+" Per Bushel":gosub 50925:if pthen 51415
+ 50905 k=val(i$):if k<1then 50855
+ 50910 if k>x(17)then a$=cr$+su$+str$(x(17))+" Bushels":sys c(.):goto 50895
+ 50915 x(17)=x(17)-k:x(3)=int(x(3)+(k*j)):a$=cr$+"{f5}Sold!":sys c(.):goto 50940
+ 50920 a$=a$+c2$+"{f5}Buy -> ":sys c(1):goto 50030
+ 50925 a$=a$+c2$+"{f5}Sell -> ":sys c(1):goto 50030
+ 50930 a$=a$+c2$+"{f5}[B]uy {f5}[S]ell {f5}[C]ontinue {f5}":sys c(1):goto 50035
+ 50935 rem {rvon}feed serfs
+ 50940 pr=x(19)*5:a$=c2$+"{f5}The Serfs Need"+str$(pr)+" Bushels":sys c(.)
+ 50945 a$=cr$+"{f5}Give Them How Many? [RETURN="+mid$(str$(pr),2)+"]"+c2$+"{f5}>
+ 50950 sys c(1):gosub 50030:if i$<>""then 50965
+ 50955 i$=str$(pr):a$="{up}"+i$
+ 50960 sys c(.)
+ 50965 mh=int(val(i$)):if pthen 51050
+ 50970 if mh>x(17)then a$=cr$+su$+str$(x(17))+" Bushels":sys c(.):goto 50940
+ 50975 on-(mh<.or(mh=.and left$(i$,1)<>"0"))goto 50940:x(17)=x(17)-mh
+ 50980 rem {rvon}feed armies
+ 50985 mr=x(21)*8+1:a$=c2$+"{f5}Your Army Needs"+str$(mr)+" Bushels":sys c(.)
+ 50990 a$=cr$+"{f5}Give Them How Many? [RETURN="+mid$(str$(mr),2)+"]"+c2$+"{f5}>
+ 50995 sys c(1):gosub 50030:if i$<>""then 51010
+ 51000 i$=str$(mr):a$="{up}"+i$
+ 51005 sys c(.)
+ 51010 mx=int(val(i$)):if pthen 51050
+ 51015 if mx>x(17)then a$=cr$+su$+str$(x(17))+" Bushels":sys c(.):goto 50985
+ 51020 on-(mx<.or(mx=.and left$(i$,1)<>"0"))goto 50985
+ 51025 x(17)=int(x(17)-mx):if x(17)<.then x(17)=.
+ 51030 rem {rvon}status report
+ 51035 gosub 51770:a$=c2$+"{rvon}{f5}Census Report: Mainland    Island "+cr$:sys c(.)
+ 51040 x=mh/pr:k=mx/mr:j=.:if x<1then j=int((pr-mh)/5)-int(rnd(1)*(pr-mh)/5+30)
+ 51045 j=j*abs(j>.):if x>.8orx>rnd(1)then 51090
+ 51050 a$=c2$+"{f5}Your Empire Is Devestated By A Horde Of Starving Serfs!":sys c(.)
+ 51055 a=x(7):gosub 51085:x(7)=a:a=x(8):gosub 51085
+ 51060 x(8)=a:a=x(9):gosub 51085:x(9)=a:a=x(10)
+ 51065 gosub 51085:x(10)=a:x(21)=.:x(3)=.:x(17)=.
+ 51070 fr=1:x(6)=int(x(6)/2):x(2)=int(x(2)/2)
+ 51075 x(19)=int(x(19)/2):f$="{SHIFT-@}emp.news1,a":gosub 203
+ 51080 .print#8,"{f5}"+na$+" Was Overrun By Serfs":.close 8:goto 51205
+ 51085 a=a-int(rnd(1)*a):return
+ 51090 z(1)=int(rnd(1)*(x(19)/10)+30):z(2)=int(rnd(1)*(x(20)/12)+10)
+ 51095 z(3)=int(rnd(1)*(x(19)/12)+10):z(4)=int(rnd(1)*(x(20)/12)+10)
+ 51100 z(5)=int(rnd(1)*(x(19)/15)+10):z(6)=z(3)+z(5)-j-z(1):z(7)=z(4)-z(2)
+ 51105 i$="           ":x$="{grn}Gains{wht}":f$=x$:if z(6)<.then x$="{red}Loses{wht}"
+ 51110 if z(7)<.then f$="{red}Loses{wht}"
+ 51115 a$="{f5}Serfs Starved   {wht}"+str$(j):sys c(.)
+ 51120 a$="{f5}Newborn Serfs   {wht}"+left$(str$(z(3))+i$,11)+str$(z(4)):sys c(.)
+ 51125 a$="{f5}Natural Deaths  {wht}"+left$(str$(z(1))+i$,11)+str$(z(2)):sys c(.)
+ 51130 a$="{f5}Immigration     {wht}"+str$(z(5)):sys c(.)
+ 51135 a$="{f5}Net Census "+x$+left$(str$(abs(z(6)))+i$,6)+f$+str$(abs(z(7)))
+ 51140 sys c(.):x(19)=x(19)+z(6):x(19)=x(19)*abs(x(19)>.)
+ 51145 x(20)=x(20)+z(7)
+ 51150 a$=cr$+"{f5}{rvon}Total Population{rvof}{wht}"+left$(str$(x(19))+i$,11)+str$(x(20)):sys c(.)
+ 51155 fr=.:on-(mx=>mr)goto 51170:fr=1:x=int(rn(.)*x(21)):x(27)=x(27)+x
+ 51160 x(21)=x(21)-x:a$=cr$+"{f5}Your Army Is On Strike":sys c(.)
+ 51165 if x>.then a$=cr$+"{f5}"+mid$(str$(x),2)+" Of Your Men Join The Rebels":sys c(.)
+ 51170 x=int((rnd(1)*3)*(rnd(1)*x(19)))
+ 51175 if x(2)<1e4then a$=c2$+"{f5}Receive $"+str$(x)+" In Taxes":sys c(.):x(3)=x(3)+x
+ 51180 on-(x(13)=.)goto 51205:x=int((rnd(1)*(x(20)+x(22)))*(x(12)+1)/x(13))
+ 51185 a$=cr$+"{f5}King Midas Taxes Your Island  $"+str$(x):sys c(.)
+ 51190 if x<x(3)then x(3)=x(3)-x:goto 51205
+ 51195 if x>x(3)then a$=cr$+"{f5}{CTRL-G}You Don't Have The Cash!"+cr$+"Lose 1 Fort
+ 51200 sys c(.):x(13)=x(13)-1
+ 51205 if x(23)<=x(11)*50then 51225
+ 51210 x=int(rnd(1)*(x(23)-(x(11)*50))+1):x(23)=x(23)-x:x(27)=x(27)+x
+ 51215 a$=cr$+"{f5}Rebels Steal"+str$(x)+" Horses":sys c(.)
+ 51220 rem {rvon}investments
+ 51225 a$(1)="Soldier":a$(2)="Market":a$(3)="Mill":a$(4)="Palace
+ 51230 a$(5)="Foundry":a$(6)="Shipyard":a$(7)="Noble":a$(8)="Ship
+ 51235 a$(9)="Stable":sw(1)=10:sw(2)=1e3:sw(3)=2e3:sw(4)=1e4:sw(5)=7e3
+ 51240 sw(6)=8e3:sw(7)=25e3:sw(8)=5e3:sw(9)=1e4
+ 51245 gosub 51770:a$=c2$+"{f5}Gold Reserve:{f5}"+str$(x(3)):sys c(1)
+ 51247 a$=cr$+"{f5}Investment? {f5}[1-9,0=None,?=List] {f5}":sys c(1)
+ 51250 gosub 50035:if pthen 51415
+ 51255 if a$="?"then f$="{SHIFT-@}emp.menu2":gosub 210:goto 51245
+ 51260 tk=int(val(a$)):if a$="Y"then gosub 50525:goto 51245
+ 51265 if a$="0"then a$="mdl.emp.delx2":goto 9050
+ 51270 if tk<1ortk>9then 51245
+ 51275 if tk>1then 51295
+ 51280 if (x(6)*20)-x(21)<(x(9)*40)-x(21)then j=(x(6)*20)-x(21):goto 51290
+ 51285 if (x(6)*20)-x(21)=>(x(9)*40)-x(21)then j=(x(9)*40)-x(21)
+ 51290 if j<.then j=.
+ 51295 a$=c2$+"{f5}Item: "+a$(tk)+" - Price: $"+str$(sw(tk))+c2$+"{f5}Buy How Many? "
+ 51300 if tk=1then a$=a$+" [Max:"+str$(j)+"] "
+ 51305 sys c(1):gosub 50030:if pthen 51415
+ 51310 if len(i$)>4then 51295
+ 51315 x=int(val(i$)):if x<1then 51245
+ 51320 k=x*sw(tk)
+ 51325 if k>x(3)then a$=c2$+su$+" $"+str$(x(3)):sys c(.):goto 51295
+ 51330 ontkgoto 51335,51350,51355,51360,51375,51380,51385,51395,51390
+ 51335 if (x+x(21))/20>x(6)then a$=c2$+su$+str$(x(6))+" Nobles":sys c(.):goto 51245
+ 51340 if (x+x(21))/40>x(9)then a$=c2$+su$+str$(x(9))+" Foundries":sys c(.):goto 51245
+ 51345 x(21)=x(21)+x:gosub 51405:a$=a$+str$(x(21))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51350 x(7)=x(7)+x:gosub 51405:a$=a$+str$(x(7))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51355 x(8)=x(8)+x:gosub 51405:a$=a$+str$(x(8))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51360 if x(5)+x>10then a$=c2$+"{CTRL-G}{lred}100% Max!":sys c(.):goto 51245
+ 51365 x(5)=x(5)+x:gosub 51405:a$=a$+str$(x(5)*10)+"% Of The "+a$(tk)
+ 51370 x(6)=x(6)+x:a$=a$+cr$+"And"+str$(x(6))+" Nobles":sys c(.):goto 51245
+ 51375 x(9)=x(9)+x:gosub 51405:a$=a$+str$(x(9))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51380 x(10)=x(10)+x:gosub 51405:a$=a$+str$(x(10))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51385 x(6)=x(6)+x:gosub 51405:a$=a$+str$(x(6))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51390 x(11)=x(11)+x:gosub 51405:a$=a$+str$(x(11))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51395 if x(12)+x>x(10)then a$=cr$+"{lred}You Need More Shipyards!":sys c(.):goto 51245
+ 51400 x(12)=x(12)+x:gosub 51405:a$=a$+str$(x(12))+" "+a$(tk)+"s":sys c(.):goto 51245
+ 51405 x(3)=x(3)-(sw(tk)*x):a$=cr$+"{f5}You Now Have":return
+ 51410 rem {rvon}quit
+ 51415 a$=c2$+"{f5}Quiting...":sys c(.)
+ 51420 if x(2)=5e3and x(17)=2e4and x(3)=1e4and x(21)=40then i$="empty"+cr$+"0":goto 51485
+ 51425 gosub 51435:a$=c2$+"{f5}Plays Remaining:"+str$(m-x(29)):sys c(.)
+ 51430 gosub 51490:a$=str$(x(2))+"-Acres"+str$(x(4))+"-Rating":goto 8004
+ 51435 i$=na$+cr$+str$(x(2))+cr$+str$(x(3))+cr$+str$(x(4))
+ 51440 i$=i$+cr$+str$(x(5))+cr$+str$(x(6))+cr$+str$(x(7))
+ 51445 i$=i$+cr$+str$(x(8))+cr$+str$(x(9))+cr$+str$(x(10))
+ 51450 i$=i$+cr$+str$(x(11))+cr$+str$(x(12))+cr$+str$(x(13))
+ 51455 i$=i$+cr$+str$(x(14))+cr$+str$(x(15))+cr$+str$(x(16))
+ 51460 i$=i$+cr$+str$(x(17))+cr$+str$(x(18))+cr$+str$(x(19))
+ 51465 i$=i$+cr$+str$(x(20))+cr$+str$(x(21))
+ 51470 i$=i$+cr$+str$(x(22))+cr$+str$(x(23))+cr$+str$(x(24))
+ 51475 i$=i$+cr$+str$(x(25))+cr$+str$(x(26))+cr$+str$(x(27))
+ 51480 i$=i$+cr$+str$(x(28))+cr$+da$+cr$+str$(x(29))
+ 51485 a$="{SHIFT-@}empire ii stats":gosub 50060:x=r1:gosub 50055:.print#2,i$:.close 2:return
+ 51490 rem {rvon}calc ratings
+ 51495 x(4)=int((x(2)/1e3)+(x(3)/1e5)+x(5)+(x(6)/10))
+ 51500 x(4)=x(4)+int((x(7)/10)+(x(8)/10)+(x(10)/10)+(x(11)/10))
+ 51505 x(4)=x(4)+int((x(13)/10)+(x(19)/1e3)+(x(20)/1e3))
+ 51510 return
+ 51515 rem {rvon}viewer
+ 51520 if rn>3then return
+ 51525 a$="{clr}{CTRL-L}"+c2$+"{f5}Empire II Stats Viewer/Editor":sys c(.)
+ 51530 a$=cr$+"{f5}Enter Record # (1-"+mid$(str$(m2),2)+") >":sys c(1)
+ 51535 gosub 310:gosub 610:if pori=.then return
+ 51537 i=val(i$)
+ 51540 if i<1ori>m2then 51530
+ 51545 a$="{SHIFT-@}empire ii stats":gosub 50060:x=i:gosub 50055
+ 51550 .input#2,k$:if k$="empty"then gosub 50055:.close 2:a$=cr$+"{lred}EMPTY":sys c(.):goto 51530
+ 51555 .input#2,x(2),x(3),x(4),x(5),x(6),x(7),x(8)
+ 51560 .input#2,x(9),x(10),x(11),x(12),x(13),x(14),x(15),x(16)
+ 51565 .input#2,x(17),x(18),x(19),x(20),x(21),x(22),x(23)
+ 51570 .input#2,x(24),x(25),x(26),x(27),x(28),u2$(2),x(29):gosub 50055:.close 2
+ 51575 gosub 155:j=30:f$="                        "
+ 51580 a$="{red}{rvon} N) Name     :{rvof}{wht} "+k$:sys c(.)
+ 51585 a$="{red}{rvon} 2) Acres    :{rvof}{wht}"+str$(x(2)):sys c(.)
+ 51590 a$=left$("{red}{rvon} 3) Gold     :{rvof}{wht}"+str$(x(3))+f$,j):sys c(1)
+ 51595 a$=left$("{red}{rvon} 4) Rating   :{rvof}{wht}"+str$(x(4))+f$,j):sys c(1)
+ 51600 a$="{red}{rvon} 5) Palace   :{rvof}{wht}"+str$(x(5)):sys c(.)
+ 51605 a$=left$("{red}{rvon} 6) Nobles   :{rvof}{wht}"+str$(x(6))+f$,j):sys c(1)
+ 51610 a$=left$("{red}{rvon} 7) Markets  :{rvof}{wht}"+str$(x(7))+f$,j):sys c(1)
+ 51615 a$="{red}{rvon} 8) Mills    :{rvof}{wht}"+str$(x(8)):sys c(.)
+ 51620 a$=left$("{red}{rvon} 9) Foundrys :{rvof}{wht}"+str$(x(9))+f$,j):sys c(1)
+ 51625 a$=left$("{red}{rvon}10) Shipyards:{rvof}{wht}"+str$(x(10))+f$,j):sys c(1)
+ 51630 a$="{red}{rvon}11) Stables  :{rvof}{wht}"+str$(x(11)):sys c(.)
+ 51635 a$=left$("{red}{rvon}12) Ships    :{rvof}{wht}"+str$(x(12))+f$,j):sys c(1)
+ 51640 a$=left$("{red}{rvon}13) Forts    :{rvof}{wht}"+str$(x(13))+f$,j):sys c(1)
+ 51645 a$="{red}{rvon}14) Cannons  :{rvof}{wht}"+str$(x(14)):sys c(.)
+ 51650 a$=left$("{red}{rvon}15) Exports-M:{rvof}{wht}"+str$(x(15))+f$,j):sys c(1)
+ 51655 a$=left$("{red}{rvon}16) Timber   :{rvof}{wht}"+str$(x(16))+f$,j):sys c(1)
+ 51660 a$="{red}{rvon}17) Grain  -M:{rvof}{wht}"+str$(x(17)):sys c(.)
+ 51665 a$=left$("{red}{rvon}18) Grain  -I:{rvof}{wht}"+str$(x(18))+f$,j):sys c(1)
+ 51670 a$=left$("{red}{rvon}19) Serfs  -M:{rvof}{wht}"+str$(x(19))+f$,j):sys c(1)
+ 51675 a$="{red}{rvon}20) Serfs  -I:{rvof}{wht}"+str$(x(20)):sys c(.)
+ 51680 a$=left$("{red}{rvon}21) Armies -M:{rvof}{wht}"+str$(x(21))+f$,j):sys c(1)
+ 51685 a$=left$("{red}{rvon}22) Armies -I:{rvof}{wht}"+str$(x(22))+f$,j):sys c(1)
+ 51690 a$="{red}{rvon}23) Horses -M:{rvof}{wht}"+str$(x(23)):sys c(.)
+ 51695 a$=left$("{red}{rvon}24) Horses -I:{rvof}{wht}"+str$(x(24))+f$,j):sys c(1)
+ 51700 a$=left$("{red}{rvon}25) Spices   :{rvof}{wht}"+str$(x(25))+f$,j):sys c(1)
+ 51705 a$="{red}{rvon}26) Exports-I:{rvof}{wht}"+str$(x(26)):sys c(.)
+ 51710 a$=left$("{red}{rvon}27) Rebels   :{rvof}{wht}"+str$(x(27))+f$,j):sys c(1)
+ 51715 a$=left$("{red}{rvon}28) Unused   :{rvof}{wht}"+str$(x(28))+f$,j):sys c(1)
+ 51720 a$="{red}{rvon} D) Date     :{rvof}{wht} "+u2$(2)+cr$+"{red}{rvon}29) Plays    :{rvof}{wht}"+str$(x(29)):sys c(.)
+ 51723 a$=cr$+"{CTRL-D}{rvon}Editor /=quit{rvof}: {CTRL-D}":sys c(1):gosub 45000:if pthen return
+ 51725 if i$="N"then 54000
+ 51728 if i$="D"then 54010
+ 51730 if i$="/"then gosub 55000:goto 51525
+ 51733 xt(9)=int(val(i$)):a$=cr$+"{CTRL-D}Old Value: "+str$(x(xt(9))):sys c(.)
+ 51735 a$=cr$+"{CTRL-D}{rvon}New Value{rvof}: ":sys c(1):gosub 45000:if pthen return
+ 51736 if (val(i$))>99999then 51735
+ 51738 x(xt(9))=int(val(i$)):goto 51575
+ 51740 return
+ 51745 return
+ 51750 return
+ 51755 return
+ 51760 return
+ 51765 return
+ 51770 return
+ 51775 return
+ 51780 return
+ 51795 auto on:x=(usr(12)+1)
+ 51805 onxgoto 51810,51815,51825,51830,51840,51845,51855,51860,51870,51875,51885,51890
+ 51810 f$="{SHIFT-@}tourney 1":gosub 205:x(2)=x(2)+100:goto 51900
+ 51815 f$="{SHIFT-@}tourney 2":gosub 205:x(2)=x(2)-100:if x(2)<101then x(2)=.
+ 51820 goto 51895
+ 51825 f$="{SHIFT-@}tourney 3":gosub 205:x(3)=x(3)+1000:goto 51900
+ 51830 f$="{SHIFT-@}tourney 4":gosub 205:x(3)=x(3)-1000:if x(3)<1001then x(3)=.
+ 51835 goto 51895
+ 51840 f$="{SHIFT-@}tourney 5":gosub 205:x(6)=x(6)+1:goto 51900
+ 51845 f$="{SHIFT-@}tourney 6":gosub 205:x(6)=x(6)-1:if x(6)<2then x(6)=1
+ 51850 goto 51895
+ 51855 f$="{SHIFT-@}tourney 7":gosub 205:x(17)=x(17)+7000:goto 51900
+ 51860 f$="{SHIFT-@}tourney 8":gosub 205:x(17)=x(17)-7000:if x(17)<7001then x(17)=.
+ 51865 goto 51895
+ 51870 f$="{SHIFT-@}tourney 9":gosub 205:x(10)=x(10)+1:x(2)=x(2)+100:goto 51900
+ 51875 f$="{SHIFT-@}tourney 10":gosub 205:x(10)=x(10)-1:if x(10)<2then x(10)=.
+ 51878 x(2)=x(2)-100:if x(2)<101then x(2)=.
+ 51880 goto 51895
+ 51885 f$="{SHIFT-@}tourney 11":gosub 205:x(16)=x(16)+2:goto 51900
+ 51890 f$="{SHIFT-@}tourney 12":gosub 205:x(16)=x(16)-2:if x(16)<3then x(16)=.
+ 51895 auto off:a$=c2$+"{f5}Tough Luck!!":sys c(.):b=.:goto 50705
+ 51900 auto off:a$=c2$+"{f1}Your Lady is Impressed!!{f3}":sys c(.):b=.:goto 50705
+ 51905 f$="{SHIFT-@}emp.title":gosub 210:forx=1to1000:next
+ 51910 return
+ 51915 auto on:f$="{SHIFT-@}empire docs":gosub 210:f$="{SHIFT-@}emp.docs2":gosub 210:auto off:goto 50460
+ 52000 if lv=9then x(28)=x(28)+1
+ 52001 return
+ 54000 a$=cr$+"{CTRL-D}{rvon}New Name{rvof}: "sys c(1):gosub 45000:if pthen return
+ 54005 k$=i$:goto 51575
+ 54010 a$=cr$+"{CTRL-D}{rvon}New Last Date{rvof}: ":sys c(1):gosub 45000:if pthen return
+ 54015 u2$(2)=i$:goto 51575
+ 55000 i$=k$+cr$+str$(x(2))+cr$+str$(x(3))+cr$+str$(x(4))
+ 55005 i$=i$+cr$+str$(x(5))+cr$+str$(x(6))+cr$+str$(x(7))
+ 55010 i$=i$+cr$+str$(x(8))+cr$+str$(x(9))+cr$+str$(x(10))
+ 55015 i$=i$+cr$+str$(x(11))+cr$+str$(x(12))+cr$+str$(x(13))
+ 55020 i$=i$+cr$+str$(x(14))+cr$+str$(x(15))+cr$+str$(x(16))
+ 55025 i$=i$+cr$+str$(x(17))+cr$+str$(x(18))+cr$+str$(x(19))
+ 55030 i$=i$+cr$+str$(x(20))+cr$+str$(x(21))
+ 55035 i$=i$+cr$+str$(x(22))+cr$+str$(x(23))+cr$+str$(x(24))
+ 55040 i$=i$+cr$+str$(x(25))+cr$+str$(x(26))+cr$+str$(x(27))
+ 55045 i$=i$+cr$+str$(x(28))+cr$+u2$(2)+cr$+str$(x(29))
+ 55050 a$="{SHIFT-@}empire ii stats":gosub 50060:x=r1:gosub 50055:.print#2,i$:.close 2:return
+ 56300 sp$="                      ":a$="{clr}"+"{f5}{rvon}  - EMPIRE II -       PLAYS REMAINING:"+str$(m-x(29))+"          MAINLAND    COLONY     FLEET{rvof}":sys c(.)
+ 56301 gosub 51770:a$=cr$+left$("{f5}"+na$+sp$,22)+"ACRES    -"+str$(x(2))
+ 56302 a$=left$(a$+sp$,40)+"    NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)+"-"+str$(s(3)):sys c(.):a$=""
+ 56303 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4))
+ 56304 a$=left$(a$+sp$,40)+"   SOILDIERS -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)+"-"+str$(s(6)):sys c(.):a$=""
+ 56305 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13))
+ 56306 a$=left$(a$+sp$,40)+"   SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"+str$(s(2)):sys c(.):a$=""
+ 56307 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"CANNONS  -"+str$(x(14))
+ 56308 a$=left$(a$+sp$,40)+"   GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"+str$(s(1)):sys c(.):a$=""
+ 56309 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10))
+ 56310 a$=left$(a$+sp$,40)+"   HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)+"-"+str$(s(7)):sys c(.):a$=""
+ 56311 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"SHIPS    -"+str$(x(12))
+ 56312 a$=left$(a$+sp$,40)+"   EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)+"-"+str$(s(5)):sys c(.):a$=""
+ 56313 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16))
+ 56314 a$=left$(a$+sp$,40)+"   SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)+"-"+str$(s(8)):sys c(.):a$=""
+ 56315 return
+ 63999 scratch"-mdl.emp.delx1":rename"mdl.emp.delx1"to"-mdl.emp.delx1":dsave"mdl.emp.delx1
+

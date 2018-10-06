@@ -1,0 +1,8 @@
+   You have anchored in a cove of a mist-shrouded island.  You send some
+of your Nobles and Soldiers ashore to explore the island.
+   After several hours, one of your Nobles returns to report their findings.
+   He reports that the island has much timber and a herd of wild horses!
+
+   You gain 100 horses, and 20 tons of timber!
+
+               <Press any Key>\g1

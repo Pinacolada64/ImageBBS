@@ -1,0 +1,11 @@
+    As you drift by the wreckage, it becomes apparent that there is nothing
+of any value to salvage.  Still, you feel you have an obligation to search
+thoroughly, in case of any survivors.
+    After about an hour of searching, you find your ships heading into a fog
+bank.  Knowing that you are well out to sea, you order lanterns lit, and
+proceed with your search.
+    Shortly after entering the fog, the wind picks up.  The waves begin to
+break over your bow!  You order 180 about, to escape the fog, but too late!
+Your ships are devastated!
+
+               <Press any Key>\g1

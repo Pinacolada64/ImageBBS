@@ -5,17 +5,20 @@ output_file="$1"
 cat $output_file | \
 
 # echo <<EOFstring
-# string="PRINT "{\$c1}{\$c2}{\$c3}{\$c4}"\nIFwhateverTHENSTOP\nGOSUB1001:GOTO{:1001}\n"
+# string='PRINT"{\$c1}{\$c2}{\$c3}{\$c4}" \
+ifwhateverthenstop\ngosub{:1001}:goto1001\n"
 # EOFstring
 
 # Desired output:
-# print "ABCD"
-# if whatever then stop
-# gosub 1001:goto {:1001}
+# PRINT "ABCD"
+#  IF whatever THEN STOP
+#  GOSUB {:1001}:GOTO 1001
+
+# TODO: lowercasing keywords, but that will be tricker. maybe use awk/sed
 
 # convert C64List 3.05's "-alpha:upper" to 3.50's "-alpha:alt"
 # this results in infinitely more readable quoted strings
-sed s/alpha:upper/alpha:alt/g
+# sed s/alpha:upper/alpha:alt/g
 
 # echo -e $string | \
 sed s/{\$c1}/A/g | \
@@ -46,9 +49,8 @@ sed s/{\$d9}/Y/g | \
 sed s/{\$da}/Z/g | \
 
 # change "(if|then)<condition>" to "(if|then) <condition>"
-sed -E s/then\[\^\ \]/then\ /g | \
+# sed -E s/then\[\^\ \]/then\ /g | \
 
 # change "go(to|sub)<xxxx>" to "go(to|sub) <xxxx>"
 # "\^\ " = 'not followed by a space"
 sed -E s/\(goto\|gosub\)\[\^\ \]/\\1\ /g # "goto 1000"
-

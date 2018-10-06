@@ -1,0 +1,13 @@
+    You have planned long for this tournament, and it has really gone
+well.  Many of your rivals are in attendance, and you hope to add some
+insult to injury.  One of your rivals, Baron Hellguard, has had a bad year. 
+You think you can make it worse with a small wager.  Though his champion
+hasn't been doing well, Baron Hellguard accepts.
+
+    With a contemptuous snort, your champion looks at his opponent.  Now
+the trumpets sound, and the two Nobles charge!  Unbelievably, you watch in
+disgust as your champion is unseated on the first pass.  You have lost!
+
+You lose 7,000 bushels of grain!
+
+               <Press any Key>\g1

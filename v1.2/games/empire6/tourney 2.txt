@@ -1,0 +1,18 @@
+   To celebrate the good fortune your lands have been blessed with, you
+decide to hold a tournament.
+
+   All the Nobles have come to pit their champions against other champions
+of the land.  One of your rivals, Prince Lloyd, suggests a land dispute
+between the two of you might be settled by a single competition: his
+champion against yours.  Feeling lucky, you agree.
+
+   As word spreads of the side bet, all eyes turn to the "Field of Honor."
+Both Prince Lloyd's and your champion line up for the joust.  The trumpets
+sound, and they charge!
+
+   The crowd rises as your champion's horse stumbles.  Unfortunately, it was
+at the moment the two knights met.  Your champion, thrown off balance, is
+knocked from his horse.
+
+You lose 100 acres!
+               <Press any Key>\g1

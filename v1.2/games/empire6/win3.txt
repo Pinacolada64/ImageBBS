@@ -1,0 +1,24 @@
+   You are in need of timber for your forts and ships.  Your land is well-
+suited for growing grain, but you have very little timber.
+
+   So, at last you decide if your empire is to survive, you must find a source
+of timber.  Discussing this with your Nobles, you decide to lead an expedition
+into the mountains. Though most of the trees are bent from the high winds, you
+have heard of a small valley, with good timber.
+
+   You and your men have been searching for some weeks, when you come upon a
+young woman.  She is in tears, explaining a band of brigands had captured her
+and her sister.  They were being used as slave labor at the brigands' camp.
+She further explains she managed to slip away, and begs you to come and free
+her sister.
+
+    Considering that these brigands may some day become a threat to your land,
+you agree.  So it was that when you and your men came upon the brigands, you
+were prepared to fight. The brigands, believing themselves safe, were caught
+off guard.
+
+    Your seasoned troops make quick work of the task.  But you have found
+something more.  The brigands' camp is in a small valley with good timber!
+
+   You gain 15 tons of timber!!
+               <Press any Key>\g1

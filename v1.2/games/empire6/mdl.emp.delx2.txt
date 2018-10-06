@@ -1,0 +1,534 @@
+
+
+;mdl.emp.delx2.prg ==1c01==
+ 50000 gosub 50001:a$="":goto 9050
+ 50001 auto off:b=.:dx=.:gosub 481:gosub 50014:su$="":sys c(41),1:return
+ 50004 poke c(23),1:gosub 300:poke c(23),.:goto 390
+ 50005 gosub 3640
+ 50006 gosub 110:if p=.and (a$<"0"ora$>"Z")then 50006
+ 50007 if pthen 360
+ 50008 sys c(.):return
+ 50009 a=int(x/256):.print#15,"p{CTRL-B}"+chr$(x-a*256)chr$(a)"{CTRL-A}":return
+ 50010 .close 2:.open 2,dv,2,dr$+a$:return
+ 50011 fori=1to2e3:nexti:i=.:return
+ 50012 a$=cr$+"You Have"+str$(x(18))+" Bushels":sys c(.):return
+ 50013 a$=cr$+su$+str$(x(25))+" Tons Spices":sys c(.):return
+ 50014 gosub 50452:fr$="{f5}You Now Have":su$="{lred}You Only Have
+ 50015 a$=c2$+"{f5}[S]ail To The Island s
+ 50016 a$=a$+cr$+"{f5}[V]isit The Dry Dock
+ 50017 a$=a$+cr$+"{f5}[G]o To The Battlefields":sys c(.):gosub 50452
+ 50018 a$=c2$+"{f5}Which Way, "+na$+"? ":sys c(1):gosub 50005:if pthen 50430
+ 50019 on-(a$="S")-(a$="V")*2-(a$="G")*3goto 50051,50277,50302
+ 50020 if a$="Y"then gosub 50024
+ 50021 goto 50014
+ 50022 a$="mdl.emp.delx3":goto 9050
+ 50023 rem {rvon}player stats
+ 50024 gosub 50452:gosub 50443:if mc>40then gosub 56300:goto 160
+ 50025 sp$="                      ":a$=c2$+"{f5}{rvon}  - EMPIRE II -   PLAYS REMAINING:"+str$(m-x(29))+" {rvof}":sys c(.)
+ 50026 gosub 50452:a$=cr$+"{f5}"+na$+sp$
+ 50027 a$=left$(a$,23)+"ACRES    -"+str$(x(2)):sys c(.)
+ 50028 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4)):sys c(.)
+ 50029 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13)):sys c(.)
+ 50030 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"CANNONS  -"+str$(x(14)):sys c(.)
+ 50031 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10)):sys c(.)
+ 50032 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"SHIPS    -"+str$(x(12)):sys c(.)
+ 50033 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16)):sys c(.)
+ 50034 gosub 50452:a$=cr$+"{f5}{rvon}EMPIRE II  MAINLAND   ISLAND    FLEET{rvof}"+cr$
+ 50035 sys c(.):sp$="         ":gosub 50452
+ 50036 a$="{f5}NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)
+ 50037 a$=a$+"-"+str$(s(3)):sys c(.)
+ 50038 a$="{f5}SOLDIERS  -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)
+ 50039 a$=a$+"-"+str$(s(6)):sys c(.)
+ 50040 a$="{f5}SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"
+ 50041 a$=a$+str$(s(2)):sys c(.)
+ 50042 a$="{f5}GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"
+ 50043 a$=a$+str$(s(1)):sys c(.)
+ 50044 a$="{f5}HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)
+ 50045 a$=a$+"-"+str$(s(7)):sys c(.)
+ 50046 a$="{f5}EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)
+ 50047 a$=a$+"-"+str$(s(5)):sys c(.)
+ 50048 a$="{f5}SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)
+ 50049 a$=a$+"-"+str$(s(8)):goto 160
+ 50050 rem {rvon}load ship
+ 50051 if x(12)<1then a$=c2$+"{f5}You Need A Ship To Cross The Seas":sys c(.):goto 50014
+ 50052 if x(12)=1then i=1:goto 50056
+ 50053 a$=c2$+"{f5}Take How Many Ships? (1-"+mid$(str$(x(12)),2)+") > ":sys c(1)
+ 50054 gosub 50004
+ 50055 on-(p=255)goto 50430:i=int(val(i$)):if i<1ori>x(12)then 50053
+ 50056 s(.)=i:x(12)=x(12)-i
+ 50057 gosub 481:z(1)=.:z(2)=s(.)*100:z(3)=z(2)
+ 50058 a$=c2$+"{rvon}{f5}Mainland  Loading Docks":sys c(.)
+ 50059 a$(1)="{rvon}Grain":a$(2)="{rvon}Serfs":a$(3)="{rvon}Nobles":a$(4)="{rvon}Navigators"
+ 50060 a$(5)="{rvon}Spices":a$(6)="{rvon}Soldiers
+ 50061 gosub 50450:a$=cr$+"{rvon}{f5}Ships Manif est{rvof}":sys c(1):gosub 50452
+ 50062 a$="{wht} [{f5}1-6,{f5}0=Sail,{f5}?=Menu{wht}]{f5} ":sys c(1):a$="":tk=.
+ 50063 gosub 50005:if p=255orp=1then 50430
+ 50064 if a$="?"then f$="{SHIFT-@}emp.menu3":gosub 210:goto 50061
+ 50065 if a$="6"then gosub 50098:goto 50061
+ 50066 tk=int(val(a$)):if a$="0"then 50177
+ 50067 on-(a$="Y")gosub 50024:if tk<1ortk>5then 50061
+ 50068 gosub 50098:a$=c2$+"{f5}Load Ship - Item: {lblu}"+a$(tk):sys c(.)
+ 50069 a$=cr$+"{f5}Take How Many? > ":sys c(1)
+ 50070 gosub 50004:on-(p=255)goto 50430:if len(i$)>5then 50068
+ 50071 j=int(val(i$)):if j<1then 50061
+ 50072 ontkgoto 50073,50077,50081,50088,50092
+ 50073 if j>x(17)then a$=cr$+su$+str$(x(17))+" Bushels":goto 50097
+ 50074 x=int(z(3)/.01):if j>xthen 50097
+ 50075 x(17)=x(17)-j:s(1)=s(1)+j:a$=cr$+fr$+str$(s(1))+" Bushels Aboard
+ 50076 z(1)=z(1)+(j*.01):z(3)=z(2)-z(1):goto 50096
+ 50077 if j>x(19)then a$=cr$+su$+str$(x(19))+" Serfs":goto 50096
+ 50078 x=int(z(3)/.2):if j>xthen 50097
+ 50079 x(19)=x(19)-j:s(2)=s(2)+j:a$=cr$+fr$+str$(s(2))+" Serfs Aboard
+ 50080 z(1)=z(1)+(j*.2):z(3)=z(2)-z(1):goto 50096
+ 50081 if frthen a$=cr$+"{CTRL-G}{lred}Your Armies Are On Strike!":goto 50096
+ 50082 if j>x(6)then a$=cr$+su$+str$(x(6))+" Nobles":goto 50096
+ 50083 if j*20>x(21)then a$=cr$+su$+str$(x(21))+" Soldiers":goto 50096
+ 50084 x=z(3)/20:if j>xthen 50097
+ 50085 x(6)=x(6)-j:s(3)=s(3)+j:x(21)=x(21)-(j*20):s(6)=s(6)+(j*20)
+ 50086 a$=cr$+fr$+str$(s(3))+" Nobles And"+str$(s(6))+" Soldiers
+ 50087 z(1)=z(1)+j*20:z(3)=z(2)-z(1):goto 50096
+ 50088 if j*2e3>x(3)then a$=cr$+su$+" $"+str$(x(3)):goto 50096
+ 50089 if j>z(3)then 50097
+ 50090 s(4)=s(4)+j:x(3)=x(3)-(j*2e3):a$=cr$+fr$+str$(s(4))+" Navigators
+ 50091 z(1)=z(1)+j:z(3)=z(2)-z(1):goto 50096
+ 50092 if j*1e3>x(3)then a$=cr$+su$+" $"+str$(x(3)):goto 50096
+ 50093 x=z(3)/5:if j>xthen 50097
+ 50094 s(8)=s(8)+j:x(3)=x(3)-(j*1e3):a$=cr$+fr$+str$(s(8))+" Tons Aboard
+ 50095 z(1)=z(1)+j*5:z(3)=z(2)-z(1)
+ 50096 sys c(.):goto 50061
+ 50097 a$=cr$+"{rvon}{lred}{CTRL-G}Limit Would Be Exceeded":sys c(.):goto 50068
+ 50098 a$=cr$+"{rvon}{f5}ITEM     LOADED     MAXIMUM{f5}":sys c(.):i$="             "
+ 50099 x=int(z(3)/.01):if x(17)<xthen x=x(17)
+ 50100 a$=cr$+a$(1)++"   {rvof}"+left$(str$(s(1))+i$,11)+str$(x):sys c(.)
+ 50101 x=int(z(3)/.2):if x(19)<xthen x=x(19)
+ 50102 a$=a$(2)+"   {rvof}"+left$(str$(s(2))+i$,11)+str$(x):sys c(.)
+ 50103 x=int(z(3)/20):if x(6)<xthen x=x(6)
+ 50104 a$=a$(3)++"  {rvof}"+left$(str$(s(3))+i$,11)+str$(x):sys c(.)
+ 50105 x=int(x(3)/2000):if z(3)<xthen x=int(z(3))
+ 50106 a$="{rvon}Navgtrs {rvof}"+left$(str$(s(4))+i$,11)+str$(x):sys c(.)
+ 50107 x=int(z(3)/5):if int(x(3)/1000)<xthen x=int(x(3)/1000)
+ 50108 a$=a$(5)+"  {rvof}"+left$(str$(s(8))+i$,11)+str$(x):sys c(.)
+ 50109 x=int(z(3)/20):if x(6)<xthen x=int(x(6)*20)
+ 50110 a$=a$(6)+"{rvof}"+left$(str$(s(6))+i$,11)+str$(x):sys c(.)
+ 50111 a$=cr$+"{red}Your"+str$(s(.))+" Ships Are {rvon}{yel}"
+ 50112 a$=a$+mid$(str$(int(z(1)/s(.))),2)+"%{red}{rvof} Full":goto 160
+ 50113 rem {rvon}hazzards
+ 50114 forx=.to8:k(x)=.:next:x=usr(11):gosub 50115:goto 50166
+ 50115 onxgoto 51500,50117,50132,50116,50136,50116,50142,50116,50146,50116,51500
+ 50116 a$=c2$+"{f5}The Seas Are Calm, Your Course True...":goto 160
+ 50117 a$=c2$+"{CTRL-G}{f5}Your Ships Are Attacked By Pirates...":sys c(.):gosub 50011
+ 50118 if fr=.then 50122
+ 50119 a$=cr$+"{CTRL-G}{f5}The Pirates Take Everything!":sys c(.)
+ 50120 k(.)=s(.):s(.)=.:k(1)=s(1):k(2)=s(2):k(7)=s(7):k(5)=s(5):k(4)=s(4)
+ 50121 k(8)=s(8):forx=.to8:s(x)=.:next:return
+ 50122 on-(s(3)<=s(.))goto 50126:a$=cr$+"{f5}Your Armies Defeat Them Easily!":sys c(.)
+ 50123 x=usr(10):if x>7then 50125
+ 50124 a$=cr$+"All Pirate Ships Destroyed!":goto 160
+ 50125 x=usr(2)+1:s(.)=s(.)+x:a$=cr$+"You Capture"+str$(x)+" Ships":goto 160
+ 50126 on-(s(3)<s(.))goto 50128:a$=cr$+"{f5}Your Armies Resist Them":sys c(.)
+ 50127 gosub 50162:gosub 50161:gosub 50158:gosub 50163:goto 50164
+ 50128 a$=cr$+"{f5}{CTRL-G}Your Men Were Out-Numbered!":sys c(.)
+ 50129 k(.)=1:s(.)=s(.)-1
+ 50130 gosub 50157:gosub 50158:gosub 50159:gosub 50160:gosub 50161:gosub 50162
+ 50131 gosub 50163:goto 50164
+ 50132 a$=c2$+"{f5}{CTRL-G}A Raging Storm Devastates Your Flotilla":sys c(.):gosub 50011
+ 50133 k(.)=int(rnd(1)*s(.)):s(.)=s(.)-k(.)
+ 50134 gosub 50157:gosub 50158:gosub 50160:gosub 50161:gosub 50162:gosub 50163
+ 50135 goto 50164
+ 50136 a$=c2$+"Your Ships Are Blown Off-Course...":sys c(.):gosub 50011
+ 50137 on-(s(4)<s(.))goto 50139:a$=cr$+"{f5}Your Navigators Are Able To"+cr$
+ 50138 a$=a$+"Correct For The Wind":goto 160
+ 50139 k(.)=s(.)-s(4):s(.)=s(.)-k(.):x=k(.):if s(4)=.goto 50154
+ 50140 gosub 50157:gosub 50158:gosub 50159:gosub 50160:gosub 50161:gosub 50162
+ 50141 gosub 50163:goto 50164
+ 50142 a$=c2$+"{f5}Wood-Worms Have Eaten Your Hull!":sys c(.)
+ 50143 a$=cr$+"{f5}Water Pours In As Serfs And Cargo"+cr$+"Float Away!":sys c(.)
+ 50144 gosub 50157:gosub 50158:gosub 50160:gosub 50161:gosub 50162:gosub 50163
+ 50145 goto 50164
+ 50146 if s(6)<1then 50116
+ 50147 a$=cr$+"{CTRL-G}{lred}There's A Mutiny Brewing Among"+cr$+"Your Armies...":sys c(.)
+ 50148 gosub 50011:x=usr(100):if x>29and x<40then 50152
+ 50149 a$=cr$+"{f5}Your Nobles Are Able To Subdue"+cr$+"The Soldiers":sys c(.)
+ 50150 x=int(rnd(1)*s(6))
+ 50151 k(6)=x:s(6)=s(6)-x:return
+ 50152 a$=cr$+"{f5}Your Armies Take Control{CTRL-G}":sys c(.)
+ 50153 a$="They Take Your Ships And Sail Away"+cr$+"Everything Is Lost!":sys c(.)
+ 50154 k(.)=s(.):s(.)=.:k(1)=s(1):s(1)=.:k(2)=s(2):s(2)=.:k(3)=s(3):s(3)=.
+ 50155 k(4)=s(4):s(4)=.:k(5)=s(5):s(5)=.:k(6)=s(6):s(6)=.:k(7)=s(7):s(7)=.
+ 50156 k(8)=s(8):s(8)=.:return
+ 50157 k(1)=int(rnd(1)*s(1)):s(1)=s(1)-k(1):return
+ 50158 k(2)=int(rnd(1)*s(2)):s(2)=s(2)-k(2):return
+ 50159 k(3)=int(rnd(1)*s(3)):s(3)=s(3)-k(3):return
+ 50160 k(4)=int(rnd(1)*s(4)):s(4)=s(4)-k(4):return
+ 50161 k(5)=int(rnd(1)*s(5)):s(5)=s(5)-k(5):return
+ 50162 k(6)=int(rnd(1)*s(6)):s(6)=s(6)-k(6):return
+ 50163 k(7)=int(rnd(1)*s(7)):s(7)=s(7)-k(7):return
+ 50164 k(8)=int(rnd(1)*s(8)):s(8)=s(8)-k(8):return
+ 50165 rem {rvon}report losses
+ 50166 gosub 50011:gosub 50450:a$=cr$+"{f5}Losses Reported":sys c(.):gosub 50452
+ 50167 a$=cr$+"{f5}Ships     :"+str$(k(.)):sys c(.)
+ 50168 a$="{f5}Nobles    :"+str$(k(3)):sys c(.)
+ 50169 a$="{f5}Soldiers  :"+str$(k(6)):sys c(.)
+ 50170 a$="{f5}Serfs     :"+str$(k(2)):sys c(.)
+ 50171 a$="{f5}Horses    :"+str$(k(7)):sys c(.)
+ 50172 a$="{f5}Navigators:"+str$(k(4)):sys c(.)
+ 50173 a$="{f5}Spices    :":x=k(8):if z(4)=1then a$="{f5}Exports   :":x=k(5)
+ 50174 a$=a$+str$(x):sys c(.)
+ 50175 a$="{f5}Grain     :"+str$(k(1)):goto 160
+ 50176 rem {rvon}enter island s
+ 50177 a$=c2$+"{f5}You Set Sail Across The Pacif ic...":sys c(.):gosub 50011:z(4)=.
+ 50178 forx=1to8:k(x)=.:next:gosub 50114:gosub 50500
+ 50180 on-(s(.)<=.)goto 50272:a$=cr$+"{f5}{rvon}You Arrive At Your Island ":sys c(.)
+ 50181 x(18)=x(18)+s(1):s(1)=.:x(20)=x(20)+s(2):s(2)=.
+ 50182 j=.:x(25)=x(25)+s(8):s(8)=.
+ 50183 x(22)=x(22)+s(6):s(6)=.
+ 50184 gosub 50452
+ 50185 rem {rvon}exports/grain
+ 50186 a$=cr$+"{f5}You Have:{f5}"+c2$+mid$(str$(x(25)),2)+" Ton/Spices{f5}"
+ 50187 a$=a$+cr$+mid$(str$(x(26)),2)+" Ton/Exports{f5}":sys c(.)
+ 50188 a$=mid$(str$(x(16)),2)+" Ton/Timber":sys c(.):gosub 50452
+ 50189 a$=cr$+"{f5}[T]imber {f5}[E]xports {f5}[C]ontinue? ":sys c(1):gosub 50005:if pthen 50430
+ 50190 on-(a$="T")-(a$="E")*2-(a$="C")*3goto 50192,50197,50203
+ 50191 on-(a$="Y")gosub 50024:goto 50186
+ 50192 a$=c2$+"{rvon}{f5}TIMBER{rvof}:"+"{f5} 2 Ton/Spices = 1 Ton/Timber":sys c(.)
+ 50193 a$=cr$+"{f5}How Many Timbers? > {f5}":sys c(1):gosub 50004:if pthen 50430
+ 50194 x=int(val(i$)):if x<1then 50186
+ 50195 if x>(x(25)/2)then gosub 50013:goto 50192
+ 50196 x(25)=x(25)-(x*2):x(16)=x(16)+x:a$=cr$+"{f5}Traded!":sys c(.):goto 50186
+ 50197 a$=c2$+"{rvon}{f5}EXPORTS{rvof}:"+"{f5} 3 Ton/Spices = 1 Ton/Exports":sys c(.)
+ 50198 a$=cr$+"{f5}How Many Exports? > {f5}":sys c(1):gosub 50004:if pthen 50430
+ 50199 x=int(val(i$)):if x<1then 50186
+ 50200 if x>x(25)/3then gosub 50013:goto 50197
+ 50201 x(26)=x(26)+x:x(25)=x(25)-(x*3):a$=cr$+"{f5}Traded!":sys c(.):goto 50186
+ 50202 rem {rvon}build forts
+ 50203 if x(16)<1then 50223
+ 50204 a$=c2$+fr$+str$(x(16))+" Tons Of Timber":sys c(.)
+ 50205 a$=cr$+"{f5}[S]hips {f5}[F]orts {f5}[C]ontinue? ":sys c(1):gosub 50005
+ 50206 if p=255then 50430
+ 50207 on-(a$="S")-(a$="F")*2-(a$="C")*3goto 50209,50215,50223
+ 50208 on-(a$="Y")gosub 50024:goto 50203
+ 50209 a$=c2$+"{f5}3 Tons Timber = 1 Ship":sys c(.)
+ 50210 a$=cr$+"{f5}Build How Many Ships? > ":sys c(1):gosub 50004:if pthen 50430
+ 50211 x=int(val(i$)):if x<1then 50203
+ 50212 if x(16)<x*3then a$=cr$+su$+str$(x(16))+" Tons":sys c(.):goto 50209
+ 50213 s(.)=s(.)+x:x(16)=x(16)-(x*3)
+ 50214 a$=cr$+fr$+str$(s(.))+" Ships":sys c(.):goto 50203
+ 50215 a$=c2$+"{f5}5 Tons Timber = 1 Fort":sys c(.)
+ 50216 a$=cr$+"{f5}Build How Many Forts? > ":sys c(1):gosub 50004:if pthen 50430
+ 50217 x=int(val(i$)):if x<1then 50203
+ 50218 if x(16)<x*5then a$=cr$+su$+str$(x(16))+" Tons":sys c(.):goto 50215
+ 50219 x(13)=x(13)+x:x(16)=x(16)-(x*5):x(14)=x(14)+x*3
+ 50220 a$=cr$+fr$+str$(x(13))+" Forts And"+str$(x(14))+" Cannons":sys c(.)
+ 50221 goto 50203
+ 50222 rem {rvon}feed serfs/nobles
+ 50223 gosub 50452:vx=.:x=usr(9/2)+3:k=x*x(20)
+ 50224 a$=c2$+"{f5}Your Island ers Need"+str$(k)+" Bushels":sys c(.):gosub 50012
+ 50225 a$=cr$+"{f5}Supply How Many? {f5}[RETURN="+mid$(str$(k),2)+"]"+c2$+"{f5}>":sys c(1)
+ 50226 gosub 50004:if pthen 50430
+ 50227 if i$<>""then 50230
+ 50228 i$=str$(k):a$="{up}"+i$
+ 50229 sys c(.)
+ 50230 x=int(val(i$))
+ 50231 if x>x(18)then 50224
+ 50232 on-(x<.or(x=.and left$(i$,1)<>"0"))goto 50224:x(18)=x(18)-x
+ 50233 if x<k/2then x(20)=int(rnd(1)*x(20)):a$=cr$+"{CTRL-G}{lred}Famine Strikes!":sys c(.):vx=1
+ 50234 x=usr(15)+2:k=x*x(22)+1
+ 50235 a$=cr$+"{f5}Your Armies Need"+str$(k)+" Bushels":sys c(.):gosub 50012
+ 50236 a$=cr$+"{f5}Supply How Many? {f5}[RETURN="+mid$(str$(k),2)+"]"+c2$+"{f5}>":sys c(1)
+ 50237 gosub 50004:if pthen 50430
+ 50238 if i$<>""then 50241
+ 50239 i$=str$(k):a$="{up}"+i$
+ 50240 sys c(.)
+ 50241 x=int(val(i$))
+ 50242 if x>x(18)then 50235
+ 50243 if x=>kthen 50246
+ 50244 if x<kthen a$=c2$+"{CTRL-G}{lred}Your Armies Starve":sys c(.)
+ 50245 i=int(rnd(1)*x(22)):x(22)=x(22)-i:x(27)=x(27)+i:vx=1
+ 50246 on-(x<.or(x=.and left$(i$,1)<>"0"))goto 50235:x(18)=int(x(18)-x)
+ 50247 on-(vx=.)goto 50249:a$=c2$+"{f5}Your Island  Is Famished":sys c(.)
+ 50248 s(4)=.:x(24)=int(rnd(1)*x(24)):vx=.:goto 50260
+ 50249 x=usr(7)+2:k=x*x(24)
+ 50250 a$=c2$+"{f5}Your Horses Need"+str$(k)+" Bushels":sys c(.):gosub 50012
+ 50251 a$=cr$+"{f5}Supply How Many? {f5}[RETURN="+mid$(str$(k),2)+"]"+c2$+"{f5}>":sys c(1)
+ 50252 gosub 50004:if pthen 50430
+ 50253 if i$<>""then 50256
+ 50254 i$=str$(k):a$="{up}"+i$
+ 50255 sys c(.)
+ 50256 x=int(val(i$))
+ 50257 if x>x(18)then 50250
+ 50258 on-(x<.or(x=.and left$(i$,1)<>"0"))goto 50250:x(18)=int(x(18)-x)
+ 50259 if x<kthen a$=cr$+"{f5}{CTRL-G}Your Horses Starve!":sys c(.):x(24)=int(rnd(1)*x(24))
+ 50260 gosub 50011:gosub 50024
+ 50261 rem {rvon}load cargo
+ 50262 if s(.)>.then 50264:a$=cr$+"{f5}No Ships! You Must SWIM Back!":sys c(.)
+ 50263 x=.:goto 50265
+ 50264 z(4)=1:gosub 50374
+ 50265 gosub 50011
+ 50266 rem {rvon}return to empire
+ 50267 a$=c2$+"{f5}You Start Your Trip Home...":sys c(.):gosub 50011
+ 50268 gosub 50114:gosub 50011:gosub 50500
+ 50269 if s(.)>.then 50274
+ 50270 a$=c2$+"{f5}You Return...By Swimming!":sys c(.)
+ 50271 a$=cr$+"{f5}King Suoivex Frowns At Your Skill":sys c(.):goto 50277
+ 50272 gosub 50011:a$=cr$+"{f5}You Find Yourself Alone In":sys c(.)
+ 50273 a$="The Ocean Without Any Ships!":sys c(.):goto 50269
+ 50274 a$=c2$+"{f5}You've Reached Home Port":sys c(.):gosub 50011
+ 50275 a$=cr$+"{f5}Unloading The Ships...":sys c(.)
+ 50276 rem {rvon}dry dock
+ 50277 x(6)=x(6)+s(3):x(15)=x(15)+s(5):x(21)=x(21)+s(6)
+ 50278 x(23)=x(23)+s(7):x(17)=x(17)+s(1)
+ 50279 x(12)=x(12)+s(.):x(19)=x(19)+s(2)
+ 50280 forx=.to8:s(x)=.:next:if x(15)=<.then 50303
+ 50281 gosub 50452:x=usr(5)+1
+ 50282 k=int(rnd(1)*1e4)
+ 50283 a$=c2$+"{f5}You Have"+str$(x(15))+" Tons In Dry Dock":sys c(.)
+ 50284 a$=cr$+"{f5}Market Master Offers $"+str$(k)+" Per Ton":sys c(.)
+ 50285 a$=cr$+"{f5}[B]arter {f5}[S]ell {f5}[H]old  ":sys c(1):gosub 50005:if pthen 50430
+ 50286 on-(a$="B")-(a$="S")*2-(a$="H")*3goto 50288,50291,50296
+ 50287 on-(a$="Y")gosub 50024:goto 50283
+ 50288 if x>.then x=x-1:goto 50282
+ 50289 a$=c2$+"{f5}The Market Master Has Made His"+cr$+"Final Offer!":sys c(.)
+ 50290 goto 50296
+ 50291 a$=c2$+"{f5}At $"+mid$(str$(k),2)+" Per Ton"+c2$+"{f5}Sell How Many? ":sys c(1)
+ 50292 gosub 50004:if pthen 50430
+ 50293 x=int(val(i$)):if x<1then 50283
+ 50294 if x>x(15)then a$=cr$+su$+str$(x(15))+" Tons":sys c(.):goto 50291
+ 50295 x(15)=x(15)-x:x(3)=x(3)+(x*k):a$=cr$+"{f5}Sold!":sys c(.)
+ 50296 if x(15)<20then 50299
+ 50297 x=int(rnd(1)*x(15)):x(15)=x(15)-x
+ 50298 a$=cr$+"{f5}Spoilage Destroys"+str$(x)+" Tons Of Cargo":sys c(.)
+ 50299 if x(15)=.then 50302
+ 50300 a$=c2$+"{f5}The Market Master Charges a $"+mid$(str$(100*x(15)),2)+cr$+"Storage Fee!
+ 50301 sys c(.):x(3)=x(3)-(x(15)*100)
+ 50302 gosub 50452:a$=c2$+"{f5}Your Nobles Head To The Battlefield":sys c(.):goto 50022
+ 50303 a$=cr$+"You Have No Exports In Dry Dock":sys c(.):goto 50302
+ 50304 rem {rvon}attack island
+ 50305 if s(.)<1then return
+ 50306 gosub 481:a$="{SHIFT-@}empire ii stats":gosub 50010:k=.
+ 50307 k=k+1:x=int(rnd(1)*m2):gosub 50009:.input#2,u2$(1)
+ 50308 if k>10then .close 2:return
+ 50309 if u2$(1)="empty"then 50307
+ 50310 if u2$(1)=na$then 50307
+ 50311 .input#2,k(2),k(3),k(4),k(5),k(6),k(7),k(8)
+ 50312 .input#2,k(9),k(10),k(11),k(12),k(13),k(14),k(15)
+ 50313 .input#2,k(16),k(17),k(18),k(19),k(20),k(21)
+ 50314 .input#2,k(22),k(23),k(24),k(25),k(26)
+ 50315 .input#2,k(27),k(28),u2$(2),k(29)
+ 50316 .close 2:x%=x:if k(13)<1ork(14)<3then return
+ 50317 a$=cr$+"{f5}First Mate Reports: "+c2$+u2$(1)+"'s Island  On The Horizon
+ 50318 a$=a$+c2$+"{f5}[A]ttack The Island "+cr$+"{f5}[C]ontinue Your Voyage":sys c(.)
+ 50319 a$=cr$+"{f5}Your Command , Cap'n? {f5}":sys c(1):gosub 50005:if pthen 50294
+ 50320 if a$="Y"then gosub 50024:a$="":goto 50318
+ 50321 if a$<>"A"then a$=cr$+"{f5}You Change Course...":goto 160
+ 50322 a$=cr$+"{f5}The First Mate Manuevers Your Ship"+cr$+"Into Position...
+ 50323 sys c(.):gosub 50011:b=(s(.)*6)+(s(3)*2)+s(6)
+ 50324 a$=c2$+"{f5}[+] PLUS=ENEMY LOSS  {f5}[-] MINUS=YOUR LOSS":sys c(.)
+ 50325 a$="{f5}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}":sys c(.):k=(k(13)*10)+k(22)
+ 50326 z=.:q(1)=1:if kb>300and k>300then q(1)=10:if kb>700and k>700then q(1)=20
+ 50327 if kb>2e3and k>2e3then q(1)=50:if kb>4e3and k>4e3then q(1)=100
+ 50328 if q(1)>1then a$="{rvon}{f5}RATIO="+mid$(str$(q(1)),2)+":1":sys c(.)
+ 50329 a=rnd(1)*50+(s(.)*.05)+(s(3)*.002)
+ 50330 i=rnd(1)*50+(k(13)*.05)+(k(14)*.002)
+ 50331 if a>ithen 50334
+ 50332 a$="{wht}-":sys c(1):b=b-q(1):if b<1then s(6)=.:goto 50364
+ 50333 fori=1to50:next:goto 50329
+ 50334 a$="{red}+":sys c(1):k=k-q(1):if k>.then 50333
+ 50335 a$=c2$+"{f5}Your Forces Destroy One Of"+cr$+u2$(1)+"'s Forts!":sys c(.):k=.
+ 50336 x=int(k(22)/2):k(22)=k(22)-x:b=int(rnd(1)*(s(6)/2))+1:s(6)=s(6)-b
+ 50337 a$=cr$+"{f5}Your Crew Returns With:":sys c(.)
+ 50338 x=int(k(20)/k(13)):s(2)=s(2)+x:k(20)=k(20)-x
+ 50339 a$=cr$+"{f5}SERFS  -"+str$(x):sys c(.)
+ 50340 x=int(k(18)/k(13)):s(1)=s(1)+x:k(18)=k(18)-x
+ 50341 a$="{f5}GRAIN  -"+str$(x):sys c(.)
+ 50342 x=int(k(14)/k(13)):x(14)=x(14)+x:k(14)=k(14)-x
+ 50343 a$="{f5}CANNONS-"+str$(x):sys c(.)
+ 50344 if k(3)<k(13)then 50347
+ 50345 x=int(k(3)/k(13)):x(3)=x(3)+x:k(3)=k(3)-x
+ 50346 a$="{f5}GOLD   -"+str$(x):sys c(.)
+ 50347 x=int(k(24)/k(13)):x(24)=x(24)+x:k(24)=k(24)-x
+ 50348 a$="{f5}HORSES -"+str$(x):sys c(.)
+ 50349 x=int(k(25)/k(13)):x(25)=x(25)+x:k(25)=k(25)-x
+ 50350 a$="{f5}SPICES -"+str$(x):sys c(.)
+ 50351 x=int(k(26)/k(13)):x(26)=x(26)+x:k(26)=k(26)-x
+ 50352 a$="{f5}EXPORTS-"+str$(x):sys c(.)
+ 50353 k(13)=k(13)-1
+ 50354 i$=u2$(1)+cr$+str$(k(2))+cr$+str$(k(3))+cr$+str$(k(4))
+ 50355 i$=i$+cr$+str$(k(5))+cr$+str$(k(6))+cr$+str$(k(7))
+ 50356 i$=i$+cr$+str$(k(8))+cr$+str$(k(9))+cr$+str$(k(10))+cr$+str$(k(11))
+ 50357 i$=i$+cr$+str$(k(12))+cr$+str$(k(13))+cr$+str$(k(14))+cr$+str$(k(15))
+ 50358 i$=i$+cr$+str$(k(16))+cr$+str$(k(17))+cr$+str$(k(18))+cr$+str$(k(19))
+ 50359 i$=i$+cr$+str$(k(20))+cr$+str$(k(21))+cr$+str$(k(22))+cr$+str$(k(23))
+ 50360 i$=i$+cr$+str$(k(24))+cr$+str$(k(25))+cr$+str$(k(26))
+ 50361 i$=i$+cr$+str$(k(27))+cr$+str$(k(28))+cr$+u2$(2)+cr$+str$(k(29))
+ 50362 a$="{SHIFT-@}empire ii stats":gosub 50010:x=x%:gosub 50009:.print#2,i$:.close 2
+ 50363 z=1:goto 50370
+ 50364 a$=c2$+"{f5}"+u2$(1)+"'s Mighty Fort Blasts"+cr$+"Your Flotilla":sys c(.):b=1
+ 50365 gosub 52000
+ 50366 k=int(k/2):k(22)=k(22)-k:forx=.to8:k(x)=.:next
+ 50367 k(.)=int(rnd(1)*s(.)):s(.)=s(.)-k(.)
+ 50368 gosub 50157:gosub 50158:gosub 50159:gosub 50160:gosub 50161:gosub 50162
+ 50369 gosub 50164:gosub 50166:if s(3)<.then s(3)=.
+ 50370 a$=c2$+"{f1}Printing The News...{f3}":sys c(.)
+ 50371 if z=1then a$="{f5}"+u2$(1)+"'s Island  Was Plundered!":goto 50373
+ 50372 a$="{f5}"+na$+"'s Ships Were Battered!
+ 50373 f$="{SHIFT-@}emp.news1,a":gosub 203:.print#8,a$:goto 505
+ 50374 z(1)=.:z(2)=s(.)*100:z(3)=z(2)
+ 50375 a$=c2$+"{rvon}{f5}Island  Loading Docks":sys c(.)
+ 50376 a$(1)="{rvon}Grain":a$(2)="{rvon}Serfs":a$(3)="{rvon}Soldiers":a$(4)="{rvon}Horses"
+ 50377 a$(5)="{rvon}Exports
+ 50378 gosub 50450:a$=cr$+"{f5}{rvon}Ships Manif est{rvof}":sys c(1):gosub 50452
+ 50379 a$="{wht} [{f5}1-6,{f5}0=Sail,{f5}?=Menu{wht}]{f5} ":sys c(1):a$="":tk=.
+ 50380 gosub 50005:if p=255orp=1then 50430
+ 50381 if a$="?"then f$="{SHIFT-@}emp.menu3":gosub 210:goto 50378
+ 50382 if a$="6"then gosub 50415:goto 50378
+ 50383 tk=int(val(a$)):if a$="0"then return
+ 50384 on-(a$="Y")gosub 50024:if tk<1ortk>5then 50378
+ 50385 gosub 50415:a$=c2$+"{f5}Load Ship - Item: {lblu}"+a$(tk):sys c(.)
+ 50386 a$=cr$+"{f5}Take How Many? > ":sys c(1)
+ 50387 gosub 50004:on-(p=255)goto 50430:if len(i$)>5then 50385
+ 50388 j=int(val(i$)):if j<1then 50378
+ 50389 ontkgoto 50390,50394,50398,50405,50409
+ 50390 if j>x(18)then a$=cr$+su$+str$(x(18))+" Bushels":goto 50414
+ 50391 x=int(z(3)/.01):if j>xthen 50414
+ 50392 x(18)=x(18)-j:s(1)=s(1)+j:a$=cr$+fr$+str$(s(1))+" Bushels Aboard
+ 50393 z(1)=z(1)+(j*.01):z(3)=z(2)-z(1):goto 50413
+ 50394 if j>x(20)then a$=cr$+su$+str$(x(20))+" Serfs":goto 50413
+ 50395 x=int(z(3)/.2):if j>xthen 50414
+ 50396 x(20)=x(20)-j:s(2)=s(2)+j:a$=cr$+fr$+str$(s(2))+" Serfs Aboard
+ 50397 z(1)=z(1)+(j*.2):z(3)=z(2)-z(1):goto 50413
+ 50398 if frthen a$=cr$+"{CTRL-G}{lred}Your Armies Are On Strike!":goto 50413
+ 50399 if (j+s(6))/20>s(3)then a$=cr$+su$+str$(s(3))+" Nobles":goto 50413
+ 50400 if j>x(22)then a$=cr$+su$+str$(x(22))+" Soldiers":goto 50413
+ 50401 x=z(3):if j>xthen 50414
+ 50402 x(22)=x(22)-j:s(6)=s(6)+j
+ 50403 a$=cr$+fr$+str$(s(3))+" Nobles And"+str$(s(6))+" Soldiers"+cr$+" Aboard
+ 50404 z(1)=z(1)+j:z(3)=z(2)-z(1):goto 50413
+ 50405 if j>x(24)then a$=cr$+su$+str$(x(24))+" Horses":goto 50413
+ 50406 x=z(3):if j>xthen 50414
+ 50407 s(7)=s(7)+j:x(24)=x(24)-j:a$=cr$+fr$+str$(s(7))+" Horses Aboard
+ 50408 z(1)=z(1)+j:z(3)=z(2)-z(1):goto 50413
+ 50409 if j>x(26)then a$=cr$+su$+str$(x(26))+" Exports":goto 50413
+ 50410 x=z(3)/20:if j>xthen 50414
+ 50411 s(5)=s(5)+j:x(26)=x(26)-j:a$=cr$+fr$+str$(s(5))+" Tons Aboard
+ 50412 z(1)=z(1)+j*20:z(3)=z(2)-z(1)
+ 50413 sys c(.):goto 50378
+ 50414 a$=cr$+"{rvon}{lred}{CTRL-G}Limit Would Be Exceeded":sys c(.):goto 50385
+ 50415 a$=cr$+"{rvon}{f5}ITEM     LOADED     MAXIMUM {f5}":sys c(.):i$="             "
+ 50416 x=int(z(3)/.01):if x(18)<xthen x=x(18)
+ 50417 a$=cr$+a$(1)+"   {rvof}"+left$(str$(s(1))+i$,11)+str$(x):sys c(.)
+ 50418 x=int(z(3)/.2):if x(20)<xthen x=x(20)
+ 50419 a$=a$(2)+"   {rvof}"+left$(str$(s(2))+i$,11)+str$(x):sys c(.)
+ 50420 x=int(z(3)):if x(22)<xthen x=x(22)
+ 50421 if s(3)*20-s(6)<xthen x=s(3)*20-s(6)
+ 50422 a$=a$(3)+"{rvof}"+left$(str$(s(6))+i$,11)+str$(x):sys c(.)
+ 50423 x=int(z(3)):if x(24)<xthen x=x(24)
+ 50424 a$=a$(4)+"  {rvof}"+left$(str$(s(7))+i$,11)+str$(x):sys c(.)
+ 50425 x=int(z(3)/20):if x(26)<xthen x=x(26)
+ 50426 a$=a$(5)+" {rvof}"+left$(str$(s(5))+i$,11)+str$(x):sys c(.)
+ 50427 a$=cr$+"{red}Your"+str$(s(.))+" Ships Are {rvon}{yel}"
+ 50428 a$=a$+mid$(str$(int(z(1)/s(.))),2)+"%{red}{rvof} Full":goto 160
+ 50429 rem {rvon}quit
+ 50430 a$="Quit":gosub 8004:a$=c2$+"{f5}Quiting...":sys c(.)
+ 50431 gosub 50433:a$=c2$+"{f5}Plays Remaining:"+str$(m-x(29)):sys c(.)
+ 50432 gosub 50443:a$=str$(x(2))+" Acres"+str$(x(4))+" Rating":goto 8004
+ 50433 i$=na$+cr$+str$(x(2))+cr$+str$(x(3))+cr$+str$(x(4))+cr$+str$(x(5))
+ 50434 i$=i$+cr$+str$(x(6))+cr$+str$(x(7))+cr$+str$(x(8))
+ 50435 i$=i$+cr$+str$(x(9))+cr$+str$(x(10))
+ 50436 i$=i$+cr$+str$(x(11))+cr$+str$(x(12))+cr$+str$(x(13))
+ 50437 i$=i$+cr$+str$(x(14))+cr$+str$(x(15))+cr$+str$(x(16))
+ 50438 i$=i$+cr$+str$(x(17))+cr$+str$(x(18))+cr$+str$(x(19))+cr$+str$(x(20))
+ 50439 i$=i$+cr$+str$(x(21))+cr$+str$(x(22))+cr$+str$(x(23))
+ 50440 i$=i$+cr$+str$(x(24))+cr$+str$(x(25))+cr$+str$(x(26))
+ 50441 i$=i$+cr$+str$(x(27))+cr$+str$(x(28))+cr$+da$+cr$+str$(x(29))
+ 50442 a$="{SHIFT-@}empire ii stats":gosub 50010:x=r1:gosub 50009:.print#2,i$:.close 2:return
+ 50443 rem {rvon}calc ratings
+ 50444 x(4)=int((x(2)/1e3)+(x(3)/1e5)+x(5)+(x(6)/10))
+ 50445 x(4)=x(4)+int((x(7)/10)+(x(8)/10)+(x(10)/10)+(x(11)/10))
+ 50446 x(4)=x(4)+int((x(13)/10)+(x(19)/1e3)+(x(20)/1e3))
+ 50447 return
+ 50448 return
+ 50449 return
+ 50450 return
+ 50451 return
+ 50452 return
+ 50453 return
+ 50454 return
+ 50500 if s(.)<1then return
+ 50502 x=usr(30)+1:if x>5goto 51000
+ 50503 a$=cr$+"{f5}First Mate Reports an Uncharted"+cr$+"Island  off the port bow!"
+ 50505 a$=a$+c2$+"{f5}[E]xplore The Island "+cr$+"{f5}[C]ontinue Your Voyage":sys c(.)
+ 50510 a$=cr$+"{f5}Your Command , Cap'n? {f5}":sys c(1):gosub 50005:if pthen 50294
+ 50515 if a$="Y"then gosub 50024:a$="":goto 50505
+ 50517 if a$<>"E"then a$=c2$+"{f5}You Change Course...":goto 160
+ 50531 x=usr(20)+1:if x>19goto 50700
+ 50532 auto on:x=usr(6)+1
+ 50533 on-(x=1)-(x=2)*2-(x=3)*3-(x=4)*4-(x=5)*5-(x=6)*6goto 50550,50560,50570,50580,50590,50600
+ 50550 x(3)=x(3)+90000:f$="{SHIFT-@}isle1":gosub 210
+ 50557 x$=" Finds Buried Treasure!":goto 50900
+ 50560 f$="{SHIFT-@}isle2":gosub 210:gosub 50800:x$=" Observes an Euruption!!":goto 50900
+ 50570 x(14)=x(14)+10:x(6)=x(6)+3:x(19)=x(19)+250:x(21)=x(21)+30
+ 50572 f$="{SHIFT-@}isle3":gosub 210:x$=" Finds Lost Settelment!":goto 50900
+ 50580 f$="{SHIFT-@}isle4":gosub 210:gosub 50800:x$=" is Surprised by Pirates!":goto 50900
+ 50590 x(23)=x(23)+100:x(16)=x(16)+20:f$="{SHIFT-@}isle5":gosub 210
+ 50595 x$=" Finds Wild Horses!":goto 50900
+ 50600 f$="{SHIFT-@}isle6":gosub 210:gosub 50800:x$=" is Attacked by Cannibals!":goto 50900
+ 50700 a$=c2$+"{f5}You find nothing of interest...":goto 160
+ 50800 k=int(k/2):k(22)=k(22)-k:forx=.to8:k(x)=.:next
+ 50805 k(.)=int(rnd(1)*s(.)):s(.)=s(.)-k(.)
+ 50810 gosub 50157:gosub 50158:gosub 50159:gosub 50160:gosub 50161:gosub 50162:gosub 50164:gosub 50166:if s(3)<.then s(3)=.:return
+ 50815 return
+ 50900 auto off:a$=c2$+"{f1}Printing the News...{f3}":sys c(.)
+ 50905 a$="{f5}"+na$+x$
+ 50910 f$="{SHIFT-@}emp.news1,a":gosub 203:.print#8,a$:gosub 505:return
+ 51000 x=usr(30)+1:if x>5goto 50305
+ 51020 a$=cr$+"{f5}First Mate Reports Wreckage"+cr$+"off the starbord bow!"
+ 51030 a$=a$+c2$+"{f5}[E]xamine The Wreckage"+cr$+"{f5}[C]ontinue Your Voyage":sys c(.)
+ 51040 a$=cr$+"{f5}Your Command , Cap'n? {f5}":sys c(1):gosub 50005:if pthen 50294
+ 51050 if a$="Y"then gosub 50024:a$="":goto 50505
+ 51060 if a$<>"E"then a$=c2$+"{f5}You Continue on Course...":goto 160
+ 51070 x=usr(20)+1:if x>19goto 50700
+ 51080 auto on:x=usr(7)+1
+ 51100 on-(x=1)-(x=2)*2-(x=3)*3-(x=4)*4-(x=5)*5-(x=6)*6-(x=7)*7goto 51110,51130,51150,51170,51190,51200,51220
+ 51110 x(6)=x(6)+2:x(21)=x(21)+15:x(19)=x(19)+30:f$="{SHIFT-@}wreck1":gosub 210
+ 51120 x$=" Rescues Survivors!":goto 50900
+ 51130 f$="{SHIFT-@}wreck2":gosub 210:gosub 50800:x$=" Finds Sea Serpant!":goto 50900
+ 51150 x(15)=x(15)+5:f$="{SHIFT-@}wreck3":gosub 210
+ 51160 x$=" Finds Goods!":goto 50900
+ 51170 f$="{SHIFT-@}wreck4":gosub 210:gosub 50800:x$=" Sees a Water Spout!":goto 50900
+ 51190 x(25)=x(25)+16:f$="{SHIFT-@}wreck5":gosub 210
+ 51195 x$=" Finds Goods!":goto 50900
+ 51200 x(6)=x(6)+3:x(21)=x(21)+25:x(3)=x(3)+15000:f$="{SHIFT-@}wreck6":gosub 210
+ 51210 x$=" Rescues Prince!":goto 50900
+ 51220 f$="{SHIFT-@}wreck7":gosub 210:gosub 50800:x$=" Sails Through Fog!":goto 50900
+ 51500 a$=c2$+"{f5}A Seagull Bombs Your Head, From Above!":goto 160
+ 52000 if b=.then return
+ 52001 w=usr(4)+2:x=int(rnd(1)*(k(22)/w))+1:k(22)=k(22)-x
+ 52003 x=usr(3)+1:k(14)=k(14)-x:if k(14)<1then k(14)=1
+ 52005 i$=u2$(1)+cr$+str$(k(2))+cr$+str$(k(3))+cr$+str$(k(4))
+ 52010 i$=i$+cr$+str$(k(5))+cr$+str$(k(6))+cr$+str$(k(7))
+ 52015 i$=i$+cr$+str$(k(8))+cr$+str$(k(9))+cr$+str$(k(10))+cr$+str$(k(11))
+ 52020 i$=i$+cr$+str$(k(12))+cr$+str$(k(13))+cr$+str$(k(14))+cr$+str$(k(15))
+ 52025 i$=i$+cr$+str$(k(16))+cr$+str$(k(17))+cr$+str$(k(18))+cr$+str$(k(19))
+ 52030 i$=i$+cr$+str$(k(20))+cr$+str$(k(21))+cr$+str$(k(22))+cr$+str$(k(23))
+ 52035 i$=i$+cr$+str$(k(24))+cr$+str$(k(25))+cr$+str$(k(26))
+ 52040 i$=i$+cr$+str$(k(27))+cr$+str$(k(28))+cr$+u2$(2)+cr$+str$(k(29))
+ 52045 a$="{SHIFT-@}empire ii stats":gosub 50010:x=x%:gosub 50009:.print#2,i$:.close 2
+ 52050 return
+ 56300 sp$="                      ":a$="{clr}"+"{f5}{rvon}  - EMPIRE II -       PLAYS REMAINING:"+str$(m-x(29))+"          MAINLAND    COLONY     FLEET{rvof}":sys c(.)
+ 56301 a$=cr$+left$("{f5}"+na$+sp$,22)+"ACRES    -"+str$(x(2))
+ 56302 a$=left$(a$+sp$,40)+"    NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)+"-"+str$(s(3)):sys c(.):a$=""
+ 56303 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4))
+ 56304 a$=left$(a$+sp$,40)+"   SOILDIERS -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)+"-"+str$(s(6)):sys c(.):a$=""
+ 56305 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13))
+ 56306 a$=left$(a$+sp$,40)+"   SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"+str$(s(2)):sys c(.):a$=""
+ 56307 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"CANNONS  -"+str$(x(14))
+ 56308 a$=left$(a$+sp$,40)+"   GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"+str$(s(1)):sys c(.):a$=""
+ 56309 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10))
+ 56310 a$=left$(a$+sp$,40)+"   HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)+"-"+str$(s(7)):sys c(.):a$=""
+ 56311 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"SHIPS    -"+str$(x(12))
+ 56312 a$=left$(a$+sp$,40)+"   EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)+"-"+str$(s(5)):sys c(.):a$=""
+ 56313 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16))
+ 56314 a$=left$(a$+sp$,40)+"   SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)+"-"+str$(s(8)):sys c(.):a$=""
+ 56315 return
+ 63999 scratch"-mdl.emp.delx2":rename"mdl.emp.delx2"to"-mdl.emp.delx2":dsave"mdl.emp.delx2
+

@@ -1,0 +1,11 @@
+   You land on a mist-shrouded island, which appears to be uninhabited.  You
+and your men spread out to explore the island.
+   While pushing your way through a tangle of brush, you come upon a
+boulder with a cross carved on it.  Deciding that this is a good omen, you
+instruct your men to dig beneath the boulder.
+   After many hours of digging, your men discover a chest.  Anticipation
+mounts, as you order it opened.
+
+   Inside, you find 90,000 gold!
+
+         <Press any Key>\g1

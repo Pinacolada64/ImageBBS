@@ -1,0 +1,14 @@
+   Up to this point, your tournament has gone well.  Unfortunately, your
+greatest rival has also shown up.  He proposes settling a dispute
+involving a Shipyard and some land by a single contest.  Reluctantly, you
+agree.
+
+   The arena falls into silence as word of the wager spreads.  All in
+attendance watch as your champion prepares for the contest.
+
+   With the blaring of trumpets, the two Nobles charge!  Then with a crash
+of armor, you rise in pride, as your rival's Noble hits the ground!  You
+have won!
+
+   You win 1 Shipyard, and 100 acres of land!
+               <Press any Key>\g1

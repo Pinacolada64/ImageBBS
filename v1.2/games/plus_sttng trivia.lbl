@@ -1,0 +1,482 @@
+{alpha:upper}
+{number:1}
+	REM +.STTNG TRIVIA
+{number:2}
+{step:2}
+	REM "STAR TREK: THE NEXT GENERATION" TRIVIA
+	REM
+	REM ORIGINALLY PROGRAMMED AND
+	REM CREATED BY DIANE & JOANNE NOTT
+	REM REVISION BY GREGORY J. GRESH
+	REM VISION VERSION BY
+	REM TONY LAFRENIER
+	REM NIGHT VISION BBS
+	REM (916)/332-3422
+	REM
+	REM PORTED TO IMAGE BBS BY RYAN "PINACOLADA" SHERWOOD
+	REM FOR CAPTAIN SULU'S "SYSTEM ONE" BBS
+
+' intro
+'	p$="{clear}{f6:8} {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb}, {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}{f6}":gosub 1
+' ----+----+----+----+----+----+----+----+
+' "Star Trek: The Next Generation" Trivia
+	&"{clear}{pound}n8 {f5}{$d3}tar {$d4}rek, {$d4}he {$ce}ext {$c7}eneration{f5} {$d4}rivia{f6}"
+
+{:open_score}
+' open score file:
+	close 2:dr=3:gosub 1010:a$="e.sttng trivia":gosub 1011:if e%=. then {:read_score}
+{:7521}
+' establish new score file:
+'	close 2:open 2,8,2,"0:tt.file,s,w":print# 2," ":print# 2," ":return
+	close 2:a$="e.sttng trivia,s,w":gosub 1011:print# 2,0:print# 2,"nobody":goto {:open_score}
+
+{:read_score}
+' ch$: champion name
+'  n$: user name
+' sc$: score
+' gosub 1: output p$
+'	t3=1:ch$="":sc$="":input# 2,sc$:input# 2,ch$:close 2:if n$=ch$ then {:7531}
+	&,2,2:sc=val(a$):input# 2,ch$:close 2:if na$<>ch$ then {:show_score}
+{:7531}
+' you are current champion
+'	p$="{f6} {$d9}ou are the current {$cc}{$c5}{$c1}{$c4}{$c5}{$d2}{f6}":gosub 1
+' "You are the current leader in the game."
+' "Let someone else play!"
+	&"{f6} {$d9}ou are the current leader of the game."
+'	p$="{f6} of this section!{f6}":gosub 1:gosub 3960:gosub 3960
+	&"{f6} {$cc}et someone else play!{f6}":goto 1811
+
+{:show_score}
+	&"{f6:2}  {$d4}he {$c3}urrent {$cc}eader {$c9}s: "+ch$+"{f6:2}"
+'	p$="{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+sc$+"{f6:2}":gosub 1:gosub 3960:gosub 3960
+	&"{f6}  {$d4}he {$d3}core {$d4}o {$c2}eat {$c9}s: "+str$(sc)+"{pound}w3"
+
+	tq=30:REM TQ=NUMBER OF QUESTIONS
+' months data must be in main module
+'	c1=0:w=0:restore:for zz=1 to 12:read zz$:next:rem skip months
+' c1=correct answers, w=wrong answers
+	c1=0:w=0:restore
+	for i1=1 to tq:read q1$,a1$,a2$,a3$,a4$,c$
+{:ask_question}
+	&"{clear}{f6}"+str$(i1)+". "+q1$
+' put question letters here instead of with every question:
+'	p$="{f6:2}     "+a1$:gosub 1:p$="{f6}     "+a2$:gosub 1:p$="{f6}     "+a3$:gosub 1
+	&"{f6:2}     {$c1}) "+a1$+"{f6}     {$c2}) "+a2$+"{f6}     {$c3}) "+a3$
+
+'	p$="{f6}     "+a4$:gosub 1:p$="{f6:2}     {$d1}) {$d1}uit":gosub 1
+	&"{f6}     {$c4}) "+a4$+"{f6:2}     {$d1}) {$d1}uit{f6:2}"
+'	p$="{f6:2}     {$c1}nswer :":gosub 1:gosub 180
+' 1006: uppercase input only:
+	p$="     {$c1}nswer":gosub 1006:if tr%<1 then i1=tq:goto {:7251}
+'	if b$="{$d1}"then p$="{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":gosub 1:gosub 3960:goto 1220
+' confirm on quit, for goodness sake!
+	if an$="{$d1}" then gosub 1901:on a+1 goto {:ask_question}:&"{f6:2} {$d2}eturning {$d4}o {$d4}he {$c2:2}{$d3}...":goto 1811
+'	if b$<>c$ then p$="{f6:2}     {$d3}orry, {$c9}ncorrect!{f6}":gosub 1:gosub 3960:w=w+1:goto{:7251}
+	if an$<>c$ then:&"{f6:2}     {$d3}orry, {$c9}ncorrect!{pound}w3{f6}":w=w+1:goto {:7251}
+'	c1=c1+1:p$="{f6:2}     {$d4}hat is correct!{f6}":gosub 1:gosub 3960
+	c1=c1+1:&"{f6:2}     {$d4}hat is correct!{pound}w3{f6}"
+{:7251}
+	next
+' pc=percent correct
+	pc=c1/tq:tc=pc*100
+'	p$="{clear}  {f6:2}":gosub 1:for i1=1 to 38:p$="-":gosub 1:next
+	&"{clear}  {f6:2}{pound}vj{f6}"
+	if tq=c1 then {:7341}
+	tc=int(tc+.5):if tc>=85 then {:7321}
+	if tc>70 and tc<85 then {:7331}
+'	p$="{f6:2} {$d7}atch more {$d3}tar {$d4}rek!":gosub 1:goto{:7371}
+	&"{f6:2} {$d7}atch more {$d3}tar {$d4}rek!":goto {:7371}
+{:7321}
+' 	p$="{f6:2} {$d9}ou are a trekker for sure.":gosub 1:goto{:7371}
+	&"{f6:2} {$d9}ou are a {$d4}rekker for sure.":goto {:7371}
+{:7331}
+'	p$="{f6:2} {$d9}ou occasionally watch {$d3}tar {$d4}rek.":gosub 1:goto{:7371}
+	&"{f6:2} {$d9}ou occasionally watch {$d3}tar {$d4}rek.":goto {:7371}
+{:7341}
+' all tq correct!
+'	p$="{f6:2} {$d9}ou got all"+str$(tq)+" questions correct!":gosub 1
+	&"{f6:2} {$d9}ou got all"+str$(tq)+" questions correct!"
+'	p$="{f6:2} {$d9}ou are a true '{$d4}rekker' beyond any{f6} doubt.":gosub 1
+	&"{f6:2} {$d9}ou are a true {f5}{$d4}rekker{f5}, without a{f6} doubt."
+'	p$="{f6:2} {$c3}ongratulations!":gosub 1
+
+' give 'em some credits:
+	cr=cr+100:&"{f6:2} {$c3}ongratulations! {$d9}ou get 100 credits!{f6}"
+' acknowledge in log:
+	a$="Current Champion: All"+str$(tq)+" questions correct!":gosub 1095
+	goto {:write_score}
+
+{:7371}
+'	p$="{f6:2} {$d9}ou got"+str$(tc)+"% correct.":gosub 1
+	&"{f6:2} {$d9}ou got"+str$(tc)+"% correct."
+'	p$="{f6} {$d9}ou got"+str$(w)+" questions incorrect. ":gosub 1
+	&"{f6} {$d9}ou got"+str$(w)+" questions incorrect. "
+'	p$="{f6} {$d9}ou got"+str$(c1)+" questions correct.{f6}":gosub 1
+	&"{f6} {$d9}ou got"+str$(c1)+" questions correct.{f6}"
+'	for i1=1 to 38:p$="-":gosub 1:next:p$="{f6} {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue..":gosub 1:gosub 180
+' TODO: subroutine this
+	&"{pound}vj{f6} {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue: {pound}g1"
+'	if tc<val(sc$)then p$="{clear}{f6:5} {$d3}orry, you missed the high score!":gosub 1
+	if tc<sc then:&"{clear}{pound}n5 {$d3}orry, you missed the high score!"
+'	v=val(sc$)-tc
+	v%=sc-tc
+'	if tc<val(sc$)then p$="{f6:2} by "+str$(v)+" points. ":gosub 1
+	if tc<sc then:&"{f6:2} by {pound}%v points. "
+'	if tc<val(sc$)then p$="{f6:3}  {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue...":gosub 1:gosub 180:goto{:7511}
+	if tc<sc then:&"{f6:3}  {$d0}ress {$c1}ny {$cb}ey {$d4}o {$c3}ontinue: {pound}g1":goto {:7511}
+
+' new champion!
+'	p$="{clear}{f6:5} {$c8}ey {$d7}e {$c8}ave {$c1} {$ce}ew {$cc}eader{f6:2}      {$c9}n {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb},":gosub 1
+	&"{clear}{pound}n5 {$c8}ey, {$d7}e {$c8}ave {$c1} {$ce}ew {$cc}eader{f6:2}      {$c9}n {$d3}{$d4}{$c1}{$d2} {$d4}{$d2}{$c5}{$cb},"
+'	p$="{f6:2}         {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}":gosub 1
+	&"{f6:2}         {$d4}{$c8}{$c5} {$ce}{$c5}{$d8}{$d4} {$c7}{$c5}{$ce}{$c5}{$d2}{$c1}{$d4}{$c9}{$cf}{$ce}"
+'	p$="{f6:2}      {$d7}ith "+str$(tc)+" points.{f6}":gosub 1:gosub 3960:gosub 3960
+	&"{f6:2}      {$d7}ith"+str$(tc)+" points.{f6}"
+
+{:write_score}
+'	p$="{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!":gosub 1
+	&"{f6:2} {$d3}aving {$d9}our {$d3}core {$c1}nd {$ce}ame {$d4}o {$c4}isk!"
+' scratch and reopen for write:
+' tc=total correct
+' na$=user name
+'	close 15:open 15,8,15,"s0:t3.file":close 15:open 2,8,2,"0:t3.file,s,w"
+	dr=3:a$="e.sttng trivia":gosub 1023
+'	print# 2,tc:print# 2,n$:close 2
+	print# 2,tc:print# 2,na$:close 2
+
+{:7511}
+'	p$="{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!":gosub 1:gosub 3960:gosub 3960:goto {:7561}
+	&"{f6:3} {$cc}ive {$cc}ong {$c1}nd {$d0}rosper!"
+
+{:10000}
+' log gameplay to e.log:
+' Played "Star Trek: The Next Generation"
+' Trivia!
+	a$="{cyan} {$d0}layed {f5}{yellow}{$d3}tar {$d4}rek: {$d4}he {$ce}ext {$c7}eneration{f5}{f6} {cyan}{$d4}rivia!":gosub 1095:close 2
+
+	goto 1811
+
+	REM DATA QUESTIONS
+	REM **** QUESTION 1 ****
+'	data "{$d7}ho is the new '{$ce}umber {$cf}ne'?                "
+'	data "{$c1}) {$cc}t. {$cc}aforge"
+'	data "{$c2}) {$c4}ata"
+'	data "{$c3}) {$c3}apt {$d0}iccard"
+'	data "{$c4}) {$d7}illiam {$d2}iker","{$c4}"
+	data "{$d7}ho is the new {f5}{$ce}umber {$cf}ne{f5}?"
+	data "{$cc}t. {$cc}a{$c6}orge"
+	data "{$c4}ata"
+	data "{$c3}apt. {$d0}icard"
+	data "{$d7}illiam {$d2}iker","{$c4}"
+	REM **** QUESTION 2 ****
+	data "{$d7}ho is the {$c3}hief {$cd}edical {$cf}fficer?"
+'	data "{$c1}) {$c4}r. {$cd}ccoy"
+'	data "{$c2}) {$c4}r. {$cd}arcus"
+'	data "{$c3}) {$c4}r. {$c3}rusher"
+'	data "{$c4}) {$c4}r. {$d4}hor","{$c3}"
+	data "{$c4}r. {$cd}c{$c3}oy"
+	data "{$c4}r. {$cd}arcus"
+' depends on which season you're talking about! everyone forgets Pulaski...
+	data "{$c4}r. {$c3}rusher"
+	data "{$c4}r. {$d4}hor","{$c3}"
+	REM *** QUESTION 3 ****
+	data "{$d7}hich crew member can read thoughts?"
+'	data "{$c1}) {$d2}iker"
+'	data "{$c2}) {$d4}roi"
+'	data "{$c3}) {$c4}ata"
+'	data "{$c4}) {$d9}ar","{$c2}"
+	data "{$d2}iker"
+	data "{$d4}roi"
+	data "{$c4}ata"
+	data "{$d9}ar","{$c2}"
+	REM **** QUESTION 4 ****
+	data "{$d7}hat is her title?"
+'	data "{$c1}) {$c3}ouncilor"
+'	data "{$c2}) {$c3}ommunications"
+'	data "{$c3}) {$ce}egotiator"
+'	data "{$c4}) {$ce}avigator","{$c1}"
+	data "{$c3}ounselor"
+	data "{$c3}ommunications"
+	data "{$ce}egotiator"
+	data "{$ce}avigator","{$c1}"
+	REM **** QUESTION 5 ****
+	data "{$d7}ho was {$cc}t. {$d9}ar?"
+'	data "{$c1}) security officer"
+'	data "{$c2}) engineering officer"
+'	data "{$c3}) science officer"
+'	data "{$c4}) a klingon orphan","{$c1}"
+	data "security officer"
+	data "engineering officer"
+	data "science officer"
+	data "a {$cb}lingon orphan","{$c1}"
+	REM **** QUESTION 6 ****
+	data "{$d7}ho was found outside abandoned?"
+' 	data "{$c1}) {$d7}arf"
+' 	data "{$c2}) {$d7}hite"
+' 	data "{$c3}) {$d9}ar"
+' 	data "{$c4}) {$c4}ata","{$c4}"
+	data "{$d7}orf"
+	data "{$d7}hite"
+	data "{$d9}ar"
+	data "{$c4}ata","{$c4}"
+	REM **** QUESTION 7 ****
+	data "{$d7}hat is {$c3}apt. {$d0}icard's first name?"
+' 	data "{$c1}) {$c2}ill"
+' 	data "{$c2}) {$d0}hillip"
+' 	data "{$c3}) {$ca}ean"
+' 	data "{$c4}) {$ce}icolaus","{$c3}"
+	data "{$c2}ill"
+	data "{$d0}hillip"
+	data "{$ca}ean-{$cc}uc"
+	data "{$ce}icolaus","{$c3}"
+	REM **** QUESTION 8 ****
+	data "{$d7}hat impersonates humans?"
+' 	data "{$c1}) {$cd}"
+' 	data "{$c2}) {$d8}"
+' 	data "{$c3}) {$d6}"
+' 	data "{$c4}) {$d1}","{$c4}"
+	data "{$cd}"
+	data "{$d8}"
+	data "{$d6}"
+	data "{$d1}","{$c4}"
+	REM **** QUESTION 9 ****
+' 	data "{$c8}ow many crew members were              'orphans'?"
+' 	data "{$c1}) three"
+' 	data "{$c2}) two"
+' 	data "{$c3}) one"
+' 	data "{$c4}) zero","{$c1}"
+	data "{$c8}ow many crew members were              orphans?"
+	data "three"
+	data "two"
+	data "one"
+	data "zero","{$c1}"
+' interesting. other than Worf, who were they?
+	REM **** QUESTION 10 ***
+' 	data "{$d7}ho invented a repulser tractor         beam?"
+' 	data "{$c1}) {$c3}rusher"
+' 	data "{$c2}) {$d7}arf"
+' 	data "{$c3}) {$d1}"
+' 	data "{$c4}) {$d2}iker","{$c1}"
+	data "{$d7}ho invented a repulsor tractor         beam?"
+	data "{$d7}esley {$c3}rusher"
+	data "{$d7}orf"
+	data "{$d1}"
+	data "{$d2}iker","{$c1}"
+' shut up, Wesley
+	REM **** QUESTION 11 ***
+	data "{$d7}ho has been blind since birth?"
+' 	data "{$c1}) {$d0}ike"
+' 	data "{$c2}) {$cc}aforge"
+' 	data "{$c3}) {$d7}arf"
+' 	data "{$c4}) {$d4}roi","{$c2}"
+	data "{$d0}ike"
+	data "{$cc}a{$c6}orge"
+	data "{$d7}orf"
+	data "{$d4}roi","{$c2}"
+	REM **** QUESTION 12 ****
+' 	data "{$d7}hat is the name of the {$c5}nterprises     sister ship"
+' 	data "{$c1}) {$c5}xcelsior"
+' 	data "{$c2}) {$c5}nterprise {$c9:2}"
+' 	data "{$c3}) {$c7}rissam"
+' 	data "{$c4}) none of the above","{$c4}"
+	data "{$d7}hat is the {$c5}nterprise's sister ship    named?"
+	data "{$d5}{$d3:2} {$c5}xcelsior"
+	data "{$d5}{$d3:2} {$c5}nterprise {$c9:2}"
+	data "{$d5}{$d3:2} {$c7}rissom"
+	data "none of the above","{$c4}"
+' http://memory-alpha.wikia.com/wiki/USS_Grissom_(24th_century)_personnel
+	REM *** QUESTION 13 ****
+	data "{$d7}ho gave up command to serve on the     {$c5}nterprise?"
+' 	data "{$c1}) {$d0}iccard"
+' 	data "{$c2}) {$d2}iker"
+' 	data "{$c3}) {$c3}rusher"
+' 	data "{$c4}) {$cc}aforge","{$c2}"
+	data "{$c3}apt. {$d0}icard"
+	data "{$c3}mdr. {$d2}iker"
+	data "{$c4}r. {$c3}rusher"
+	data "{$c3}mdr. {$cc}a{$c6}orge","{$c2}"
+	REM **** QUESTION 14 ****
+	data "{$d7}hich crew member was killed by an      evil black tar?"
+' 	data "{$c1}) {$d9}ar"
+' 	data "{$c2}) {$d4}roi"
+' 	data "{$c3}) {$cc}t. {$d7}arf"
+' 	data "{$c4}) {$cc}t. {$d3}oo","{$c1}"
+	data "{$d9}ar"
+	data "{$d4}roi"
+	data "{$cc}t. {$d7}orf"
+	data "{$cc}t. {$d3}oo","{$c1}"
+' http://memory-alpha.wikia.com/wiki/Skin_of_Evil_(episode)
+	REM *** QUESTION 15 ****
+	data "{$d4}hat same episode, who was trapped      in a space ship?"
+' 	data "{$c1}) {$d9}ar"
+' 	data "{$c2}) {$d4}roi"
+' 	data "{$c3}) {$cc}t. {$d7}arf"
+' 	data "{$c4}) {$cc}t. {$d3}oo","{$c2}"
+	data "{$d9}ar"
+	data "{$d4}roi"
+	data "{$cc}t. {$d7}orf"
+	data "{$cc}t. {$d3}oo","{$c2}"
+	REM *** QUESTION 16 ****
+'	data "{$d7}hat war was rekindered from the        original series?"
+	data "{$d7}hat war was rekindled from the         original series?"
+'	data "{$c1}) {$c6}ederation/{$cb}lingon"
+'	data "{$c2}) {$c6}ederation/{$d2}ommulan"
+'	data "{$c3}) {$c6}ederation/{$c6}erengie"
+'	data "{$c4}) no war at all","{$c2}"
+	data "{$c6}ederation/{$cb}lingon"
+	data "{$c6}ederation/{$d2}omulan"
+	data "{$c6}ederation/{$c6}erengi"
+	data "no war at all","{$c2}"
+	REM **** QUESTION 17 ****
+	data "{$c1} war machine computer hailed the       {$c5}nterprise for what?"
+' 	data "{$c1}) sale"
+' 	data "{$c2}) war"
+' 	data "{$c3}) information"
+' 	data "{$c4}) weapons","{$c1}"
+	data "sale"
+	data "war"
+	data "information"
+	data "weapons","{$c1}"
+	REM **** QUESTION 18 ****
+' I'm not sure how to fix this question...
+	data "{$d7}hat was the shape of the saline        life form?"
+' 	data "{$c1}) crystal"
+' 	data "{$c2}) diamond"
+' 	data "{$c3}) octagonal"
+' 	data "{$c4}) tubular","{$c1}"
+	data "crystal"
+	data "diamond"
+	data "octagonal"
+	data "tubular","{$c1}"
+' http://memory-alpha.wikia.com/wiki/Crystalline_Entity
+	REM **** QUESTION 19 ****
+	data "{$d7}here did that life-form get its        power?"
+' 	data "{$c1}) saline"
+' 	data "{$c2}) light"
+' 	data "{$c3}) dilithium"
+' 	data "{$c4}) nuclear","{$c2}"
+	data "saline"
+	data "light"
+	data "dilithium"
+	data "nuclear","{$c2}"
+	REM **** QUESTION 20 ****
+	data "{$d7}hat was {$c4}ata's brother called?"
+' 	data "{$c1}) he had no brother"
+' 	data "{$c2}) {$c4}ato"
+' 	data "{$c3}) {$d5}nix"
+' 	data "{$c4}) {$cc}orr","{$c4}"
+	data "he had no brother"
+	data "{$c4}ato"
+	data "{$d5}nix"
+	data "{$cc}ore","{$c4}"
+' http://memory-alpha.wikia.com/wiki/Lore
+	REM **** QUESTION 21 ****
+' 	data "{$d7}hich of the following disabled the     enterprise?"
+' 	data "{$c1}) {$c3}rusher"
+' 	data "{$c2}) {$d7}arf"
+' 	data "{$c3}) {$d0}iccard"
+' 	data "{$c4}) {$cc}aforge","{$c1}"
+	data "{$d7}hich of the following disabled the     {$c5}nterprise?"
+	data "{$c3}rusher"
+	data "{$d7}orf"
+	data "{$d0}icard"
+	data "{$cc}a{$c6}orge","{$c1}"
+	REM **** QUESTION 22 ****
+	data "{$d7}ho hijacked the {$c5}nterprise?"
+' 	data "{$c1}) {$c2}inards"
+' 	data "{$c2}) {$c6}erengies"
+' 	data "{$c3}) {$cb}lingons"
+' 	data "{$c4}) {$d2}ommulans","{$c1}"
+	data "{$c2}ynars"
+	data "{$c6}erengis"
+	data "{$cb}lingons"
+	data "{$d2}omulans","{$c1}"
+	REM **** QUESTION 23 ****
+'	data "{$d7}hat was so special about the           {$c2}inards?"
+	data "{$d7}hat was so special about the           {$c2}ynars?"
+	data "they were always paired"
+	data "they were linked to a computer"
+	data "all of the above"
+	data "none of the above","{$c3}"
+' http://memory-alpha.wikia.com/wiki/11001001_(episode)
+	REM **** QUESTION 24 ****
+	data "{$d7}ho didn't want to change when          {$d2}iker was given the gift of {$d1}?"
+' 	data "{$c1}) {$c4}ata"
+' 	data "{$c2}) {$cc}aforge"
+' 	data "{$c3}) {$d7}esley {$c3}rusher"
+' 	data "{$c4}) {$d7}arf","{$c1}"
+	data "{$c4}ata"
+	data "{$cc}a{$c6}orge"
+	data "{$d7}esley {$c3}rusher"
+	data "{$d7}orf","{$c1}"
+	REM **** QUESTION 25 ****
+'	data "{$d4}he insect planet would not speak       to the {$c5}nterprise unless.."
+'	data "{$c1}) they stopped killing insects"
+'	data "{$c2}) they got out of range"
+'	data "{$c3}) they released their shields"
+'	data "{$c4}) they spoke the language","{$c4}"
+	data "{$d4}he insect planet would not speak       to the {$c5}nterprise unless they:"
+	data "stopped killing insects"
+	data "got out of range"
+	data "released their shields"
+	data "spoke the language","{$c4}"
+	REM **** QUESTION 26 ****
+'	data "{$c9}n episode with the planet where    love is free, what was '{$c7}od'?"
+'	data "{$c1}) {$c7}od"
+'	data "{$c2}) {$c1} {$d3}paceship"
+'	data "{$c3}) {$c1}n {$c9}dol"
+'	data "{$c4}) {$c1}n {$c5}ntity","{$c4}"
+	data "{$c9}n the episode with the planet          where love is free, what was {f5}{$c7}od{f5}?"
+	data "{$c7}od"
+	data "a spaceship"
+	data "an idol"
+	data "an entity","{$c4}"
+	REM **** QUESTION 27 ****
+'	data "{$d4}hat same episode, what law did         {$d7}esley {$c3}rusher break?"
+'	data "{$c1}) playing on a {$d3}unday"
+'	data "{$c2}) killing flowers"
+'	data "{$c3}) running on a {$d3}unday"
+'	data "{$c4}) walking on the grass","{$c2}"
+	data "{$c9}n that same episode, what law did      {$d7}esley {$c3}rusher break?"
+	data "playing on a {$d3}unday"
+	data "killing flowers"
+	data "running on a {$d3}unday"
+	data "walking on the grass","{$c2}"
+	REM **** QUESTION 28 ****
+' 	data "{$d4}hat same episode, what were they       playing?"
+' 	data "{$c1}) catch"
+' 	data "{$c2}) football"
+' 	data "{$c3}) baseball"
+' 	data "{$c4}) hockey","{$c1}"
+	data "{$c9}n that same episode, what were         they playing?"
+	data "catch"
+	data "football"
+	data "baseball"
+	data "hockey","{$c1}"
+	REM **** QUESTION 29 ****
+' 	data "{$d7}hy couldn't {$d7}arf participate in        '{$c6}ree {$cc}ove'?
+' 	data "{$c1}) he didn't care for it"
+' 	data "{$c2}) he needed a {$cb}lingon woman"
+' 	data "{$c3}) he was too powerful"
+' 	data "{$c4}) {$c2}oth {$c2} & {$c3}","{$c4}"
+	data "{$d7}hy couldn't {$d7}orf participate in        {f5}{$c6}ree {$cc}ove{f5}?
+	data "he didn't care for it"
+	data "he needed a {$cb}lingon woman"
+	data "he was too powerful"
+	data "both {$c2} & {$c3}","{$c4}"
+	REM **** QUESTION 30 ****
+' 	data "{$d7}hat is the most distinctive            feature of the {$c6}erengies?"
+' 	data "{$c1}) greed"
+' 	data "{$c2}) power-based"
+' 	data "{$c3}) ignorance"
+' 	data "{$c4}) cold-blooded","{$c1}"
+	data "{$d7}hat is the most distinctive            feature of the {$c6}erengis?"
+	data "greed"
+	data "power-based"
+	data "ignorance"
+	data "cold-blooded","{$c1}"
+' I would argue their lobes, but...
+
+{number:997}
+	REM "STAR TREK: THE NEXT GENERATION" TRIVIA
+	REM FOR "SYSTEM ONE" BBS, 7/8/2018

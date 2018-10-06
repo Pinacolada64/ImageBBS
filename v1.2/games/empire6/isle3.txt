@@ -1,0 +1,10 @@
+   You have landed on an uncharted island. You send your men out to explore it.
+   One of your men has climbed up a brush-covered hill, and now calls for
+your attention.  You climb up to join him.
+   At the top of the hill you discover the remains of a fort.  Then, just 
+beyond the fort, you see a run-down settlement.  People cautiously emerge from 
+broken down huts.  You have found a lost colony!
+
+   You gain 10 Cannons, 3 Nobles, 30 Soldiers, and 250 Serfs!
+
+               <Press any Key>\g1

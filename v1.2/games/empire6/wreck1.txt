@@ -1,0 +1,11 @@
+   You have found the wreckage of a ship floating on the waves.  Timbers,
+beams, and broken crates drift by.  Then, off in the distance, one of your
+lookouts spots two small life boats.
+
+   As you draw nearer, you see that they are filled to overflowing with
+people.  You are seen as well, people waving a small plank with a white
+shirt attached to attract your attention.
+
+   You pull alongside and rescue 2 Nobles, 15 Soldiers, and 30 serfs!
+
+               <Press any Key>\g1

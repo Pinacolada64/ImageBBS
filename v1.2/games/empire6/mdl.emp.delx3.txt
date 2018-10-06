@@ -1,0 +1,545 @@
+
+
+;mdl.emp.delx3.prg ==1c01==
+ 50000 auto off:gosub 50001:a$="":goto 9050
+ 50001 kk=.:dx=.:gosub 481:gosub 50040:gosub 50053:su$="":sys c(41),1:return
+ 50004 poke c(23),1:gosub 300:poke c(23),.:goto 390
+ 50005 a$="{f5}":sys c(1):gosub 3640
+ 50006 gosub 110:if p=.and (a$<"0"ora$>"Z")then 50006
+ 50007 if pthen 360
+ 50008 sys c(.):return
+ 50009 a=int(x/256):.print#15,"p{CTRL-B}"+chr$(x-a*256)chr$(a)"{CTRL-A}":return
+ 50010 .close 2:.open 2,dv,2,dr$+a$:return
+ 50011 fori=1to1e3:nexti:i=.:return
+ 50012 rem {rvon}player stats
+ 50013 gosub 50331:gosub 50316:if mc>40then gosub 56300:goto 160
+ 50014 sp$="                      ":a$=c2$+"{f5}{rvon}  - EMPIRE II -   PLAYS REMAINING:"+str$(m-x(29))+" {rvof}":sys c(.)
+ 50015 gosub 50331:a$=cr$+"{f5}"+na$+sp$
+ 50016 a$=left$(a$,23)+"ACRES    -"+str$(x(2)):sys c(.)
+ 50017 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4)):sys c(.)
+ 50018 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13)):sys c(.)
+ 50019 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"CANNONS  -"+str$(x(14)):sys c(.)
+ 50020 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10)):sys c(.)
+ 50021 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"SHIPS    -"+str$(x(12)):sys c(.)
+ 50022 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16)):sys c(.)
+ 50023 gosub 50331:a$=cr$+"{f5}{rvon}EMPIRE II  MAINLAND   ISLAND    FLEET"+cr$
+ 50024 sys c(.):sp$="         ":gosub 50331
+ 50025 a$="{f5}NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)
+ 50026 a$=a$+"-"+str$(s(3)):sys c(.)
+ 50027 a$="{f5}SOLDIERS  -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)
+ 50028 a$=a$+"-"+str$(s(6)):sys c(.)
+ 50029 a$="{f5}SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"
+ 50030 a$=a$+str$(s(2)):sys c(.)
+ 50031 a$="{f5}GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"
+ 50032 a$=a$+str$(s(1)):sys c(.)
+ 50033 a$="{f5}HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)
+ 50034 a$=a$+"-"+str$(s(7)):sys c(.)
+ 50035 a$="{f5}EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)
+ 50036 a$=a$+"-"+str$(s(5)):sys c(.)
+ 50037 a$="{f5}SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)
+ 50038 a$=a$+"-"+str$(s(8)):goto 160
+ 50039 rem {rvon}list players
+ 50040 gosub 50331:sp$=".........................."
+ 50041 a$=c2$+"{rvon}{f5}# EMPEROR'S NAME     ACRES   RATING"+cr$:sys c(.)
+ 50042 x=1:a$="{SHIFT-@}empire ii stats":gosub 50010
+ 50043 gosub 50331:gosub 50009:.input#2,u2$(1):if u2$(1)="empty"then 50046
+ 50044 gosub 50048:gosub 50321:a$="{f5}"+left$(mid$(str$(x),2)+" "+u2$(1)+sp$,21)
+ 50045 a$=a$+left$(mid$(str$(k(2)),2)+sp$,9)+mid$(str$(k(4)),2):sys c(.)
+ 50046 gosub 110:if pora$=" "then a$=cr$+"{f5}^p"+cr$:sys c(.):x=m2+1
+ 50047 x=x+1:on-(x<=m2)goto 50043:.close 2:return
+ 50048 .input#2,k(2),k(3),k(4),k(5),k(6),k(7),k(8),k(9)
+ 50049 .input#2,k(10),k(11),k(12),k(13),k(14),k(15)
+ 50050 .input#2,k(16),k(17),k(18),k(19),k(20),k(21),k(22),k(23),k(24)
+ 50051 .input#2,k(25),k(26),k(27),k(28),u2$(2),k(29):return
+ 50052 rem {rvon}select opponent
+ 50053 gosub 50331:on-(fr=1orx(21)<=.)goto 50082
+ 50054 a$=c2$+"{f5}Attack Whom? {f5}[0=None,{f5}N=News,{f5}?=List] {f5}":sys c(1)
+ 50055 gosub 50004:if pthen 50303
+ 50056 if i$="0"then a$=cr$+"{f5}No Attack...":sys c(.):goto 50210
+ 50057 if i$="?"then gosub 50040:goto 50053
+ 50058 if i$="N"then f$="{SHIFT-@}emp.news2":gosub 210:f$="{SHIFT-@}emp.news1":gosub 210:goto 50053
+ 50059 on-(i$="Y")gosub 50013:x=int(val(i$)):if x<1orx>m2then 50053
+ 50060 a$="{SHIFT-@}empire ii stats":gosub 50010:gosub 50009:.input#2,u2$(1)
+ 50061 if u2$(1)="empty"then a$=cr$+"{lred}Invalid Number{CTRL-G}":sys c(.):.close 2:goto 50053
+ 50062 gosub 50048:.close 2
+ 50063 gosub 50321:a$=cr$+"{red}{rvon}Opponent:{rvof}{wht} "+u2$(1):sys c(.):if k(2)<2then k(2)=1
+ 50064 a$="{red}{rvon}Acreage :{rvof}{wht}"+str$(k(2)):sys c(.)
+ 50065 a$="{red}{rvon}Rating  :{rvof}{wht}"+str$(k(4)):sys c(.)
+ 50066 if x=r1then j=x(23):if x(23)>x(21)then j=x(21)
+ 50067 if x=r1then j=j+x(21):goto 50070
+ 50068 j=k(23):if k(23)>k(21)then j=k(21)
+ 50069 j=j+k(21)
+ 50070 a$="{red}{rvon}Forces  :{rvof}{wht}"+str$(j):sys c(.)
+ 50071 a$="{red}{rvon}Rebels  :{rvof}{wht}"+str$(k(27)):sys c(.)
+ 50072 gosub 1005:if pthen gosub 360:goto 50303
+ 50073 sys c(.):if a$<>"Y"then 50053
+ 50074 goto 51210
+ 50075 .input#2,i:if st=.and i<>xthen 50075
+ 50076 .close 2:if i<>xthen 50078
+ 50077 a$=c2$+"{lred}You've Attacked Them Already.....Bud!":sys c(.):goto 50053
+ 50078 if x<>r1then 50082
+ 50079 a$=c2$+"{CTRL-G}{lred}ATTACK YOUR OWN EMPIRE?":sys c(.)
+ 50080 a$=cr$+"{f5}Your Civil War is Very Costly!!":sys c(.):gosub 56000:goto 50210
+ 50082 if fr=1orx(21)<1then a$=cr$+"{f5}Your Armies Are On Strike!":sys c(.):goto 50210
+ 50083 tk=.:if x(21)>k(21)/2orx(2)>k(2)*2orx(4)>99ork(27)<20then 50089
+ 50084 a$=c2$+"{f5}Recruit Rebel Forces? {f5}":sys c(1):gosub 1010:if pthen 50303
+ 50085 sys c(.):if a$="N"then 50089
+ 50086 tk=1:i=int(rnd(1)*k(27))
+ 50087 a$=c2$+"{f5}"+mid$(str$(i),2)+" Rebels Join Your Army":sys c(.):kk=kk+1
+ 50088 x(21)=x(21)+i:k(27)=k(27)-i
+ 50089 x%=x:gosub 50331
+ 50090 ss=int(rnd(1)*x(21))+1:gosub 52000:rem  **** battle command  ****
+ 50091 z=.:k=.:a$=c2$+"{f5}Battle Command  {f5}[?=Menu] {f5}":sys c(1):gosub 50005:if pthen 50303
+ 50092 k=val(a$):if a$="?"then f$="{SHIFT-@}emp.menu4":gosub 210:goto 50091
+ 50093 on-(a$="Y")gosub 50013:onkgoto 50095,50142,50164,50176,53000,50190:goto 50091
+ 50094 rem {rvon}attack
+ 50095 if x(21)<1then a$=cr$+"{lred}{CTRL-G}You Have No Men Left":sys c(.):goto 50190
+ 50096 a=(x(21)+x(2))/(k(21)+k(2)):if a>1orrnd(1)<athen 50100
+ 50097 a=int(rnd(1)*k(21))
+ 50098 a$=cr$+"{f5}{CTRL-G}Suprise Attack!{f5}"+str$(a)+" Enemy Soldiers Die!":sys c(.)
+ 50099 k(21)=k(21)-a:goto 50103
+ 50100 if a<1orrnd(1)+.1>a/10then 50103
+ 50101 a=int(rnd(1)*x(21)):a$=cr$+"{CTRL-G}{f1}AMBUSH!!{f3}{f5}"+str$(a)+" Of Your Men Die!":sys c(.)
+ 50102 x(21)=x(21)-a
+ 50103 gosub 50331:a$=c2$+"{f5}[+] PLUS=ENEMY LOSS  {f5}[-] MINUS=YOUR LOSS":sys c(.)
+ 50104 a$="{f5}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}{SHIFT-*}":sys c(.)
+ 50105 s(1)=x(23):if s(1)>x(21)then s(1)=x(21)
+ 50106 s(2)=k(23):if s(2)>k(21)then s(2)=k(21)
+ 50107 x=x(21):k=k(21):q(1)=1:gosub 50331
+ 50108 if x>300and k>300then q(1)=10:if x>700and k>700then q(1)=20
+ 50109 if x>2e3and k>2e3then q(1)=50:if x>4e3and k>4e3then q(1)=100
+ 50110 if q(1)>1then a$="{f5}{rvon}RATIO="+mid$(str$(q(1)),2)+":1":sys c(.)
+ 50111 a=rnd(1)*50+(x(21)*.05)+(s(1)*.002)
+ 50112 i=rnd(1)*(50+x(5))+(k(21)*.05)+(s(2)*.002):if a>ithen 50116
+ 50113 a$="{wht}-":sys c(1):x(21)=x(21)-q(1)
+ 50114 if x(21)<1then k(21)=int(k(21)+rnd(1)*(k-k(21))):goto 50122
+ 50115 fori=1to50:next:goto 50111
+ 50116 a$="{blu}+":sys c(1):k(21)=k(21)-q(1):if k(21)>.then 50115
+ 50117 a$=c2$+"{CTRL-G}{f5}Your Men Are Victorious!":sys c(.):z=2:if k(21)<.then k(21)=.
+ 50118 j=abs(int(x(21)*.7+200+rnd(1)*300+rnd(1)*200+k(2)*.01)):if j>k(2)then j=k(2)
+ 50119 a$=cr$+"{f5}Your"+str$(x(21))+" Remaining Soldiers Managed"+cr$+"To Capture"
+ 50120 a$=a$+str$(j)+" Acres":sys c(.)
+ 50121 k(21)=int(k(6)*20/2+rnd(1)*(k(6)*20/2)):goto 50126
+ 50122 a$=c2$+"{f5}Your Armies Are Defeated!":sys c(.):z=1:if x(21)<.then x(21)=.
+ 50123 j=abs(k-k(21)):j=abs(int(j*rnd(1)*4+100*(rnd(1)*3)+1))
+ 50124 if j>k(2)then j=k(2)
+ 50125 a$="{f5}But Your Men Managed To Seize"+str$(j)+" Acres":sys c(.)
+ 50126 k(2)=int(k(2)-j):x(2)=int(x(2)+j)
+ 50127 a$=cr$+"{f5}You Now Have"+str$(x(2))+" Acres":sys c(.)
+ 50128 if k(2)>.then 50140
+ 50129 a$=cr$+"{f5}You Have Killed "+u2$(1):sys c(.):i$="empty"+cr$+"0":gosub 50011
+ 50130 x(17)=x(17)+k(17):x(3)=x(3)+k(3)
+ 50131 x(19)=x(19)+k(19):x(12)=x(12)+k(12)
+ 50132 x(15)=x(15)+k(15):x(6)=x(6)+k(6):x(23)=x(23)+k(23)
+ 50133 a$=cr$+"{f5}You Find...{f5}":sys c(.)
+ 50134 a$=cr$+str$(k(3))+" In Gold{f5}"+cr$+str$(k(17))+" Bushels{f5}
+ 50135 a$=a$+cr$+str$(k(6))+" Nobles{f5}"+cr$+str$(k(19))+" Serfs{f5}"
+ 50136 a$=a$+cr$+str$(k(12))+" Ships{f5}
+ 50137 a$=a$+cr$+str$(k(15))+" Exports{f5}"
+ 50138 a$=a$+cr$+"And"+str$(k(23))+" Horses"+c2$+"{f5}...Scattered Across The Land
+ 50139 sys c(.):gosub 50011:goto 50200
+ 50140 a$=cr$+"{f5}"+u2$(1)+" Now Has"+str$(k(2))+" Acres":sys c(.):goto 50190
+ 50141 rem {rvon}attack palace
+ 50142 a$=c2$+"{f5}Raid The Palace...":sys c(.):gosub 50011:kk=kk+1
+ 50143 if x(21)<1then x(21)=.:goto 50095
+ 50144 if k(5)<1then a$=cr$+"{f5}"+u2$(1)+" Has No Palace!":sys c(.):goto 50091
+ 50145 if rnd(1)*x(21)>rnd(1)*k(21)*2then 50151
+ 50146 a$=cr$+"{f5}Your Forces Are Turned Away":sys c(.)
+ 50147 gosub 50159
+ 50148 a$=cr$+"{f5}You Lose"+str$(x)+" Men":sys c(.)
+ 50149 gosub 50161
+ 50150 a$=cr$+"{f5}"+u2$(1)+" Lose's"+str$(x)+" Men":sys c(.):goto 50091
+ 50151 a$=cr$+"{f5}You Destroy 10% Of The Palace":sys c(.):if k(3)<1e3then 50156
+ 50152 x=int((rnd(1)*k(3))-k(3)/8):if x>k(3)orx<1then 50152
+ 50153 a$=cr$+"{f5}You Find $"+str$(x)+" In Gold Hidden There":sys c(.)
+ 50154 k(3)=k(3)-x:x(3)=x(3)+x
+ 50155 k(5)=k(5)-1:gosub 50159
+ 50156 a$=cr$+"{f5}You Lose"+str$(x)+" Men During"+cr$+"The Fight":sys c(.)
+ 50157 gosub 50161
+ 50158 a$=cr$+"{f5}"+u2$(1)+" Lose's"+str$(x)+" Men":sys c(.):goto 50091
+ 50159 x=int(rnd(1)*(x(21)*.3)+1):x(21)=x(21)-x:if x(21)<.then x(21)=.
+ 50160 return
+ 50161 x=.:if k(21)>50then x=int(rnd(1)*(k(21)*.02)):k(21)=k(21)-x:if k(21)<.then k(21)=.
+ 50162 return
+ 50163 rem {rvon}attack noble
+ 50164 kk=kk+1:a$=cr$+"{f5}Ambush A Noble":sys c(.):if x(21)<1then 50095
+ 50165 gosub 50011:if rnd(1)*x(21)<rnd(1)*k(21)*1.7then 50173
+ 50166 if k(6)<2ork(21)<20orx(6)<1then a$=c2$+"{f5}None Found!":sys c(.):goto 50091
+ 50167 if x(6)<int(x(2)/1e3)orrnd(1)>.7then 50171
+ 50168 a$=cr$+"{f5}Your Men Refuse":sys c(.)
+ 50169 gosub 50159
+ 50170 a$=cr$+str$(x)+" Are Shot For Treason":sys c(.):goto 50091
+ 50171 a$=cr$+"{f5}You Punch Him Out And Drag His"+cr$+"Twitching Carcass Off!{CTRL-G}"
+ 50172 sys c(.):x(6)=x(6)+1:k(6)=k(6)-1:gosub 50159:goto 50156
+ 50173 a$=cr$+"{f5}His Guards Foil Your Plan":sys c(.):gosub 50159
+ 50174 goto 50156
+ 50175 rem {rvon}add rebels
+ 50176 a$=cr$+"{f5}Supply Rebel Troops":sys c(.):gosub 50011:kk=kk+1
+ 50177 if tkthen a$=cr$+"{f5}The Rebels Have Left":sys c(.):goto 50091
+ 50178 j=int(rnd(1)*k(4)+k(4)):tk=1
+ 50179 a$=cr$+"{f5}You Have"+str$(x(21))+" Soldiers":sys c(.):if x(21)<1then 50095
+ 50180 a$=u2$(1)+" Has"+str$(k(27))+" Rebel Forces":sys c(.)
+ 50181 a$="The Rebels Will Pay $"+mid$(str$(j),2)+" Per Man":sys c(.)
+ 50182 a$=cr$+"{f5}Sell How Many? > ":sys c(1)
+ 50183 gosub 50004:if pthen 50303
+ 50184 x=val(i$):if i$=""orx<1then 50091
+ 50185 if x>ssthen gosub 51200:goto 50179
+ 50186 x(21)=int(x(21)-x):k(27)=int(k(27)+x):x(3)=int(x(3)+(j*x))
+ 50187 a$=cr$+"{f5}You Sell"+str$(x)+" Of Your Men":sys c(.)
+ 50188 a$=cr$+u2$(1)+"'s Rebel Forces ="+str$(k(27)):sys c(.):goto 50091
+ 50189 rem {rvon}save opponents stats
+ 50190 i$=u2$(1)+cr$+str$(k(2))+cr$+str$(k(3))+cr$
+ 50191 i$=i$+str$(k(4))+cr$+str$(k(5))+cr$+str$(k(6))+cr$
+ 50192 i$=i$+str$(k(7))+cr$+str$(k(8))+cr$+str$(k(9))+cr$
+ 50193 i$=i$+str$(k(10))+cr$+str$(k(11))+cr$+str$(k(12))+cr$
+ 50194 i$=i$+str$(k(13))+cr$+str$(k(14))+cr$+str$(k(15))+cr$
+ 50195 i$=i$+str$(k(16))+cr$+str$(k(17))+cr$+str$(k(18))+cr$
+ 50196 i$=i$+str$(k(19))+cr$+str$(k(20))+cr$+str$(k(21))+cr$
+ 50197 i$=i$+str$(k(22))+cr$+str$(k(23))+cr$+str$(k(24))+cr$+str$(k(25))
+ 50198 i$=i$+cr$+str$(k(26))+cr$+str$(k(27))
+ 50199 i$=i$+cr$+str$(k(28))+cr$+u2$(2)+cr$+str$(k(29))
+ 50200 a$="{SHIFT-@}empire ii stats":gosub 50010:x=x%:gosub 50009:.print#2,i$:.close 2
+ 50201 .open 8,dv,8,dr$+"{SHIFT-@}emp.atk,a":.print#8,x%:.close 8
+ 50202 if z=3goto 50210:rem  *** news ***
+ 50203 gosub 50331:if z<1then 50210
+ 50204 a$=c2$+"{f1}Printing The News...{f3}":sys c(.)
+ 50205 x$=" Defeated ":if z=1then x$=" Lost To "
+ 50206 if k(2)<1then x$=" Killed "
+ 50207 a$="{f5}"+na$+x$+u2$(1)
+ 50208 f$="{SHIFT-@}emp.news1,a":gosub 203:.print#8,a$:.close 8
+ 50209 rem {rvon}rand om routines
+ 50210 gosub 50400:forx=.to10:s(x)=.:next:gosub 50331
+ 50211 x=usr(16)+1:if x>8goto 50238
+ 50212 onxgoto 50213,50220,50224,50226,50228,50230,50234,50236
+ 50213 x=int(rnd(1)*(x(9)/2)):k=int(rnd(1)*(x(10)/2)):z=int(rnd(1)*(x(11)/2))
+ 50214 if x=.ork=.orz=.then 50211
+ 50215 a$=cr$+"{f5}{CTRL-O}Worker Revolt!{$8f}{CTRL-G}{f5} Loses Reported:":sys c(.)
+ 50216 a$=cr$+"Foundries:"+str$(x):sys c(.):x(9)=x(9)-x
+ 50217 a$="Shipyards:"+str$(k):sys c(.):x(10)=x(10)-k
+ 50218 a$="Stables  :"+str$(z):sys c(.):x(11)=x(11)-z
+ 50219 goto 50238
+ 50220 if x(6)<20then 50211
+ 50221 x=int(rnd(1)*x(21)/3)+1:x(21)=x(21)-x:x(27)=x(27)+x
+ 50222 a$=cr$+"{f5}"+mid$(str$(x),2)+" Of Your Soldiers Join":sys c(.)
+ 50223 a$=cr$+"The Rebel Forces!":sys c(.):goto 50238
+ 50224 x=int(rnd(1)*(x(19)*.2)):a$=c2$+"{f5}Plague Strikes!"+str$(x)+" Serfs Die
+ 50225 sys c(.):x(19)=x(19)-x:goto 50238
+ 50226 x=int(rnd(1)*(x(2)/6)):a$=c2$+"{CTRL-O}{f1}EARTHQUAKE!{$8f}{CTRL-G}{f3}"+str$(x)+" Acres":sys c(.)
+ 50227 a$="Go Crashing Into The Sea":sys c(.):x(2)=int(x(2)-x):goto 50239
+ 50228 x=int(rnd(1)*(x(3)*.6)):a$=c2$+"{f5}Saddam Steal"+str$(x)+" In Gold":sys c(.)
+ 50229 x(3)=int(x(3)-x):goto 50238
+ 50230 x=int(rnd(1)*(x(2)/6))
+ 50231 a$=cr$+"{f5}King Lilbit Grants You"+str$(x)+" Acres":sys c(.)
+ 50232 a$=cr$+"There Are"+str$(int(x/3))+" Serfs Living On It":sys c(.)
+ 50233 x(2)=int(x(2)+x):x(19)=x(19)+int(x/3):goto 50238
+ 50234 a$=cr$+"{f5}King Xevious Allows You Another Turn!":sys c(.)
+ 50235 x(29)=x(29)-1:goto 50238
+ 50236 if x(29)<mthen a$=cr$+"{CTRL-G}{f5}King Lathen  Revokes 1 Play!":sys c(.):x(29)=x(29)+1
+ 50237 rem {rvon}exit routines
+ 50238 if x(2)>5e4then 50226
+ 50239 on-(x(2)>1)goto 50242:a$=cr$+"{f5}{CTRL-G}You Have No Land !":sys c(.)
+ 50240 a$="{f5}King Whiz Executes You!":sys c(.):gosub 8004:i$="empty"+cr$+"0"
+ 50241 gosub 50315:goto 50301
+ 50242 if x(19)<(x(2)*.23)then a$=cr$+"{CTRL-G}{lred}Land :Serf Ratio Getting High!":sys c(.)
+ 50243 if x(19)>=(x(2)*.15)then 50249
+ 50244 a$=cr$+"{f5}You Haven't Enough Serfs To"+cr$+"{f5}Support Your Kingdom!":sys c(.)
+ 50245 a$=cr$+"{f5}You're Beheaded By King Whiz"+cr$+"Your Empire Is Lost":sys c(.)
+ 50246 i$="empty"+cr$+"0":gosub 50315:fori=1to2000:next
+ 50247 f$="{SHIFT-@}emp.news1,a":gosub 203
+ 50248 a$="{f5}King Whiz Executed "+na$+"!":.print#8,a$:gosub 505:goto 50301
+ 50249 z(1)=int((rnd(1)*75)+25)*x(7):z(2)=int((rnd(1)*100)+50)*x(8)
+ 50250 z(3)=int(((rnd(1)*175)+125)*x(9)):z(4)=int(((rnd(1)*200)+150)*x(10))
+ 50251 z(5)=int(((rnd(1)*500)+200)*x(11)):z(6)=int(((rnd(1)*600)+200)*x(13))
+ 50252 a$=c2$+"{f5}{rvon}$ Treasurer's Report ${rvof}":sys c(.)
+ 50253 x(3)=int(x(3)+z(1)+z(2)+z(3)+z(4)+z(5)+z(6))
+ 50254 a$=cr$+"{f5}MARKETS  :"+str$(z(1)):sys c(.)
+ 50255 a$="{f5}MILLS    :"+str$(z(2)):sys c(.)
+ 50256 a$="{f5}FOUNDRIES:"+str$(z(3)):sys c(.)
+ 50257 a$="{f5}SHIPYARDS:"+str$(z(4)):sys c(.)
+ 50258 a$="{f5}STABLES  :"+str$(z(5)):sys c(.)
+ 50259 a$="{f5}ISLAND   :"+str$(z(6)):sys c(.)
+ 50260 a$=cr$+"{f5}<PRESS RETURN>":sys c(1)
+ 50261 gosub 110:if pthen 50303
+ 50262 if a$<>cr$then 50261
+ 50263 gosub 50013
+ 50264 x=usr(19)+6
+ 50265 gosub 50331
+ 50266 a$=cr$+"{f5}Buy Soldiers To Protect The Throne?":sys c(.)
+ 50267 a$="{f5}Soldiers Cost"+str$(x)+" Dollars Each":sys c(.)
+ 50268 if (x(6)*20)-x(21)<(x(9)*40)-x(21)then k=(x(6)*20)-x(21):goto 50270
+ 50269 if (x(6)*20)-x(21)>=(x(9)*40)-x(21)then k=(x(9)*40)-x(21)
+ 50270 if k<.then k=.
+ 50271 a$="{f5}Buy How Many? [Max="+mid$(str$(k),2)+"] {f5}>":sys c(1)
+ 50272 gosub 995:gosub 310:gosub 610:if pthen 50303
+ 50273 if i<.ori>kthen 50266
+ 50274 j=int(i):on-(j=.)-(j*x>x(3))*2goto 50278,50265
+ 50275 if x(21)+j>x(6)*20then a$=cr$+su$+str$(x(6))+" Nobles":sys c(.):goto 50265
+ 50276 if x(21)+j>x(9)*40then a$=cr$+su$+str$(x(9))+" Foundries":sys c(.):goto 50265
+ 50277 x(21)=int(x(21)+j):x(3)=int(x(3)-(j*x))
+ 50278 a$=cr$+"{f1}Updating...{f3}":sys c(.):gosub 50306
+ 50279 rem {rvon}check for winner
+ 50280 gosub 50316:if x(4)>999then 50284
+ 50281 if x(2)<3e4orx(19)<9e3orx(6)<100orx(5)<10then 50295
+ 50282 if x(7)<200orx(8)<200orx(10)<50then 50295
+ 50283 if x(13)<50orx(3)<25e4orx(20)<5e3then 50295
+ 50284 a$="{clr}"+c2$+"{CTRL-G}{f1}{CTRL-O}WE HAVE A NEW KING!{CTRL-G}{f3}":sys c(.)
+ 50285 .close 8:a$="{yel}"+na$+"-empire winner{grn}":gosub 8004
+ 50286 a$=cr$+"{f5}Informing The Other Players...":sys c(.)
+ 50287 i$="empty"+cr$+"0":gosub 50315
+ 50288 .open 8,dv,8,dr$+"{SHIFT-@}emp.news1,a":gosub 510:if erthen gosub 505
+ 50289 .print#8,"{rvon}{f5}"+na$+" BECOMES KING!{CTRL-G}{rvof}":.close 8
+ 50290 x=int(500/1):pu=pu+x
+ 50291 a$=cr$+"{f5}Receive"+str$(x*1)+" Credits":sys c(.):a$=""
+ 50292 f$="{SHIFT-@}emp.fame":.print#15,"s"+dr$+f$
+ 50293 f$=f$+",s,w":gosub 203:.print#8,na$+cr$+da$+cr$+str$(x)+cr$+"0":gosub 505
+ 50294 goto 50297
+ 50295 if tm-ti/3600<1orx(29)>=mthen gosub 50305:goto 50297
+ 50296 x=1:k=1:poke 116,1:a$="mdl.emp.delx1":goto 9050
+ 50297 a$=c2$+"{f5}Any Last Words, "+na$+"?"+c2$+"{f5}<1 Line Max - RETURN To Exit>
+ 50298 sys c(.):gosub 305:gosub 390:if pori$=""then 50301
+ 50299 .print#15,"s"+dr$+"{SHIFT-@}emp.msg":f$="{SHIFT-@}emp.msg,s,w":gosub 203
+ 50300 .print#8,na$+cr$+i$:.close 8
+ 50301 a$=cr$+"Check Back Soon!":goto 160
+ 50302 rem {rvon}quit
+ 50303 a$="Quit":gosub 8004:a$=c2$+"{f5}Quiting...":sys c(.)
+ 50304 gosub 50306:a$=c2$+"{f5}Plays Remaining:"+str$(m-x(29)):sys c(.)
+ 50305 gosub 50316:a$=str$(x(2))+" Acres"+str$(x(4))+" Points":goto 8004
+ 50306 i$=na$+cr$+str$(x(2))+cr$+str$(x(3))+cr$+str$(x(4))+cr$+str$(x(5))
+ 50307 i$=i$+cr$+str$(x(6))+cr$+str$(x(7))+cr$+str$(x(8))
+ 50308 i$=i$+cr$+str$(x(9))+cr$+str$(x(10))
+ 50309 i$=i$+cr$+str$(x(11))+cr$+str$(x(12))+cr$+str$(x(13))
+ 50310 i$=i$+cr$+str$(x(14))+cr$+str$(x(15))+cr$+str$(x(16))
+ 50311 i$=i$+cr$+str$(x(17))+cr$+str$(x(18))+cr$+str$(x(19))+cr$+str$(x(20))
+ 50312 i$=i$+cr$+str$(x(21))+cr$+str$(x(22))+cr$+str$(x(23))
+ 50313 i$=i$+cr$+str$(x(24))+cr$+str$(x(25))+cr$+str$(x(26))
+ 50314 i$=i$+cr$+str$(x(27))+cr$+str$(x(28))+cr$+da$+cr$+str$(x(29))
+ 50315 a$="{SHIFT-@}empire ii stats":gosub 50010:x=r1:gosub 50009:.print#2,i$:.close 2:return
+ 50316 rem {rvon}calc ratings
+ 50317 x(4)=int((x(2)/1e3)+(x(3)/1e5)+x(5)+(x(6)/10))
+ 50318 x(4)=x(4)+int((x(7)/10)+(x(8)/10)+(x(10)/10)+(x(11)/10))
+ 50319 x(4)=x(4)+int((x(13)/10)+(x(19)/1e3)+(x(20)/1e3))
+ 50320 return
+ 50321 k(4)=int((k(2)/1e3)+(k(3)/1e5)+k(5)+(k(6)/10))
+ 50322 k(4)=k(4)+int((k(7)/10)+(k(8)/10)+(k(10)/10)+(k(11)/10))
+ 50323 k(4)=k(4)+int((k(13)/10)+(k(19)/1e3)+(k(20)/1e3))
+ 50324 return
+ 50325 rem  if peek(vj)then gosub 50333:a$="5m":sys c(1)
+ 50326 return
+ 50327 rem  if peek(vj)then a$="0m":sys c(1)
+ 50328 return
+ 50329 rem  if peek(vj)then gosub 50333:a$="7m":sys c(1)
+ 50330 return
+ 50331 rem  if peek(vj)then 50333
+ 50332 return
+ 50333 rem  vc=vc+1:if vc>7then vc=1
+ 50334 rem  x$="1;"
+ 50335 return:rem  a$=mid$(str$(vc+30),2)+"m":a$="0;"+x$+a$:sys c(1):return
+ 50399 rem  **** quests ****
+ 50400 auto off:f$="{SHIFT-@}emp.menu5":gosub 210
+ 50401 auto on:a$=c2$+"{lblu}{rvon}QUEST{rvof}{wht} 1-9,{f5} or 0=None":sys c(1):gosub 50005:on-(a$="?")goto 50400
+ 50402 on-(a$<>"Y")goto 50416
+ 50403 on-(a$="Y")gosub 50013:goto 50401
+ 50416 b=int(val(a$)):if b>9then 50400
+ 50417 if b=.then return
+ 50418 if b=9then 50580
+ 50419 if (int((rnd(1)*20))+1)>5then a$=c2$+"{orng}Your Quest Fails{wht}!":sys c(.):return
+ 50420 if b=1then 50500
+ 50430 if b=2then 50510
+ 50440 if b=3then 50520
+ 50450 if b=4then 50530
+ 50460 if b=5then 50540
+ 50470 if b=6then 50550
+ 50480 if b=7then 50560
+ 50490 if b=8then 50570
+ 50500 f$="{SHIFT-@}win1":gosub 210:x(3)=x(3)+30000:x$=" Wins Quest 1":gosub 50900:return
+ 50510 f$="{SHIFT-@}win2":gosub 210:x(23)=x(23)+30:x$=" Wins Quest 2":gosub 50900:return
+ 50520 f$="{SHIFT-@}win3":gosub 210:x(16)=x(16)+15:x$=" Wins Quest 3":gosub 50900:return
+ 50530 f$="{SHIFT-@}win4":gosub 210:x(17)=x(17)+30000:x$=" Wins Quest 4":gosub 50900:return
+ 50540 f$="{SHIFT-@}win5":gosub 210:x(2)=x(2)+4000:x$=" Wins Quest 5":gosub 50900:return
+ 50550 f$="{SHIFT-@}win6":gosub 210:x(25)=x(25)+20:x$=" Wins Quest 6":gosub 50900:return
+ 50560 f$="{SHIFT-@}win7":gosub 210:x(6)=x(6)+4:x$=" Wins Quest 7":gosub 50900:return
+ 50570 f$="{SHIFT-@}win8":gosub 210:x(14)=x(14)+6:x$=" Wins Quest 8":gosub 50900:return
+ 50580 f$="{SHIFT-@}zircon":gosub 210
+ 50581 a$=cr$+"{yel}<PRESS{$a0}RETURN>":sys c(1)
+ 50582 gosub 110
+ 50584 if a$<>cr$then 50582:goto 50585
+ 50585 x=usr(40)+1:if x>=19goto 50780
+ 50587 a$=cr$+"   {pur}Zircon says he must consult the":sys c(.)
+ 50588 a$="{pur}Bones{wht}...":sys c(.)
+ 50589 gosub 50950:onxgoto 50600,50610,50620,50630,50640
+ 50600 a$=cr$+"{lblu}Zircon gives you 8000 Acres":sys c(1):x(2)=x(2)+8000:goto 50640
+ 50610 a$=cr$+"{lblu}Zircon gives you 30000 Gold":sys c(1):x(3)=x(3)+30000:goto 50640
+ 50620 a$=cr$+"{lblu}Zircon gives you 5 Nobles":sys c(1):x(6)=x(6)+5:goto 50640
+ 50630 a$=cr$+"{lblu}Zircon gives you 40000 bushels":sys c(1)
+ 50631 x(17)=x(17)+40000:goto 50640
+ 50640 x=.:gosub 50950:onxgoto 50650,50660,50670,50680,50690
+ 50650 a$=cr$+"{cyn}Zircon gives you 1000 Serfs":sys c(1):x(19)=x(19)+1000:goto 50690
+ 50660 a$=cr$+"{cyn}Zircon gives you 4 Shipyards":sys c(1):x(10)=x(10)+4:goto 50690
+ 50670 a$=cr$+"{cyn}Zircon gives you 2 Forts,"+cr$+"and  {wht}8 {cyn}Cannon{wht}!!":sys c(1)
+ 50671 x(13)=x(13)+2:x(14)=x(14)+8:goto 50690
+ 50680 a$=cr$+"{cyn}Zircon gives you 50 Horses":sys c(1):x(23)=x(23)+50:goto 50690
+ 50690 x=.:gosub 50950:onxgoto 50700,50710,50720,50730,50735
+ 50700 a$=cr$+"{grn}Zircon gives you 4 Foundries":sys c(1):x(9)=x(9)+4:goto 50740
+ 50710 a$=cr$+"{grn}Zircon gives you 10 Markets":sys c(1):x(7)=x(7)+10:goto 50740
+ 50720 a$=cr$+"{grn}Zircon gives you 10 Mills":sys c(1):x(8)=x(8)+10:goto 50740
+ 50730 a$=cr$+"{grn}Zircon gives you 10 tons of spices":sys c(1):x(25)=x(25)+10
+ 50731 goto 50740
+ 50735 a$=cr$+"{grn}Zircon gives you 4 Ships{wht}!":sys c(1):x(12)=x(12)+4:x=.
+ 50740 x=usr(20)+1:if x>3goto 50760
+ 50741 a$=cr$+"{f1}Zircon gives you 2 more Turns{f3}{wht}!":sys c(1):x(29)=x(29)-2:x=.
+ 50760 x=usr(20)+1:if x>3goto 50765
+ 50761 a$=cr$+"{orng}Zircon gives you 10 tons of exports{wht}!":sys c(.):x(15)=x(15)+10
+ 50765 x=usr(50)+1:if x>3goto 50770
+ 50766 a$=cr$+"{gry1}Zircon gives you a {f1}DRAGON{f3}{wht}!!":sys c(.):x(28)=x(28)+1:x=.
+ 50770 x$=" Wins Zircon's Help!":gosub 50900:return
+ 50780 x=usr(30)+1:if x>4goto 50805
+ 50782 a$=cr$+"{pur}Your brash and  superior attitude":sys c(1)
+ 50785 a$=cr$+"{pur}has enraged {yel}Zircon!!{pur} He demand s":sys c(1)
+ 50790 a$=cr$+"{pur}restitution for your insults{wht}!!!":sys c(1)
+ 50795 f$="{SHIFT-@}rage":gosub 210
+ 50796 x(2)=x(2)-2000:if x(2)<2001then x(2)=100
+ 50797 x(3)=x(3)-9000:if x(3)<9001then x(3)=1000
+ 50798 x(6)=x(6)-4:if x(6)<5then x(6)=1
+ 50799 x(19)=x(19)-600:if x(19)<601then x(19)=100
+ 50800 x$=" Enrages Zircon!!":gosub 50900:return
+ 50805 a$=c2$+"{yel}Zircon{pur} cant see you now{wht}!":sys c(.):return
+ 50900 auto off:a$=c2$+"{f1}Printing The News...{f3}":sys c(.)
+ 50904 a$="{f5}"+na$+x$
+ 50905 f$="{SHIFT-@}emp.news1,a":gosub 203:.print#8,a$:.close 8:return
+ 50950 x=usr(5)+1:return
+ 51200 a$=cr$+"The Rebels Can Only Pay For"+str$(ss):sys c(1)
+ 51201 a$=cr$+"Of Your Soldiers!":sys c(.):return
+ 51210 if x(4)>75and k(4)<76then goto 51220
+ 51212 a$="{SHIFT-@}emp.atk":gosub 50010:goto 50075
+ 51220 x=usr(10)+1
+ 51225 onxgoto 51230,51235,51240,51245,51250,51255,51260,51265,51270,51275
+ 51230 a$=cr$+"He's Too Weak! Attack Someone Else!":sys c(.):goto 50053
+ 51235 a$=cr$+"Pick On Someone Your Own Strength!":sys c(.):goto 50053
+ 51240 a$=cr$+"Big Bulley! Pick On Someone Else!":sys c(.):goto 50053
+ 51245 a$=cr$+"Just A Bunch Of Hungry Serfs There":sys c(1)
+ 51247 a$=cr$+"Choose Someone Stronger!":sys c(.):goto 50053
+ 51250 a$=cr$+u2$(1)+" Is Too Weak!!":sys c(.):goto 50053
+ 51255 a$=cr$+"Give Him A Chance "+na$+cr$+"He's Too Weak!":sys c(.):goto 50053
+ 51260 a$=cr$+"Whimp!  Fight Someone Who Can Defend "+cr$+"Himself!!":sys c(.)
+ 51263 goto 50053
+ 51265 a$=cr$+"He's Got It Tough Enough As It Is!":sys c(1)
+ 51268 a$=cr$+"Fight Someone Stronger!":sys c(.):goto 50053
+ 51270 a$=cr$+"A Little Chivalry, Please!"+cr$+"Fight Someone Stronger!":sys c(.)
+ 51273 goto 50053
+ 51275 a$=cr$+"He's Just An Upstart!  Fight Someone "+cr$+"Stronger":sys c(.)
+ 51278 goto 50053
+ 51999 rem  **** unleash dragon ****
+ 52000 if x(28)=.then return
+ 52005 a$=c2$+"{gry3}DRAGONS:..... {orng}"+str$(x(28)):sys c(1)
+ 52010 a$=cr$+"{gry1}Unleash Dragon{gry3}?  (Y/N)":sys c(1):gosub 1010
+ 52015 if a$<>"Y"and a$<>"N"goto 52010
+ 52020 if a$<>"Y"then return
+ 52025 kk=kk+1:a$=c2$+"{red}Your Dragon Devastates{gry2}"+cr$+u2$(1)+"'s {red}Empire{wht}!!":sys c(.):gosub 53020
+ 52030 n=(k(17)/10):gosub 53500:k(17)=k(17)-x
+ 52035 if x=.goto 52045
+ 52040 a$=cr$+"{rght}{rght}{rght}{f5} Bushels Of Grain Baked..."+str$(x):sys c(1)
+ 52045 n=(k(19)/10):gosub 53500:k(19)=k(19)-x
+ 52050 if x=.goto 52060
+ 52055 a$=cr$+"{rght}{rght}{rght}{f5} Serfs Barbiqued.........."+str$(x):sys c(1)
+ 52060 n=(k(23)/10):gosub 53500:k(23)=k(23)-x
+ 52065 if x=.goto 52075
+ 52070 a$=cr$+"{rght}{rght}{rght}{f5} Horses Roasted..........."+str$(x):sys c(1)
+ 52075 n=(k(2)/10):gosub 53500:k(2)=k(2)-x
+ 52080 if x=.goto 52090
+ 52085 a$=cr$+"{rght}{rght}{rght}{f5} Acres Incinerated........"+str$(x):sys c(1)
+ 52090 x=usr(40)+1
+ 52091 if x<21then x(28)=x(28)-1:a$=c2$+"{rght}{rght}{rght}{f5} Your Dragon was{f5} KILLED!":sys c(.)
+ 52150 gosub 55000:x$=" Unleashes DRAGON!!":gosub 50900:return
+ 53000 t=.:goto 55100
+ 53001 a$=c2$+"{f5}Use Sneek Attack? {f5}(Y/N)":sys c(1):gosub 1010
+ 53005 if a$<>"Y"goto 50091
+ 53010 if x(29)=mthen a$=c2$+"Not Enough Turns Left!":sys c(.):goto 50091
+ 53015 x(29)=x(29)+1
+ 53018 a$=c2$+"{gry2}Your Raiders Report:":sys c(1)
+ 53020 n=(k(6)/10):if kk>.then n=(k(6)/8)
+ 53022 gosub 53500:k(6)=k(6)-x:gosub 54000
+ 53025 n=(k(21)/10):if kk>.then n=(k(21)/4)
+ 53027 gosub 53500:k(21)=k(21)-x:gosub 54010
+ 53030 n=(k(7)/10):gosub 53500:k(7)=k(7)-x:gosub 54020
+ 53035 n=(k(8)/10):gosub 53500:k(8)=k(8)-x:gosub 54030
+ 53040 n=(k(9)/10):gosub 53500:k(9)=k(9)-x:gosub 54040
+ 53045 n=(k(10)/10):gosub 53500:k(10)=k(10)-x:gosub 54050
+ 53050 n=(k(12)/10):gosub 53500:k(12)=k(12)-x:gosub 54060
+ 53055 n=(k(11)/10):gosub 53500:k(11)=k(11)-x:gosub 54070:if kk>.then return
+ 53060 n=(k(17)/10):gosub 53500:k(17)=k(17)-x:x(17)=x(17)+x:gosub 54080
+ 53065 n=(k(19)/10):gosub 53500:k(19)=k(19)-x:x(19)=x(19)+x:gosub 54090
+ 53070 n=(k(23)/10):gosub 53500:k(23)=k(23)-x:x(23)=x(23)+x:gosub 54100
+ 53073 a$=c2$+"{gry2}Our Losses Were:":sys c(1)
+ 53075 n=(x(6)/20):gosub 53500:x(6)=x(6)-x:gosub 54110
+ 53080 n=(x(21)/20):gosub 53500:x(21)=x(21)-x:gosub 54120
+ 53085 n=(x(23)/20):gosub 53500:x(23)=x(23)-x:gosub 54130
+ 53088 if t=.then a$="{f5} None!":sys c(.)
+ 53090 gosub 55000:z=3:goto 50190
+ 53500 x=int(rnd(1)*n)-1:if x=<.then x=.
+ 53505 return
+ 54000 if x=.then return
+ 54005 a$=cr$+"{rght}{rght}{rght}{f5} Enemy Nobles Killed......"+str$(x):sys c(1):return
+ 54010 if x=.then return
+ 54015 a$=cr$+"{rght}{rght}{rght}{f5} Enemy Soldiers Killed...."+str$(x):sys c(1):return
+ 54020 if x=.then return
+ 54025 a$=cr$+"{rght}{rght}{rght}{f5} Markets Burned..........."+str$(x):sys c(1):return
+ 54030 if x=.then return
+ 54035 a$=cr$+"{rght}{rght}{rght}{f5} Mills Burned............."+str$(x):sys c(1):return
+ 54040 if x=.then return
+ 54045 a$=cr$+"{rght}{rght}{rght}{f5} Foundries Burned........."+str$(x):sys c(1):return
+ 54050 if x=.then return
+ 54055 a$=cr$+"{rght}{rght}{rght}{f5} Shipyards Burned........."+str$(x):sys c(1):return
+ 54060 if x=.then return
+ 54065 a$=cr$+"{rght}{rght}{rght}{f5} Ships Burned............."+str$(x):sys c(1):return
+ 54070 if x=.then return
+ 54075 a$=cr$+"{rght}{rght}{rght}{f5} Stables Burned..........."+str$(x):sys c(1):return
+ 54080 if x=.then return
+ 54085 a$=cr$+"{rght}{rght}{rght}{f5} Bushels Of Grain Stolen.."+str$(x):sys c(1):return
+ 54090 if x=.then return
+ 54095 a$=cr$+"{rght}{rght}{rght}{f5} Serfs Kidnapped.........."+str$(x):sys c(1):return
+ 54100 if x=.then return
+ 54105 a$=cr$+"{rght}{rght}{rght}{f5} Horses Stolen............"+str$(x):sys c(1):return
+ 54110 if x=.then return
+ 54115 a$=cr$+"{rght}{rght}{rght}{f5} Nobles Died.............."+str$(x):sys c(1):t=t+1:return
+ 54120 if x=.then return
+ 54125 a$=cr$+"{rght}{rght}{rght}{f5} Soldiers Died............"+str$(x):sys c(1):t=t+1:return
+ 54130 if x=.then return
+ 54135 a$=cr$+"{rght}{rght}{rght}{f5} Horses Died.............."+str$(x):sys c(1):t=t+1:return
+ 55000 a$=c2$+"{f5}Continue?{f5} (Y/N) ":sys c(26)
+ 55005 gosub 3640
+ 55010 gosub 110:if a$<>"Y"and p=.then 55010
+ 55015 return
+ 55100 if kk=.goto 53001
+ 55110 if kk=>1then a$=c2$+"{f5}Your Enemy Is Allerted!":sys c(1)
+ 55120 a$=cr$+"No Sneek Attack Possible, Now!":sys c(.):goto 50091
+ 56000 if x(29)=mthen a$=cr$+"{f1}You Got Lucky!!!{f3}":sys c(.):goto 56090
+ 56002 if x(4)<30then a$="{f1}You Got Lucky!!{f3}":sys c(.):goto 56090
+ 56005 x(29)=x(29)+1
+ 56010 zz=x(2):gosub 56200:x(2)=zz:zz=x(3):gosub 56200:x(3)=zz:zz=x(6):gosub 56200
+ 56020 x(6)=zz:zz=x(7):gosub 56200:x(7)=zz:zz=x(8):gosub 56200:x(8)=zz:zz=x(9)
+ 56030 gosub 56200:x(9)=zz:zz=x(10):gosub 56200:x(10)=zz:zz=x(11):gosub 56200
+ 56040 x(11)=zz:zz=x(12):gosub 56200:x(12)=zz:zz=x(13):gosub 56200:x(13)=zz
+ 56050 zz=x(14):gosub 56200:x(14)=zz:zz=x(15):gosub 56200:x(15)=zz:zz=x(16)
+ 56060 gosub 56200:x(16)=zz:zz=x(17):gosub 56200:x(17)=zz:zz=x(21):gosub 56200
+ 56070 x(21)=zz:zz=x(23):gosub 56200:x(23)=zz
+ 56080 x$=" Has A Civil War!!!":gosub 50900:return
+ 56090 x$=" Averted A Civil War!":gosub 50900:return
+ 56200 x=int((rnd(1)*zz)/2):zz=zz-x:return
+ 56300 sp$="                      ":a$="{clr}"+"{f5}{rvon}  - EMPIRE II -       PLAYS REMAINING:"+str$(m-x(29))+"          MAINLAND    COLONY     FLEET{rvof}":sys c(.)
+ 56301 a$=cr$+left$("{f5}"+na$+sp$,22)+"ACRES    -"+str$(x(2))
+ 56302 a$=left$(a$+sp$,40)+"    NOBLES    -"+left$(str$(x(6))+sp$,9)+"-"+left$(" 0"+sp$,9)+"-"+str$(s(3)):sys c(.):a$=""
+ 56303 a$="{f5}GOLD     -"+left$(str$(x(3))+sp$,11)+"RATING   -"+str$(x(4))
+ 56304 a$=left$(a$+sp$,40)+"   SOILDIERS -"+left$(str$(x(21))+sp$,9)+"-"+left$(str$(x(22))+sp$,9)+"-"+str$(s(6)):sys c(.):a$=""
+ 56305 a$="{f5}PALACE   -"+left$(str$(10*x(5))+"%"+sp$,11)+"FORTS    -"+str$(x(13))
+ 56306 a$=left$(a$+sp$,40)+"   SERFS     -"+left$(str$(x(19))+sp$,9)+"-"+left$(str$(x(20))+sp$,9)+"-"+str$(s(2)):sys c(.):a$=""
+ 56307 a$="{f5}MARKETS  -"+left$(str$(x(7))+sp$,11)+"CANNONS  -"+str$(x(14))
+ 56308 a$=left$(a$+sp$,40)+"   GRAIN     -"+left$(str$(x(17))+sp$,9)+"-"+left$(str$(x(18))+sp$,9)+"-"+str$(s(1)):sys c(.):a$=""
+ 56309 a$="{f5}MILLS    -"+left$(str$(x(8))+sp$,11)+"SHIPYARDS-"+str$(x(10))
+ 56310 a$=left$(a$+sp$,40)+"   HORSES    -"+left$(str$(x(23))+sp$,9)+"-"+left$(str$(x(24))+sp$,9)+"-"+str$(s(7)):sys c(.):a$=""
+ 56311 a$="{f5}FOUNDRIES-"+left$(str$(x(9))+sp$,11)+"SHIPS    -"+str$(x(12))
+ 56312 a$=left$(a$+sp$,40)+"   EXPORTS   -"+left$(str$(x(15))+sp$,9)+"-"+left$(str$(x(26))+sp$,9)+"-"+str$(s(5)):sys c(.):a$=""
+ 56313 a$="{f5}STABLES  -"+left$(str$(x(11))+sp$,11)+"TIMBER   -"+str$(x(16))
+ 56314 a$=left$(a$+sp$,40)+"   SPICES    -"+left$(" 0"+sp$,9)+"-"+left$(str$(x(25))+sp$,9)+"-"+str$(s(8)):sys c(.):a$=""
+ 56315 return
+ 63999 scratch"-mdl.emp.delx3":rename"mdl.emp.delx3"to"-mdl.emp.delx3":dsave"mdl.emp.delx3
+

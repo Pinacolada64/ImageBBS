@@ -1,0 +1,20 @@
+    Your land has suffered a terrible drought.  Being a caring ruler, you
+have prayed for deliverance for many months.  You have diligently made
+sacrifices to the gods and have refused to give up hope.
+
+    Then in a dream you had an image of an island in the swamps.  This
+island was covered with grain.  When you awoke, you were left with the
+impression that the island is in a swamp on your land.  Arising, you
+decide to search the swamp for this bounty.
+
+    You gather your nobles together, and outline your plan for a thorough
+search of the swamp.  Convinced that this is a sign from the gods, you begin
+your quest.
+
+    After several weeks of searching, you are about to give up hope.  On the
+next day, however, you hack your way through a thick mass of vines and see
+before you the image of your dream!  You have found the island of grain!
+
+    You gain 40,000 bushels of grain!
+
+               <Press any Key>\g1

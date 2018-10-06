@@ -1147,7 +1147,7 @@
 ' [> _
 {:3446}
 	&"Set Clock From:{f6:2} 1. CMD boot device{f6} 2. Lt.Kernal{f6}"
-	&" 3. Last AutoMaint timestamp{f6} 4. CMD external device{f6:2}"
+	&" 3. Last system timestamp{f6} 4. CMD external device{f6:2}"
 {:3448}
 	&"[> ":gosub {:1007}:y%=int(val(an$)):if y%<1 or y%>4 then:&"{up}":goto {:3448}
 {:3449}
