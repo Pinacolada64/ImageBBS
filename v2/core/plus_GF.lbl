@@ -15,31 +15,31 @@
 '	s%(x,0): where the field starts?
 '	d2$: string to get
 
-	&,60,1,20,s%(15,0),d2$:&,60,1,30,s%(25,0),p$:if q then p$="({$cd}) "+p$
+	&,60,1,20,s%(15,0),d2$:&,60,1,30,s%(25,0),p$:if q then p$="(M) "+p$
 	return
 {:3010}
-	lc=7:h$="{$cc}ibrary":j$="{$c6}ile":k$="":l$="":m$=""
-	i$="{$d3}ubop":r$=chr$(13):sy$="{$c6}iles"+"":return
+	lc=7:h$="Library":j$="File":k$="":l$="":m$=""
+	i$="Subop":r$=chr$(13):sy$="Files"+"":return
 {:3050}
 	a$="{gray3}???":b$="":on a goto {:3051},{:3052},{:3053},{:3054},{:3055},{:3056},{:3057},{:3058},{:3059}:return
 {:3051}
-	dr=4:a$="{yellow}{$c4}ir":b$="d.{$c7}{$c6}.":return
+	dr=4:a$="{yellow}Dir":b$="d.GF.":return
 {:3052}
-	dr=0:a$="{lt. blue}{$d0}rg":b$="+.":return
+	dr=0:a$="{lt. blue}Prg":b$="+.":return
 {:3053}
-	dr=0:a$="{lt. blue}{$cd}od":b$="+/{$c7}{$c6}.":return
+	dr=0:a$="{lt. blue}Mod":b$="+/GF.":return
 {:3054}
-	dr=0:a$="{lt. green}{$d4}xt":return
+	dr=0:a$="{lt. green}Txt":return
 {:3055}
-	dr=0:a$="{lt. green}{$cd}ov":return
+	dr=0:a$="{lt. green}Mov":return
 {:3056}
-	dr=0:a$="{lt. green}{$d2}{$cc}{$c5}":return
+	dr=0:a$="{lt. green}RLE":return
 {:3057}
-	dr=4:a$="{yellow}{$d5}/{$d8}":b$="d.{$d5}{$d8}.":return
+	dr=4:a$="{yellow}U/X":b$="d.UX.":return
 {:3058}
-	dr=4:a$="{yellow}{$d5}/{$c4}":b$="d.{$d5}{$c4}.":return
+	dr=4:a$="{yellow}U/D":b$="d.UD.":return
 {:3059}
-	dr=0:a$="{yellow}{$d3}ub":b$="d.{$d3}{$c2}.":return
+	dr=0:a$="{yellow}Sub":b$="d.SB.":return
 {:3070}
 	dr=4:gosub 1010:a$=dr$+"d."+pf$(pf):return
 {:3072}
@@ -47,20 +47,20 @@
 {:3074}
 	gosub {:3070}:print# 15,"s"a$:&,60,3,0,s%(0,0),80+80*s%(0,0),a$,dv%:goto 1012
 {:3080}
-	lp=1:&"{f6}{$d3}orry, you do not have enough{$a0}credits!":goto {:3200}
+	lp=1:&"{f6}Sorry, you do not have enough credits!":goto {:3200}
 {:3082}
-	lp=1:&"{f6}{$d3}orry, you must be in color/graphics mode to view movies.":goto {:3200}
-	b=0:for i=0 to 9:a%=i:&"{$c7}roup #{pound}%a?: ":gosub 1902:b=b+2^i*a:next:a=b:return
+	lp=1:&"{f6}Sorry, you must be in color/graphics mode to view movies.":goto {:3200}
+	b=0:for i=0 to 9:a%=i:&"Group #{pound}%a?: ":gosub 1902:b=b+2^i*a:next:a=b:return
 {:3100}
 	on mm goto {:3109}:&"{clear} {blue}{pound}o{$a2}{pound}o{$a2}{f6} {rvrs on}{lt. green} {pound}$h: {pound}v8{pound}{back arrow}39{f6}"
 	on-(s%(2,0)=0)goto {:3104}:an$=so$:&,15,1:on-(s%(2,0)<>id or id=0)goto {:3103}
-	&" {rvrs on} ({$d9}ou are the {pound}$i here){pound}{back arrow}39{f6}":q=1:goto {:3104}
+	&" {rvrs on} (You are the {pound}$i here){pound}{back arrow}39{f6}":q=1:goto {:3104}
 {:3103}
 	&" {rvrs on} {pound}$i: {pound}v7{pound}{back arrow}39{f6}"
 {:3104}
 	&" {rvrs on}{blue}{pound}o{$a2}{pound}o{$a2}{f6}{pound}q0":return
 {:3105}
-	&"{purple} {$b0}{pound}$y{$ae}{f6} {$dd}{lt. green} {$d4}his {pound}$h is {$c5}mpty.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$y{$bd}{f6}{pound}q0":return
+	&"{purple} {$b0}{pound}$y{$ae}{f6} {$dd}{lt. green} This {pound}$h is Empty.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$y{$bd}{f6}{pound}q0":return
 {:3106}
 	a%=br:x=e%(br):a=s%(2,x):gosub {:3050}:&,60,1,28,s%(13,x),c$
 	&" {purple}{$dd}{white}{pound}#2{pound}# {pound}%a {pound}$a{lt. blue}: {cyan}{pound}$c{pound}{back arrow}38{purple}{$dd}{f6}":return
@@ -78,12 +78,12 @@
 	next:&"{purple} {$ad}{pound}$y{$bd}{f6}{pound}q0":return
 {:3130}
 	gosub {:3106}:s=rc:on-(q=0)goto {:3138}:a%=s%(1,x):&,60,1,16,s%(27,x),a$
-	&"{purple} {$dd}{cyan}{$c6}ile:{pound}$b{pound}$a{pound}{back arrow}29{$c1}ccs:{pound}#4{pound}%a{purple}{$dd}{f6}":s=s+rc
-	if a<>1 then b%=s%(3,x):c%=s%(4,x):&"{purple} {$dd}{cyan}{$c4}ev:{pound}#2{pound}%b {$c4}rv:{pound}#3{pound}%c{pound}{back arrow}38{purple}{$dd}{f6}"
+	&"{purple} {$dd}{cyan}File:{pound}$b{pound}$a{pound}{back arrow}29Accs:{pound}#4{pound}%a{purple}{$dd}{f6}":s=s+rc
+	if a<>1 then b%=s%(3,x):c%=s%(4,x):&"{purple} {$dd}{cyan}Dev:{pound}#2{pound}%b Drv:{pound}#3{pound}%c{pound}{back arrow}38{purple}{$dd}{f6}"
 {:3138}
-	a%=s%(5,x):if a%then:&"{purple} {$dd}{cyan}{$c3}redits:{pound}%a{pound}{back arrow}38{purple}{$dd}{f6}":s=s+rc
+	a%=s%(5,x):if a%then:&"{purple} {$dd}{cyan}Credits:{pound}%a{pound}{back arrow}38{purple}{$dd}{f6}":s=s+rc
 	on a goto {:3144}:a%=s%(6,x):&,60,5,0,s%(10,x),an$
-	if a%then:&,15:&"{purple} {$dd}{cyan}{$d5}sed {pound}%a {$d4}imes{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}{$cc}ast:{pound}v7{$cd}{pound}{back arrow}38{purple}{$dd}{f6}":s=s+rc
+	if a%then:&,15:&"{purple} {$dd}{cyan}Used {pound}%a Times{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}Last:{pound}v7M{pound}{back arrow}38{purple}{$dd}{f6}":s=s+rc
 {:3144}
 	return
 {:3150}
@@ -102,41 +102,41 @@
 {:3168}
 	rn=a%:if rn then:&,60,8,s%(0,0),80,1,s%(0,1),e%(1),1
 	a$="{up arrow}":if s%(2,0)<>0 then x=s%(2,0):gosub 1065:gosub 1001:&,2,2:close 2
-	if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then a$="{$ce}o {$cf}ne"
-	so$=a$:if q then sy$=sy$+"-{$cd}aint"
+	if a$="{up arrow}"or a$="RES"then a$="No One"
+	so$=a$:if q then sy$=sy$+"-Maint"
 	return
 {:3180}
-	on-(pf<>0)goto {:3182}:pf=0:a$="{$c7}{$c6}.{$cd}ain"+"":tp=0
+	on-(pf<>0)goto {:3182}:pf=0:a$="GF.Main"+"":tp=0
 {:3181}
 	pf=pf+1:pf$(pf)=a$
 {:3182}
 	gosub {:3160}:if u$=""then gosub {:3152}:on-(tp=0)gosub {:3110}
 	gosub {:3010}:on-(s%(1,0)=0)goto {:3200}
-	dr=5:gosub 1010:a$=dr$+"+/{$c7}{$c6}."+left$(pf$(pf),2):load a$,dv%
+	dr=5:gosub 1010:a$=dr$+"+/GF."+left$(pf$(pf),2):load a$,dv%
 	rk=1:gosub 4000:goto {:3200}
 {:3198}
-	if e%then:&"{$c5}rror {$d2}eading {f5}{pound}$b{f5}.{f6:2}"
+	if e%then:&"Error Reading {f5}{pound}$b{f5}.{f6:2}"
 {:3200}
 	gosub {:3003}:on-(mm=1 and u$="")goto {:3220}
 {:3202}
 	gosub {:3008}:gosub 1098:on-(tr%<1)goto {:quit}:gosub 1850:on f4 goto {:3233}:on rs goto {:3200}
 	gosub {:3006}:if a then br=a:goto {:3400}
-	if pf>1 and(a$="<"or a$="{$c2}")then pf=pf-1:goto {:3182}
-	if pf>1 and a$="{$cd}"then pf=1:goto {:3182}
-	if q=1 and a$="{$da}"then{:3231}
-	on-(a$="{$d1}")goto {:quit}:gosub {:3212}:goto {:3200}
+	if pf>1 and(a$="<"or a$="B")then pf=pf-1:goto {:3182}
+	if pf>1 and a$="M"then pf=1:goto {:3182}
+	if q=1 and a$="Z"then{:3231}
+	on-(a$="Q")goto {:quit}:gosub {:3212}:goto {:3200}
 {:3212}
-	on-(a$="{$cc}")-2*(a$="{$d3}")-4*(a$="{f2}")goto {:3110},{:3120},1351
+	on-(a$="L")-2*(a$="S")-4*(a$="{f2}")goto {:3110},{:3120},1351
 	on-(a$="")goto {:3110}
-	&"{f6:2}{$d5}nknown {$c3}ommand. {$d4}ype {f5}?{f5} for {$c8}elp.{f6:2}":return
+	&"{f6:2}Unknown Command. Type {f5}?{f5} for Help.{f6:2}":return
 {:3220}
 	cx=1
 {:3222}
-	gosub {:3500}:on-(tr%<1)goto {:quit}:on-(a$="{$d2}")goto {:3222}:on-(a$="{$d1}")goto {:quit}
+	gosub {:3500}:on-(tr%<1)goto {:quit}:on-(a$="R")goto {:3222}:on-(a$="Q")goto {:quit}
 	cx=a%:a=val(a$):if a then br=a:goto {:3400}
-	on-(a$="{f2}")-2*(a$="{$cf}")-3*(a$="{$da}"and q=1)goto {:3232},{:3230},{:3231}
-	if pf>1 and a$="{$c2}"then pf=pf-1:goto {:3182}
-	if pf>1 and a$="{$cd}"then pf=1:goto {:3182}
+	on-(a$="{f2}")-2*(a$="O")-3*(a$="Z"and q=1)goto {:3232},{:3230},{:3231}
+	if pf>1 and a$="B"then pf=pf-1:goto {:3182}
+	if pf>1 and a$="M"then pf=1:goto {:3182}
 	goto {:3222}
 {:3230}
 	a$="other":goto {:3300}
@@ -152,18 +152,18 @@
 {:quit}
 	pf=0:f1=.:goto 1811
 {:3300}
-	if"{$c7}{$c6}-"+a$<>lm$then lm$="{$c7}{$c6}-"+a$:dr=5:gosub 1010:a$="+/"+lm$:load a$,dv%
+	if"GF-"+a$<>lm$then lm$="GF-"+a$:dr=5:gosub 1010:a$="+/"+lm$:load a$,dv%
 	cx=1
 {:3304}
 	rk=1:gosub 4000
 {:3306}
 	if mm=0 then{:3314}
-	gosub {:3350}:on-(tr%<1)goto {:3202}:on-(a$="{$d2}")goto {:3304}:on-(a$="{$d1}")goto {:3200}
+	gosub {:3350}:on-(tr%<1)goto {:3202}:on-(a$="R")goto {:3304}:on-(a$="Q")goto {:3200}
 	cx=a%:rk=2:gosub 4000:on tz gosub {:3150}:on rs goto {:3200}:goto {:3306}
 {:3314}
 	gosub 1098:on-(tr%<1)goto {:quit}:gosub 1850:on f4 goto {:3233}:on rs goto {:3304}:goto {:3306}
 {:3350}
-	&,52,$22:m%(0,0)=0:m%(1,0)=-1:m%(2,0)=-1:m%(3,0)=asc("{$d2}")
+	&,52,$22:m%(0,0)=0:m%(1,0)=-1:m%(2,0)=-1:m%(3,0)=asc("R")
 	m%(1,1)=n*256+2:m%(1,n)=(n-1)*256+1
 	&,71,cx,n+1,m%(0,0):&,70,0,mp%-1:a$=mid$(str$(a%),2)
 	if m%(3,a%)then a$=chr$(m%(3,a%))
@@ -190,7 +190,7 @@
 {:3428}
 	gosub 1075:goto {:3198}
 {:3430}
-	if"{$c7}{$c6}."+a$<>lm$then lm$="{$c7}{$c6}."+a$:a$="+/"+lm$:load a$,dv%
+	if"GF."+a$<>lm$then lm$="GF."+a$:a$="+/"+lm$:load a$,dv%
 	gosub 4000:goto {:3200}
 {:3434}
 	tp=1:a$=mid$(b$,3):goto {:3181}
@@ -203,29 +203,29 @@
 {:3500}
 	s$=left$("                    ",18-len(d2$)/2):gosub {:3008}
 	&"{rvrs off}{clear}{rvrs on}{blue}{pound}{back arrow}39{f6}"
-	&"{rvrs on}{blue} {gray3}          {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$c2:2}{$d3}{$a0}{$d6}2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on}{blue} {gray3}          IMAGE {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
 	&"{rvrs on}{blue} {gray3}{pound}$s{pound}v8{pound}{back arrow}37{blue}{rvrs off} {rvrs on} {f6}{rvrs on}{blue}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	n=0:if rn=0 then{:3518}
-	ct$="??? {$c4}ir {$d0}rg {$cd}od {$d4}xt {$cd}ov {$d2}{$cc}{$c5} {$d5}/{$d8} {$d5}/{$c4} {$d3}ub ":m=5
+	ct$="??? Dir Prg Mod Txt Mov RLE U/X U/D Sub ":m=5
 	&,16,1,42,q%(0,n),"1",ct$,80,s%(0,1),1,s%(2,1),s%(13,1),28,rn,9,1:n=b%
 {:3518}
-	if pf>1 then:&,16,0,42,q%(0,n),"/{$c2}","{$cf}p ","{$d2}eturn to {$d0}revious {$cd}enu":n=n+1
-	if pf>1 then:&,16,0,42,q%(0,n),"/{$cd}","{$cf}p ","{$d2}eturn to {$cd}ain {$cd}enu":n=n+1
-	if q then:&,16,0,42,q%(0,n),"/{$da}","{$cf}p ","{$cd}aintenance {$cf}ptions":n=n+1
-	&,16,0,42,q%(0,n),"/{$cf}","{$cf}p ","{$cf}ther {$cf}ptions":n=n+1
-	&,16,0,42,q%(0,n),"/{f2}","{$cf}p ","{$c8}elp":n=n+1
-	&,16,0,42,q%(0,n),"/{$d1}","{$cf}p ","{$d1}uit":n=n+1
+	if pf>1 then:&,16,0,42,q%(0,n),"/B","Op ","Return to Previous Menu":n=n+1
+	if pf>1 then:&,16,0,42,q%(0,n),"/M","Op ","Return to Main Menu":n=n+1
+	if q then:&,16,0,42,q%(0,n),"/Z","Op ","Maintenance Options":n=n+1
+	&,16,0,42,q%(0,n),"/O","Op ","Other Options":n=n+1
+	&,16,0,42,q%(0,n),"/{f2}","Op ","Help":n=n+1
+	&,16,0,42,q%(0,n),"/Q","Op ","Quit":n=n+1
 	&,16,2,42,q%(0,0),n,36,1,n,6,6,0:a$=chr$(q%(3,a%)and 255)
 	&,70,0,mp%-1:return
 {:3550}
 	&"{home}{down:4}{yellow}"
 	&"{right:3}{rvrs on}{pound}{back arrow}34{f6}"
-	&"{right:3}{rvrs on} {$c3}ursor {$cb}eys {$cd}ove {$c8}ighlight    {rvrs off} {f6}"
-	&"{right:3}{rvrs on} {$cb}eys in quotes are '{$c8}ot' {$cb}eys {rvrs off} {f6}"
-	&"{right:3}{rvrs on} {$d5}se {$d3}{$d0}{$c1}{$c3}{$c5} to {$d3}elect an {$c9}tem   {rvrs off} {f6}"
-	&"{right:3}{rvrs on} {$d0}ress {f5}{$d2}{f5} to {$d2}eprint the {$cd}enu {rvrs off} {f6}"
+	&"{right:3}{rvrs on} Cursor Keys Move Highlight    {rvrs off} {f6}"
+	&"{right:3}{rvrs on} Keys in quotes are 'Hot' Keys {rvrs off} {f6}"
+	&"{right:3}{rvrs on} Use SPACE to Select an Item   {rvrs off} {f6}"
+	&"{right:3}{rvrs on} Press {f5}R{f5} to Reprint the Menu {rvrs off} {f6}"
 	&"{right:3}{rvrs on}{pound}{back arrow}34{rvrs off} {f6}"
-	&"{right:3}{rvrs on} {$d0}ress any key to continue     {rvrs off} {f6}"
+	&"{right:3}{rvrs on} Press any key to continue     {rvrs off} {f6}"
 	&"{right:3}{rvrs on}{pound}{back arrow}34{rvrs off} {f6}"
 	&"{right:4}{pound}{back arrow}35{f6}":fd=3:return
 	rem +.gf

@@ -2,53 +2,53 @@
 	rem +.bb
 	a=8:gosub 1004:q=a:a=4:gosub 1004:z=a:goto {:3100}
 {:3002}
-	&"{f6:2}{yellow}d{$c2}{$c1}{$d3}{$c5}:{white} {pound}i1":z$=left$(an$,2):return
+	&"{f6:2}{yellow}dBASE:{white} {pound}i1":z$=left$(an$,2):return
 {:3004}
 	gosub 1001:print# 2,w$r$"-"r$"-"r$"-"r$"-":return
 {:3006}
-	gosub 1902:a$=mid$("{$d9}es{$ce}o",a+4*-(a=.),3):return
+	gosub 1902:a$=mid$("YesNo",a+4*-(a=.),3):return
 {:3008}
 	dr=3:a$="e.i.bbs":gosub 1023:print# 2,n%r$d%:close 2
 {:3010}
 	dr=3:a$="e.bbs":goto 1011
 {:3012}
-	&"{f6} ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$cb}eep {$d3}ame){f6:2}":return
+	&"{f6} (RETURN To Keep Same){f6:2}":return
 {:3014}
-	poke 53252,24:&"{f6:2}{pound}q0{$c2:2}{$d3} {$ce}ame (24 char max):"
-	&"{f6:2}{pound}{back arrow}081.........12..........24{f6}{$ce}ame => {pound}i0":if tr%<1 then y=10:return
+	poke 53252,24:&"{f6:2}{pound}q0{$c2:2}S Name (24 char max):"
+	&"{f6:2}{pound}{back arrow}081.........12..........24{f6}Name => {pound}i0":if tr%<1 then y=10:return
 	b$=an$:on-(b$="")goto {:3014}:return
 {:3020}
 	poke 53252,12
-	&"{f6}{$c2:2}{$d3} {$d0}hone  {$d8:3}-{$d8:3}-{$d8:4}{f6}{pound}{back arrow}09> {pound}i1":a=val(an$):if tr%<1 then y=10:return
-	if mid$(an$,5,3)="555"or a=.or len(an$)<>12 then:&"{f6}{$c9}llegal {$c5}ntry!":goto {:3020}
+	&"{f6}{$c2:2}S Phone  {$d8:3}-{$d8:3}-{$d8:4}{f6}{pound}{back arrow}09> {pound}i1":a=val(an$):if tr%<1 then y=10:return
+	if mid$(an$,5,3)="555"or a=.or len(an$)<>12 then:&"{f6}Illegal Entry!":goto {:3020}
 {:3026}
-	&"{f6}{$c3}hecking {$c6}or {$c4}uplicate..."
+	&"{f6}Checking For Duplicate..."
 	f=.:for x=1 to n%:gosub 1001:&,2,2:on-(a$="{up arrow}")goto {:3032}
-	if an$=a$then f=1:&"{f6:2}{$d3}orry, {$d4}hat {$ce}umber {$c9}s{f6}{$c1}lready {$cf}n {$d4}he {$cc}ist!":x=n%
+	if an$=a$then f=1:&"{f6:2}Sorry, That Number Is{f6}Already On The List!":x=n%
 {:3032}
 	&".":next:c$=an$:return
 {:3034}
-	poke 53252,2:&"{f6:2}{pound}q0{$cd}ax {$c2}aud {$d2}ate (03/12/24/96){f6:2}> {pound}i1":if tr%<1 then y=10:return
+	poke 53252,2:&"{f6:2}{pound}q0Max Baud Rate (03/12/24/96){f6:2}> {pound}i1":if tr%<1 then y=10:return
 	on-(an$<>"03"and an$<>"12"and an$<>"24"and an$<>"96")goto {:3034}:d$=an$:return
 {:3038}
-	&"{f6}{$c9}s {f5}{pound}$b{f5}{f6}24 hours?: ":gosub {:3006}:e$=a$:goto {:3050}
+	&"{f6}Is {f5}{pound}$b{f5}{f6}24 hours?: ":gosub {:3006}:e$=a$:goto {:3050}
 {:3040}
-	&"{f6}{$c4}oes {f5}{pound}$b{f5}{f6}{$c8}ave {$d5}/{$c4}s?: ":gosub {:3006}:f$=a$:goto {:3050}
+	&"{f6}Does {f5}{pound}$b{f5}{f6}Have U/Ds?: ":gosub {:3006}:f$=a$:goto {:3050}
 {:3042}
-	&"{f6}{$c4}oes {f5}{pound}$b{f5}{f6}{$d2}equire {$c1} {$c6}ee?: ":gosub {:3006}:h$=a$:goto {:3050}
+	&"{f6}Does {f5}{pound}$b{f5}{f6}Require A Fee?: ":gosub {:3006}:h$=a$:goto {:3050}
 {:3044}
-	&"{f6}{$c4}oes {f5}{pound}$b{f5}{f6}{$c8}ave {$cf}nline {$c7}ames?: ":gosub {:3006}:i$=a$:goto {:3050}
+	&"{f6}Does {f5}{pound}$b{f5}{f6}Have Online Games?: ":gosub {:3006}:i$=a$:goto {:3050}
 {:3046}
-	&"{f6}{$c4}oes {f5}{pound}$b{f5}{f6}{$c8}ave {$d2}{$d0}{$c7}'s?: ":gosub {:3006}:j$=a$:goto {:3050}
+	&"{f6}Does {f5}{pound}$b{f5}{f6}Have RPG's?: ":gosub {:3006}:j$=a$:goto {:3050}
 {:3048}
-	&"{f6}{$c9}s {f5}{pound}$b{f5}{f6}{$d0}{$c3} {$d0}ursuitable?: ":gosub {:3006}:k$=a$
+	&"{f6}Is {f5}{pound}$b{f5}{f6}PC Pursuitable?: ":gosub {:3006}:k$=a$
 {:3050}
 	if tr%<1 then y=10
 	return
 {:3054}
-	&"{f6}{$d0}lease {$d3}elect {$d4}he {$c3}omputer {$d4}ype{f6}{$d2}unning {f5}{pound}$b{f5}:{f6}"
+	&"{f6}Please Select The Computer Type{f6}Running {f5}{pound}$b{f5}:{f6}"
 	for i=1 to 4:a%=i:b%=i+4:a$=tt$(i+8):n$=tt$(b%+8):&"{f6}{pound}%a: {pound}$a{pound}{back arrow}17{pound}%b: {pound}$n":next
-	&"{f6:2}{$d4}{$d9}{$d0}{$c5} ({$c4}efaults {$d4}o {$c3}ommodore): {pound}g1{pound}v7{f6}":if tr%<1 then y=10:return
+	&"{f6:2}TYPE (Defaults To Commodore): {pound}g1{pound}v7{f6}":if tr%<1 then y=10:return
 	a=int(val(an$)):if a<1 or a>8 then a=3
 	c%=a:l$=tt$(a+8):return
 {:3064}
@@ -65,68 +65,68 @@
 	on-(val(c$)=val(g$))goto {:3078}:goto {:3084}
 {:3078}
 	on-(c$="{up arrow}")goto {:3084}
-	a%=x:&"{yellow} {pound}%a{pound}{back arrow}09{green}{pound}$c {white} {pound}$b {yellow} {pound}$d  {pound}$e":s=rc:if q then:&"{f6}{cyan}  {$c2}y {f5}{pound}$f{f5}"
+	a%=x:&"{yellow} {pound}%a{pound}{back arrow}09{green}{pound}$c {white} {pound}$b {yellow} {pound}$d  {pound}$e":s=rc:if q then:&"{f6}{cyan}  By {f5}{pound}$f{f5}"
 	&"{f6}{yellow}{pound}vj"
 {:3084}
 	x=x+(rc+s)*n%:next:if rc or s then{:3088}
-	&"{f6:2}{yellow}{$d4}hat {$d7}as {$d4}he {$cc}ast {$cf}ne!"
+	&"{f6:2}{yellow}That Was The Last One!"
 {:3088}
-	&"{f6:2}{white}{$d0}ress {rvrs on} {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {rvrs off} {$d4}o {$c3}ontinue: {pound}g1{lt. green}":return
+	&"{f6:2}{white}Press {rvrs on} RETURN {rvrs off} To Continue: {pound}g1{lt. green}":return
 {:3090}
-	&"{f6:2}{$cf}ne {$cd}oment {$d0}lease...":return
+	&"{f6:2}One Moment Please...":return
 {:3092}
 	dr=3:gosub 1079:if a<42 then gosub 1978:goto 1812
-	&"{f6:2} {$c3}reating {$c2:2}{$d3} d{$c2}ase {$c6}ile...{f6}"
+	&"{f6:2} Creating {$c2:2}S dBase File...{f6}"
 	dr=3:a$="e.bbs,l,"+chr$(110):gosub 1011:gosub {:3066}:x=5:gosub 1001:print# 2,"0"
 	x=1:gosub {:3066}:gosub {:3004}:close 2:d%=1:n%=.:gosub {:3008}
 {:3100}
 	restore:for i=1 to 16:read tt$(i):next
-	&"{clear}{f6:2}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5}{$a0}{$c2:2}{$d3} {$c4}{$c1}{$d4}{$c1}{$c2}{$c1}{$d3}{$c5} {f6}{rvrs on} {$c2}y {$d0}{$c8}{$c1}{$da}{$c5}{$a0}{$c2:2}{$d3}!      {rvrs off}{f6}":gosub {:3010}:if e%then{:3092}
+	&"{clear}{f6:2}{rvrs on} IMAGE {$c2:2}S DATABASE {f6}{rvrs on} By PHAZE {$c2:2}S!      {rvrs off}{f6}":gosub {:3010}:if e%then{:3092}
 	a$="e.i.bbs,s,r":gosub 1011:input# 2,n%,d%:close 2:gosub {:3010}
 {:3106}
 	d=.:c=.:f=.:s=.:f1=.
 {:3108}
-	poke 53252,24:fl=.:&"{f6:2}{green}<{white}{$cc}{green}>{orange}ist {$c2:2}{$d3} {$ce}umbers{f6}{green}<{white}{$d1}{green}>{orange}uit {$d4}o {$cd}ain {$cd}enu"
-	&"{f6}{green}<{white}{$c4}{green}>{orange}isplay {$ce}otes":if z=.then{:3114}
-	&"{f6}{green}<{white}{$c1}{green}>{orange}dd {$c1} {$ce}umber{f6}{green}<{white}{$d2}{green}>{orange}emove {$c1}n {$c5}ntry{f6}{green}<{white}{$c5}{green}>{orange}dit {$c1}n {$c5}ntry"
+	poke 53252,24:fl=.:&"{f6:2}{green}<{white}L{green}>{orange}ist {$c2:2}S Numbers{f6}{green}<{white}Q{green}>{orange}uit To Main Menu"
+	&"{f6}{green}<{white}D{green}>{orange}isplay Notes":if z=.then{:3114}
+	&"{f6}{green}<{white}A{green}>{orange}dd A Number{f6}{green}<{white}R{green}>{orange}emove An Entry{f6}{green}<{white}E{green}>{orange}dit An Entry"
 {:3114}
 	gosub {:3002}:on tr%+1 goto {:3246}
-	on z+1 goto {:3118}:on-(an$="{$c1}")-(an$="{$d2}")*2-(an$="{$c5}")*3 goto {:3142},{:3204},{:3224}
+	on z+1 goto {:3118}:on-(an$="A")-(an$="R")*2-(an$="E")*3 goto {:3142},{:3204},{:3224}
 {:3118}
-	if an$="{$cc}"then{:3122}
-	on-(an$="{$d1}"or an$="")-(an$="{f2}")*2-(an$="{$c4}")*3 goto {:3246},{:3108},{:3218}:goto {:3108}
+	if an$="L"then{:3122}
+	on-(an$="Q"or an$="")-(an$="{f2}")*2-(an$="D")*3 goto {:3246},{:3108},{:3218}:goto {:3108}
 {:3122}
-	&"{f6:2}{cyan}<{red}{$c2}{cyan}>aud{f6}<{red}{$c1}{cyan}>rea {$c3}ode{f6}<{red}{$c3}{cyan}>omplete {$cc}isting":gosub {:3002}:on tr%+1 goto {:3246}
-	on-(an$="{$c3}")-(an$="{$c2}")*2-(an$="{$c1}")*3 goto {:3126},{:3128},{:3132}:goto {:3108}
+	&"{f6:2}{cyan}<{red}B{cyan}>aud{f6}<{red}A{cyan}>rea Code{f6}<{red}C{cyan}>omplete Listing":gosub {:3002}:on tr%+1 goto {:3246}
+	on-(an$="C")-(an$="B")*2-(an$="A")*3 goto {:3126},{:3128},{:3132}:goto {:3108}
 {:3126}
 	fl=2:goto {:3134}
 {:3128}
-	poke 53252,2:&"{f6:2}{lt. red}{$cd}inimum {$d2}ate (03/12/24/96){f6:2}: {pound}i1{lt. green}"
+	poke 53252,2:&"{f6:2}{lt. red}Minimum Rate (03/12/24/96){f6:2}: {pound}i1{lt. green}"
 	on-(an$="03"or an$="12"or an$="24"or an$="96")-(an$="")*2 goto {:3134},{:3108}:goto {:3128}
 {:3132}
-	poke 53252,3:fl=1:&"{f6:2}{yellow}{$c1}rea {$c3}ode: {pound}i1{lt. green}":if an$=""or len(an$)<3 then{:3108}
+	poke 53252,3:fl=1:&"{f6:2}{yellow}Area Code: {pound}i1{lt. green}":if an$=""or len(an$)<3 then{:3108}
 {:3134}
-	g$=an$:&"{clear}{f6} ##   {$d4}elephone #   {$ce}ame                      {$c2}d  {$ce}otes{f6}"
+	g$=an$:&"{clear}{f6} ##   Telephone #   Name                      Bd  Notes{f6}"
 	&"----  ------------  -------------------"
 	&"       --  ----------------------------{f6}"
 	gosub {:3074}:goto {:3106}
 {:3142}
-	gosub {:3070}:on z+1 goto {:3108}:&"{f6:2}{green}{$c1}dd {$c1} {$ce}umber":for y=1 to 10
+	gosub {:3070}:on z+1 goto {:3108}:&"{f6:2}{green}Add A Number":for y=1 to 10
 	on y gosub {:3014},{:3020},{:3034},{:3038},{:3040},{:3042},{:3044},{:3046},{:3048},{:3054}:y=y+f*10:next:on f goto {:3106}
 {:3146}
-	on tr%+1 goto {:3246}:&"{f6:2}{lt. green}{$c9}{$ce}{$c6}{$cf} {$c5}{$ce}{$d4}{$c5}{$d2}{$c5}{$c4}:{f6}"
-	a$=b$:&"{f6}1  {$c2:2}{$d3} {$ce}{$c1}{$cd}{$c5}-------: {pound}$a"
-	a$=c$:&"{f6}2  {$d0}{$c8}{$cf}{$ce}{$c5}----------: {pound}$a"
-	a$=d$:&"{f6}3  {$cd}{$c1}{$d8} {$c2}{$c1}{$d5}{$c4}-------: {pound}$a00"
-	a$=e$:&"{f6}4  24 {$c8}{$cf}{$d5}{$d2}--------: {pound}$a"
-	a$=f$:&"{f6}5  {$d5}/{$c4}s-----------: {pound}$a"
-	a$=h$:&"{f6}6  {$c6}{$c5:2}------------: {pound}$a"
-	a$=i$:&"{f6}7  {$cf}{$ce}{$cc}{$c9}{$ce}{$c5} {$c7}{$c1}{$cd}{$c5}{$d3}---: {pound}$a"
-	a$=j$:&"{f6}8  {$d2}{$d0}{$c7}'s----------: {pound}$a"
-	a$=k$:&"{f6}9  {$d0}{$c3} {$d0}{$d5}{$d2}{$d3}{$d5}{$c9}{$d4}{$c1}{$c2}{$cc}{$c5}-: {pound}$a"
-	&"{f6}10 {$d4}{$d9}{$d0}{$c5}-----------: {pound}%c ({pound}$l)"
-	&"{f6:2}{cyan}{$c3}hange? (1-10){f6}<{$c1}>bort{f6}<{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}>= {$c3}orrect : {pound}i1":if tr%<1 then{:3246}
-	on-(an$="{$c1}")-(an$="")*2 goto {:3106},{:3174}:e=abs(val(an$))
+	on tr%+1 goto {:3246}:&"{f6:2}{lt. green}INFO ENTERED:{f6}"
+	a$=b$:&"{f6}1  {$c2:2}S NAME-------: {pound}$a"
+	a$=c$:&"{f6}2  PHONE----------: {pound}$a"
+	a$=d$:&"{f6}3  MAX BAUD-------: {pound}$a00"
+	a$=e$:&"{f6}4  24 HOUR--------: {pound}$a"
+	a$=f$:&"{f6}5  U/Ds-----------: {pound}$a"
+	a$=h$:&"{f6}6  F{$c5:2}------------: {pound}$a"
+	a$=i$:&"{f6}7  ONLINE GAMES---: {pound}$a"
+	a$=j$:&"{f6}8  RPG's----------: {pound}$a"
+	a$=k$:&"{f6}9  PC PURSUITABLE-: {pound}$a"
+	&"{f6}10 TYPE-----------: {pound}%c ({pound}$l)"
+	&"{f6:2}{cyan}Change? (1-10){f6}<A>bort{f6}<RETURN>= Correct : {pound}i1":if tr%<1 then{:3246}
+	on-(an$="A")-(an$="")*2 goto {:3106},{:3174}:e=abs(val(an$))
 	on e gosub {:3014},{:3020},{:3034},{:3038},{:3040},{:3042},{:3044},{:3046},{:3048},{:3054}:on f goto {:3106}:goto {:3146}
 {:3174}
 	b$=left$(b$+"                          ",24):gosub {:3090}
@@ -137,41 +137,41 @@
 	d%=x+1:n%=n%+1
 {:3184}
 	w$=c$+r$+b$+r$+d$+r$
-	if e$="{$d9}es"then w$=w$+"24hr-"
-	if e$="{$ce}o"then w$=w$+"{$d0}/{$d4}-"
-	if f$="{$d9}es"then w$=w$+"{$d5}{$c4}s-"
-	if h$="{$d9}es"then w$=w$+"{$c6}{$c5:2}-"
-	if i$="{$d9}es"then w$=w$+"{$c7}{$c1}{$cd}-"
-	if j$="{$d9}es"then w$=w$+"{$d2}{$d0}{$c7}-"
-	if k$="{$d9}es"then w$=w$+"{$d0}{$c3}{$d0}-"
-	a$=mid$("{$c9}{$c2}{$cd}{$c7}{$c2:2}{$c3}{$c2}{$cd}{$c1}{$d4}{$d2}{$cd}{$c1}{$c3}{$d4}{$d2}{$d3}{$cf}{$c1}{$d0}{$d5}{$cb}{$ce}",c%*3-2,3)
+	if e$="Yes"then w$=w$+"24hr-"
+	if e$="No"then w$=w$+"P/T-"
+	if f$="Yes"then w$=w$+"UDs-"
+	if h$="Yes"then w$=w$+"F{$c5:2}-"
+	if i$="Yes"then w$=w$+"GAM-"
+	if j$="Yes"then w$=w$+"RPG-"
+	if k$="Yes"then w$=w$+"PCP-"
+	a$=mid$("IBMG{$c2:2}CBMATRMACTRSOAPUKN",c%*3-2,3)
 	w$=w$+a$+r$+na$:gosub 1001:print# 2,w$:on f1+1 gosub {:3008}:goto {:3106}
 {:3204}
-	gosub {:3070}:on z+1 goto {:3108}:&"{f6:2}{$ce}umber {$d4}o {$d2}emove?: {pound}i1":if tr%<1 then{:3246}
-	fl=.:if an$="{$cc}"or an$="{f2}"then fl=2:gosub {:3074}:goto {:3204}
+	gosub {:3070}:on z+1 goto {:3108}:&"{f6:2}Number To Remove?: {pound}i1":if tr%<1 then{:3246}
+	fl=.:if an$="L"or an$="{f2}"then fl=2:gosub {:3074}:goto {:3204}
 	x=int(val(an$)):on-(x<1)goto {:3106}:gosub {:3090}:gosub {:3064}
-	if f$<>na$and q=.then:&"{f6:2}{$d3}orry, {$d4}hat {$ce}umber {$cd}ust {$c2}e {$d2}emoved{f6}{$c2}y {f5}{pound}$f{f5}":goto {:3106}
-	&"{f6:2}{$d2}emove{f6}{f5}{pound}$b{f5}?: ":gosub 1902:on a+1 goto {:3106}
+	if f$<>na$and q=.then:&"{f6:2}Sorry, That Number Must Be Removed{f6}By {f5}{pound}$f{f5}":goto {:3106}
+	&"{f6:2}Remove{f6}{f5}{pound}$b{f5}?: ":gosub 1902:on a+1 goto {:3106}
 	d=1:gosub {:3066}:gosub {:3004}:if x<d%then d%=x:gosub {:3008}
-	&"{f5}{pound}$b{f5}{f6}{$d2}emoved {$c6}rom {$cc}ist!":goto {:3106}
+	&"{f5}{pound}$b{f5}{f6}Removed From List!":goto {:3106}
 {:3218}
-	&"{f6}":for i=1 to 8:a$=tt$(i):b$=tt$(i+8):&"{f6}{pound}$a = {pound}$b {$d3}ystem":next
-	&"{f6}{$d5}{$c4}s = {$c6}ile {$d4}ransfers{f6}{$d0}{$c3}{$d0} = {$d0}{$c3} {$d0}ursuitable{f6}{$c6}{$c5:2} = {$d2}equires {$c1}ccess {$c6}ee"
-	&"{f6}{$c7}{$c1}{$cd} = {$cf}nline {$c7}ames{f6}{$d2}{$d0}{$c7} = {$cf}nline {$d2}ole {$d0}laying {$c7}ames":gosub {:3088}:goto {:3106}
+	&"{f6}":for i=1 to 8:a$=tt$(i):b$=tt$(i+8):&"{f6}{pound}$a = {pound}$b System":next
+	&"{f6}UDs = File Transfers{f6}PCP = PC Pursuitable{f6}F{$c5:2} = Requires Access Fee"
+	&"{f6}GAM = Online Games{f6}RPG = Online Role Playing Games":gosub {:3088}:goto {:3106}
 {:3224}
-	if f$<>na$and q=.then:&"{f6:2}{$d3}orry, {$d4}hat {$ce}umber {$cd}ust {$c2}e {$c5}dited{f6}{$c2}y {f5}{pound}$f{f5}":goto {:3106}
-	poke 53252,24:&"{f6:2}{$c5}dit {$d7}hich {$ce}umber?: {pound}i1":x=int(val(an$)):if x<1 or x>n%then{:3106}
-	gosub {:3064}:gosub {:3012}:pl=.:p$="{$c2:2}{$d3} {$ce}ame":w$=b$:&,1,32:if an$<>""then b$=an$
+	if f$<>na$and q=.then:&"{f6:2}Sorry, That Number Must Be Edited{f6}By {f5}{pound}$f{f5}":goto {:3106}
+	poke 53252,24:&"{f6:2}Edit Which Number?: {pound}i1":x=int(val(an$)):if x<1 or x>n%then{:3106}
+	gosub {:3064}:gosub {:3012}:pl=.:p$="{$c2:2}S Name":w$=b$:&,1,32:if an$<>""then b$=an$
 {:3230}
-	gosub {:3012}:pl=1:p$="{$c2:2}{$d3} {$ce}umber":w$=c$:&,1,32:a=val(an$):if an$=""then{:3236}
-	if mid$(an$,5,3)="555"or a=.or len(an$)<>12 then:&"{f6}{$c9}llegal {$c5}ntry!":goto {:3230}
+	gosub {:3012}:pl=1:p$="{$c2:2}S Number":w$=c$:&,1,32:a=val(an$):if an$=""then{:3236}
+	if mid$(an$,5,3)="555"or a=.or len(an$)<>12 then:&"{f6}Illegal Entry!":goto {:3230}
 	gosub {:3026}:if f then c$=w$:goto {:3230}
 {:3236}
 	on tr%+1 goto {:3246}
 	for y=1 to 8:on y gosub {:3034},{:3038},{:3040},{:3042},{:3044},{:3046},{:3048},{:3054}:y=y+f*8:next:on tr%+1 goto {:3246}
 	f1=1:goto {:3146}
-	data"{$c9}{$c2}{$cd}","{$c7}{$c2:2}","{$c3}{$c2}{$cd}","{$c1}{$d4}{$d2}","{$cd}{$c1}{$c3}","{$d4}{$d2}{$d3}","{$cf}{$c1}{$d0}","{$d5}{$cb}{$ce}"
-	data"{$c9}{$c2}{$cd}","{$c7}{$c2:2}{$d3}","{$c3}ommodore","{$c1}tari","{$cd}{$c1}{$c3}","{$d4}{$d2}{$d3}","{$cf}ther {$c1}pple","{$d5}nknown"
+	data"IBM","G{$c2:2}","CBM","ATR","MAC","TRS","OAP","UKN"
+	data"IBM","G{$c2:2}S","Commodore","Atari","MAC","TRS","Other Apple","Unknown"
 {:3246}
 	close 2:f1=.:goto 1811
 	copr.1989 new image 3/24/89

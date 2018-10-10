@@ -7,13 +7,13 @@
 	n=4: rem number of options
 	dim m%(16,n):rem 16 is # of characters for options
 	rem next lines setup menu information
-	&,16,.,34,m%(.,1),"{$c1}","","{$cf}ption {$c1}"
-	&,16,.,34,m%(.,2),"{$c2}","","{$cf}ption {$c2}"
-	&,16,.,34,m%(.,3),"{$c3}","","{$cf}ption {$c3}"
-	&,16,.,34,m%(.,4),"{$c4}","","{$d1}uit"
+	&,16,.,34,m%(.,1),"A","","Option A"
+	&,16,.,34,m%(.,2),"B","","Option B"
+	&,16,.,34,m%(.,3),"C","","Option C"
+	&,16,.,34,m%(.,4),"D","","Quit"
 	rem setup header
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            {$c9}mage {$c2:2}{$d3} {$d6}2.0{pound}{back arrow}37{blue}  {f6}"
-	&"{rvrs on} {cyan}        {$cd}enu {$c5}xample {$d0}rogram{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}        Menu Example Program{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	rem enable menu
 	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"
 	rem
@@ -23,17 +23,17 @@
 	goto 1811: rem no option/return to main
 {:3040}
 	rem option a
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c1} {$c5}xecuted *{rvrs off}":
-	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	&"{f6:2}{lt. blue}{rvrs on} * Option A Executed *{rvrs off}":
+	&"{f6:2}{white}- Hit Any Key -{pound}g1":
 	goto {:3006}
 {:3048}
 	rem option b
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c2} {$c5}xecuted *{rvrs off}":
-	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	&"{f6:2}{lt. blue}{rvrs on} * Option B Executed *{rvrs off}":
+	&"{f6:2}{white}- Hit Any Key -{pound}g1":
 	goto {:3006}
 {:3056}
 	rem option c
-	&"{f6:2}{lt. blue}{rvrs on} * {$cf}ption {$c3} {$c5}xecuted *{rvrs off}"
-	&"{f6:2}{white}- {$c8}it {$c1}ny {$cb}ey -{pound}g1":
+	&"{f6:2}{lt. blue}{rvrs on} * Option C Executed *{rvrs off}"
+	&"{f6:2}{white}- Hit Any Key -{pound}g1":
 	goto {:3006}
 	copr. 1994 new image 10/25/94

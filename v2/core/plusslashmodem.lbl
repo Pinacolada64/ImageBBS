@@ -13,10 +13,10 @@
 	if val(mt$)=0 then return
 {:4004}
 	get#131,a$:gosub {:4024}:gosub {:4176}:m$="z":t=50:gosub {:4156}
-	m$="e0v0":if mid$(mt$,7,1)="{$c8}"then m$=m$+"h":if mid$(mt$,6,1)="0"then m$=m$+"0"
+	m$="e0v0":if mid$(mt$,7,1)="H"then m$=m$+"h":if mid$(mt$,6,1)="0"then m$=m$+"0"
 	m$=m$+"x"+mid$(mt$,8,1)+"m"+chr$(mf+48)+"b"+mid$(mt$,10,1)
 ' &,52,43,3 - right Mnt: Modem answer disabled
-	gosub {:4014}:on-(t=0)goto {:4004}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"{$c1}"then a=48
+	gosub {:4014}:on-(t=0)goto {:4004}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"A"then a=48
 	m$="s0="+chr$(a)+"s2=27s7=25":gosub {:4014}:on-(t=0)goto {:4004}:&,22,10:goto {:4176}
 {:4014}
 	x=5
@@ -30,14 +30,14 @@
 {:4024}
 	on val(mt$)goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:return
 {:4026}
-	if mid$(mt$,2,1)="{$c4}"then{:4144}
+	if mid$(mt$,2,1)="D"then{:4144}
 	&,22,15:for x=1 to 3:print# 131,chr$(27);:&,22,5:next:&,22,10
 	if mid$(mt$,6,1)="0"then a$="h0":gosub {:4156}:goto {:4034}
-	if mid$(mt$,4,1)="{$c8}"then a$="h":gosub {:4156}
+	if mid$(mt$,4,1)="H"then a$="h":gosub {:4156}
 {:4034}
 	&,22,5:goto {:4176}
 {:4036}
-	if left$(mt$,1)<>"0"and mid$(mt$,5,1)="{$c8}"then a$="h1":gosub {:4156}
+	if left$(mt$,1)<>"0"and mid$(mt$,5,1)="H"then a$="h1":gosub {:4156}
 	return
 {:4050}
 	t=0:a$="":&,4:a=peek(780)and 127:if a=0 then return
@@ -48,7 +48,7 @@
 {:4056}
 	a=1:on b+1 goto {:4060}, {:4166}, {:4058}, {:4062}, {:4060}, {:4168}, {:4060}, {:4060}, {:4060}, {:4060}, {:4170}
 {:4058}
-	&,52,43,3:on-(mid$(mt$,3,1)="{$cd}"and a%=0)gosub {:4090}:a=2:return
+	&,52,43,3:on-(mid$(mt$,3,1)="M"and a%=0)gosub {:4090}:a=2:return
 {:4060}
 	a=0:return
 {:4062}
@@ -61,7 +61,7 @@
 ' dial number/string:
 ' 4180: set baud rate
 ' 4156: send/echo at command
-	&,52,16,1:x=b:gosub {:4180}:&"{f6}{lt. blue}{$c4}ialing {pound}$b: {pound}$c{f6}":a$="dt"+c$:gosub {:4156}
+	&,52,16,1:x=b:gosub {:4180}:&"{f6}{lt. blue}Dialing {pound}$b: {pound}$c{f6}":a$="dt"+c$:gosub {:4156}
 {:4104}
 ' check for c= key to abort
 	if peek(653)and 2 then{:4128}
@@ -86,9 +86,9 @@
 {:4126}
 	gosub {:4026}:&,22,30:a=0:return
 {:4128}
-	&"{$c1}borted{f6}":a=2:return
+	&"Aborted{f6}":a=2:return
 {:4144}
-	a=254:b=255:if mid$(mt$,9,1)="{$d2}"then a=255:b=254
+	a=254:b=255:if mid$(mt$,9,1)="R"then a=255:b=254
 	&,41,a:&,22,7:&,41,b:&,22,3:goto {:4176}
 {:4148}
 	if(peek(2033)and 128)=0 then print# 131,"at"
@@ -99,7 +99,7 @@
 ' save local mode state, enable it, output string, restore state
 	z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
 {:4156}
-	poke 667,.:poke 668,.:c$="{$d3}ent":a$="at"+a$:print# 131,a$:gosub {:4154}
+	poke 667,.:poke 668,.:c$="Sent":a$="at"+a$:print# 131,a$:gosub {:4154}
 {:4158}
 ' get modem response code
 ' return b=code, a$=string

@@ -2,10 +2,10 @@
 	on rk goto {:4002},{:4100}
 {:4002}
 	n=0
-	p$="{$cf}ther {$cf}ptions":gosub {:4026}
-	a$="{$cd}":b$="{$cd}ovie {$d3}peed":gosub {:4018}
-	a$="{$d3}":b$="{$d3}end {$cd}ail":gosub {:4018}
-	a$="{$d1}":b$="{$d2}eturn to {$cd}enu":gosub {:4018}
+	p$="Other Options":gosub {:4026}
+	a$="M":b$="Movie Speed":gosub {:4018}
+	a$="S":b$="Send Mail":gosub {:4018}
+	a$="Q":b$="Return to Menu":gosub {:4018}
 	if mm then:&"{right:9}{rvrs on}{yellow}{pound}{back arrow}32{rvrs off} {f6}"
 	if mm then:&"{right:10}{pound}{back arrow}33{f6}"
 	fd=2:return
@@ -21,37 +21,37 @@
 	return
 {:4100}
 	rs=1:tz=0
-	on-(a$="{$cd}")-2*(a$="{$d3}")-3*(a$="x")-4*(a$="x")goto {:4200},{:4300},{:4400},{:4500}
+	on-(a$="M")-2*(a$="S")-3*(a$="x")-4*(a$="x")goto {:4200},{:4300},{:4400},{:4500}
 	rs=0:return
 {:4200}
-	&"{f6:2}{yellow}{$d0}resent {$cd}ovie {$d3}peed {$c9}s{lt. green} {pound}%f{f6:2}"
-	&"{yellow}{$c5}nter {$ce}ew {$d3}peed {lt. green}(1-{$c6}aster to 20-{$d3}lower) :{lt. blue} {pound}i1":if tr%<1 then return
-	a=val(an$):if a<1 or a>20 then:&"{f6}{yellow}{$d5}nchanged{f6}":return
-	f%=a:&"{f6}{yellow}{$d3}peed {$c3}hanged {$d4}o:{lt. green} {pound}%f":return
+	&"{f6:2}{yellow}Present Movie Speed Is{lt. green} {pound}%f{f6:2}"
+	&"{yellow}Enter New Speed {lt. green}(1-Faster to 20-Slower) :{lt. blue} {pound}i1":if tr%<1 then return
+	a=val(an$):if a<1 or a>20 then:&"{f6}{yellow}Unchanged{f6}":return
+	f%=a:&"{f6}{yellow}Speed Changed To:{lt. green} {pound}%f":return
 {:4300}
-	&"{clear}{f6:2}{lt. blue}{pound}v5 {$ce}otepad{f6}"
+	&"{clear}{f6:2}{lt. blue}{pound}v5 Notepad{f6}"
 {:4302}
 	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:4312}
 {:4306}
-	p$="":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:4312}
+	p$="":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:4312}
 	on-(an$="")goto {:4346}:gosub 1046:x=i:if x then nn$=an$:goto {:4320}
-	&"{f6:2}{white}{f5}{lt. blue}{pound}v7{white}{f5} {lt. blue}{$ce}ot {$c6}ound.{f6}":goto {:4306}
+	&"{f6:2}{white}{f5}{lt. blue}{pound}v7{white}{f5} {lt. blue}Not Found.{f6}":goto {:4306}
 {:4312}
 	i=x:if x<1 or x>ur then{:4316}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"{$d2}{$c5}{$d3}"then{:4318}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES"then{:4318}
 {:4316}
-	&"{f6}{yellow}{$c9}nvalid {$c1}ccount {$ce}umber.{f6}":x=.:goto {:4346}
+	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:4346}
 {:4318}
-	&"{f6}{lt. green}{$c8}andle: {rvrs on}":&nn$:&"{f6}{yellow}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1902:if a=.then{:4302}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1902:if a=.then{:4302}
 {:4320}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:4342}:gosub 1085:if a then gosub 1980:goto {:4346}
 	on fl goto {:4330}
-	poke 53252,30:&"{f6}":&"{$d3}ubject: ":pl=.:&,1,5:if an$=""then an$="{$ce}{$c9}{$d3:2}{$c1} {$ce}ote"
-	&"{up}{$d3}ubject: {pound}v7{f6}"
+	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="NI{$d3:2}A Note"
+	&"{up}Subject: {pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:if kk=.then{:4346}
 {:4330}
-	c$="{$ce}ote":&"{f6}{$c6}iling {pound}$c {$c6}or ":&nn$:&"...{f6}"
+	c$="Note":&"{f6}Filing {pound}$c For ":&nn$:&"...{f6}"
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
 	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
 	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
@@ -60,10 +60,10 @@
 {:4342}
 	x=2:gosub 1980
 {:4344}
-	&"{f6:2}{$d3}end to another user? ":gosub 1902:if a then fl=1:goto {:4306}
+	&"{f6:2}Send to another user? ":gosub 1902:if a then fl=1:goto {:4306}
 {:4346}
 	return
 {:4400}
-	&"{$d3}orry, that is not yet supported.{pound}w1":return
+	&"Sorry, that is not yet supported.{pound}w1":return
 {:4500}
-	&"{$d3}orry, that is not yet supported.{pound}w1":return
+	&"Sorry, that is not yet supported.{pound}w1":return

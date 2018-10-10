@@ -1,7 +1,7 @@
 {number:4000}
 	rem +.lo.cr pool - credit pool
 	on-(cr<10 or ct%>1)goto {:4006}
-	&"{f6}{green}{$ca}oin {$d4}he {$c3}redit {$d0}ool? ":gosub 1907:on-(a=1)goto {:4014}:goto {:4006}
+	&"{f6}{green}Join The Credit Pool? ":gosub 1907:on-(a=1)goto {:4014}:goto {:4006}
 {:4004}
 	a$="e.cr.pool"+str$(p)+",s,r":dr=3:gosub 1011:if e%then gosub {:4034}
 {:4006}
@@ -13,15 +13,15 @@
 	return
 {:4014}
 	a=.:b=.:c=.:d=.:n=.:l=.
-	&"{f6}{gray3}{$c9}nstructions? ":gosub 1902:if a then a$="s.pool":dr=1:gosub 1075
-	&"{f6}{cyan}{$d9}ou {$c8}ave {white}":&str$(cr):&" {cyan}{$c3}redits."
+	&"{f6}{gray3}Instructions? ":gosub 1902:if a then a$="s.pool":dr=1:gosub 1075
+	&"{f6}{cyan}You Have {white}":&str$(cr):&" {cyan}Credits."
 {:4020}
-	&"{f6}{lt. green}({f5}{$d1}{f5} {$d1}uits:100 {$cd}ax){f6}{$c8}ow {$cd}any {$c3}redits? {pound}i1":on tr%+1 goto 1603:if an$="{$d1}"then return
-	a=int(val(an$)):if a<10 or a>cr or a>100 then:&"{f6}{$d3}orry, {$ce}ot {$c1}cceptable":goto {:4020}
+	&"{f6}{lt. green}({f5}Q{f5} Quits:100 Max){f6}How Many Credits? {pound}i1":on tr%+1 goto 1603:if an$="Q"then return
+	a=int(val(an$)):if a<10 or a>cr or a>100 then:&"{f6}Sorry, Not Acceptable":goto {:4020}
 	p=1:gosub {:4004}:&,2,2:n=val(a$):&,2,2:b=val(a$):close 2
-	&"{f6:2}{$d0}resent {$d0}ool {$d3}tands {$c1}t":&str$(b)
-	a%=a/10:&"{f6}{$d9}ou {$c8}ave {pound}%a {$c3}hances {$d4}o {$d7}in"
-	c=a+b:&"{f6}{$ce}ew {$d6}alue = ":&str$(c):&"{f6:2}{$c7}ood {$cc}uck!!{f6}":cr=cr-a
+	&"{f6:2}Present Pool Stands At":&str$(b)
+	a%=a/10:&"{f6}You Have {pound}%a Chances To Win"
+	c=a+b:&"{f6}New Value = ":&str$(c):&"{f6:2}Good Luck!!{f6}":cr=cr-a
 	gosub {:4008}:print# 2,n+a%:print# 2,c:close 2:gosub {:4010}:for i=1 to a%:print# 2,na$:next:close 2:return
 {:4034}
 	dr=3:a$="e.cr.pool 1":gosub 1023:print# 2,0:print# 2,0:a$="e.cr.pool 1,s,r"

@@ -12,67 +12,67 @@
 {:4014}
 	gosub {:4118}
 {:4016}
-	&"{clear}{white}{f6}{$cd}odem {$c3}onfig ":if lk%then:&"for {$d0}ort #{pound}!p"
+	&"{clear}{white}{f6}Modem Config ":if lk%then:&"for Port #{pound}!p"
 	&"{f6:2}":f=0:for i=1 to 9:b$=" ":if mt$=left$(ed$(i),l)then b$="*":f=1
 	b%=i:a$=mid$(ed$(i),l+2):&"{pound}$b {pound}%b. {pound}$a{f6}":next:b$="":if f=0 then b$="("+mt$+")"
-	&"{f6}  {$c3}. {$c3}ustom {pound}$b{f6}  {$d1}. {$d1}uit{f6}"
-	&"{f6:2} {$cd}odem {$d4}ype ":a$="{$d1}":b$="123456789{$c3}{$d1}":gosub {:4110}:if a$="{$d1}"then{:4034}
-	b=val(an$):tt$=left$(ed$(b),l):if a$="{$c3}"then tt$=mt$:gosub {:4036}
-	a$=tt$:&"{f6}{$c9}s {f5}{pound}$a{f5} {$cf}k? ":gosub 1902:if a=0 then{:4016}
-	&"{clear}{down:3}{yellow}  {$d7}riting {$cd}odem {$c3}onfig...{f6}"
-	mt$=tt$:gosub {:4004}:&"{f6:2}   {white}{$c4}one!"
+	&"{f6}  C. Custom {pound}$b{f6}  Q. Quit{f6}"
+	&"{f6:2} Modem Type ":a$="Q":b$="123456789CQ":gosub {:4110}:if a$="Q"then{:4034}
+	b=val(an$):tt$=left$(ed$(b),l):if a$="C"then tt$=mt$:gosub {:4036}
+	a$=tt$:&"{f6}Is {f5}{pound}$a{f5} Ok? ":gosub 1902:if a=0 then{:4016}
+	&"{clear}{down:3}{yellow}  Writing Modem Config...{f6}"
+	mt$=tt$:gosub {:4004}:&"{f6:2}   {white}Done!"
 {:4034}
 	return
 {:4036}
-	&"{clear}{f6}":gosub {:4044}:&"{f6}{$c3}hange {$d7}hich ({$d1}={$d1}uit)? ":a$="{$d1}":b$="123456789{$c1}{$d1}":gosub {:4110}
-	if a$="{$d1}"then return
+	&"{clear}{f6}":gosub {:4044}:&"{f6}Change Which (Q=Quit)? ":a$="Q":b$="123456789AQ":gosub {:4110}
+	if a$="Q"then return
 	if a$>"9"then a$=str$(10+asc(a$)-193)
 	a=val(a$):gosub {:4084}:goto {:4036}
 {:4044}
 	a%=val(left$(tt$,1)):a%=300*2^a%+300*(a%<2)
-	&"1. {$c8}ighest {$c2}aud {$d2}ate:{pound}%a{f6}"
-	a$="{$c4}{$d4}{$d2}":if mid$(tt$,2,1)="{$c5}"then a$="{$c5}{$d3}{$c3} {$c3}odes"
-	&"2. {$c8}angup {$cd}ethod:{pound}$a{f6}"
-	a$="{$c1}uto ({$c1}{$d4}{$d3}0=1)":if mid$(tt$,3,1)="{$cd}"then a$="{$cd}anual ({$c1}{$d4}{$c1})"
-	&"3. {$c1}nswer {$cd}ethod:{pound}$a{f6}"
-	a$="{$ce}o ":if mid$(tt$,4,1)="{$c8}"then a$=""
-	&"4. {pound}$a{$c1}{$d4}{$c8} after {$c5}{$d3}{$c3} {$c3}odes{f6}"
-	a$="{$cf}n-{$c8}ook":if mid$(tt$,5,1)="{$c8}"then a$="{$cf}ff-{$c8}ook"
-	&"5. {$cc}ocal {$cd}ode: {pound}$a{f6}"
+	&"1. Highest Baud Rate:{pound}%a{f6}"
+	a$="DTR":if mid$(tt$,2,1)="E"then a$="ESC Codes"
+	&"2. Hangup Method:{pound}$a{f6}"
+	a$="Auto (ATS0=1)":if mid$(tt$,3,1)="M"then a$="Manual (ATA)"
+	&"3. Answer Method:{pound}$a{f6}"
+	a$="No ":if mid$(tt$,4,1)="H"then a$=""
+	&"4. {pound}$aATH after ESC Codes{f6}"
+	a$="On-Hook":if mid$(tt$,5,1)="H"then a$="Off-Hook"
+	&"5. Local Mode: {pound}$a{f6}"
 	a$="":if mid$(tt$,6,1)="0"then a$="0"
-	&"6. {$c1}{$d4}{$c8} {$c3}ommand:{$c1}{$d4}{$c8}{pound}$a{f6}"
-	a$="{$ce}o":if mid$(tt$,7,1)="{$c8}"then a$="{$d9}es"
-	&"7. {$c1}{$d4}{$c8} in {$cd}odem {$d2}eset:{pound}$a{f6}"
+	&"6. ATH Command:ATH{pound}$a{f6}"
+	a$="No":if mid$(tt$,7,1)="H"then a$="Yes"
+	&"7. ATH in Modem Reset:{pound}$a{f6}"
 	a$=mid$(tt$,8,1)
-	&"8. {$c1}{$d4}{$d8} {$d6}alue: {$c1}{$d4}{$d8}{pound}$a{f6}"
-	a$="{$ce}ormal":if mid$(tt$,9,1)="{$d2}"then a$="{$d2}everse"
-	&"9. {$c4}{$d4}{$d2} {$cd}ode: {pound}$a{f6}":a$="{$c3:2}{$c9}{$d4:2}":if mid$(tt$,10,1)="1"then a$="{$c2}ell"
-	&"{$c1}. {$c3:2}{$c9}{$d4:2}/{$c2}ell: {pound}$a{f6}"
+	&"8. ATX Value: ATX{pound}$a{f6}"
+	a$="Normal":if mid$(tt$,9,1)="R"then a$="Reverse"
+	&"9. DTR Mode: {pound}$a{f6}":a$="{$c3:2}I{$d4:2}":if mid$(tt$,10,1)="1"then a$="Bell"
+	&"A. {$c3:2}I{$d4:2}/Bell: {pound}$a{f6}"
 	return
 {:4084}
 	a$=mid$(tt$,a,1):on a gosub {:4088},{:4092},{:4094},{:4096},{:4098},{:4100},{:4102},{:4104},{:4106},{:4108}
 	tt$=left$(tt$,a-1)+a$+mid$(tt$,a+1):return
 {:4088}
-	&"{$cd}aximum {$c2}aud {$d2}ate (0={$cf}ff,1=300,2=1200,{f6}3=2400,4=4800,5=9600,6=19200){f6}"
+	&"Maximum Baud Rate (0=Off,1=300,2=1200,{f6}3=2400,4=4800,5=9600,6=19200){f6}"
 	b$="0123456":goto {:4110}
 {:4092}
-	&"{$c8}angup ({$c5}={$c5}{$d3}{$c3},{$c4}={$c4}{$d4}{$d2}){f6}":b$="{$c5}{$c4}":goto {:4110}
+	&"Hangup (E=ESC,D=DTR){f6}":b$="ED":goto {:4110}
 {:4094}
-	&"{$c1}nswer ({$c1}={$c1}uto,{$cd}={$cd}anual){f6}":b$="{$c1}{$cd}":goto {:4110}
+	&"Answer (A=Auto,M=Manual){f6}":b$="AM":goto {:4110}
 {:4096}
-	&"{$c1}{$d4}{$c8} after {$c5}{$d3}{$c3} ({$ce}={$ce}o,{$c8}={$d9}es){f6}":b$="{$ce}{$c8}":goto {:4110}
+	&"ATH after ESC (N=No,H=Yes){f6}":b$="NH":goto {:4110}
 {:4098}
-	&"{$cc}ocal ({$ce}={$cf}n {$c8}ook,{$c8}={$cf}ff {$c8}ook){f6}":b$="{$ce}{$c8}":goto {:4110}
+	&"Local (N=On Hook,H=Off Hook){f6}":b$="NH":goto {:4110}
 {:4100}
-	&"{$c1}{$d4}{$c8} (0={$c1}{$d4}{$c8}0,{f5} {f5}={$c1}{$d4}{$c8}){f6}":b$="0 ":goto {:4110}
+	&"ATH (0=ATH0,{f5} {f5}=ATH){f6}":b$="0 ":goto {:4110}
 {:4102}
-	&"{$cd}odem {$d2}eset ({$c8}={$c8}angup,{$ce}={$ce}o {$c8}angup){f6}":b$="{$c8}{$ce}":goto {:4110}
+	&"Modem Reset (H=Hangup,N=No Hangup){f6}":b$="HN":goto {:4110}
 {:4104}
-	&"{$c1}{$d4}{$d8} {$d6}alue (1, 2, 3, 4){f6}":b$="1234":goto {:4110}
+	&"ATX Value (1, 2, 3, 4){f6}":b$="1234":goto {:4110}
 {:4106}
-	&"{$c4}{$d4}{$d2} {$cd}ode ({$ce}={$ce}ormal,{$d2}={$d2}everse){f6}":b$="{$ce}{$d2}":goto {:4110}
+	&"DTR Mode (N=Normal,R=Reverse){f6}":b$="NR":goto {:4110}
 {:4108}
-	&"{$c3:2}{$c9}{$d4:2}/{$c2}ell (0={$c3:2}{$c9}{$d4:2},1={$c2}ell){f6}":b$="01":goto {:4110}
+	&"{$c3:2}I{$d4:2}/Bell (0={$c3:2}I{$d4:2},1=Bell){f6}":b$="01":goto {:4110}
 {:4110}
 	&">"
 {:4112}
@@ -81,16 +81,16 @@
 	next:goto {:4112}
 {:4118}
 	rem default options
-	ed$(1)="2{$c5}{$c1}{$ce:2} {$ce}1{$ce}1 1670 ({$cf}ld {$cd}odel)"
-	ed$(2)="2{$c5}{$c1}{$c8:2} {$c8}2{$ce}1 1670 ({$ce}ew {$cd}odel)"
-	ed$(3)="2{$c5}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}ayes  300 {$ce}o {$c4}{$d4}{$d2}"
-	ed$(4)="2{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}ayes  300 {$c4}{$d4}{$d2}"
-	ed$(5)="2{$c5}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}ayes 1200 {$ce}o {$c4}{$d4}{$d2}"
-	ed$(6)="2{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}ayes 1200 {$c4}{$d4}{$d2}"
-	ed$(7)="3{$c4}{$cd}{$c8:2}0{$c8}1{$ce}1 {$c8}ayes 2400 {$c4}{$d4}{$d2}"
-	ed$(8)="3{$c4}{$cd}{$c8:2}0{$c8}4{$ce}1 {$d3}upra 2400"
-	ed$(9)="3{$c5}{$cd}{$c8:2}0{$c8}4{$ce}1 {$c1}protek 2400"
-	ed$(0)="3{$c5}{$cd}{$c8}{$ce}0{$c8}4{$ce}1 {$c3}ustom":l=10
+	ed$(1)="2EA{$ce:2} N1N1 1670 (Old Model)"
+	ed$(2)="2EA{$c8:2} H2N1 1670 (New Model)"
+	ed$(3)="2EM{$c8:2}0H1N1 Hayes  300 No DTR"
+	ed$(4)="2DM{$c8:2}0H1N1 Hayes  300 DTR"
+	ed$(5)="2EM{$c8:2}0H1N1 Hayes 1200 No DTR"
+	ed$(6)="2DM{$c8:2}0H1N1 Hayes 1200 DTR"
+	ed$(7)="3DM{$c8:2}0H1N1 Hayes 2400 DTR"
+	ed$(8)="3DM{$c8:2}0H4N1 Supra 2400"
+	ed$(9)="3EM{$c8:2}0H4N1 Aprotek 2400"
+	ed$(0)="3EMHN0H4N1 Custom":l=10
 	return
 	rem 0,300,1200,2400,4800,9600,19200
 	rem

@@ -16,9 +16,9 @@
 {:3006}
 	dr=3:gosub 1010:print# 15,"s"m$:&,60,3,0,jm%(0,0),3000,m$,dv%:goto 1012
 {:3008}
-	&"{$c3}hanges made-- {$d3}ave? ":gosub 1902:on a gosub {:3006}:return
+	&"Changes made-- Save? ":gosub 1902:on a gosub {:3006}:return
 {:3100}
-	&"{f6}{$c5}dit {$d7}hich {$cd}enu: {pound}i1":m=val(an$):if tr%=0 or m=0 then return
+	&"{f6}Edit Which Menu: {pound}i1":m=val(an$):if tr%=0 or m=0 then return
 	gosub {:3002}
 {:3104}
 ' get string from struct: 30 chars, starting from char 5 (?), return in a$
@@ -26,30 +26,30 @@
 	for x=0 to 49:&,60,1,30,jm%(5,x),a$:a%=x:b%=jm%(1,x)and 32767
 	&"{white}{pound}#2{pound}%a:{pound}#5{pound}%b {pound}$a{f6}":x=x+rc*50:next
 {:3108}
-	&"{f6}{$cf}ptions: {$cc}ist {$c5}dit {$d1}uit{f6:2}>"
+	&"{f6}Options: List Edit Quit{f6:2}>"
 {:3110}
 	&"{pound}g1":if tr%=0 then return
-	on-(an$="{$d1}")-2*(an$="{$cc}")-3*(an$="{$c5}")goto {:3114},{:3116},{:3120}:goto {:3110}
+	on-(an$="Q")-2*(an$="L")-3*(an$="E")goto {:3114},{:3116},{:3120}:goto {:3110}
 {:3114}
-	&"{$d1}uit{f6:2}":on tz gosub {:3008}:goto {:3100}
+	&"Quit{f6:2}":on tz gosub {:3008}:goto {:3100}
 {:3116}
-	&"{$cc}ist{f6:2}":goto {:3104}
+	&"List{f6:2}":goto {:3104}
 	&,28,1:goto 1811
 {:3120}
-	poke 53252,2:&"{$c5}dit #{pound}i1{f6}":x=val(an$):if x<0 or x>49 then{:3108}
+	poke 53252,2:&"Edit #{pound}i1{f6}":x=val(an$):if x<0 or x>49 then{:3108}
 {:3122}
-	&"{clear}{$c9}tem#{pound}!x:{f6:2}":a%=jm%(1,x)and 32767
-	&"1. {$c1}ccess: {pound}%a{f6}":a%=jm%(0,x)and 255
+	&"{clear}Item#{pound}!x:{f6:2}":a%=jm%(1,x)and 32767
+	&"1. Access: {pound}%a{f6}":a%=jm%(0,x)and 255
 ' seemingly not implemented in im.menus, but is in +.convert menu
 ' maybe it's a flag for 'is the command active'?
 ' todo: display each bit of the byte?
-	&"2. {$c6}lags: {pound}%a{f6}"
-	&"3. {$d4}ext:{f6}":&,60,1,50,jm%(5,x),a$
+	&"2. Flags: {pound}%a{f6}"
+	&"3. Text:{f6}":&,60,1,50,jm%(5,x),a$
 	&:&"{f6}>{pound}g1":a=val(an$):if a then on a gosub {:3134},{:3136},{:3138}:goto {:3122}
 	goto {:3108}
 {:3134}
-	poke 53252,5:&"{$c1}ccess: {pound}i1":jm%(1,x)=val(an$):tz=1:return
+	poke 53252,5:&"Access: {pound}i1":jm%(1,x)=val(an$):tz=1:return
 {:3136}
-	poke 53252,3:&"{$c6}lags: {pound}i1":jm%(0,x)=val(an$):tz=1:return
+	poke 53252,3:&"Flags: {pound}i1":jm%(0,x)=val(an$):tz=1:return
 {:3138}
-	poke 53252,50:p$="{$d4}ext":pl=0:&,1,9:&,60,0,50,jm%(5,x),an$:tz=1:return
+	poke 53252,50:p$="Text":pl=0:&,1,9:&,60,0,50,jm%(5,x),an$:tz=1:return

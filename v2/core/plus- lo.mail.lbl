@@ -1,20 +1,20 @@
 {number:4000}
 	a=9:gosub 1004:on-(a=.)goto {:4026}:b%=.:a%=.:mm=.
-	a$="r":tt$=na$:gosub 1062:if e%then:&"{f6}{$d3}orry, {$ce}o {$cd}ail {$d4}oday.{f6}":goto {:4026}
-	if i%or k%then close 2:&"{f6:2}{gray3}{$d9}ou have {$cd}ail":goto {:4024}
+	a$="r":tt$=na$:gosub 1062:if e%then:&"{f6}Sorry, No Mail Today.{f6}":goto {:4026}
+	if i%or k%then close 2:&"{f6:2}{gray3}You have Mail":goto {:4024}
 {:4006}
-	&".":if rc then close 2:&"{f6:2}{gray3}{$d9}ou have {$cd}ail":goto {:4024}
+	&".":if rc then close 2:&"{f6:2}{gray3}You have Mail":goto {:4024}
 	b%=b%+1:input# 2,a$,a$,a$:if mid$(a$,2)>mid$(ld$,2)then a%=a%+1
 {:4010}
 	&,2,2:s=st:on tr%+1 goto {:4026}:on-(a$<>"{up arrow}")goto {:4010}:on-(s=.)goto {:4006}:close 2
 	&"{f6}":a$="s.mail":dr=1:gosub 1076:b$="":if b%>1 then b$="s"
-	c$="{$c9}t {$c9}s":if a%>1 then c$="{$c1}re"
-	mm=1:&"{f6}{green}{$d9}ou {$c8}ave {white}{pound}%b{green} {$d0}iece{pound}$b {$cf}f {$cd}ail":if a%=1 then:&"{f1}{green} {pound}$c {$ce}ew":goto {:4024}
-	if b%>1 then if a%=1 then:&"{f1}{white}{pound}%a {green}{$c9}s {$ce}ew":goto {:4024}
-	if b%>1 then if a%=b%then:&"{f1} {green}{$c1}ll {pound}$c {$ce}ew":goto {:4024}
-	&"{f1}{white} {pound}%a {green}{pound}$c {$ce}ew"
+	c$="It Is":if a%>1 then c$="Are"
+	mm=1:&"{f6}{green}You Have {white}{pound}%b{green} Piece{pound}$b Of Mail":if a%=1 then:&"{f1}{green} {pound}$c New":goto {:4024}
+	if b%>1 then if a%=1 then:&"{f1}{white}{pound}%a {green}Is New":goto {:4024}
+	if b%>1 then if a%=b%then:&"{f1} {green}All {pound}$c New":goto {:4024}
+	&"{f1}{white} {pound}%a {green}{pound}$c New"
 {:4024}
-	&"!{f6:2}{$d2}ead {$ce}ow?: ":goto 1907
+	&"!{f6:2}Read Now?: ":goto 1907
 {:4026}
 	close 2:a=.:return
 	copr. 1994 new image 11/27/94

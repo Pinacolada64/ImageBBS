@@ -1,26 +1,26 @@
 {number:4000}
 	&,27,2:fd=10:bl=10:dim s%(8+bl,fd):tz=0:gosub {:4002}:&,28,2:return
 {:4002}
-	dr=3:a$="e.{$d5}/{$c4}":gosub 1011:if e%then:&"{f6}{$c5}rror opening {$d5}{$c4} file{f6:2}{pound}w1":return
+	dr=3:a$="e.U/D":gosub 1011:if e%then:&"{f6}Error opening UD file{f6:2}{pound}w1":return
 	&,2,2:bz=val(a$):for x=2 to bz+1:gosub 1001:&,2,2:&,2,2:&,2,2:tt$(x-1)=a$:next
-	close 2:tt$(0)="{$ce}one":a$=dr$+"e.filelists":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
+	close 2:tt$(0)="None":a$=dr$+"e.filelists":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
 	s$="                                        "
 	for i=1 to fd:&,60,1,16,s%(1,i),b$:if s%(0,i)=0 or b$=""then{:4038}
-	dr=3:a$="e.{$d5}/{$c4}":gosub 1011:x=s%(0,i)+1:gosub 1001:&,2,2:&,2,2:&,2,2:&,2,2
+	dr=3:a$="e.U/D":gosub 1011:x=s%(0,i)+1:gosub 1001:&,2,2:&,2,2:&,2,2:&,2,2
 	&,2,2:d1%=val(a$):&,2,2:d2%=val(a$):close 2
 	dr=0:gosub 1010:print# 15,"s"dr$b$:a$=b$+",s,w":gosub 1011
-	print# 2,"{white}{$c6}ile list: {cyan}{$04}"d1$:dr=4:gosub 1009:close 16:open 16,dv%,15
+	print# 2,"{white}File list: {cyan}{$04}"d1$:dr=4:gosub 1009:close 16:open 16,dv%,15
 	for j=1 to bl:a=s%(8+j,i):if a=0 then{:4036}
 	print# 2,"{lt. blue}"tt$(a)r$
 	close 3:open 3,dv%,3,dr$+"d.u/d"+str$(a)+",s,r":input# 16,e%
-	k=1:on-(e%<>0)goto {:4034}:&"{$d5}{$c4}{pound}!a"
+	k=1:on-(e%<>0)goto {:4034}:&"UD{pound}!a"
 	&,2,3:a=val(a$):on-(a=0)goto {:4034}:for k=1 to a:&,2,3:b=val(a$):&,2,3:&,2,3
 	d$=mid$(a$,4,2)+"/"+mid$(a$,6,2)+"/"+mid$(a$,2,2):f$=mid$(a$,23)
 	f$=left$(f$,len(f$)-2)+","+right$(f$,1):&,2,3:b$=a$:&,2,3:&,2,3:n=val(a$)
 	print# 2,"{white}"right$(s$+str$(b),4);" {cyan}";left$(f$+s$,20);" {white}"d$:rem print#2,b$
 	&".":next:&"{f6}"
 {:4034}
-	print# 2,r$;"{white}"k-1"{$c6}iles"r$:close 3
+	print# 2,r$;"{white}"k-1"Files"r$:close 3
 {:4036}
 	next:close 2
 {:4038}

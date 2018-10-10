@@ -1,7 +1,9 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	&,28,1:dim jm%(29,49)
 {:3002}
-	&"{$cd}enu #: {pound}i1":m=val(an$):if m<>0 then gosub {:3006}:goto {:3002}
+	&"Menu #: {pound}i1":m=val(an$):if m<>0 then gosub {:3006}:goto {:3002}
 	&,28,1:goto 1812
 {:3006}
 	n=0:dr=1:a$="s.menu"+str$(m)+",s,r":gosub 1011:if e%then close 2:&:return

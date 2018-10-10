@@ -269,6 +269,7 @@
 ' maybe: specify color of title as $80+c, for reverse text)
 ' to clear Area: cm$="":gosub 1360
 	if peek(17139)=. then:&,69,4,21," "+left$(cm$+"{space:21}",21)+" ",$8c
+{number:1362}
 	return
 {:1370}
 {number:1370}
@@ -542,7 +543,7 @@
 ' New Image Software:
 '	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b Mode: O{pound}v7{f6}":return ' 55 bytes
 ' X-Tec 2018/08/05:
-'	a=1-a:a=abs(a):an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b Mode: {$cf}{pound}v7{f6}":return ' 62 bytes
+'	a=1-a:a=abs(a):an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b Mode: O{pound}v7{f6}":return ' 62 bytes
 ' Pinacolada 2018/08/06:
 	a=abs(1-a):&"{f6}{pound}$b Mode: O"+mid$("ffn",a*2+1,2)+"{f6}":return ' 54 bytes
 {:1871}
@@ -568,12 +569,13 @@
 {number:1890}
 {:1890}
 ' R - Run a plus-file, X-Tec's mod asks for device/drive:
+' 1470 splits an$ into an$ and a$
 	poke 53252,14:&"{f6:2}Run: +.{pound}i0":b$=an$:on -(b$="")goto {:1812}:gosub {:1008}:gosub {:1470}
 {:1900}
 {number:1900}
 ' update Area window, set cm$ for error logging
-' Pinacolada's fix: shorten on-goto
-	cm$=b$:gosub {:1360}:a$=b$:gosub {:1014}:on e%+1 goto {:3000}:goto {:1906}
+' Pinacolada's fix: remove redundant gosub {:1360}, shorten on-goto
+	a$=b$:gosub {:1014}:on e%+1 goto {:3000}:goto {:1906}
 ' on 1-(e%=.) goto 1906,3000 ' 19 bytes
 ' on e%+1 goto 3000:goto 1906 '16 bytes
 {:1901}

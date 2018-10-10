@@ -3,12 +3,12 @@
 {:4002}
 	im=3:gosub 2428:tz$=an$:return
 {:4004}
-	&"{f6}{$c1}utoweed {$c3}utoff: {pound}i1":n=val(an$):if an$=""then return
-	if n<.or n>48 then:&"{f6}0 to 48 {$d0}lease. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort.{f6}":goto {:4004}
+	&"{f6}Autoweed Cutoff: {pound}i1":n=val(an$):if an$=""then return
+	if n<.or n>48 then:&"{f6}0 to 48 Please. Press RETURN to Abort.{f6}":goto {:4004}
 	gosub 1063:x=39:gosub 1001:print# 2,n:a%(2)=n:close 2:return
 {:4010}
-	&"{f6}{$cc}t. {$cb}ernal {$c4}evice (0 {$c9}f {$ce}one): {pound}i1":n=val(an$):if an$=""then return
-	if n and(n<7 or n>32)then:&"{f6}7 to 32 {$d0}lease. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort.{f6}":goto {:4010}
+	&"{f6}Lt. Kernal Device (0 If None): {pound}i1":n=val(an$):if an$=""then return
+	if n and(n<7 or n>32)then:&"{f6}7 to 32 Please. Press RETURN to Abort.{f6}":goto {:4010}
 	gosub 1063:x=38:gosub 1001:print# 2,n:close 2:lk%=n:return
 {:4016}
 	&"{f6}":for i=1 to 15:a%=i:a$=tt$(i):&"{white}{pound}#2{pound}# {pound}%a{pound}c"+chr$(48+i)+" {pound}$a"
@@ -16,53 +16,53 @@
 	if(i and 1)=.then:&"{f6}"
 	next:&"{white}"
 {:4024}
-	&"{$c4}efault {$c3}olor: {pound}i1":n=val(an$):if an$=""then return
-	if n<1 or n>15 then:&"1 to 15 {$d0}lease. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort.{f6}":goto {:4024}
+	&"Default Color: {pound}i1":n=val(an$):if an$=""then return
+	if n<1 or n>15 then:&"1 to 15 Please. Press RETURN to Abort.{f6}":goto {:4024}
 	gosub 1063:x=40:gosub 1001:print# 2,n:a%(3)=n:close 2:df%=n:return
 {:4030}
-	&"{f6}{$d0}rinter {$d3}econdary {$c1}ddress: {pound}i1":n=val(an$):if an$=""then return
-	if(n<.or n>32)then:&"{f6}0 to 32 {$d0}lease. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort.{f6}":goto {:4030}
+	&"{f6}Printer Secondary Address: {pound}i1":n=val(an$):if an$=""then return
+	if(n<.or n>32)then:&"{f6}0 to 32 Please. Press RETURN to Abort.{f6}":goto {:4030}
 	gosub 1063:x=41:gosub 1001:print# 2,n:a%(4)=n:close 2:close 4:open 4,4,n:return
 {:4036}
-	&"{f6}{$d3}end {$cc}inefeeds to the printer? ":gosub 1902:n=.:if a then n=10
+	&"{f6}Send Linefeeds to the printer? ":gosub 1902:n=.:if a then n=10
 	gosub 1063:x=42:gosub 1001:print# 2,n:a%(5)=n:close 2:poke 17136,n:return
 {:4040}
-	&"{f6}":poke 53252,30:pl=.:p$="{gray3}{$cd}ask{white}":w$=mm$:&,1,41
-	if an$=""or an$=w$or an$=r$or tr%<1 then:&"{$ce}o {$c3}hange":return
+	&"{f6}":poke 53252,30:pl=.:p$="{gray3}Mask{white}":w$=mm$:&,1,41
+	if an$=""or an$=w$or an$=r$or tr%<1 then:&"No Change":return
 	&,15,2:gosub 1063:x=43:gosub 1001:print# 2,an$:close 2:mm$=an$:return
 {:4046}
-	poke 53252,20:pl=.:w$=po$:p$="{$cd}ain":&"{f6}":&,1,41:on tr%+1 goto {:4052}:if an$=w$then{:4062}
+	poke 53252,20:pl=.:w$=po$:p$="Main":&"{f6}":&,1,41:on tr%+1 goto {:4052}:if an$=w$then{:4062}
 	po$=an$:dr=5:a$="bd.data,s,r":gosub 1011:for i=1 to 4:&,2,2:tt$(i)=a$:next
 	tt$(3)=po$:dr=5:a$="bd.data":gosub 1023:for i=1 to 4:print# 2,tt$(i):next:close 2
 {:4052}
 	return
 {:4054}
-	poke 53252,30:pl=.:w$=bn$:p$="{$c2}oard {$ce}ame":&"{f6}":&,1,32
+	poke 53252,30:pl=.:w$=bn$:p$="Board Name":&"{f6}":&,1,32
 	if tr%<1 or an$=bn$then{:4062}
 	bn$=an$:gosub 1063:x=47:gosub 1001:print# 2,bn$:close 2
 	return
 {:4062}
-	&"{clear}{f6} {lt. green}{$c3}hat {$cd}essage {$c5}ditor{f6}{white}{pound}vj 1) {gray3}{$c5}ntry {$cd}essage{f6} {white}2) {gray3}{$c5}xit {$cd}essage{f6}{white}{pound}vj"
-	poke 53252,30:&" {green}{$d7}hich? {pound}g1{f6}":a=val(an$):on tr%+1 goto {:4080}
+	&"{clear}{f6} {lt. green}Chat Message Editor{f6}{white}{pound}vj 1) {gray3}Entry Message{f6} {white}2) {gray3}Exit Message{f6}{white}{pound}vj"
+	poke 53252,30:&" {green}Which? {pound}g1{f6}":a=val(an$):on tr%+1 goto {:4080}
 	on a goto {:4068},{:4074}:goto {:4080}
 {:4068}
-	pl=.:w$=mid$(c1$,4,len(c1$)-5):p$="{gray3}{$c5}ntry{white}":&"{f6}":&,1,32
+	pl=.:w$=mid$(c1$,4,len(c1$)-5):p$="{gray3}Entry{white}":&"{f6}":&,1,32
 	if an$=w$or tr%<1 then{:4062}
 	gosub 1063:x=48:gosub 1001:print# 2,an$:c1$="{clear}{f6}{$07}"+an$+"{f6:2}":close 2:goto {:4062}
 {:4074}
-	pl=.:w$=mid$(c2$,3,len(c2$)-4):p$="{gray3}{$c5}xit{white}":&"{f6}":&,1,32
+	pl=.:w$=mid$(c2$,3,len(c2$)-4):p$="{gray3}Exit{white}":&"{f6}":&,1,32
 	if an$=w$or tr%<1 then{:4062}
 	gosub 1063:x=49:gosub 1001:print# 2,an$:c2$="{f6:2}"+an$+"{f6:2}":close 2:goto {:4062}
 {:4080}
 	return
 {:4082}
-	poke 53252,2:pl=1:w$=cc$:p$="{yellow}{$d3}ystem {$c9}{$c4}{white}":&"{f6}":&,1,32
+	poke 53252,2:pl=1:w$=cc$:p$="{yellow}System ID{white}":&"{f6}":&,1,32
 	if tr%<1 or an$=cc$then{:4088}
 	cc$=an$:gosub 1063:x=51:gosub 1001:print# 2,cc$:close 2
 {:4088}
 	return
 {:4090}
-	poke 53252,5:pl=1:w$=mid$(str$(nc),2):p$="{cyan}{$ce}ew {$c3}redits":&"{f6}":&,1,32
+	poke 53252,5:pl=1:w$=mid$(str$(nc),2):p$="{cyan}New Credits":&"{f6}":&,1,32
 	on tr%+1 goto {:4096}
 	if an$<>""then nc=val(an$):gosub 1063:x=58:gosub 1001:print# 2,nc:close 2
 {:4096}

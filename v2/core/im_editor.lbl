@@ -1,18 +1,18 @@
 {number:60000}
 {step:2}
-{alpha:upper}
+{alpha:alt}
 {crunch:on}
 	on im goto {:60082},{:60088}:return
 {:60002}
 	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
 {:60004}
-	p$="{$c6}ilename":b$=b$+" {$c6}ile"
+	p$="Filename":b$=b$+" File"
 {:60006}
 	&"{pound}$b {pound}g1":fl=0:if an$<>r$then:&"{pound}h"+chr$(65+len(b$)):fl=1:return
 	&"{f6}":return
 {:60010}
-	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{white}{rvrs on}{$d4}otal {$cc}ines:{f6}{gray3}{$c1}vailable  : {yellow}{pound}%a"
-	&"{pound}{back arrow}20{gray3}{$c9}n {$cd}emory  : {yellow}{pound}%b{f6}{gray3}{$d2}emaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}{$c6}ree {$cd}emory: {yellow}{pound}%z"
+	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{white}{rvrs on}Total Lines:{f6}{gray3}Available  : {yellow}{pound}%a"
+	&"{pound}{back arrow}20{gray3}In Memory  : {yellow}{pound}%b{f6}{gray3}Remaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}Free Memory: {yellow}{pound}%z"
 	&"{lt. green}{f6:2}":return
 {:60016}
 ' reset mci defaults, exit
@@ -27,7 +27,7 @@
 	poke 53252,ll%-2:if zz then poke 1022,254
 	return
 {:60030}
-	b$="{$c7}et":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
+	b$="Get":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
 {:60032}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60032}
 	gosub 1010:a$="r":gosub {:60002}:gosub 1372:if e%then close 6:&:goto {:60110}
@@ -35,7 +35,7 @@
 	&,2,6:tt$(kk)=a$:kk=kk+1:gosub 1373:on-(z%>100 and kk<254 and st=0)goto {:60036}
 	close 6:goto {:60110}
 {:60040}
-	on kk goto {:60108}:b$="{$d0}ut":gosub {:60004}:on fl goto {:60108}:&"{f6:2}"
+	on kk goto {:60108}:b$="Put":gosub {:60004}:on fl goto {:60108}:&"{f6:2}"
 	if v$<>""then poke 53252,16:w$=v$:&,1,32:goto {:60046}
 	gosub 1005:if an$=""then{:60110}
 {:60046}
@@ -47,22 +47,22 @@
 	a$="w":gosub {:60002}:if e%=.then{:60062}
 {:60054}
 	close 6:&:if e%<>63 then{:60066}
-	&"{f6} [{$c1}]ppend [{$d2}]eplace [{$d1}]uit: {pound}i1":if an$="{$d1}"or tr%<1 then{:60066}
-	if an$="{$d2}"then a$=v$:gosub 1024:goto {:60052}
-	on-(an$<>"{$c1}")goto {:60054}:a$="a":gosub {:60002}:if e%then{:60066}
+	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then{:60066}
+	if an$="R"then a$=v$:gosub 1024:goto {:60052}
+	on-(an$<>"A")goto {:60054}:a$="a":gosub {:60002}:if e%then{:60066}
 {:60062}
 	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
 	next:&,14,6,kk-1
 {:60066}
 	close 6:gosub 1081:goto {:60110}
 {:60068}
-	b$="{$d6}iew {$c4}irectory":gosub {:60006}:on fl goto {:60108}:gosub 1008:gosub 1089:goto {:60110}
+	b$="View Directory":gosub {:60006}:on fl goto {:60108}:gosub 1008:gosub 1089:goto {:60110}
 {:60070}
-	&"{$d1}uery{f6}":goto {:60110}
+	&"Query{f6}":goto {:60110}
 {:60072}
-	b$="{$c4}isk {$c3}ommand":gosub {:60006}:on fl goto {:60108}:&"{f6:2}":gosub 1450:goto {:60110}
+	b$="Disk Command":gosub {:60006}:on fl goto {:60108}:&"{f6:2}":gosub 1450:goto {:60110}
 {:60074}
-	b$="{$d2}ead":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
+	b$="Read":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60110}
 	gosub 1010:a$="r":gosub {:60002}:if e%then close 6:&:goto {:60110}
 	&,3,6:close 6:goto {:60110}
@@ -76,7 +76,7 @@
 {:60092}
 	kk=peek(1016):on a goto {:60094},{:60102},{:60098}:&"{f6:2}":b%=kk-1:kk=.:goto {:60016}
 {:60094}
-	poke 2031,0:b%=kk-1:&"{f6}{pound}%b "+left$("{$cc}ines",4-(b%<>1))+" {$d5}sed.{f6}":if kk=1 then a=0:goto {:60092}
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b "+left$("Lines",4-(b%<>1))+" Used.{f6}":if kk=1 then a=0:goto {:60092}
 	b%=kk:goto {:60016}
 {:60098}
 	poke 2031,0:dr=1:a$="s.menu 3":gosub 1075:goto {:60088}

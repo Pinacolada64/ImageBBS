@@ -27,11 +27,11 @@
 	lf=val(left$(uf$,1)):&,52,44,val(mid$(uf$,3,1)):&,52,34,val(mid$(uf$,2,1))
 	goto 1072
 {:60046}
-	on peek(53256)goto {:60054}:cc=.:poke 53256,1:&"{f6}{lt. green}{$d2}eason {$c6}or {$c3}hat?{f6:2}{$c3}hat: {pound}i1"
-	on-(an$="")goto {:60060}:a$=" {$c3}hat: "+an$:d$=an$:gosub 1095:a$=d$:gosub 1376
+	on peek(53256)goto {:60054}:cc=.:poke 53256,1:&"{f6}{lt. green}Reason For Chat?{f6:2}Chat: {pound}i1"
+	on-(an$="")goto {:60060}:a$=" Chat: "+an$:d$=an$:gosub 1095:a$=d$:gosub 1376
 	&,52,1,3:&,25,1,a%*255:&,52,.,3:on a%goto {:60052}:gosub {:60054}:goto 1678
 {:60052}
-	&"{f6}{$d0}aging {$ce}ow!{f6}":return
+	&"{f6}Paging Now!{f6}":return
 {:60054}
 	cc=cc+1:dr=1:a$="s.chat"+str$(cc):gosub 1076
 	if e%then:&,52,33,3:if a%then tr%=.
@@ -39,8 +39,8 @@
 {:60060}
 	poke 53256,.:goto 1920
 {:60062}
-	&"{f6}{$d4}ime {$c1}nd {$c4}ate:{f6:2}{$cc}ogon: {$04}"+lt$:&"{f6}{$ce}ow:   {pound}v0{f6:2}{$cd}inutes {$cc}eft: "
-	a%=tr%:a$="{pound}%a":if a%>99 then a$="{$c9}nfinite"
+	&"{f6}Time And Date:{f6:2}Logon: {$04}"+lt$:&"{f6}Now:   {pound}v0{f6:2}Minutes Left: "
+	a%=tr%:a$="{pound}%a":if a%>99 then a$="Infinite"
 	&:return
 {:60068}
 	gosub 1068:gosub 1074:&,11
@@ -64,36 +64,36 @@
 	gosub {:60086}:gosub 1065:&,16:close 2
 	i=a%:return
 {:60092}
-	if i%=.then:&"{f6}{$d3}orry, {$c9}nstant {$cd}ode {$cf}nly...{f6:2}":return
+	if i%=.then:&"{f6}Sorry, Instant Mode Only...{f6:2}":return
 {:60094}
-	lp=1:&"{f6}{$c5}nter the {$c8}andle or {$c9}{$c4} you wish to switch to ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to {$c1}bort){f6}"
-	p$="{$c8}andle":poke 53252,20:gosub 1006:if an$=""then return
-	i=val(an$):if i<1 or i>ur then gosub {:60088}:if i=.then:&"{f6}{$ce}ot found!{f6:2}":goto {:60094}
-	gosub 1065:x=i:gosub 1001:&,2,2:if a$="{up arrow}"then:&"{f6}{$c4}eleted {$c9}{$c4}!{f6:2}":goto {:60094}
+	lp=1:&"{f6}Enter the Handle or ID you wish to switch to (RETURN to Abort){f6}"
+	p$="Handle":poke 53252,20:gosub 1006:if an$=""then return
+	i=val(an$):if i<1 or i>ur then gosub {:60088}:if i=.then:&"{f6}Not found!{f6:2}":goto {:60094}
+	gosub 1065:x=i:gosub 1001:&,2,2:if a$="{up arrow}"then:&"{f6}Deleted ID!{f6:2}":goto {:60094}
 	id=i:gosub {:60026}:goto 1073
 {:60104}
 ' check post/respond flag:
 	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60114}
 {:60108}
-	p$="":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60114}
+	p$="":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60114}
 	on tr%+1 goto {:60148}:on-(an$="")goto {:60148}:gosub 1046:x=i:if x then nn$=an$:goto {:60122}
-	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}{$ce}ot {$c6}ound.{f6}":goto {:60108}
+	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}Not Found.{f6}":goto {:60108}
 {:60114}
 	i=x:if x<1 or x>ur then{:60118}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"{$d2}{$c5}{$d3}"then{:60120}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES"then{:60120}
 {:60118}
-	&"{f6}{yellow}{$c9}nvalid {$c1}ccount {$ce}umber.{f6}":x=.:goto {:60148}
+	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:60148}
 {:60120}
-	&"{f6}{lt. green}{$c8}andle: {rvrs on}":&nn$:&"{f6}{yellow}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1907:if a=.then{:60104}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=.then{:60104}
 {:60122}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:60144}:gosub 1085:if a then gosub 1980:goto {:60148}
 	on fl goto {:60132}
-	poke 53252,30:&"{f6}":&"{$d3}ubject: ":pl=.:&,1,5:if an$=""then an$="{$ce}ote":c$=an$
-	&"{up}{$d3}ubject: {pound}v7{f6}"
+	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="Note":c$=an$
+	&"{up}Subject: {pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:on tr%+1 goto {:60148}:if kk=.then{:60148}
 {:60132}
-	&"{f6}{$c6}iling {pound}$c {$c6}or ":&nn$:&"...{f6}"
+	&"{f6}Filing {pound}$c For ":&nn$:&"...{f6}"
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
 	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
 	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
@@ -103,7 +103,7 @@
 	x=2:gosub 1980
 {:60146}
 ' if pr$="EM" then this should only ask if in E-Mail subsystem, not +.am.num squ
-	&"{f6:2}{$d3}end to another user? ":gosub 1902:if a then fl=1:goto {:60108}
+	&"{f6:2}Send to another user? ":gosub 1902:if a then fl=1:goto {:60108}
 {:60148}
 	return
 	copr. 1994 new image 9/19/94

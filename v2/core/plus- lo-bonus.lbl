@@ -7,19 +7,19 @@
 {:4010}
 	c%=50:rem tc%  /10
 {:4012}
-	a%=tc%:&"{f6:2}{green}{$d4}his is {$d9}our {pound}#0{pound}%ath {$c3}all!":goto {:4024}
+	a%=tc%:&"{f6:2}{green}This is Your {pound}#0{pound}%ath Call!":goto {:4024}
 {:4014}
 	c%=100:rem ca /100
-	a=ca:&"{f6:2}{green}{$d9}ou are the {pound}!ath {$c3}aller to the {$d3}ystem!":goto {:4024}
+	a=ca:&"{f6:2}{green}You are the {pound}!ath Caller to the System!":goto {:4024}
 {:4018}
 	c%=200:rem tc%/100 & ca/100
 {:4020}
-	a=ca:a%=tc%:&"{f6:2}{$0f}{green}{rvrs on}{$d9}{$cf}{$d5} {$c8}{$c9}{$d4}{$a0}{$d4}{$c8}{$c5}{$a0}{$ca}{$c1}{$c3}{$cb}{$d0}{$cf}{$d4}!{f6:2}{lt. red}{$d9}our {pound}#0{pound}%ath {$c3}all is also"
-	&" the {pound}$ath {$c3}all to the {$d3}ystem!"
+	a=ca:a%=tc%:&"{f6:2}{$0f}{green}{rvrs on}YOU HIT THE JACKPOT!{f6:2}{lt. red}Your {pound}#0{pound}%ath Call is also"
+	&" the {pound}$ath Call to the System!"
 {:4024}
-	cr=cr+c%:a=cr:&"{f6:2}{gray3}{$d9}ou {$d7}in {white}{pound}#0{pound}%c {gray3}{$c3}redits!{f6:2}"
-	&"{lt. green}{$d9}ou {$ce}ow {$c8}ave{lt. red} {pound}!a {lt. green}{$c3}redits {$d4}otal!{f6:2}"
-	a$=" {yellow}{$c3}redit {$d7}inner:{white}"+str$(c%)+"{yellow} {$c3}redits":goto 1095
+	cr=cr+c%:a=cr:&"{f6:2}{gray3}You Win {white}{pound}#0{pound}%c {gray3}Credits!{f6:2}"
+	&"{lt. green}You Now Have{lt. red} {pound}!a {lt. green}Credits Total!{f6:2}"
+	a$=" {yellow}Credit Winner:{white}"+str$(c%)+"{yellow} Credits":goto 1095
 {:4030}
 	c%=250:goto {:4012}:rem ca/1000
 {:4032}

@@ -1,0 +1,262 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOSUB{:3306}:a$="s.greed":dr=1:GOSUB 1076
+{:3002}
+	gs=.:&"{f6:2}Instructions? ":GOSUB 1902:IF a THEN GOSUB{:3238}
+	&"{f6:2}A Game to 5,000? ":GOSUB 1902:IF a THEN GOSUB{:3158}:GOTO{:3008}
+	gs=1:&"{f6}{pound}{back arrow}10{white}Single Hand Champions":GOSUB{:3300}:GOTO{:3010}
+{:3008}
+	GOSUB{:3260}:GOTO{:3012}
+{:3010}
+	&"{f6}{purple}OK then a Single Hand Game.{f6}"
+{:3012}
+	c%=0:b%=0:f$=ff$:&"{f6:2}{green}Let Me Get The Dice! {pound}$f{pound}w2{f6}":hl=0
+{:3014}
+	&"{clear}{f6:2}{green}The Score is: You {pound}%c to Me {pound}%b":f%=6
+	a%=.:cs=.:sb=.:j1=.:i2=.:od=1:it=1:bs=1
+{:3018}
+	f%=6:od=1:IF hl THEN:&"{f6}{pound}$f's Last Turn{f6}":GOTO{:3022}
+	&"{f6}{lt. green}{pound}$f's Turn{f6}"
+{:3022}
+	GOSUB{:3092}
+{:3024}
+	GOSUB{:3094}:IF bs=2 THEN{:3036}
+	GOSUB{:3110}:ON tr%+1 GOTO 1812:GOSUB{:3118}:IF it=2 THEN{:3024}
+	IF f%=.THEN:&"{f6}{green}You get to roll ALL 6 Again!!{f6:2}"
+	&"{cyan}Do you want to continue? ":GOSUB 1902:ON tr%+1 GOTO 1811:ON a GOTO{:3032}:GOTO{:3038}
+{:3032}
+	IF od=2 THEN{:3018}
+	GOTO{:3022}
+{:3036}
+	& "{red}You Busted!!!{f6}"
+{:3038}
+	& "{white}Score = {pound}%a{f6}":c%=c%+a%:&"Game Total= {pound}%c{f6}"
+	IF gs=1 THEN:&"{f6}{purple}Single Hand Total= {pound}%c{f6}":GOSUB{:3274}:GOTO{:3256}
+	ON hl GOTO{:3086}:IF c%>gt THEN:&"{f6}{red}Computer's Last Turn{f6}":GOTO{:3046}
+	&"{lt. blue}{f6:2}Computer's Turn...{f6}"
+{:3046}
+	bs=1:d%=a%:a%=.
+{:3048}
+	f%=6
+{:3050}
+	od=1:GOSUB{:3092}:GOSUB{:3094}:IF bs=2 THEN{:3066}
+	GOSUB{:3142}:GOSUB{:3118}:IF f%=.THEN{:3060}
+	IF a%=>1000 THEN{:3074}
+	IF a%=>400 AND f%<3 THEN{:3074}
+	IF a%<400 AND f%<3 THEN{:3074}
+{:3060}
+	& "{yellow}Computer will continue...{pound}w2"
+	IF od=2 THEN{:3048}
+	GOTO{:3050}
+{:3066}
+	&"{red}Computer Busted!!!{f6}"
+{:3068}
+	IF a%<d%THEN{:3078}
+	IF a%=d%THEN:&"{f6}Hand is a TIE {pound}%a TO {pound}%d{f6}":&ak$:GOTO{:3080}
+	&"Computer won this hand {pound}%a TO {pound}%d{f6}":&ak$:b%=b%+100:GOTO{:3080}
+{:3074}
+	&"{yellow}Computer Keeps this hand {pound}%a{f6}":b%=b%+a%:GOTO{:3068}
+{:3076}
+	& "{f6:2}{white}Ready for the Next Hand? ":GOSUB 1902:ON tr%+1 GOTO 1811:ON a GOTO{:3014}:GOTO{:3256}
+{:3078}
+	&"{yellow}You won this hand {pound}%d to {pound}%a{f6}":&ak$:c%=c%+100
+{:3080}
+	&"Total scores: {f6}{pound}$f Has {pound}%c{f6}Computer Has {pound}%b{pound}w2{f6}":IF hl>.THEN{:3086}
+	ON-(c%>gt)GOTO{:3086}:IF b%>gt THEN hl=1:GOTO{:3014}
+	GOTO{:3076}
+{:3086}
+	IF c%>b%THEN:&"{f6:2}You WON! {pound}%c To {pound}%b{f6}":GOSUB{:3274}:GOTO{:3256}
+	IF c%<b%THEN:&"{f6:2}Computer WON! {pound}%b To {pound}%c{f6}":GOTO{:3256}
+	GOTO{:3076}
+{:3092}
+	& "{f6}Rolling {pound}%f Dice...{f6}":FOR i=1 TO 6:di(i)=INT(RND(1)*6+1):NEXT:RETURN
+{:3094}
+	FOR i=1 TO 6:a2(i)=.:NEXT:&"{white}Die    #1 #2 #3 #4 #5 #6{f6}":FOR k=1 TO f%:GOSUB{:3242}
+	&"{green}{pound}{back arrow}"+a$:&STR$(di(k)):a2(di(k))=a2(di(k))+1:NEXT
+	&"{f6}{pound}{back arrow}08{pound}k1{$b7:17}{pound}k0{f6:2}"
+	IF a2(1)<>.OR a2(5)<>.THEN{:3108}
+	IF a2(2)>2 OR a2(3)>2 THEN{:3108}
+	IF a2(4)>2 OR a2(6)>2 THEN{:3108}
+	a%=.:bs=2
+{:3108}
+	RETURN
+{:3110}
+	FOR i=1 TO 6:a(i)=.:NEXT:j1=.:FOR k=1 TO f%:t%=k
+	&"{yellow}Remove die {pound}%t? ":GOSUB 1902:ON tr%+1 GOTO{:3116}:ON a GOTO{:3114}:GOTO{:3116}
+{:3114}
+	a(j1+1)=di(t%):j1=j1+1
+{:3116}
+	NEXT:RETURN
+{:3118}
+	IF j1=.THEN{:3234}
+	&"{f6}{yellow}Removed ":FOR i=1 TO j1:&STR$(a(i)):a1(a(i))=a1(a(i))+1:NEXT:&"{f6}"
+	ON a1(1)GOTO{:3160},{:3162},{:3164},{:3166},{:3168},{:3170}
+{:3124}
+	ON a1(2)GOTO{:3172},{:3174},{:3176},{:3178},{:3180},{:3182}
+{:3126}
+	ON a1(3)GOTO{:3184},{:3186},{:3188},{:3190},{:3192},{:3194}
+{:3128}
+	ON a1(4)GOTO{:3196},{:3198},{:3200},{:3202},{:3204},{:3206}
+{:3130}
+	ON a1(5)GOTO{:3208},{:3210},{:3212},{:3214},{:3216},{:3218}
+{:3132}
+	ON a1(6)GOTO{:3220},{:3222},{:3224},{:3228},{:3230},{:3232}
+{:3134}
+	a%=sb+a%
+	&"{white}Total for the Hand {pound}%a Points{f6:2}":sb=.:FOR i=1 TO 6:a1(i)=.:NEXT:f%=f%-j1
+	IF f%=.THEN od=2
+	it=1:j1=.:RETURN
+{:3142}
+	FOR i=1 TO 6:a4(i)=.:NEXT:FOR k=1 TO f%:a4(di(k))=a4(di(k))+1:NEXT
+	FOR i=1 TO 6:a(i)=.:a3(i)=.:NEXT:j1=.:FOR k=1 TO f%
+	dk=di(k):a$="YES":IF dk=1 OR dk=5 THEN{:3154}
+	IF a4(dk)<3 THEN a$="NO"
+	IF((a4(dk)<6)AND(a3(dk)>2))THEN a$="NO"
+	IF a$<>"YES"THEN{:3156}
+{:3154}
+	a3(dk)=a3(dk)+1:a(j1+1)=die(k):j1=j1+1
+{:3156}
+	t%=k:&"{f6}Remove die {pound}%t? {pound}w1":&:NEXT:RETURN
+{:3158}
+	gt=4999:RETURN
+{:3160}
+	&"{white}One 1     : 100 pts{f6}":sb=sb+100:GOTO{:3124}
+{:3162}
+	&"{white}Two 1's   : 200 pts{f6}":sb=sb+200:GOTO{:3124}
+{:3164}
+	&"{white}Three 1's :1000 pts{f6}":sb=sb+1000:GOTO{:3124}
+{:3166}
+	&"{white}Four 1's  :1100 pts{f6}":sb=sb+1100:GOTO{:3124}
+{:3168}
+	&"{white}Five 1's  :1200 pts{f6}":sb=sb+1200:GOTO{:3124}
+{:3170}
+	&"{white}Six 1's   :2000 pts{f6}":sb=sb+2000:GOTO{:3134}
+{:3172}
+	&"{red}One 2     : illegal{f6}":GOTO{:3234}
+{:3174}
+	&"{red}Two 2's   : illegal{f6}":GOTO{:3234}
+{:3176}
+	&"{white}Three 2's : 200 pts{f6}":sb=sb+200:GOTO{:3126}
+{:3178}
+	&"{red}Four 2's  : illegal{f6}":GOTO{:3234}
+{:3180}
+	&"{red}Five 2's  : illegal{f6}":GOTO{:3234}
+{:3182}
+	&"{white}Six 2's   : 400 pts{f6}":sb=sb+400:GOTO{:3134}
+{:3184}
+	&"{red}One 3     : illegal{f6}":GOTO{:3234}
+{:3186}
+	&"{red}Two 3's   : illegal{f6}":GOTO{:3234}
+{:3188}
+	&"{white}Three 3's : 300 pts{f6}":sb=sb+300:GOTO{:3128}
+{:3190}
+	&"{red}Four 3's  : illegal{f6}":GOTO{:3234}
+{:3192}
+	&"{red}Five 3's  : illegal{f6}":GOTO{:3234}
+{:3194}
+	&"{white}Six 3's   : 600 pts{f6}":sb=sb+600:GOTO{:3134}
+{:3196}
+	&"{red}One 4     : illegal{f6}":GOTO{:3234}
+{:3198}
+	&"{red}Two 4's   : illegal{f6}":GOTO{:3234}
+{:3200}
+	&"{white}Three 4's : 400 pts{f6}":sb=sb+400:GOTO{:3130}
+{:3202}
+	&"{red}Four 4's  : illegal{f6}":GOTO{:3234}
+{:3204}
+	&"{red}Five 4's  : illegal{f6}":GOTO{:3234}
+{:3206}
+	&"{white}Six 4's   : 800 pts{f6}":sb=sb+800:GOTO{:3134}
+{:3208}
+	&"{white}One 5     :  50 pts{f6}":sb=sb+50:GOTO{:3132}
+{:3210}
+	&"{white}Two 5's   : 100 pts{f6}":sb=sb+100:GOTO{:3132}
+{:3212}
+	&"{white}Three 5's : 500 pts{f6}":sb=sb+500:GOTO{:3132}
+{:3214}
+	&"{white}Four 5's  : 550 pts{f6}":sb=sb+550:GOTO{:3132}
+{:3216}
+	&"{white}Five 5's  : 600 pts{f6}":sb=sb+600:GOTO{:3132}
+{:3218}
+	&"{white}Six 5's   :1000 pts{f6}":sb=sb+1000:GOTO{:3134}
+{:3220}
+	&"{red}One 6     : illegal{f6}":GOTO{:3234}
+{:3222}
+	&"{red}Two 6's   : illegal{f6}":GOTO{:3234}
+{:3224}
+	&"{white}Three 6's : 600 pts{f6}":sb=sb+600:GOTO{:3134}
+	GOTO{:3134}
+{:3228}
+	&"{red}Four 6's  : illegal{f6}":GOTO{:3234}
+{:3230}
+	&"{red}Five 6's  : illegal{f6}":GOTO{:3234}
+{:3232}
+	&"{white}Six 6's   :1200 pts{f6}":sb=sb+1200:GOTO{:3134}
+{:3234}
+	sb=.:&"{f6}{white}You are not allowed to select that combination of dice.{f6}"
+	&"{red}Do you need to see the rules? ":GOSUB 1902:ON a GOSUB{:3238}:GOTO{:3240}
+{:3238}
+	a$="s.g.rules":dr=1:GOTO 1075
+{:3240}
+	it=2:FOR i=1 TO 6:a1(i)=.:NEXT:j1=.:&"{clear}":RETURN
+{:3242}
+	ON k GOTO{:3244},{:3246},{:3248},{:3250},{:3252},{:3254}
+{:3244}
+	a$="07":RETURN
+{:3246}
+	a$="10":RETURN
+{:3248}
+	a$="13":RETURN
+{:3250}
+	a$="16":RETURN
+{:3252}
+	a$="19":RETURN
+{:3254}
+	a$="22":RETURN
+{:3256}
+	& "{f6}{white}Want to play GREED again? ":GOSUB 1902:ON tr%+1 GOTO 1811:ON a+1 GOTO 1811
+	c%=.:b%=.:gt=.:GOTO{:3002}
+{:3260}
+	dr=3:a$="e.g.five,s,r":GOSUB 1011:sj$="{pound}{back arrow}25"
+{:3262}
+	FOR x=1 TO 5:FOR y=1 TO 2:INPUT# 2,zp$(x,y):NEXT:NEXT:CLOSE 2
+{:3264}
+	&"{f6:2}{lt. green}Current Top Five {orange}Greed {lt. green}Champions Are:{f6:2}{orange}{pound}{back arrow}10NAME "
+	&"{orange}          TOTAL SCORE!{f6}{lt. blue}         {$a3:4}           {$a3:12}{f6}"
+	FOR x=1 TO 5:&"{f6}{gray3}<":&RIGHT$(STR$(x),1):b$="{orange}":IF x>1 THEN b$="{gray3}"
+	&">  {pound}$b":&LEFT$(zp$(x,1)+sj$,17)
+	&b$:&RIGHT$(sj$+zp$(x,2),11):NEXT:&"{f6:2}{yellow}{pound}{back arrow}13Press Return: {pound}g1{f6}":RETURN
+{:3274}
+	sj$="{pound}{back arrow}25":x=.:gp=c%:IF gp<=.THEN{:3288}
+{:3276}
+	x=x+1:IF x>5 THEN{:3288}
+	zp=VAL(zp$(x,2)):IF zp=.THEN{:3282}
+	IF gp<zp THEN{:3276}
+{:3282}
+	FOR z=5 TO x STEP-1:FOR y=1 TO 2:zp$(z,y)=zp$(z-1,y):NEXT y,z
+	zp$(x,1)=na$:zp$(x,2)=MID$(STR$(gp),2)
+	&"{f6:2}{lt. red}Congratulations! You Are One Of The{f6}Top 5 Players!":GOTO{:3302}
+{:3288}
+	&"{f6:2}{lt. red}Sorry, You Did Not Make It In The{f6}Top Five. Try Again Next Time.{f6}"
+	RETURN
+{:3292}
+	GOSUB{:3264}:GOSUB{:3296}:dr=3:GOSUB 1023
+	FOR x=1 TO 5:FOR y=1 TO 2:PRINT# 2,zp$(x,y):NEXT:NEXT:CLOSE 2:RETURN
+{:3296}
+	FOR x=1 TO 5:IF VAL(zp$(x,2))<1 THEN zp$(x,1)="Nobody":zp$(x,2)=" 0"
+	NEXT:RETURN
+{:3300}
+	dr=3:a$="e.g.five-sh,s,r":GOSUB 1011:sj$="{pound}{back arrow}25":GOTO{:3262}
+{:3302}
+	IF gs=1 THEN a$="e.g.five-sh":GOTO{:3292}
+	a$="e.g.five":GOTO{:3292}
+{:3306}
+	&"{f6}{blue}{pound}u1{pound}{back arrow}06UCCCCCCCCCCCCCCCCCCCCCCCCCCCCI"
+	&"{f6}{blue}{pound}{back arrow}06B   {red}this game written by:    {blue}B"
+	&"{f6}{blue}{pound}{back arrow}06B   {white}fizban & cregan          {blue}B"
+	&"{f6}{blue}{pound}{back arrow}06B   {red}the codex bbs 85 megs    {blue}B"
+	&"{f6}{blue}{pound}{back arrow}06B   {white}404-473-6173  aisa       {blue}B"
+	&"{f6}{blue}{pound}{back arrow}06JCCCCCCCCCCCCCCCCCCCCCCCCCCCCK{pound}w3"
+	RETURN
+	REM fizban/cregan 7/1/90 2:00am

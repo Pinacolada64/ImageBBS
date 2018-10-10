@@ -1,15 +1,15 @@
 {number:60000}
 	i=1:on im gosub {:60100},{:60200},{:60300},{:60400},{:60500},{:60500}
-	&"{f6:2}{$c5}nd of {$d4}ransfer.{f6:2}":return
+	&"{f6:2}End of Transfer.{f6:2}":return
 {:60002}
 	a=peek(53248):poke 53248,1:&,18,0:a%=dv%:b%=val(dr$)
 	&"{clear} {cyan}{$a2:37}{f6}"
 	&" {rvrs on} {pound}$x{pound}{back arrow}11: {f5}{pound}$f{f5}{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}evice   : {pound}%a{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$c4}rive    : {pound}%b{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
-	&" {rvrs on}{cyan} {$d0}rotocol : {pound}vl{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} Device   : {pound}%a{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} Drive    : {pound}%b{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
+	&" {rvrs on}{cyan} Protocol : {pound}vl{pound}{back arrow}38{rvrs off}{gray3}{$a1}{f6}"
 	&" {gray3}{$bc}{rvrs on}{$a2:36}{rvrs off}{$be}{f6}"
-	&"{lt. red} {$c7}ood: {white}00000  {lt. red}{$c2}ad: {white}00000  {lt. red}{$c2}ytes: {white}000000{f6}"
+	&"{lt. red} Good: {white}00000  {lt. red}Bad: {white}00000  {lt. red}Bytes: {white}000000{f6}"
 	an$=f$:&,16,x:&"{clear}":&,18,1:poke 53248,a:b=-(rc<>.)*int(rc/254+.999):return
 {:60020}
 	an$=tt$(i):gosub {:60022}:goto {:60024}
@@ -23,14 +23,14 @@
 {:60100}
 	b$=",r":gosub {:60020}:if e%then return
 {:60102}
-	x$="{$d3}ending":x=0:poke 2036,-(right$(f$,1)="p"):gosub {:60002}:close 2
+	x$="Sending":x=0:poke 2036,-(right$(f$,1)="p"):gosub {:60002}:close 2
 	return
 {:60200}
-	b$=",w":gosub {:60020}:if e%=.then x$="{$d2}eceiving":x=1:gosub {:60002}:close 2
+	b$=",w":gosub {:60020}:if e%=.then x$="Receiving":x=1:gosub {:60002}:close 2
 	return
 {:60300}
 	for i=1 to n:a=.:b$=",r":gosub {:60020}
-	if e%=.then x$="{$d3}ending":x=2:gosub {:60002}:gosub {:60102}:if b=.then{:60304}
+	if e%=.then x$="Sending":x=2:gosub {:60002}:gosub {:60102}:if b=.then{:60304}
 	tt$(i)=mid$(str$(b),2)+":"+f$:next
 {:60304}
 	n=i-1:return
@@ -39,7 +39,7 @@
 {:60402}
 	f$="":x=3:gosub {:60002}:if an$=""then return
 	f$=an$:b$=",w":gosub {:60024}:if e%then return
-	x$="{$d2}eceiving":x=1:gosub {:60002}:close 2:if b=.then return
+	x$="Receiving":x=1:gosub {:60002}:close 2:if b=.then return
 	n=n+1:tt$(n)=mid$(str$(b),2)+":"+f$:on-(n<60)goto {:60402}
 {:60500}
 	return
