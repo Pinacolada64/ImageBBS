@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	on rk goto {:4002},{:4100}
 {:4002}
 	n=0
@@ -47,7 +49,7 @@
 {:4320}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:4342}:gosub 1085:if a then gosub 1980:goto {:4346}
 	on fl goto {:4330}
-	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="NI{$d3:2}A Note"
+	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="NISSA Note"
 	&"{up}Subject: {pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:if kk=.then{:4346}
 {:4330}

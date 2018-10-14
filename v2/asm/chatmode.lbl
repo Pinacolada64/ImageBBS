@@ -1,0 +1,114 @@
+' 4/Jun/2016 11:14
+' i am assuming this is a header prg which displays saved chats
+
+' Could this be loaded into the BBS as "++ chatmode"?
+
+' for pass=1 to 3:org $0801,-(pass=3),8,"@:chatmode"
+' print pass;
+' this wrote a line of BASIC:
+' send "1990 sys"+mid$(str$(ml),2)+" new image"
+' unsend
+
+1990 sys{sym:ml} new image
+{asm}
+bnkout=$fc4e
+bankin=$fc71
+;
+clrhdr=$806c ; clear header?
+fnfile=$804b ; find file?
+alcont=$807b ; ?
+mnsext=$809c ; ?
+output=$8048
+;
+catlog=$24 ; $22-$25 INDEX Miscellaneous Temporary Pointers and Save Area
+cntfil=5
+;
+hdrblk=$91e0
+filnam=hdrblk+$00 ; f 16 bytes, presumably
+nbinfl=hdrblk+$10 ; n 16 "number in filename?" split long chats into multiple files?
+filtyp=hdrblk+$18 ; t 24
+blmilo=hdrblk+$20 ; b 32
+;                1       2       3
+; 1              6       4       2
+; fffffffffffffffn.......t.......b
+
+size=16
+
+ml:
+	jsr bnkout
+	jsr clrhdr
+	ldy #7
+loop:
+	lda name,y
+	sta filnam,y
+	dey
+	bpl loop
+	jsr fnfile
+	bcc found
+	sta idxoff
+	stx idxblk
+	sty idxblk+1
+	lda #cntfil
+	sta filtyp
+	lda #>size
+	sta nbinfl
+	lda #<size
+	sta nbinfl+1
+	jsr alcont
+	bcs noroom
+	lda idxoff
+	pha
+	ldx idxblk
+	ldy idxblk+1
+	lda #catlog
+	jsr mnsext
+	ldx #<msg1
+	ldy #>msg1
+	jsr output
+found:
+	ldx #<msg2
+	ldy #>msg2
+	jsr output
+	jsr chatmode
+done:
+	jsr bankin
+	jmp $a8f8	; DATA: Perform DATA
+;
+noroom:
+	ldx #<msg3
+	ldy #>msg3
+	jsr output
+	jmp done
+;
+msg1:
+	ascii "ChatFile Created"
+	byte 13,0
+msg2:
+	ascii "Chat Mode:"
+	byte 13,0
+msg3:
+	ascii "No Room"
+	byte 13,0
+;
+idxoff:
+	byte 0
+idxblk:
+	word 0
+;
+name:
+	ascii "chatfile"
+;
+chatmode:
+	lda blmilo+0
+	sta blknum+0
+	lda blmilo+1
+	sta blknum+1
+chat0:
+	lda 198
+	beq chat1
+	rts
+chat1:
+; missing code. presumably some kind of pause function here
+
+blokbuf:
+	area 0,512

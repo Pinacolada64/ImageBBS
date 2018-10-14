@@ -1,4 +1,5 @@
 {number:4000}
+{alpha:alt}
 {step:2}
 {crunch:on}
 ' x=1: reset modem
@@ -19,7 +20,8 @@
 	gosub {:4014}:on-(t=0)goto {:4004}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"A"then a=48
 	m$="s0="+chr$(a)+"s2=27s7=25":gosub {:4014}:on-(t=0)goto {:4004}:&,22,10:goto {:4176}
 {:4014}
-	x=5
+'	x=5
+	x=1
 {:4016}
 	a$=m$:t=50:&,22,10:gosub {:4156}:x=x-1:on-(a<>0 and x>0)goto {:4016}:return
 {:4018}
@@ -91,13 +93,15 @@
 	a=254:b=255:if mid$(mt$,9,1)="R"then a=255:b=254
 	&,41,a:&,22,7:&,41,b:&,22,3:goto {:4176}
 {:4148}
-	if(peek(2033)and 128)=0 then print# 131,"at"
-	&,69,31,20,str$(qb),$8c
+	if (peek(2033) and 128)=0 then print# 131,"at"
+' copied from +.lo
+	if peek(17139)=. then:&,69,31,20,left$(str$(qb)+"         ",9),$8c
 	&,22,5:goto {:4176}
 {:4154}
 ' c$ could be either "Sent", "Recv", or "Dialing"
 ' save local mode state, enable it, output string, restore state
-	z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
+'	z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
+	cm$=c$+": "+a$:goto 1360
 {:4156}
 	poke 667,.:poke 668,.:c$="Sent":a$="at"+a$:print# 131,a$:gosub {:4154}
 {:4158}
@@ -126,5 +130,6 @@
 	qb=19200:&,41,6:goto {:4148}
 {:4180}
 	on x goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:goto {:4166}
-	REM +/MODEM
-	REM COPYRIGHT 1991 NEW IMAGE 1/7/91
+	REM +/modem 2018-10-09
+	rem copyright 1991 new image 1/7/91
+

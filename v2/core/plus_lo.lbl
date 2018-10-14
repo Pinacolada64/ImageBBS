@@ -454,6 +454,7 @@
 	on i goto {:3490}:c$="e.idle "+left$(am$,1)+",s,"
 	dr=3:a$=c$+"a":gosub 1011:if e% then a$=c$+"w":gosub 1011
 {endif}
+' FIXME: 3488: illegal quantity error, occasionally
 	print# 2,d1$","mid$("idleused",1-4*(p=10),4)","i","b$:close 2
 {:3490}
 	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%

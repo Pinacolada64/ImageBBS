@@ -471,6 +471,7 @@
 {:1804}
 {number:1804}
 	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+' TODO: Message about inactive command
 {:1805}
 {number:1805}
 ' password-protected by ep$, and/or costs ec% credits to run command:
