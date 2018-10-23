@@ -10,6 +10,7 @@
 use_slashes=1
 
 function translate_filename()
+# this translates the filename given and returns in $test
 {
 	stringZ="$1"
 # // delimiter replaces globally; / replaces first occurrence
