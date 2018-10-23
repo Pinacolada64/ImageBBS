@@ -215,12 +215,12 @@
 	tsp2	= $07f3	; 2035: transmit speed hi-byte
 	chks	= $07f4	; 2036: Checkmark flag for Lightbar (left side)
 ; unofficially added by Pinacolada:
-;	chk_rt	= $07f5 ; 2037: Checkmark flag for Lightbar (right side)
+	chk_rt	= $07f5 ; 2037: Checkmark flag for Lightbar (right side)
 	readmode= $07f6	; 2038: [1.2] Stores the unabortable file read flag
 	filenum	= $07f7	; 2039: [1.2] Stores the file number for read0/dskin
 	tmp5	= $07f8	; 2040
 	abtchr	= $07f9	; 2041: [1.2] Alternate abort character (works like <space>)
-	clock	= $07fa ; 2042: [1.2] Turns on idle screen big clock
+	clock	= $07fa ; 2042: [1.2] 1=Turns on idle screen big clock
 	filetyp	= $07fb	; 2043: [1.2] Filetype for Punter transfer protocol
 	tmp1	= $07fc	; 2044
 	tmp2	= $07fd	; 2045
@@ -229,7 +229,7 @@
 
 ; BBS flags (really VIC-II registers)
 
-	local	= $d000 ; 53248
+	local	= $d000 ; 53248: 1=no modem output with &
 	case	= $d001 ; 53249
 	editor	= $d002 ; 53250
 	tsr	= $d003 ; 53251: needed by inline.s, I think
