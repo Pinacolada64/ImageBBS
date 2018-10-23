@@ -27,7 +27,7 @@
 	poke 53252,ll%-2:if zz then poke 1022,254
 	return
 {:60030}
-	b$="Get":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
+	b$="Get":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:60110}
 {:60032}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60032}
 	gosub 1010:a$="r":gosub {:60002}:gosub 1372:if e%then close 6:&:goto {:60110}
@@ -37,19 +37,19 @@
 {:60040}
 	on kk goto {:60108}:b$="Put":gosub {:60004}:on fl goto {:60108}:&"{f6:2}"
 	if v$<>""then poke 53252,16:w$=v$:&,1,32:goto {:60046}
-	gosub 1005:if an$=""then{:60110}
+	gosub 1005:if an$="" then {:60110}
 {:60046}
 	if an$<>""then v$=an$
 {:60048}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60048}
 	gosub 1010
 {:60052}
-	a$="w":gosub {:60002}:if e%=.then{:60062}
+	a$="w":gosub {:60002}:if e%=. then {:60062}
 {:60054}
 	close 6:&:if e%<>63 then{:60066}
-	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then{:60066}
+	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then {:60066}
 	if an$="R"then a$=v$:gosub 1024:goto {:60052}
-	on-(an$<>"A")goto {:60054}:a$="a":gosub {:60002}:if e%then{:60066}
+	on-(an$<>"A")goto {:60054}:a$="a":gosub {:60002}:if e% then {:60066}
 {:60062}
 	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
 	next:&,14,6,kk-1
@@ -62,7 +62,7 @@
 {:60072}
 	b$="Disk Command":gosub {:60006}:on fl goto {:60108}:&"{f6:2}":gosub 1450:goto {:60110}
 {:60074}
-	b$="Read":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:60110}
+	b$="Read":gosub {:60004}:on fl goto {:60108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:60110}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:60110}
 	gosub 1010:a$="r":gosub {:60002}:if e%then close 6:&:goto {:60110}
 	&,3,6:close 6:goto {:60110}
@@ -84,7 +84,7 @@
 ' enter editor: a=0, 1, 2
 	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:60092}
 {:60102}
-	b%=kk-1:if an$="q"then{:60070}
+	b%=kk-1:if an$="q" then {:60070}
 	if zz then on-(an$="g")-(an$="p")*2-(an$="$")*3 goto {:60030},{:60040},{:60068}
 	if zz then on-(an$="@")-(an$="&")*2 goto {:60072},{:60074}
 {:60108}

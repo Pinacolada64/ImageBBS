@@ -71,7 +71,7 @@
 {:4220}
 	gosub {:4206}:&" ##  OnTime OffTime Check Active?{f6:2}"
 	for i=0 to 15:a%=i+1:a$=c$(i):&" {pound}#2{pound}# {pound}%a) {pound}$a{f6}":next
-	&"{pound}$kEdit Which (RETURN to Quit)? {pound}i1":if an$=""then{:4276}
+	&"{pound}$kEdit Which (RETURN to Quit)? {pound}i1":if an$="" then {:4276}
 	a=val(an$):on-(a<1 or a>16)goto {:4220}:a=a-1
 {:4228}
 	gosub {:4206}:a%=a+1:&"Alarm #{pound}%a:{f6:2}"
@@ -133,12 +133,12 @@
 	&"{pound}#2{pound}# {pound}%a) {pound}$a{pound}{back arrow}20{pound}%b) {pound}$b{f6}"
 	next:&"{f6}Change Which? {pound}i1":a=val(an$):if a<1 or a>24 then{:4336}
 	p$="NetMail Alarm #"+str$(a)
-	a=a-1:b=a%(a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$=""then{:4314}
+	a=a-1:b=a%(a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$="" then {:4314}
 	if an$="-"or an$="{f8}"then b=-1:goto {:4332}
 	b=val(left$(an$,2)):if b=12 then b=0
 	b=b*60+val(mid$(an$,4,2))-(right$(an$,1)="P")*720
 {:4332}
-	if b=a%(a)then{:4314}
+	if b=a%(a) then {:4314}
 	a%(a)=b:gosub {:4004}:c$(a)=a$:tz=1:goto {:4314}
 {:4336}
 	if tz=0 then return

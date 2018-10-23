@@ -37,7 +37,7 @@
 	&,16,.,34,m%(.,7),"G","","Netwall/Grf"
 	&,16,.,34,m%(.,8),"H","","Quit"
 {:3062}
-	n=8:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	n=8:gosub {:3330}:if tr%<1 or lm=n or lm=. then {:3006}
 	a$="netmail":gosub{:3182}:fl=1:gosub{:3002}:fl=.:goto{:3062}
 {:3068}
 	&,28,1:n=5:dim m%(16,n),tx$(60),fb%(29,15),a%(60):if tr%<1 then{:3006}
@@ -47,7 +47,7 @@
 	&,16,.,34,m%(.,4),"D","","Quicklist"
 	&,16,.,34,m%(.,5),"E","","Quit"
 {:3080}
-	n=5:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	n=5:gosub {:3330}:if tr%<1 or lm=n or lm=. then {:3006}
 	a$="logon":gosub {:3182}:fl=1:gosub {:3002}:fl=.:goto {:3080}
 {:3084}
 	&,28,1:n=4:zz%=8:dim am%(3,15),m%(16,n),b$(zz%*16-1),c$(60),a%(60)
@@ -60,14 +60,14 @@
 	&,16,.,34,m%(.,3),"C","","NetMail Alarms"
 	&,16,.,34,m%(.,4),"D","","Quit"
 {:3100}
-	n=4:gosub {:3330}:if tr%<1 or lm=n or lm=.then{:3006}
+	n=4:gosub {:3330}:if tr%<1 or lm=n or lm=. then {:3006}
 	a$="lightbar":gosub {:3182}:goto {:3100}
 {:3104}
 	&,28,1:n=7:zz%=6:dim m%(20,n)
 	a=1:a$="System":gosub {:3116}:a=2:a$="E-Mail":gosub {:3116}
 	a=3:a$="Etcetera":gosub {:3116}:a=4:a$="Directory":gosub {:3116}
 	a=5:a$="Program":gosub {:3116}:a=6:a$="User":gosub {:3116}
-	&,16,.,42,m%(.,7),"G","","Quit":n=7:gosub {:3336}:if tr%<1 or lm=n or lm=.then{:3006}
+	&,16,.,42,m%(.,7),"G","","Quit":n=7:gosub {:3336}:if tr%<1 or lm=n or lm=. then {:3006}
 	gosub {:3252}:goto {:3104}
 {:3116}
 	b$=right$("   "+str$(dv%(a)),3)+","+mid$(str$(dr%(a)),2)
@@ -95,7 +95,7 @@
 	&,16,.,46,m%(.,11),"K","","New User Credits:  "+str$(nc)
 	&,16,.,46,m%(.,12),"L","","Chat Messages"
 	&,16,.,46,m%(.,13),"M","","Quit"
-	n=13:gosub {:3342}:a=lm:if tr%<1 or lm=n or lm=.then{:3006}
+	n=13:gosub {:3342}:a=lm:if tr%<1 or lm=n or lm=. then {:3006}
 	a$="misc":gosub {:3182}:goto {:3134}
 	data"White","Red","Cyan","Purple","Green","Blue","Yellow","Orange","Brown"
 	data"Light Red","Dark Gray","Medium Gray","Light Green","Light Blue"
@@ -119,9 +119,9 @@
 {:3190}
 	lm=2:goto {:3180}
 {:3192}
-	dr=6:a$="u.payroll,s,r":n=.:gosub 1011:if e%then{:3196}
+	dr=6:a$="u.payroll,s,r":n=.:gosub 1011:if e% then {:3196}
 {:3194}
-	n=n+1:&,2,2:tt$(n)=a$:if st=.then{:3194}
+	n=n+1:&,2,2:tt$(n)=a$:if st=. then {:3194}
 {:3196}
 	close 2:cf=.
 {:3198}
@@ -132,8 +132,8 @@
 {:3206}
 	&"{white}{pound}vjA{green}dd{blue}/{white}D{green}elete{blue}/{white}E{green}dit{blue}/{white}Q{green}uit{blue}: {white}{pound}g1"
 	on-(an$="A")-2*(an$="D")-3*(an$="E")goto {:3220},{:3230},{:3238}
-	&"Quit{f6}":if cf=.then{:3218}
-	&"{f6}{white}Save Changes? ":gosub 1907:if a=.then{:3218}
+	&"Quit{f6}":if cf=. then {:3218}
+	&"{f6}{white}Save Changes? ":gosub 1907:if a=. then {:3218}
 	dr=6:a$="u.payroll":gosub 1023
 	for i=1 to n:print# 2,tt$(i):next:close 2
 {:3218}

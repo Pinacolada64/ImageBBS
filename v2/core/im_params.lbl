@@ -58,7 +58,7 @@
 {:60080}
 	z$="ANSI C/G":return
 {:60082}
-	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>.then{:60088}
+	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>. then {:60088}
 {:60084}
 	&"{f6}Available Protocols:{f6:2}":for i=1 to x:a%=i:a$=mid$(tt$(i),10)
 	lp=1:&"{pound}%a) {pound}$a{pound}{back arrow}39 ":next:&"{f6:2}--> {pound}g1":a=val(an$)
@@ -79,7 +79,7 @@
 {:60106}
 	&,11:b%=.:dr=1:a$="s.m.protos,s,r":gosub 1011:x=.:if e%then:&:return
 {:60108}
-	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=.then{:60108}
+	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=. then {:60108}
 	&,52,4,3:if zz=1 or a%=1 then x=x+1:tt$(x)="copier00 Copier":b%=1
 	close 2:return
 {:60114}

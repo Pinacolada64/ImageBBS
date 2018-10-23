@@ -1,64 +1,64 @@
-	REM"{$c6}IRST{$c9}MAGE (C)1995 {$ce}{$c9}{$d3}                  ** {$d1}&{$c4} {$d6}.001 **        "
+	REM"FIRSTIMAGE (C)1995 NIS                  ** Q&D V.001 **        "
 	ON LM GOTO{:4100},{:4090}:RETURN
 {:4008}
-	LP=1:&"{f6}{$d3}ORRY, THE SYSTEM IS RESERVED FOR NETWORK MAINTENANCE.{f6}":GOTO{:4012}
+	LP=1:&"{f6}SORRY, THE SYSTEM IS RESERVED FOR NETWORK MAINTENANCE.{f6}":GOTO{:4012}
 {:4010}
-	&"{f6:2}{$d3}{$cf}{$d2:2}{$d9}, {$ce}{$cf} {$c3}{$c1}{$cc:2}{$d3} {$cc}{$c5}{$d3:2}{$a0}{$d4}{$c8}{$c1}{$ce} 1200 {$c2}{$d0}{$d3}{f6}{$c1}{$d2}{$c5} {$c3}{$d5}{$d2:2}{$c5}{$ce}{$d4}{$cc}{$d9} {$c2}{$c5}{$c9}{$ce}{$c7}{$a0}{$c1}{$c3:2}{$c5}{$d0}{$d4}{$c5}{$c4}.{f6:2}"
+	&"{f6:2}SO{$d2:2}Y, NO CA{$cc:2}S LE{$d3:2} THAN 1200 BPS{f6}ARE CU{$d2:2}ENTLY BEING A{$c3:2}EPTED.{f6:2}"
 {:4012}
 	MM=.:F1=3:GOTO 3000
 {:4030}
 	&,52,16,.:&CHR$(27)+"[6N":&,52,16,1:B=.:FOR X=.TO 8:&,4:A%=PEEK(780)AND 127
 	B=-(A%=27):X=X-(9-X)*(B=1):NEXT:ON-(B=.)GOTO 999:&,52,18,1:&,52,19,1:NL=2
 	&,52,16,.:&R$+CHR$(27)+"[1;3;5;7;46M":&,52,16,1
-	&" {$c1}{$ce}{$d3}{$c9}/{$c7}RAPHICS {$c4}ETECTED {f6}":RETURN
-	REM"{$ca}UMP-{$cf}UT {$d0}OINTS"
+	&" ANSI/GRAPHICS DETECTED {f6}":RETURN
+	REM"JUMP-OUT POINTS"
 {:4050}
-	B$="IMG-NET RCV":X=10:MM=4:GOSUB 3000:GOSUB 304:A$="{$ce}{$cd}/AUTO":F1=2:GOTO 70
-	REM B$="FIDO REC'V":X=10:MM=3:GOSUB3000:A$="{$c6}{$c9}{$c4}{$cf}/REC":GOTO70
-	REM B$="UUCP REC'V":X=10:MM=3:GOSUB3000:A$="{$d5:2}{$c3}{$d0}/REC":GOTO70
+	B$="IMG-NET RCV":X=10:MM=4:GOSUB 3000:GOSUB 304:A$="NM/AUTO":F1=2:GOTO 70
+	REM B$="FIDO REC'V":X=10:MM=3:GOSUB3000:A$="FIDO/REC":GOTO70
+	REM B$="UUCP REC'V":X=10:MM=3:GOSUB3000:A$="{$d5:2}CP/REC":GOTO70
 {:4060}
-	MM=9:GOTO 3000:REM"** {$c2}EGIN {$cc}OGIN"
+	MM=9:GOTO 3000:REM"** BEGIN LOGIN"
 {:4090}
-	REM"{$c1}{$d3}{$c3}{$c9:2} {$c4}ETECT ({$c1}{$c7}{$c1}{$c9}{$ce}!)"
-	&,52,16,.:&,52,17,1:&,52,18,.:&,52,19,.:CM$="{$c1}{$d3}{$c3}{$c9:2} {$d2}E-{$c4}ETECT":GOSUB 9
+	REM"ASC{$c9:2} DETECT (AGAIN!)"
+	&,52,16,.:&,52,17,1:&,52,18,.:&,52,19,.:CM$="ASC{$c9:2} RE-DETECT":GOSUB 9
 	GOTO{:4134}
 {:4100}
-	REM"{$c6}IND OUT WHAT'S {$cf}UT {$d4}HERE..."
+	REM"FIND OUT WHAT'S OUT THERE..."
 	POKE 2033,.:&,52,16,1:&,52,17,1:&"{f6}":&,52,16,.:&"{pound}B1":&,52,16,1:&,22,5
-	CM$="{$c3}ALL {$c3}ONNECTED":GOSUB 9:TR%=7:GOSUB 12
-	REM"** {$d2}ESP. {$c4}ETECT {$d0}HASE {$c9} **   "
-	&,22,40:&"{f6:2}{$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}{$c9}{$cf}{$ce} {$c3}{$cf}{$ce}{$c6}{$c9}{$d2}{$cd}{$c5}{$c4}:{f6}"+QB$+R$:GOSUB 82:&,40
-	A%=.:IF QB<1200 THEN:&,52,3,3:IF A%THEN{:4010}
+	CM$="CALL CONNECTED":GOSUB 9:TR%=7:GOSUB 12
+	REM"** RESP. DETECT PHASE I **   "
+	&,22,40:&"{f6:2}CO{$ce:2}ECTION CONFIRMED:{f6}"+QB$+R$:GOSUB 82:&,40
+	A%=.:IF QB<1200 THEN:&,52,3,3:IF A% then {:4010}
 {:4134}
 	MP%=.:LL%=80:POKE 971,MP%:POKE 970,.:POKE 951,LL%
 {:4136}
-	GOSUB{:4030}:ON B GOTO{:4180}:&"{f6}{$d0}{$cc}{$c5}{$c1}{$d3}{$c5} {$c8}{$c9}{$d4} {$d9}{$cf}{$d5}{$d2} {$c2}{$c1}{$c3}{$cb}{$d3}{$d0}{$c1}{$c3}{$c5}{$a0}({$c4}{$c5}{$cc}{$c5}{$d4}{$c5}) {$cb}{$c5}{$d9}"
+	GOSUB{:4030}:ON B GOTO{:4180}:&"{f6}PLEASE HIT YOUR BACKSPACE (DELETE) KEY"
 	&,52,16,.:&"{pound}B1: ":&,52,16,1
 {:4140}
 	&,4:A=PEEK(780)AND 127:IF(PEEK(2033)AND 128)<>128 OR TR%<1 THEN{:4012}
 	ON-(A=13)-2*(A=.)GOTO{:4136},{:4140}
 ' 28: NetMail Enable
 	&,52,28,3:IF A%THEN ON-(A=1)GOTO{:4050}
-	REM"** {$d2}ESP. {$c4}ETECT {$d0}HASE ][ **  "
+	REM"** RESP. DETECT PHASE ][ **  "
 ' 16: ASCII Translation
 	ON-(A<>8 AND A<>20 AND A<>127)GOTO{:4136}:NL=-(A=20):&,52,16,1-NL
 ' 47: Right $2e - read "s.detect" (from i.lo)
 	&,52,47,3:IF A%THEN A$="S.DETECT":MM=13:GOSUB 3000:GOTO{:4180}
-	B$="{$c1}{$d3}{$c3}{$c9:2}":IF NL THEN B$="{$c3}OMMODORE {$c7}RAPHICS"
-	&"{lt. blue}{pound}$B {$cd}ODE {$c4}ETECTED{cyan}.{pound}Q0{f6:2}":ON-(TR%<1)GOTO{:4012}
+	B$="ASC{$c9:2}":IF NL THEN B$="COMMODORE GRAPHICS"
+	&"{lt. blue}{pound}$B MODE DETECTED{cyan}.{pound}Q0{f6:2}":ON-(TR%<1)GOTO{:4012}
 {:4180}
 	TR%=5:ON-(NL>.)GOTO{:4190}:&,52,17,1:&,52,18,.:&,52,19,.
-	&"{f6}{lt. blue}{$c4}OES {$d9}OUR {$d4}ERMINAL {$d3}UPPORT{cyan}:{f6} {lt. blue}{$c1}{$ce}{$d3}{$c9} {$c3}OLOR{cyan}?: ":GOSUB 96:&,52,18,A:B=A
-	&" {lt. blue}{$c9}{$c2}{$cd} {$d3}TYLE {$c7}RAPHICS{cyan}?: ":GOSUB 96:&,52,19,A:NL=-2*(A+B=2)
+	&"{f6}{lt. blue}DOES YOUR TERMINAL SUPPORT{cyan}:{f6} {lt. blue}ANSI COLOR{cyan}?: ":GOSUB 96:&,52,18,A:B=A
+	&" {lt. blue}IBM STYLE GRAPHICS{cyan}?: ":GOSUB 96:&,52,19,A:NL=-2*(A+B=2)
 {:4190}
-	&" {lt. blue}{$c1}RE {$d9}OU IN 80 {$c3}OLUMNS{cyan}?: ":A=-(NL=1):ON A+1 GOSUB 96,94:LL%=40+(40*A)
+	&" {lt. blue}ARE YOU IN 80 COLUMNS{cyan}?: ":A=-(NL=1):ON A+1 GOSUB 96,94:LL%=40+(40*A)
 ' 41: Network Reserve
 ' 40: System Reserved (Default PW)
 	&,52,41,3:ON A%GOTO{:4008}:&,52,40,3:ON 1-A%GOTO{:4060}
-	A=.:B$="":IF L2=.THEN B$="{$d4}EMPORARILY "
+	A=.:B$="":IF L2=.THEN B$="TEMPORARILY "
 {:4204}
-	&"{green}{$d4}HE {$d3}YSTEM IS {pound}&B{$d2}ESERVED{lt. green}.{f6:2}{green}{$c5}NTER {$d0}ASSWORD{lt. green}: {white}":&,6:IF AN$=L2$THEN{:4210}
-	&"{green}{$d3}ORRY{lt. green}, {green}{$d4}HAT {$d0}ASSWORD IS {$ce}OT {$d6}ALID{lt. green}.":A=A+1
+	&"{green}THE SYSTEM IS {pound}&BRESERVED{lt. green}.{f6:2}{green}ENTER PASSWORD{lt. green}: {white}":&,6:IF AN$=L2$ then {:4210}
+	&"{green}SORRY{lt. green}, {green}THAT PASSWORD IS NOT VALID{lt. green}.":A=A+1
 	ON-(A<3)AND TR%>.)GOTO{:4204}:GOTO 4112
 {:4210}
-	&"{green}{$d0}ASSWORD {$c1}CCEPTED{lt. green}.":&,52,40,L2:GOTO{:4060}
+	&"{green}PASSWORD ACCEPTED{lt. green}.":&,52,40,L2:GOTO{:4060}

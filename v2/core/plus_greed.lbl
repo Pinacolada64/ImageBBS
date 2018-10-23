@@ -41,7 +41,7 @@
 	f%=6
 {:3050}
 	od=1:GOSUB{:3092}:GOSUB{:3094}:IF bs=2 THEN{:3066}
-	GOSUB{:3142}:GOSUB{:3118}:IF f%=.THEN{:3060}
+	GOSUB{:3142}:GOSUB{:3118}:IF f%=. then {:3060}
 	IF a%=>1000 THEN{:3074}
 	IF a%=>400 AND f%<3 THEN{:3074}
 	IF a%<400 AND f%<3 THEN{:3074}
@@ -52,7 +52,7 @@
 {:3066}
 	&"{red}Computer Busted!!!{f6}"
 {:3068}
-	IF a%<d%THEN{:3078}
+	IF a%<d% then {:3078}
 	IF a%=d%THEN:&"{f6}Hand is a TIE {pound}%a TO {pound}%d{f6}":&ak$:GOTO{:3080}
 	&"Computer won this hand {pound}%a TO {pound}%d{f6}":&ak$:b%=b%+100:GOTO{:3080}
 {:3074}
@@ -62,7 +62,7 @@
 {:3078}
 	&"{yellow}You won this hand {pound}%d to {pound}%a{f6}":&ak$:c%=c%+100
 {:3080}
-	&"Total scores: {f6}{pound}$f Has {pound}%c{f6}Computer Has {pound}%b{pound}w2{f6}":IF hl>.THEN{:3086}
+	&"Total scores: {f6}{pound}$f Has {pound}%c{f6}Computer Has {pound}%b{pound}w2{f6}":IF hl>. then {:3086}
 	ON-(c%>gt)GOTO{:3086}:IF b%>gt THEN hl=1:GOTO{:3014}
 	GOTO{:3076}
 {:3086}
@@ -75,7 +75,7 @@
 	FOR i=1 TO 6:a2(i)=.:NEXT:&"{white}Die    #1 #2 #3 #4 #5 #6{f6}":FOR k=1 TO f%:GOSUB{:3242}
 	&"{green}{pound}{back arrow}"+a$:&STR$(di(k)):a2(di(k))=a2(di(k))+1:NEXT
 	&"{f6}{pound}{back arrow}08{pound}k1{$b7:17}{pound}k0{f6:2}"
-	IF a2(1)<>.OR a2(5)<>.THEN{:3108}
+	IF a2(1)<>.OR a2(5)<>. then {:3108}
 	IF a2(2)>2 OR a2(3)>2 THEN{:3108}
 	IF a2(4)>2 OR a2(6)>2 THEN{:3108}
 	a%=.:bs=2
@@ -89,7 +89,7 @@
 {:3116}
 	NEXT:RETURN
 {:3118}
-	IF j1=.THEN{:3234}
+	IF j1=. then {:3234}
 	&"{f6}{yellow}Removed ":FOR i=1 TO j1:&STR$(a(i)):a1(a(i))=a1(a(i))+1:NEXT:&"{f6}"
 	ON a1(1)GOTO{:3160},{:3162},{:3164},{:3166},{:3168},{:3170}
 {:3124}
@@ -113,7 +113,7 @@
 	dk=di(k):a$="YES":IF dk=1 OR dk=5 THEN{:3154}
 	IF a4(dk)<3 THEN a$="NO"
 	IF((a4(dk)<6)AND(a3(dk)>2))THEN a$="NO"
-	IF a$<>"YES"THEN{:3156}
+	IF a$<>"YES" then {:3156}
 {:3154}
 	a3(dk)=a3(dk)+1:a(j1+1)=die(k):j1=j1+1
 {:3156}
@@ -228,10 +228,10 @@
 	&">  {pound}$b":&LEFT$(zp$(x,1)+sj$,17)
 	&b$:&RIGHT$(sj$+zp$(x,2),11):NEXT:&"{f6:2}{yellow}{pound}{back arrow}13Press Return: {pound}g1{f6}":RETURN
 {:3274}
-	sj$="{pound}{back arrow}25":x=.:gp=c%:IF gp<=.THEN{:3288}
+	sj$="{pound}{back arrow}25":x=.:gp=c%:IF gp<=. then {:3288}
 {:3276}
 	x=x+1:IF x>5 THEN{:3288}
-	zp=VAL(zp$(x,2)):IF zp=.THEN{:3282}
+	zp=VAL(zp$(x,2)):IF zp=. then {:3282}
 	IF gp<zp THEN{:3276}
 {:3282}
 	FOR z=5 TO x STEP-1:FOR y=1 TO 2:zp$(z,y)=zp$(z-1,y):NEXT y,z

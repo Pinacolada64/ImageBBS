@@ -8,12 +8,12 @@
 	gosub 1063:x=1:gosub 1001:&,2,2:ca=val(a$):close 2:&,52,20,em
 	poke 970,.:&,52,$22,val(mid$(uf$,2,1)):&,52,21,3:if i%then qb=2400:goto {:4050}
 	&,52,4,3:if a%then qb=2400
-	if a%=.then{:4018}
-	a=3:gosub 1004:if na$<>d3$or a<>.then{:4018}
+	if a%=. then {:4018}
+	a=3:gosub 1004:if na$<>d3$or a<>. then {:4018}
 	&"{f6}Sorry, No Back-To-Back Calls!{f6}":ac%=16:f4=1:return
 {:4018}
 	a=17:gosub 1004:if left$(d1$,7)<>left$(d5$,7)then ct%=.
-	f2=.:ct%=ct%+1:tc%=tc%+1:if ct%<a or a=.then{:4026}
+	f2=.:ct%=ct%+1:tc%=tc%+1:if ct%<a or a=. then {:4026}
 	if ct%>a then:&"{f6}{lt. blue}Sorry, Call Limit Used Today!{f6}":f4=1:ac%=16:return
 	&"{f6:2}{white}Note{blue}:{lt. green} This Is Your Last Call Today.{f6}"
 {:4026}
@@ -33,9 +33,9 @@
 {:4050}
 	f1=.:pt%=.:a=1:gosub 1003
 	gosub 1019:&,52,7,3:if a%then pt%=1-pt%:if p1%<1 then p1%=30
-	if pt%=.then{:4062}
+	if pt%=. then {:4062}
 ' prime time enabled: this gets overwritten by screen mask load later. has been moved to im.disp
-'	print"{home}{down}{rvrs on}{white}P":print"{rvrs on}{white}R":print"{rvrs on}{white}I":print"{rvrs on}{white}M":print"{rvrs on}{white}E":if g<p1%then{:4062}
+'	print"{home}{down}{rvrs on}{white}P":print"{rvrs on}{white}R":print"{rvrs on}{white}I":print"{rvrs on}{white}M":print"{rvrs on}{white}E":if g<p1% then {:4062}
 	if g<p1% then {:4062}
 	a%=p1%:tr%=a%
 	&"{f6}Note - It Is Now Prime Time -{f6}A{$cc:2} Callers Are Limited To {pound}%a Minutes!{f6:2}"
@@ -53,7 +53,7 @@
 {:4078}
 	a$=left$("f."+na$,16)+",s,r":dr=2:gosub 1011:on e%goto {:4134}
 {:4080}
-	f4=.:&"{f6}":&,2,2:c$=b$:b$=a$:if a$="{up arrow}"or st<>.then{:4088}
+	f4=.:&"{f6}":&,2,2:c$=b$:b$=a$:if a$="{up arrow}"or st<>. then {:4088}
 	fl=-(a$="ERASE"or a$="KI{$cc:2}"or a$="O{$c6:2}"):on fl goto {:4080}
 	fl=-(left$(a$,1)="!"or left$(a$,1)="{back arrow}"or left$(a$,1)="@"):on fl goto {:4080}
 	&:goto {:4080}
@@ -69,7 +69,7 @@
 	a$="@":if left$(c$,1)=a$then nn$=mid$(c$,2):gosub {:4136}
 	goto {:4134}
 {:4108}
-	if mid$(d1$,2,6)<mid$(b$,2,6)then{:4112}
+	if mid$(d1$,2,6)<mid$(b$,2,6) then {:4112}
 {:4110}
 	dr=2:gosub 1010:print# 15,"s"dr$"f."left$(na$,13):gosub 1081:goto {:4134}
 {:4112}

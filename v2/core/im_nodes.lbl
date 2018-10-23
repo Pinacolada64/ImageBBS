@@ -53,15 +53,15 @@
 {:60074}
 	a%=a%+1:input# 2,a$,b$:&"{f6}#{pound}%a: {pound}$a{f6}    {$04}"+right$(b$,11)
 	if len(b$)>11 then:&"{f6} To {$04}"+left$(b$,11)
-	&"{f6}Files Transferred:":&,3,2:if st=.and sh=.then{:60074}
+	&"{f6}Files Transferred:":&,3,2:if st=.and sh=. then {:60074}
 	close 2:&"{f6}Delete?":gosub 1907:on a+1 goto {:60008}:a$=l$:gosub 1024:close 2:goto {:60008}
 {:60082}
 	&"{f6}Read Net Sysop Log{f6}":dr=2:l$="nm.sylog":a$=l$+",s,r":gosub 1011:a%=.:sh=.
 	if e%then close 2:goto {:60008}
 {:60086}
 	a%=a%+1:&,2,2:f$=a$:&,2,2:b$=a$:&,2,2:c$=a$:a$=f$:s=st
-	&"{f6}#{pound}%a: Sent By {f5}{pound}$a{f5}{f6} On {$04}"+b$:&"{f6} File:{pound}$c{f6}":if s+sh=.then{:60086}
-	close 2:&"{f6}Delete?":gosub 1907:if a=.then{:60008}
+	&"{f6}#{pound}%a: Sent By {f5}{pound}$a{f5}{f6} On {$04}"+b$:&"{f6} File:{pound}$c{f6}":if s+sh=. then {:60086}
+	close 2:&"{f6}Delete?":gosub 1907:if a=. then {:60008}
 	a$=l$:gosub 1024:close 2:goto {:60008}
 {:60094}
 	a$="nm.map link":gosub 1075:if e%then:&"{f6:2}No Link Map Found."

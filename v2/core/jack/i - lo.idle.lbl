@@ -1,19 +1,19 @@
 	ON LM GOTO{:4100},{:4200},{:4010}:MM=.:F1=3:GOTO 3000
 	REM I/LO.IDLE
 {:4006}
-	CM$="{$c3}ONNECTED":GOSUB 9:&,69,5,21,CM$,$85
+	CM$="CONNECTED":GOSUB 9:&,69,5,21,CM$,$85
 {:4008}
 	LT$=D1$:LT%=MN%:POKE 53248,.:MM=.:F1=.:GOTO 3000
 {:4010}
 	&,18,1:AN$=D3$:&,15,1:&,69,5,17,AN$,$8C:&,69,5,18,D2$,$8C:&,69,5,19,D6$,$8C
-	&,69,5,20,L2$,$8C:IF PT%THEN:&,69,16,20,"*{$d0}{$d2}{$c9}{$cd}{$c5}{$d4}{$c9}{$cd}{$c5}*",$8C
+	&,69,5,20,L2$,$8C:IF PT%THEN:&,69,16,20,"*PRIMETIME*",$8C
 ' 41: Network Reserve
-	&,52,41,3:&,69,31,17," {$d2}ES {$cf}"+MID$("FF N  ",A%*3+1,3),$8C:KK=A%
+	&,52,41,3:&,69,31,17," RES O"+MID$("FF N  ",A%*3+1,3),$8C:KK=A%
 ' 40: System Reserved (Default PW)
-	&,52,40,3:&,69,31,18," {$d2}ES {$cf}"+MID$("FF N  ",A%*3+1,3),$8C:KK=KK+2*A%
-	IF L2=.AND A%=.THEN:&,69,31,19," {$ce}ONE    ",$8C
-	IF L2=.AND A%=1 THEN:&,69,31,19," {$cf}NE     ",$8C
-	IF L2>.THEN:&,69,31,19," {$c1}LL     ",$8C
+	&,52,40,3:&,69,31,18," RES O"+MID$("FF N  ",A%*3+1,3),$8C:KK=KK+2*A%
+	IF L2=.AND A%=.THEN:&,69,31,19," NONE    ",$8C
+	IF L2=.AND A%=1 THEN:&,69,31,19," ONE     ",$8C
+	IF L2>.THEN:&,69,31,19," ALL     ",$8C
 	&,69,31,20,"         ",$8C:&,69,31,20,STR$(QB),$8C
 	&,69,31,21,"         ",$8C:&,69,31,21,STR$(UH)+"/"+MID$(STR$(UR),2),$8C
 	&,69,2,22,RIGHT$(STR$(CA+1E5),5),$81:&,69,10,22,RIGHT$(STR$(CN+1E5),3),$81
@@ -24,8 +24,8 @@
 	&,52,2,3:A=A%:&,52,4,3:A=A+A%:&,52,6,3:A=A+A%:RETURN
 {:4040}
 ' fixme: return without gosub error in 4040 after setting time... or hitting any idle key listed
-	CM$="{$d3}YSTEM {$c9}DLE":GOSUB 9:&,69,5,21,CM$,$8A:RETURN
-	CM$="{$c3}ONNECTED":GOSUB 9:&,69,5,21,CM$,$85:RETURN
+	CM$="SYSTEM IDLE":GOSUB 9:&,69,5,21,CM$,$8A:RETURN
+	CM$="CONNECTED":GOSUB 9:&,69,5,21,CM$,$85:RETURN
 {:4100}
 ' 4: Local Mode (No Modem IO) [clear]
 ' 5: ZZ (Pseudo-Local) Mode   [clear]
@@ -37,7 +37,7 @@
 	IM=.:GOSUB 446:IF AC%=16 THEN MM=5:GOSUB 3000
 	AK$=" {$c0:38}"+"{f6}":PF=.:POKE 951,40
 	GOSUB 33:X=17:GOSUB 1:&,2,2:D3$=A$:X=19:GOSUB 1:&,2,2:CLOSE 2
-	AN$=A$:&,15:D2$=AN$+"{$cd}":UF$="01000"+TZ$:IM=6:GOSUB 447
+	AN$=A$:&,15:D2$=AN$+"M":UF$="01000"+TZ$:IM=6:GOSUB 447
 	LC=.:EM=.:ZZ=.:GS=.:CF=.:CR=.:LF=1:NL=.:UL=.:LE=.:PM=1:C9=.
 ' 2: editing user's access
 ' 4: Local Mode (No Modem IO)
@@ -71,9 +71,9 @@
 	LM=WC%(1,B):MM=8:GOTO 72
 {:4222}
 	X=VAL(A$):IF X THEN ON X GOTO{:4450},{:4420},{:4430},{:4400},{:4462},{:4464},{:4452},{:4454}
-	IF A$="{$d2}"THEN B$="RELOAD":X=11:MM=4:GOSUB 3000:F1=3:PR$="":GOTO 302
+	IF A$="R"THEN B$="RELOAD":X=11:MM=4:GOSUB 3000:F1=3:PR$="":GOTO 302
 {:4224}
-	X=.:X=-(A$="+")-2*(A$="-")-3*(A$="{pound}")-4*(A$="{$d4}")-5*(A$="{$c1}")-6*(A$="{back arrow}")
+	X=.:X=-(A$="+")-2*(A$="-")-3*(A$="{pound}")-4*(A$="T")-5*(A$="A")-6*(A$="{back arrow}")
 	ON X+1 GOTO{:4230},,,,,4258,4260:ON X GOSUB{:4250},{:4252},{:4254},{:4256}:GOTO{:4232}
 {:4230}
 	K=K+(K>.):ON-(A$=" "OR K=1)GOTO{:4200}:ON-(A$<>""AND(A$<"{f1}"OR A$>"{f8}"))GOSUB{:4270}
@@ -88,19 +88,19 @@
 {:4256}
 	POKE 53258,16-PEEK(53258):RETURN
 	MM=7:GOTO 3000
-	POKE 2042,.:POKE 53248,1:&"{clear}{f6:2}{$cc}OADING {$c9}MAGE-{$d4}ERM..{f6}":GOSUB 304:B$="TERM":X=11
+	POKE 2042,.:POKE 53248,1:&"{clear}{f6:2}LOADING IMAGE-TERM..{f6}":GOSUB 304:B$="TERM":X=11
 	MM=4:GOSUB 3000:A$="T":GOTO 70
 {:4264}
-	CM$="{$d2}ING {$c4}ETECTED":GOSUB 9:&,69,5,21,CM$,$83:GOTO{:4202}
+	CM$="RING DETECTED":GOSUB 9:&,69,5,21,CM$,$83:GOTO{:4202}
 {:4266}
 	GOSUB{:4040}:GOTO{:4204}
 {:4270}
 	ON-(A$="?")GOTO{:4300}:POKE 53248,1:POKE 971,16:&"{clear}{f6}{cyan}{$ac}{pound}O{$a2}{pound}O{$a2}{pound}H1{lt. blue}{$bb}{f6}"
-	&"{cyan}{rvrs on}{$a1}{lt. blue}1){$d3}ET {$d4}IME{pound}{back arrow}202){$d6}IEW {$c2}{$c1}{$d2}{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}3){$d6}IEW {$c2}LOCKS {$c6}REE{pound}{back arrow}204){$d6}IEW"
-	&" {$c3}LOCK/{$c3}ALLS{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}5){$c7}ARBAGE {$c3}OLLECT{pound}{back arrow}206){$d2}ESET {$cd}ODEM{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}"
-	&"{cyan}{rvrs on}{$a1}{lt. blue}7){$d3}ET {$d0}ASSWORD{pound}{back arrow}208){$d6}IEW {$cc}OGS{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}+){$d3}PEAKER {$cf}N{pound}{back arrow}20-){$d3}PEAKER "
-	&"{$cf}FF{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}{back arrow}){$c9}MAGE-{$d4}ERM{pound}{back arrow}20{$c1}){$c1}UTO-{$cd}AINT{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}{$d2}){$d2}E-{$cc}OAD {$cc}{$cf}{pound}{back arrow}20"
-	&"{$d4}){$c9}NVERT {$c3}ARRIER  {blue}{rvrs off}{$a1}{f6}":IF WC%(.,.)=.THEN{:4290}
+	&"{cyan}{rvrs on}{$a1}{lt. blue}1)SET TIME{pound}{back arrow}202)VIEW BAR{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}3)VIEW BLOCKS FREE{pound}{back arrow}204)VIEW"
+	&" CLOCK/CALLS{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}5)GARBAGE COLLECT{pound}{back arrow}206)RESET MODEM{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}"
+	&"{cyan}{rvrs on}{$a1}{lt. blue}7)SET PASSWORD{pound}{back arrow}208)VIEW LOGS{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}+)SPEAKER ON{pound}{back arrow}20-)SPEAKER "
+	&"OFF{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}{back arrow})IMAGE-TERM{pound}{back arrow}20A)AUTO-MAINT{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{cyan}{rvrs on}{$a1}{lt. blue}R)RE-LOAD LO{pound}{back arrow}20"
+	&"T)INVERT CARRIER  {blue}{rvrs off}{$a1}{f6}":IF WC%(.,.)=. then {:4290}
 ' show extended idle commands:
 	A=.:FOR I=1 TO WC%(.,.):A$=MID$("{cyan}{rvrs on}{$a1}{lt. blue}",A*4+1):E$=MID$("{pound}{back arrow}38{blue}{rvrs off}{$a1}{f6}{pound}{back arrow}20",(1-A)*8+1,8)
 	ON-(WC%(0,I)=0)GOTO{:4288}:B$=CHR$(WC%(.,I)):&,60,1,16,WC%(8,I),C$
@@ -110,16 +110,16 @@
 {:4290}
 	&"{lt. blue}{$bc}{blue}{rvrs on}{pound}O{$a2}{pound}O{$a2}{pound}H1{rvrs off}{$be}{f6}":POKE 53248,.:POKE 2042,.:K=50:RETURN
 {:4300}
-	A$="":GOTO{:4270}:REM"{$c7}{$cd} {$d7}ILL BE HERE"
+	A$="":GOTO{:4270}:REM"GM WILL BE HERE"
 {:4400}
 	F3=1:POKE 53248,1:POKE 2042,1:X%=ST(20):Y%=ST(24):Z%=ST(23):W%=ST(29)
-	&"{clear}{f6}{pound}{back arrow}22{lt. red}{rvrs on} {$c6}EEDBACK   {pound}#3{pound}# {pound}%Z {f6}{pound}{back arrow}22{rvrs on} {$d3}YS{$cf}P {$cd}AIL {pound}#3{pound}# {pound}%Y {gray1} {f6}"
-	&"{pound}{back arrow}22{lt. red}{rvrs on} {$c3}ALLS/{$cc}OG  {pound}#3{pound}# {pound}%X {gray1} {f6}{pound}{back arrow}22{lt. red}{rvrs on} {$ce}EW {$d5}SERS  {pound}#3{pound}# {pound}%W {gray1} {f6}"
+	&"{clear}{f6}{pound}{back arrow}22{lt. red}{rvrs on} FEEDBACK   {pound}#3{pound}# {pound}%Z {f6}{pound}{back arrow}22{rvrs on} SYSOP MAIL {pound}#3{pound}# {pound}%Y {gray1} {f6}"
+	&"{pound}{back arrow}22{lt. red}{rvrs on} CALLS/LOG  {pound}#3{pound}# {pound}%X {gray1} {f6}{pound}{back arrow}22{lt. red}{rvrs on} NEW USERS  {pound}#3{pound}# {pound}%W {gray1} {f6}"
 	&"{pound}{back arrow}23{rvrs on}                {f6}{up}":&,27,3:DIM L%(30,9):DR=3:GOSUB 3
 	&,60,2,.,L%(.,.),DR$+"E.LAST",DV%:ON-(E%>.)GOTO{:4414}:FOR I=.TO 9
 	&,60,1,20,L%(8,I),B$:&,60,5,.,L%(1,I),AN$:IF LEN(B$)<4 THEN NEXT:GOTO{:4414}
 	C$=MID$(AN$,4,4):&,15:&"{f6}{lt. blue} "+MID$(C$,1,2)+"/"+MID$(C$,3,2)+" @ "
-	&RIGHT$(AN$,7)+"{$cd} {cyan}{pound}$B{pound}{back arrow}39{rvrs off}":NEXT
+	&RIGHT$(AN$,7)+"M {cyan}{pound}$B{pound}{back arrow}39{rvrs off}":NEXT
 {:4414}
 	&,28,3:CLOSE 2:POKE 53248,.:GOTO{:4040}
 {:4420}
@@ -127,20 +127,20 @@
 {number:4430}
 {:4430}
 {step:2}
-	F3=3:POKE 53248,1:POKE 2042,.:&"{f6:2} {rvrs on}{cyan} {$c2}LOCKS {$c6}REE {$cf}N {$d3}YSTEM {$c4}ISKS {f6:2}"
+	F3=3:POKE 53248,1:POKE 2042,.:&"{f6:2} {rvrs on}{cyan} BLOCKS FREE ON SYSTEM DISKS {f6:2}"
 ' 3x2 display:
 '      System: xxxxx  Directory: xxxxx  '
 '        Mail: xxxxx  Plus-File: xxxxx  '
 '    Etcetera: xxxxx       User: xxxxx  '
 
-'	A$="{lt. red} {pound}$B {gray3}{$c4}ISK{white}:{pound}{back arrow}15{pound}$C{f6}{lt. red} {pound}$B {gray3}{$c4}ISK{white}:{pound}{back arrow}15{pound}$F{f6}":DR=1
-'	B$="{$d3}YSTEM":D$="{$cd}AIL":GOSUB{:4438}:B$="{$c5}TC.":D$="{$c4}IR.":GOSUB{:4438}
-'	B$="{$d0}ROGRAM":D$="{$d5}SER":GOSUB{:4438}:&"{f6:2}":POKE 53248,.:GOTO{:4040}
+'	A$="{lt. red} {pound}$B {gray3}DISK{white}:{pound}{back arrow}15{pound}$C{f6}{lt. red} {pound}$B {gray3}DISK{white}:{pound}{back arrow}15{pound}$F{f6}":DR=1
+'	B$="SYSTEM":D$="MAIL":GOSUB{:4438}:B$="ETC.":D$="DIR.":GOSUB{:4438}
+'	B$="PROGRAM":D$="USER":GOSUB{:4438}:&"{f6:2}":POKE 53248,.:GOTO{:4040}
 ' pina fix!
 	dr=1
-	b$="  {$d3}ystem":d$="{$c4}irectory":gosub{:4438}
-	b$="    {$cd}ail":d$="{$d0}lus-{$c6}ile":gosub{:4438}
-	b$="{$c5}tcetera":d$="     {$d5}ser":gosub{:4438}:&"{f6:2}":poke 53248,.:goto{:4040}
+	b$="  System":d$="Directory":gosub{:4438}
+	b$="    Mail":d$="Plus-File":gosub{:4438}
+	b$="Etcetera":d$="     User":gosub{:4438}:&"{f6:2}":poke 53248,.:goto{:4040}
 '{:4438}
 '	C$=STR$(BF(DR)):F$=STR$(BF(DR+1)):DR=DR+2:&:RETURN
 {:4438}

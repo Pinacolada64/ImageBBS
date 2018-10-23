@@ -81,17 +81,17 @@
 	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}Not Found.{f6}":goto {:60108}
 {:60114}
 	i=x:if x<1 or x>ur then{:60118}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES"then{:60120}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES" then {:60120}
 {:60118}
 	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:60148}
 {:60120}
-	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=.then{:60104}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=. then {:60104}
 {:60122}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:60144}:gosub 1085:if a then gosub 1980:goto {:60148}
 	on fl goto {:60132}
 	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="Note":c$=an$
 	&"{up}Subject: {pound}v7{f6}"
-	tt$(.)="["+an$+"]":gosub 1604:a=1:on tr%+1 goto {:60148}:if kk=.then{:60148}
+	tt$(.)="["+an$+"]":gosub 1604:a=1:on tr%+1 goto {:60148}:if kk=. then {:60148}
 {:60132}
 	&"{f6}Filing {pound}$c For ":&nn$:&"...{f6}"
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062

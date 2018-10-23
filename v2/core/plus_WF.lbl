@@ -22,7 +22,7 @@
 	poke 53252,ll%-2:if zz then poke 1022,254
 	return
 {:3030}
-	b$="Get":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:3110}
+	b$="Get":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:3110}
 {:3032}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3032}
 	gosub 1010:a$="r":gosub {:3002}:gosub 1372:if e%then close 6:&:goto {:3110}
@@ -32,19 +32,19 @@
 {:3040}
 	on kk goto {:3108}:b$="Put":gosub {:3004}:on fl goto {:3108}:&"{f6:2}"
 	if v$<>""then poke 53252,16:w$=v$:&,1,32:goto {:3046}
-	gosub 1005:if an$=""then{:3110}
+	gosub 1005:if an$="" then {:3110}
 {:3046}
 	if an$<>""then v$=an$
 {:3048}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3048}
 	gosub 1010
 {:3052}
-	a$="w":gosub {:3002}:if e%=.then{:3062}
+	a$="w":gosub {:3002}:if e%=. then {:3062}
 {:3054}
 	close 6:&:if e%<>63 then{:3066}
 	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then{:3066}
 	if an$="R"then a$=v$:gosub 1024:goto {:3052}
-	on-(an$<>"A")goto {:3054}:a$="a":gosub {:3002}:if e%then{:3066}
+	on-(an$<>"A")goto {:3054}:a$="a":gosub {:3002}:if e% then {:3066}
 {:3062}
 	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
 	next:&,14,6,kk-1
@@ -57,7 +57,7 @@
 {:3072}
 	b$="Disk Command":gosub {:3006}:on fl goto {:3108}:&"{f6:2}":gosub 1450:goto {:3110}
 {:3074}
-	b$="Read":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:3110}
+	b$="Read":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:3110}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3110}
 	gosub 1010:a$="r":gosub {:3002}:if e%then close 6:&:goto {:3110}
 	&,3,6:close 6:goto {:3110}
@@ -78,7 +78,7 @@
 {:3100}
 	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:3092}
 {:3102}
-	b%=kk-1:on-(an$="u")goto {:3112}:if an$="q"then{:3070}
+	b%=kk-1:on-(an$="u")goto {:3112}:if an$="q" then {:3070}
 	if zz then on-(an$="g")-(an$="p")*2-(an$="$")*3 goto {:3030},{:3040},{:3068}
 	if zz then on-(an$="@")-(an$="&")*2 goto {:3072},{:3074}
 {:3108}

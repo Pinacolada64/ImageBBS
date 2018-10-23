@@ -76,7 +76,7 @@
 {:4114}
 	poke 53252,11
 	dr=5:gosub 1010:an$="+/lo/*":gosub 1090:&"{f6}{lt. green}Add Which Module?{f6:2}Add +/lo/{white}{pound}i0"
-	if an$=""then{:4096}
+	if an$="" then {:4096}
 	b$=an$:gosub {:4160}:br=br+1:tt$(br)=b$:ed$(br)=c$:i=br:gosub {:4182}:fl=1:goto {:4096}
 {:4122}
 	&"{f6}{green}Delete Which? (1-{pound}#0{pound}%a):{white} {pound}i1":a=val(an$):if a<1 or a>br or tr%<1 then{:4096}
@@ -122,7 +122,7 @@
 	dt$(i)="":a=val(left$(ed$(i),3)):a$="SMTWTFS":if a=.then dt$(i)=a$:return
 	for z=1 to 7:dt$(i)=dt$(i)+mid$(mid$(a$,z,1)+"-",1-((a and 2^z)=.),1):next:return
 {:4186}
-	fl=.:&"Edit {$c2:2}S Adds{f6}":br=.:a$="e.walladds":dr=3:gosub 1011:if e%=.then{:4190}
+	fl=.:&"Edit {$c2:2}S Adds{f6}":br=.:a$="e.walladds":dr=3:gosub 1011:if e%=. then {:4190}
 	a$="e.walladds,l,"+chr$(50):dr=3:gosub 1011:x=1:gosub 1001:print# 2,br
 {:4190}
 	x=1:gosub 1001:&,2,2:br=val(a$):if br<1 then close 2:&"{f6}No Adds":goto {:4200}
@@ -187,7 +187,7 @@
 	fl=1:lo=lo+1:x=lo:ed$(1)=str$(id):ed$(2)=na$:ed$(3)="00000000":ed$(4)="none"
 	goto {:4290}
 {:4286}
-	a$="Edit":gosub {:4352}:if x=.then{:4262}
+	a$="Edit":gosub {:4352}:if x=. then {:4262}
 	gosub {:4330}
 {:4290}
 	a=val(ed$(1)):an$=ed$(2):&,15,1:&"{clear}{f6}{green}1{lt. green}. {gray3}Name{pound}{back arrow}15{purple}: {white}{pound}v7 (ID#{pound}!a){f6}"
@@ -204,7 +204,7 @@
 	&"{clear}{f6}{lt. red}Flags:{f6}":for i=.to 7:a=val(mid$(ed$(3),i+1,1)):a$=dt$(i):a%=i+1
 	b$=mid$("NY",a+1,1):&" {lt. green}{pound}%a{green}.{cyan}({white}{pound}$b{cyan}) {gray3}{pound}$a{f6}":next:&"{f6}Change Which? "
 {:4312}
-	&"{pound}g1":if tr%<1 or an$=r$then{:4290}
+	&"{pound}g1":if tr%<1 or an$=r$ then {:4290}
 	i=val(an$):if i<1 or i>8 then{:4312}
 	a$=ed$(3):a=val(mid$(a$,i,1)):ed$(3)=left$(a$,i-1)+chr$(49-a)+mid$(a$,i+1)
 {:4318}
@@ -213,7 +213,7 @@
 {:4322}
 	l=36:d$=ed$(4):p$="Description":pl=.:f=1:gosub {:4342}:ed$(4)=an$:goto {:4290}
 {:4324}
-	a$="Delete":gosub {:4352}:if x=.then{:4262}
+	a$="Delete":gosub {:4352}:if x=. then {:4262}
 	if x<>fb%(.,.)then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
 	fb%(.,.)=fb%(.,.)-1:lo=fb%(.,.):fl=1:goto {:4262}
 {:4330}

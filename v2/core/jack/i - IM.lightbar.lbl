@@ -2,19 +2,19 @@
 	RETURN
 {:4004}
 	IF B<0 THEN A$="--:--":RETURN
-	A%=B/60:B%=B-A%*60:A$="{$c1}":IF A%>11 THEN A$="{$d0}":A%=A%-12
+	A%=B/60:B%=B-A%*60:A$="A":IF A%>11 THEN A$="P":A%=A%-12
 	A%=A%-12*(A%=0):A$=RIGHT$(STR$(A%),2)+":"+RIGHT$(STR$(100+B%),2)+A$:RETURN
 {:4100}
 	GOSUB{:4128}:P%=1
 {:4102}
 	P%=P%+ZZ%*(P%>ZZ%)-ZZ%*(P%<1)
-	&"{clear}{lt. blue}{$d0}AGE{white} {pound}%P{f6}":GOSUB{:4140}
-	&"{f6:2}{white}{$cc}{lt. blue}OAD{blue}/{white}{$d3}{lt. blue}AVE{blue}/{white}{$ce}{lt. blue}EXT{blue}/{white}{$d0}{lt. blue}REV{blue}/{white}#{blue}/{white}{$d1}{lt. blue}UIT{blue}:{white} {pound}I1"
-	IF AN$="{$ce}"OR AN$="{$d0}"THEN P%=P%+(AN$="{$d0}")-(AN$="{$ce}"):GOTO{:4102}
-	IF AN$="{$cc}"THEN GOSUB{:4128}:GOTO{:4102}
-	IF AN$="{$d3}"THEN GOSUB{:4134}:GOTO{:4102}
+	&"{clear}{lt. blue}PAGE{white} {pound}%P{f6}":GOSUB{:4140}
+	&"{f6:2}{white}L{lt. blue}OAD{blue}/{white}S{lt. blue}AVE{blue}/{white}N{lt. blue}EXT{blue}/{white}P{lt. blue}REV{blue}/{white}#{blue}/{white}Q{lt. blue}UIT{blue}:{white} {pound}I1"
+	IF AN$="N"OR AN$="P"THEN P%=P%+(AN$="P")-(AN$="N"):GOTO{:4102}
+	IF AN$="L"THEN GOSUB{:4128}:GOTO{:4102}
+	IF AN$="S"THEN GOSUB{:4134}:GOTO{:4102}
 	IF VAL(AN$)THEN GOSUB{:4120}:GOTO{:4102}
-	IF TZ THEN:&"{$d3}AVE {$c3}HANGES? ":GOSUB 94:IF A THEN GOSUB{:4134}
+	IF TZ THEN:&"SAVE CHANGES? ":GOSUB 94:IF A THEN GOSUB{:4134}
 	&,11:RETURN
 {:4120}
 	A=VAL(AN$):IF A<1 OR A>16 THEN RETURN
@@ -22,7 +22,7 @@
 	A$=CHR$(48-(A$="0")):C$(P%)=LEFT$(C$(P%),A-1)+A$+MID$(C$(P%),A+1)
 	TZ=1:RETURN
 {:4128}
-	TZ=0:&"{$cc}OADING {$c3}HECKMARK {$c4}EFAULTS{f6}":GOSUB{:4146}
+	TZ=0:&"LOADING CHECKMARK DEFAULTS{f6}":GOSUB{:4146}
 	DR=3:A$="E.LIGHTDEFS,S,R":GOSUB 4:IF E%THEN CLOSE 2:RETURN
 	FOR X=1 TO ZZ%:&,2,2:GOSUB{:4164}:C$(X)=A$:X=X-(ST<>0)*ZZ%:NEXT:CLOSE 2:RETURN
 {:4134}
@@ -54,8 +54,8 @@
 {:4204}
 	TZ=0:DR=3:GOSUB 3:A$=DR$+"E.ALARMS":RETURN
 {:4206}
-	&"{clear}{$c1}LARM {$d4}IME/{$c3}HECKMARK {$c5}DITOR 1.3{f6}{pound}$K":RETURN
-	A%=B/60:B%=B-A%*60:A$="{$c1}":IF A%>11 THEN A$="{$d0}":A%=A%-12
+	&"{clear}ALARM TIME/CHECKMARK EDITOR 1.3{f6}{pound}$K":RETURN
+	A%=B/60:B%=B-A%*60:A$="A":IF A%>11 THEN A$="P":A%=A%-12
 	A%=A%-12*(A%=0):A$=RIGHT$(STR$(A%),2)+":"+RIGHT$(STR$(100+B%),2)+A$:RETURN
 {:4212}
 	GOSUB{:4204}:&,60,2,0,AM%(0,0),A$,DV%:GOTO 5
@@ -66,54 +66,54 @@
 {:4218}
 	FOR I=0 TO 15:GOSUB{:4282}:NEXT:K$=" {$c0:38}{f6}"
 {:4220}
-	GOSUB{:4206}:&" ##  {$cf}N{$d4}IME {$cf}FF{$d4}IME {$c3}HECK {$c1}CTIVE?{f6:2}"
+	GOSUB{:4206}:&" ##  ONTIME OFFTIME CHECK ACTIVE?{f6:2}"
 	FOR I=0 TO 15:A%=I+1:A$=C$(I):&" {pound}#2{pound}# {pound}%A) {pound}$A{f6}":NEXT
-	&"{pound}$K{$c5}DIT {$d7}HICH ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$d1}UIT)? {pound}I1":IF AN$=""THEN{:4276}
+	&"{pound}$KEDIT WHICH (RETURN TO QUIT)? {pound}I1":IF AN$="" then {:4276}
 	A=VAL(AN$):ON-(A<1 OR A>16)GOTO{:4220}:A=A-1
 {:4228}
-	GOSUB{:4206}:A%=A+1:&"{$c1}LARM #{pound}%A:{f6:2}"
-	B=AM%(1,A):GOSUB{:4004}:&" 1) {$cf}N {$d4}IME:  {pound}$A{f6}"
-	B=AM%(2,A):GOSUB{:4004}:&" 2) {$cf}FF {$d4}IME: {pound}$A{f6}":A%=AM%(0,A)
-	IF A%=256 THEN:&" 3) {$c4}ISABLED{f6}"
-	IF A%>256 THEN:&" 3) {$c5}NABLED{f6}"
-	IF A%<256 THEN:&" 3) {$c5}NABLED {$c2}Y {$c3}HECKMARK {pound}%A{f6}"
-	A%=AM%(3,A):&" 4) {$c3}HECKMARK {pound}%A IS {$d4}RIGGERED{f6}"
-	&"{pound}$K{$c3}HANGE {$d7}HICH ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT)? {pound}I1":IF AN$=""THEN I=A:GOSUB{:4282}:GOTO{:4220}
+	GOSUB{:4206}:A%=A+1:&"ALARM #{pound}%A:{f6:2}"
+	B=AM%(1,A):GOSUB{:4004}:&" 1) ON TIME:  {pound}$A{f6}"
+	B=AM%(2,A):GOSUB{:4004}:&" 2) OFF TIME: {pound}$A{f6}":A%=AM%(0,A)
+	IF A%=256 THEN:&" 3) DISABLED{f6}"
+	IF A%>256 THEN:&" 3) ENABLED{f6}"
+	IF A%<256 THEN:&" 3) ENABLED BY CHECKMARK {pound}%A{f6}"
+	A%=AM%(3,A):&" 4) CHECKMARK {pound}%A IS TRIGGERED{f6}"
+	&"{pound}$KCHANGE WHICH (RETURN TO ABORT)? {pound}I1":IF AN$=""THEN I=A:GOSUB{:4282}:GOTO{:4220}
 	&"{f6}":X=VAL(AN$):ON X GOSUB{:4246},{:4250},{:4258},{:4270}:GOTO{:4228}
 {:4246}
-	P$="{$d4}URN {$cf}N {$d4}IME":GOTO{:4250}
-	P$="{$d4}URN {$cf}FF {$d4}IME"
+	P$="TURN ON TIME":GOTO{:4250}
+	P$="TURN OFF TIME"
 {:4250}
 	B=AM%(X,A):GOSUB{:4004}:W$=A$:POKE 53252,6:&,1,32:IF AN$=""THEN RETURN
 	B=VAL(LEFT$(AN$,2)):IF B=12 THEN B=0
-	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="{$d0}")*720:IF B=AM%(X,A)THEN RETURN
+	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="P")*720:IF B=AM%(X,A)THEN RETURN
 	AM%(X,A)=B:TZ=1:RETURN
 {:4258}
-	&"{$c6}ORCED [{$c5}]NABLED, {$c6}ORCED [{$c4}]ISABLED,OR{f6}[{$c3}]HECKMARK? {pound}G1":B=AM%(0,A)
-	IF AN$="{$c5}"THEN B=257
-	IF AN$="{$c4}"THEN B=256
-	IF AN$="{$c3}"THEN:&"{$d7}HICH {$cf}NE? {pound}I1":B=VAL(AN$)
+	&"FORCED [E]NABLED, FORCED [D]ISABLED,OR{f6}[C]HECKMARK? {pound}G1":B=AM%(0,A)
+	IF AN$="E"THEN B=257
+	IF AN$="D"THEN B=256
+	IF AN$="C"THEN:&"WHICH ONE? {pound}I1":B=VAL(AN$)
 	IF AM%(0,A)=B THEN RETURN
 	AM%(0,A)=B:TZ=1:RETURN
 {:4270}
-	&"{$d7}HICH {$c3}HECK DO YOU WANT TRIGGERED? {pound}I1":IF AN$=""THEN RETURN
+	&"WHICH CHECK DO YOU WANT TRIGGERED? {pound}I1":IF AN$=""THEN RETURN
 	B=VAL(AN$):IF AM%(3,A)=B THEN RETURN
 	AM%(3,A)=B:TZ=1:RETURN
 {:4276}
-	A=0:IF TZ THEN:&"{$c3}HANGES {$cd}ADE! {$d3}AVE? ":GOSUB 94
-	IF A THEN GOSUB{:4214}:&"{$c1}CTIVATE {$d3}AVED {$d4}ABLE? ":GOSUB 96:ON A GOSUB{:4216}
+	A=0:IF TZ THEN:&"CHANGES MADE! SAVE? ":GOSUB 94
+	IF A THEN GOSUB{:4214}:&"ACTIVATE SAVED TABLE? ":GOSUB 96:ON A GOSUB{:4216}
 	RETURN
 {:4282}
 	A=AM%(0,I):B=AM%(1,I):GOSUB{:4004}:B$=A$:B=AM%(2,I):GOSUB{:4004}:C$=A$:A%=AM%(3,I)
 	A$=B$+" "+C$+"  "+LEFT$(B$(AM%(3,I)AND 127),5)+"  "
-	IF A=256 THEN A$=A$+"{$ce}O":GOTO{:4292}
-	IF A>256 THEN A$=A$+"{$d9}ES":GOTO{:4292}
+	IF A=256 THEN A$=A$+"NO":GOTO{:4292}
+	IF A>256 THEN A$=A$+"YES":GOTO{:4292}
 	A$=A$+"IF "+LEFT$(B$(A AND 127),5)
 {:4292}
 	C$(I)=A$:RETURN
 	REM
 {:4300}
-	&"{$cc}OADING {$ce}ET{$cd}AIL {$c1}LARM {$d4}ABLE..."
+	&"LOADING NETMAIL ALARM TABLE..."
 	FOR I=0 TO 23:A%(I)=I*60:NEXT:GOSUB{:4308}:TZ=-(E%<>0)
 	FOR I=0 TO 23:B=A%(I):GOSUB{:4004}:C$(I)=A$:NEXT:GOTO{:4314}
 {:4306}
@@ -125,21 +125,21 @@
 {:4312}
 	GOSUB{:4310}:&,7,DV%,12:GOTO 5
 {:4314}
-	&"{clear}{f6}{$ce}ET{$cd}AIL {$d4}RIGGER {$d4}IMES:{f6:2}"
+	&"{clear}{f6}NETMAIL TRIGGER TIMES:{f6:2}"
 	FOR I=0 TO 11:A%=I+1:A$=C$(I):B%=I+13:B$=C$(I+12)
 	&"{pound}#2{pound}# {pound}%A) {pound}$A{pound}{back arrow}20{pound}%B) {pound}$B{f6}"
-	NEXT:&"{f6}{$c3}HANGE {$d7}HICH? {pound}I1":A=VAL(AN$):IF A<1 OR A>24 THEN{:4336}
-	P$="{$ce}ET{$cd}AIL {$c1}LARM #"+STR$(A)
-	A=A-1:B=A%(A):GOSUB{:4004}:W$=A$:POKE 53252,6:&,1,32:IF AN$=""THEN{:4314}
+	NEXT:&"{f6}CHANGE WHICH? {pound}I1":A=VAL(AN$):IF A<1 OR A>24 THEN{:4336}
+	P$="NETMAIL ALARM #"+STR$(A)
+	A=A-1:B=A%(A):GOSUB{:4004}:W$=A$:POKE 53252,6:&,1,32:IF AN$="" then {:4314}
 	IF AN$="-"OR AN$="{f8}"THEN B=-1:GOTO{:4332}
 	B=VAL(LEFT$(AN$,2)):IF B=12 THEN B=0
-	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="{$d0}")*720
+	B=B*60+VAL(MID$(AN$,4,2))-(RIGHT$(AN$,1)="P")*720
 {:4332}
-	IF B=A%(A)THEN{:4314}
+	IF B=A%(A) then {:4314}
 	A%(A)=B:GOSUB{:4004}:C$(A)=A$:TZ=1:GOTO{:4314}
 {:4336}
 	IF TZ=0 THEN RETURN
-	&"{f6}{$d3}AVE {$c3}HANGES? ":GOSUB 94:IF A THEN GOSUB{:4306}
-	&"{f6}{$c1}CTIVATE {$d3}AVED {$d4}ABLE? ":GOSUB 96:IF A THEN GOSUB{:4312}
+	&"{f6}SAVE CHANGES? ":GOSUB 94:IF A THEN GOSUB{:4306}
+	&"{f6}ACTIVATE SAVED TABLE? ":GOSUB 96:IF A THEN GOSUB{:4312}
 	RETURN
 	REM

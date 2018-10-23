@@ -16,7 +16,7 @@
 	a=val(an$):if a<1 or a>6 then 1811
 	on a goto {:3020},{:3030},{:3092},{:3168},{:3102},1811:goto {:3012}
 {:3020}
-	&"{clear}Create File{f6:2}Continue? ":gosub 1907:if a=.then{:3012}
+	&"{clear}Create File{f6:2}Continue? ":gosub 1907:if a=. then {:3012}
 	&"{f6:2}Creating...":gosub {:3002}:if e%then:&"{f6:2}Error Creating File.":goto {:3010}
 	&"{pound}h6ed...{f6:2}Filling: ":for x=1 to ur
 	&mid$("{white}{cyan}{purple}{green}{yellow}{lt. red}{lt. green}{lt. blue}{gray3}",int(rnd(1)*9)+1,1)+mid$("{up arrow}*+{pound}=[]$#",int(rnd(1)*9)+1,1)
@@ -25,12 +25,12 @@
 	&"{clear}Edit Sysop Record:"
 {:3032}
 	&"{f6:2}Enter The HANDLE Or ID# Of The Sysop:{f6:2}"
-	nn$="":poke 53252,20:gosub 1006:gosub {:3004}:if an$=""then{:3012}
+	nn$="":poke 53252,20:gosub 1006:gosub {:3004}:if an$="" then {:3012}
 	if a=.then nn$=an$:goto {:3048}
 	if a>ur then:&"{f6:2}Out Of Range. ":goto {:3032}
 	i=a:gosub 1065:x=a
 	gosub 1001:&,2,2:on-(a$="{up arrow}")goto {:3052}:nn$=a$
-	b$=nn$:&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1907:if a=.then{:3032}
+	b$=nn$:&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1907:if a=. then {:3032}
 	close 2:poke 53252,30:goto {:3054}
 {:3048}
 	gosub 1046:if i=.then:&"{f6}{f5}{pound}v7{f5} Not Found{f6}In User File.{f6}":goto {:3032}
@@ -45,14 +45,14 @@
 {:3062}
 	&"{f6:2}Edit...":for i=1 to 13
 	&"{f6}{pound}!i{pound}{back arrow}04":&ed$(i):&"{pound}{back arrow}20:":&tt$(i):next:&"{f6:2}Which Field? {pound}i1"
-	on tr%+1 goto 1811:if an$=""then{:3012}
+	on tr%+1 goto 1811:if an$="" then {:3012}
 	i=val(an$):if i<1 or i>13 then:&"{f6:2}Out of Range!{pound}w2":goto {:3062}
-	&"{f6:2}Change ":&tt$(i):&" ?":gosub 1907:if a=.then{:3062}
+	&"{f6:2}Change ":&tt$(i):&" ?":gosub 1907:if a=. then {:3062}
 	if i<=3 or i=8 or i=13 then:&"{f6:2}New Data For :":&tt$(i):&"{f6:2}[> {pound}i1":goto {:3076}
 	&"{f6:2}New Data For :":&tt$(i):&"{f6:2}[> {pound}i0"
 {:3076}
 	on tr%+1 goto 1811:on-(an$="")goto {:3090}:tt$=an$:&"{f6:2}Is ":&tt$:&" Correct? "
-	gosub 1907:if a=.then{:3090}
+	gosub 1907:if a=. then {:3090}
 	tt$(i)=tt$:&"{f6:2}Other Changes? ":gosub 1907:on a goto {:3062}:tt$(.)=d1$
 	if tt$(12)=""then tt$(12)="None"
 	if tt$(13)=""then tt$(13)="N/A"
@@ -64,18 +64,18 @@
 	&"{clear}Delete A Sysop.{f6:2}ID Number To Delete? {pound}i1":x=val(an$)
 	on tr%+1 goto 1811:on-(an$="")goto {:3012}:if x<1 or x>ur then{:3092}
 	gosub {:3006}:gosub 1001:&,2,2:if a$="n"or a$="{up arrow}"then:&"{f6:2}Deleted!{pound}w2":goto {:3092}
-	&,2,2:&"{f6:2}Delete {pound}$a? ":gosub 1907:if a=.then{:3092}
+	&,2,2:&"{f6:2}Delete {pound}$a? ":gosub 1907:if a=. then {:3092}
 	gosub 1001:print# 2,"n":&"{f6:2}Sysop Deleted.  Another? ":gosub 1902
 {:3102}
 	on a goto {:3092}:goto {:3010}
 	&"{clear}Add A Sysop.{f6:2}The Following Information Is Required."
 {:3106}
 	&"{f6:2}Enter The HANDLE Or ID# Of The Sysop:{f6:2}"
-	nn$="":poke 53252,20:gosub 1006:gosub {:3004}:if an$=""then{:3012}
+	nn$="":poke 53252,20:gosub 1006:gosub {:3004}:if an$="" then {:3012}
 	if a>ur then:&"{f6:2}Out Of Range. ":goto {:3106}
 	on-(a=.)goto {:3120}:i=a:gosub 1065:x=a
 	gosub 1001:&,2,2:on-(a$="{up arrow}")goto {:3126}:b$=a$
-	&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1907:if a=.then{:3106}
+	&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1907:if a=. then {:3106}
 	fl=1:nn$=b$:close 2:goto {:3126}
 {:3120}
 	gosub 1046:if i=.then:&"{f6}{f5}{pound}v7{f5} Not Found{f6}In User File.{f6}":goto {:3106}
@@ -102,7 +102,7 @@
 	if i<=3 or i=8 or i=13 then:&"New :":&ed$:&"{f6}]> {pound}i1":tt$=an$:on tr%+1 goto 1811:goto {:3156}
 	&"{f6}New :":&ed$(i):&"{f6}]> {pound}i0":on tr%+1 goto 1811:tt$=an$
 {:3156}
-	on-(an$="")goto {:3142}:&"{f6:2}Is ":&an$:" Correct? ":gosub 1907:if a=.then{:3142}
+	on-(an$="")goto {:3142}:&"{f6:2}Is ":&an$:" Correct? ":gosub 1907:if a=. then {:3142}
 	tt$(i)=tt$:goto {:3142}
 {:3160}
 	&"{f6:2}Writing Data...":tt$(.)=d1$:if tt$(12)=""then tt$(12)="None"
@@ -111,7 +111,7 @@
 	gosub {:3006}:gosub 1001:print# 2,w$:&"{f6:2}Added!":goto {:3010}
 {:3168}
 	&"{f6}Change file to {f5}n{f5}"
-	&"{f6:2}ID Number: {pound}i1":if an$=""then{:3010}
+	&"{f6:2}ID Number: {pound}i1":if an$="" then {:3010}
 	on tr%+1 goto 1811:x=val(an$):if x<1 or x>ur then:&"{f6:2}Out of range.":goto {:3010}
 	gosub {:3006}:gosub 1001:print# 2,"n":&"{f6}Done!":goto {:3010}
 {:3176}

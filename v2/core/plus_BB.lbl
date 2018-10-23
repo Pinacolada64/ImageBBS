@@ -81,19 +81,19 @@
 	x=1:gosub {:3066}:gosub {:3004}:close 2:d%=1:n%=.:gosub {:3008}
 {:3100}
 	restore:for i=1 to 16:read tt$(i):next
-	&"{clear}{f6:2}{rvrs on} IMAGE {$c2:2}S DATABASE {f6}{rvrs on} By PHAZE {$c2:2}S!      {rvrs off}{f6}":gosub {:3010}:if e%then{:3092}
+	&"{clear}{f6:2}{rvrs on} IMAGE {$c2:2}S DATABASE {f6}{rvrs on} By PHAZE {$c2:2}S!      {rvrs off}{f6}":gosub {:3010}:if e% then {:3092}
 	a$="e.i.bbs,s,r":gosub 1011:input# 2,n%,d%:close 2:gosub {:3010}
 {:3106}
 	d=.:c=.:f=.:s=.:f1=.
 {:3108}
 	poke 53252,24:fl=.:&"{f6:2}{green}<{white}L{green}>{orange}ist {$c2:2}S Numbers{f6}{green}<{white}Q{green}>{orange}uit To Main Menu"
-	&"{f6}{green}<{white}D{green}>{orange}isplay Notes":if z=.then{:3114}
+	&"{f6}{green}<{white}D{green}>{orange}isplay Notes":if z=. then {:3114}
 	&"{f6}{green}<{white}A{green}>{orange}dd A Number{f6}{green}<{white}R{green}>{orange}emove An Entry{f6}{green}<{white}E{green}>{orange}dit An Entry"
 {:3114}
 	gosub {:3002}:on tr%+1 goto {:3246}
 	on z+1 goto {:3118}:on-(an$="A")-(an$="R")*2-(an$="E")*3 goto {:3142},{:3204},{:3224}
 {:3118}
-	if an$="L"then{:3122}
+	if an$="L" then {:3122}
 	on-(an$="Q"or an$="")-(an$="{f2}")*2-(an$="D")*3 goto {:3246},{:3108},{:3218}:goto {:3108}
 {:3122}
 	&"{f6:2}{cyan}<{red}B{cyan}>aud{f6}<{red}A{cyan}>rea Code{f6}<{red}C{cyan}>omplete Listing":gosub {:3002}:on tr%+1 goto {:3246}
@@ -160,10 +160,10 @@
 	&"{f6}GAM = Online Games{f6}RPG = Online Role Playing Games":gosub {:3088}:goto {:3106}
 {:3224}
 	if f$<>na$and q=.then:&"{f6:2}Sorry, That Number Must Be Edited{f6}By {f5}{pound}$f{f5}":goto {:3106}
-	poke 53252,24:&"{f6:2}Edit Which Number?: {pound}i1":x=int(val(an$)):if x<1 or x>n%then{:3106}
+	poke 53252,24:&"{f6:2}Edit Which Number?: {pound}i1":x=int(val(an$)):if x<1 or x>n% then {:3106}
 	gosub {:3064}:gosub {:3012}:pl=.:p$="{$c2:2}S Name":w$=b$:&,1,32:if an$<>""then b$=an$
 {:3230}
-	gosub {:3012}:pl=1:p$="{$c2:2}S Number":w$=c$:&,1,32:a=val(an$):if an$=""then{:3236}
+	gosub {:3012}:pl=1:p$="{$c2:2}S Number":w$=c$:&,1,32:a=val(an$):if an$="" then {:3236}
 	if mid$(an$,5,3)="555"or a=.or len(an$)<>12 then:&"{f6}Illegal Entry!":goto {:3230}
 	gosub {:3026}:if f then c$=w$:goto {:3230}
 {:3236}

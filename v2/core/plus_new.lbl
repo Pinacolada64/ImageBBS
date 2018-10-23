@@ -15,14 +15,14 @@
 	b=b+1:if b=5 then{:3088}
 	close 2:&"{f6:2}Please Enter Your{f6}RES Account Number: {pound}i1":on tr%+1 goto {:3088}
 	id=int(abs(val(an$))):if id<1 or id>ur then{:3022}
-	gosub 1071:if na$<>"RES"then{:3022}
+	gosub 1071:if na$<>"RES" then {:3022}
 	&"{f6:2}Please Enter Your{f6}RES Password : ":&,6:if tr%<1 or b>4 then{:3088}
 	if an$<>pw$then:&"{f6}Incorrect Password.{f6}":goto {:3022}
 {:3034}
 	na$="":rn$="":ct%=.:tc%=.:ll%=40:lf=1:em=.:ul=.:co%=1:ff$="":ll$="":d5$=lt$
 	tr%=30:gosub {:3090}:on tr%+1 goto {:3088}
 	if pw$=""then id=.:&"{f6}":ao%=ac%:gosub 1634:goto {:3064}
-	gosub 1073:if id<>.then{:3054}
+	gosub 1073:if id<>. then {:3054}
 	gosub 1065:&"{f6:2}Updating account info...":id=l1
 	l=l1+1:if l1>ur then e=.:goto {:3052}
 	e=1:on-(l1=ur)goto {:3052}:for x=l to ur:if x/3=int(x/3)then:&"."
@@ -38,7 +38,7 @@
 	&"{f6}Press RETURN To Continue.{f6:2}: {$07}{pound}i1"
 {:3064}
 	gosub {:3188}:on tr%+1 goto {:3088}
-	if pw$=""then{:3086}
+	if pw$="" then {:3086}
 	gosub {:3202}:on tr%+1 goto {:3088}
 	gosub {:3236}:on tr%+1 goto {:3088}
 	gosub {:3264}:on tr%+1 goto {:3088}
@@ -69,7 +69,7 @@
 	&"{f6}Enter The Handle That You Wish{f6}To Use On This System:{f6:2}: {pound}i1"
 	if tr%<1 then na$="":return
 	a=len(an$):if a<5 or a>20 then{:3122}
-	if left$(an$,1)<"A"then{:3122}
+	if left$(an$,1)<"A" then {:3122}
 	&"{f6}Checking To See If Anybody Is Already{f6}Using That Handle..."
 	gosub 1046:if i=.then na$=an$:return
 	a%=i:&"{f6:2}That handle is now used by {pound}$f{pound}%a.{f6}":goto {:3106}
@@ -79,7 +79,7 @@
 {:3126}
 	poke 53252,12:&"{f6}Enter Your Phone Number In The Form{f6}801-423-2734:{f6:2}: {pound}i1"
 	if tr%<1 then ph$="[{$d8:3}] {$d8:3}-{$d8:4}":return
-	if an$=""then{:3126}
+	if an$="" then {:3126}
 	an$=left$(an$,3)+mid$(an$,5,3)+right$(an$,4):if len(an$)<>10 then{:3138}
 	g=.:for x=1 to 10:b$=mid$(an$,x,1):g=-(b$<"0"or b$>"9")or g:next:on g goto {:3138}
 	ph$="["+left$(an$,3)+"] "+mid$(an$,4,3)+"-"+right$(an$,4):return
@@ -104,7 +104,7 @@
 	pw$="":return
 {:3162}
 	poke 53252,14:&"A{f6:2}Please Enter A Password To Use{f6}"
-	&"for your account on this {$c2:2}S.{f6:2}: {pound}i1":on tr%+1 goto {:3160}:if an$=""then{:3150}
+	&"for your account on this {$c2:2}S.{f6:2}: {pound}i1":on tr%+1 goto {:3160}:if an$="" then {:3150}
 	if tr%<1 then{:3170}
 	if na$=an$then:&"{f6}Please Do Not Use Your Handle{f6}As A Password.{f6}":goto {:3162}
 {:3170}
@@ -158,7 +158,7 @@
 	if tr%>.then a=val(an$):if a>.and a<=b then i=a:gosub {:3210}:gosub {:3224}:goto {:3226}
 	return
 {:3236}
-	q=.:&"{f6:2}Are You An IMAGE {$c2:2}S Owner? ":gosub 1902:q=a:if a=.then{:3262}
+	q=.:&"{f6:2}Are You An IMAGE {$c2:2}S Owner? ":gosub 1902:q=a:if a=. then {:3262}
 	b=5:p$="":for i=1 to b:gosub {:3240}:gosub {:3252}:next:goto {:3254}
 {:3240}
 	poke 53252,38:on i goto {:3242},{:3244},{:3246},{:3248},{:3250}
@@ -193,7 +193,7 @@
 	gosub {:3076}:b$="new":ad$="New User Registration":gosub 1068
 	print# 2,"NEW USER:"r$r$rn$r$ed$(1)r$ed$(2)", "ed$(3)" "ed$(4)
 	print# 2,"Birthdate : "ed$(5)r$"Occupation: "ed$(6)r$"Baud Rate:"str$(qb)r$
-	if q=.then{:3290}
+	if q=. then {:3290}
 	print# 2,r$"IMAGE SYSOP"r$r$"Board Name:  "dt$(1)r$"Board Phone: "dt$(2)
 	print# 2,"Serial #:    "dt$(3)r$"Network:     "dt$(4)r$"Node ID:      "dt$(5)r$
 {:3290}
@@ -207,7 +207,7 @@
 	b$="new temp":a$="a":gosub 1027:if e%then a$="w":gosub 1027
 	print# 2,na$+r$+ed$(2)+r$+ed$(3)
 	close 2:an$=na$:gosub 1038:gosub 1060:i=1:x=19:gosub 1025:x=29:gosub 1025:close 2
-	a$="e.macs":dr=3:gosub 1011:if e%then{:3088}
+	a$="e.macs":dr=3:gosub 1011:if e% then {:3088}
 	for x=id*4-4 to id*4:gosub 1001:print# 2,"{up arrow}":next:close 2:goto {:3086}
 	rem +.new
 	copr. 1995 new image 02/08/95

@@ -4,9 +4,9 @@
 	&,2,2:bl=val(a$):&,2,2:k=val(a$):close 2:if bl=.then gosub {:4040}:goto {:4020}
 	dr=3:a$="e.cr.pool 2,s,r":gosub 1011:if e%then close 2:goto {:4020}
 {:4008}
-	l$="":for i=1 to rnd(1)*bl+1:&,2,2:next:an$=a$:&,15,1:m$=a$:if a$=""then{:4008}
+	l$="":for i=1 to rnd(1)*bl+1:&,2,2:next:an$=a$:&,15,1:m$=a$:if a$="" then {:4008}
 	l$=an$+"":a$="{yellow} Credit Pool Winner: {white} "+l$+r$+" {yellow}Credits Won:{white}"+str$(k)+r$
-	a$=a$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095:a$="":an$=m$:gosub 1046:y=i:if i=.then{:4020}
+	a$=a$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095:a$="":an$=m$:gosub 1046:y=i:if i=. then {:4020}
 	x=i:gosub 1065:gosub 1001:for i=1 to 23:&,2,2:tt$(i)=a$:next
 	a$="":tt$(19)=str$(val(tt$(19))+k):for i=1 to 23:a$=a$+tt$(i)+r$:next
 	gosub 1001:print# 2,a$:close 2:gosub {:4026}:k=250
@@ -24,7 +24,7 @@
 	x=25:on z gosub 1025:close 2:gosub 1081
 {:4040}
 	dr=1:a$="n.$Winner":gosub 1023
-	if bl=.then{:4054}
+	if bl=. then {:4054}
 	print# 2,"{pound}$q{pound}{back arrow}15{rvrs on}{white} WI{$ce:2}ER! {rvrs off}"
 	print# 2,"{f6:2}{pound}$q{yellow}Today's {lt. red}{rvrs on}Credit Pool Winner{rvrs off} {lt. green}is:"
 	print# 2,"{f6:2}{pound}$q{rvrs on}{gray3}"+l$+"{rvrs off}{yellow} who won{gray3} {rvrs on}"+str$(k)+"{rvrs off} {yellow}Credits."

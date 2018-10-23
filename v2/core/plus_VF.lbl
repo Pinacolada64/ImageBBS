@@ -36,7 +36,7 @@
 	if y=1 then for x=2 to 24 step 11:gosub 1025:next:x=31:gosub 1025
 	x=25:on z gosub 1025:close 2:return
 {:3046}
-	if zz=.then{:3116}
+	if zz=. then {:3116}
 {:3048}
 	f1=f1-(f1=.):&"{f6}Which Msg?: {pound}i1":gosub {:3008}:on tr%+1 goto {:3416}:if an$="{f2}"then gosub {:3002}:goto {:3048}
 	on-(left$(an$,1)="R")goto {:3060}:if a<1 or a>bz then{:3116}
@@ -46,7 +46,8 @@
 	&,2,2:bz=val(a$):if bz=.then close 2:return
 	for x=1 to bz:&,2,2:dt$(x)=a$:next:close 2:return
 {:3060}
-	gosub {:3006}:on-(a<1 or a>bz)goto {:3048}:a$="s.can msg"+str$(a):dr=1:gosub 1076:goto {:3062}
+	gosub {:3006}:on-(a<1 or a>bz)goto {:3048}:a$="s.can msg"+str$(a):dr=1:gosub 1076
+{:3062}
 	dr=3:a$="e.access":gosub 1011:for i=.to 9:x=i+1:gosub 1001:&,2,2:&,2,2:fl$(i)=a$
 	next:return
 {:3066}

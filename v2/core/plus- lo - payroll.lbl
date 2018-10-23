@@ -1,8 +1,8 @@
 {number:4000}
 	rem distribute paychecks
-	n=0:dr=6:a$="u.payroll,s,r":gosub 1011:if e%then{:4012}
+	n=0:dr=6:a$="u.payroll,s,r":gosub 1011:if e% then {:4012}
 {:4004}
-	n=n+1:&,2,2:a%(n)=val(left$(a$,3)):c%(n)=val(mid$(a$,5)):if st=.then{:4004}
+	n=n+1:&,2,2:a%(n)=val(left$(a$,3)):c%(n)=val(mid$(a$,5)):if st=. then {:4004}
 	close 2:&"{f6}Executing Credit Payroll{f6:2}"
 	gosub 1065:for i=1 to n:x=a%(i):c%=c%(i):gosub {:4014}:next:close 2
 	for k=1 to n:tt$=tt$(k):c%=c%(k):gosub {:4022}:next
@@ -14,7 +14,7 @@
 	&"{pound}$a{pound}{back arrow}25{pound}%c Credits{f6}":ed$(19)=str$(val(ed$(19))+c%)
 	a$="":for j=1 to 23:a$=a$+ed$(j)+r$:next:gosub 1001:print# 2,a$:return
 {:4022}
-	a$=tt$:&"{pound}$a{pound}{back arrow}30Notified{f6}":if tt$="{up arrow}"then{:4036}
+	a$=tt$:&"{pound}$a{pound}{back arrow}30Notified{f6}":if tt$="{up arrow}" then {:4036}
 	z=1:a$="w":gosub 1062:if e%then z=.:a$="a":gosub 1062
 	print# 2,"IMAGE"r$0;r$d1$r$"[Payroll]"r$
 	print# 2,"You have received"str$(c%)" credits{f6}"r$"for this week's paycheck."

@@ -11,7 +11,7 @@
 	poke 53252,20:w$=tt$(t):p$="Group Name":pl=.:&,1,32:if an$<>""then tt$(t)=an$
 	q$=tt$(t+10):f$=q$:gosub {:4026}:tt$(t+10)=q$:goto {:4008}
 {:4020}
-	&" Save Changes?: ":gosub 1902:if a=.then{:4024}
+	&" Save Changes?: ":gosub 1902:if a=. then {:4024}
 	&"{f6}Saving...":for i=.to 9:x=i+1:gosub 1001:print# 2,tt$(i)r$tt$(i+10):next
 {:4024}
 	close 2:return
@@ -34,7 +34,7 @@
 {:4052}
 	if a=2 then b$=mid$(q$,2,1)+"/1"
 	if a=6 then b$=mid$(str$((val(mid$(q$,6,1))+1)*10),2)
-	p$=dt$(a):w$=b$:&,1,32:if an$=""then{:4026}
+	p$=dt$(a):w$=b$:&,1,32:if an$="" then {:4026}
 	b$=left$(an$,1):if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
 {:4060}
 	q$=left$(q$,a-1)+b$+mid$(q$,a+1):&"{f6}":goto {:4026}

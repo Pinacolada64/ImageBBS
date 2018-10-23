@@ -16,7 +16,7 @@
 	&"{f6:2}":f=0:for i=1 to 9:b$=" ":if mt$=left$(ed$(i),l)then b$="*":f=1
 	b%=i:a$=mid$(ed$(i),l+2):&"{pound}$b {pound}%b. {pound}$a{f6}":next:b$="":if f=0 then b$="("+mt$+")"
 	&"{f6}  C. Custom {pound}$b{f6}  Q. Quit{f6}"
-	&"{f6:2} Modem Type ":a$="Q":b$="123456789CQ":gosub {:4110}:if a$="Q"then{:4034}
+	&"{f6:2} Modem Type ":a$="Q":b$="123456789CQ":gosub {:4110}:if a$="Q" then {:4034}
 	b=val(an$):tt$=left$(ed$(b),l):if a$="C"then tt$=mt$:gosub {:4036}
 	a$=tt$:&"{f6}Is {f5}{pound}$a{f5} Ok? ":gosub 1902:if a=0 then{:4016}
 	&"{clear}{down:3}{yellow}  Writing Modem Config...{f6}"

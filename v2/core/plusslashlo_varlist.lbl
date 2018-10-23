@@ -18,7 +18,7 @@
 	if t=2 then poke y+2,peek(x+2):poke y+3,peek(x+3):poke y+4,peek(x+4):gosub {:4058}
 	if t=3 then:&" ?"
 	if rc then{:4028}
-	&"{f6}":x=x+7:if x<(peek(47)+peek(48)*256)then{:4008}
+	&"{f6}":x=x+7:if x<(peek(47)+peek(48)*256) then {:4008}
 {:4028}
 ' beginning of arrays:
 	&"{f6:2}    Arrays:{f6:2}":x=peek(47)+peek(48)*256:sh=.
@@ -43,7 +43,7 @@
 {:4044}
 	&"{f6:2}":x=fre(.):return
 {:4046}
-	if peek(x)=65 and peek(x+1)=.then{:4056}
+	if peek(x)=65 and peek(x+1)=. then {:4056}
 	if peek(x+2)=.then a=.:goto {:4056}
 	a=(128+(peek(x+3)and 127))*256^3+peek(x+4)*65536+peek(x+5)*256+peek(x+6)
 	a=a/256^4*2:if peek(x+3)>127 then a=-a
@@ -52,7 +52,7 @@
 	&str$(a):return
 {:4058}
 ' display string contents:
-	b$="":if a$=""then{:4066}
+	b$="":if a$="" then {:4066}
 	for a=1 to len(a$):an$=mid$(a$,a,1):b=asc(an$):if an$="{pound}"then an$="{pound:2}"
 	if b<32 or(b>127 and b<160)then an$="{pound}r1"+chr$(b+64)+"{pound}r0"
 	b$=b$+an$:next

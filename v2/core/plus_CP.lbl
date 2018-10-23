@@ -57,7 +57,7 @@
 	IF x=5 THEN s8=1:x9=.
 {:3086}
 	IF x=6 THEN s1=1:x9=.
-	IF s=.THEN{:3050}
+	IF s=. then {:3050}
 {:3090}
 	CLOSE 1:a9$="":IF t=.THEN GOSUB 1920:GOTO{:3004}
 	&"{f6}":a=f:GOSUB{:3132}:ON-(a<>.)GOTO{:3116}:a=g:GOSUB{:3132}:ON-(a<>.)GOTO{:3116}
@@ -68,7 +68,7 @@
 	&"{pound}g1{pound}v7":ON-(an$="C")-(an$="A")*2-(an$="R")*3 GOTO{:3100},{:3184},{:3186}:GOTO{:3192}
 {:3100}
 	CLOSE 15:OPEN 15,f,15:OPEN 14,g,15
-	FOR i=1 TO t:c$=tt$(i):IF c$="[Deleted]"THEN{:3112}
+	FOR i=1 TO t:c$=tt$(i):IF c$="[Deleted]" then {:3112}
 	&"{f6}Copying:{f5}{pound}$c{f5}..."
 	OPEN 3,f,3,f$+c$+",r":INPUT# 15,a$,b$:IF a$<>"00"THEN:&"{pound}{back arrow}32{pound}$b!":GOTO{:3112}
 {:3108}
@@ -86,8 +86,8 @@
 {:3120}
 	f=8:d$="":b%=8:GOSUB{:3134}:IF b%>6 AND b%<16 THEN f=b%
 	a=f:GOSUB{:3132}:IF a THEN{:3116}
-	&"{f6:2}Disk Command: ":GOSUB 1499:c$=an$:a$=LEFT$(c$,1):IF a$=""THEN{:3004}
-	IF a$="n"OR a$="s"THEN GOSUB 1901:IF a=.THEN{:3004}
+	&"{f6:2}Disk Command: ":GOSUB 1499:c$=an$:a$=LEFT$(c$,1):IF a$="" then {:3004}
+	IF a$="n"OR a$="s"THEN GOSUB 1901:IF a=. then {:3004}
 	CLOSE 15:OPEN 15,f,15:PRINT# 15,c$:GOSUB 1012
 	CLOSE 15:&:&"{f6} (Hit A Key) {pound}g1":GOTO{:3004}
 {:3132}
@@ -135,8 +135,8 @@
 	a9$=an$:IF an$<>"R"THEN x9=x:RETURN
 	x=x9:RETURN
 {:3192}
-	IF an$="S"THEN{:3208}
-	IF an$<>"D"THEN{:3100}
+	IF an$="S" then {:3208}
+	IF an$<>"D" then {:3100}
 	&"{f6}Delete Which Number: {pound}i1"
 	zq=VAL(an$):IF zq<1 OR zq>t THEN{:3096}
 	tt$(zq)="[Deleted]":GOTO{:3094}

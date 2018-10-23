@@ -30,7 +30,7 @@
 	return
 {:60300}
 	for i=1 to n:a=.:b$=",r":gosub {:60020}
-	if e%=.then x$="Sending":x=2:gosub {:60002}:gosub {:60102}:if b=.then{:60304}
+	if e%=.then x$="Sending":x=2:gosub {:60002}:gosub {:60102}:if b=. then {:60304}
 	tt$(i)=mid$(str$(b),2)+":"+f$:next
 {:60304}
 	n=i-1:return

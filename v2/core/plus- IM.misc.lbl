@@ -31,14 +31,14 @@
 	if an$=""or an$=w$or an$=r$or tr%<1 then:&"No Change":return
 	&,15,2:gosub 1063:x=43:gosub 1001:print# 2,an$:close 2:mm$=an$:return
 {:4046}
-	poke 53252,20:pl=.:w$=po$:p$="Main":&"{f6}":&,1,41:on tr%+1 goto {:4052}:if an$=w$then{:4062}
+	poke 53252,20:pl=.:w$=po$:p$="Main":&"{f6}":&,1,41:on tr%+1 goto {:4052}:if an$=w$ then {:4062}
 	po$=an$:dr=5:a$="bd.data,s,r":gosub 1011:for i=1 to 4:&,2,2:tt$(i)=a$:next
 	tt$(3)=po$:dr=5:a$="bd.data":gosub 1023:for i=1 to 4:print# 2,tt$(i):next:close 2
 {:4052}
 	return
 {:4054}
 	poke 53252,30:pl=.:w$=bn$:p$="Board Name":&"{f6}":&,1,32
-	if tr%<1 or an$=bn$then{:4062}
+	if tr%<1 or an$=bn$ then {:4062}
 	bn$=an$:gosub 1063:x=47:gosub 1001:print# 2,bn$:close 2
 	return
 {:4062}
@@ -57,7 +57,7 @@
 	return
 {:4082}
 	poke 53252,2:pl=1:w$=cc$:p$="{yellow}System ID{white}":&"{f6}":&,1,32
-	if tr%<1 or an$=cc$then{:4088}
+	if tr%<1 or an$=cc$ then {:4088}
 	cc$=an$:gosub 1063:x=51:gosub 1001:print# 2,cc$:close 2
 {:4088}
 	return

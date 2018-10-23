@@ -35,7 +35,7 @@
 {:3044}
 	gosub {:3008}
 	open 3,dv%,3,dr$+"u.index,p,r":get#3,a$,a$:z$=chr$(0)
-	get#3,a$,b$:n%=asc(b$+z$)+asc(a$+z$)*256:&"{f6}{pound}%n Users.{f6}":if n%=.then{:3056}
+	get#3,a$,b$:n%=asc(b$+z$)+asc(a$+z$)*256:&"{f6}{pound}%n Users.{f6}":if n%=. then {:3056}
 	for i=1 to n%:get#3,a$,b$:a%=asc(b$+z$)+asc(a$+z$)*256
 	x=a%:gosub 1001:input# 2,a$:&"{pound}%a - {pound}$a{f6}"
 	i=i+rc*n%:next
@@ -43,7 +43,7 @@
 	close 3:&"Press A Key {pound}g1{f6}":close 2:return
 {:3058}
 	gosub {:3008}:for i=1 to ur:x=i:gosub 1001:input# 2,a$
-	if a$="{up arrow}"or a$="RES"then{:3066}
+	if a$="{up arrow}"or a$="RES" then {:3066}
 	a%=i:an$=a$:&"{pound}#3{pound}# {pound}%a. {pound}$a{pound}{back arrow}30":&,16:if a%then:&"Dupe={pound}%a{f6}":goto {:3066}
 	a%=i:&,16,4:&"At {pound}%b{f6}"
 {:3066}

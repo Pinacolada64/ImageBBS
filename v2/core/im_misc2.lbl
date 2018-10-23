@@ -23,11 +23,11 @@
 	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}Not Found.{f6}":goto {:60006}
 {:60012}
 	i=x:if x<1 or x>ur then{:60016}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES"then{:60018}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES" then {:60018}
 {:60016}
 	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:60048}
 {:60018}
-	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=.then{:60002}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=. then {:60002}
 {:60020}
 	y=i:dr=2:gosub 1079:if a<20 then x=2:gosub 1980:goto {:60046}
 ' check for directory space:

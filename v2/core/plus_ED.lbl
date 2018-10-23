@@ -8,7 +8,7 @@
 	a%=ur:&"{f6} Users: {pound}%a{f6:2}Enter Handle Or ID# Of User To Edit.{f6:2}":gosub 1006
 	on-(an$="")goto 1811:x=abs(int(val(left$(an$,4))))
 {:3114}
-	tz=1:p=0:if(x<=ur)and x>.then{:3118}
+	tz=1:p=0:if(x<=ur)and x>. then {:3118}
 	i=0:on-(an$<>"")gosub 1046:x=i:if i=0 then:&"{f6}{f5}{pound}v7{f5} Not Found.{f6}{pound}w2":goto {:3108}
 {:3118}
 	gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
@@ -27,13 +27,13 @@
 	if a=2 and id<>1 then x=3:gosub 1980:&"{f6}{pound}w2":goto {:3126}
 	if a=10 then gosub {:3162}:goto {:3126}
 	on-(a<1 or a>23)goto {:3152}:if a=23 then q$=tt$(23):gosub {:3196}:tt$(23)=q$:tz=0:goto {:3126}
-	p$=ed$(a):w$=tt$(a):&,1,32:if an$=""or an$=tt$(a)then{:3126}
+	p$=ed$(a):w$=tt$(a):&,1,32:if an$=""or an$=tt$(a) then {:3126}
 	tt$(a)=an$:tz=.:on-(a=1)-(a=7)*2 goto {:3168},{:3172}:goto {:3126}
 {:3152}
 	on tz goto {:3108}:&"{f6}Save Changes?: ":gosub 1902:on-(a=.)goto {:3108}
 	&"{clear}{f6}Writing To User Data Files..."
 	if tt$(1)<>"{up arrow}"and tt$(1)<>"RES"and tt$(1)<>tt$then gosub {:3242}:gosub {:3174}:goto {:3108}
-	gosub {:3174}:if tt$(1)="RES"and tt$<>"{up arrow}"and tt$<>"RES"then{:3186}
+	gosub {:3174}:if tt$(1)="RES"and tt$<>"{up arrow}"and tt$<>"RES" then {:3186}
 	goto {:3108}
 {:3162}
 	&"{f6:2}":for t=1 to 9:b$=co$(t):a%=t:&"{pound}%a>-{pound}$b{f6}":next
@@ -48,7 +48,7 @@
 	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:gosub 1001
 	print# 2,a$;:close 2:return
 {:3178}
-	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}Are You Sure?: ":gosub 1902:if a=.then{:3108}
+	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}Are You Sure?: ":gosub 1902:if a=. then {:3108}
 	an$=tt$:gosub 1034
 	tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next:gosub {:3174}
 	if x<l1 then l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
@@ -78,7 +78,7 @@
 {:3222}
 	if a=2 then b$=mid$(q$,2,1)+"/1"
 	if a=6 then b$=mid$(str$((val(mid$(q$,6,1))+1)*10),2)
-	p$=dt$(a):w$=b$:&,1,32:if an$=""then{:3196}
+	p$=dt$(a):w$=b$:&,1,32:if an$="" then {:3196}
 	b$=left$(an$,1):if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
 {:3230}
 	q$=left$(q$,a-1)+b$+mid$(q$,a+1):&"{f6}":goto {:3196}

@@ -229,7 +229,7 @@
 	c$="A":if c%>11 then c%=c%-12:c$="P"
 	b%=b%-12*(b%=0):c%=c%-12*(c%=0)
 	&"{pound}%a) {pound}#2{pound}# {pound}%b:00 {pound}$bM to {pound}#2{pound}# {pound}%c:59 {pound}$cM{f6}":next
-	&"{f6} Change Which? {pound}g1":a=val(an$):if an$<"0"or an$>"9"then{:4092}
+	&"{f6} Change Which? {pound}g1":a=val(an$):if an$<"0"or an$>"9" then {:4092}
 	&"{pound}v7{f6:2}"
 	q=3:gosub{:4618}
 	a$="Start":gosub{:4324}:if a$<>""then tt$(a)=a$+mid$(tt$(a),3)
@@ -259,7 +259,7 @@
 {:4348}
 	a$="":if z then a$=" (A=Add) "
 	q=2:gosub{:4618}:&"{f6:2}{cyan}Edit/View Which{pound}$a?{white} {pound}i1":if tr%<1 or an$=""then return
-	if z and an$="A"then{:4358}
+	if z and an$="A" then {:4358}
 	a=val(an$):if a=>1 and a<=m then x=a+k:gosub{:4364}:gosub{:4368}:goto{:4344}
 	return
 {:4358}
@@ -389,7 +389,7 @@
 	input# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
 	x=a+1:gosub 1001:print# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
 	if a>n then n=a:x=1:gosub 1001:print# 2,n
-	if s=.then{:4534}
+	if s=. then {:4534}
 	close 2:close 3:print# 15,"s"dr$"nm.nodelist":goto{:4548}
 {:4544}
 	&"No {f5}nm.create{f5} file found!{f6}Please contact your NetWork{f6}Administrator.{f6}"
@@ -400,7 +400,7 @@
 	gosub {:open_nm.nodes}:&,2,2:n=val(a$):close 2
 	&"{f6}Enter the Node # you were assigned: {pound}i1":nn=val(an$)
 	if nn<1 or nn>n then e%=1:return
-	gosub {:open_nm.config}:if e%then{:4562}
+	gosub {:open_nm.config}:if e% then {:4562}
 	&,2,2:&,2,2:&,2,2:af%=val(a$):&,2,2:pn$=a$:gosub{:4088}:goto{:4574}
 {:4562}
 	dr=2:a$="nm.config,l,z":gosub 1011

@@ -1,5 +1,5 @@
 	REM WALLWRITER
-	REM&"{f6}{yellow}{$d2}EAD {lt. blue}{rvrs on}{$dd:3}{lt. red}{$d7}ALL{lt. green}{$d7}RITER?:{rvrs off} ":GOSUB94:IFA=.THEN4634
+	REM&"{f6}{yellow}READ {lt. blue}{rvrs on}{$dd:3}{lt. red}WALL{lt. green}WRITER?:{rvrs off} ":GOSUB94:IFA=. then 4634
 {:4504}
 	&,5:V=LP:GF=1:NN=1:S$="                    ":S$=S$+S$+S$+S$
 	ON GF+1 GOTO{:4516}:DR=2:A$="NM.CONFIG":GOSUB 4:IF E%THEN NN=.:GOTO{:4516}
@@ -9,20 +9,20 @@
 	X=NN+1:GOSUB 1:&,2,2:NN$=A$:CLOSE 2
 {:4516}
 	DR=2:A$="NM.GRF2":GOSUB 4:&,2,2:A1=VAL(A$):&,2,2:A2=VAL(A$)
-	&,2,2:A3=VAL(A$):IF A3=.THEN:&"{f6}{yellow}{$d7}ALL NOT {$c3}{$cf}{$ce}{$c6}{$c9}{$c7}{$d5}{$d2}{$c5}{$c4}!{f6}":CLOSE 2:GOTO{:4618}
+	&,2,2:A3=VAL(A$):IF A3=.THEN:&"{f6}{yellow}WALL NOT CONFIGURED!{f6}":CLOSE 2:GOTO{:4618}
 	L$=LEFT$(S$,LL%/2-17)
-	LP=1:&"{clear}{f6}{pound}$L          {lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}{$d7}ALL{lt. green}{$d7}RITER{f6}{pound}$L{cyan}               V2.0"
+	LP=1:&"{clear}{f6}{pound}$L          {lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}WALL{lt. green}WRITER{f6}{pound}$L{cyan}               V2.0"
 	A$="E.WALLADDS":DR=3:GOSUB 4:IF E%THEN CLOSE 2:&"{f6}{lt. red}{pound}VZ{f6}":GOTO{:4532}
 	X=1:GOSUB 1:&,2,2:X=VAL(A$):X=INT(RND(.)*X)+2:GOSUB 1:&,2,2:B$=A$
 	&,2,2:C$=A$:CLOSE 2:A=INT((LL%/2)-(LEN(B$)/2)):B=INT((LL%/2)-(LEN(C$)/2))
 	L$=LEFT$(S$,A):J$=LEFT$(S$,B):&"{f6}{pound}$L{pound}$B{f6}{pound}$J{pound}$C{f6}{lt. red}{pound}VZ{f6}"
 {:4532}
-	A$="NM.GRF2":DR=2:GOSUB 4:IF A1=.THEN:&"{yellow}{$d4}HE {$d7}ALL {$c9}S {$c2}{$cc}{$c1}{$ce}{$cb}!{f6}":GOTO{:4538}
-	&"{purple}{$d3}CANNING {$c6}OR {$ce}EW {$d7}RITINGS{pound}K1..."
-	X=A1:Q=.:GOSUB{:4556}:IF Q=.THEN:&"{pound}Q0{f6:2}{yellow}{$ce}O {$ce}EW {$d7}RITINGS!{f6}"
+	A$="NM.GRF2":DR=2:GOSUB 4:IF A1=.THEN:&"{yellow}THE WALL IS BLANK!{f6}":GOTO{:4538}
+	&"{purple}SCANNING FOR NEW WRITINGS{pound}K1..."
+	X=A1:Q=.:GOSUB{:4556}:IF Q=.THEN:&"{pound}Q0{f6:2}{yellow}NO NEW WRITINGS!{f6}"
 {:4538}
-	&"{f6}{lt. green}{$d7}ANNA {$c1}DD YOUR WORDS OF WISDOM? ":GOSUB 96:IF A=.THEN{:4546}
-	N=76:GOSUB{:4632}:PL=.:&"{f6}{purple}{$c7}O AHEAD AND WRITE:{f6}:{yellow} ":&,1,5:IF AN$=""THEN{:4546}
+	&"{f6}{lt. green}WANNA ADD YOUR WORDS OF WISDOM? ":GOSUB 96:IF A=. then {:4546}
+	N=76:GOSUB{:4632}:PL=.:&"{f6}{purple}GO AHEAD AND WRITE:{f6}:{yellow} ":&,1,5:IF AN$="" then {:4546}
 	A$=D1$:B$=RIGHT$(STR$(10000+ID),4)+NA$:C$="{up arrow}":D$=AN$:GOSUB{:4548}
 	X=1:GOSUB 1:PRINT# 2,A1;R$A2;R$A3:GOSUB 1:CLOSE 2:ON GF GOSUB{:4578}
 {:4546}
@@ -34,7 +34,7 @@
 	RETURN
 {:4556}
 	GOSUB 1:GOSUB{:4586}:IF MID$(A$,2,6)<MID$(LD$,2,6)THEN:&".":GOTO{:4570}
-	IF Q=.THEN Q=1:&"{pound}Q0{f6:2}{yellow}{$ce}EW {$d7}RITINGS!{f6:2}{orange}{pound}VZ"
+	IF Q=.THEN Q=1:&"{pound}Q0{f6:2}{yellow}NEW WRITINGS!{f6:2}{orange}{pound}VZ"
 	A$=LEFT$(B$,4):AN$=MID$(B$,5):&,15,1:B$=AN$:IF C$="{up arrow}"THEN C$=""
 	B=VAL(A$):IF B THEN B$=B$+"-"+CC$+MID$(STR$(B),2):GOTO{:4566}
 	B$=B$+" @ "+MID$(A$,2)
@@ -43,13 +43,13 @@
 	LP=1:&"{pound}Q0{yellow} {pound}$D{f6:2}{pound}$B{pound}$C{f6}{lt. red}{pound}VJ"
 {:4570}
 	X=X+1:IF X=>A3 THEN X=2
-	IF X<>A2 AND X<>A1 AND RC=.THEN{:4556}
+	IF X<>A2 AND X<>A1 AND RC=. then {:4556}
 	RETURN
 {:4576}
 	A$=RIGHT$(S$+MID$("{cyan}{green}{yellow}{lt. red}{lt. green}{gray3}{white}",INT(RND(1)*7)+1,1)+A$,LL%):RETURN
 {:4578}
 	IF NN=.THEN RETURN
-	A$="NM.{$c2}.TEMP,S,A":DR=2:GOSUB 4:IF E%THEN A$="NM.{$c2}.TEMP,S,W":GOSUB 4
+	A$="NM.B.TEMP,S,A":DR=2:GOSUB 4:IF E%THEN A$="NM.B.TEMP,S,W":GOSUB 4
 	A$="!"+NN$+NA$:PRINT# 2,A$R$KK$R$AN$
 {:4584}
 	CLOSE 2:RETURN
@@ -63,22 +63,22 @@
 	A$=B$:GOSUB{:4606}:B$=A$:IF C$<>""THEN A$=C$:GOSUB{:4606}:C$=A$
 	LP=1:&"{yellow} {pound}$D{f6:2}{pound}$B{pound}$C{f6}{lt. red}{pound}VJ":Q=1
 	X=X+1:IF X=>A3 THEN X=2
-	IF X<>A2 AND X<>A1 AND RC=.THEN{:4584}
+	IF X<>A2 AND X<>A1 AND RC=. then {:4584}
 	RETURN
 {:4606}
 	A$=RIGHT$(S$+MID$("{cyan}{green}{yellow}{lt. red}{lt. green}{gray3}{white}",INT(RND(1)*7)+1,1)+A$,LL%):RETURN
 	IF NN=.THEN RETURN
-	A$="NM.{$c2}.TEMP,S,A":DR=2:GOSUB 4:IF E%THEN A$="NM.{$c2}.TEMP,S,W":GOSUB 4
+	A$="NM.B.TEMP,S,A":DR=2:GOSUB 4:IF E%THEN A$="NM.B.TEMP,S,W":GOSUB 4
 	A$="!"+NN$+NA$:PRINT# 2,A$R$KK$R$AN$
 	CLOSE 2:RETURN
 	&,2,2:E$=A$:&,2,2:B$=A$:&,2,2:C$=A$:&,2,2:D$=A$:A$=E$:S=ST:RETURN
 {:4618}
 	IF ZZ=.THEN RETURN
-	&"{f6}{$c3}ONFIGURE IT? ":GOSUB 96:IF A=.THEN RETURN
+	&"{f6}CONFIGURE IT? ":GOSUB 96:IF A=.THEN RETURN
 {:4622}
-	N=3:GOSUB{:4632}:&"{f6}{$c5}NTER MAX # OF MESSAGES: {pound}I1":IF AN$=""THEN RETURN
-	N=VAL(AN$)+3:IF N<23 THEN:&"{f6}{$d3}ORRY, THAT IS TOO LOW.{f6}":GOTO{:4622}
-	&"{$c2}UILDING FILE..."
+	N=3:GOSUB{:4632}:&"{f6}ENTER MAX # OF MESSAGES: {pound}I1":IF AN$=""THEN RETURN
+	N=VAL(AN$)+3:IF N<23 THEN:&"{f6}SORRY, THAT IS TOO LOW.{f6}":GOTO{:4622}
+	&"BUILDING FILE..."
 	DR=2:A$="NM.GRF2,L,"+CHR$(160):GOSUB 4:X=N:GOSUB 1:PRINT# 2,"{up arrow}"
 	X=1:GOSUB 1:PRINT# 2,.;R$;.;R$;N:GOSUB 1:CLOSE 2:GOTO{:4504}
 {:4632}

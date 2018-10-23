@@ -1,15 +1,15 @@
 	R=INT(VAL(MID$(AN$,3,3))):DR=5:GOSUB 3:A$="MENU2":GOSUB 28
 	&,28,1:DIM M%(22,25,6),U$(50,3),AC$(15,1),YN$(1):PR$=""
-	YN$(0)="{$ce}O":YN$(1)="{$d9}ES":GOSUB 31
+	YN$(0)="NO":YN$(1)="YES":GOSUB 31
 	FOR I=0 TO 9:X=I+1:GOSUB 1:&,2,2:AC$(I,0)=A$:&,2,2:AC$(I,1)=A$:NEXT
 	CLOSE 2:IF R THEN AN$="":X=R:GOTO{:3016}
 {:3010}
-	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}SER {$c1}CCOUNT {$c5}DITOR {f6}{cyan}":P$="{$d5}SER {$c5}DIT"
-	A%=UR:&"{f6} {$d5}SERS: {pound}%A{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}DIT.{f6:2}":GOSUB 6
+	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} IMAGE USER ACCOUNT EDITOR {f6}{cyan}":P$="USER EDIT"
+	A%=UR:&"{f6} USERS: {pound}%A{f6:2}ENTER HANDLE OR ID# OF USER TO EDIT.{f6:2}":GOSUB 6
 	ON-(AN$="")GOTO 300:X=ABS(INT(VAL(LEFT$(AN$,4))))
 {:3016}
-	IF(X<=UR)AND X>.THEN{:3020}
-	I=0:ON-(AN$<>"")GOSUB 505:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":GOTO{:3010}
+	IF(X<=UR)AND X>. then {:3020}
+	I=0:ON-(AN$<>"")GOSUB 505:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} NOT FOUND.{f6}{pound}W2":GOTO{:3010}
 {:3020}
 	GOSUB 35:GOSUB 1:FOR I=1 TO 24:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
 	U$(I,0)=A$:NEXT:A$=U$(13,0):U$(13,0)=LEFT$(A$,1)
@@ -28,65 +28,65 @@
 	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+CO$(VAL(U$(I,0))):RETURN
 {:3046}
 	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+YN$(VAL(U$(I,0))):RETURN
-	DATA1,1,1,"{$c8}ANDLE:       "
-	DATA1,1,2,"{$d0}ASSWORD:     "
-	DATA1,1,3,"{$c6}IRST {$ce}AME:   "
-	DATA1,1,4,"{$cc}AST {$ce}AME:    "
-	DATA1,1,5,"{$d0}HONE {$ce}UMBER: "
-	DATA1,1,7,"{$cd}ESSAGE {$c4}ATE: "
-	DATA2,1,6,"{$c1}CCESS {$c7}ROUP: "
-	DATA1,2,8,"{$c3}ALLS {$d4}ODAY:  "
-	DATA1,2,9,"{$d4}OTAL {$c3}ALLS:  "
-	DATA3,3,1,"{$c3}OMPUTER:     "
-	DATA0,0,0,"{$cc}INELEN/{$d3}CREEN"
-	DATA0,0,0,"{$d5}PPER/{$cc}OWER   "
+	DATA1,1,1,"HANDLE:       "
+	DATA1,1,2,"PASSWORD:     "
+	DATA1,1,3,"FIRST NAME:   "
+	DATA1,1,4,"LAST NAME:    "
+	DATA1,1,5,"PHONE NUMBER: "
+	DATA1,1,7,"MESSAGE DATE: "
+	DATA2,1,6,"ACCESS GROUP: "
+	DATA1,2,8,"CALLS TODAY:  "
+	DATA1,2,9,"TOTAL CALLS:  "
+	DATA3,3,1,"COMPUTER:     "
+	DATA0,0,0,"LINELEN/SCREEN"
+	DATA0,0,0,"UPPER/LOWER   "
 	DATA0,0,0,"USERFLAGS     "
-	DATA1,3,6,"{$c5}XPERT {$cd}ODE:  "
-	DATA1,2,1,"{$c4}OWNLOADS:    "
-	DATA1,2,2,"{$d5}PLOADS:      "
-	DATA1,2,3,"{$c2}LOCKS {$c4}{$cc}'ED: "
-	DATA1,2,4,"{$c2}LOCKS {$d5}{$cc}'ED: "
-	DATA1,2,7,"{$c3}REDITS:      "
-	DATA1,2,5,"{$d0}OSTS:        "
-	DATA1,2,6,"{$d2}ESPONSES:    "
-	DATA1,1,8,"{$cc}AST {$c3}ALL:    "
+	DATA1,3,6,"EXPERT MODE:  "
+	DATA1,2,1,"DOWNLOADS:    "
+	DATA1,2,2,"UPLOADS:      "
+	DATA1,2,3,"BLOCKS DL'ED: "
+	DATA1,2,4,"BLOCKS UL'ED: "
+	DATA1,2,7,"CREDITS:      "
+	DATA1,2,5,"POSTS:        "
+	DATA1,2,6,"RESPONSES:    "
+	DATA1,1,8,"LAST CALL:    "
 	DATA0,0,0,"ACCESSFLAGS   "
-	DATA1,3,4,"{$cd}ORE {$d0}ROMPT:  "
-	DATA1,3,5,"{$c3}URSOR {$cd}ENUS: "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA1,3,7,"{$d4}IME {$da}ONE:    "
-	DATA1,3,2,"{$cc}INE {$cc}ENGTH:  "
-	DATA1,3,3,"{$d3}CREEN {$cc}INES: "
-	DATA4,5,1,"{$ce}ON-{$d7}EED:       "
-	DATA1,4,10,"{$c3}REDIT {$d2}ATIO:   "
-	DATA4,5,2,"{$cc}OCAL {$cd}AINT:    "
-	DATA4,4,1,"{$d0}OST/{$d2}ESPOND:   "
-	DATA4,4,2,"{$d5}/{$c4} {$c1}CCESS:     "
-	DATA1,4,5,"{$c5}DITOR {$cc}INES:   "
-	DATA4,5,3,"{$d5}NLIMITED {$c4}{$cc}'S: "
-	DATA4,5,4,"{$d2}EMOTE {$cd}AINT:   "
-	DATA4,4,3,"{$c5}-{$cd}AIL:         "
-	DATA4,4,4,"{$d5}SER {$cc}IST:      "
-	DATA4,5,8,"{$c2}{$c1}{$d2}/{$cc}OG {$d6}IEW:   "
-	DATA4,5,5,"{$d3}UBMAINT:       "
-	DATA4,5,6,"{$c6}ILES {$cd}AINT:    "
-	DATA4,5,8,"{$cd}{$c3}{$c9} {$c1}CCESS:     "
-	DATA4,5,7,"{$d0}RIMETIME {$d5}{$c4}S:  "
-	DATA1,4,6,"{$cd}AX {$c9}DLE {$d4}IME:  "
-	DATA1,4,7,"{$c3}ALLS/{$c4}AY:      "
-	DATA1,4,8,"{$d4}IME/{$c3}ALL:      "
+	DATA1,3,4,"MORE PROMPT:  "
+	DATA1,3,5,"CURSOR MENUS: "
+	DATA0,0,0,"SOME FLAG     "
+	DATA0,0,0,"SOME FLAG     "
+	DATA1,3,7,"TIME ZONE:    "
+	DATA1,3,2,"LINE LENGTH:  "
+	DATA1,3,3,"SCREEN LINES: "
+	DATA4,5,1,"NON-WEED:       "
+	DATA1,4,10,"CREDIT RATIO:   "
+	DATA4,5,2,"LOCAL MAINT:    "
+	DATA4,4,1,"POST/RESPOND:   "
+	DATA4,4,2,"U/D ACCESS:     "
+	DATA1,4,5,"EDITOR LINES:   "
+	DATA4,5,3,"UNLIMITED DL'S: "
+	DATA4,5,4,"REMOTE MAINT:   "
+	DATA4,4,3,"E-MAIL:         "
+	DATA4,4,4,"USER LIST:      "
+	DATA4,5,8,"BAR/LOG VIEW:   "
+	DATA4,5,5,"SUBMAINT:       "
+	DATA4,5,6,"FILES MAINT:    "
+	DATA4,5,8,"MCI ACCESS:     "
+	DATA4,5,7,"PRIMETIME UDS:  "
+	DATA1,4,6,"MAX IDLE TIME:  "
+	DATA1,4,7,"CALLS/DAY:      "
+	DATA1,4,8,"TIME/CALL:      "
 	DATA0,0,0,"TIME/CALL"
-	DATA1,4,9,"{$c4}{$cc}'S/{$c3}ALL:      "
+	DATA1,4,9,"DL'S/CALL:      "
 {:3100}
 	IF TR%<1 THEN RETURN
 	LM=0:GOSUB{:3150}:KK=M%(0,0,PG):N=KK
-	IF PG<>1 THEN B$="/{$c9}":A$="{$c5}DIT {$d5}SER {$c9}NFORMATION":GOSUB{:3152}
-	IF PG<>2 THEN B$="/{$d3}":A$="{$c5}DIT {$d5}SER {$d3}TATS":GOSUB{:3152}
-	IF PG<>3 THEN B$="/{$d4}":A$="{$c5}DIT {$d4}ERMINAL {$d0}ARAMETERS":GOSUB{:3152}
-	IF PG<>4 THEN B$="/{$c6}":A$="{$c5}DIT {$d5}SER {$c6}LAGS":GOSUB{:3152}
-	IF PG<>5 THEN B$="/{$cd}":A$="{$c5}DIT {$d5}SER {$cd}AINT {$c6}LAGS":GOSUB{:3152}
-	B$="/{$d1}":A$="{$d1}UIT":GOSUB{:3152}
+	IF PG<>1 THEN B$="/I":A$="EDIT USER INFORMATION":GOSUB{:3152}
+	IF PG<>2 THEN B$="/S":A$="EDIT USER STATS":GOSUB{:3152}
+	IF PG<>3 THEN B$="/T":A$="EDIT TERMINAL PARAMETERS":GOSUB{:3152}
+	IF PG<>4 THEN B$="/F":A$="EDIT USER FLAGS":GOSUB{:3152}
+	IF PG<>5 THEN B$="/M":A$="EDIT USER MAINT FLAGS":GOSUB{:3152}
+	B$="/Q":A$="QUIT":GOSUB{:3152}
 	&,16,2,46,M%(0,1,PG),N,36,1,N,3,5,0:LM=A%+1:&,70,0,23
 	IF TR%<1 OR LM=N OR LM=0 THEN RETURN
 	IF LM>KK THEN A=LM-KK:PG=A-(A>=PG):GOTO{:3100}
@@ -98,17 +98,17 @@
 {:3152}
 	N=N+1:&,16,0,46,M%(0,N,PG),B$,"",A$:RETURN
 {:3154}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c9}NFORMATION{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           USER INFORMATION{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3158}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          {$d5}SER {$d3}TATISTICS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          USER STATISTICS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3162}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        {$d4}ERMINAL {$d0}ARAMETERS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        TERMINAL PARAMETERS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3166}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           USER FLAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3170}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      {$d5}SER {$cd}AINT {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      USER MAINT FLAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	ON LM GOTO{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN

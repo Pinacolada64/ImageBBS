@@ -6,74 +6,74 @@
 {:4008}
 	A=ABS(INT(VAL(AN$))):RETURN
 {:4010}
-	V$=" {$d3}UBOP ":H$="{$c2}OARD"
+	V$=" SUBOP ":H$="BOARD"
 	RETURN
 {:4014}
-	&"{f6:2}({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$cb}EEP {$d3}AME){f6}":RETURN
+	&"{f6:2}(RETURN TO KEEP SAME){f6}":RETURN
 {:4016}
 	A$=BB$(BN):GOSUB{:4004}:P$=SY$+"#"+MID$(STR$(BN),2)+":{f6}"+A$:CM$=P$:RETURN
 {:4018}
 	ON LC+1 GOTO{:4020},{:4024},{:4024}
 {:4020}
-	A=(F2 AND 3):A=A+(A>.):B$=MID$("{$d3}TD {$c1}NON{$ce}-{$c1}N",1+A*4,4)
+	A=(F2 AND 3):A=A+(A>.):B$=MID$("STD ANONN-AN",1+A*4,4)
 {:4022}
 	A=-((F2 AND 4)=4):RETURN
 {:4024}
-	A=(F2 AND 3):B$=MID$("{$c3}RED{$c4}{$cf}-{$c3}{$c6}REE{$c4}{$cf}-{$c6}",1+A*4,4):GOTO{:4022}
+	A=(F2 AND 3):B$=MID$("CREDDO-CFREEDO-F",1+A*4,4):GOTO{:4022}
 {:4026}
 	BB$(BN)="":ON F2+1 GOTO{:4028}:BB$(BN)="."+MID$(STR$(F2),2,1)+"."
 {:4028}
 	BB$(BN)=BB$(BN)+XX$+MID$("{up arrow}?",ZZ%-3*(ZZ%=0),1):RETURN
 {:4030}
-	B=.:FOR I=.TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
+	B=.:FOR I=.TO 9:A%=I:&"GROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
 {:4032}
 	V$="":M$="":RETURN
 {:4034}
 	TZ=1:E=1:A$="E."+SY$:DR=3:GOSUB 4:X=E%(BN)+1:GOSUB 1:&,2,2:YY$=A$:CLOSE 2
 {:4036}
-	LM=.:&"{clear}{f6:2}{$cd}AINT {$cf}PTIONS:{f6:2}1) {$c5}DIT {pound}$H {$c5}NTRY {$c6}ILES{f6}2) {$c5}DIT {pound}$H {$c4}ETAIL":GOSUB{:4144}
+	LM=.:&"{clear}{f6:2}MAINT OPTIONS:{f6:2}1) EDIT {pound}$H ENTRY FILES{f6}2) EDIT {pound}$H DETAIL":GOSUB{:4144}
 	&"{f6:2} : {pound}G1{pound}V7{f6}":GOSUB{:4008}:ON-(A>LM)GOTO{:4040}:LM=-(A=3):ON A GOTO{:4046},{:4062},{:4046},{:4156}
 {:4040}
 	R=BN:ON(TZ AND E)GOTO{:4032}:DR=3:A$="E."+SY$:GOSUB 4:X=E%(BN)+1:GOSUB 1
 	A$=YY$+R$+STR$(AC%(BN))+R$+BB$(BN)+R$+STR$(SO%(BN))+R$+STR$(DV%(BN+6))+R$
 	A$=A$+STR$(DR%(BN+6))+R$+MID$(OC$,BN,1):PRINT# 2,A$:CLOSE 2:GOTO{:4032}
 {:4046}
-	&"{clear}{f6:2}{$c5}DIT {$c5}NTRY {$c6}ILES:{f6:2}1) {$c1}{$d3}{$c3}{$c9:2}{f6}2) {$c3}/{$c7}{f6:2} : {pound}G1{pound}V7{f6}"
+	&"{clear}{f6:2}EDIT ENTRY FILES:{f6:2}1) ASC{$c9:2}{f6}2) C/G{f6:2} : {pound}G1{pound}V7{f6}"
 	GOSUB{:4008}:ON-(A<1 OR A>2)GOTO{:4036}:A=A-1:ON-(LM=1)GOTO{:4148}
 	KK=1:DR=1:O$="S."+SY$+STR$(E%(BN))+STR$(A)
 {:4051}
 	A$=O$+",S,R":GOSUB 4:IF E%THEN:&:GOTO{:4056}
-	&"{f6:2}{$cc}OADING {$d4}EXT...{f6:2}"
+	&"{f6:2}LOADING TEXT...{f6:2}"
 {:4054}
 	&,2,2:IF A$<>"{up arrow}"AND KK<101 THEN TT$(KK)=A$:KK=KK+1:&".":GOTO{:4054}
 {:4056}
 	CLOSE 2:IM=2:GOSUB 440:GOSUB{:4010}:ON-(KK=.)GOTO{:4036}
-	&"{f6:2}{$d3}AVING...":DR=1:GOSUB 3:PRINT# 15,"S"DR$O$:A$=O$+",S,R":GOSUB 4
+	&"{f6:2}SAVING...":DR=1:GOSUB 3:PRINT# 15,"S"DR$O$:A$=O$+",S,R":GOSUB 4
 	FOR X=1 TO KK-1:PRINT# 2,TT$(X):&".":NEXT:PRINT# 2,"{up arrow}":CLOSE 2
 	&,11,.:GOTO{:4036}
 {:4062}
-	POKE 53252,38:GOSUB{:4016}:&"{clear}{f6}{$c4}ETAILS - {pound}$P:{f6:2}":B$="":IF ZZ%THEN B$=" ({$ce}ET{$d3}UB)"
-	A$=BB$(BN):GOSUB{:4004}:XX$=A$:A%=AC%(BN):&" 1) {$ce}AME  : {pound}$A{pound}$B{f6} 2) {$c1}CCESS: {pound}%A"
-	A=1-VAL(MID$(OC$,BN,1)):&"{f6} 3) {$cf}PEN? : ":GOSUB{:4200}
-	GOSUB{:4018}:&" 4) {$d4}YPE  : {pound}$B{f6} 5) {$d0}SWD? : ":GOSUB{:4200}:&" 6) {$d0}SWD  : ":&YY$
+	POKE 53252,38:GOSUB{:4016}:&"{clear}{f6}DETAILS - {pound}$P:{f6:2}":B$="":IF ZZ%THEN B$=" (NETSUB)"
+	A$=BB$(BN):GOSUB{:4004}:XX$=A$:A%=AC%(BN):&" 1) NAME  : {pound}$A{pound}$B{f6} 2) ACCESS: {pound}%A"
+	A=1-VAL(MID$(OC$,BN,1)):&"{f6} 3) OPEN? : ":GOSUB{:4200}
+	GOSUB{:4018}:&" 4) TYPE  : {pound}$B{f6} 5) PSWD? : ":GOSUB{:4200}:&" 6) PSWD  : ":&YY$
 	IF ZZ=.AND SO%<>ID THEN{:4078}
-	B$="{$ce}ONE":IF SO%(BN)>.THEN B$=CC$+MID$(STR$(SO%(BN)),2)
-	ON-(ZZ=.)GOTO{:4078}:A%=DV%(BN+6):&"{f6} 7){pound}$V: {pound}$B{f6} 8) {$c4}EVICE: {pound}%A"
-	B$=STR$(DR%(BN+6)):&"{f6} 9) {$c4}RIVE :{pound}$B"
+	B$="NONE":IF SO%(BN)>.THEN B$=CC$+MID$(STR$(SO%(BN)),2)
+	ON-(ZZ=.)GOTO{:4078}:A%=DV%(BN+6):&"{f6} 7){pound}$V: {pound}$B{f6} 8) DEVICE: {pound}%A"
+	B$=STR$(DR%(BN+6)):&"{f6} 9) DRIVE :{pound}$B"
 {:4078}
-	&"{f6:2}{$cd}AINT: {pound}G1{pound}V7{f6}":GOSUB{:4008}:IF A<1 OR A>9 THEN{:4036}
+	&"{f6:2}MAINT: {pound}G1{pound}V7{f6}":GOSUB{:4008}:IF A<1 OR A>9 THEN{:4036}
 	ON A GOTO{:4082},{:4088},{:4102},{:4120},{:4136},{:4138}:ON-(ID=SO%AND A=7)GOTO{:4096}:ON A-ZZ*6 GOTO{:4096},{:4108},{:4114}
 {:4082}
-	GOSUB{:4014}:PL=.:P$="{pound}$H {$ce}AME":W$=XX$:POKE 53252,27:&,1,32
+	GOSUB{:4014}:PL=.:P$="{pound}$H NAME":W$=XX$:POKE 53252,27:&,1,32
 	IF LEN(AN$)>2 AND AN$<>XX$THEN XX$=AN$:TZ=.:GOSUB{:4026}
 	GOTO{:4062}
 {:4088}
-	GOSUB{:4014}:PL=1:P$="{$c1}CCESS {$c3}ODE":W$=MID$(STR$(AC%(BN)),2):&,1,32:GOSUB{:4008}
+	GOSUB{:4014}:PL=1:P$="ACCESS CODE":W$=MID$(STR$(AC%(BN)),2):&,1,32:GOSUB{:4008}
 	IF AN$="{f2}"THEN GOSUB{:4030}
 	IF AN$<>""AND A>.AND A<1024 THEN AC%(BN)=A:TZ=.
 	GOTO{:4062}
 {:4096}
-	GOSUB{:4014}:P$="{$d3}UBOP {$c9}{$c4}:"+CC$:W$=MID$(STR$(SO%(BN)),2):&,1,32:IF AN$=""THEN{:4062}
+	GOSUB{:4014}:P$="SUBOP ID:"+CC$:W$=MID$(STR$(SO%(BN)),2):&,1,32:IF AN$="" then {:4062}
 	GOSUB{:4008}:IF A<1 OR A>UR THEN A=-1
 	SO%(BN)=A:TZ=.:GOTO{:4062}
 {:4102}
@@ -81,45 +81,45 @@
 	A$=MID$(STR$(-VAL(MID$(OC$,A,1))+1),2):OC$=LEFT$(OC$,A-1)+A$+MID$(OC$,A+1)
 	E=1-E:GOTO{:4062}
 {:4108}
-	GOSUB{:4014}:P$="{$c4}EVICE":W$=MID$(STR$(DV%(BN+6)),2):&,1,32:GOSUB{:4008}
+	GOSUB{:4014}:P$="DEVICE":W$=MID$(STR$(DV%(BN+6)),2):&,1,32:GOSUB{:4008}
 	IF A<33 AND A>6 AND A<>DV%(BN+6)THEN DV%(BN+6)=A:TZ=.
 	GOTO{:4062}
 {:4114}
-	GOSUB{:4014}:POKE 53252,3:P$="{$c4}RIVE":W$=MID$(STR$(DR%(BN+6)),2):&,1,32:GOSUB{:4008}
-	IF AN$=""OR VAL(AN$)<0 OR VAL(AN$)=DR%(BN+6)THEN{:4062}
+	GOSUB{:4014}:POKE 53252,3:P$="DRIVE":W$=MID$(STR$(DR%(BN+6)),2):&,1,32:GOSUB{:4008}
+	IF AN$=""OR VAL(AN$)<0 OR VAL(AN$)=DR%(BN+6) then {:4062}
 	DR%(BN+6)=VAL(AN$):TZ=.:GOTO{:4062}
 {:4120}
 	ON LC+1 GOTO{:4122},{:4128},{:4128}
 {:4122}
-	&"{clear}{f6}{$d4}YPE :{f6} (1) {$d3}TANDARD{f6} (2) {$c1}NONYMOUS{f6} (3) {$ce}ON-{$c1}NONYMOUS{f6:2}{$d4}YPE : {pound}G1{pound}V7{f6}"
+	&"{clear}{f6}TYPE :{f6} (1) STANDARD{f6} (2) ANONYMOUS{f6} (3) NON-ANONYMOUS{f6:2}TYPE : {pound}G1{pound}V7{f6}"
 	A=VAL(AN$):IF A<1 OR A>3 THEN{:4062}
 	A=-A*(A<>1):F2=(F2 AND 4)OR A:TZ=.:GOSUB{:4026}:GOTO{:4062}
 {:4128}
-	&"{clear}{f6}{$d4}YPE :{f6} (1) {$d3}TANDARD ({$c3}RED){f6} (2) {$c4}OWNLOAD {$cf}NLY ({$c3}RED){f6}"
-	&" (3) {$d3}TANDARD ({$c6}REE){f6} (4) {$c4}OWNLOAD {$cf}NLY ({$c6}REE){f6:2}{$d4}YPE : {pound}G1{pound}V7{f6}"
+	&"{clear}{f6}TYPE :{f6} (1) STANDARD (CRED){f6} (2) DOWNLOAD ONLY (CRED){f6}"
+	&" (3) STANDARD (FREE){f6} (4) DOWNLOAD ONLY (FREE){f6:2}TYPE : {pound}G1{pound}V7{f6}"
 	A=VAL(AN$):IF A<1 OR A>4 THEN{:4062}
 	A=A-1:F2=(F2 AND 4)OR A:TZ=.:GOSUB{:4026}:GOTO{:4062}
 {:4136}
 	A=-4*((F2 AND 4)<>4):F2=(F2 AND 3)OR A:TZ=.:GOSUB{:4026}:GOTO{:4062}
 {:4138}
-	GOSUB{:4014}:PL=1:P$="{$d0}ASSWORD":W$=YY$:POKE 53252,14:&,1,32
+	GOSUB{:4014}:PL=1:P$="PASSWORD":W$=YY$:POKE 53252,14:&,1,32
 	IF LEN(AN$)>2 AND AN$<>YY$THEN TZ=.:YY$=AN$
 	GOTO{:4062}
 {:4144}
-	GOSUB{:4152}:IF LM>2 THEN:&"{f6}3) {$c5}DIT {$d3}{$c9}{$c7} {$c5}NTRY {$c6}ILES{f6}4) {$c5}DIT {$d3}{$c9}{$c7} {$c4}ETAILS"
+	GOSUB{:4152}:IF LM>2 THEN:&"{f6}3) EDIT SIG ENTRY FILES{f6}4) EDIT SIG DETAILS"
 	RETURN
 {:4148}
-	KK=1:DR=1:O$="S.{$d3}IG"+STR$(SG)+STR$(A):GOTO{:4051}
+	KK=1:DR=1:O$="S.SIG"+STR$(SG)+STR$(A):GOTO{:4051}
 {:4152}
 	LM=2:IF SG THEN A=8:GOSUB 11:LM=2-2*(A>0 OR SO%=ID)
 	RETURN
 {:4156}
-	&"{f6:2}{$c5}DIT {$d3}{$c9}{$c7} {$c4}ETAILS:{f6:2}":DR=3:A$="E.{$d3}IG":GOSUB 4:X=SG+1:GOSUB 1:&,2,2
+	&"{f6:2}EDIT SIG DETAILS:{f6:2}":DR=3:A$="E.SIG":GOSUB 4:X=SG+1:GOSUB 1:&,2,2
 	&,2,2:ZZ%=VAL(A$):&,2,2:XX%=VAL(A$)
-	P$="{$d3}{$c9}{$c7} {$ce}AME":W$=SG$:A=27:B=.:GOSUB{:4172}:SG$=AN$
-	P$="{$d3}{$c9}{$c7} {$c1}CCESS":C=ZZ%:A=4:B=1:GOSUB{:4172}:A=VAL(AN$):IF AN$="{f2}"THEN GOSUB{:4030}
+	P$="SIG NAME":W$=SG$:A=27:B=.:GOSUB{:4172}:SG$=AN$
+	P$="SIG ACCESS":C=ZZ%:A=4:B=1:GOSUB{:4172}:A=VAL(AN$):IF AN$="{f2}"THEN GOSUB{:4030}
 	IF A>0 AND A<1024 THEN ZZ%=A
-	A=8:GOSUB 11:IF A THEN P$="{$d3}IG{$cf}P":C=SO%:A=4:B=1:GOSUB{:4172}:SO%=VAL(AN$)
+	A=8:GOSUB 11:IF A THEN P$="SIGOP":C=SO%:A=4:B=1:GOSUB{:4172}:SO%=VAL(AN$)
 	X=SG+1:GOSUB 1:A$=SG$+R$+STR$(ZZ%)+R$+STR$(XX%)+R$+STR$(SO%)
 	PRINT# 2,A$:CLOSE 2:GOTO{:4034}
 {:4172}
@@ -128,4 +128,4 @@
 	RETURN
 	COPR.1990 NEW IMAGE 12/13/90
 {:4200}
-	A$=MID$("{$d9}ES{$ce}O",4-A*3,3):RETURN
+	A$=MID$("YESNO",4-A*3,3):RETURN

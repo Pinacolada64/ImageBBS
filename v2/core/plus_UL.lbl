@@ -49,7 +49,7 @@
 {:3074}
 	&"{f6}{purple}Quick User List.{f6}"
 	&"{f6}{yellow}Would You Like To List:{f6:2} {lt. green}[N]umerically Or{f6} [A]lphabetically?: {yellow}{pound}g1{pound}v7{f6}"
-	if an$<>"A"and an$<>"N"then{:3012}
+	if an$<>"A"and an$<>"N" then {:3012}
 	kk=1:dt$(1)="":on-(an$="N")goto {:3096}:a%=uh:&"{f6:2}{white}{pound}%a {orange}Users.{f6}"
 	&"{f6}{yellow}Enter Beginning Char(s) Of The{f6}Handle You Want To Start At.{f6:2}"
 	gosub 1006:gosub 1065:&,16:if a%=.and b%=1 then b%=.

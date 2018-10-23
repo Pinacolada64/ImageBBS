@@ -33,7 +33,7 @@
 {:4040}
 ' open "e.logweek" - error? start new log.
 ' otherwise, restart log on Sunday
-	a$="e.logweek,s,r":dr=3:gosub 1011:on-(e%<>.)goto {:4072}:if left$(d1$,1)="1"then{:4064}
+	a$="e.logweek,s,r":dr=3:gosub 1011:on-(e%<>.)goto {:4072}:if left$(d1$,1)="1" then {:4064}
 	&"{f6}{gray2}Appending to Weekly Log"
 {:4042}
 	close 2:print# 15,"c"dr$"temp=e.logweek,e.log"

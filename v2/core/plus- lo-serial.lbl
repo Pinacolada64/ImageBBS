@@ -2,13 +2,13 @@
 	rem "+.lo.serial" 05-14-90 10:20 pm
 	d1%=8:d2%=2:mx=999
 	dr=0:a$="or.serial":gosub 1011:x=id:gosub 1001:&,2,2:close 2
-	vf=1:on-(len(a$)=5)goto {:4026}:vf=0:if left$(a$,1)<>"*"then{:4014}
+	vf=1:on-(len(a$)=5)goto {:4026}:vf=0:if left$(a$,1)<>"*" then {:4014}
 	lp=1:&"{f6:2}Your serial number is {pound}$a. This has not yet been verified by "
 	lp=1:&"New Image Software, but will be within 24 hours.{f6}"
 	a$=mid$(a$,2):goto {:4026}
 {:4014}
 	poke 53252,5:&"Enter your Image {$c2:2}S Serial #: {pound}i1":if an$=""or tr%<1 then return
-	z$=left$(an$,1):if z$<>"G"and z$<>"F"and z$<>"E"then{:4060}
+	z$=left$(an$,1):if z$<>"G"and z$<>"F"and z$<>"E" then {:4060}
 	a=val(mid$(an$,2)):if a<1 or a>999 then{:4060}
 	dr=0:f$="or.serial.add,s":a$=f$+",w":gosub 1011:a$=f$+",a":gosub 1011
 	print# 2,id:close 2

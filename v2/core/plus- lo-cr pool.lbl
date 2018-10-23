@@ -9,7 +9,7 @@
 {:4008}
 	a$="e.cr.pool 1":dr=3:goto 1023
 {:4010}
-	a$="e.cr.pool 2,s,a":gosub 1011:if e%then{:4038}
+	a$="e.cr.pool 2,s,a":gosub 1011:if e% then {:4038}
 	return
 {:4014}
 	a=.:b=.:c=.:d=.:n=.:l=.

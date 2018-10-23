@@ -9,13 +9,13 @@
 	a=-(b$>l$):if a=0 then a=-(b>l)
 	return
 {:4016}
-	dr=3:a$="e.Sub":gosub 1011:if e%then{:4046}
+	dr=3:a$="e.Sub":gosub 1011:if e% then {:4046}
 	&"{f6} Sub{pound}{back arrow}25Posts/Resps{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4046}:for i=1 to n
 	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4044}
 	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
 	if right$(a$,1)="{up arrow}"then a$=left$(a$,len(a$)-1)
 	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4044}
-	close 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+str$(i):gosub 1011:if e%then{:4038}
+	close 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+str$(i):gosub 1011:if e% then {:4038}
 	&,2,2:p=val(a$):for j=1 to p:x=j+1:gosub 1001:input# 2,a$,a$,a$
 	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:np=np+a:if a then{:4036}
 	b$=mid$(a$,13,6):b=val(mid$(a$,19,4))/100:gosub {:4010}:nr=nr+a
@@ -30,12 +30,12 @@
 {:4046}
 	close 2:&"{f6:2}No Subs!{f6}":return
 {:4048}
-	dr=3:a$="e.U/D":gosub 1011:if e%then{:4074}
+	dr=3:a$="e.U/D":gosub 1011:if e% then {:4074}
 	&"{f6} U/D{pound}{back arrow}30New Files{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4074}:for i=1 to n
 	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4072}
 	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
 	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4072}
-	close 2:u=0:nu=0:dr=4:a$="d.u/d"+str$(i):gosub 1011:if e%then{:4066}
+	close 2:u=0:nu=0:dr=4:a$="d.u/d"+str$(i):gosub 1011:if e% then {:4066}
 	&,2,2:u=val(a$):if u=0 then{:4066}
 	for j=1 to u:&,2,2:&,2,2:&,2,2:b$=a$:&,2,2:&,2,2:a$=b$
 	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:nu=nu+a:next

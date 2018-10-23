@@ -41,17 +41,17 @@
 	&"{f6:2}{white}{f5}{lt. blue}{pound}v7{white}{f5} {lt. blue}Not Found.{f6}":goto {:4306}
 {:4312}
 	i=x:if x<1 or x>ur then{:4316}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES"then{:4318}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES" then {:4318}
 {:4316}
 	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:4346}
 {:4318}
-	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1902:if a=.then{:4302}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1902:if a=. then {:4302}
 {:4320}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:4342}:gosub 1085:if a then gosub 1980:goto {:4346}
 	on fl goto {:4330}
 	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="NISSA Note"
 	&"{up}Subject: {pound}v7{f6}"
-	tt$(.)="["+an$+"]":gosub 1604:a=1:if kk=.then{:4346}
+	tt$(.)="["+an$+"]":gosub 1604:a=1:if kk=. then {:4346}
 {:4330}
 	c$="Note":&"{f6}Filing {pound}$c For ":&nn$:&"...{f6}"
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062

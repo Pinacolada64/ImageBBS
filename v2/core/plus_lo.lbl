@@ -1,8 +1,9 @@
-{undef:idle_logging}' use x-tec's fix for "e.idle <am$>" debug log
+' 10887 bytes (-253 bytes from +.lo r2)
 {alpha:alt}
 {number:3000}
 {crunch:on}
 {quoter:32=space} ' make runs of spaces easier to read
+' TODO: re-add "e.idlecmds" feature, it got removed
 {step:2}
 	q$="":am=1:k%=.:rs=.:close 2:close 5:on f1 goto {:3256},{:3262},{:3266},{:3333}:goto {:3050}
 {:3002}
@@ -11,8 +12,14 @@
 ' &,52,6,3: changing user's time remaining?
 	&,52,2,3:a=a%:&,52,4,3:a=a+a%:&,52,6,3:a=a+a%:return
 {:3004}
-	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%
-	a$=dr$+"++ clock":&,7,dv%,2:pr=-1:d4$="Clock":goto {:3016}
+' 43 bytes:
+'	dr=5:gosub 1009:a$=dr$+"+/modem":load a$,dv%
+' 16 bytes (-27):
+	a$="modem":gosub 2630
+' 51 bytes:
+'	a$=dr$+"++ clock":&,7,dv%,2:pr=-1:d4$="Clock":goto {:3016}
+' 26 bytes (-25):
+	a$="clock":gosub 1750:pr=-1:gosub {:3016}
 	return
 {:3010}
 ' increment password mask character per call
@@ -21,17 +28,21 @@
 	&,15,2:poke 17138,asc(an$):return
 {:3016}
 	dr=3:a$="e.modem":gosub 1011:if e% then close 2:mt$="0":return
-	x=1:if lk%then x=(peek(57092)and 15)+1
+	x=1:if lk% then x=(peek(57092) and 15)+1
 	gosub 1001:&,2,2:mt$=a$:close 2:return
-	&,22,x*6:return
+' not called from anywhere (-10 bytes)
+'	&,22,x*6:return
+{number:3024}
 {:3024}
 	a=-((peek(2033)and 128)=128):return
 {:3026}
 ' redirect to 1360. just a quick hack. TODO: change 3026 to 1360
+' 11 bytes (-35):
 	cm$=a$
 	goto 1360
-'	&,69,4,21,"               ",1
-'	&,69,5,21,a$,1:return
+' 46 bytes:
+' 29:	&,69,4,21,"{space:15}",1
+' 17:	&,69,5,21,a$,1:return
 {:3030}
 	gosub {:3496}:a$="System Idle":goto {:3026}
 {:3032}
@@ -39,6 +50,7 @@
 {:3034}
 	b=1:gosub {:3024}:on -(a=.) goto {:3040}:a$="Clearing Line":gosub {:3026}:x=2:goto 4000
 {:3036}
+' turn off clock display, turn on local mode
 	poke 2042,.:poke 53248,1:&"{lt. red}{clear}":return
 {:3038}
 	poke 53248,.:goto {:3030}
@@ -63,14 +75,16 @@
 	on -(an$="I")goto {:3300}:&"Normal{f6}":goto {:3106}
 {:3064}
 ' old: %q BPS CONNECTION CONFIRMED.
-	q%=qb:&"{f6:2}CONNECTED AT {pound}%q BAUD.{f6}":gosub 1093:gosub 1372
+	q%=qb:&"{f6:2}CONNECTED AT {pound}%q BPS.{f6}":gosub 1093:gosub 1372
 ' &,52,3,3: block 300 baud callers?
 	a%=.:if qb<1200 then:&,52,3,3
 	tr%=5:if a% then:&"{f6:2}SORRY, NO 300 BPS CALLS ACCEPTED.{f6}":goto {:3266}
 ' TODO: this would be an interesting feature, but let's comment it out for now
-'	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
-'	rem iftr%>.anda=21then3070
-'	rem ifa=6thennl=2:&,52,16,.:&"{f6}Image Term Detected.{f6}":goto 3090
+' 42	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
+' 16	rem iftr%>.anda=21then 3070
+' 51	rem ifa=6then nl=2:&,52,16,.:&"{f6}Image Term Detected.{f6}":goto 3090
+' --
+'109
 {number:3076}
 {:3076}
 	&"{f6}HIT YOUR BACKSPACE (DELETE) KEY:":&,52,16,.:&"{pound}b1":&,52,16,1
@@ -99,7 +113,7 @@
 ' on -(l2<>1) goto 3106 = 14
 ' if l2=1 then (*2) = 12
 {number:3105}
-' if l2=1 then... makes this line too long to edit on the '64
+' if l2=1 then ... makes this line too long to edit on the '64
 ' ...clear reservation, password, lightbar checkmark, write to e.data:
 	l2=.:l2$="^":&,52,40,.:gosub 1063:x=37:gosub 1001:print# 2,l2","l2$:close 2
 {number:3106}
@@ -109,53 +123,53 @@
 ' &,52,32,3: Enable Mail Check at Logon:
 	poke 53252,20:ac%=16:id=.:&,52,32,3:if a%=. then {:3116}
 	&"{f6:2}Press RETURN/ENTER to Log On, or{f6}"
-	&"{f5}M{f5} to just check mail: {pound}g1":if tr%<1 then{:3266}
+	&"{f5}M{f5} to just check mail: {pound}g1":if tr%<1 then {:3266}
 	on-(an$="I")-2*(an$="M")goto {:3300},{:3298}:&"Logon{f6:2}"
 {:3116}
-	&"{f6}Enter Your Handle Or Login ID#{f6:2}{pound}b1:{white} {pound}i1":if tr%<1 then{:3266}
+	&"{f6}Enter Your Handle Or Login ID#{f6:2}{pound}b1:{white} {pound}i1":if tr%<1 then {:3266}
 	dd$=an$:on-(dd$="RES")-(dd$="NEW")*2-(dd$="HELP")*3 goto {:3332},{:3162},{:3184}
 	if val(an$)then dd$=cc$+an$:goto {:3142}
-	i=len(dd$):b$=left$(dd$,1):if left$(dd$,len(cc$))=cc$then{:3142}
+	i=len(dd$):b$=left$(dd$,1):if left$(dd$,len(cc$))=cc$then {:3142}
 	if i<4 or i>20 or b$<"A"or b$>"Z"then id=.:goto {:3160}
 	gosub 1046
 	if i then id=i:&"{f6}{lt. blue}Your ID# is {white}{pound}!i. {lt. blue}Use It For A{f6}Faster Logon!{f6}":goto {:3144}
 ' &,52,10,3: Disallow New Users
-	&"{f6:2} {f5}{pound}v7{f5}{f6} Not Found.{f6:2}":&,52,10,3:if a%then{:3164}
+	&"{f6:2} {f5}{pound}v7{f5}{f6} Not Found.{f6:2}":&,52,10,3:if a%then {:3164}
 ' Do You Wish To Apply For An
 ' Account With That Handle?: 
 	&"Do You Wish To Apply For An{f6}Account With That Handle?: "
 	gosub 1902:if a then f1=1:g$=dd$:dd$="NE"+"W":goto {:3332}
 {:3136}
-	ac%=16:k=k+1:if k>4 then{:3266}
+	ac%=16:k=k+1:if k>4 then {:3266}
 ' immediate mode (i%):
-	on i%goto {:3144}:lp=1:&"{f6:2}Enter {f5}NEW{f5} If You Have No Login ID, or {f5}HELP{f5} If "
+	on i% goto {:3144}:lp=1:&"{f6:2}Enter {f5}NEW{f5} If You Have No Login ID, or {f5}HELP{f5} If "
 	lp=1:&"You Are Having Trouble{f6}Logging On.":goto {:3108}
 {:3142}
 	id=int(val(mid$(dd$,len(cc$)+1,4))):if id<1 or id>ur then id=.:goto {:3160}
 {:3144}
-	&"{f6}{lt. blue}Please Enter Your Password.{f6:2}{pound}b1:{white} ":&,6:if tr%=.then{:3266}
+	&"{f6}{lt. blue}Please Enter Your Password.{f6:2}{pound}b1:{white} ":&,6:if tr%=.then {:3266}
 ' immediate mode (i%):
-	z$=an$:if z$=""then on i%goto {:3160}:id=.:goto {:3160}
-	gosub 1071:if na$="{up arrow}"or na$="RES"then{:3166}
-	if i%then on-(pw$=z$)goto {:3170}:goto {:3160}
+	z$=an$:if z$="" then on i% goto {:3160}:id=.:goto {:3160}
+	gosub 1071:if na$="{up arrow}"or na$="RES"then {:3166}
+	if i% then on -(pw$=z$) goto {:3170}:goto {:3160}
 	&"{f6:2}Additional Information:":a=int(rnd(1)*5)+1:on a gosub {:3174},{:3176},{:3178},{:3180},{:3182}
 	if p then:&"{f6}Only fill in the ?'s.{f6}"
 	gosub 1006:c$=an$
-	if pw$=z$and t$=c$and z$<>""and c$<>""then{:3170}
+	if pw$=z$ and t$=c$ and z$<>"" and c$<>"" then {:3170}
 {:3160}
-	&"{f6:2}Login Not Valid.":on-(id<>.and i%=.)gosub {:3216}:goto {:3136}
+	&"{f6:2}Login Not Valid.":on -(id<>. and i%=.) gosub {:3216}:goto {:3136}
 {:3162}
 ' &,52,10,3: Disallow New Users
-	&,52,10,3:if a%=.then{:3332}
+	&,52,10,3:if a%=. then {:3332}
 {:3164}
 	&"{f6:2}Sorry, No New Users Are Being{f6}Accepted At This Time.{f6:2}":goto {:3108}
 {:3166}
 	&"{f6:2}That Account Has Been Deleted.{f6}":goto {:3136}
 {:3168}
 ' instant logon (2):
-	gosub 1071:if na$="{up arrow}"then{:3060}
+	gosub 1071:if na$="{up arrow}"then {:3060}
 {:3170}
-	&"{up}Login Complete!{pound}{back arrow}39{f6:2}":IF zz=.THEN k%=i%:i%=.
+	&"{up}Login Complete!{pound}{back arrow}39{f6:2}":IF zz=. THEN k%=i%:i%=.
 	goto {:3226}
 {:3174}
 ' TODO: add lightbar checkmark to disable extra login questions
@@ -174,11 +188,11 @@
 	if a=.then tr%=.:goto {:3136}
 	&"{f6}Logging On For HELP...{f6}":t=5
 {:3192}
-	a$="First Name":gosub {:3214}:on-(t<1)goto {:3204}:ff$=an$:if an$=""then{:3192}
+	a$="First Name":gosub {:3214}:on -(t<1) goto {:3204}:ff$=an$:if an$="" then {:3192}
 {:3194}
-	a$="Last Name":gosub {:3214}:on-(t<1)goto {:3204}:ll$=an$:if an$=""then{:3194}
+	a$="Last Name":gosub {:3214}:on-(t<1)goto {:3204}:ll$=an$:if an$="" then {:3194}
 {:3196}
-	a$="Phone # or Email":gosub {:3214}:ON-(t<1)goto {:3204}:ph$=an$:IF an$=""THEN{:3196}
+	a$="Phone # or Email":gosub {:3214}:ON-(t<1)goto {:3204}:ph$=an$:IF an$=""then {:3196}
 	na$="HELP"+"":pw$="NONE"+"":ld$=d1$:ac%=0:dt%=0:tc%=0:co%=1:ll%=40:id=0
 	ul=1:lf=1:em=.:dc=.:uc=.:bd=.:bu=.:cr=.:ps=.:rp=.:d5$=d1$:fl$=fl$(ac%)
 	co$=co$(co%):rn$=ff$+" "+ll$:tr%=15:gosub 1072:gosub {:3206}:if tr%>.then {:3226}
@@ -199,19 +213,19 @@
 	print# 2,"{up arrow}":close 2:return
 {:3226}
 ' instant logon (3):
-	a$="on":gosub {:3362}:on f4 goto {:3262}:if i%or k%then{:3250}
+	a$="on":gosub {:3362}:on f4 goto {:3262}:if i%or k%then {:3250}
 	b$=str$(ca):b=7:a=1:if mn%>719 then a=8:b=9:if mn%>1079 then a=17:b=7
 	an$=ff$:&,15,1:h$=an$
 	gosub 2912:lp=1:g$=mid$("MorningAfternoonEvening",a,b):&"{f6:2}{lt. blue}{pound}$q    {rvrs on} Good {pound}$g, {pound}$h! {rvrs off}{f6}"
-	g%=uh:an$=d3$:&,15,1:if d3$=na$then an$="You!"
-	f%=cn:a$="s.welcome"+str$(nl):dr=1:gosub 1076:gosub 1910:for i=1 to 10:st(i)=.:next
+	g%=uh:an$=d3$:&,15,1:if d3$=na$ then an$="You!"
+	f%=cn:a$="welcome"+str$(nl):gosub 1350:gosub 1910:for i=1 to 10:st(i)=.:next
 ' 2100: clear vars
-	gosub 2100:a$="e.loginmods,s,r":dr=3:gosub 1011:if e%or id<1 then close 2:goto {:3248}
+	gosub 2100:b$="loginmods":a$="r":gosub 1027:if e% or id<1 then close 2:goto {:3248}
 	&,2,2:br=val(a$):if br<1 then close 2:goto {:3248}
 	dim lm$(br),lm%(br):rk=.:for i=1 to br:&,2,2:lm$(i)=a$:&,2,2:lm%(i)=val(a$):next
 {:3244}
 	rk=rk+1:if lm%(rk)and(2^ac%)then a$=lm$(rk):gosub {:3360}
-	if rk<br then{:3244}
+	if rk<br then {:3244}
 {:3248}
 	&,28,1 ':goto {:3250}
 {:3250}
@@ -262,12 +276,12 @@
 {:3300}
 ' instant logon (1):
 	&"Instant{f6:2}":&,27,2:dim fb%(29,15),ff%(15):dr=3:gosub 1010
-	&,60,2,.,fb%(.,.),dr$+"e.sysoplist",dv%:gosub 1012:if e%then{:3318}
+	&,60,2,.,fb%(.,.),dr$+"e.sysoplist",dv%:gosub 1012:if e%then {:3318}
 ' &,52,4,3: Local Mode (No Modem IO)
 	&,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
-	if a%=.then{:3318}
+	if a%=.then {:3318}
 	for i=1 to a%:x=ff%(i):&,60,1,20,fb%(1,x),an$:&,15,1:b%=fb%(.,x)
-	&" {white}{pound}!i. {lt. blue}{pound}v7 {cyan}{pound}{back arrow}28(ID# {pound}#0{pound}%b){f6}":next
+	&" {white}{pound}!i. {lt. blue}{pound}v7{cyan}{pound}{back arrow}28(ID# {pound}#0{pound}%b){f6}":next
 	poke 53252,4:&"{f6}{lt. blue} Logon Which Account?{white}: {pound}i1"
 	a=val(an$):on-(a<1 or a>a%or tr%<1)goto {:3316}:a=ff%(a):id=fb%(.,a):i%=1
 	&,28,2:on i%and zz goto {:3168}:goto {:3144}
@@ -281,9 +295,10 @@
 {:3322}
 	&"{clear}":b$="automaint":x=11:gosub {:3480}:a$="automaint":gosub {:3364}:goto {:3336}
 {:3324}
-' set password
+' set reservation password
 	a$="misc":a=1:gosub {:3358}:goto {:3436}
 {:3326}
+' view activity/idle logs
 	a$="misc":a=2:gosub {:3358}:goto {:3436}
 {:3328}
 	a$="varlist":gosub {:3358}:goto {:3436}
@@ -372,10 +387,10 @@
 	if a$=""then {:3414}
 	poke 198,.
 	if a$="R" then b$="reload":x=11:gosub {:3480}:f1=3:pr$="":a$="lo":goto 1016
-	x=val(a$):if x then{:3418}
+	x=val(a$):if x then {:3418}
 	x=-(a$="V")-2*(a$="C")-3*(a$="+")-4*(a$="-")-5*(a$="T")-6*(a$="{pound}")
 ' ctrl-f: run terminal
-	on-(x<>.)goto {:3420}:x=-(a$="{$06}")-2*(a$="A"):if x then{:3428}
+	on-(x<>.)goto {:3420}:x=-(a$="{$06}")-2*(a$="A"):if x then {:3428}
 {:3414}
 	k=k+(k>.):on-(a$=" " or k=1)goto {:3384}:on -(a$<>"" and (a$<"{f1}" or a$>"{f8}")) gosub {:3454}
 {:3416}
@@ -404,15 +419,37 @@
 	poke 53248,.:poke 53252,.:on f3 goto {:3456},{:3438},{:3440}:return
 {:3438}
 	f3=2:gosub {:3036}:im=2:gosub 2414:goto {:3038}
+
 {:3440}
-	f3=3:gosub {:3036}:&"{f6:2} {rvrs on}{white} Blocks Free On System Disks {f6:2}"
-	a$="{yellow} {pound}$b Disk:{pound}{back arrow}15{white}{pound}$c{f6}{yellow} {pound}$d Disk:{pound}{back arrow}15{white}{pound}$f{f6}":dr=1
-	b$="System":d$="E-Mail":gosub {:3452}
-	b$="Etc.":d$="Dir.":gosub {:3452}
-	b$="Program":d$="User":gosub {:3452}
-	poke 2042,.:&"{f6:2}":goto {:3038}
+' 3x2 display:
+' ----+----+----+----+----+----+----+----+
+'      [Blocks Free on System Disks:]
+'
+'      System: xxxxx  Directory: xxxxx
+'      E-Mail: xxxxx  Plus-File: xxxxx
+'    Etcetera: xxxxx       User: xxxxx
+' 3036: turn off clock, turn on local mode
+' "£#5" print 5 characters, "£# " use leading spaces
+	f3=3:gosub {:3036}:&"{f6:2}     {rvrs on}{white} Blocks Free on System Disks: {f6:2}{pound}#5{pound}# ":x=1
+' 3442
+	a$="   {yellow}{pound}$b: {white}{pound}%b{pound}{back arrow}21{yellow}{pound}$d: {white}{pound}%f{f6}"
+' 3444
+	b$=" System":d$="Directory":gosub {:3452}
+' 3446
+	b$=" E-Mail":d$="Plus-File":gosub {:3452}
+' 3448
+	b$="Ecetera":d$="     User":gosub {:3452}
+' 3450: turn off local mode
+	&"{f6:2}":poke 2042,.:goto {:3038}
 {:3452}
-	c$=str$(bf(dr)):f$=str$(bf(dr+1)):dr=dr+2:&:return
+	' display blocks free:
+	' 1st column, b$: disk, b%: blocks free
+	' 2nd column, d$: disk, f%: blocks free
+' 39 bytes:
+'	c$=str$(bf(dr)):f$=str$(bf(dr+1)):dr=dr+2:&:return
+' 27 bytes (-12):
+	c%=bf(x):f%=bf(x+3):x=x+1:&:return
+
 {:3454}
 	poke 53248,1:a$="idle":gosub 1350:poke 53248,.:k=50:poke 2042,.:return
 {:3456}
@@ -423,7 +460,10 @@
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} Calls/Log  {pound}#3{pound}# {pound}%x {gray1} {f6}"
 	&"{pound}{back arrow}22{lt. blue}{rvrs on} New Users  {pound}#3{pound}# {pound}%w {gray1} {f6}"
 	&"{pound}{back arrow}23{gray1}{rvrs on}                {f6}{up}{cyan}"
-	dr=3:a$="e.last,s,r":gosub 1011:if e then {:3478}
+' 34 bytes
+'	dr=3:a$="e.last,s,r":gosub 1011:if e then {:3478}
+' 30 bytes
+	b$="last":a$="r":gosub 1027:if e then {:3478}
 	for x=1 to 10:&,2,2:on-(len(a$)<11)goto {:3476}:an$=a$:&,15
 	&"{f6} "+left$(an$,6)+", "+right$(an$,7)+"M "+mid$(a$,12)
 {:3476}
@@ -439,21 +479,16 @@
 '         or "used" (p<>10)
 '                  i
 '                    b$
-' 31801168108 used 1 logoff
-' 31801168108 idle 0 modem reset
-' 31801168108 idle 0 modem reset
-' 31801168121 idle 12 modem reset
-' 31801168122 idle 0 connect
-{ifdef:idle_logging}
-' 1068: append or write e.b$:
-'	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
-' preserve b$ in c$:
-	c$=b$:b$="idle "+left$(am$,1):gosub 1068:b$=c$
-{else}
+' 31801168108,used,1,logoff
+' 31801168108,idle,0,modem reset
+' 31801168108,idle,0,modem reset
+' 31801168121,idle,12,modem reset
+' 31801168122,idle,0,connect
 ' "on i goto..." closes issue #35
-	on i goto {:3490}:c$="e.idle "+left$(am$,1)+",s,"
-	dr=3:a$=c$+"a":gosub 1011:if e% then a$=c$+"w":gosub 1011
-{endif}
+'	on i goto {:3490}:c$="e.idle "+left$(am$,1)+",s,"
+	on i goto {:3490}:b$="idle "+left$(am$,1):a$="a"
+'	dr=3:a$=c$+"a":gosub 1011:if e% then a$=c$+"w":gosub 1011
+	gosub 1027:if e% then a$="w":gosub 1027
 ' FIXME: 3488: illegal quantity error, occasionally
 	print# 2,d1$","mid$("idleused",1-4*(p=10),4)","i","b$:close 2
 {:3490}
@@ -463,7 +498,7 @@
 {:3496}
 ' turn screen mask on, display date, set reservation password string (None, or password)
 	&,18,1:an$=d3$:&,15,1:&,69,5,17,an$,$8c:an$="None":if l2 then an$=l2$
-' fix reservation password display (l2$):
+' fix Reservation PassWord display (l2$):
 	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,left$(an$+"{space:21}",21),$8c
 ' &,52,41,3: Network Reserve
 	&,52,41,3:&,69,31,17," Res O"+mid$("ff n  ",a%*3+1,3),$8c:kk=a%
@@ -473,9 +508,9 @@
 ' print mid$("NoneOne All ",(l2+1)*4-3,4)
 ' fixed: 3104 l2, l2$ reset after 1-call reservation
 	&,69,32,19,mid$("NoneOne All ",(l2+1)*4-3,4)+"{space:4}",$8c
-	&,69,31,20,left$(str$(qb)+"         ",9),$8c
-	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c
+	&,69,31,20,left$(str$(qb)+"{space:9}",9),$8c
+	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"{space:9}",9),$8c
 ' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today)
 ' check available RAM:
 	goto 1374
-	rem +.lo - 2018-10-05 pinacolada
+	rem +.lo - 2018-10-13 pinacolada

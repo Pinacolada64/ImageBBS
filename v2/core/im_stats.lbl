@@ -15,7 +15,7 @@
 	a%=le:&"{f6}{white}{rvrs on} Editor Lns :{rvrs off}{yellow} {pound}%a"
 	a%=ct%:&"{pound}{back arrow}39 {white}{rvrs on} Calls Today:{rvrs off}{lt. green} {pound}%a"
 	a%=tc%:&"{f6}{white}{rvrs on} Total Calls:{rvrs off}{yellow} {pound}%a"
-	a$=str$(ca):&"{pound}{back arrow}39 {white}{rvrs on} Caller#    :{rvrs off}{lt. green}{pound}$a":gosub {:60076}:if a=.then{:60074}
+	a$=str$(ca):&"{pound}{back arrow}39 {white}{rvrs on} Caller#    :{rvrs off}{lt. green}{pound}$a":gosub {:60076}:if a=. then {:60074}
 	a%=da%:&"{f6}{white}{rvrs on} DL's Allowed:{rvrs off}{yellow} {pound}%a {lt. red}(0)=Unlimited"
 	a%=dc:&"{pound}{back arrow}39 {white}{rvrs on} Total DL's  :{rvrs off}{lt. green} {pound}%a"
 	a%=uc:&"{f6}{white}{rvrs on} Total UL's  :{rvrs off}{yellow} {pound}%a"
@@ -24,7 +24,7 @@
 	an$=str$(cr):&"{pound}{back arrow}39 {white}{rvrs on} Credit Pts  :{rvrs off}{lt. green}{pound}v7"
 	a=2:gosub 1004:a%=a:&"{f6}{white}{rvrs on} Credit Ratio:{rvrs off}{yellow} {pound}%a To 1"
 	a%=ps:&"{pound}{back arrow}39 {white}{rvrs on} Total Posts :{rvrs off}{lt. green} {pound}%a"
-	a%=rp:&"{f6}{white}{rvrs on} Total Resp. :{rvrs off}{yellow} {pound}%a{f6}":gosub {:60076}:if a=.then{:60074}
+	a%=rp:&"{f6}{white}{rvrs on} Total Resp. :{rvrs off}{yellow} {pound}%a{f6}":gosub {:60076}:if a=. then {:60074}
 	&"{f6}{lt. red}{rvrs on}You Have:{f6}":f=0
 	a=1:a$="Non-Weed Status":gosub {:sub.color}
 	a=3:a$="Full Maintenance":gosub {:sub.color}

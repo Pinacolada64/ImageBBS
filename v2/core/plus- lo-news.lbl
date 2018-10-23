@@ -4,9 +4,9 @@
 	on sgn(e%)goto {:4026}:input# 2,b:if b<1 then{:4026}
 	t=.:for x=1 to b:input# 2,ed$(x),nn$(x),d%(x):d%(x)=d%(x)*-((d%(x)and 2^ac%)<>.)
 	if d%(x)then t=t+1:ed$(t)=ed$(x):nn$(t)=nn$(x):c%(t)=d%(x)
-	next:close 2:if t=.then{:4026}
+	next:close 2:if t=. then {:4026}
 	for i=1 to t:sh=.:c$="New News":f2=-(mid$(nn$(i),2)<mid$(d5$,2))*-(tc%>1)
-	if f2 then c$="Reminder":if left$(ed$(i),1)<>"$"then{:4024}
+	if f2 then c$="Reminder":if left$(ed$(i),1)<>"$" then {:4024}
 	b$=ed$(i):if left$(b$,1)="$"then b$=mid$(b$,2)
 	&"{f6} {lt. blue}{pound}$c:{white} {pound}$b{pound}{back arrow}39  {cyan}Date: ({gray3}{$04}"+nn$(i):&"{cyan}){f6}{blue}{pound}vj{pound}q0{f6:2}":kk=1:dr=1:b$=a$
 	a$="n."+left$(ed$(i),14)+",s,r":gosub 1011:on-(e%<>.)goto {:4022}:&,3-9*(f2=.),2

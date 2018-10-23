@@ -123,7 +123,7 @@
 	gosub {:3006}:if a then br=a:goto {:3400}
 	if pf>1 and(a$="<"or a$="B")then pf=pf-1:goto {:3182}
 	if pf>1 and a$="M"then pf=1:goto {:3182}
-	if q=1 and a$="Z"then{:3231}
+	if q=1 and a$="Z" then {:3231}
 	on-(a$="Q")goto {:quit}:gosub {:3212}:goto {:3200}
 {:3212}
 	on-(a$="L")-2*(a$="S")-4*(a$="{f2}")goto {:3110},{:3120},1351

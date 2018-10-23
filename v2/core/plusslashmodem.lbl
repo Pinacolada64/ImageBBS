@@ -25,14 +25,14 @@
 {:4016}
 	a$=m$:t=50:&,22,10:gosub {:4156}:x=x-1:on-(a<>0 and x>0)goto {:4016}:return
 {:4018}
-	z=val(mt$):gosub {:4026}:gosub {:4100}:if a=.then{:4024}
+	z=val(mt$):gosub {:4026}:gosub {:4100}:if a=. then {:4024}
 	for y=1 to z:on y gosub {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:gosub {:4026}:gosub {:4100}:if a=.then y=z
 {:4022}
 	next
 {:4024}
 	on val(mt$)goto {:4166},{:4168},{:4170},{:4172},{:4174},{:4178}:return
 {:4026}
-	if mid$(mt$,2,1)="D"then{:4144}
+	if mid$(mt$,2,1)="D" then {:4144}
 	&,22,15:for x=1 to 3:print# 131,chr$(27);:&,22,5:next:&,22,10
 	if mid$(mt$,6,1)="0"then a$="h0":gosub {:4156}:goto {:4034}
 	if mid$(mt$,4,1)="H"then a$="h":gosub {:4156}

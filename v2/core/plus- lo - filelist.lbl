@@ -5,7 +5,7 @@
 	&,2,2:bz=val(a$):for x=2 to bz+1:gosub 1001:&,2,2:&,2,2:&,2,2:tt$(x-1)=a$:next
 	close 2:tt$(0)="None":a$=dr$+"e.filelists":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
 	s$="                                        "
-	for i=1 to fd:&,60,1,16,s%(1,i),b$:if s%(0,i)=0 or b$=""then{:4038}
+	for i=1 to fd:&,60,1,16,s%(1,i),b$:if s%(0,i)=0 or b$="" then {:4038}
 	dr=3:a$="e.U/D":gosub 1011:x=s%(0,i)+1:gosub 1001:&,2,2:&,2,2:&,2,2:&,2,2
 	&,2,2:d1%=val(a$):&,2,2:d2%=val(a$):close 2
 	dr=0:gosub 1010:print# 15,"s"dr$b$:a$=b$+",s,w":gosub 1011

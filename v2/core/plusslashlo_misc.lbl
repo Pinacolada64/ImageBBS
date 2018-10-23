@@ -163,8 +163,8 @@
 {:4068}
 ' read daily activity/idle log
 ' [A]ctivity or [I]dle Log?: Activity
-	poke 53252,1:&"{clear}[A]ctivity or [I]dle Log?: {pound}g1":a$="r":on -(an$="A")-2*(an$="I") goto {:activity}, {:idle}
-	&"Done{f6}":return
+	poke 53252,1:&"{clear}[A]ctivity or [I]dle Log?: {pound}g1"
+	a$="r":on -(an$="A")-2*(an$="I") goto {:activity}, {:idle}:&"Done{f6}":return
 {:activity}
 	&"Activity{f6}":gosub 1064:goto {:log_reader}
 {:idle}
@@ -178,8 +178,8 @@
 ' --------------------------------------
 ' 3:59 PM | 11 mins idle | modem reset
 {:idle.2}
-	input# 2,an$,b$,c$,d$:&,15:c%=val(c$):&right$(an$,7)+"M {pipe}{pound}#3{pound}# {pound}%c mins {pound}$b {pipe} {pound}$d{f6}"
-	on st+1 goto {:idle.2}:goto {:end}
+	input# 2,an$,b$,c$,d$:&,15:c%=val(c$)
+	&right$(an$,7)+"M {pipe}{pound}#3{pound}# {pound}%c mins {pound}$b {pipe} {pound}$d{f6}":on st+1 goto {:idle.2}:goto {:end}
 {:log_reader}
 	sh=.:if e%=. then:&,3,2
 {:error}

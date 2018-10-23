@@ -18,7 +18,7 @@
 	&"{f6}Read Reason File? ":gosub 1902:if a=0 then close 2:return
 {:4026}
 	rc=0:gosub 1914:x=x+1:&,2,2:a%=x:&"{f6:2}Reason #{pound}%a:{pound}$a{f6:2}":&,3,2
-	if(st=0)and(rc=0)then{:4026}
+	if(st=0)and(rc=0) then {:4026}
 {:4030}
 	close 2:return
 {:4032}
@@ -45,9 +45,9 @@
 {:4062}
 	on f goto {:4076}:&"{f6}Would you like to leave an Anonymous{f6}reason? ":gosub 1902
 	if a=0 then{:4076}
-	tt$(0)=chr$(48+c)+tt$(c):gosub 1604:if kk=.then{:4076}
+	tt$(0)=chr$(48+c)+tt$(c):gosub 1604:if kk=. then {:4076}
 	a=b:gosub {:4016}:a$=o$+",s,w":gosub 1011:if e%then a$=o$+",s,a":gosub 1011
-	if e%then{:4074}
+	if e% then {:4074}
 	print# 2,mid$(tt$(0),2):for i=1 to kk-1:print# 2,tt$(i):next:print# 2,"{up arrow}"
 {:4074}
 	close 2

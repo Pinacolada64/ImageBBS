@@ -28,7 +28,7 @@
 ' 94=^
 	an$=mid$(tt$,5):&,15,6,94:b$=an$:an$=a$
 	if left$(tt$,1)="!"then b$=mid$(tt$,2,3)+b$
-	if b$<>""then{:60046}
+	if b$<>"" then {:60046}
 	c$=left$("m."+an$,15):gosub {:60064}:if e%then close 2:&:return
 	an$=right$(str$(id+10000),4)+na$
 	print# 2,an$r$id:goto {:60062}

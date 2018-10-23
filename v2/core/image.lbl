@@ -96,14 +96,14 @@
 	if zz then a%=usr(0):&"{f6} - Stack Free: {pound}%a"
 	&"{f6:2}":poke 53252,38:gosub{:6}
 	cm$=left$(p$,11)+":"+left$(an$,4):gosub{:9}:cm$=p$
-	on tr%+1 goto{:240}:if an$=""then{:250}
+	on tr%+1 goto{:240}:if an$="" then {:250}
 	gosub{:220}:if f4 then gosub{:304}:on-(f4=1.1)-2*(f4=1.2)-3*(f4=1.3)goto{:270},{:268},{:234}
 	on rs goto{:200}:mm=1:goto 3000
 {:220}
 	on-(ac%<>ao%)gosub{:320}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
-	f4=.:gosub{:280}:if a%then{:260}
+	f4=.:gosub{:280}:if a% then {:260}
 	on-(a$="O"or(lc=1 and a$="Q"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
 {:230}
 	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}Logoff?: ":gosub{:8}:if a=0 then return

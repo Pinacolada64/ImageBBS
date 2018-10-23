@@ -5,7 +5,7 @@
 {:3022}
 	GOSUB{:3024}:POKE 2033,.:RETURN
 {:3024}
-	ON-((PEEK(2033)AND 128)=128)GOTO{:3040}:CM$="{$c3}LEARING {$cc}INE":GOSUB 9:IM=2:GOTO 446
+	ON-((PEEK(2033)AND 128)=128)GOTO{:3040}:CM$="CLEARING LINE":GOSUB 9:IM=2:GOTO 446
 {:3040}
 	B$="MODEM RESET":X=11:GOSUB{:3080}:TI$="000000":IM=1:GOSUB 446:IM=9:GOTO 446
 {:3050}
@@ -20,25 +20,25 @@
 	PRINT# 2,D1$;" ";MID$("IDLEUSED",1-4*(P=10),4);I;B$:CLOSE 2
 {:3085}
 	Z%=.:Y%=.:A=ST(21)+ST(22)+.5:IF A>1 THEN Z%=100*ST(21)/A:Y%=100-Z%
-	AN$=LEFT$("{$d5}="+MID$(STR$(Z%),2)+" {$c9}="+MID$(STR$(Y%),2)+"     ",10)
+	AN$=LEFT$("U="+MID$(STR$(Z%),2)+" I="+MID$(STR$(Y%),2)+"     ",10)
 	&,69,14,22,AN$,$81:RETURN
 {:3100}
 	&,28,1:&,52,34,.:POKE 970,.:POKE 971,.:POKE 2042,.:POKE 53248,1:&"{lt. red}{clear}":GOSUB 12
 	POKE 53248,.:B$="CONNECT":X=11:GOSUB{:3080}:&,52,5,ZZ:&,25:GOSUB 33:X=43:GOSUB 1
 	CLOSE 2:&,52,2,3:A=A%:&,52,4,3:ZZ=A%:A=A+A%:&,52,6,3:A=A+A%:IF A THEN:&,52,4,4
-	TR%=4:ON-(ZZ=.)GOTO{:3114}:QB$="{$cc}OCAL {$c3}ONSOLE":NL=1:LL%=40:&,52,16,.:&"{f6}"
-	&"{f6} {$d0}RESS {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c6}OR {$ce}ORMAL {$cc}OGIN OR{f6} {$d0}RESS {f5}{$c9}{f5} {$c6}OR {$c9}NSTANT {$cc}OGIN: {pound}G1"
-	A=-(AN$="{$c9}"):&MID$("{$c9}NSTANT{$ce}ORMAL",8-A*7,7)+"{f6}":ON A GOTO{:3234}:GOTO{:3116}
+	TR%=4:ON-(ZZ=.)GOTO{:3114}:QB$="LOCAL CONSOLE":NL=1:LL%=40:&,52,16,.:&"{f6}"
+	&"{f6} PRESS RETURN FOR NORMAL LOGIN OR{f6} PRESS {f5}I{f5} FOR INSTANT LOGIN: {pound}G1"
+	A=-(AN$="I"):&MID$("INSTANTNORMAL",8-A*7,7)+"{f6}":ON A GOTO{:3234}:GOTO{:3116}
 {:3114}
 	LM=1:A$="LO."+"FIRSTIMAGE":GOTO 72
 {:3116}
 	A$="S.LOGIN":GOSUB{:3050}:A$="LO."+"LOGIN":GOSUB{:3052}:GOTO 72
-	A$="LO."+"ON":GOSUB 72:REM"             **{$c9}NSERT {$cd}AIL-{$d3}CAN {$d2}OUTINE {$c8}ERE**"
-	&"{f6}{$cd}AIL {$d3}YSTEM {$ce}OT {$c9}NSTALLED!{f6}":GOTO 300
+	A$="LO."+"ON":GOSUB 72:REM"             **INSERT MAIL-SCAN ROUTINE HERE**"
+	&"{f6}MAIL SYSTEM NOT INSTALLED!{f6}":GOTO 300
 {:3200}
-	&"{f6}{lt. blue}{$d7}OULD YOU LIKE TO LEAVE FEEDBACK?{cyan}: ":GOSUB 94:ON A GOSUB 444
-	&,52,$22,.:AN$=FF$:&,15,1:&"{f6:2} {green}{$c2}YE {lt. green}{pound}V7{green}!{f6:2}":A$="S.END":GOSUB{:3050}
-	IF I%OR K%THEN:&"{f6}{lt. blue}{$d5}PDATE {$d5}SER {$c6}ILE?:{white} ":GOSUB 96:IM=1:ON A GOSUB 445
+	&"{f6}{lt. blue}WOULD YOU LIKE TO LEAVE FEEDBACK?{cyan}: ":GOSUB 94:ON A GOSUB 444
+	&,52,$22,.:AN$=FF$:&,15,1:&"{f6:2} {green}BYE {lt. green}{pound}V7{green}!{f6:2}":A$="S.END":GOSUB{:3050}
+	IF I%OR K%THEN:&"{f6}{lt. blue}UPDATE USER FILE?:{white} ":GOSUB 96:IM=1:ON A GOSUB 445
 {:3220}
 	&,52,$22,.:GOSUB{:3022}:ON-(AC%=16 OR I%<>.)GOTO{:3230}
 	A$="LO."+"OFF":GOSUB 72
@@ -47,7 +47,7 @@
 	A$="LO."+"IDLE":GOTO 72
 {:3234}
 	A$="LO."+"INSTANT":GOTO 72
-	POKE 53248,1:&"{clear}":B$="AUTOMAINT":X=11:GOSUB{:3080}:CM$="{$c1}UTO-{$cd}AINT":GOSUB 9
+	POKE 53248,1:&"{clear}":B$="AUTOMAINT":X=11:GOSUB{:3080}:CM$="AUTO-MAINT":GOSUB 9
 	A$="LO."+"AUTOMAINT":GOSUB 72
 	GOSUB 304:BR=.:A$="E.MAINTMODS,S,R":DR=3:GOSUB 4:IF E%THEN CLOSE 2:GOTO{:3416}
 	&,2,2:BR=VAL(A$):ON-(BR<1)GOTO 3216:DIM LM$(BR),MT$(BR)

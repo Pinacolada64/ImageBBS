@@ -82,12 +82,12 @@
 	if an$<>""then tt$(a)=an$:cf=1
 	goto {:4114}
 {:4130}
-	&"Quit{f6:2}":if cf=.then{:4148}
-	&"Save Changes? ":gosub 1907:if a=.then{:4138}
+	&"Quit{f6:2}":if cf=. then {:4148}
+	&"Save Changes? ":gosub 1907:if a=. then {:4138}
 	dr=3:a$="e.fkeys":gosub 1023
 	for i=1 to 8:print# 2,tt$(i):next:close 2
 {:4138}
-	&"Activate? ":gosub 1907:if a=.then{:4148}
+	&"Activate? ":gosub 1907:if a=. then {:4148}
 	for i=1 to 8:a$=tt$(i):if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
 	tt$(i)=a$:next
 	f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)

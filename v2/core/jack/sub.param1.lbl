@@ -19,21 +19,21 @@
 	&,52,44,2:&,52,44,3:UF$=LEFT$(UF$,2)+MID$(STR$(A%),2,1)+MID$(UF$,4):RETURN
 {:60028}
 	&"{f6:2}":FOR X=1 TO 9:B$=CO$(X):A%=X:&"{pound}%A>-{pound}$B{f6}":NEXT
-	&"{f6}{$c3}OMPUTER {$d4}YPE?: {pound}G1{pound}V7{f6}":IF TR%<1 THEN RETURN
+	&"{f6}COMPUTER TYPE?: {pound}G1{pound}V7{f6}":IF TR%<1 THEN RETURN
 	ON-(VAL(AN$)<1)GOTO{:60028}:CO%=VAL(AN$):AN$=CO$(CO%):CO$=AN$:&,9:RETURN
 {:60034}
-	LP=1:&"{f6}{$c8}OW {$cd}ANY {$c3}HARACTERS/{$cc}INE?{f6:2}: {pound}I1"
+	LP=1:&"{f6}HOW MANY CHARACTERS/LINE?{f6:2}: {pound}I1"
 	X=INT(VAL(AN$)):IF TR%<1 THEN RETURN
-	IF X<22 OR X>80 THEN:&"{f6}{$cd}UST {$c2}E {$c2}ETWEEN 22 {$c1}ND 80.{f6}":GOTO{:60034}
+	IF X<22 OR X>80 THEN:&"{f6}MUST BE BETWEEN 22 AND 80.{f6}":GOTO{:60034}
 	LL%=X:A$="":FOR A=1 TO LL%-2:A$=A$+"{$c0}":NEXT:AK$=" "+A$+"{f6}":RETURN
 {:60042}
-	POKE 53252,3:LP=1:&"{f6}{$c8}OW {$cd}ANY {$cc}INES/{$d3}CREEN?{f6:2}: {pound}I1"
+	POKE 53252,3:LP=1:&"{f6}HOW MANY LINES/SCREEN?{f6:2}: {pound}I1"
 	MP%=ABS(VAL(AN$)):ON-(MP%<1 OR MP%>255)GOTO{:60050}:POKE 971,MP%:RETURN
 {:60046}
-	AN$="{$cf}FF":IF A%THEN AN$="{$cf}N"
+	AN$="OFF":IF A%THEN AN$="ON"
 	RETURN
 {:60050}
-	LP=1:&"{f6}{$cd}UST {$c2}E {$c2}ETWEEN 1 AND 255":GOTO{:60042}
+	LP=1:&"{f6}MUST BE BETWEEN 1 AND 255":GOTO{:60042}
 	&,52,34,2:&,52,34,3:UF$=LEFT$(UF$,1)+MID$(STR$(A%),2,1)+MID$(UF$,3)
 	RETURN
 {:60056}
@@ -48,19 +48,19 @@
 {:60068}
 	&,52,16,3:A=A%*4:&,52,18,3:A=A+A%*2:&,52,19,3:A=A+A%
 	LP=1:IF A>3 THEN ON A-3 GOTO{:60074},{:60076},{:60078},{:60080}
-	Z$="{$c3}{$c2}{$cd} {$c3}/{$c7}":RETURN
+	Z$="CBM C/G":RETURN
 {:60074}
-	Z$="{$c1}{$d3}{$c3}{$c9:2}":RETURN
+	Z$="ASC{$c9:2}":RETURN
 {:60076}
-	Z$="{$c1}{$d3}{$c3}{$c9:2} & {$c9}{$c2}{$cd} {$c7}RAPHICS":RETURN
+	Z$="ASC{$c9:2} & IBM GRAPHICS":RETURN
 {:60078}
-	Z$="{$c1}{$d3}{$c3}{$c9:2} & {$c1}{$ce}{$d3}{$c9} {$c3}OLOR":RETURN
+	Z$="ASC{$c9:2} & ANSI COLOR":RETURN
 {:60080}
-	Z$="{$c1}{$ce}{$d3}{$c9} {$c3}/{$c7}":RETURN
+	Z$="ANSI C/G":RETURN
 {:60082}
-	GOSUB{:60106}:ON X+1 GOTO 999:A=VAL(MID$(AN$,3,3)):IF A>.THEN{:60088}
+	GOSUB{:60106}:ON X+1 GOTO 999:A=VAL(MID$(AN$,3,3)):IF A>. then {:60088}
 {:60084}
-	&"{f6}{$c1}VAILABLE {$d0}ROTOCOLS:{f6:2}":FOR I=1 TO X:A%=I:A$=MID$(TT$(I),10)
+	&"{f6}AVAILABLE PROTOCOLS:{f6:2}":FOR I=1 TO X:A%=I:A$=MID$(TT$(I),10)
 	LP=1:&"{pound}%A) {pound}$A{pound}{back arrow}39 ":NEXT:&"{f6:2}--> {pound}G1":A=VAL(AN$)
 {:60088}
 	IF A>.AND A<=X THEN LP=1:&MID$(TT$(A),10):IF A<X OR B%=.THEN UL=A-1
@@ -79,14 +79,14 @@
 {:60106}
 	&,11:B%=.:DR=1:A$="S.M.PROTOS,S,R":GOSUB 4:X=.:IF E%THEN:&:RETURN
 {:60108}
-	&,2,2:IF A$<>"{up arrow}"AND X<253 THEN X=X+1:TT$(X)=A$:IF ST=.THEN{:60108}
-	&,52,4,3:IF ZZ=1 OR A%=1 THEN X=X+1:TT$(X)="COPIER00 {$c3}OPIER":B%=1
+	&,2,2:IF A$<>"{up arrow}"AND X<253 THEN X=X+1:TT$(X)=A$:IF ST=. then {:60108}
+	&,52,4,3:IF ZZ=1 OR A%=1 THEN X=X+1:TT$(X)="COPIER00 COPIER":B%=1
 	CLOSE 2:RETURN
 {:60114}
-	&"{clear}{f6}{$cd}ORE {$d0}ROMPT {$cf}PTIONS:{f6:2}{white} 1 {lt. blue}{$cf}FF{f6}{white} 2 {lt. blue}{$cf}N{f6}{white} 3 {lt. blue}{$cd}ESSAGES {$cf}NLY{f6:2}{white}  > {pound}G1"
+	&"{clear}{f6}MORE PROMPT OPTIONS:{f6:2}{white} 1 {lt. blue}OFF{f6}{white} 2 {lt. blue}ON{f6}{white} 3 {lt. blue}MESSAGES ONLY{f6:2}{white}  > {pound}G1"
 	A=VAL(AN$):IF A>.AND A<4 THEN UF$=LEFT$(UF$,1)+CHR$(A+47)+MID$(UF$,3)
 	GOSUB{:60120}:&"{pound}$W{f6}":RETURN
 {:60120}
-	A=VAL(MID$(UF$,2,1)):W$="{$cf}FF":IF A THEN W$="{$cf}N":IF A>1 THEN W$="{$cd}ESSAGES {$cf}NLY"
+	A=VAL(MID$(UF$,2,1)):W$="OFF":IF A THEN W$="ON":IF A>1 THEN W$="MESSAGES ONLY"
 	RETURN
 	COPR. 1996 NEW IMAGE 5/5/96

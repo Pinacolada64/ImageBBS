@@ -8,12 +8,12 @@
 	b=val(left$(ld$,1))+a:c=val(mid$(ld$,2,2)):d=val(mid$(ld$,4,2))
 	e=val(mid$(ld$,6,2))+a:a$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
 {:60014}
-	if e<=asc(mid$(a$,d))then{:60020}
+	if e<=asc(mid$(a$,d)) then {:60020}
 	e=e-asc(mid$(a$,d)):d=d+1:if d<13 then{:60014}
 	d=1:c=c+1:goto {:60014}
 {:60020}
-	if e>.then{:60026}
-	d=d-1:e=e+asc(mid$(a$,d-12*(d=.))):if d>.then{:60020}
+	if e>. then {:60026}
+	d=d-1:e=e+asc(mid$(a$,d-12*(d=.))):if d>. then {:60020}
 	d=12:c=c-1:goto {:60020}
 {:60026}
 	if b>7 then b=b-7:goto {:60026}
@@ -40,6 +40,7 @@
 	c=c+a*365:if b>1 then for i=1 to b-1:c=c+asc(mid$("{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}",i,1)):next
 	if a>0 then l=int(a/4):if(int(a/4)=a/4)and b<3 then l=l-1
 	c=c+l:c=.5+7*(c/7-int(c/7)):ld$=chr$(49+c)+mid$(an$,2)+mid$(ld$,8):return
+{number:60100}
 {:60100}
 	a=11:gosub 1004:if a=.then return
 	d=val(left$(lt$,1))
@@ -49,7 +50,7 @@
 	dt$(11)="Wednesday":dt$(12)="Thursday":dt$(13)="Friday":dt$(14)="Saturday"
 {:60112}
 	for i=.to 6:a%=i+1:&"{f6} [{pound}#1{pound}%a] ":&dt$(7-i+d):next:&"{f6} [Q]uit{f6:2}Which Log? "
-	gosub 1007:&:on-(tr%=.or a$="Q")goto {:60134}:if a$<>r$and(a$<"1"or a$>"7")then{:60130}
+	gosub 1007:&:on-(tr%=.or a$="Q")goto {:60134}:if a$<>r$and(a$<"1"or a$>"7") then {:60130}
 	c=val(a$):if a$=r$then c=1
 {:60118}
 	b=d+1-c:if c>d then b=d+8-c
@@ -67,8 +68,9 @@
 	close 2:return
 {:60136}
 	&"{f6}No Log For ":&dt$(b):&"{f6}":goto {:60132}
+{number:60200}
 {:60200}
-	t%=60:&"{clear}":if tr%>t%or(pt%and tr%>p1%)then{:60216}
+	t%=60:&"{clear}":if tr%>t%or(pt%and tr%>p1%) then {:60216}
 {:60202}
 	a%=tr%:b$=str$(cr):&"{f6:2}{rvrs on} ** Credit Exchange ** {rvrs off}{f6:2} Current Rate Of Exchange:"
 	&"{f6} 5 Credit Pts = 1 Minute{f6:2}Minutes Left  : {pound}%a{f6}Credit Points :{pound}$b"
@@ -80,5 +82,6 @@
 {:60216}
 	if pt%then t%=p1%
 	&"{f6}Sorry, You Cannot Have More{f6}Than {pound}%t Minutes Total.{f6:2}":return
+{number:60300}
 {:60300}
 	return

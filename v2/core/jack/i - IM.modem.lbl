@@ -1,242 +1,242 @@
 {:4000}
-	REM MODEM/RS232 CONFIG
-	&,27,3:DIM MR%(15,51)
-	GOSUB{:4012}:GOTO{:4030}
+	rem modem/rs232 config
+	&,27,3:dim mr%(15,51)
+	gosub{:4012}:goto{:4030}
 {:4004}
 	&"{white}-=>"
 {:4006}
-	&"{pound}G1":IF A$<>""AND AN$=CHR$(13)THEN:&"{pound}$A{f6}":RETURN
-	FOR I=1 TO LEN(B$):IF AN$=MID$(B$,I,1)THEN A$=AN$:&"{pound}$A{f6}":I=LEN(B$)+1:NEXT:RETURN
-	NEXT:ON-(TR%<1)GOTO 999:GOTO{:4006}
+	&"{pound}g1":if a$<>""and an$=chr$(13)then:&"{pound}$a{f6}":return
+	for i=1 to len(b$):if an$=mid$(b$,i,1)then a$=an$:&"{pound}$a{f6}":i=len(b$)+1:next:return
+	next:on-(tr%<1)goto 999:goto{:4006}
 {:4012}
-	JF=.:MT$="0":DR=3:A$="E.I.MODEM":GOSUB 4:IF E%THEN GOSUB{:4022}
-	P=.:ON 1+LK%GOTO{:4020}:P=(PEEK(57092)AND 15):&"{f6:2}{lt. blue}{$c5}DIT {$cd}ODEM {$c3}ONFIG FOR {$d7}HICH"
-	&" {$d0}ORT?{f6}{yellow}({cyan}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} = {pound}!P){white}: {pound}I1":
-	IF(VAL(AN$)>1 AND VAL(AN$)<15)OR AN$="0"THEN P=VAL(AN$)
+	jf=.:mt$="0":dr=3:a$="e.i.modem":gosub 4:if e%then gosub{:4022}
+	p=.:on 1+lk%goto{:4020}:p=(peek(57092)and 15):&"{f6:2}{lt. blue}Edit Modem Config for Which"
+	&" Port?{f6}{yellow}({cyan}RETURN = {pound}!p){white}: {pound}i1":
+	if(val(an$)>1 and val(an$)<15)or an$="0"then p=val(an$)
 {:4020}
-	X=P+1:GOSUB 1:&,2,2:MT$=A$:&,2,2:IN$=A$:&,2,2:M$=A$:&,2,2:AU$=A$
-	CLOSE 2:RETURN
+	x=p+1:gosub 1:&,2,2:mt$=a$:&,2,2:in$=a$:&,2,2:m$=a$:&,2,2:au$=a$
+	close 2:return
 {:4022}
-	DR=3:GOSUB 61:GOSUB 60:IF A<>0 OR BF<15 THEN:&"{f6}{$c4}ISK {$c6}ULL!{pound}W2":RETURN
-	DR=3:A$="E.I.MODEM,L,"+CHR$(100):GOSUB 4:X=17::GOSUB 1:PRINT# 2:GOSUB 1
-	FOR X=1 TO 16:GOSUB 1:PRINT# 2,"0"+R$+"{up arrow}"+R$+"{up arrow}"+R$+"{up arrow}":IF LK%=.THEN X=17
-	NEXT:RETURN
+	dr=3:gosub 61:gosub 60:if a<>0 or bf<15 then:&"{f6}Disk Full!{pound}w2":return
+	dr=3:a$="e.i.modem,l,"+chr$(100):gosub 4:x=17::gosub 1:print# 2:gosub 1
+	for x=1 to 16:gosub 1:print# 2,"0"+r$+"{up arrow}"+r$+"{up arrow}"+r$+"{up arrow}":if lk%=.then x=17
+	next:return
 {:4026}
-	&"{f6} {cyan}{$d5}PDATE {$cd}ODEM {$c6}LAGS?{white}: ":GOSUB 96:ON A+1 GOTO 999:DR=3:A$="E.I.MODEM"
-	GOSUB 4:X=P+1:GOSUB 1:PRINT# 2,MT$R$IN$R$M$R$AU$:CLOSE 2:RETURN
+	&"{f6} {cyan}Update Modem Flags?{white}: ":gosub 96:on a+1 goto 999:dr=3:a$="e.i.modem"
+	gosub 4:x=p+1:gosub 1:print# 2,mt$r$in$r$m$r$au$:close 2:return
 {:4030}
-	&"{clear}{white}":&"{$cd}ODEM: {gray3}"+M$+"{f6}{white}{$c2}Y   : {gray3}"+AU$+"{f6}"
-	&"{f6}{rvrs on}{cyan} {$cd}ODEM {$c3}ONFIG {$c6}LAGS ":IF LK%THEN:&"{$c6}OR {$d0}ORT #{pound}!P {rvrs off}"
-	A%=VAL(MID$(MT$,1,1)):IF A%=0 THEN:&"{f6} {yellow}- {lt. blue}{$ce}O {$cd}ODEM {$c3}ONFIGURED.":GOTO{:4090}
-	&"{f6} {yellow}1:{lt. blue}{$cd}AX. {$c2}AUD ":&MID$("300 120024004800960019.238.4",(4*A%)-3,4)
-	IF A%>5 THEN:&"K"
-	A$="{$c4}{$d4}{$d2}":IF MID$(MT$,2,1)="{$c5}"THEN A$="{$c5}{$d3}{$c3} {$c3}ODE"
-	&"{pound}{back arrow}21{yellow}2:{lt. blue}{pound}$A {$c8}ANG-{$d5}P"
-	A$="{$c1}UTO-":IF MID$(MT$,3,1)="{$cd}"THEN A$="{$cd}ANUAL "
-	&"{f6} {yellow}3:{lt. blue}{pound}$A{$c1}NSWER"
-	&"{pound}{back arrow}21{yellow}4:{lt. blue}":A$="{$ce}O ":IF MID$(MT$,4,1)="{$c8}"THEN A$=""
-	&"{pound}$A{$c1}{$d4}{$c8} {$c1}FT/ {$c5}{$d3}{$c3}"
-	A$="N":IF MID$(MT$,5,1)="{$c8}"THEN A$="FF"
-	&"{f6}{yellow} 5:{lt. blue}{$cc}OCAL {$cf}{pound}$A {$c8}OOK"
-	A$="W/O ":B$="":IF MID$(MT$,6,1)="0"THEN A$="W/":B$="0"
-	&"{pound}{back arrow}21{yellow}6:{lt. blue}{$c1}{$d4}{$c8} {pound}$A0 ({$c1}{$d4}{$c8}{pound}$B)"
-	A$="{$ce}O ":IF MID$(MT$,7,1)="{$c8}"THEN A$=""
-	&"{f6}{yellow} 7:{lt. blue}{pound}$A{$c1}{$d4}{$c8} IN {$c9}NIT$"
-	&"{pound}{back arrow}21{yellow}8:{lt. blue}{$c1}{$d4}{$d8} {$d6}ALUE = "+MID$(MT$,8,1)
-	A$="{$ce}ORMAL":IF MID$(MT$,9,1)="{$d2}"THEN A$="{$d2}EVERSED"
-	&"{f6}{yellow} 9:{lt. blue}{pound}$A {$c4}{$d4}{$d2}"
-	A$="{$c3:2}{$c9}{$d4:2} ({$c1}{$d4}{$c2}0)":IF MID$(MT$,10,1)="1"THEN A$="{$c2}ELL ({$c1}{$d4}{$c2}1)"
-	&"{pound}{back arrow}20{yellow}10:{lt. blue}{pound}$A"
-	A$=" {$ce}ORMAL":IF MID$(MT$,11,1)="1"THEN A$="{$d3}WIFT{$cc}INK"
-	&"{f6}{yellow}11:{lt. blue}{$d2}{$d3}232:{pound}$A"
-	A$="{$ce}O ":IF MID$(MT$,12,1)="1"THEN A$=""
-	&"{pound}{back arrow}20{yellow}12:{lt. blue}{pound}$A{$c3}ALLER {$c9}{$c4}"
-	REM"{$c6}LAG 13"
-	REM"{$c6}LAG 13"
-	REM"{$c6}LAG 14"
-	REM"{$c6}LAG 14"
+	&"{clear}{white}":&"Modem: {gray3}"+m$+"{f6}{white}By   : {gray3}"+au$+"{f6}"
+	&"{f6}{rvrs on}{cyan} Modem Config Flags ":if lk%then:&"For Port #{pound}!p {rvrs off}"
+	a%=val(mid$(mt$,1,1)):if a%=0 then:&"{f6} {yellow}- {lt. blue}No Modem Configured.":goto{:4090}
+	&"{f6} {yellow}1:{lt. blue}Max. Baud ":&mid$("300 120024004800960019.238.4",(4*a%)-3,4)
+	if a%>5 then:&"k"
+	a$="DTR":if mid$(mt$,2,1)="E"then a$="ESC Code"
+	&"{pound}{back arrow}21{yellow}2:{lt. blue}{pound}$a Hang-Up"
+	a$="Auto-":if mid$(mt$,3,1)="M"then a$="Manual "
+	&"{f6} {yellow}3:{lt. blue}{pound}$aAnswer"
+	&"{pound}{back arrow}21{yellow}4:{lt. blue}":a$="No ":if mid$(mt$,4,1)="H"then a$=""
+	&"{pound}$aATH Aft/ ESC"
+	a$="n":if mid$(mt$,5,1)="H"then a$="ff"
+	&"{f6}{yellow} 5:{lt. blue}Local O{pound}$a Hook"
+	a$="w/o ":b$="":if mid$(mt$,6,1)="0"then a$="w/":b$="0"
+	&"{pound}{back arrow}21{yellow}6:{lt. blue}ATH {pound}$a0 (ATH{pound}$b)"
+	a$="No ":if mid$(mt$,7,1)="H"then a$=""
+	&"{f6}{yellow} 7:{lt. blue}{pound}$aATH in Init$"
+	&"{pound}{back arrow}21{yellow}8:{lt. blue}ATX Value = "+mid$(mt$,8,1)
+	a$="Normal":if mid$(mt$,9,1)="R"then a$="Reversed"
+	&"{f6}{yellow} 9:{lt. blue}{pound}$a DTR"
+	a$="{$c3:2}I{$d4:2} (ATB0)":if mid$(mt$,10,1)="1"then a$="Bell (ATB1)"
+	&"{pound}{back arrow}20{yellow}10:{lt. blue}{pound}$a"
+	a$=" Normal":if mid$(mt$,11,1)="1"then a$="SwiftLink"
+	&"{f6}{yellow}11:{lt. blue}RS232:{pound}$a"
+	a$="No ":if mid$(mt$,12,1)="1"then a$=""
+	&"{pound}{back arrow}20{yellow}12:{lt. blue}{pound}$aCaller ID"
+	rem"Flag 13"
+	rem"Flag 13"
+	rem"Flag 14"
+	rem"Flag 14"
 {:4090}
-	&"{f6:2}{cyan}{rvrs on} {$cd}ODEM {$c9}NIT. {$d3}TRINGS ":IF LK%THEN:&"{$c6}OR {$d0}ORT #{pound}!P {rvrs off}"
-	A%=VAL(MID$(MT$,1,1)):IF A%=0 THEN:&"{f6} {yellow}- {lt. blue}{$ce}O {$cd}ODEM {$c3}ONFIGURED.":GOTO{:4104}
-	A$="E0V0":IF MID$(MT$,7,1)="{$c8}"THEN A$=A$+"H":IF MID$(MT$,6,1)="0"THEN A$=A$+"0"
-	A$=A$+"X"+MID$(MT$,8,1)+"B"+MID$(MT$,10,1)
-	A=49:IF MID$(MT$,3,1)<>"{$c1}"THEN A=48
-	B$="S0="+CHR$(A)+"S2=27S7=25"
-	&"{f6} {yellow}-:{lt. blue}{pound}$A{f6} {yellow}-:{lt. blue}{pound}$B{f6} {yellow}{$c1}:{lt. blue}"+IN$
+	&"{f6:2}{cyan}{rvrs on} Modem Init. Strings ":if lk%then:&"For Port #{pound}!p {rvrs off}"
+	a%=val(mid$(mt$,1,1)):if a%=0 then:&"{f6} {yellow}- {lt. blue}No Modem Configured.":goto{:4104}
+	a$="e0v0":if mid$(mt$,7,1)="H"then a$=a$+"h":if mid$(mt$,6,1)="0"then a$=a$+"0"
+	a$=a$+"x"+mid$(mt$,8,1)+"b"+mid$(mt$,10,1)
+	a=49:if mid$(mt$,3,1)<>"A"then a=48
+	b$="s0="+chr$(a)+"s2=27s7=25"
+	&"{f6} {yellow}-:{lt. blue}{pound}$a{f6} {yellow}-:{lt. blue}{pound}$b{f6} {yellow}A:{lt. blue}"+in$
 {:4104}
-	&"{f6:2}{cyan}{rvrs on}{$cd}ODEM {$c3}ONFIG {$d5}TILITIES{rvrs off}"
-	&"{f6} {yellow}{$c2}:{lt. blue}{$d3}ETUP/{$c9}MPORT {$cd}ODEM {$c3}ONFIG{f6} {yellow}{$c3}:{lt. blue}{$c3}USTOMIZE {$c3}URRENT {$d2}ESULT {$c3}ODE(S)"
-	IF LK%THEN:&"{f6} {yellow}{$d2}:{lt. blue}{$d2}E-{$d3}ELECT {$d0}ORT#"
-	&"{f6} {yellow}{$d8}:{lt. blue}{$c5}XIT {$cd}ODEM {$c3}ONFIG{f6}{white}-=>"
-	&"{pound}G1":A=VAL(AN$):ON-(TR%<1)GOTO 999:ON A+1 GOTO{:4124},{:4114}:GOTO{:4116}
+	&"{f6:2}{cyan}{rvrs on}Modem Config Utilities{rvrs off}"
+	&"{f6} {yellow}B:{lt. blue}Setup/Import Modem Config{f6} {yellow}C:{lt. blue}Customize Current Result Code(s)"
+	if lk%then:&"{f6} {yellow}R:{lt. blue}Re-Select Port#"
+	&"{f6} {yellow}X:{lt. blue}Exit Modem Config{f6}{white}-=>"
+	&"{pound}g1":a=val(an$):on-(tr%<1)goto 999:on a+1 goto{:4124},{:4114}:goto{:4116}
 {:4114}
-	&"{pound}V7{pound}G1":ON-(AN$=CHR$(13))GOTO{:4116}:A=10+VAL(AN$):&MID$(STR$(VAL(AN$)),2)
+	&"{pound}v7{pound}g1":on-(an$=chr$(13))goto{:4116}:a=10+val(an$):&mid$(str$(val(an$)),2)
 {:4116}
-	IF LEN(MT$)=1 THEN:&"{f6:2}{yellow}{$d9}OU {$cd}UST {$c6}IRST {$d3}ETUP A {$cd}ODEM!{f6:2}  {white}>{$c1}NY {$cb}EY<{pound}G1":GOTO{:4030}
-	ON-(A>12)GOTO{:4124}:A$=MID$(MT$,A,1)
-	ON A GOSUB{:4134},{:4142},{:4146},{:4152},{:4158},{:4164},{:4170},{:4176},{:4180},{:4186},{:4192},{:4198}
-	MT$=LEFT$(MT$,A-1)+A$+MID$(MT$,A+1):JF=1:GOTO{:4030}
+	if len(mt$)=1 then:&"{f6:2}{yellow}You Must First Setup a Modem!{f6:2}  {white}>Any Key<{pound}g1":goto{:4030}
+	on-(a>12)goto{:4124}:a$=mid$(mt$,a,1)
+	on a gosub{:4134},{:4142},{:4146},{:4152},{:4158},{:4164},{:4170},{:4176},{:4180},{:4186},{:4192},{:4198}
+	mt$=left$(mt$,a-1)+a$+mid$(mt$,a+1):jf=1:goto{:4030}
 {:4124}
-	ON-(AN$<>"{$d8}"AND TR%>0)GOTO{:4130}:&" {gray3}{$c5}XIT{f6}":ON JF GOTO{:4026}:&,28,3:RETURN
+	on-(an$<>"X"and tr%>0)goto{:4130}:&" {gray3}Exit{f6}":on jf goto{:4026}:&,28,3:return
 {:4130}
-	ON-(AN$="{$c1}")-2*(AN$="{$c2}")-3*(AN$="{$c3}")-4*(AN$="{$c4}")GOTO{:4216},{:4238},{:4380},{:4030}
-	IF AN$="{$d2}"AND LK%>0 THEN:&"{gray3} {$d2}E-{$d3}ELECT{f6}":ON JF GOSUB{:4026}:&,28,3:GOTO{:4000}
-	AN$="{$d8}":GOTO{:4124}
+	on-(an$="A")-2*(an$="B")-3*(an$="C")-4*(an$="D")goto{:4216},{:4238},{:4380},{:4030}
+	if an$="R"and lk%>0 then:&"{gray3} Re-Select{f6}":on jf gosub{:4026}:&,28,3:goto{:4000}
+	an$="X":goto{:4124}
 {:4134}
-	&" {gray3}({$c6}LAG 1){f6:2}{cyan}{$d7}HAT IS THE {$cd}AX. {$c3}ONNECTION {$d2}ATE {$c6}OR{f6}{$d4}HIS {$cd}ODEM?{f6}"
-	&"{yellow}0: {lt. blue}{$ce}O {$cd}ODEM{f6}{yellow}1: {lt. blue}300 BPS{f6}{yellow}2: {lt. blue}1200 BPS{f6}{yellow}3: {lt. blue}2400 BPS{f6}{yellow}4: {lt. blue}4800 BPS"
-	&"{f6}{yellow}5: {lt. blue}9600 BPS{f6}{yellow}6: {lt. blue}19.2 KBPS{f6}{yellow}7: {lt. blue}38.4 KBPS{f6}"
-	B$="01234567":GOTO{:4004}
+	&" {gray3}(Flag 1){f6:2}{cyan}What is the Max. Connection Rate For{f6}This Modem?{f6}"
+	&"{yellow}0: {lt. blue}No Modem{f6}{yellow}1: {lt. blue}300 bps{f6}{yellow}2: {lt. blue}1200 bps{f6}{yellow}3: {lt. blue}2400 bps{f6}{yellow}4: {lt. blue}4800 bps"
+	&"{f6}{yellow}5: {lt. blue}9600 bps{f6}{yellow}6: {lt. blue}19.2 kbps{f6}{yellow}7: {lt. blue}38.4 kbps{f6}"
+	b$="01234567":goto{:4004}
 {:4142}
-	&" {gray3}({$c6}LAG 2){f6:2}{cyan}{$d3}ELECT {$c8}ANG-{$d5}P {$cd}ETHOD {$c6}OR {$d4}HIS {$cd}ODEM:{f6}"
-	&"{yellow}{$c4}: {lt. blue}{$c4}{$d4}{$d2} {$c8}ANG-{$d5}P{f6}{yellow}{$c5}: {lt. blue}{$c5}{$d3}{$c3}APE {$c3}ODE {$c8}ANG-{$d5}P{f6}":B$="{$c4}{$c5}":GOTO{:4004}
+	&" {gray3}(Flag 2){f6:2}{cyan}Select Hang-Up Method For This Modem:{f6}"
+	&"{yellow}D: {lt. blue}DTR Hang-Up{f6}{yellow}E: {lt. blue}ESCape Code Hang-Up{f6}":b$="DE":goto{:4004}
 {:4146}
-	&" {gray3}({$c6}LAG 3){f6:2}{cyan}{$d3}ELECT {$c1}NSWER {$cd}ETHOD {$c6}OR {$d4}HIS {$cd}ODEM:{f6}"
-	&"{yellow}{$c1}: {lt. blue}{$c1}UTO-{$c1}NSWER ({$c1}{$d4}{$d3}0=1){f6}{yellow}{$cd}: {lt. blue}{$cd}ANUAL {$c1}NSWER ({$c1}{$d4}{$c1}){f6}"
-	B$="{$c1}{$cd}":GOTO{:4004}
+	&" {gray3}(Flag 3){f6:2}{cyan}Select Answer Method For This Modem:{f6}"
+	&"{yellow}A: {lt. blue}Auto-Answer (ATS0=1){f6}{yellow}M: {lt. blue}Manual Answer (ATA){f6}"
+	b$="AM":goto{:4004}
 {:4152}
-	&" {gray3}({$c6}LAG 4){f6:2}{cyan}{$d5}SE AN {$c1}{$d4}{$c8} {$c1}FTER {$c5}{$d3}{$c3}APE {$c3}ODES?{f6}"
-	&"{yellow}{$c8}: {lt. blue}{$d9}ES; {$d5}SE {$c1}{$d4}{$c8} {$c1}FTER {$c5}{$d3}{$c3}APE {$c3}ODES{f6}{yellow}{$ce}: {lt. blue}{$ce}O; {$ce}OT {$ce}EEDED{f6}"
-	B$="{$c8}{$ce}":GOTO{:4004}
+	&" {gray3}(Flag 4){f6:2}{cyan}Use an ATH After ESCape Codes?{f6}"
+	&"{yellow}H: {lt. blue}Yes; Use ATH After ESCape Codes{f6}{yellow}N: {lt. blue}No; Not Needed{f6}"
+	b$="HN":goto{:4004}
 {:4158}
-	&" {gray3}({$c6}LAG 5){f6:2}{cyan}{$d7}HEN {$c9}N {$cc}OCAL {$cd}ODE, {$d3}HOULD {$d0}HONE BE:{f6}"
-	&"{yellow}{$ce}: {lt. blue}{$cf}N {$d4}HE {$c8}OOK{f6}{yellow}{$c8}: {lt. blue}{$cf}FF {$d4}HE {$c8}OOK ({$c2}USY {$d3}IGNAL){f6}"
-	B$="{$ce}{$c8}":GOTO{:4004}
+	&" {gray3}(Flag 5){f6:2}{cyan}When In Local Mode, Should Phone be:{f6}"
+	&"{yellow}N: {lt. blue}On The Hook{f6}{yellow}H: {lt. blue}Off The Hook (Busy Signal){f6}"
+	b$="NH":goto{:4004}
 {:4164}
-	&" {gray3}({$c6}LAG 6){f6:2}{cyan}{$c4}OES {$d4}HIS {$cd}ODEM {$ce}EED A 0 {$c1}FTER {$c1}{$d4}{$c8}?{f6}"
-	&"{yellow} 0 : {lt. blue}{$d9}ES ({$c1}{$d4}{$c8}0){f6}{yellow}{f5} {f5}: {lt. blue}{$ce}O ({$c1}{$d4}{$c8}){f6}"
-	B$="0 ":GOTO{:4004}
+	&" {gray3}(Flag 6){f6:2}{cyan}Does This Modem Need a 0 After ATH?{f6}"
+	&"{yellow} 0 : {lt. blue}Yes (ATH0){f6}{yellow}{f5} {f5}: {lt. blue}No (ATH){f6}"
+	b$="0 ":goto{:4004}
 {:4170}
-	&" {gray3}({$c6}LAG 7){f6:2}{cyan}{$d3}HOULD {$c1}{$d4}{$c8} BE IN THE {$cd}ODEM {$d2}ESET/{$c9}NIT{f6}  {$d3}TRING?{f6}"
-	&"{yellow}{$c8}: {lt. blue}{$d9}ES{f6}{yellow}{$ce}: {lt. blue}{$ce}O{f6}"
-	B$="{$c8}{$ce}":GOTO{:4004}
+	&" {gray3}(Flag 7){f6:2}{cyan}Should ATH be in the Modem Reset/Init{f6}  String?{f6}"
+	&"{yellow}H: {lt. blue}Yes{f6}{yellow}N: {lt. blue}No{f6}"
+	b$="HN":goto{:4004}
 {:4176}
-	&" {gray3}({$c6}LAG 8){f6:2}{cyan}{$d3}ELECT {$d6}ALUE {$c6}OR {$c1}{$d4}{$d8} {$d3}ETTING{f6}{yellow}(1-4)"
-	B$="1234":GOTO{:4004}
+	&" {gray3}(Flag 8){f6:2}{cyan}Select Value For ATX Setting{f6}{yellow}(1-4)"
+	b$="1234":goto{:4004}
 {:4180}
-	&" {gray3}({$c6}LAG 9){f6:2}{cyan}{$c9}S {$c4}{$d4}{$d2} ON {$d4}HIS {$cd}ODEM {$ce}ORMAL OR {$d2}EVERSE?{f6}"
-	&"{yellow}{$ce}: {lt. blue}{$ce}ORMAL {$c4}{$d4}{$d2}{f6}{yellow}{$d2}: {lt. blue}{$d2}EVERSE {$c4}{$d4}{$d2}{f6}"
-	B$="{$ce}{$d2}":GOTO{:4004}
+	&" {gray3}(Flag 9){f6:2}{cyan}Is DTR on This Modem Normal or Reverse?{f6}"
+	&"{yellow}N: {lt. blue}Normal DTR{f6}{yellow}R: {lt. blue}Reverse DTR{f6}"
+	b$="NR":goto{:4004}
 {:4186}
-	&" {gray3}({$c6}LAG 10){f6:2}{cyan}{$d3}ELECT {$c3:2}{$c9}{$d4:2} OR {$c2}ELL {$cc}ABS {$d3}TANDARD{f6}"
-	&"{yellow}0: {lt. blue}{$c3:2}{$c9}{$d4:2} ({$c1}{$d4}{$c2}0; {$c9}NTERNATIONAL){f6}{yellow}1: {lt. blue}{$c2}ELL ({$c1}{$d4}{$c2}1; {$d5}{$d3}/{$c3}ANADA){f6}"
-	B$="01":GOTO{:4004}
+	&" {gray3}(Flag 10){f6:2}{cyan}Select {$c3:2}I{$d4:2} or Bell Labs Standard{f6}"
+	&"{yellow}0: {lt. blue}{$c3:2}I{$d4:2} (ATB0; International){f6}{yellow}1: {lt. blue}Bell (ATB1; US/Canada){f6}"
+	b$="01":goto{:4004}
 {:4192}
-	&" {gray3}({$c6}LAG 11){f6:2}{cyan}{$d3}ELECT {$d2}{$d3}232 {$c9}NTERFACE {$d4}YPE:{f6}"
-	&"{yellow}0: {lt. blue}{$d3}TANDARD ({$d5}SER {$d0}ORT) {$d2}{$d3}232{f6}{yellow}1: {lt. blue}{$d3}WIFT{$cc}INK {$c3}ARTRIDGE ($DE00 {$cf}NLY){f6}"
-	B$="01":GOTO{:4004}
+	&" {gray3}(Flag 11){f6:2}{cyan}Select RS232 Interface Type:{f6}"
+	&"{yellow}0: {lt. blue}Standard (User Port) RS232{f6}{yellow}1: {lt. blue}SwiftLink Cartridge ($de00 Only){f6}"
+	b$="01":goto{:4004}
 {:4198}
-	&" {gray3}({$c6}LAG 12){f6:2}{cyan}{$c9}S {$c3}ALLER {$c9}{$c4} {$c1}VAILABLE ({$c2}OTH {$cd}ODEM {$c1}{$ce}{$c4}{f6}{$d0}HONE {$cc}INE){f6}"
-	&"{yellow}0: {lt. blue}{$ce}O; {$c3}ALLER {$c9}{$c4} {$ce}OT {$c1}VAILABLE{f6}{yellow}1: {lt. blue}{$d9}ES; {$c3}ALLER {$c9}{$c4} IS {$c1}VAILABLE{f6}"
-	B$="01":GOTO{:4004}
-	REM"{$c6}LAG 13"
-	REM   "  "
-	RETURN
-	REM"{$c6}LAG 14"
-	REM   "  "
-	RETURN
+	&" {gray3}(Flag 12){f6:2}{cyan}Is Caller ID Available (Both Modem AND{f6}Phone Line){f6}"
+	&"{yellow}0: {lt. blue}No; Caller ID Not Available{f6}{yellow}1: {lt. blue}Yes; Caller ID is Available{f6}"
+	b$="01":goto{:4004}
+	rem"Flag 13"
+	rem   "  "
+	return
+	rem"Flag 14"
+	rem   "  "
+	return
 {:4216}
-	&" {gray3}({$c5}DIT {$c9}NIT){f6:2}":IF LEN(MT$)=1 THEN
-	IF LEN(MT$)=1 THEN:&"{f6:2}{yellow}{$d9}OU {$cd}UST {$c6}IRST {$d3}ETUP A {$cd}ODEM!{f6:2}  {white}>{$c1}NY {$cb}EY<{pound}G1":GOTO{:4030}
-	&"{cyan}{$c3}URRENT ({$c3}USTOMIZABLE) {$c9}NIT {$d3}TRING:{f6}":A$=IN$:IF IN$="{up arrow}"THEN A$="<{$ce}ONE>"
-	&"{pound}$A{f6}{cyan}{$c5}NTER {$ce}EW {$c9}NIT {$d3}TRING (35 {$c3}HAR. {$cd}AX.):{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce}{$a0}TO {$cb}EEP {$d4}HE {$d3}AME.{f6}"
-	P$="":W$=IN$:PL=.:POKE 53249,PL:POKE 53252,35:&,1,40
-	ON-(AN$<>"")GOTO{:4228}:GOSUB 92:GOTO{:4030}
+	&" {gray3}(Edit Init){f6:2}":if len(mt$)=1 then
+	if len(mt$)=1 then:&"{f6:2}{yellow}You Must First Setup a Modem!{f6:2}  {white}>Any Key<{pound}g1":goto{:4030}
+	&"{cyan}Current (Customizable) Init String:{f6}":a$=in$:if in$="{up arrow}"then a$="<None>"
+	&"{pound}$a{f6}{cyan}Enter New Init String (35 Char. Max.):{f6}RETURN to Keep The Same.{f6}"
+	p$="":w$=in$:pl=.:poke 53249,pl:poke 53252,35:&,1,40
+	on-(an$<>"")goto{:4228}:gosub 92:goto{:4030}
 {:4228}
-	IN$=AN$:DR=3:A$="E.I.MODEM":GOSUB 4:X=P+1:GOSUB 1
-	PRINT# 2,MT$R$IN$R$M$R$AU$:CLOSE 2:GOTO{:4030}
+	in$=an$:dr=3:a$="e.i.modem":gosub 4:x=p+1:gosub 1
+	print# 2,mt$r$in$r$m$r$au$:close 2:goto{:4030}
 {:4232}
-	&"{f6}{lt. red}{$d7}{$c1}{$d2}{$ce}{$c9}{$ce}{$c7}: {yellow}{$c3}ONTINUING WILL OVERWRITE ANY{f6}         PREVIOUS SETUP"
-	IF LK%THEN:&" ON THIS PORT"
-	&"!{f6:2}":GOTO 93
+	&"{f6}{lt. red}WARNING: {yellow}Continuing will overwrite any{f6}         previous setup"
+	if lk%then:&" on this port"
+	&"!{f6:2}":goto 93
 {:4238}
-	&" {gray3}({$d3}ETUP){f6}"
+	&" {gray3}(Setup){f6}"
 {:4240}
-	&"{f6:2}{yellow} 1) {lt. blue}{$d3}ETUP {$ce}EW {$cd}ODEM {$c3}ONFIG{f6}{yellow} 2) {lt. blue}{$c9}MPORT {$d3}ETUP {$c6}ROM NIMODEM.DAT {$c6}ILE{f6}"
-	&"{yellow} 3) {lt. blue}{$c9}MPORT {$d3}ETUP {$c6}ROM 1.2 E.MODRC {$c6}ILE{f6}"
-	&"{yellow} 4) {lt. blue}{$c3}REATE/{$c5}DIT NIMODEM.DAT {$c6}ILE{f6}{yellow} 5) {lt. blue}{$c7}{$ce}{$c4}{$ce}{f6}"
-	&"{yellow} {$d8}) {lt. blue}{$c5}XIT {$d3}UB-{$cd}ENU{f6:2}":A$="{$c5}XIT":B$="123{$d8}":GOSUB{:4004}:A=VAL(AN$)
-	ON A GOTO{:4248},{:4030},{:4350}:GOTO{:4030}
+	&"{f6:2}{yellow} 1) {lt. blue}Setup New Modem Config{f6}{yellow} 2) {lt. blue}Import Setup From nimodem.dat File{f6}"
+	&"{yellow} 3) {lt. blue}Import Setup From 1.2 e.modrc File{f6}"
+	&"{yellow} 4) {lt. blue}Create/Edit nimodem.dat File{f6}{yellow} 5) {lt. blue}GNDN{f6}"
+	&"{yellow} X) {lt. blue}Exit Sub-Menu{f6:2}":a$="Exit":b$="123X":gosub{:4004}:a=val(an$)
+	on a goto{:4248},{:4030},{:4350}:goto{:4030}
 {:4248}
-	&"{f6} {yellow}{$ce}{$cf}{$d4}{$c5}: {white}{$d4}HIS OPTION WILL SETUP THE BASIC{f6}FILES NEEDED TO CONFIGURE A"
-	&" MODEM SETUP{f6}FROM SCRATCH.  {$c9}T IS RECOMMENDED THAT{f6}YOU {$c9}{$cd}{$d0}{$cf}{$d2}{$d4} FROM AN "
-	&"NIMODEM.DAT FILE SINCE IMPORTING WILL ADD THE BASE RESULT CODES NEEDED."
-	&"{f6:2}{$c3}ONTINUE? :":GOSUB 94:IF A=.THEN{:4240}
-	GOSUB{:4232}:IF A=.THEN{:4240}
-	POKE 53252,25:&"{f6:2}{cyan}{$c5}NTER {$cd}ODEM {$c2}RAND/{$ce}AME{white}:{f6}:{pound}I1":IF AN$=""THEN{:4240}
-	&,15,1:M$=AN$:POKE 53252,20:&"{up}{white}:{gray3}{pound}$M{f6:2}{cyan}{$c5}NTER {$c1}UTHOR ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce}={$ce}EW {$c9}MAGE){f6}{white}:{pound}I1"
-	IF AN$=""THEN AN$="{$ce}EW {$c9}MAGE {$d3}OFTWARE"
-	&,15,1:AU$=AN$:POKE 53252,35:&"{up}{white}:{gray3}{pound}V7{f6:2}{cyan}{$c5}NTER {$c3}USTOM {$c9}NIT {$d3}TRING{white}:{f6}:{pound}I0"
-	IN$=AN$:MT$="1{$c5}{$cd}{$d9}{$c8}0{$c8}1{$ce}10000":FOR A=1 TO 12
-	A$=MID$(MT$,A,1):IF TR%<1 THEN A=15:NEXT:GOTO{:4240}
-	ON A GOSUB{:4134},{:4142},{:4146},{:4152},{:4158},{:4164},{:4170},{:4176},{:4180},{:4186},{:4192},{:4198}
-	&"{f6}":MT$=LEFT$(MT$,A-1)+A$+MID$(MT$,A+1):NEXT
-	DR=3:GOSUB 61:GOSUB 60:IF A<>0 OR BF<15 THEN:&"{f6}{$c4}ISK {$c6}ULL!{pound}W2":GOTO{:4240}
-	DR=3:A$="E.I.MODEM":GOSUB 4:X=P+1:GOSUB 1:PRINT# 2,MT$R$IN$R$M$R$AU$:CLOSE 2
-	MR%(0,0)=1:T=1:MR%(1,1)=1:MR%(2,1)=2:&,60,0,26,MR%(3,1),"{$c3}{$cf}{$ce:2}{$c5}{$c3}{$d4}"
-	A$="E.MODEM":IF LK%THEN A$=A$+STR$(P)
-	GOSUB 19:&,60,3,0,MR%(0,0),32,DR$+A$,DV%:JF=.:&"{f6:2}{white}{$d3}ETUP {$c3}OMPLETED!{f6}"
-	&"{f6}{lt. blue} {$c2}E SURE TO ({$c3})USTOMIZE {$d2}ESULT {$c3}ODES TO{f6}ADD ALL NEEDED RESULT CODES"
-	&" FOR THIS{f6}MODEM OR IT WILL NOT OPERATE CORRECTLY!{f6:2}"
-	&"{white}>{$c8}IT A {$cb}EY<{pound}G1{f6}":GOTO{:4030}
-	REM"{$c9}MPORT {$c6}ROM NIMODEM.DAT {$c6}ILE"
+	&"{f6} {yellow}NOTE: {white}This option will setup the basic{f6}files needed to configure a"
+	&" modem setup{f6}from scratch.  It is recommended that{f6}you IMPORT from an "
+	&"nimodem.dat file since importing will add the base result codes needed."
+	&"{f6:2}Continue? :":gosub 94:if a=. then {:4240}
+	gosub{:4232}:if a=. then {:4240}
+	poke 53252,25:&"{f6:2}{cyan}Enter Modem Brand/Name{white}:{f6}:{pound}i1":if an$="" then {:4240}
+	&,15,1:m$=an$:poke 53252,20:&"{up}{white}:{gray3}{pound}$m{f6:2}{cyan}Enter Author (RETURN=New Image){f6}{white}:{pound}i1"
+	if an$=""then an$="New Image Software"
+	&,15,1:au$=an$:poke 53252,35:&"{up}{white}:{gray3}{pound}v7{f6:2}{cyan}Enter Custom Init String{white}:{f6}:{pound}i0"
+	in$=an$:mt$="1EMYH0H1N10000":for a=1 to 12
+	a$=mid$(mt$,a,1):if tr%<1 then a=15:next:goto{:4240}
+	on a gosub{:4134},{:4142},{:4146},{:4152},{:4158},{:4164},{:4170},{:4176},{:4180},{:4186},{:4192},{:4198}
+	&"{f6}":mt$=left$(mt$,a-1)+a$+mid$(mt$,a+1):next
+	dr=3:gosub 61:gosub 60:if a<>0 or bf<15 then:&"{f6}Disk Full!{pound}w2":goto{:4240}
+	dr=3:a$="e.i.modem":gosub 4:x=p+1:gosub 1:print# 2,mt$r$in$r$m$r$au$:close 2
+	mr%(0,0)=1:t=1:mr%(1,1)=1:mr%(2,1)=2:&,60,0,26,mr%(3,1),"CO{$ce:2}ECT"
+	a$="e.modem":if lk%then a$=a$+str$(p)
+	gosub 19:&,60,3,0,mr%(0,0),32,dr$+a$,dv%:jf=.:&"{f6:2}{white}Setup Completed!{f6}"
+	&"{f6}{lt. blue} Be sure to (C)ustomize Result Codes to{f6}add all needed result codes"
+	&" for this{f6}modem or it will not operate correctly!{f6:2}"
+	&"{white}>Hit a Key<{pound}g1{f6}":goto{:4030}
+	rem"Import From nimodem.dat File"
 {:4350}
-	&"{f6}{$c9}MPORT {$d3}ETUP {$c6}ROM 1.2 E.MODRC {$c6}ILE:{f6:2}":GOSUB{:4232}:IF A=.THEN{:4240}
-	DR=3:A$="E.MODRC":GOSUB 4:IF E%THEN:&"{$c6}ILE {$ce}OT {$c6}OUND!{f6}":GOTO{:4240}
-	&"{cyan}{$c9}MPORTING{white}..":&,2,2:IN$=LEFT$(A$,35)
-	&,2,2:M$=LEFT$(A$,25):AU$="{$c9}MPORTED {$c6}ROM V1.2":CLOSE 2
-	GOSUB 33:X=32:GOSUB 1:&,2,2:MT$=LEFT$(A$+"00000",14):CLOSE 2
-	A$="E.I.MODEM":GOSUB 4:X=P+1:GOSUB 1:PRINT# 2,MT$R$IN$R$M$R$AU$:CLOSE 2
-	A$="E.MODRC":GOSUB 4:X=2:T=.
+	&"{f6}Import Setup From 1.2 e.modrc File:{f6:2}":gosub{:4232}:if a=. then {:4240}
+	dr=3:a$="e.modrc":gosub 4:if e%then:&"File Not Found!{f6}":goto{:4240}
+	&"{cyan}Importing{white}..":&,2,2:in$=left$(a$,35)
+	&,2,2:m$=left$(a$,25):au$="Imported From v1.2":close 2
+	gosub 33:x=32:gosub 1:&,2,2:mt$=left$(a$+"00000",14):close 2
+	a$="e.i.modem":gosub 4:x=p+1:gosub 1:print# 2,mt$r$in$r$m$r$au$:close 2
+	a$="e.modrc":gosub 4:x=2:t=.
 {:4364}
-	GOSUB 1:&,2,2:B$=A$:IF(ST<>0)OR(LEN(B$)<2)OR(TR%<1)THEN{:4372}
-	&,2,2:ON-(VAL(A$)=0)GOTO{:4370}:T=T+1:&".":MR%(1,T)=X-1
-	MR%(2,T)=VAL(A$):&,60,0,26,MR%(3,T),LEFT$(B$,26)
+	gosub 1:&,2,2:b$=a$:if(st<>0)or(len(b$)<2)or(tr%<1) then {:4372}
+	&,2,2:on-(val(a$)=0)goto{:4370}:t=t+1:&".":mr%(1,t)=x-1
+	mr%(2,t)=val(a$):&,60,0,26,mr%(3,t),left$(b$,26)
 {:4370}
-	X=X+1:GOTO{:4364}
+	x=x+1:goto{:4364}
 {:4372}
-	A%=T:MR%(0,0)=A%
-	A$="E.MODEM":IF LK%THEN A$=A$+STR$(P)
-	GOSUB 19:&,60,3,0,MR%(0,0),(T+1)*32,DR$+A$,DV%
-	&"{f6} {lt. blue}{$c9}MPORT {$c3}OMPLETE!{f6:2} {white}>{$c8}IT {$c1} {$cb}EY<{pound}G1{f6}":GOTO{:4240}
+	a%=t:mr%(0,0)=a%
+	a$="e.modem":if lk%then a$=a$+str$(p)
+	gosub 19:&,60,3,0,mr%(0,0),(t+1)*32,dr$+a$,dv%
+	&"{f6} {lt. blue}Import Complete!{f6:2} {white}>Hit A Key<{pound}g1{f6}":goto{:4240}
 {:4380}
-	&"{gray3}{$c5}DIT {$d2}{$c3}{f6:2}":A$="E.MODEM":IF LK%THEN A$=A$+STR$(P)
-	DR=3:GOSUB 3:&,60,2,0,MR%(0,0),DR$+A$,DV%:T=MR%(0,0)
+	&"{gray3}Edit RC{f6:2}":a$="e.modem":if lk%then a$=a$+str$(p)
+	dr=3:gosub 3:&,60,2,0,mr%(0,0),dr$+a$,dv%:t=mr%(0,0)
 {:4382}
-	POKE 53252,3:&"{lt. blue}{$c5}NTER {$d2}ESULT {$c3}ODE # {$d4}O {$c5}DIT/{$c1}DD{f6}({$cc} FOR {$cc}IST){yellow}:{white} {pound}I1"
-	POKE 53252,38:ON-(AN$="{$cc}")GOTO{:4440}:C=VAL(AN$):IF C<1 OR TR%<1 THEN GOTO{:4030}
-	&"{f6}{cyan}{$d3}CANNING{white}..":F=.:FOR I=1 TO T:&".":IF MR%(1,I)=C THEN F=I:I=T+1
-	NEXT:&"{f6:2}":C$="":C%=.:D=.:ON-(F>.)GOTO{:4394}:D=1:ON-(T<49)GOTO{:4398}:GOTO{:4426}
+	poke 53252,3:&"{lt. blue}Enter Result Code # To Edit/Add{f6}(L for List){yellow}:{white} {pound}i1"
+	poke 53252,38:on-(an$="L")goto{:4440}:c=val(an$):if c<1 or tr%<1 then goto{:4030}
+	&"{f6}{cyan}Scanning{white}..":f=.:for i=1 to t:&".":if mr%(1,i)=c then f=i:i=t+1
+	next:&"{f6:2}":c$="":c%=.:d=.:on-(f>.)goto{:4394}:d=1:on-(t<49)goto{:4398}:goto{:4426}
 {:4394}
-	&,60,1,26,MR%(3,F),C$:C%=MR%(2,F)
+	&,60,1,26,mr%(3,f),c$:c%=mr%(2,f)
 {:4396}
-	&"{yellow}{$d2}{$c3}#{white}{pound}!C{yellow}: {lt. blue}{pound}$C{f6}  {gray3}({$c6}LAG = {white}{pound}%C{gray3}){f6:2}"
+	&"{yellow}RC#{white}{pound}!c{yellow}: {lt. blue}{pound}$c{f6}  {gray3}(Flag = {white}{pound}%c{gray3}){f6:2}"
 {:4398}
-	&"{cyan}{$c5}NTER {$ce}EW {$d2}ESULT {$c3}ODE {$d4}EXT {yellow}(26 {$c3}HAR.){f6}{cyan} {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$cb}EEP {$d4}HE {$d3}AME"
-	IF D=.THEN:&";{f6} {$c5}NTER {f5}{$c4}{$c5}{$cc}{f5} {$d4}O {$c4}ELETE"
-	&".{f6}{white}":P$="":W$=C$:PL=1:POKE 53249,PL:POKE 53252,26:&,1,40
-	IF AN$<>""THEN:ON-(AN$="{$c4}{$c5}{$cc}"AND D=.)GOTO{:4428}:C$=AN$
-	&"{f6}{cyan}{$d3}ELECT {$c6}LAG FOR {$d4}HIS {$d2}ESULT {$c3}ODE{white}:{f6}"
-	A$="{$c5}RROR     {$d2}E-{$cc}OOP   {$c3}ON. 300 {f6}{$c3}ON. 1200 {$c3}ON. 2400 {$c3}ON. 4800{f6}{$c3}ON. 9600 "
-	A$=A$+"{$c3}ON. 19.2K{$c3}ON. 38.4K":FOR I=0 TO 8:B$="":IF I=C%THEN B$="{rvrs on}"
-	&" {pound}$B{yellow}{pound}!I{rvrs off}-{lt. blue}"+MID$(A$,(I*10)+1,10):NEXT:&"{f6}"
-	A$=MID$(STR$(C%),2,1):B$="012345678":GOSUB{:4004}:C%=VAL(A$)
-	&"{f6}{yellow}{$d2}{$c3}#{white}{pound}!C{yellow}: {lt. blue}{pound}$C{f6}{gray3}{$c6}LAG = {white}{pound}%C{f6:2}  {cyan}{$c3}ORRECT? ":GOSUB 94:&"{f6}":IF A=.THEN{:4382}
-	ON D+1 GOTO{:4420}:T=T+1:F=T:MR%(0,0)=T
+	&"{cyan}Enter New Result Code Text {yellow}(26 Char.){f6}{cyan} RETURN to Keep The Same"
+	if d=.then:&";{f6} Enter {f5}DEL{f5} To Delete"
+	&".{f6}{white}":p$="":w$=c$:pl=1:poke 53249,pl:poke 53252,26:&,1,40
+	if an$<>""then:on-(an$="DEL"and d=.)goto{:4428}:c$=an$
+	&"{f6}{cyan}Select Flag for This Result Code{white}:{f6}"
+	a$="Error     Re-Loop   Con. 300 {f6}Con. 1200 Con. 2400 Con. 4800{f6}Con. 9600 "
+	a$=a$+"Con. 19.2kCon. 38.4k":for i=0 to 8:b$="":if i=c%then b$="{rvrs on}"
+	&" {pound}$b{yellow}{pound}!i{rvrs off}-{lt. blue}"+mid$(a$,(i*10)+1,10):next:&"{f6}"
+	a$=mid$(str$(c%),2,1):b$="012345678":gosub{:4004}:c%=val(a$)
+	&"{f6}{yellow}RC#{white}{pound}!c{yellow}: {lt. blue}{pound}$c{f6}{gray3}Flag = {white}{pound}%c{f6:2}  {cyan}Correct? ":gosub 94:&"{f6}":if a=. then {:4382}
+	on d+1 goto{:4420}:t=t+1:f=t:mr%(0,0)=t
 {:4420}
-	MR%(1,F)=C:MR%(2,F)=C%:&,60,0,26,MR%(3,F),C$
+	mr%(1,f)=c:mr%(2,f)=c%:&,60,0,26,mr%(3,f),c$
 {:4422}
-	DR=3:A$="E.MODEM":IF LK%THEN A$=A$+STR$(P)
-	GOSUB 19:&,60,3,0,MR%(0,0),(T+1)*32,DR$+A$,DV%:&"{f6}{white}{rvrs on}{$d5}PDATED!{rvrs off}{f6:2}":GOTO{:4382}
+	dr=3:a$="e.modem":if lk%then a$=a$+str$(p)
+	gosub 19:&,60,3,0,mr%(0,0),(t+1)*32,dr$+a$,dv%:&"{f6}{white}{rvrs on}Updated!{rvrs off}{f6:2}":goto{:4382}
 {:4426}
-	&"{f6:2}{white}{$c3}AN {$ce}OT {$c1}DD: {$cd}AX=50!{f6:2}{$c8}IT A {$cb}EY{pound}G1{f6}":GOTO{:4382}
+	&"{f6:2}{white}Can Not Add: Max=50!{f6:2}Hit a Key{pound}g1{f6}":goto{:4382}
 {:4428}
-	&"{f6}{lt. red}{$c4}ELETE {lt. green}{f5}{pound}$C{f5}{lt. red}; {$c1}RE {$d9}OU {$d3}URE?{white} :":GOSUB 94:IF A=.THEN{:4396}
-	FOR I=F+1 TO T:MR%(1,I-1)=MR%(1,I):MR%(2,I-1)=MR%(2,I):&,60,1,26,MR%(3,I),A$
-	&,60,0,26,MR%(3,I-1),A$:NEXT:T=T-1:M%(0,0)=T:GOTO{:4422}
+	&"{f6}{lt. red}Delete {lt. green}{f5}{pound}$c{f5}{lt. red}; Are You Sure?{white} :":gosub 94:if a=. then {:4396}
+	for i=f+1 to t:mr%(1,i-1)=mr%(1,i):mr%(2,i-1)=mr%(2,i):&,60,1,26,mr%(3,i),a$
+	&,60,0,26,mr%(3,i-1),a$:next:t=t-1:m%(0,0)=t:goto{:4422}
 {:4440}
-	SH=.:RC=.:&"{f6}{white} {$d2}{$c3}#  {lt. green}{$c6}L  {cyan}{$d4}EXT{f6}{blue}{pound}VJ":FOR I=1 TO T:A%=MR%(1,I):B%=MR%(2,I):C%=I
-	&,60,1,26,MR%(3,I),A$:&"{white} {pound}#3{pound}# {pound}%A{pound}{back arrow}06{pound}#2{pound}# {lt. green}{pound}%B{pound}{back arrow}11{cyan}{pound}$A{f6}"
-	IF SH+RC>0 THEN I=T+1
-	NEXT:&"{blue}{pound}VJ {purple}({lt. blue}{pound}!T {$d4}OTAL{purple}){f6:2}":GOTO{:4382}
-	REM"{$c3}OPYRIGHT 1995, {$ce}EW {$c9}MAGE               ** 06 {$cd}{$c1}{$d2} 95 - {$ca}{$cc}{$c6} **    "
+	sh=.:rc=.:&"{f6}{white} RC#  {lt. green}Fl  {cyan}Text{f6}{blue}{pound}vj":for i=1 to t:a%=mr%(1,i):b%=mr%(2,i):c%=i
+	&,60,1,26,mr%(3,i),a$:&"{white} {pound}#3{pound}# {pound}%a{pound}{back arrow}06{pound}#2{pound}# {lt. green}{pound}%b{pound}{back arrow}11{cyan}{pound}$a{f6}"
+	if sh+rc>0 then i=t+1
+	next:&"{blue}{pound}vj {purple}({lt. blue}{pound}!t Total{purple}){f6:2}":goto{:4382}
+	rem"Copyright 1995, New Image               ** 06 MAR 95 - JLF **    "

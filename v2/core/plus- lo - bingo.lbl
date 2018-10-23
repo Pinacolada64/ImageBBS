@@ -1,6 +1,6 @@
 {number:4000}
 	rem +.bingo automaint 8/19/94
-	rem:ifval(left$(d1$,1)<>1thenreturn
+	rem:ifval(left$(d1$,1)<>1 then return
 	cm$="Bingo Automaint":gosub 1360
 	dr=3:a$="e.bscore,s,r":gosub 1011:if e%then close 2:return
 	&,2,2:w$=a$:&,2,2:close 2:an$=w$:gosub 1046:y=i:if i=.then return

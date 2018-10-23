@@ -115,7 +115,7 @@
 	&"{f6}{lt. blue}Filename: {pound}i0":on-(an$="")goto {:3150}:f$=an$
 	&"{f6} (S)eq Or (P)rg?: {pound}g1{pound}v7{f6}":if an$<>"S"and an$<>"P"then an$="S"
 	t$=chr$(asc(an$)and 127):gosub 1008:gosub 1470:on-(t$="s")goto {:3180}:x%=pr:pr=-2
-	dr=5:gosub 1010:a$=dr$+"++ read":&,7,dv%,2:gosub 1012:if e%or t$<>"p"then{:3178}
+	dr=5:gosub 1010:a$=dr$+"++ read":&,7,dv%,2:gosub 1012:if e%or t$<>"p" then {:3178}
 ' fixme: reading a PRG file (+.greed) displays "Load Address: $0801" but not the program text
 	a$=f$+","+t$+",r":gosub 1011:&"{lt. blue}":&,16,0,80:close 2
 {:3178}
@@ -161,7 +161,7 @@
 ' reason for the x=... is on-gosub cannot deal with an expression resolving to 0. 
 ' crashes if a<>1-3 and "on a gosub" is used. wanted to just have 1 {:sub.delay} call
 
-' 1 inputa:x=-(a=1)-2*(a=2)-3*(a=3):ifx=.thenprint"bad value"
+' 1 inputa:x=-(a=1)-2*(a=2)-3*(a=3):ifx=. then print"bad value"
 ' 2 onxgosub10,20,30:print"loop":goto1
 ' 10 print10:return
 ' 20 print20:return
@@ -206,8 +206,8 @@
 	if an$<>""then tt$(a)=an$:cf=1
 	goto {:3258}
 {:3270}
-	&"Quit{f6}":if cf=.then{:3200}
-	&"{f6}Save Changes?: ":gosub 1902:if a=.then{:3200}
+	&"Quit{f6}":if cf=. then {:3200}
+	&"{f6}Save Changes?: ":gosub 1902:if a=. then {:3200}
 	a$="e.termkeys":dr=3:gosub 1023:for i=1 to 8:print# 2,tt$(i):next
 	close 2:gosub {:3242}:goto {:3200}
 {number:3300}
@@ -449,7 +449,7 @@
 {:3478}
 	poke 53252,16:&"{f6}Filename?: {pound}i0":f$=an$
 	&"{f6}(P)rg or (S)eq?: {pound}g1{pound}v7{f6}":t$=chr$(asc(an$)and 127)
-	if f$=""or(t$<>"p"and t$<>"s")then{:term_mode}
+	if f$=""or(t$<>"p"and t$<>"s") then {:term_mode}
 	a$=f$+","+t$:on x goto {:3486},{:3492}:goto {:main_menu}
 {:3486}
 	b$=a$:a$=b$+",r":dr=0:gosub 1011:if e%then close 2:goto {:3500}
@@ -490,9 +490,9 @@
 	&"{f6} Press {white}{rvrs on}RETURN{rvrs off}{lt. blue} To Begin: {pound}g1{f6}":f=1:bb%=0:gosub {:3542}:gosub {:3016}:gosub {:3012}
 	x=4:gosub {:sub.delay}:goto {:term_mode}
 {:3542}
-	an$=tt$(f):&,15,2:a$=an$+",r":dr=0:gosub 1011:if e%then{:3548}
+	an$=tt$(f):&,15,2:a$=an$+",r":dr=0:gosub 1011:if e% then {:3548}
 {:3544}
-	x=1:gosub {:3034}:&,16,2:&,22,10:&,16,0:gosub {:3048}:if b=.then{:3552}
+	x=1:gosub {:3034}:&,16,2:&,22,10:&,16,0:gosub {:3048}:if b=. then {:3552}
 	&,22,10:on-(f>=f%)goto {:3554}:f=f+1:bl=bl+rc:goto {:3542}
 {:3548}
 	close 2:on-(f=f%)goto {:3550}:for x=f to f%-1:tt$(x)=tt$(x+1):next

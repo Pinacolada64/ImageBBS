@@ -59,7 +59,7 @@
 	&"Save{f6:2}":&,42,3,n
 	gosub {:4018}:gosub 1024:a$=dr$+a$:&,42,5:return
 {:4084}
-	poke 53252,7:&"Find Which? {pound}i1":if an$=""then{:4034}
+	poke 53252,7:&"Find Which? {pound}i1":if an$="" then {:4034}
 	&"Searching...":z=0
 	for i=1 to n:a$=tt$(i):gosub {:4222}:if an$=b$then z=i:i=n
 	if int(i/5)=(i/5)then:&"."
@@ -83,7 +83,7 @@
 	poke 53252,4:&"{f6}Access (Or {f5}?{f5}): {pound}i1":on-(an$="{f2}")gosub {:4138}:f=val(an$)
 	if f<1 or f>1023 then f=1023
 	poke 53252,3:&"{f6}Credits: {pound}i1":h=val(an$)
-	e$="":if(len(c$)>2)and(len(d$)>2)and((g and 1)=1)then{:4128}
+	e$="":if(len(c$)>2)and(len(d$)>2)and((g and 1)=1) then {:4128}
 	poke 53252,6:&"{f6}Password: {pound}i1":e$=an$
 {:4128}
 	&"{f6}Flags:{f6} {$da:2} Locked? ":gosub 1902:b=a
@@ -173,7 +173,8 @@
 	rem   4  = normal/ignore extra
 	rem   8  = long/short
 	rem   16 = file/line
-	rem   32 = goto /gosub 	rem   64 = used/empty slot
+	rem   32 = goto /gosub 
+	rem   64 = used/empty slot
 	rem   128= inactive/active
 	rem  b$= command
 	rem  c$= filename or line#

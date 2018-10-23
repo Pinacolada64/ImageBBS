@@ -5,35 +5,35 @@
 {:4004}
 	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} Port Commodore {rvrs off}{f6}{pound}{back arrow}13{green}Presents....{f6:2}{pound}{back arrow}10{white}The {rvrs on}{purple}JERK{green}{rvrs off} Award!!{f6}"
 	a$="e.jerks":dr=3:gosub 1011:if e%then:&"{f6}Not configured{pound}w2":goto {:4100}
-	x=17:gosub 1001:&,2,2:d=val(a$):x=1:gosub 1001:&,2,2:if a$="{up arrow}"then{:4050}
-	if a$="{$ff}"then{:4050}
+	x=17:gosub 1001:&,2,2:d=val(a$):x=1:gosub 1001:&,2,2:if a$="{up arrow}" then {:4050}
+	if a$="{$ff}" then {:4050}
 	n$=a$:&"{f6:3}{lt. blue}The {white}NOMIN{$c5:2}S{lt. blue} Are: {f6}":c=.
 {:4014}
 	c%=val(n$):n$=mid$(n$,4)
 	b%=x:&"{f6}{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} Vote!":if c%<>1 then:&"{pound}h1s"
 	&"!":x=x+1:kk=x:gosub 1001:&,2,2:n$=a$:if mid$(n$,4)="DELETED"then c=c+1
-	if n$<>"{up arrow}"then{:4014}
+	if n$<>"{up arrow}" then {:4014}
 {:4022}
 	&"{f6:2}{gray3}V)ote, A)dd A New Nominee Or Q)uit?{f6}15 Name Maximum.{f6}> {pound}g1{lt. green}{pound}v7{f6}"
 	if tr%<1 then{:4100}
 	on-(an$="V")-(an$="A")*2-(an$="Q")*3 goto {:4028},{:4054},{:4100}:goto {:4022}
 {:4028}
-	c=1:a$="e.jvoters,s,r":dr=3:gosub 1011:if e%then{:4100}
+	c=1:a$="e.jvoters,s,r":dr=3:gosub 1011:if e% then {:4100}
 {:4030}
 	on q goto {:4034}:for x=1 to d:&,2,2:if na$=a$then x=d:c=.
 	next:on-(c<>.)goto {:4034}:&"{f6:2}Sorry, You've Already Voted{pound}w2":goto {:4100}
 {:4034}
 	&"{f6:2}{yellow}Vote For Which Number?{cyan} {pound}i1":on-(an$=""or an$="Q")goto {:4100}
 	on tr%+1 goto {:4100}:x=int(val(an$)):if x<1 or x>kk then{:4030}
-	a$="e.jerks":dr=3:gosub 1011:if e%then{:4100}
+	a$="e.jerks":dr=3:gosub 1011:if e% then {:4100}
 	gosub 1001:&,2,2:n$=a$:c%=val(n$):n$=mid$(n$,4)
 	c%=c%+1:n$=right$(str$(1000+c%),3)+n$
-	gosub 1001:print# 2,n$:close 2:a$="e.jvoters,s,a":dr=3:gosub 1011:if e%then{:4100}
+	gosub 1001:print# 2,n$:close 2:a$="e.jvoters,s,a":dr=3:gosub 1011:if e% then {:4100}
 	if q=.then print# 2,na$:d=d+1:a$="e.jerks":gosub 1011:x=17:gosub 1001:print# 2,d
 	&"{f6:2}Your Vote Has Been Recorded, Thanks!{f6}{pound}w2":goto {:4100}
 {:4050}
 	&"{f6:2}{cyan}There Are NO Nominees, Would You Like To{f6}Nominate Someone? "
-	gosub 1902:if a=.then{:4100}
+	gosub 1902:if a=. then {:4100}
 {:4054}
 	if kk>15 and c=.then:&"{f6:2}{purple}No NOMIN{$c5:2}S Being Accepted At This Time!{f6}":goto {:4022}
 	&"{f6:2}{cyan}And {rvrs on}{white} WHO {rvrs off}{cyan} Is Your Nominee?{f6:2}> {pound}i1":a=len(an$):if tr%<1 then{:4100}
@@ -47,12 +47,12 @@
 {:4068}
 	&"{f6:2}Would You Like To Try Again? ":gosub 1902:on a goto {:4054}:goto {:4100}
 {:4070}
-	nn$=an$:dr=3:a$="e.jerks":gosub 1011:if e%then{:4100}
+	nn$=an$:dr=3:a$="e.jerks":gosub 1011:if e% then {:4100}
 	x=.:tt$=""
 {:4074}
-	x=x+1:gosub 1001:&,2,2:tt$=a$:if mid$(tt$,4)="DELETED"then{:4082}
+	x=x+1:gosub 1001:&,2,2:tt$=a$:if mid$(tt$,4)="DELETED" then {:4082}
 	if mid$(tt$,4)=nn$then:&"{f6:2}{white}That NOMIN{$c5:2} Already Exists!{f6}{pound}w2{lt. green}":goto {:4100}
-	if tt$<>"{up arrow}"then{:4074}
+	if tt$<>"{up arrow}" then {:4074}
 	gosub 1001:print# 2,"000"nn$:x=x+1:gosub 1001:print# 2,"{up arrow}":goto {:4084}
 {:4082}
 	gosub 1001:print# 2,"000"nn$

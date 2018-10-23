@@ -78,7 +78,7 @@
 	x=1:gosub 1001:print# 2,n:gosub 1001:close 2
 	if a<ng then for i=a to ng-1:tt$(i)=tt$(i+1):a%(i)=a%(i+1):f%(i)=f%(i+1):next
 	tt$(ng)="":ng=ng-1
-	if sb=val(left$(an$,2))then{:3138}
+	if sb=val(left$(an$,2)) then {:3138}
 ' 13=<Return>
 	&,15,6,13:a$=left$(a$,16):b$=right$(str$(sb),2)+mid$(a$,3):dr=0:gosub 1010
 	fr$=mid$(str$(f),2)+":"

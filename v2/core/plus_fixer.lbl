@@ -41,7 +41,7 @@
 {:3300}
 	dr=2:gosub 1010:open 2,dv%,0,"$"+dr$+"m.*":get#2,a$,a$:&,8,2,1:n=0
 {:3302}
-	&,8,2,1:s=st:if mid$(a$,7,5)="block"or s<>.then{:3308}
+	&,8,2,1:s=st:if mid$(a$,7,5)="block"or s<>. then {:3308}
 	if val(mid$(a$,10))=0 then n=n+1:a%=n:&"#{pound}%a{pound}{back arrow}05>{pound}$a{f6}"
 	goto {:3302}
 {:3308}
@@ -53,7 +53,7 @@
 	&"{f6}New Users: ":dr=3:a$="e.new,s,r":gosub {:3410}:st(29)=n
 	gosub 1060:x=23:gosub 1026:x=24:gosub 1026:x=29:gosub 1026:close 2:return
 {:3410}
-	gosub 1011:n=0:if e%then{:3414}
+	gosub 1011:n=0:if e% then {:3414}
 {:3412}
 	&,2,2:s=st:on-(a$<>"{up arrow}"and s=0)goto {:3412}:n=n+1:on-(s=0)goto {:3412}:close 2
 {:3414}
