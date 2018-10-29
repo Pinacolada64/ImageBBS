@@ -3,9 +3,13 @@
 {step:2}
 {crunch:on}
 ' x=1: reset modem
+' x=2: clear line (step through bps rates)
 ' x=3: hang up (ath or toggle dtr)
+' x=4: take modem off-hook
+' x=5: get response from modem
 ' x=6: 4102 dial b$=name, c$=phone #, b=baud rate (6=14400)
 '	return a=0: no connection, a=1: connected
+' x=7: send "ata"
 ' x=8: send at command in a$
 ' x=9: get char from modem until buffer empty
 ' x=10: set BPS rate
