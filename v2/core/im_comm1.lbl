@@ -1,4 +1,7 @@
 {number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
 	on im goto {:60002},{:60100},{:60200},{:60300}:return
 {:60002}
 	nr=1:&"{f6}{cyan}Last Call: {$04}"+ld$+"{f6:2}Add Or Subtract How Many Days? {f6:2}Last: {pound}i1"
@@ -85,3 +88,4 @@
 {number:60300}
 {:60300}
 	return
+	rem im.comm1

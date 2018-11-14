@@ -1,7 +1,10 @@
 {number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
 	on im goto {:60002},{:60008}:return
 {:60002}
-	gosub {:60004}:&"{pound}{back arrow}13{rvrs on} PRE{$d3:2} A KEY {pound}g1{f6}":return
+	gosub {:60004}:&"{pound}{back arrow}13{rvrs on} PRESS A KEY {pound}g1{f6}":return
 {:60004}
 	a=11:gosub 1004:on-(a<>.)goto {:60008}:return
 	gosub 1060:for x=1 to 38:gosub 1001:&,2,2:st(x)=val(a$):next:close 2
@@ -42,3 +45,4 @@
 	if a=.then f%=100:d%=0:return
 	if b=.then d%=100:f%=0:return
 	d%=a/(a+b)*100+.5:f%=100-d%:return
+	rem im.bar

@@ -3,8 +3,8 @@
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
 
-{include:C:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v2\asm\equates-2_0.lbl}
-orig $c000
+{include:equates-2_0.lbl}
+orig $0800
 {asm}
 ;
 baudof	= $299
@@ -24,7 +24,7 @@ nofile	= $f701
 io1	= $de00
 io2	= $df00
 port	= io1
-status	= port+1
+SLstatus= port+1
 command	= port+2
 control	= port+3
 ;
@@ -39,8 +39,8 @@ statrxd	= {%:00001000} ;receive
 stattxd	= {%:00010000} ;transmit
 statint	= {%:10000000} ;nmi
 ;
-imagecd0={%:00000000} ;none
-imagecd1={%:00010000} ;carrier
+imagecd0= {%:00000000} ;none
+imagecd1= {%:00010000} ;carrier
 ;
 first:
 xx00:
@@ -93,7 +93,7 @@ oldclr:
 oldchr:
 	byte $24
 	word nchrin
-; todo: try uncommenting this
+; TODO: try uncommenting this
 oldout:
 	byte $26
 	word nchrout
@@ -130,7 +130,7 @@ setup2:
 	jmp setup1
 setup3:
 	lda #0
-	sta status
+	sta SLstatus
 	lda #comint1
 	sta shcomm
 	jsr inable
@@ -140,7 +140,7 @@ setup3:
 ;
 setcarr:
 	ldy #imagecd1
-	lda status
+	lda SLstatus
 	and #statdcd
 	beq setcarr1
 	ldy #imagecd0
@@ -157,7 +157,7 @@ nmi64:
 	tya
 	pha
 	cld
-	lda status
+	lda SLstatus
 	and #statint
 	beq notacia
 	lda #comint0
@@ -180,7 +180,7 @@ notacia:
 ;
 rsint:
 	jsr setcarr
-	lda status
+	lda SLstatus
 	and #statrxd
 	beq rsint2
 	lda port
@@ -203,7 +203,7 @@ rsint1:
 ; ** check transmit
 ;
 rsint2:
-	lda status
+	lda SLstatus
 	and #stattxd
 	beq rsint4
 	lda shcomm
@@ -405,5 +405,5 @@ nchrin:
 ; from "fast assembler":
 ; last:
 ; next pass:close 8:print last-first "bytes."
-{info:last-first bytes.}
+{info:DONE.}
 {endasm}

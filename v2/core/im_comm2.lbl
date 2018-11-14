@@ -1,4 +1,7 @@
 {number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
 	on im goto {:60002}:return
 {:60002}
 	&,18,0:gosub 1914:if peek(1063)<>250 then print# 131,"ate1v1m1"
@@ -19,3 +22,4 @@
 {:60026}
 	if peek(1063)<>250 then print# 131,"at"
 	return
+	rem im.comm2

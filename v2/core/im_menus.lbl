@@ -1,31 +1,31 @@
 {number:60000}
 ' fd%() must hold a flag
 ' 29=chars per field, 0-49=# of items within struct?
-' 
-	&,27,7:DIM FD%(50),JM%(29,49)
-	X=LC:ON IM goSUB {:60004},{:60006},{:60010}:&,28,7:RETURN
+	&,27,7:dim fd%(50),jm%(29,49)
+	x=lc:on im gosub {:60004},{:60006},{:60010}:&,28,7:return
 {:60004}
-	goSUB {:60006}:X=1:IF LC=1 OR RC THEN RETURN
+	gosub {:60006}:x=1:if lc=1 or rc then return
 {:60006}
 ' read access-aware menu listing if it exists
-	B$="E.MENU"+STR$(X):goSUB {:60010}:IF E%=.THEN RETURN
+	b$="e.menu"+str$(x):gosub {:60010}:if e%=.then return
 ' otherwise, fall back to SEQ style
-	DR=1:A$="S.MENU"+STR$(X):GOTO 1076
+	dr=1:a$="s.menu"+str$(x):goto 1076
 {:60010}
-	DR=3:GOSUB 1010:A$=DR$+B$
+	dr=3:gosub 1010:a$=dr$+b$
 ' load struct:
-	&,60,2,.,JM%(.,.),A$,DV%:GOSUB 1012:IF E%THEN RETURN
+	&,60,2,.,jm%(.,.),a$,dv%:gosub 1012:if e%then return
 ' &,60,8,num,size,access,a(a,b),a%(a),start
 ' num: # of items in struct
 ' size seems too large: is it the width of the item in the struct?
 '	that was only 30
 ' returns a% (# of matches?) and fd%(): whether user has access to item?
-	&,60,8,50,60,2^AC%+ZZ*32768,JM%(1,.),FD%(1),.:IF A%=.THEN RETURN
-	&"{f6}":FOR I=1 TO A%:&,60,1,50,JM%(5,FD%(I)),A$:LP=1:&:I=I+A%*RC:NEXT:RETURN
+	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=.then return
+	&"{f6}":for i=1 to a%:&,60,1,50,jm%(5,fd%(i)),a$:lp=1:&:i=i+a%*rc:next:return
 
-' proposed rewrite:
-'	&,60,8,50,60,2^AC%+ZZ*32768,JM%(1,.),FD%(1),.
-'	IF A% THEN:&"{f6}":FOR I=1 TO A%:&,60,1,50,JM%(5,FD%(I)),A$:LP=1:&:I=I+A%*RC:NEXT
-'	RETURN
+' TODO: proposed rewrite:
+'	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.
+'	if a% then:&"{f6}":for i=1 to a%:&,60,1,50,jm%(5,fd%(i)),a$:lp=1:&:i=i+a%*rc:next
+'	return
 
-	COPR. 1994 NEW IMAGE 9/27/94
+	copr. 1994 new image 9/27/94
+	rem im.menus

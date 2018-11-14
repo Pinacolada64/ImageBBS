@@ -231,7 +231,7 @@
 	gosub {:1338}:&"IM Revision: "+left$(an$,26)+"M{f6}":return
 {:1338}
 ' used at BBS bootup to set clock to something sane
-	an$="51810058953":&,15:return
+	an$="31810238855":&,15:return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -555,13 +555,13 @@
 ' XP - eXPert mode
 	a=em:b$="Expert":gosub {:1870}:em=a:&,52,20,2:return
 ' 1881: PM - Prompt Mode
-'	a=pm:b$="Prompt":gosub {:1870}:pm=a:return
+	a=pm:b$="Prompt":gosub {:1870}:pm=a:return
 ' 1882: MP - More Prompt
 ' closes issue #15
 ' properly set multi-value "Messages Only" prompt mode. load "im.params"
 '	b=2:b$="{f5}More?{f5} Prompt":gosub {:1871}:&,52,34,a:return
 	im=3:gosub {:2406}:&,52,34,a:return
-' 1883: MN - Menu Mode
+' 1883: MN - Cursor Menu Mode
 	b=3:b$="Menu":gosub {:1871}:&,52,44,a:return
 ' 1884: commented out (duplicate &,52,44), also Mnu lightbar related. maybe &,52,44,a should be &,52,45,a? -36 bytes
 '	b=4:b$="Undefined":gosub {:1871}:&,52,44,a:return
@@ -824,14 +824,17 @@
 	dim ec%(19,24),es%(3,49),ei%(50):restore:for i=1 to 9:read a$:co$(i)=a$+"":next
 ' &,53: logoff (don't know why this is called, init rs232 stuff?)
 	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
-' FIXME: Boot year is 2000, but better yet would be fix ML to do so
-	poke $16ec,$32:poke $16ed,$30:poke $16ee,$30:poke $16ef,$30
+
+' FIXME: Long date string is 2018, but better yet would be fix ML to do so
+' >C:16e0  d4 55 45 20  cf 43 54 20  32 33 2c 20  32 30 31 38   Tue Oct 23, 2018
+	poke $16ec,$32:poke $16ed,$30:poke $16ee,$31:poke $16ef,$38
 ' For a brand new BBS that hasn't got a clock set method yet, set clock to IM revision date
 ' 1336: gosub 1338:display IM revision (omit time zone):return
 ' 1338: define an$
-	gosub {:1336}:for x=1 to 11:poke $cdff+x,asc(mid$(an$,x,1)):next
+	gosub {:1336}:d1$=an$ ' for x=1 to 11:poke $cdff+x,asc(mid$(an$,x,1)):next
 	a$="NTSC":if peek(678) then a$="PAL"
-	&"{pound}$a System Detected.{f6}"
+' 24	&"{pound}$a System Detected.{f6}"
+	&:&" System Detected.{f6}"
 {:3080}
 	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$=d1$
 {ifdef:swiftlink}
@@ -884,6 +887,7 @@
 	x=1:gosub {:1001}:&,2,2:ca=val(a$):x=12:gosub {:1001}:&,2,2:ur=val(a$)-1
 	x=17:gosub {:1001}:&,2,2:d3$=a$:x=18:gosub {:1001}:&,2,2:pp$=a$
 	x=19:gosub {:1001}:&,2,2:z$=a$:x=20:gosub {:1001}:input# 2,p1%,p2%,p3%
+' clock set method, external cmd device (if any)
 	x=33:gosub {:1001}:&,2,2:y%=val(a$):x=34:gosub {:1001}:&,2,2:y1%=val(a$)
 ' record 35: last automaint date
 	x=35:gosub {:1001}:&,2,2:am$=a$:an$=a$:&,15:d6$=an$+"M":x=36:gosub {:1001}:&,2,2:mc=val(a$)
@@ -900,7 +904,8 @@
 ' 3160
 ' y%: 1=cmd clock, 2=ltk clock, 3=last system timestamp, 4=external cmd device
 ' gosub {:3170} - set clock
-	on y% gosub {:3354},{:3364},{:3368},{:3372}:gosub {:3174}
+	&"Setting Clock...":on y% gosub {:3354},{:3364},{:3368},{:3372}:gosub {:3174}
+' im=5...: load im.info, set BBS time zone
 	poke 970,.:poke 971,23:mp$=" ...More? (Y/n) "+"":im=5:gosub {:2428}:gosub {:3202}
 	gosub {:1060}:for x=1 to 38:gosub {:1001}:&,2,2:st(x)=val(a$):next:close 2
 	an$=am$:lt$=am$:tk$=left$(am$,1):gosub {:3212}
@@ -985,7 +990,7 @@
 ' al's method (sets to 141), would use 1023 instead of s0:, but that is only for seq files:
 '	&"{f6}Creating {f5}u.index{f5}....":an$=tt$(1):gosub {:1038}:close 2:&"Done!{f6}"
 ' jack's method (tested, correctly sets to 1):
-	&"{f6}Creating {f5}u.index{f5}....":dr=6:gosub {:1010}:a$=dr$+"u.index":print# 15,"s"a$
+	&"{f6}Creating {f5}u.index{f5}...":dr=6:gosub {:1010}:a$=dr$+"u.index":print# 15,"s"a$
 ' insert user #1 into u.index, create a struct:
 	a%(0)=1:a%(1)=1:&,60,3,0,a%(0),4,a$,dv%:close 15:gosub {:sub.done}
 	&"{f6}Creating {f5}e.stats{f5}...."
