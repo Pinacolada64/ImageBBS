@@ -1,3 +1,6 @@
+{step:2}
+{crunch:on}
+{alpha:alt}
 {number:3000}
 {:3000}
 	gosub {:3094}:pr$="":goto 1812
@@ -22,10 +25,10 @@
 {:3020}
 	poke 49,m-int(m/256)*256:poke 50,m/256:return
 {:3022}
-	&"Loading{f6}":dr=6:gosub 1010:close 8,dv%,0,dr$+"u.index":a=m+7
+	&"Loading{f6}":dr=6:gosub 1010:open 8,dv%,0,dr$+"u.index":a=m+7
 	poke 780,0:poke 781,a-int(a/256)*256:poke 782,int(a/256):sys 65493:return
 {:3026}
-	&"Saving{f6}":dr=6:gosub 1010:print# 15,"s"dr$"u.index":close 8,dv%,1,dr$+"u.index"
+	&"Saving{f6}":dr=6:gosub 1010:print# 15,"s"dr$"u.index":open 8,dv%,1,dr$+"u.index"
 	a=m+7:b=ur%(0)*2+a+3:poke 780,5:poke 5,a-int(a/256)*256:poke 6,int(a/256)
 	poke 781,b-int(b/256)*256:poke 782,int(b/256):sys 65496:return
 {:3032}
@@ -88,3 +91,5 @@
 {:3118}
 	&"ID #:{pound}i1":u=val(an$):if u<1 or u>ur then return
 	x=u:gosub 1001:&,2,2:an$=a$:goto {:3086}
+	rem +.index
+	
