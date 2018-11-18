@@ -16,8 +16,9 @@
 	scs	= $dc09 ; seconds
 	min	= $dc0a ; minutes
 	hrs	= $dc0b ; hours
-;	carrier = $dd01 ; 56577: CIA #2 Data Port B
-;			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
+	carrier = $dd01 ; needed by irqhn.s
+			; 56577: CIA #2 Data Port B
+			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
 	colors	= $e8da	; flashing chat page color table
 
 ; Kernal routines:

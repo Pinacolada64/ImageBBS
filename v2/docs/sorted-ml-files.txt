@@ -35,8 +35,6 @@
 28   "chrio.s"          prg	Build req	character output routines
 11   "dskio.s"          prg	Build req	has offsets for various load types/disk dir
 50   "irqhn.s"          prg	Build req	IRQ handler; local screen mask output, function keys (C= + fkey?)
-	undef'd label in line 3280, pass 3
-	lda irqcount:sta irqt+1
 2    "setup.s"          prg	Build req	log off and set baud rate
 13   "varbl.s"          prg	Build req	Handle variables
 10   "miscl.s"          prg	Build req	handle structures, calculated GOTO, cursor menu
@@ -79,10 +77,12 @@
 18   "rs232/swift.s"    prg   	ml.rs232/swift	SwiftLink RS232
 19   "rs232/user.s"     prg	ml.rs232/user	User-port RS232
 1    "rspatch.s"        prg	ml.rspatch	?
-7    "serial.s"         prg			serialization routines, missing label "rand"
+7    "serial.s"         prg			serialization routines, FIXME: missing label "rand" line 1650
 6    "sort.s"           prg	++ sort		Sort 1-dimensional string arrays, "++ sort text" shows this
 32   "sound.s"          prg			a memory dump of a directory listing with some intriguing filenames
-31   "swap4.s"          prg	ml.swap4	structure commands (+ some documentation) + date table
+31   "swap4.s"          prg	ml.swap4	putstruc, getstruc, lodstruc, savstruc, putdate, getdate, doscan,
+						(+ some documentation) + date table
+				Build req	extra.s
 14   "swap5.s"          prg	Fragment	"++ 4" bits, Comment says "Search for an$ in file"
 3    "swapr.s"          prg	Fragment
 17   "t1.rs232.s"       prg	ml.rs232
@@ -93,7 +93,8 @@
 51   "xmodemcrc.s"      prg	++ 1		XMODEM-crc source; some line corruption
 
 	Tests
-2    "3way.s"           prg	++ 3way		No idea what this is for
+2    "3way.s"           prg	++ 3way		[1.2] Checks for carrier detect checkmark, calls some Image routines;
+						not sure what this does
 3    "array.s"          prg	Standalone	copy/restore array pointers
 28   "banner.s"         prg	Standalone	sys $8000 gives big clock display
 1    "blank.s"          prg	Standalone	screen blanking?
@@ -103,14 +104,15 @@
      "break4.s"  Modified version of break2.s	sys 52992; poke 828,0:sys 828 to start. JAMs CPU, shows some info
 6    "chatmode.s"       prg	chatmode	Fragment. Save chat logs?
 3    "clrar.s"          prg	Standalone	Clear arrays
-2    "convert.s"        prg	Standalone	Test of something, displays char typed on screen
+2    "convert.s"        prg	Standalone	Test of something, sys $8000 displays char typed on screen
 21   "dtoi.s"           prg	Standalone	date to integer conversion tests
 3    "dumpm.s"          prg	Standalone	dump memory
-3    "extra.s"          prg	ml.extra	sys $8000, echoes keystrokes until STOP hit
+3    "extra.s"          prg	ml.extra	links ml.editor, ml.gc, ml.ecs, ml.swap[1234], but so does build.s
+						*** ml.extra is not loaded by Image 2.0
 52   "inline.s"         prg	ml.inline	term, chat, movie/normal/unabortable file read, more...
 						*** Line links fixed, bad line number 1566 corrected to 1590
 						*** Still an undefined label: nchks1, I defined it to $ffff
-						*** This may be some version of swap1.s
+						*** This may be some older version of swap1.s
 14   "ml.rk.s"          prg	Standalone	phone number/date manipulation
 2    "movem.s"          prg	Standalone	move memory
 7    "nums.s"           prg	Standalone	idle screen clock numbers (part of clock.s?)
@@ -122,4 +124,4 @@
 28   "trans.s"          prg	Standalone	dupe of banner.s? clock #'s, sys $8000
 
 	Binaries
-2    "ml patcher"       prg
+2    "ml patcher"       prg	Standalone	FIXME: Does not save correct range of memory

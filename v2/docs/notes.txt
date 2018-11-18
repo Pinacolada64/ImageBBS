@@ -50,19 +50,3 @@ Handle: BUCKO
  In Line:2512 Of im
 
 Image 2.0: Turn MN mode on, then go into GF files, then Z for maint
-
-Nov. 13, 2018
-After BBS boots, vectors:
-
-IERROR $300-$301: $0c18
-IMAIN  $302-$303: $a483 [default]
-ICRNCH $304-$305: $ea64
-IQPLOP $306-$307: $a71a [default]
-IGONE  $308-$309: $0c12
-IEVAL  $30a-$30b: $0c15
-USRADD $311-$312: $0c1b [a=usr(.) for stack free info]
-CINV   $314-$315: $cd9c [main IRQ routine]
-CBINV  $316-$317: $fe66 [default]
-NMINV  $318-$319: $086e
-IBSOUT $326-$327: $cd83
-ILOAD  $330-$331: $f4a5 [default $f49e]
