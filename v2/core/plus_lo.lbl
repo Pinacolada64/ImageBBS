@@ -1,7 +1,7 @@
 ' 10887 bytes (-253 bytes from +.lo r2)
 ' 10224 after mask stuff moved to im.disp
 ' FIXME: clock missing after doing something, what was it
-' FIXME: linefeeds do not reset after invalid login attempt
+' FIXME: Linefeeds assumed from failed login #41
 
 {alpha:alt}
 {number:3000}
@@ -76,6 +76,7 @@
 ' calls +/modem: 
 	b$="connect":x=11:gosub {:3480}
 	poke 2033,.:&"{f6}{pound}b1":&,22,5:gosub 1914:&,52,5,zz:a$="Connected":gosub {:3026}:&,25
+' &,52,17,1: set linefeeds:
 	&,52,16,1:&,52,17,1:gosub {:3002}:if a=. then:&,52,4,4
 	tr%=4:poke 2042,.:gosub {:3496}:gosub {:3010}:on -(zz=.)goto {:3064}:&,52,$22,.
 {:3060}
@@ -102,9 +103,16 @@
 	&,52,28,3:if a% then if a=1 then {:3042}
 	if a=13 then {:3076}
 	on -(a<>8 and a<>127 and a<>20) goto {:3078}
-	nl=-(a=20):&,52,16,1-nl:b$="ASCII":if nl then b$="Commodore Graphics":&"{pound}k7"
+' &,52,16,x: ASCII Translation
+' disable lf's, save lf mode in lf%
+	nl=-(a=20):&,52,16,1-nl:b$="ASCII":if nl then b$="Commodore Graphics":&"{pound}k7":&,52,17,.:lf%=.
 	&"{f6:2}  {rvrs on} {pound}$b {rvrs off}{pound}k0 Mode Detected. {pound}q0{f6:2}":if tr%<1 then {:3266}
-	tr%=5:on nl goto {:3096},{:3096}:&,52,18,.:&,52,19,.:&,52,17,1
+' &,52,17,1: (set) Line Feed After Return
+' &,52,18,.: (clr) ANSI Color Enable
+' &,52,19,.: (clr) ANSI Graphics Enable
+' issue #42: clearing linefeeds after failed login: save lf status in lf%
+' (lf is overwritten by loading stats in im.misc)
+	tr%=5:on nl goto {:3096}:&,52,18,.:&,52,19,.:&,52,17,1:lf%=1
 	&"Do You Want ANSI Color? ":gosub 1907:&,52,18,a:b=a
 	&"Do You Want IBM Graphics? ":gosub 1907:&,52,19,a:if a and b then nl=2:poke 951,80
 {:3096}
@@ -149,7 +157,8 @@
 	&"Do You Wish To Apply For An{f6}Account With That Handle?: "
 	gosub 1902:if a then f1=1:g$=dd$:dd$="NE"+"W":goto {:3332}
 {:3136}
-	ac%=16:k=k+1:if k>4 then {:3266}
+' restore saved linefeed status (lf%) for correct display on login attempt:
+	&,52,17,lf%:ac%=16:k=k+1:if k>4 then {:3266}
 ' immediate mode (i%):
 	on i% goto {:3144}:lp=1:&"{f6:2}Enter {f5}NEW{f5} If You Have No Login ID, or {f5}HELP{f5} If "
 	lp=1:&"You Are Having Trouble{f6}Logging On.":goto {:3108}
@@ -270,6 +279,7 @@
 	lc=.:em=.:zz=.:gs=.:cf=.:cr=.:lf=1:nl=.:ul=.:le=.:pm=1:c9=.
 	gosub {:3002}:if a=.then:&,52,2,4
 	i%=.:ac%=16:dc%=.:ct%=.:tc%=.:u$="":sy$="":ba$="":na$="":ph$="":id=.
+' &,52,17,1: set linefeeds:
 	poke 830,3:poke 53248,.:&,52,16,1:&,52,17,1:&,52,18,.:&,52,19,.
 	&,28,1:gosub 1093:gosub 1914:for j=217 to 242:poke j,peek(j)or 128:next:dr=3:gosub 1079
 ' this was moved also:
