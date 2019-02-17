@@ -1,7 +1,8 @@
 {number:3000}
 {step:2}
 {crunch:on}
-\{alpha:alt\}
+{alpha:alt}
+'  Is User in Menu Mode?         44 Mnu 45   Are Menus Available on BBS?
 	zz%=8:pr$="":lm$="":&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%:fl=.
 {:3002}
 	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2:if fl then return
@@ -18,7 +19,7 @@
 	&,16,.,34,m%(.,8),"H","","Lightbar/Alarms"
 	&,16,.,34,m%(.,9),"I","","Misc. Features"
 	&,16,.,34,m%(.,10),"J","","Modem Config"
-	&,16,.,34,m%(.,11),"K","","Set Time"
+	&,16,.,34,m%(.,11),"K","","Time Options"
 	&,16,.,34,m%(.,12),"L","","System Drives"
 	&,16,.,34,m%(.,13),"M","","Netmail Config"
 	&,16,.,34,m%(.,14),"N","","Quit"
@@ -33,7 +34,7 @@
 	&,16,.,34,m%(.,3),"C","","Calling Hours"
 	&,16,.,34,m%(.,4),"D","","Make nm.create"
 	&,16,.,34,m%(.,5),"E","","Connections"
-	&,16,.,34,m%(.,6),"F","","Fwd. List"
+	&,16,.,34,m%(.,6),"F","","Forward List"
 	&,16,.,34,m%(.,7),"G","","Netwall/Grf"
 	&,16,.,34,m%(.,8),"H","","Quit"
 {:3062}
@@ -90,7 +91,7 @@
 	&,16,.,46,m%(.,6),"F","","Password Masks:     "+mm$
 	&,16,.,46,m%(.,7),"G","","Time Zone:          "+left$(tz$,3):a$=po$
 	&,16,.,46,m%(.,8),"H","","Main Prompt:        "+left$(po$,15)
-	&,16,.,46,m%(.,9),"I","","{$c2:2}S Name:           "+left$(bn$,15)
+	&,16,.,46,m%(.,9),"I","","BBS Name:           "+left$(bn$,15)
 	&,16,.,46,m%(.,10),"J","","System ID           "+cc$
 	&,16,.,46,m%(.,11),"K","","New User Credits:  "+str$(nc)
 	&,16,.,46,m%(.,12),"L","","Chat Messages"
@@ -165,78 +166,23 @@
 	if tf then gosub 1063:x=lm+51:gosub 1001:print# 2,dv%(lm);r$;dr%(lm):close 2
 	return
 {:3264}
-	&"{f6:2}{purple}{pound}vj{cyan}   Remote Time Editor v2.0{f6}{purple}{pound}vj{cyan}":goto {:3268}
-	a$=d1$:gosub 1520:t1=a:return
-{:3268}
-	&"{f6}{pound}{back arrow}10{cyan}Current Date/Time is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
-{:3270}
-	p$=" Day   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
-	dw$=mid$(str$(val(an$)),2,1)
-{:3274}
-	p$=" Month ":w$=mid$(d$,4,2):a=2:gosub {:3310}:if a<1 or a>12 then{:3274}
-	gosub {:3316}:mo$=an$
-{:3278}
-	p$=" Date  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
-	gosub {:3316}:dt$=an$
-{:3282}
-	p$=" Year  ":w$=mid$(d$,2,2):a=2:gosub {:3310}:if a<1 or a>99 then{:3282}
-	gosub {:3316}:yr$=an$
-	c$="A":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="P"
-{:3288}
-	p$=" Hour  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
-	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
-{:3292}
-	p$=" Min.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
-	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
-{:3296}
-	p$=" A/P   ":a=1:gosub {:3310}:on-(an$<>"A"and an$<>"P")goto {:3296}:if an$<>v$then tz=1
-	if(an$="P"and b<>18)or(an$="A"and b=18)then b=b or 128:gosub {:3318}
-	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10Setting Date/Time to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} OK?   {lt. green}: "
-	gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
-	poke 56328,.:poke 1010,1
-	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:goto {:3326}
-{:3308}
-	a=16*int(a/10)+a-int(a/10)*10:return
-{:3310}
-	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:on-(an$="")goto {:3314}:&"{f6}"
-	a=val(an$):tz=(tz or-(a<>val(v$))):return
-{:3314}
-	&"{f6}":an$=v$:a=val(an$):return
-{:3316}
-	an$=right$("0"+mid$(str$(val(an$)),2,2),2):return
-{:3318}
-	hr$=right$("0"+mid$(str$(-80*(an$="P")+val(hr$)),2,2),2):return
-{:3320}
-	a$=dw$+yr$+mo$+dt$+hr$+mn$:return
-{:3322}
-	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
-	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
-{:3326}
-	return
-{:3328}
-	&"{f6}No Changes Made - Aborted!{f6:2}":return
+	a$="time":gosub {:3182}:goto {:3006}
 
 {:sub.menu_header}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           Image BBS V2.0{pound}{back arrow}37{blue}  {f6}"
 	&"{rvrs on} {cyan}        Configuration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	return
 
 {:3330}
 	gosub {:sub.menu_header}
-'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        Configuration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}":return
 
 {:3336}
 	gosub {:sub.menu_header}
-'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        Configuration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,42,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {:3342}
 	gosub {:sub.menu_header}
-'	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
-'	&"{rvrs on} {cyan}        Configuration Editor{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	&,16,2,46,m%(.,1),n,36,1,n,2,6,.:lm=a%+1:&,70,.,n+8:&"{white}":return
 {crunch:off}
 	copr. 1994 new image 10/19/94
-	REM 171221 X-TEC
+	rem 171221 x-tec, 180207 pinacolada
