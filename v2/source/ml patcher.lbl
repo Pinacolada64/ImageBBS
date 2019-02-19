@@ -230,14 +230,14 @@ ml:
 	jsr getname
 ; 2) The accumulator should be loaded with the Page 0 offset of
 ;    that pointer, then 
-	lda #sal       ; #sal was '#first'
+	lda #172	; #(s)tart (a)ddress of (l)oad
 
 ; 3) the .X and .Y registers should be set with the ending address for
 ;    the save, and the SAVE routine called.
 
-	ldx last
-	ldy last+1
-	jsr savefile   ; $ffd8
+	ldx #<last
+	ldy #>last
+	jsr savefile	; $ffd8
 ; bank in basic
 	lda #$37
 	sta 1
