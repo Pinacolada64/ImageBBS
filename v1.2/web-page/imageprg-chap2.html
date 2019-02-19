@@ -1,0 +1,4111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- $MVD$:app("MicroVision WebExpress","770") --><!-- $MVD$:template("","0","0") --><!-- $MVD$:color("18","80ff","Orange","0") --><!-- $MVD$:color("19","ffd6ce","Lavender","0") --><!-- $MVD$:color("20","7dc0e1","Tan","0") --><!-- $MVD$:color("21","adcfeb","Light Tan","0") --><!-- $MVD$:color("22","dc727c","Commodore Light Blue","0") --><!-- $MVD$:color("23","a5323e","Commodore Dark Blue","0") -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>IMAGE BBS Programmer's Reference Guide</title>
+  <meta name="GENERATOR" content="MicroVision Development / WebExpress">
+</head>
+
+<body bgcolor="WHITE" link="#00007f">
+
+    
+<center>
+   
+<p align="center">
+    
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+     <tbody>
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       
+      <center>
+        
+      <p align="center">
+         <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | Chapter II | <a href="imageprg-chap3-1.html">Chapter
+          III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p>
+      </center>
+      </td>
+
+     </tr>
+
+    
+  </tbody>
+</table>
+</p>
+
+   </center>
+
+    
+<center>
+   
+<p align="center">
+    
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+     <tbody>
+    <tr>
+
+      <td colspan="3" rowspan="2" valign="top" width="33%">
+       
+      <h1>
+        Chapter II: BASIC Subroutines<a name="basicsubs"></a></h1>
+
+       
+      <p>
+        The purpose of this chapter is to provide you with all existing 
+        subroutines available for your use. All routines are shown being 
+        accessed through their recommended entry points. Some routines may be 
+        accessed through several entry points; others may not. Failure to use 
+        the proper entry points of the routines provided may cause undue 
+        garbage on the CPU stack or other problems with your programs.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+     </tr>
+
+    
+  </tbody>
+</table>
+</p>
+
+   </center>
+
+  
+<center>
+   
+<p align="center">
+    
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+     <tbody>
+    <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1001</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Position record of relative file currently open as logical file #2.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             <tt>X</tt>: Record desired.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             E%: Error number.<br>
+
+             E$: Error message.<br>
+
+             T%: Track number.<br>
+
+             S%: Sector number.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1004</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Checks status of user flags 1-15.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A: flag number.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A=0: Not accessible<br>
+
+             A=1: Access allowed</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+
+        </center>
+
+       
+      <h3>
+        User Flags</h3>
+
+       
+      <p>
+        Each user has a total of 15 flags which decide whether or not they 
+        have access to a particular function or area of the system. These 
+        flags are held in a fifteen digit string, each digit representing a 
+        seperate flag which can be checked by setting the variable A to the 
+        flag number (1-15) and issuing a GOSUB 1004 command. If A returns 
+        with a value of zero, access is denied. The values of each flag are 
+        as follows:</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="2">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 1 Non-Weed Access</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 6 Editor Lines</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>11 BAR/Log Access</pre>
+            </td>
+          </tr>
+
+          <tr>
+
+           <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 2 Credit Ratio</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 7 Unlimited Credits</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>12 Sub Maint</pre>
+            </td>
+          </tr>
+
+          <tr>
+
+           <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 3 Local Maint</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 8 Remote Maint</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>13 Files Maint</pre>
+            </td>
+          </tr>
+
+          <tr>
+
+           <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 4 Post/Respond</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 9 E-Mail Access</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>14 MCI Access</pre>
+            </td>
+          </tr>
+
+          <tr>
+
+           <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre> 5 U/D Access</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>10 User List Access</pre>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="33%">
+            <pre>15 Prime Time U/D Access</pre>
+            </td>
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1005</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Upper/lowercase input.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             P$: Displays prompt<br>
+
+             Number of characters allowed in input is governed by POKEing location 
+             53252: 0-255</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: User input</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1006</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Uppercase input - accepts a line of text, delimited by the RETURN key.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: User input<br>
+
+             U$: Duplicate of AN$, for command stacking</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1007</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        'Hotkey' input - waits for a single key. RETURN doesn't need to be pressed.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: User input</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1009</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Set drive - Sets active system drive, 1-6.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             DR: 0-6. 0 is the drive designated by PF, TF, TF, MF, or RF 
+             subsystems. 1-6 are the <a href="imageprg-chap1.html#drives">drive designators</a> 
+             used by the system.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             DV%: Active device number<br>
+
+             DR$: "&lt;<i>active device</i>&gt;:"</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1010</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Closes and then (re)opens the command channel&mdash;logical file 
+        #15&mdash;on the device and drive requested, as above</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1011</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens file.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             DR: Drive designator<br>
+
+             A$: Filename. Add <tt>",s,[r|w|a]"</tt> for SEQuential 
+             files, <tt>",l,"+CHR$(</tt><i>&lt;recordlength&gt;</i><tt>)</tt> 
+             for RELative files.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             E%: Error number</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1012</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Read error channel of currently active device/drive</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Error message<br>
+
+             E%: Error number<br>
+
+             E$: Copy of A$<br>
+
+             T%: Track<br>
+
+             S%: Sector</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1013</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Loads plus file module from plus file disk.</p>
+
+       
+      <p>
+        Notes:</p>
+
+       
+      <ul>
+
+        <li>
+        
+          <p>
+         The name is stored in CM$ and output to the top of the AREA window on 
+         the sysop's screen.<br>
+
+         </p>
+        </li>
+        <li>A$ (the filename to load) does not need a leading "+." 
+         The drive designators and "+." are automatically added.
+        </li>
+      </ul>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$, CM$: As noted above.<br>
+
+             DR: Drive designator</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1016</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Same as above, but will load the plus file and proceed to line 1 if 
+        no error is encountered.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1023</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Scratch-and-replace. Scratches (deletes) the specified file and re-opens
+         it for writing. Note: This routine should <i>only</i> be used for 
+        SEQuential files.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Filename to be scratched.<br>
+
+             DR: Drive designator.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             E%: Error number (?)</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1024</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Scratch (delete) specified file.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1025</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Update BAR stats. This routine will update the ST() array of the 
+        Board Activity Register. Note: Line 1025 will fall through to line 
+        1026 before RETURNing.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             X: Set to the number in 4.&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Access group name of user currently online. (Also .<br>
+
+             I: Value to be added to ST(X)</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1026</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs the value of ST(X) to record X of RELative file currently 
+        open on logical file number 2. Note: "e.stats" should be 
+        opened before calling this routine.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             X: Record number.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             E%: Error number (?).</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1027</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Sets active device and drive to the e. drive, and opens a SEQuential file.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             B$: Filename without e. prefix.<br>
+
+             A$: R, W, or A, depending if you want to read, write, or append to 
+             the file.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1030</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Read currently open SEQuential file until the ^ character is 
+        encountered, then reset output defaults and return.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             SR: the logical file number of the currently open file (2 in most cases)</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1034</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Deletes user handle from alphabetical index.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: Name of user to delete from index.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1038</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Inserts user handle into alphabetical index.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: Name of user to delete from index.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1040</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Search alphabettical index for user name.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: Name of user to search for in index.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: 1 if found, 0 if not. [Note: Why use a string variable? I'm 
+             going to check this for accuracy.]</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1060</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens RELative file <code>e.stats</code> on your etcetera disk.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1062</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens e-mail file for desired user.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             TT$: The name of the user to send mail to, minus the m. prefix.<br>
+
+             A$: R or W, depending on whether you want to read from or write to 
+             the file.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1063</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens RELative file <tt>e.data</tt> on your etcetera disk.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1064</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens the daily log.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: R, W, or A, depending if you want to read, write, or append to 
+             the file.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1065</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Opens RELative file <tt>u.config</tt> on your e. file disk.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1067</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Loads plus file module from plus file disk and proceed to line 1 if 
+        no errors are encountered.</p>
+
+       
+      <p>
+        Notes:</p>
+
+       
+      <ul>
+
+        <li>
+        
+          <p>
+         The name is stored in CM$ and output to the top of the AREA window on 
+         the sysop's screen.<br>
+
+         </p>
+        </li>
+        <li>A$ (the filename to load) does not need a leading "+." 
+         The drive designators and "+." are automatically added.
+        </li>
+      </ul>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: As stated above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1070</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Assembles user's online stats into a single string (A$), each 
+        separated by a carriage return. Positions RELative file pointer and 
+        prints A$ to the <tt>u.config</tt> file. The <tt>u.config</tt> file 
+        must be opened prior to calling this routine.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1075</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Clears the screen, outputs SEQuential file to screen and modem.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Name of file.<br>
+
+             DR: Drive designator.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1076</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs SEQuential file to screen and modem without clearing screen first.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1079</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Reads blocks free and updates sysop screen.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             DR: Device designator.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             BF: Blocks free.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1089</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Disk directory.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             DR: Device designator.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1093</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Clears all programmable arrays (those not DIMensioned at the start of 
+        the program).</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1095</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Adds a line to the system log and displays on the printer (device #4).</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Line to be output.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1096</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Displays a line on the printer (device #4).</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1098</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Resets system to default outputs, displays current prompt to the AREA 
+        window, and waits for uppercase input of up to 38 characters.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             P$: Prompt to display.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1099</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Displays first 11 characters of prompt, and first 4 characters of AN$ 
+        to AREA window.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             P$: Prompt to display.<br>
+
+             AN$: User input.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1300</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Loads module (minus the +. prefix) and GOSUBs to line 1 of the 
+        module. This routine is for all level command type modules like <tt>+.ST</tt>,
+         <tt>+.XP</tt>, <tt>+.LD</tt>, etc. These types of modules must 
+        return control to the main program with a <tt>RETURN</tt>.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Z$: Name of module to load.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1301</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Loads module (minus the +. prefix) and continues to line 1 of the 
+        module, unless an error is encountered in which case it will return 
+        to the main prompt. This is a good routine to load main level command 
+        modules like +.BB and +.CP.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Z$: Name of module to load.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1348</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs SEQuential file <tt>s.new user</tt> to screen and modem.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1349</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs SEQuential file <tt>s.config</tt> to screen and modem.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1350</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Clears screen and outputs SEQuential file.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Filename to be output, minus s. prefix.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1351</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Clears screen and outputs SEQuential file <tt>s.menu</tt> plus a 
+        number. It is followed by <tt>s.menu 1</tt> if the menu number chosen 
+        is greater than 1.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             LC: Number of menu to view:<br>
+            </p>
+            <ol>
+              <li>Main menu</li>
+              <li>Sub-boards</li>
+              <li>BBS editor</li>
+              <li>Sysop functions</li>
+              <li>Upload/download</li>
+              <li>Electronic mail</li>
+              <li>Directory subsystem</li>
+              <li>End-of-bulletin commands</li>
+              <li>Full disk exchange</li>
+              <li>Voting subsystem</li>
+            </ol>
+
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1354</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Read SEQuential file from drive. If no device/drive are specified, 
+        read will be from device 8, drive 0.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             X: Drive to have file read from.<br>
+
+             AN$: Command and device,drive. (For example, <tt>RD8,0</tt>).</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1360</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Display message to sysop screen AREA window.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             CM$: 14 characters maximum.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1375</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Display online user's computer type to chat window.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1376</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Display message to computer type/chat message window.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AN$: Message to display, 16 characters maximum.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1450</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Prompts for device and drive, then prompts for disk command before returning.</p>
+
+       
+      <p>
+        Notes:</p>
+
+       
+      <ul>
+
+        <li>
+        
+          <p>
+         If the command starts with <tt>n0:</tt> or <tt>s0:</tt>, you will be 
+         prompted "Are you sure?"<br>
+
+         </p>
+        </li>
+        <li><tt>@</tt> will return status of drive.</li>
+      </ul>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1460</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Add credits in the amount specified to user online.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1470</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Input routine for device, drive prompt.</p>
+
+       
+      <ul>
+
+        <li>
+        
+          <p>
+         If the device number is followed by a comma and a number in the range 
+         of 0-255, the second number represents the drive/logical unit number. 
+         Default device, drive is 8,0.</p>
+        </li>
+        <li>
+          <p>Values of 1-6 will return system drives.</p>
+        </li>
+        <li>Values of 7-15 will return the device number for each of the 
+         system drives.
+        </li>
+      </ul>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             D1%: Device number.<br>
+
+             D2%: Drive number.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1490</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Add a line to the daily log.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A$: Line to be added.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1500</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Translate IMAGE-encoded <a href="imageprg-chap1.html#fkeys">function keys</a> 
+        to text.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1520</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Time-of-day clock routines.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1604</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        BBS text editor entry routine.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             TT$(): All lines typed will be stored in this array.<br>
+
+             KK: Equals the number of the last line entered. If 0, no text was 
+             entered or the editor was aborted.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1610</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Alternate editor entry. This will not clear the text already in memory.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             Same as above.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1634</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Change access. This will change the user's flags to that of the 
+        access group it has been changed to via the <tt>Acs</tt> checkmark.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AO%: Old access flags.</p>
+            </td>
+
+          </tr>
+
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             AC%: New access flags.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1640</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Chat request. The first time a user requests chat, s/he will be asked 
+        a reason for chat. Every time thereafter, they will be told the page 
+        function is on.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1656</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Displays current time and date, and minutes left for this call.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1678</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Feedback. This will let the user leave a message to the sysop. Each 
+        user is allowed to leave two messages per call.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1694</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Logs the user off and resets BBS for incoming calls.</p>
+
+       
+      <p>
+        Notes:</p>
+
+       
+      <ul>
+
+        <li>
+        
+          <p>
+         If O is followed by a #, then the user's last call date will <i>not</i> 
+         be updated. [Note: I haven't been able to verify this.]</p>
+        </li>
+        <li>
+          <p>If the last character of the command is !, then the user will not 
+         be asked to log off, but be immediately disconnected.<br>
+
+         </p>
+        </li>
+        <li>On a normal logoff, the user's last call date is updated to the 
+         time the user logged on, not the time of logoff.</li>
+      </ul>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1736</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Load ML module into memory at <span style="font-family: monospace;">$C000</span> (49152).</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A: Number of ML module to load.
+             
+              </p>
+            <ol start="0">
+              <li>Punter</li>
+              <li>Xmodem</li>
+              <li>Copier</li>
+              <li>Relaxed Punter</li>
+              <li>Indexer</li>
+              <li>Clock</li>
+            </ol>
+
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1811</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Main system prompt entry. Clears arrays.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1812</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Alternate main system prompt entry.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1901</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Output <tt>Are You Sure?</tt> and fall through to the 
+        "Yes/No" routine below.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1902</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        "Get key" routine. Waits for a user to hit a key (Y or N). 
+        If Y is hit, <tt>Yes!</tt> will be output, otherwise <tt>No!</tt> 
+        will be output.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Returns:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             A=0: N or any other key other than Y was entered.<br>
+
+             A=1: Y was entered.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1903</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Same as above, except you must add your own "get key" 
+        routine, most likely calling line 1007.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1908</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Displays current time to screen and modem, also minutes left if the 
+        caller does not have unlimited time.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1910</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        "Say" routine. Reads a random quote from the <tt>e.say</tt> 
+        data file and outputs it to the screen and modem.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1914</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Resets all system output to default parameters.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1915</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Checks for local console (ZZ) mode.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1920</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs <tt>Aborted!</tt> to screen and modem.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1980</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs record from <tt>e.text</tt> (a file that contains various 
+        customizable error messages such as <tt>Not cleared for this function.</tt>)</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             X: Record number.</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1985</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs <tt>Sorry, </tt><i><tt>b$</tt></i><tt> limit exceeded</tt>.</p>
+
+       
+      <center>
+        
+      <p align="center">
+         
+      <table border="2" cellpadding="2" cellspacing="0" width="75%">
+
+          <tbody>
+          <tr>
+
+           <td bgcolor="WHEAT" valign="top" width="19%">
+            
+            <p>
+             Expects:</p>
+            </td>
+
+           <td valign="top" width="81%">
+            
+            <p>
+             B$: Whatever you want it to be: time, credit...</p>
+            </td>
+
+          </tr>
+
+         
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        1989</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Outputs <tt>Illegal Command</tt> message.</p>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td colspan="2" valign="top" width="12%">
+       
+      <center>
+        
+      <hr align="center" size="2" width="100%">
+       </center>
+      </td>
+
+     </tr>
+
+     <tr>
+
+      <td valign="top" width="12%">
+       
+      <p>
+        2000-<br>
+
+        2015</p>
+      </td>
+
+      <td valign="top" width="88%">
+       
+      <p>
+        Error-trapping routines.</p>
+      </td>
+
+     </tr>
+
+    
+  </tbody>
+</table>
+</p>
+
+   </center>
+
+    
+<center>
+   
+<p align="center">
+    
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+     <tbody>
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       
+      <center>
+        
+      <p align="center">
+         <a href="../index.html">Ryan's Web Page</a> | <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | Chapter II | <a href="imageprg-chap3-1.html">Chapter
+          III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p>
+      </center>
+      </td>
+
+     </tr>
+
+    
+  </tbody>
+</table>
+</p>
+
+   </center>
+
+  
+</body>
+</html>

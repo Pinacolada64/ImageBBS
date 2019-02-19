@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("MicroVision WebExpress","770") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("18","80ff","Orange","0") -->
+  <!-- $MVD$:color("19","ffd6ce","Lavender","0") -->
+  <!-- $MVD$:color("20","7dc0e1","Tan","0") -->
+  <!-- $MVD$:color("21","adcfeb","Light Tan","0") -->
+  <!-- $MVD$:color("22","dc727c","Commodore Light Blue","0") -->
+  <!-- $MVD$:color("23","a5323e","Commodore Dark Blue","0") -->
+  <TITLE>IMAGE BBS Programmer's Reference Guide</TITLE>
+ </HEAD>
+ <BODY LINK="#00007F" STYLE="background-color: WHITE; direction: ltr;">
+  <CENTER>
+   <P ALIGN=CENTER>
+    <TABLE WIDTH="75%" CELLPADDING="2" CELLSPACING="0" BORDER="0">
+     <TR>
+      <TD VALIGN=TOP>
+       <P>
+        <tbody></TD>
+     </TR>
+     <TR>
+      <TD WIDTH="100%" BGCOLOR="#EBCFAD" VALIGN=TOP>
+       <CENTER>
+        <P ALIGN=CENTER>
+         Index/Preface | <A HREF="imageprg-chap1.html">Chapter I</A> | <A HREF="imageprg-chap2.html">Chapter
+          II</A> | <A HREF="imageprg-chap3-1.html">Chapter III</A> | <A HREF="imageprg-chap4.html">Chapter
+          IV</A> | <A HREF="imageprg-chap5.html">Chapter V</A></TD>
+     </TR>
+    </TABLE></P>
+   </CENTER>
+  <CENTER>
+   <P ALIGN=CENTER>
+    <TABLE WIDTH="75%" CELLPADDING="2" CELLSPACING="5" BORDER="0">
+     <TR>
+      <TD VALIGN=TOP>
+       <P>
+        <tbody></TD>
+     </TR>
+     <TR>
+      <TD WIDTH="100%" VALIGN=TOP><PRE>File date: 10/10/2001<BR>  Updated:  8/31/2002, 9/9/2004, 10/26/2006<BR>&nbsp;&nbsp; Typist: Ryan Sherwood (Pinacolada)</PRE><P>
+        <I>This is a manual for programming Image BBS v1.2(A) applications on 
+        the Commodore 64. It was retyped based on the only surviving printed 
+        copy I had. I was missing a few pages; plus, my Okimate 20 chewed up 
+        a few lines here and there. I'll do the best I can to extrapolate any 
+        missing information and add comments, which will go in </I>[square brackets].<I> 
+        Overall, I'm hoping it should be pretty accurate - all typos should 
+        be squashed, and none added.</I></P>
+       <P>
+        <I>I'm not sure where to get the original copy...</I></P>
+       <P>
+        <I>For now, I can be reached on the Internet at </I><A HREF="mailto:sym_rsherwood@yahoo.com"><TT>sym_rsherwood@yahoo.com</TT></A><I>.</I></P>
+       <P>
+        <I>I admit, I got a little lazy on the last part of the BASIC 
+        listing. It appears the original writers did too. Any additional 
+        fact-finding would have to be done on the original distribution 
+        files, as my BBS as it stands now is heavily modified.</I></P>
+       <H1>
+        Index</H1>
+       <BLOCKQUOTE>
+        <P>
+         <A HREF="#preface">Preface</A></P>
+        <P>
+         Chapter I: <A HREF="imageprg-chap1.html#generalinfo">General Information</A></P>
+        <BLOCKQUOTE>
+         <P>
+          <A HREF="imageprg-chap1.html#fkeys">The Function Keys</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#drives">The Drive Designators</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#timedate">Time and Date Format</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#carrierloss">Carrier Loss</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#accesslevels">Access Levels</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#plusfiles">Plus Files (+.*)</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#plusplusfiles">ML Modules (++ *)</A></P>
+         <P>
+          <A HREF="imageprg-chap1.html#miniplusfiles">Mini Plus Files</A></P>
+         </BLOCKQUOTE>
+        <P>
+         Chapter II: <A HREF="imageprg-chap2.html#basicsubs">BASIC Subroutines</A></P>
+        <P>
+         Chapter III: Machine Language Subroutines</P>
+        <BLOCKQUOTE>
+         <P>
+          <A HREF="imageprg-chap3-2.html">Jump Table (&amp; commands)</A></P>
+         <P>
+          <A HREF="imageprg-chap3-2.html#memlocs">Memory Map</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#usingmodules">Using Modules</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#usingmlmodules">Using ML Modules</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#rs232">RS232 Routines</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#theswapper">Swapper</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#thelightbar">The Light Bar</A></P>
+         <P>
+          <A HREF="imageprg-chap3-3.html#theeditor">The System Editor</A></P>
+         </BLOCKQUOTE>
+        <P>
+         Chapter IV: <A HREF="imageprg-chap4.html">Disk File Formats</A></P>
+        <BLOCKQUOTE>
+         <P>
+          <A HREF="imageprg-chap4.html#uconfig">The User File</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#edata">The System Data File</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#barstats">Statistics</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#bd_data">Boot Files</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#ud_dirs">U/D Directories</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#sub_boards">Sub-Board Directories</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#e_sub">Sub-Board/Library Data</A></P>
+         <P>
+          <A HREF="imageprg-chap4.html#email">E-Mail</A></P>
+         </BLOCKQUOTE>
+        <P>
+         Chapter V: <A HREF="imageprg-chap5.html">Variable Usage</A></P>
+        <BLOCKQUOTE>
+         <P>
+          <A HREF="imageprg-chap5.html#temporarystorage">Temporary Storage Variables</A></P>
+         <P>
+          <A HREF="imageprg-chap5.html#reservedstrings">Reserved String Variables</A></P>
+         <P>
+          <A HREF="imageprg-chap5.html#integervariables">Reserved Integer Variables</A></P>
+         <P>
+          <A HREF="imageprg-chap5.html#floatingpoint">Reserved Floating Point Variables</A></P>
+         <P>
+          <A HREF="imageprg-chap5.html#arrays">Arrays</A></P>
+         </BLOCKQUOTE>
+        </BLOCKQUOTE>
+       <H1>
+        &nbsp;Preface<A NAME="preface"></A></H1>
+       <P>
+        This manual assumes the [user has a good working knowledge of] the 
+        BASIC programming language. If you find that you have trouble with 
+        areas on BASIC, it is recommended that you refer to a good 
+        programming book, such as the Commodore 64 Programmer's Reference 
+        Guide, published by Howard W. Sams &amp; Company.</P>
+       <P>
+        The main purpose of this manual is to familiarize the reader with 
+        areas of Image that may be accessed in order for the reader to write 
+        modifications or modules to enhance their systems.</P>
+       <P>
+        The scope of this book is intended to include: BASIC subroutines, 
+        reserved system variables, important areas of memory in use, disk 
+        file handling, execution and use of &quot;mini plus-files&quot; and 
+        data formats of various disk files.</P>
+       <P>
+        This manual was made with every intent to provide a readable, 
+        accurate, and exciting way to program Image like never before. Enjoy 
+        the manual.</P>
+       <P ALIGN=RIGHT>
+        New Image Software</P>
+       <P>
+        Welcome to the world of programming IMAGE BBS! This manual is 
+        designed to allow both the novice and advanced programmer the ability 
+        to program IMAGE BBS modules. We will cover five major areas of IMAGE 
+        BBS: general information, the BASIC program, machine language 
+        routines, disk file formats, and variable usage charts. Also included 
+        you will find a special question and answer section of the most often 
+        asked questions and the answers to those questions. [Note: I never 
+        saw that section.]</P>
+       <P>
+        IMAGE BBS will support virtually all hardware available for the C64, 
+        including the Lt. Kernal (c) hard drives and the CMD HD 
+        series&nbsp;hard drives. Also, the SwiftLink (c) RS-232 cartridge by 
+        Dr. Evil. [Note: SwiftLinks have been replaced by Turbo232 
+        cartridges, sold by Maurice Randall of <A HREF="http://www.ia4u.net/%7Emaurice/">Click
+         Here Software</A>. His order site is located at <A HREF="http://www.cmdrkey.com">http://www.cmdrkey.com</A>.]</P>
+       <P>
+        IMAGE BBS is a modular type program consisting of both BASIC and 
+        machine language modules. A main BASIC module (&quot;im&quot;) and a 
+        main machine language module (&quot;ml 1.2&quot;) both reside in main 
+        memory at all times. Also used are BASIC modules (+.*) and machine 
+        language (++*) modules.</P>
+       <P>
+        The purpose of this manual is to provide you with necessary 
+        subroutines and variable considerations to make your own modules or 
+        modify the existing system to suit your needs.</P>
+       <P>
+        I would like to thank all of those who worked hard in taking NEW 
+        IMAGE SOFTWARE to where it stands today.</P>
+       <P>
+        DON GLADDEN (C Tuna) for the original BASIC program.</P>
+       <P>
+        RAY KELM (The Professor) the ML whiz-kid, for the ML.</P>
+       <P>
+        FRED DART (The Chief) for hours upon hours of work and always being 
+        available for support. [R.I.P.]</P>
+       <P>
+        JOHN MOORE (Little John) for continuous sleepless nights spent to 
+        better the software and its subsystems. Also for the much awaited 128 version.</P>
+       <P>
+        BOB LEARY (Dr. Bob) for countless hours of work wracking my brains 
+        trying to get this manual done.</P>
+       <P>
+        NISSA for providing undue support to all those sysops in their time 
+        of need.</TD>
+     </TR>
+    </TABLE></P>
+   </CENTER>
+  <CENTER>
+   <P ALIGN=CENTER>
+    <TABLE WIDTH="75%" CELLPADDING="2" CELLSPACING="0" BORDER="0" STYLE="background-color: rgb(255, 204, 153);">
+     <TR>
+      <TD VALIGN=TOP>
+       <P>
+        <tbody></TD>
+     </TR>
+     <TR>
+      <TD WIDTH="100%" BGCOLOR="#EBCFAD" VALIGN=TOP>
+       <CENTER>
+        <P ALIGN=CENTER>
+         Index/Preface | <A HREF="imageprg-chap1.html">Chapter I</A> | <A HREF="imageprg-chap2.html">Chapter
+          II</A> | <A HREF="imageprg-chap3-1.html">Chapter III</A> | <A HREF="imageprg-chap4.html">Chapter
+          IV</A> | <A HREF="imageprg-chap5.html">Chapter V</A></TD>
+     </TR>
+    </TABLE>
+ </BODY>
+</HTML>

@@ -1,0 +1,2385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-us">
+<head>
+
+  
+
+
+  
+  <title>Image BBS Programming Reference Guide</title>
+  <meta content="MicroVision Development / WebExpress" name="GENERATOR">
+</head>
+
+
+<body style="direction: ltr;">
+
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      
+      <center>
+      
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | <a href="imageprg-chap3-1.html">Chapter III</a> | Chapter IV | <a href="imageprg-chap5.html">Chapter V</a></p>
+
+
+      </center>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+</p>
+
+
+</center>
+
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td valign="top" width="100%">
+      
+      <h1> Chapter IV:&nbsp;Disk File Formats</h1>
+
+
+      <br>
+
+
+This chapter will give you the formats for all important files on your
+system. The maps will include the name of each file, the information
+stored in each record, and the associated system variables.<br>
+
+
+      <br>
+
+
+1. <span style="font-family: monospace;">u.config</span>
+(user statistics)&nbsp; REL &nbsp;254 bytes per record<a name="uconfig"></a><br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(153, 153, 153);" align="undefined" valign="undefined">Field</td>
+
+
+            <td style="background-color: rgb(153, 153, 153);" align="undefined" valign="undefined">Variable</td>
+
+
+            <td style="background-color: rgb(153, 153, 153);" align="undefined" valign="undefined">Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">NA$</td>
+
+
+            <td align="undefined" valign="undefined">Handle</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PW$</td>
+
+
+            <td align="undefined" valign="undefined">Password</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FF$</td>
+
+
+            <td align="undefined" valign="undefined">First
+name</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">LL$</td>
+
+
+            <td align="undefined" valign="undefined">Last
+name</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">5</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PH$</td>
+
+
+            <td align="undefined" valign="undefined">Phone
+number</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">6</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">LD$</td>
+
+
+            <td align="undefined" valign="undefined">Last
+call date<br>
+
+
+(for new messages)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">7</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">AC%</td>
+
+
+            <td align="undefined" valign="undefined">Access
+level</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">8</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">CT%</td>
+
+
+            <td align="undefined" valign="undefined">Calls
+today</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">9</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">TC%</td>
+
+
+            <td align="undefined" valign="undefined">Total
+calls</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">10</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">CO%</td>
+
+
+            <td align="undefined" valign="undefined">Computer
+type<br>
+
+
+(<span style="font-family: monospace;">CO$(CO%)</span>
+to see text)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">11</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">LL%</td>
+
+
+            <td align="undefined" valign="undefined">Line
+length</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">12</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">UL<br>
+
+
+            </td>
+
+
+            <td align="undefined" valign="undefined">Upper/lowercase
+flag*</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">13</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">LL</td>
+
+
+            <td align="undefined" valign="undefined">Linefeed
+flag (1=on)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">14</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">EM</td>
+
+
+            <td align="undefined" valign="undefined">Expert
+mode flag (1=on)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">15</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">DC</td>
+
+
+            <td align="undefined" valign="undefined">Total
+files downloaded</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">16</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">UC</td>
+
+
+            <td align="undefined" valign="undefined">Total
+files uploaded</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">17</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">BD</td>
+
+
+            <td align="undefined" valign="undefined">Total
+blocks downloaded</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">18</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">BU</td>
+
+
+            <td align="undefined" valign="undefined">Total
+blocks uploaded</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">19</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">CR</td>
+
+
+            <td align="undefined" valign="undefined">Credit
+points</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">20</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PS</td>
+
+
+            <td align="undefined" valign="undefined">Total
+posts</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">21</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">RP</td>
+
+
+            <td align="undefined" valign="undefined">Total
+responses</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">22</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">D5$</td>
+
+
+            <td align="undefined" valign="undefined">True
+last call date</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">23</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$</td>
+
+
+            <td align="undefined" valign="undefined">User
+flags</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">24</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">JN$</td>
+
+
+            <td align="undefined" valign="undefined">Joined/unjoined
+flags</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td colspan="3" rowspan="1" align="undefined" valign="undefined">* Note that the
+UL flag is used for the default transfer protocol if your system uses
+the TurboRel Subs.</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+2. <span style="font-family: monospace;">e.data</span> (system data) &nbsp;REL &nbsp;40 bytes per record<a name="edata"></a><br>
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <th style="text-align: left; background-color: rgb(192, 192, 192);"><span style="text-decoration: underline;"></span>Record&nbsp;#</th>
+
+
+            <th style="background-color: rgb(192, 192, 192);">Variable</th>
+
+
+            <th style="background-color: rgb(192, 192, 192);">Description</th>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">CA</td>
+
+
+            <td align="undefined" valign="undefined">Total
+calls to the system</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">AG$</td>
+
+
+            <td align="undefined" valign="undefined">Access
+group name (AG$) for group 0*</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 1 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 2 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">5</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 3 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">6</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 4 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">7</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 5 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">8</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 6 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">9</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 7 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">10</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 8 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">11</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Access
+group 9 (see record #2)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">12</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">UR</td>
+
+
+            <td align="undefined" valign="undefined">Highest
+user account minus one</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">13</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">OC$</td>
+
+
+            <td align="undefined" valign="undefined">30
+character string of 0's and 1's for SB</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">14</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Same
+as record 13 for UD</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">15</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Same
+as record 13 for UX</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">16</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">UH</td>
+
+
+            <td align="undefined" valign="undefined">Number
+of active user accounts</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">17</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">D3$</td>
+
+
+            <td align="undefined" valign="undefined">Last
+caller on system</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">18</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PP$</td>
+
+
+            <td align="undefined" valign="undefined">System
+remote password</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">19</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">D6$</td>
+
+
+            <td align="undefined" valign="undefined">Time
+of last user logoff (11 digits)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">20</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PT%, P2%, P3%</td>
+
+
+            <td align="undefined" valign="undefined">Time
+allowed during prime time (P1%), prime time start (P2%), prime time end
+(P3%)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">21</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(0)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 0.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">22</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(1)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 1.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">23</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(2)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 2.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">24</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(3)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 3.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">25</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(4)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 4.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">26</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(5)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 5.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">27</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(6)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 6.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">28</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(7)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 7.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">29</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(8)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 8.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">30</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">FL$(9)</td>
+
+
+            <td align="undefined" valign="undefined">Default
+flags for access group 9.</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">31</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">L1</td>
+
+
+            <td align="undefined" valign="undefined">Next
+available user account</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">32</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">AT$</td>
+
+
+            <td align="undefined" valign="undefined">Modem
+command string</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td colspan="3" rowspan="1" align="undefined" valign="undefined">* Note that in
+records 2-10, the access group name is preceded by 4 control codes
+which designate:<br>
+
+
+            
+            <ul>
+
+
+              <li>time per call (0=unlimited)</li>
+
+
+              <li>calls per day (0=unlimited)</li>
+
+
+              <li>downloads per call (0=unlimited)</li>
+
+
+              <li>maximum idle time (1-9 minutes)<br>
+
+
+              </li>
+
+
+            
+            </ul>
+
+
+These control characters may be seen using the <span style="font-family: monospace;">+.access</span> editor.</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+3. e.stats (system stats)&nbsp; (REL) &nbsp;20 bytes per record<a name="barstats"></a><br>
+      <br>
+
+
+      
+      <table style="text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(153, 153, 153);"></td>
+
+
+            <td style="background-color: rgb(153, 153, 153); text-align: center;" valign="undefined">&nbsp; Last &nbsp;</td>
+
+
+            <td style="background-color: rgb(153, 153, 153); text-align: center;" valign="undefined">&nbsp; Log &nbsp;</td>
+
+
+            <td style="background-color: rgb(153, 153, 153); text-align: center;" valign="undefined">Current</td>
+
+
+            <td style="background-color: rgb(153, 153, 153); text-align: center;" valign="undefined">&nbsp;Total </td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Feedback</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">1</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">12</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">23</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">30</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Sysop Mail</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">2</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">13</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">24</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">31</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">User Mail</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">3</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">14</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">25</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">32</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Posts</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">4</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">15</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">26</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">33</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Responses</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">5</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">16</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">27</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">34</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Uploads</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">6</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">17</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">28</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">35</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Downloads</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">7</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">18</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">36</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">New Users</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">8</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">19</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">29</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">Calls</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">9</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">20</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">% Used</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">10</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">21</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td style="background-color: rgb(192, 192, 192);" align="undefined" valign="undefined">% Idle</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">11</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined">22</td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+            <td style="font-family: monospace; text-align: center;" valign="undefined"></td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td colspan="5" rowspan="1" align="undefined" valign="undefined">Record 37: Total
+minutes system used overall</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td colspan="5" rowspan="1" align="undefined" valign="undefined">Record 38: Total
+minutes system idle overall</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      
+      <div style="text-align: center;"><br>
+
+
+      
+      <div style="text-align: left;">4. <span style="font-family: monospace;">bd.data</span> &nbsp;(SEQ)<a name="bd_data"></a><br>
+
+
+      <br>
+      <span style="font-family: monospace;">
+
+bd.data</span> is a SEQ file which your system reads once during boot. If any
+changes are made to this file, you must reboot your system to activate
+them.<br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td>Line</td>
+
+
+            <td align="undefined" valign="undefined">Variable</td>
+
+
+            <td align="undefined" valign="undefined">Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">System
+disk device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">System
+disk drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">E-Mail
+disk device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">E-Mail
+disk drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">5</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Etcetera
+disk device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">6</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Etcetera
+disk drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">7</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Directory
+disk device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">8</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Directory
+disk drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">10</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Plus
+file device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">11</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Plus
+file drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">12</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">User
+file device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">13</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">User
+file drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">14</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">CC$</td>
+
+
+            <td align="undefined" valign="undefined">System
+identifier</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">15</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">New
+user credits</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">16</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Highest
+device number</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">17</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Highest
+drive number</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">18</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">BN$</td>
+
+
+            <td align="undefined" valign="undefined">BBS
+name</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">19</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">PO$</td>
+
+
+            <td align="undefined" valign="undefined">Main
+prompt</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+5. U/D directory file format &nbsp;(SEQ)<a name="ud_dirs"></a><br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">Line</td>
+
+
+            <td align="undefined" valign="undefined">Variable</td>
+
+
+            <td align="undefined" valign="undefined">Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">RN</td>
+
+
+            <td align="undefined" valign="undefined">Number
+of files in directory (60 max)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">F%(X)</td>
+
+
+            <td align="undefined" valign="undefined">File
+size in CBM blocks</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">NN$(X)</td>
+
+
+            <td align="undefined" valign="undefined">User
+ID number padded with 0's, plus handle</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">DT$(X)</td>
+
+
+            <td align="undefined" valign="undefined">Upload
+date plus last download date plus filename, type</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">5</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">ED$(X)</td>
+
+
+            <td align="undefined" valign="undefined">Description
+of file</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">6</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">C%(X)</td>
+
+
+            <td align="undefined" valign="undefined">Times
+downloaded</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">7</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">D%(X)</td>
+
+
+            <td>Computer type 0-9 (0=any)</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+Lines 2-7 are repeated throughout the file, once for each file in
+the directory. The number of times is determined by the first file
+entry (RN).<br>
+
+
+      <br>
+
+
+6. &nbsp;SB directory format&nbsp; (SEQ/REL)<a name="sub_boards"></a><br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td>Position</td>
+
+
+            <td align="undefined" valign="undefined">Variable</td>
+
+
+            <td align="undefined" valign="undefined">Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td style="font-family: monospace;" align="undefined" valign="undefined">RN</td>
+
+
+            <td align="undefined" valign="undefined">Number
+of posts in directory (60 max)</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Title
+of original message</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">ID#
+(or net ID#) of poster, plus handle</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Date
+of message, plus date of last response</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">5</td>
+
+
+            <td align="undefined" valign="undefined"></td>
+
+
+            <td align="undefined" valign="undefined">Total
+number of responses</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+Lines 2-5 are repeated throughout the file, once for each file in
+the directory. The number of times is determined by the first file
+entry (RN).<br>
+
+
+      <br>
+
+
+7. <span style="font-family: monospace;">e.Sub</span>, <span style="font-family: monospace;">e.U/D</span>, <span style="font-family: monospace;">e.U/X</span> file formats &nbsp;(REL)<a name="e_sub"></a><br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <th style="background-color: rgb(192, 192, 192);" colspan="2" rowspan="1">Record 1</th>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td colspan="2" rowspan="1" align="undefined" valign="undefined">Total number of
+subs, libraries defined</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <th style="background-color: rgb(192, 192, 192); width: 100%; vertical-align: top;" colspan="3" rowspan="1">Records 2-901</th>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>Field</td>
+
+
+            <td>Variable</td>
+
+
+            <td>Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>1</td>
+
+
+            <td></td>
+
+
+            <td>Password for password-protected board</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>2</td>
+
+
+            <td style="font-family: monospace;">AC%(X)</td>
+
+
+            <td>Access code</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>3</td>
+
+
+            <td style="font-family: monospace;">BN$(X)</td>
+
+
+            <td>Board name</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td><br>
+            </td>
+
+
+            <td></td>
+
+
+            <td>Unused</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>5</td>
+
+
+            <td></td>
+
+
+            <td>Device</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>6</td>
+
+
+            <td></td>
+
+
+            <td>Drive</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td>7</td>
+
+
+            <td></td>
+
+
+            <td>Open/close flag</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+
+8. E-mail format (<span style="font-family: monospace;">m.</span><var style="font-family: monospace;"><span style="font-style: italic;">&lt;handle&gt;</span></var>)&nbsp; SEQ<a name="email"></a><br>
+
+
+      <br>
+
+
+      
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+
+        <tbody>
+
+
+          <tr>
+
+
+            <td>Line</td>
+
+
+            <td align="undefined" valign="undefined">Description</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">1</td>
+
+
+            <td align="undefined" valign="undefined">Handle
+of sending user</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">2</td>
+
+
+            <td align="undefined" valign="undefined">ID
+of sending user</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">3</td>
+
+
+            <td align="undefined" valign="undefined">Date
+sent</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">4</td>
+
+
+            <td align="undefined" valign="undefined">[
+title ]</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined">.<br>
+
+
+.<br>
+
+            <var>
+n</var></td>
+
+
+            <td align="undefined" valign="undefined">text
+of message</td>
+
+
+          </tr>
+
+
+          <tr>
+
+
+            <td align="undefined" valign="undefined"><var>n</var>+1</td>
+
+
+            <td align="undefined" valign="undefined">^
+at end of message</td>
+
+
+          </tr>
+
+
+        
+        </tbody>
+      
+      </table>
+
+
+      <br>
+
+[Lines 1-<var>n+1</var> are repeated throughout the file, once for each message in
+the user's mailbox.]
+ </div>
+
+
+      </div>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+</p>
+
+
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      
+      <center>
+      
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | <a href="imageprg-chap3-1.html">Chapter III</a> | Chapter
+IV | <a href="imageprg-chap5.html">Chapter V</a></p>
+
+
+      </center>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+</p>
+
+
+</center>
+
+
+<p align="center">&nbsp;</p>
+
+
+</body>
+</html>
