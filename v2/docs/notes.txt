@@ -50,3 +50,32 @@ Handle: BUCKO
  In Line:2512 Of im
 
 Image 2.0: Turn MN mode on, then go into GF files, then Z for maint
+
+Regarding Fast Assembler's
+	if * > $8000 then print "Error in extra modules"
+
+TASS <http://tass64.sourceforge.net/> can do:
+
+.error <message> [, <message>, …]
+.cerror <condition>, <message> [, <message>, …]
+Exit with error or conditionally exit with error
+        .error "Unfinished here..."
+        .cerror * > $1200, "Program too long by ", * - $1200, " bytes"
+
+Regarding telnet binary mode:
+https://github.com/FozzTexx/tcpser/commit/321b2ff26087dacb85032e7bea5315b4924ced8e
+mentions "set parity to space" to enable 8-bit binary transmission. Interesting.
+
+http://stanislavs.org/helppc/hayes_modem_info.html
+
+|7|6|5|4|3|2|1|0|  S13	 power up async data format
+ | | | | | | | `---- unused
+ | | | | | | `----- result code, 0=basic, 1=extended
+ | | | | | `------ parity, 0=disabled, 1=enabled
+ | | | | `------- parity, 0=odd ,1=even
+ | | | `-------- data bits, 0=7 bits, 1=8 bits
+ | | `--------- undefined
+ | `---------- buffer ovfw flag, 0=disabled,1=enabled
+ `----------- 8th bit, 0=space,1=mark (8 bit only)
+
+ats13=%00011010 = 26

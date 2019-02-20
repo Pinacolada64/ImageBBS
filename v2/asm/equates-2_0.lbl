@@ -1,6 +1,3 @@
-{asm}
-; to include:
-; {uses:..\asm\equates-2_0.lbl}
 ;
 ; image 2.0 equates
 ;
@@ -16,7 +13,8 @@
 	scs	= $dc09 ; seconds
 	min	= $dc0a ; minutes
 	hrs	= $dc0b ; hours
-	carrier = $dd01 ; needed by irqhn.s
+;	carrier = $dd01 ; This definition conflicts with $d009;
+			; "carrier" is referenced by irqhn.s
 			; 56577: CIA #2 Data Port B
 			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
 	colors	= $e8da	; flashing chat page color table
@@ -337,4 +335,3 @@
 	arraysav= wedgemem+9
 	arrayres= wedgemem+12
 	forcegc	= wedgemem+15
-{endasm}

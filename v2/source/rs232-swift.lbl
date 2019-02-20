@@ -1,12 +1,11 @@
-; 5/Jun/2016 21:43 - assemble with casm 4.0 beta
+; assemble with casm 4.0 beta
 
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
 
-{include:equates-2_0.lbl}
+{include:../asm/equates-2_0.lbl}
 orig $0800
-{asm}
-;
+
 baudof	= $299
 rodbe	= $29e
 rodbs	= $29d
@@ -406,4 +405,4 @@ nchrin:
 ; last:
 ; next pass:close 8:print last-first "bytes."
 {info:DONE.}
-{endasm}
+

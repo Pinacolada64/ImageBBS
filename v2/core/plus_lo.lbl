@@ -217,8 +217,8 @@
 {:3204}
 	&"{f6:2}Sorry, Unable To Log You In...{f6:2}":goto {:3262}
 {:3206}
-	&"{f6:2}Enter A Brief Message Stating Why You{f6}Need Help.{f6}NOTE: Aborting This "
-	&"WILL Log You Off.{f6:2}"
+	&"{f6:2}Enter A Brief Message Stating Why You{f6}Need Help.{f6}"
+	&"NOTE: Aborting This WILL Log You Off.{f6:2}"
 	le=10*(val(mid$(fl$,6,1))+1):gosub 1604:if kk=.then tr%=.:return
 	b$="telecheck":ad$="Telecheck":gosub 1068:print# 2,"Forgotten Password"r$:goto 1074
 {:3214}
