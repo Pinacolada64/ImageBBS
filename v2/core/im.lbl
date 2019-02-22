@@ -532,7 +532,7 @@
 	&"{lt. green}[{gray3}Yes{lt. green}]":gosub {:1007}:a=(a$="N")+1:&"{pound}h5":goto {:1904}
 {:1908}
 {number:1908}
-' &,52,30,3: are main prompt macros enabled? (fixme: seems superflous here...)
+' &,52,30,3: are main prompt macros enabled? (FIXME: seems superflous here...)
 ' also called from {:1100} gosub {:1908}
 	poke 970,.:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
 	goto {:1915}
@@ -778,14 +778,14 @@
 	&"Print Mode Defs":a$=dr$+"e.printmodes":&,7,dv%,7:gosub {:sub.status}
 	&"Lightbar Defs":a$=dr$+"e.lightbar":&,7,dv%,8:gosub {:sub.status}
 '	&"Alarm Table":a$=dr$+"e.alarms":&,7,dv%,9:gosub {:sub.status}
-' fixme: also not ready:
+' FIXME: also not ready:
 	f$="e.alarms":gosub {:sub.check_for_file}:if e%=62 then {:nm_times}
 ' a$ gets overwritten by DOS status
 	a$=dr$+f$:&"Alarm Table":&,7,dv%,9:gosub {:sub.status}
 {:nm_times}
 ' TODO: check if "nm.config" exists first?
 ' check for presence of "nm.times": if not present, don't crash with ?load error
-' fixme: larry said this caused his bbs to not run network transfers :(
+' FIXME: larry said this caused his bbs to not run network transfers :(
 	dr=2:gosub {:1009}:f$="nm.times":gosub {:sub.check_for_file}:if e%=62 then {:fkeys}
 	&"Network Alarm Table":a$=dr$+f$:&,7,dv%,12:gosub {:sub.status}
 {:fkeys}
@@ -923,7 +923,7 @@
 	print# 2,"2.0 Image v2.0 Copyright 1994 New Image Software":close 2:close 15
 	gosub {:sub.done}:&"{f6}Creating {f5}u.config{f5}...."
 	dr=6:a$="u.config,l,"+chr$(254):gosub {:1011}
-' fixme: ur=1: is this wrong? should it be 2?
+' FIXME: ur=1: is this wrong? should it be 2?
 	x=1:gosub {:1001}:print# 2,tt$:x=2:gosub {:1001}:print# 2,"{up arrow}":ur=1:close 2:gosub {:sub.done}
 ' insert user #1 into u.index:
 ' al's method (sets to 141), would use 1023 instead of s0:, but that is only for seq files:
@@ -1032,7 +1032,7 @@
 '{:3364}
 ' load Lt.Kernal ml:
 '	dr=5:gosub {:1010}:a$=dr$+"swr.ml":&,7,dv%,2:return
-' fixme: partial duplicate of 3358, no reference to it
+' FIXME: partial duplicate of 3358, no reference to it
 '	gosub {:3364}:sys 49152:sys 49155:goto {:3362}
 
 {:set_time_flag}
@@ -1041,7 +1041,7 @@
 {:3368}
 {number:3376} ' to sync up with older version line #s
 ' convert from 1/2(a)
-' fixme: x-tec says it's broken
+' FIXME: x-tec says it's broken
 	close 15:open 15,dv%,15,"r"+bd$+"d.data=bd.data"
 	fl=.:&"{f6:2}Reading {f5}d.data{f5}...":close 2:open 2,dv%,2,bd$+"d.data,s,r":gosub {:1012}
 	if e%then close 2:&"{f6:2}{f5}d.data{f5} not found!! [CONFIGURE] (Key) {pound}g1":return
@@ -1095,7 +1095,7 @@
 ' [> _
 	&"Set Clock From:{f6:2} 1. CMD boot device{f6} 2. Lt.Kernal{f6}"
 {number:3449}
-	&" 3. Last AutoMaint timestamp{f6:2}"
+	&" 3. Last system timestamp{f6:2} 4. External CMD device"
 {number:3450}
 {:3450}
 	&"[> {pound}i1":y%=int(val(an$)):if y%<1 or y%>3 then &"{up}":goto {:3450}
@@ -1146,7 +1146,7 @@
 {number:4000}
 {:4000}
 	&,38:el=y:cm$=cm$+"":p$=p$+"":pr$=pr$+"":im$=im$+"":if x<128 then :4006}
-	a$="FATAL E{$d2:2}OR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	a$="FATAL ERROR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 	&,38:&,61,.,8:print"&,37:goto 1812:":end
 {:4006}
 {number:4006}
@@ -1155,10 +1155,10 @@
 {number:4008}
 	read a$:if a$<>"errors"then :4008}
 	&,40:d$="GURU":if x>.and x<30 then for k=1 to x:read d$:next
-	a%=x:&"{f6}{lt. red} SYSTEM E{$d2:2}OR #{pound}%a {white}({pound}$d E{$d2:2}OR){f6}":r$=chr$(13)
+	a%=x:&"{f6}{lt. red} SYSTEM ERROR #{pound}%a {white}({pound}$d ERROR){f6}":r$=chr$(13)
 	a$="im":if el=>3000 then a$="+."+pr$:if el=>60000 then a$="im."+im$
 	a=el:&"{lt. blue} In Line:{gray3}{pound}!a {lt. blue}Of {gray3}{pound}$a{f6}"
-	&"{f6}{lt. red}Recording Error, Please Wait...":d$=str$(x)+" ("+d$+" E{$d2:2}OR)"
+	&"{f6}{lt. red}Recording Error, Please Wait...":d$=str$(x)+" ("+d$+" ERROR)"
 ' 1027	dr=3:a$="e."+b$+",s,"+a$:goto {:1011}
 	b$="errlog":a$="a":gosub {:1027}:if e% then a$="w":gosub {:1027}
 {:4024}
@@ -1177,7 +1177,7 @@
 ' peek(2033)=0: carrier status
 	if ac%<>16 then &,52,4,3:if a% or (peek(2033)and 1)=. then :4050}
 	a$="lo":f1=2:goto {:1016}
-	a$="FATAL E{$d2:2}OR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	a$="FATAL ERROR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
 {number:4050}
 ' &,52,4,3: is "console mode" enabled? (true local login),
@@ -1202,16 +1202,16 @@
 {:4068}
 {number:4068}
 	pr$="":goto {:1811}
-	data"errors"
-	data "T{$cf:2} MANY FILES","FILE OPEN","FILE NOT OPEN"
+	data "errors"
+	data "TOO MANY FILES","FILE OPEN","FILE NOT OPEN"
 	data "FILE NOT FOUND","DEVICE NOT PRESENT","NOT INPUT FILE"
-	data "NOT OUTPUT FILE","MI{$d3:2}ING FILE NAME","I{$cc:2}EGAL DEVICE NUMBER"
+	data "NOT OUTPUT FILE","MISSING FILE NAME","ILLEGAL DEVICE NUMBER"
 	data "NEXT WITHOUT FOR","SYNTAX","RETURN WITHOUT GOSUB"
-	data "OUT OF DATA","I{$cc:2}EGAL QUANTITY","OVERFLOW"
+	data "OUT OF DATA","ILLEGAL QUANTITY","OVERFLOW"
 	data "OUT OF MEMORY","UNDEF'D STATEMENT","BAD SUBSCRIPT"
-	data "REDIM'D A{$d2:2}AY","DIVISION BY ZERO","I{$cc:2}EGAL DIRECT"
-	data "TYPE MISMATCH","STRING T{$cf:2} LONG","FILE DATA"
-	data "FORMULA T{$cf:2} COMPLEX","CAN'T CONTINUE","UNDEF'D FUNCTION"
+	data "REDIM'D ARRAY","DIVISION BY ZERO","ILLEGAL DIRECT"
+	data "TYPE MISMATCH","STRING TOO LONG","FILE DATA"
+	data "FORMULA TOO COMPLEX","CAN'T CONTINUE","UNDEF'D FUNCTION"
 	data "VERIFY","LOAD","BREAK "
 {crunch:off}
 	copr. 1994 new image 9/21/94
