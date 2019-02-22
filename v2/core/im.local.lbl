@@ -1,4 +1,6 @@
 {number:60000}
+{step:2}
+{alpha:alt}
 	on im goto {:60002},{:60006},{:60008},{:60010},{:60016},{:60018},{:60026},{:60032}
 {:60002}
 	&"{f6:2}#{$c3}redits?: {pound}i1":cr=cr+int(val(left$(an$,6)))
@@ -46,3 +48,4 @@
 {:60064}
 	dr=2:a$=c$+",s,w":gosub 1011:if e%then a$=c$+",s,a":gosub 1011
 	return
+	rem im.local
