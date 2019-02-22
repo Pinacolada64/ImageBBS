@@ -1,0 +1,86 @@
+{number:3000}
+{step:2}
+{alpha:alt}
+{:3000}
+' &,52,46: AutoMaint or Xpress Login related, have seen both referenced for this checkmark
+' maybe it means Xpress Login only during login, AutoMaint enabled during system idle
+	k%=.:rs=.:&,52,46,3:am=a%:close 2:close 5
+	on mm goto,,,{:3080},{:3022},{:3040},{:3400},{:3232},{:3116},{:3118},{:3234},{:3114},{:3050}
+	on f1 goto {:3200},{:3220},{:3230}:goto {:3100}
+{:3022}
+	gosub {:3024}:poke 2033,.:return
+{:3024}
+	on -((peek(2033)and 128)=128) goto {:3040}:cm$="Clearing Line":gosub 9:im=2:goto 446
+{number:3040}
+{:3040}
+	b$="modem reset":x=11:gosub {:3080}:ti$="000000":im=1:gosub 446:im=9:goto 446
+{number:3050}
+{:3050}
+' FIXME: can't find where nl$ is defined
+	a$=a$+nl$:goto 14
+{:3052}
+	&,52,37,3:on -(a%=. or nl<1) goto 999:a$=a$+"+":return
+{number:3080}
+{:3080}
+	p=x:gosub 30:i=t1:t1=mn%:i=t1-i:i=i-1440*(i<.):st(x)=i:gosub 17
+	if i then x=x+11:gosub 16:x=x+16:gosub 16
+' FIXME: same issue with idle logging in 1.3: change "1" to "i" to activate
+	on 1 goto {:3085}:dr=3:c$="e.idle "+left$(am$,1)+",s,"
+	a$=c$+"a":gosub 4:if e% then a$=c$+"w":gosub 4
+	print# 2,d1$;" ";mid$("idleused",1-4*(p=10),4);i;b$:close 2
+{:3085}
+	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
+	an$=left$("U="+mid$(str$(z%),2)+" I="+mid$(str$(y%),2)+"     ",10)
+	&,69,14,22,an$,$81:return
+{number:3100}
+{:3100}
+	&,28,1:&,52,34,.:poke 970,.:poke 971,.:poke 2042,.:poke 53248,1:&"{lt. red}{clear}":gosub 12
+	poke 53248,.:b$="connect":x=11:gosub{:3080}:&,52,5,zz:&,25:gosub 33:x=43:gosub 1
+	close 2:&,52,2,3:a=a%:&,52,4,3:zz=a%:a=a+a%:&,52,6,3:a=a+a%:if a then:&,52,4,4
+	tr%=4:on -(zz=.) goto {:3114}:qb$="Local Console":nl=1:ll%=40:&,52,16,.:&"{f6}"
+	&"{f6} Press Return For Normal Login Or{f6} Press {f5}I{f5} For Instant Login: {pound}g1"
+	a=-(an$="I"):&mid$("InstantNormal",8-a*7,7)+"{f6}":on a goto {:3234}:goto {:3116}
+{:3114}
+	lm=1:a$="lo."+"firstimage":goto 72
+{:3116}
+' display "s.login", load "+/lo.login" (nl=0, ASCII) or "+/lo.login+" (nl>0, C= C/G, ANSI)
+	a$="s.login":gosub {:3050}:a$="lo."+"login":gosub {:3052}:goto 72
+{:3118}
+	a$="lo."+"on":gosub 72:rem ** insert mail-scan routine here **
+	&"{f6}Mail System Not Installed!{f6}":goto 300
+{number:3200}
+{:3200}
+	&"{f6}{lt. blue}Would You Like To Leave Feedback?{cyan}: ":gosub 94:on a gosub 444
+	&,52,$22,.:an$=ff$:&,15,1:&"{f6:2} {green}Bye {lt. green}{pound}v7{green}!{f6:2}":a$="s.end":gosub {:3050}
+	if i% or k% then:&"{f6}{lt. blue}Update User File?:{white} ":gosub 96:im=1:on a gosub 445
+{number:3220}
+{:3220}
+	&,52,$22,.:gosub{:3022}:on-(ac%=16 or i%<>.)goto{:3230}
+	a$="lo."+"off":gosub 72
+{number:3230}
+{:3230}
+	lm=1
+{:3232}
+	a$="lo."+"idle":goto 72
+{:3234}
+	a$="lo."+"instant":goto 72
+{number:3400}
+{:3400}
+	poke 53248,1:&"{clear}":b$="automaint":x=11:gosub{:3080}:cm$="Auto-Maint":gosub 9
+{number:3401}
+{:3401}
+	a$="lo."+"automaint":gosub 72
+{number:3402}
+{:3402}
+	gosub 304:br=.:a$="e.maintmods,s,r":dr=3:gosub 4:if e% then close 2:goto {:3416}
+	&,2,2:br=val(a$):on -(br<1) goto 3216:dim lm$(br),mt$(br)
+	for i=1 to br:&,2,2:lm$(i)=a$:&,2,2:mt$(i)=a$:next:close 2:rk=1
+{number:3408}
+{:3408}
+	a=val(left$(mt$(rk),3)):z=val(left$(d1$,1)):a=(a and 2^z)<>. or a=.
+	a$=mid$(mt$(rk),4,2):b=mid$(d1$,4,2)=a$ or a$="00":a$=mid$(mt$(rk),6,2)
+	c=mid$(d1$,6,2)=a$ or a$="00":if a and b and c then a$="lo/"+lm$(rk):cm$=a$:gosub 9
+	gosub 72:rk=rk+1:on -(rk<=br) goto {:3408}
+{:3416}
+	&,28,1:am$=d1$+"":gosub 33:x=35:gosub 1:print# 2,am$:close 2:mm=.:f1=3:goto {:3000}
+	rem i.lo
