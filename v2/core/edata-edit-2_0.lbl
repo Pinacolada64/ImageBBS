@@ -1,0 +1,234 @@
+' TODO: Use Input Any to get disk data
+' TODO: Use Sliding Input to edit string data in-place
+
+{number:0}
+{step:1}
+	n$=chr$(.):q$=chr$(34):r$=chr$(13):mx=58:dim tt$(mx):goto {:100}
+{number:1}
+{:1}
+	gosub {:2}:for s=1 to 50:next
+{number:2}
+{:2}
+	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
+{number:5}
+{:5}
+	x=rn:gosub {:1}:ed$=""
+{number:6}
+{:6}
+	get#2,b$:b$=chr$(asc(b$+n$)):if b$<>r$ then ed$=ed$+b$:goto {:6}
+	return
+{number:10}
+{:10}
+	for i=1 to len(ed$):z$=mid$(ed$,i,1):a=asc(z$+n$)
+	if (a>32 and a<128) or a>159 then print z$;:goto {:15}
+	if a<>34 then print"{rvrs on}"chr$(a+64)"{rvrs off}";:goto {:15}
+' TODO: add f-key translation?
+'	for x=1 to len(an$):a$=mid$(an$,x,1)
+'	if a$>="{f1}"then if a$<="{f8}"then a$=mid$(",:{f5}*?={f6}{f8}",asc(a$)-132,1)
+'	an$=left$(an$,x-1)+a$+mid$(an$,x+1):next:return
+' quote mark:
+	print z$ chr$(20)z$;:goto {:15}
+{number:15}
+{:15}
+	next:print:return
+
+{nice:20}
+{:sub.edit_string}
+' input subroutine:
+' enter with b$
+' special case for records 52-57 since device/drive stored in cr-delimited fields
+{step:2}
+{:112}
+	if len(b$)=32 then print:print "String at maximum length.":return
+{:114}
+	print"{rvrs on} {rvrs off}{left}";:wait 198,1:get a$:a=asc(a$+n$):on -(a=34) goto {:122}:if a=13 then {:124}
+' on -(a=34) goto {:122}:if a=13 then {:124} ' 22 bytes
+' on -(a=34)-2*(a=13) goto {:122}. {:124} ' 24 bytes
+	if (a>32 and a<128) or a>159 then b$=b$+a$:print a$;:goto {:112}
+' 20=delete, 148=insert
+' peek(653)=4: holding ctrl key
+	if (a<>20 and a<>148) or peek(653)=4 then b$=b$+chr$(a):print"{rvrs on}"chr$(a+64)"{rvrs off}";:goto {:112}
+' delete:
+	on len(b$)+1 goto {:114}:b$=left$(b$,len(b$)-1):print a$;:goto {:112}
+{:122}
+' quote:
+	print a$ chr$(20)a$;:b$=b$+a$:goto {:112}
+{:124}
+' tz: flag if data changed, 0=no
+	tz=1:if len(b$)=. then b$=ed$:print"(Unchanged.)":tz=.
+	return
+
+{number:100}
+{:100}
+	for rn=1 to mx:read tt$(x):next
+' ----+----+----+----+----+----+----+----+
+' Image BBS 2.0 "e.data" File Editor
+
+' If Necessary, Insert Your Etcetera Disk 
+' Into Any Drive.
+	print "{clear}{lower}Image BBS 2.0 "q$"e.data"q$" File Editor"
+	rn=.:dv=peek(186):if dv<8 then dv=8
+	print "If Necessary, Insert Your Etcetera Disk":print "Into Any Drive.":print
+{:device}
+	print "Device (7-31)  "dv%:print "{up}"tab(14):input a$:dv%=val(a$)
+	if dv%<7 and dv%>31 then print"{up}":goto {:device}
+{:drive}
+	print "Drive  (0-254)  0" :print "{up}"tab(14):input a$:a=val(a$)
+	if a<7 and a>31 then print"{up}":goto {:drive}
+	open 15,dv%,15:open 2,dv%,2,a$+":e.data":input# 15,a,a$:if a then {:900}
+{:103}
+	rn=rn+1:if rn>mx then rn=mx
+{:104}
+'	print "{down:2}Record # To Edit, {rvrs on}L{rvrs off} To List All,":print "Or {rvrs on}Q{rvrs off} to Quit ";
+
+' 31	print mid$(str$(rn),2)"{left:4}";:if rn<10 then print"{right}";
+'	print mid$(str$(rn),2)left$("{left:5}",4-(rn>9)); ' 31?
+
+' ----+----+----+----+----+----+----+----+
+' Record # To Edit, List All, or Quit
+' Option? xx
+
+	print "{down:2}Record # To Edit, {rvrs on}L{rvrs off}ist All, Or {rvrs on}Q{rvrs off}uit"
+	print "Option?"rn
+	print "{up}"tab(6):input a$:a$=chr$(asc(left$(a$,1)) and 127):if a$="q" then {:1811}
+	if a$="l" then {:350}
+	rn=abs(int(val(left$(a$,2)))):if rn<1 or rn>mx then rn=1:goto {:104}
+' display meaningful string about record's purpose [tt$()]:
+	gosub {:5}:gosub {:10}:b$="":print mid$(str$(rn),2)", "tt$(rn)":":print"{down}Type Changes.  Return When Finished."
+	gosub {:sub.edit_string}:if rn<52 or rn>57 then {:126}
+
+{:get_drive}
+' get additional field with drive # after device # (now saved in dr$):
+' saving in ed$ preserves original info for edit routine abort
+	dr$=ed$:input# 2,ed$
+{:edit_drive}
+	b$=ed$:print "Drive: "b$:gosub {:sub.edit_string}:if tz=. then {:103}
+' check if it's in range 0-254:
+	a=val(b$):if a<0 or a>254 then print"Must be between 0-254.":goto {:edit_drive}
+' concatenate device, drive:
+	b$=dr$+r$+b$
+
+{:126}
+	print:print "Writing...":x=rn:gosub {:1}:print# 2,b$:goto {:103}
+
+{number:350}
+{:350}
+	print "Any key aborts."
+	for rn=1 to mx:print mid$(str$(rn),2)", "tt$(rn)":":gosub {:5}:gosub {:10}:rn=rn+peek(198)*mx:next:rn=1:goto {:104}
+
+{number:900}
+{:900}
+	print"Disk Error: "a","a$
+{number:1000}
+' 1
+	data "Total calls to the system"
+' 2
+	data "(unused)"
+' 3
+	data "(unused)"
+' 4
+	data "(unused)"
+' 5
+	data "(unused)"
+' 6
+	data "(unused)"
+' 7
+	data "(unused)"
+' 8
+	data "(unused)"
+' 9
+	data "(unused)"
+' 10
+	data "(unused)"
+' 11
+	data "(unused)"
+' 12
+	data "Highest user account # -1"
+' 13
+	data "(unused)"
+' 14
+	data "(unused)"
+' 15
+	data "(unused)"
+' 16
+	data "(unused)"
+' 17
+	data "Last caller handle"
+' 18
+	data "Password of some kind"
+' 19
+	data "Date/time of last user logoff"
+' 20
+	data "Prime Time info: Time allowed per   call, Prime Time start, Prime Time end"
+'	      ----+----+----+----+----+----+----+----+
+'	      20, Prime Time info: Time allowed per
+'	      call, Prime Time start, Prime Time end
+' 21
+	data "(unused)"
+' 22
+	data "(unused)"
+' 23
+	data "(unused)"
+' 24
+	data "(unused)"
+' 25
+	data "(unused)"
+' 26
+	data "(unused)"
+' 27
+	data "(unused)"
+' 28
+	data "(unused)"
+' 29
+	data "(unused)"
+' 30
+	data "(unused)"
+' 31
+	data "Next available user account #"
+' 32
+	data "(unused)"
+' 33
+	data "Clock set device type: 1=CMD HD,    2=Lt.Kernal, 3=Last System Timestamp,   4=External CMD Device"
+'	      ----+----+----+----+----+----+----+----+
+'	      33, Clock set device type: 1=CMD HD,    
+'	      2=Lt.Kernal, 3=Last System Timestamp,   
+'	      4=External CMD Device
+' 34
+	data "External CMD device (related to clock set method, #33)"
+' 35
+	data "Date/time of last log reset"
+' 36
+	data "Macro count"
+' 37
+	data "System Reservation Password: 0=None,1=One Call, 2=All Calls. ',' ^=No Pass- Word, or <15 Character Password"
+'	      ----+----+----+----+----+----+----+----+
+'	      37, System Reservation Password: 0=None,
+'	      1=One Call, 2=All Calls. ',' ^=No Pass-
+'	      word, or < 15-Character Password
+	data "Lt.Kernal device number"
+	data "Autoweed cutoff, in months"
+	data "Default prompt color"
+	data "Printer secondary address"
+	data "Line feeds to printer (0=no, 10=yes)"
+	data "Password mask character(s)"
+	data "Log start date"
+	data "BBS time zone abbreviation/hour offset: e.g., 'EST0700'"
+	data "Main prompt text"
+	data "BBS name"
+	data "Entering chat message"
+	data "Exiting chat message"
+	data "Netsub ID: increments by 1 when net post/response made"
+	data "BBS identifier (e.g., WN)"
+' 52: two fields - device, drive
+	data "System device/drive"
+	data "E-Mail device/drive"
+	data "Etcetera device/drive"
+	data "Directory device/drive"
+	data "Plus-File device/drive"
+	data "User device/drive"
+' 58
+	data "Credits for new user"
+
+{number:1811}
+{:1811}
+	close 2:close 15:end
