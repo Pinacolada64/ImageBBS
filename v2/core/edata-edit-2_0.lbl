@@ -1,8 +1,9 @@
 ' TODO: Use Input Any to get disk data
 ' TODO: Use Sliding Input to edit string data in-place
-
+{alpha:alt}
 {number:0}
 {step:1}
+' mx=max # of records in e.data
 	n$=chr$(.):q$=chr$(34):r$=chr$(13):mx=58:dim tt$(mx):goto {:100}
 {number:1}
 {:1}
@@ -14,11 +15,11 @@
 {:5}
 	x=rn:gosub {:1}:ed$=""
 {number:6}
-{:6}
-	get#2,b$:b$=chr$(asc(b$+n$)):if b$<>r$ then ed$=ed$+b$:goto {:6}
+{:sub.get_data} ' returns ed$
+	get#2,b$:b$=chr$(asc(b$+n$)):if b$<>r$ then ed$=ed$+b$:goto {:sub.get_data}
 	return
 {number:10}
-{:10}
+{:sub.print_string}
 	for i=1 to len(ed$):z$=mid$(ed$,i,1):a=asc(z$+n$)
 	if (a>32 and a<128) or a>159 then print z$;:goto {:15}
 	if a<>34 then print"{rvrs on}"chr$(a+64)"{rvrs off}";:goto {:15}
@@ -27,19 +28,24 @@
 '	if a$>="{f1}"then if a$<="{f8}"then a$=mid$(",:{f5}*?={f6}{f8}",asc(a$)-132,1)
 '	an$=left$(an$,x-1)+a$+mid$(an$,x+1):next:return
 ' quote mark:
-	print z$ chr$(20)z$;:goto {:15}
+	print z$ chr$(20)z$;
 {number:15}
 {:15}
 	next:print:return
 
-{nice:20}
+{number:20}
 {:sub.edit_string}
-' input subroutine:
-' enter with b$
-' special case for records 52-57 since device/drive stored in cr-delimited fields
+' input subroutine
+' enter with:
+' - ed$=original text
+' -  b$=copy of ed$
+' special case for records 52-57 since drive stored in second field of record
+' exit with:
+' - tz=1 if b$ differs from ed$
+' - b$=new string
 {step:2}
 {:112}
-	if len(b$)=32 then print:print "String at maximum length.":return
+	if len(b$)=32 then gosub {:124}:print "(String at 32 characters.)":return
 {:114}
 	print"{rvrs on} {rvrs off}{left}";:wait 198,1:get a$:a=asc(a$+n$):on -(a=34) goto {:122}:if a=13 then {:124}
 ' on -(a=34) goto {:122}:if a=13 then {:124} ' 22 bytes
@@ -54,33 +60,40 @@
 ' quote:
 	print a$ chr$(20)a$;:b$=b$+a$:goto {:112}
 {:124}
-' tz: flag if data changed, 0=no
-	tz=1:if len(b$)=. then b$=ed$:print"(Unchanged.)":tz=.
+' erase cursor. tz: flag if data changed, 0=no
+	print " ":tz=-(len(b$)=. or b$<>ed$):if tz=. then b$=ed$:print "(Unchanged.)"
+' otherwise return b$:
 	return
+
+{nice:10}
+{:sub.record_info}
+' display record #, meaningful string about record's purpose [tt$()]
+	print mid$(str$(rn),2)", "tt$(rn)":":return
 
 {number:100}
 {:100}
-	for rn=1 to mx:read tt$(x):next
+	for x=1 to mx:read tt$(x):next
 ' ----+----+----+----+----+----+----+----+
-' Image BBS 2.0 "e.data" File Editor
+' Image BBS v2.0 "e.data" File Editor
 
 ' If Necessary, Insert Your Etcetera Disk 
 ' Into Any Drive.
-	print "{clear}{lower}Image BBS 2.0 "q$"e.data"q$" File Editor"
-	rn=.:dv=peek(186):if dv<8 then dv=8
-	print "If Necessary, Insert Your Etcetera Disk":print "Into Any Drive.":print
+	print "{clear}{lower}Image BBS v2.0 "q$"e.data"q$" File Editor"
+	rn=.:dv%=peek(186):if dv%<8 then dv%=8
+	print "If Necessary, Insert Your Etcetera Disk Into Any Drive.":print
 {:device}
 	print "Device (7-31)  "dv%:print "{up}"tab(14):input a$:dv%=val(a$)
 	if dv%<7 and dv%>31 then print"{up}":goto {:device}
 {:drive}
 	print "Drive  (0-254)  0" :print "{up}"tab(14):input a$:a=val(a$)
-	if a<7 and a>31 then print"{up}":goto {:drive}
+	if a<. and a>254 then print"{up}":goto {:drive}
 	open 15,dv%,15:open 2,dv%,2,a$+":e.data":input# 15,a,a$:if a then {:900}
+
+' --- main loop ---
 {:103}
 	rn=rn+1:if rn>mx then rn=mx
 {:104}
 '	print "{down:2}Record # To Edit, {rvrs on}L{rvrs off} To List All,":print "Or {rvrs on}Q{rvrs off} to Quit ";
-
 ' 31	print mid$(str$(rn),2)"{left:4}";:if rn<10 then print"{right}";
 '	print mid$(str$(rn),2)left$("{left:5}",4-(rn>9)); ' 31?
 
@@ -89,32 +102,40 @@
 ' Option? xx
 
 	print "{down:2}Record # To Edit, {rvrs on}L{rvrs off}ist All, Or {rvrs on}Q{rvrs off}uit"
-	print "Option?"rn
-	print "{up}"tab(6):input a$:a$=chr$(asc(left$(a$,1)) and 127):if a$="q" then {:1811}
-	if a$="l" then {:350}
-	rn=abs(int(val(left$(a$,2)))):if rn<1 or rn>mx then rn=1:goto {:104}
-' display meaningful string about record's purpose [tt$()]:
-	gosub {:5}:gosub {:10}:b$="":print mid$(str$(rn),2)", "tt$(rn)":":print"{down}Type Changes.  Return When Finished."
+	print "Option?"rn:print "{up}"tab(6):input an$
+	a$=chr$(asc(left$(an$,1)) and 127):on -(a$="q")-2*(a$="l") goto {:1811},{:350}
+	rn=abs(int(val(left$(an$,2)))):if rn<1 or rn>mx then rn=1:goto {:104}
+'	gosub {:5}:b$="":print mid$(str$(rn),2)", "tt$(rn)":":gosub {:sub.print_string}
+	gosub {:sub.record_info}:gosub {:5}:b$="":gosub {:sub.print_string}
+	print"{down}Type Changes.  Return When Finished."
 	gosub {:sub.edit_string}:if rn<52 or rn>57 then {:126}
 
 {:get_drive}
-' get additional field with drive # after device # (now saved in dr$):
-' saving in ed$ preserves original info for edit routine abort
-	dr$=ed$:input# 2,ed$
+' - ed$ saves the device # from previous call to {:sub.edit_string}
+' - get additional field within record: drive # (saved in dr$):
+' - clearing ed$ and b$ then ensures we *only* return the drive # (ed$) from {:sub.get_data}
+'   and do not add to existing data
+	dr$=ed$:ed$="":b$="":gosub {:sub.get_data}
 {:edit_drive}
-	b$=ed$:print "Drive: "b$:gosub {:sub.edit_string}:if tz=. then {:103}
+' {:sub.edit_string} returns b$
+	b$=ed$:print "Drive:";:gosub {:sub.print_string}:gosub {:sub.edit_string}:if tz=. then {:103}
 ' check if it's in range 0-254:
 	a=val(b$):if a<0 or a>254 then print"Must be between 0-254.":goto {:edit_drive}
-' concatenate device, drive:
-	b$=dr$+r$+b$
+' concatenate device, drive: (FIXME: this appends drive just entered to existing string)
+	a$=dr$+r$+b$:b$=a$
 
 {:126}
-	print:print "Writing...":x=rn:gosub {:1}:print# 2,b$:goto {:103}
+	print:if tz then print "Writing...":x=rn:gosub {:1}:print# 2,b$
+	goto {:103}
 
 {number:350}
 {:350}
 	print "Any key aborts."
-	for rn=1 to mx:print mid$(str$(rn),2)", "tt$(rn)":":gosub {:5}:gosub {:10}:rn=rn+peek(198)*mx:next:rn=1:goto {:104}
+'	for rn=1 to mx:print mid$(str$(rn),2)", "tt$(rn)":":gosub {:5}:gosub {:sub.print_string}
+	for rn=1 to mx:gosub {:sub.record_info}:gosub {:5}:gosub {:sub.print_string}
+' special case for 2nd field, drive #, records 52-57:
+	if x>51 and x<58 then ed$="":gosub {:sub.get_data}:print "Drive: ";:gosub {:sub.print_string}
+	rn=rn+peek(198)*mx:next:rn=1:goto {:104}
 
 {number:900}
 {:900}
@@ -194,32 +215,46 @@
 '	      2=Lt.Kernal, 3=Last System Timestamp,   
 '	      4=External CMD Device
 ' 34
-	data "External CMD device (related to clock set method, #33)"
+	data "External CMD device (related to     clock set method, #33)"
 ' 35
 	data "Date/time of last log reset"
 ' 36
 	data "Macro count"
 ' 37
-	data "System Reservation Password: 0=None,1=One Call, 2=All Calls. ',' ^=No Pass- Word, or <15 Character Password"
+	data "System Reservation Password: 0=None,1=One Call, 2=All Calls. ',' ^=No Pass- Word, or 1-14 Character Password"
 '	      ----+----+----+----+----+----+----+----+
 '	      37, System Reservation Password: 0=None,
 '	      1=One Call, 2=All Calls. ',' ^=No Pass-
-'	      word, or < 15-Character Password
+'	      word, or 1-14 Character Password
+' 38
 	data "Lt.Kernal device number"
+' 39
 	data "Autoweed cutoff, in months"
+' 40
 	data "Default prompt color"
+' 41
 	data "Printer secondary address"
-	data "Line feeds to printer (0=no, 10=yes)"
+' 42
+	data "Printer line feeds (0=no, 10=yes)"
+' 43
 	data "Password mask character(s)"
+' 44
 	data "Log start date"
-	data "BBS time zone abbreviation/hour offset: e.g., 'EST0700'"
+' 45
+	data "BBS time zone abbreviation/hour     offset: e.g., 'EST0700'"
+' 46
 	data "Main prompt text"
+' 47
 	data "BBS name"
+' 48
 	data "Entering chat message"
+' 49
 	data "Exiting chat message"
+' 50
 	data "Netsub ID: increments by 1 when net post/response made"
+' 51
 	data "BBS identifier (e.g., WN)"
-' 52: two fields - device, drive
+' 52-57: two fields - device, drive
 	data "System device/drive"
 	data "E-Mail device/drive"
 	data "Etcetera device/drive"
