@@ -1,8 +1,8 @@
 {quoter:32=space} ' make runs of spaces easier to read
 {undef:swiftlink} ' for switching to swiftlink rs232, not ready yet
 {crunch:on}
-{alpha:upper}
-
+{alpha:alt}
+' TODO: merge im r3 changes in
 {number:0}
 	on peek(829)goto {:3000},{:4000}
 {number:1000}
@@ -745,8 +745,8 @@
 	dim tt$(254),dv%(36),dr%(36),co$(9),hs$(10),bf(6),st(38),im$(5),pf$(10)
 	dim ec%(19,24),es%(3,49),ei%(50):restore:for i=1 to 9:read a$:co$(i)=a$+"":next
 	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
-' adjust console clock year to 20xx:
-	poke $16ec,$32:poke $16ed,$30
+' adjust console clock year to 2000:
+	poke $16ec,$32:poke $16ed,$30:poke $16ef,$30:poke $16f0,$30
 ' display IM revision (omit time zone):
 	gosub {:1336}
 	a$="NTSC":if peek(678)then a$="PAL"

@@ -5,16 +5,13 @@
 {step:1}
 ' mx=max # of records in e.data
 	n$=chr$(.):q$=chr$(34):r$=chr$(13):mx=58:dim tt$(mx):goto {:100}
-{number:1}
 {:1}
 	gosub {:2}:for s=1 to 50:next
-{number:2}
 {:2}
 	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
 {number:5}
 {:5}
 	x=rn:gosub {:1}:ed$=""
-{number:6}
 {:sub.get_data} ' returns ed$
 	get#2,b$:b$=chr$(asc(b$+n$)):if b$<>r$ then ed$=ed$+b$:goto {:sub.get_data}
 	return
@@ -82,10 +79,10 @@
 	rn=.:dv%=peek(186):if dv%<8 then dv%=8
 	print "If Necessary, Insert Your Etcetera Disk Into Any Drive.":print
 {:device}
-	print "Device (7-31)  "dv%:print "{up}"tab(14):input a$:dv%=val(a$)
+	print "Device   (7-31)  "dv%:print "{up}"tab(17):input a$:dv%=val(a$)
 	if dv%<7 and dv%>31 then print"{up}":goto {:device}
 {:drive}
-	print "Drive  (0-254)  0" :print "{up}"tab(14):input a$:a=val(a$)
+	print "Drive/LU (0-254)  0" :print "{up}"tab(17):input a$:a=val(a$)
 	if a<. and a>254 then print"{up}":goto {:drive}
 	open 15,dv%,15:open 2,dv%,2,a$+":e.data":input# 15,a,a$:if a then {:900}
 
@@ -109,8 +106,10 @@
 	gosub {:sub.record_info}:gosub {:5}:b$="":gosub {:sub.print_string}
 	print"{down}Type Changes.  Return When Finished."
 	gosub {:sub.edit_string}:if rn<52 or rn>57 then {:126}
-
-{:get_drive}
+' get Lt.K config, return to proper record being edited:
+	x=38:gosub {:1}:input# 2,a$:lk%=val(a$):x=rn:gosub {:1}
+	x$="Drive":h=254:if lk% then x$="LU":h=10
+' get drive/lu#:
 ' - ed$ saves the device # from previous call to {:sub.edit_string}
 ' - get additional field within record: drive # (saved in dr$):
 ' - clearing ed$ and b$ then ensures we *only* return the drive # (ed$) from {:sub.get_data}
@@ -118,9 +117,9 @@
 	dr$=ed$:ed$="":b$="":gosub {:sub.get_data}
 {:edit_drive}
 ' {:sub.edit_string} returns b$
-	b$=ed$:print "Drive:";:gosub {:sub.print_string}:gosub {:sub.edit_string}:if tz=. then {:103}
-' check if it's in range 0-254:
-	a=val(b$):if a<0 or a>254 then print"Must be between 0-254.":goto {:edit_drive}
+	b$=ed$:print x$": ";:gosub {:sub.print_string}:gosub {:sub.edit_string}:if tz=. then {:103}
+' check if it's in range 0-10 for LtK device, or 0-254 for non-LtK device:
+	a=val(b$):if a<. or a>h then print"Must be between 0-"mid$(str$(h),2)".":goto {:edit_drive}
 ' concatenate device, drive: (FIXME: this appends drive just entered to existing string)
 	a$=dr$+r$+b$:b$=a$
 
@@ -140,7 +139,8 @@
 {number:900}
 {:900}
 	print"Disk Error: "a","a$
-{number:1000}
+{number:1001}
+{step:1}
 ' 1
 	data "Total calls to the system"
 ' 2
@@ -254,13 +254,13 @@
 	data "Netsub ID: increments by 1 when net post/response made"
 ' 51
 	data "BBS identifier (e.g., WN)"
-' 52-57: two fields - device, drive
-	data "System device/drive"
-	data "E-Mail device/drive"
-	data "Etcetera device/drive"
-	data "Directory device/drive"
-	data "Plus-File device/drive"
-	data "User device/drive"
+' 52-57: two fields - device, drive/LU
+	data "System device"
+	data "E-Mail device"
+	data "Etcetera device"
+	data "Directory device"
+	data "Plus-File device"
+	data "User device"
 ' 58
 	data "Credits for new user"
 
