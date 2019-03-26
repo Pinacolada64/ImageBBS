@@ -123,23 +123,25 @@ setup:
 
 	lda #comint0	; turn SwiftLink NMIs off
 	sta slCommand
+
 	ldx #0
 	lda #3
-	sta 21		; <LINNUM, temp storage
+	sta 21		; <LINNUM, temp storage: $03xx
+
 setup1:
-	lda vectbl,x
+	lda vectbl,x	; get byte denoting offset into vector table at $0300
 	beq setup3
-	sta 20		; >LINNUM, temp storage
-	lda #$4c
-	sta vectbl,x
+	sta 20		; >LINNUM, temp storage: $xxaa
+	lda #$4c	; load JMP instruction
+	sta vectbl,x	; replace offset with it
 	inx
 	ldy #0
 setup2:
-	lda vectbl,x
-	pha
-	lda (20),y
-	sta vectbl,x
-	pla
+	lda vectbl,x	; get JMP from table
+	pha		; push on stack?
+	lda (20),y	; lda $0300
+	sta vectbl,x	; re-save it?
+	pla		; pop off stack
 	sta (20),y
 	iny
 	inx
@@ -150,7 +152,7 @@ setup3:
 	lda #0
 	sta slStatus
 	lda #comint1
-	sta shcomm
+	sta shcomm	; save command?
 	jsr inable
 	jsr setcarr
 	lda #2

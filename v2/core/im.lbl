@@ -256,7 +256,7 @@
 ' fixed: lines are short enough to edit on c64
 ' maybe: specify color of title as $80+c, for reverse text)
 ' to clear Area: cm$="":gosub 1360
-	if peek(17139)=. then &,69,4,21," "+left$(cm$+"{space:21}",21)+" ",$8c
+	if peek(17139)=. then:&,69,4,21," "+left$(cm$+"{space:21}",21)+" ",$8c
 	return
 {:1370}
 {number:1370}
@@ -377,7 +377,7 @@
 {number:1678} ' F - feedback
 	b=.:o$="Feedback":&"{f6}Leave {pound}$o?: ":gosub {:1902}:if a=.then return
 {number:1680}
-	dr=3:gosub {:1079}:if a<35 then :1978}
+	dr=3:gosub {:1079}:if a<35 then {:1978}
 {number:1681}
 	im=1:goto {:2422}
 {:1690}
@@ -463,19 +463,19 @@
 	&,52,$19,3:on a%gosub {:1810}:if pf then a$="GF":goto {:1016}
 {:1814}
 {number:1814}
-	&,28,1:gosub {:1930}:p$=po$:gosub {:1098}:on tr%+1 goto {:1698}:if an$=""then :1345}
+	&,28,1:gosub {:1930}:p$=po$:gosub {:1098}:on tr%+1 goto {:1698}:if an$=""then {:1345}
 	gosub {:1850}:on f4 goto {:1842}:on rs goto {:1812}
 {number:1820}
-	if zz and an$="R"then gosub {:2100}:goto {:1900}
+	if zz and an$="R" then gosub {:2100}:goto {:1900}
 ' "TEST": loads "image", renumbered/RAM-light version of "im"
-	if an$="TEST"then :1200}
+	if an$="TEST"then {:1200}
 {number:1840}
 	x=1:on-(a$="Q")-(a$="{f2}")*2 goto {:1694},{:1345}
 {:1842}
 {number:1842}
 	if f4 then gosub {:2100}:on-(f4=1.1)-2*(f4=1.2)-3*(f4=1.3)goto {:1301},{:1804},{:1696}
 {number:1844}
-	if rc or val(an$)=.then :1848}
+	if rc or val(an$)=.then {:1848}
 	a%=val(an$):if a%<1 or a%>4 then an$="":goto {:1848}
 	dr=3:a$="e.macs":gosub {:1011}:on e%goto {:1848}:x=id*4-4+a%:gosub {:1001}:&,2,2:an$=a$
 	if a$<>"{up arrow}"then uu$=a$:goto {:1814}
@@ -492,7 +492,7 @@
 {:1860}
 {number:1860}
 	f4=.:a%=zz:b%=2^ac%:&,42:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto {:1800}
-	if a$="O"then :1690}
+	if a$="O"then {:1690}
 {number:1869}
 	rs=.:return
 {:1870}
@@ -764,7 +764,7 @@
 	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub {:1012}:if e%then close 2:gosub {:3192}:goto {:3084}
 	input# 2,dv%(3),dr%(3),po$:close 2:restore:if po$=""then po$="Main: "
 {:3090}
-	read a$:if a$<>"*"then :3090}
+	read a$:if a$<>"*"then {:3090}
 	gosub {:1196}:gosub {:1063}:for i=1 to 6:x=i+51:gosub {:1001}:&,2,2:dv%(i)=val(a$)
 	&,2,2:dr%(i)=val(a$):next:close 2
 {:3096}
@@ -846,7 +846,7 @@
 {:3200}
 	dr=3:a$="e.lightdefs,s,r":gosub {:1011}:if e%then close 2:goto {:3210}
 	&"Setting default checks..."
-	for x=.to 7:&,2,2:if len(a$)<>16 then :3208}
+	for x=.to 7:&,2,2:if len(a$)<>16 then {:3208}
 	for i=1 to 16:b$=mid$(a$,i,1):&,52,(x)*16+i-1,val(b$):next
 {:3208}
 	next:close 2:gosub {:sub.done}
@@ -902,7 +902,7 @@
 	tt$=tt$+"1411191111111119000090000"
 	&"{clear}{f6} Part {$c9:2}: Device, Drive Configuration{f6:2}":restore:gosub {:sub.clock_method}
 {:3250}
-	a=.:read a$:if a$<>"*"then :3250}
+	a=.:read a$:if a$<>"*"then {:3250}
 	for i=1 to 6:poke 53252,3:pl=1:read b$
 	w$="8":p$=b$+" Device":&,1,32:a=val(an$):if a<7 or a>15 then a=8
 	dv%(i)=a:w$="0":p$=b$+" Drive":&,1,32:a=val(an$):if a<.or a>254 then a=.
@@ -1145,7 +1145,7 @@
 
 {number:4000}
 {:4000}
-	&,38:el=y:cm$=cm$+"":p$=p$+"":pr$=pr$+"":im$=im$+"":if x<128 then :4006}
+	&,38:el=y:cm$=cm$+"":p$=p$+"":pr$=pr$+"":im$=im$+"":if x<128 then {:4006}
 	a$="FATAL ERROR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 	&,38:&,61,.,8:print"&,37:goto 1812:":end
 {:4006}
@@ -1153,7 +1153,7 @@
 	restore
 {:4008}
 {number:4008}
-	read a$:if a$<>"errors"then :4008}
+	read a$:if a$<>"errors"then {:4008}
 	&,40:d$="GURU":if x>.and x<30 then for k=1 to x:read d$:next
 	a%=x:&"{f6}{lt. red} SYSTEM ERROR #{pound}%a {white}({pound}$d ERROR){f6}":r$=chr$(13)
 	a$="im":if el=>3000 then a$="+."+pr$:if el=>60000 then a$="im."+im$
@@ -1175,7 +1175,7 @@
 	im$="":is=.:lm$="":pr$="":ml$="":pr=-1:pf=.
 ' &,52,4,3: is "console mode" enabled? (true local login)
 ' peek(2033)=0: carrier status
-	if ac%<>16 then &,52,4,3:if a% or (peek(2033)and 1)=. then :4050}
+	if ac%<>16 then &,52,4,3:if a% or (peek(2033)and 1)=. then {:4050}
 	a$="lo":f1=2:goto {:1016}
 	a$="FATAL ERROR!!":gosub {:1096}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
@@ -1190,7 +1190,7 @@
 	kk=.:a$="s.errmail,s,r":dr=1:gosub {:1011}:if e%then close 2:goto {:4068}
 {:4054}
 {number:4054}
-	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=.then :4054}
+	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=.then {:4054}
 	close 2:tt$=na$:a$="a":gosub {:1062}:if e%then a$="w":gosub {:1062}
 	a$="[System Error ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
 	gosub {:1074}:close 15

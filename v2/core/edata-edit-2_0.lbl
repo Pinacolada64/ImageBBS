@@ -67,6 +67,10 @@
 ' display record #, meaningful string about record's purpose [tt$()]
 	print mid$(str$(rn),2)", "tt$(rn)":":return
 
+{nice:10}
+{:sub.out_of_range}
+	print "Must be between 0-"mid$(str$(h),2)".":return
+
 {number:100}
 {:100}
 	for x=1 to mx:read tt$(x):next
@@ -85,6 +89,8 @@
 	print "Drive/LU (0-254)  0" :print "{up}"tab(17):input a$:a=val(a$)
 	if a<. and a>254 then print"{up}":goto {:drive}
 	open 15,dv%,15:open 2,dv%,2,a$+":e.data":input# 15,a,a$:if a then {:900}
+' get Lt.Kernal config, return to record #1:
+	x=38:gosub {:1}:input# 2,a$:lk%=val(a$):x=1:gosub {:1}
 
 ' --- main loop ---
 {:103}
@@ -106,8 +112,6 @@
 	gosub {:sub.record_info}:gosub {:5}:b$="":gosub {:sub.print_string}
 	print"{down}Type Changes.  Return When Finished."
 	gosub {:sub.edit_string}:if rn<52 or rn>57 then {:126}
-' get Lt.K config, return to proper record being edited:
-	x=38:gosub {:1}:input# 2,a$:lk%=val(a$):x=rn:gosub {:1}
 	x$="Drive":h=254:if lk% then x$="LU":h=10
 ' get drive/lu#:
 ' - ed$ saves the device # from previous call to {:sub.edit_string}
@@ -119,7 +123,7 @@
 ' {:sub.edit_string} returns b$
 	b$=ed$:print x$": ";:gosub {:sub.print_string}:gosub {:sub.edit_string}:if tz=. then {:103}
 ' check if it's in range 0-10 for LtK device, or 0-254 for non-LtK device:
-	a=val(b$):if a<. or a>h then print"Must be between 0-"mid$(str$(h),2)".":goto {:edit_drive}
+	a=val(b$):if a<. or a>h then gosub {:sub.out_of_range}:goto {:edit_drive}
 ' concatenate device, drive: (FIXME: this appends drive just entered to existing string)
 	a$=dr$+r$+b$:b$=a$
 
@@ -267,3 +271,6 @@
 {number:1811}
 {:1811}
 	close 2:close 15:end
+{number:2000}
+	rem "edata edit 2.0" alpha: pinacolada 2018/03/08
+	
