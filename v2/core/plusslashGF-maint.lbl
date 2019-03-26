@@ -1,0 +1,138 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&,52,34,1:ON rk GOTO{:4002},{:4100}
+{:4002}
+	n=0
+	p$="Maintenance Options":GOSUB{:4030}
+	a$="A":b$="Add Item":GOSUB{:4022}
+	a$="E":b$="Edit Item":GOSUB{:4022}
+	a$="K":b$="Kill Item":GOSUB{:4022}
+	a$="Z":b$="Misc Info":GOSUB{:4022}
+	a$="Q":b$="Return to Menu":GOSUB{:4022}
+	IF mm THEN:&"{right:9}{rvrs on}{yellow}{pound}{back arrow}32{rvrs off} {f6}"
+	IF mm THEN:&"{right:10}{pound}{back arrow}33{f6}"
+	fd=2:RETURN
+{:4022}
+	n=n+1:m%(3,n)=ASC(a$+CHR$(0)):m%(2,n)=-1:m%(1,n)=(n-1)*256+n+1
+	m%(0,n)=14*256+5+n
+	IF mm THEN:&"{right:9}{rvrs on}{yellow} {f5}{pound}$a{f5} {white}{$a4}{yellow} {pound}$b{pound}{back arrow}32{rvrs off} {f6}":RETURN
+	&"{pound}$a) {pound}$b{f6}":RETURN
+{:4030}
+	IF mm=0 THEN:&"{clear}{pound}$p{f6:2}":RETURN
+	&"{home}{down:4}{right:9}{rvrs on}{yellow} {pound}$p{pound}{back arrow}32{f6}"
+	&"{right:9}{rvrs on}{yellow}     {$a4}{pound}{back arrow}32{rvrs off} {f6}"
+	RETURN
+{:4100}
+	rs=1:tz=0:GOSUB 1007
+	ON-(a$="A")-2*(a$="E")-3*(a$="K")-4*(a$="Z")GOTO{:4200},{:4300},{:4400},{:4500}:GOTO{:4666}
+	rs=0:RETURN
+{:4200}
+	IF s%(0,0)=60 THEN:&"This {pound}$h is Full{f6}":RETURN
+	br=s%(0,0)+1:s%(1,br)=1023:s%(2,br)=0:s%(3,br)=dv%(1):s%(4,br)=dr%(1)
+	s%(5,br)=0:s%(6,br)=0:&,60,4,0,s%(7,br),d1$:&,60,4,0,s%(10,br),d1$
+	&,60,0,16,s%(27,br),"":&,60,0,28,s%(13,br),""
+	s%(36,br)=0:s%(37,br)=0:s%(38,br)=0:s%(39,br)=0
+	GOSUB{:4600}:&,60,1,16,s%(27,br),a$:&,60,1,28,s%(13,br),b$:a=s%(1,br)
+	IF a<1 OR a$=""OR b$=""THEN RETURN
+	s%(0,0)=s%(0,0)+1:tz=1:RETURN
+{:4300}
+	&"Which: {pound}i1":an$=" "+an$
+	GOSUB 3004:IF a>0 AND a<=rn THEN br=e%(a):tz=1:GOTO{:4600}
+	RETURN
+{:4400}
+	&"Which: {pound}i1":an$=" "+an$
+	a$="":GOSUB 3004:IF a<1 OR a>rn THEN RETURN
+	br=e%(a):&"{f6}{purple} {$b0}{pound}$y{$ae}{f6}":GOSUB 3130:&"{purple} {$ad}{pound}$y{$bd}{f6:2}{pound}q0Kill This? ":GOSUB 1902
+	IF a=0 THEN RETURN
+	&"{f6}Scratch {pound}$j? ":GOSUB 1902:IF a=0 THEN{:4414}
+	a=s%(2,br):GOSUB 3050:&,60,1,16,s%(13,br),c$:a$=b$+c$
+	dr=0:d1%=s%(3,br):d2%=s%(4,br):GOSUB 1010:PRINT# 15,"s"dr$a$
+{:4414}
+	IF br<>s%(0,0)THEN FOR a=br TO s%(0,0)-1:&,60,10,80,s%(0,a+1),s%(0,a):NEXT
+	s%(0,0)=s%(0,0)-1:tz=1:RETURN
+{:4500}
+	&"{clear}{f6}{pound}q0{pound}$i Options:{f6:2}"
+	&"1. Edit Entry Text{f6}":&,60,1,30,s%(25,0),a$
+	&"2. Prompt: {f5}{pound}$a{f5}{f6}":&,60,1,20,s%(15,0),a$
+	&"3. Name:   {f5}{pound}$a{f5}{f6}":a%=s%(2,0)
+	&"4. {pound}$i:    {pound}%a{f6}":a%=s%(3,0)
+	&"5. Device: {pound}%a{f6}":a%=s%(4,0)
+	&"6. Drive:  {pound}%a{f6}"
+	&"{f6}> {pound}g1":a=VAL(an$)
+	IF a THEN:&"{pound}v7{f6:2}":ON a GOSUB{:4520},{:4532},{:4556},{:4538},{:4544},{:4550}:GOTO{:4500}
+	RETURN
+{:4520}
+	dr=1:o$="s."+pf$(pf):a$=o$+",s,r":GOSUB 1011:kk=1:IF e%THEN:&:GOTO{:4526}
+	&"{f6}Loading Text...{f6:2}"
+{:4524}
+	&,2,2:IF a$<>"{up arrow}"AND kk<101 THEN tt$(kk)=a$:kk=kk+1:&".":GOTO{:4524}
+{:4526}
+	CLOSE 2:GOSUB 1610:IF kk=0 THEN RETURN
+	&"{f6:2}Saving...":a$=o$:dr=1:GOSUB 1023:&,14,2,kk-1:PRINT# 2,"{up arrow}":CLOSE 2:&,11
+	GOTO 1081
+{:4532}
+	p$="Prompt":&,60,1,30,s%(25,0),w$:POKE 53252,30:pl=0
+	&,1,33:IF an$=""THEN RETURN
+	tz=1:&,60,0,30,s%(25,0),an$:RETURN
+{:4538}
+	p$=i$:w$=MID$(STR$(s%(2,0)),2):POKE 53252,4:pl=1
+	&,1,32:IF an$=""THEN RETURN
+	tz=1:s%(2,0)=VAL(an$):RETURN
+{:4544}
+	p$="Device":w$=MID$(STR$(s%(3,0)),2):POKE 53252,4:pl=1
+	&,1,32:IF an$=""THEN RETURN
+	tz=1:s%(3,0)=VAL(an$):RETURN
+{:4550}
+	p$="Drive":w$=MID$(STR$(s%(4,0)),2):POKE 53252,4:pl=1
+	&,1,32:IF an$=""THEN RETURN
+	tz=1:s%(4,0)=VAL(an$):RETURN
+{:4556}
+	p$="Name":&,60,1,20,s%(15,0),w$:POKE 53252,20:pl=0
+	&,1,32:IF an$=""THEN RETURN
+	tz=1:&,60,0,20,s%(15,0),an$:RETURN
+{:4600}
+	&"{clear}{f6}":&,60,1,28,s%(13,br),a$
+	&"{blue}({white}1{blue}) {cyan}Title{blue}:  {white}{pound}$a{f6}":a=s%(2,br):GOSUB 3050
+	&"{blue}({white}2{blue}) {cyan}Type{blue}:   {white}{pound}$a{f6}":a%=s%(1,br)
+	&"{blue}({white}3{blue}) {cyan}Access{blue}: {white}{pound}%a{f6}":a%=s%(5,br)
+	&"{blue}({white}4{blue}) {cyan}Credit{blue}: {white}{pound}%a{f6}":&,60,1,16,s%(27,br),a$
+	&"{blue}({white}5{blue}) {cyan}{pound}$j{blue}:   {cyan}{pound}$b{white}{pound}$a{f6}":n=5:ON-(dr=4)GOTO{:4616}:n=7:a%=s%(3,br)
+	&"{blue}({white}6{blue}) {cyan}Device{blue}: {white}{pound}%a{f6}":a%=s%(4,br)
+	&"{blue}({white}7{blue}) {cyan}Drive{blue}:  {white}{pound}%a{f6}"
+{:4616}
+	&"{f6}> {pound}g1":a=VAL(an$):a=VAL(an$):IF a<1 OR a>n THEN RETURN
+	&"{pound}v7{f6:2}":ON a GOSUB{:4620},{:4626},{:4658},{:4652},{:4634},{:4640},{:4646}:GOTO{:4600}
+{:4620}
+	p$="Title":&,60,1,28,s%(13,br),w$:POKE 53252,28:pl=0
+	&,1,33:IF an$=""THEN RETURN
+	&,60,0,28,s%(13,br),an$:RETURN
+{:4626}
+	&"Type:{f6:2}":FOR a=1 TO 9:GOSUB 3050:a$=MID$(a$,2):lp=1:&"{pound}!a-{pound}$a ":NEXT
+	&"{f6:2}{pound}q0> {pound}g1"
+	a=VAL(an$):IF a<1 OR a>7 THEN RETURN
+	GOSUB 3050:&"{pound}$a{f6}":s%(2,br)=a:RETURN
+{:4634}
+	a=s%(2,br):GOSUB 3050:p$=j$:&,60,1,16,s%(27,br),w$:pl=0
+	POKE 53252,16-LEN(b$):&,1,32:IF an$=""THEN RETURN
+	&,60,0,16,s%(27,br),an$:RETURN
+{:4640}
+	p$="Device":w$=MID$(STR$(s%(3,br)),2):POKE 53252,4
+	&,1,32:IF an$=""THEN RETURN
+	s%(3,br)=VAL(an$):RETURN
+{:4646}
+	p$="Drive":w$=MID$(STR$(s%(4,br)),2):POKE 53252,4
+	&,1,32:IF an$=""THEN RETURN
+	s%(4,br)=VAL(an$):RETURN
+{:4652}
+	p$="Credit":w$=MID$(STR$(s%(5,br)),2):POKE 53252,4
+	&,1,32:IF an$=""THEN RETURN
+	s%(5,br)=VAL(an$):RETURN
+{:4658}
+	p$="Access":w$=MID$(STR$(s%(1,br)),2):POKE 53252,4
+	&,1,32:IF an$=""THEN RETURN
+	a=VAL(an$):IF an$="{f2}"THEN GOSUB 3090
+	s%(1,br)=a:RETURN
+{:4666}
+	RETURN
+	REM fixes 171116 x-tec
