@@ -1,7 +1,11 @@
 ' 4/Jun/2016 11:14
 ' i am assuming this is a header prg which displays saved chats
 
-' Could this be loaded into the BBS as "++ chatmode"?
+' 4/Apr/2019 3:38
+' This is an LtK program, as evidenced by label definitions at
+' https://www.floodgap.com/retrobits/ckb/ltk/isam02.html
+
+' FIXME: finish "chat1" display routine
 
 ' for pass=1 to 3:org $0801,-(pass=3),8,"@:chatmode"
 ' print pass;
@@ -9,30 +13,54 @@
 ' send "1990 sys"+mid$(str$(ml),2)+" new image"
 ' unsend
 
-1990 sys{sym:ml} new image
+{number:1990}
+	sys{sym:ml} new image
 {asm}
-bnkout=$fc4e
-bankin=$fc71
+; LtK host adapter disk RAM buffers (each 1 block in size)
 ;
-clrhdr=$806c ; clear header?
-fnfile=$804b ; find file?
-alcont=$807b ; ?
-mnsext=$809c ; ?
-output=$8048
-;
-catlog=$24 ; $22-$25 INDEX Miscellaneous Temporary Pointers and Save Area
-cntfil=5
-;
-hdrblk=$91e0
-filnam=hdrblk+$00 ; f 16 bytes, presumably
-nbinfl=hdrblk+$10 ; n 16 "number in filename?" split long chats into multiple files?
-filtyp=hdrblk+$18 ; t 24
-blmilo=hdrblk+$20 ; b 32
-;                1       2       3
-; 1              6       4       2
-; fffffffffffffffn.......t.......b
+allmap	= $8000		; start of host adapter address space
+hdrblk	= allmap+$11e0	; file header block buffer (see below)
 
-size=16
+bnkout	=$fc4e	; set ALLMAP mode
+bankin	=$fc71	; set KERTRAP mode
+
+output	=$8048	; output string: <.x, >.y
+fnfile	=$804b	; search directory for file
+clrhdr	=$806c	; clear HDRBLK buffer
+alcont	=$807b	; allocate contiguous blocks to file
+mnsext	=$809c	; execute DOS mini-sub processor
+
+; DOS mini-subs, addressed as a block offset on LU 10
+catlog	=$24	; index catalog
+
+; LtK DOS file types (stored at FILTYP in header block)
+cntfil	=$05	; contiguous block sequential data
+
+;			; offset
+hdrblk	=$91e0		;		; file header block buffer
+filnam	=hdrblk+$00	; +$00-0f	; 'f'ilename padded w/trailing nulls (max 16 bytes)
+nbinfl	=hdrblk+$10	; +$10-11	; file size in blocks, includes header
+			; 		; "Number of Blocks IN FiLe"
+; nrpblk .word $0000	; +$12-13 'nr'	; records per block (RELative only)
+; nbprec .word $0000	; +$14-15	; bytes per record
+; nrinfl .word $0000	; +$16-17	; active records in file
+; filtyp .word $0000    ; +$18-19	; binary file type
+; nblkpc .byte $00      ; +$1a		; bytes in last block (MSB)
+; loadad .byte $00      ; +$1b		; load address, $0000 if none
+; nbytlb .word $0000    ; +$1c-1d	; bytes in last block (LSB)
+; usrlun .byte $00      ; +$1e		; binary LU & user
+; hdrflg .byte $00      ; +$1f		; valid header block flag
+; hdradr .word $0000    ; +$20		; 'h'eader block address (file origin)
+
+filtyp	=hdrblk+$18 ; (+24) ; binary file 'ty'pe
+blmilo	=hdrblk+$20 ; (+32-33) [bl] (aka 'hdrflg')
+
+; 0              0|1|1|1|1|    1|1      2|2
+; 0              f|0|1|2|3|    8|9abcdef0|1
+; ----------------+---+---+-----+----------
+; ffffffffffffffff| nb| nr|.... ty...... hh
+
+size	=16
 
 ml:
 	jsr bnkout
@@ -60,8 +88,8 @@ loop:
 	pha
 	ldx idxblk
 	ldy idxblk+1
-	lda #catlog
-	jsr mnsext
+	lda #catlog	; load opcode for "index catalog"
+	jsr mnsext	; jump to DOS mini-sub processor
 	ldx #<msg1
 	ldy #>msg1
 	jsr output
@@ -108,7 +136,7 @@ chat0:
 	beq chat1
 	rts
 chat1:
-; missing code. presumably some kind of pause function here
+; FIXME: missing code. presumably some kind of pause function here
 
 blokbuf:
 	area 0,512
