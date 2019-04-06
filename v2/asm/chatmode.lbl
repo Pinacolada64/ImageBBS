@@ -14,11 +14,11 @@
 ' for pass=1 to 3:org $0801,-(pass=3),8,"@:chatmode"
 ' print pass;
 ' this wrote a line of BASIC:
-' send "1990 sys"+mid$(str$(ml),2)+" new image"
+' send "1990 sys"+mid$(str$(ml),2)+":rem new image"
 ' unsend
 
 {number:1990}
-	sys{sym:ml} new image
+	sys{sym:ml}:rem new image
 {asm}
 bnkout	=$fc4e		; set ALLMAP mode
 			; $8000-$9FFF is shadow (host adapter) RAM in ALLMAP mode
