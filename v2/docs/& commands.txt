@@ -138,32 +138,38 @@ $fc06	&,57	relread
 
 &,60	struct
 
-	PutStruc: put string into structure
-	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+struct%(0,0) holds # of records in a struct
+
+	PutString: put string into structure
+	Usage	&,60,0,bytes,struct%(field,record),string$
 	Example:&,60,0,11,lm%(2,x),a$
 		&,60,0,16,lm%(8,x),b$
 	
-	GetStruc: get string from structure
-	Usage:	&,60,1,<#_of_bytes>,array(a,b),string$
+	GetString: get string from structure
+	Usage:	&,60,1,bytes,struct%(field,record),string$
 	Example:&,60,1,50,jm%(5,fd%(i)),a$ - im.menus
 	
-	LoadStruc: load structure from disk
-	Usage:	&,60,2,0,array(a,b),"<filename>",<device>
+	LoadStruct: load structure from disk
+	Usage:	&,60,2,0,array(a,b),"filename$",device
+		third parameter always seems to be 0
+		maybe array(a,b) is # of records, or struct to load 
 	Example:&,60,2,.,lm%(.,.),dr$+"e.loginmods",dv%:gosub5
 	
-	SaveStruc: save structure
-	Usage:	&,60,3,0,array(a,b),<bytes>,"<filename>",<device>
+	SaveStruct: save structure
+	Usage:	&,60,3,0,struct%(.,.),bytes,filename$,device
+		does 0 param always have to be 0?
+		maybe struct%(.,.) stands for the array name
 	Example:&,60,3,.,lm%(.,.),1271,a$,dv%
 		&,60,3,.,fb%(.,.),960,a$,dv%
 	
 	PutDate: put date string into structure (BCD)
-	Usage:	&,60,4,0,array(a,b),<string$>
-
+	Usage:	&,60,4,0,struct%(array(a,b),<string$>
+		does 0 param always have to be 0?
 		array(a,b)	starting element
 		string$		the date string
 
 	GetDate: get date string from structure (BCD)
-	Usage:	&,60,5,array(a,b),<string>
+	Usage:	&,60,5,struct%(a,b),<string>
 
 		array(a,b)	starting element
 		string$		the date string
@@ -189,28 +195,50 @@ $fc06	&,57	relread
 	+.GF:	3166 &,60,6,s%(0,0),0,s%(0,1),s%(1,1),80,1,2^ac%
 
 	sort:
-	+/lo-tt maint: &,60,7,0,a$(p+1,i),n-p
+	+/lo/tt maint: &,60,7,0,a$(p+1,i),n-p
 	
-	scannums	purpose unknown		returns a%
-	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
+	scannums	Returns an integer array result%(a)
+	Returns:	a%, count of records which match <acs>
+			
+	Usage:	&,60,8,recs,size,access,search%(f,r),result%(s),start
 
-	num	cols in struct?
-	siz	field width?
-	acs	access level
-	a(a,b)	row,col array?
-	a%(a)	?
+	recs		number of records in struct
+	size		size of the record in struct
+	access		access level to add results to result%(a)
+	search%(f,r)	struct to search (<field>,<record>)
+	result%(s)	integer array to 
 	start	element to start scanning from?
+
+' scan struct:
+' &,60,8,recs,size,access,search%(field,record),result%(element),start
+' recs:		50
+'	# of records in struct
+' size:		60
+'	size of the record in the struct (seems too large: was only DIMensioned for 30)
+' access:	2^ac%+zz%*32768
+'	access level to filter results by
+' search%(field,record):	jm%(1,.)
+'	search%()	the integer array to search
+	field		the field within the record to search
+	record		the record to search
+' element:	?
 
 Examples:
 im.menus:
 	dim fd%(50),jm%(29,49)
+' ScanStruct returns a% (# of matches)
+' this code returns fd%(): single dimension array of matching records
+' (I think "1" is a dummy value, although it may be significant)
 	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
+' &,60,1: get 50-byte string from struct jm%( , ), field [aka "offset"] 6 (zero-based)
+' of record fd%(i). assign string to a$:
+	&"{f6}":for i=1 to a%:&,60,1,50,jm%(5,fd%(i)),a$:lp=1:&:i=i+a%*rc:next:return
 
 im.feedback:
 	a%=0:if fb%(0,0)>0 then:&,60,8,fb%(0,0),60,1,fb%(11,1),ff%(1),1
 im.menus:
 	60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
-+.GF:		
++.GF:
 	3168: rn=a%:if rn then:&,60,8,s%(0,0),80,1,s%(0,1),e%(1),1
 +.lo:
 	3304: &,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
@@ -219,15 +247,15 @@ im.menus:
 	Usage:	&,60,9,num,siz,a(a,b)
 	
 	cpystruc	Copy field in struct to another field?
-	Usage:	&,60,10,size,a1(a,b),a2(a,b)
+	Usage:	&,60,10,bytes,a1(a,b),a2(a,b)
 
 +/IM.logon:
-	inserting a struct at fb%(0,a):
-	4326 if x<>fb%(.,.)then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
+	inserting a record at fb%(0,a):
+	4326 if x<>fb%(.,.) then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
 
 +/GF-add:
-	again, inserting a struct
-	3324 if x<>cm%(0,0)then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
+	again, inserting a record
+	3324 if x<>cm%(0,0) then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
 	
 	scanstr		Unknown what this is for
 	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
@@ -240,6 +268,7 @@ im.menus:
 	&,61,col,row
 		poscrsr
 		[jack] im 4006: &,38:&,61,.,8:print"&,37:goto 1812:":end
+	[Maybe this affects the console cursor position]
 
 	&,62,b,c
 		settim: b=hour, c=min? im: ~3184
@@ -249,7 +278,7 @@ $fc09	&,65	convert
 	&,66	calcgoto [intrigued by this one] a%=line #
 $fc0c	&,67	copyrite
 $ee03	&,68	struct
-	[difference between &,62 and &,68?]
+	[What's the difference between &,60 and &,68?]
 
 	&,69	dispstr
 
@@ -264,6 +293,7 @@ I'm pretty sure it does.]
 &,70	cursposn	<column>,<row>?
 	+.IM &,70,.,n/2+8.5:&"{white}"
 [what is the difference between &,61 and &,70?]
+[Maybe &,70 affects the user's terminal cursor position]
 
 &,71	cursmenu
 
