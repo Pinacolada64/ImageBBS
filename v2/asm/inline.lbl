@@ -1,4 +1,4 @@
-{uses:..\v2\asm\equates-2_0.lbl}
+{uses:equates-2_0.lbl}
 {asm}
 orig $c000
 ; inline.s - assemble with casm
@@ -13,11 +13,6 @@ orig $c000
 ; open 15,8,15,"s:ml.inline":close 15
 ; include "equat.s",8
 ; for pass=1 to 3:org $c000,-(pass=3),8,"ml.inline":print pass; 
-
-usetbl1	= $cd03
-buffer	= $ce77
-buf2	= $ce27
-
 
 ARYTAB	= 47	; start of arrays
 VARPNT	= 71	; $47-$48 Pointer to the Current BASIC Variable Value
@@ -1136,7 +1131,7 @@ readf:
 	lda index
 	beq read1
 	lda buf2
-	cmp #'^'
+	cmp #'{up arrow}'
 	beq read2
 read1:
 	jsr zero

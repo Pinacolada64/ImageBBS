@@ -1,282 +1,316 @@
-; assemble with casm.exe
-
-; fkey: function key routines
-
-{uses:.\equates-2_0.lbl}
-
 ; irqhn.s - irq routine
 ;
 ;* counter to execute a different
 ;* part of the routine each jiffy
 
-irq:		jsr irq9
-		jsr irq10
-		inc idlejif
-		lda mupcase
-		lsr
-		ror
-		eor #$ff
-		cmp caseflag
-		beq irq0
-		sta caseflag
-		jsr dispdate
+irq:
+	jsr irq9
+	jsr irq10
+	inc idlejif
+	lda mupcase
+	lsr
+	ror
+	eor #$ff
+	cmp caseflag
+	beq irq0
+	sta caseflag
+	jsr dispdate
 
-irq0:		ldy #0
-		lda irqtbl,y
-		sta irqjmp+1
-		iny
-		lda irqtbl,y
-		sta irqjmp+2
-		iny
-		cpy #16
-		bcc irq0a
-		ldy #0
-irq0a:		sty irq0+1
-irqjmp: 	jmp $ffff
-irqtbl: 	word irq1 ;page
-		word irq2 ;time
-		word irq3 ;blanker
-		word irq4 ;lightbar
-		word irq5 ;carrier
-		word irq6 ;flag
-		word irq7 ;lightbar
-		word irq4 ;lightbar
+irq0:
+	ldy #0
+	lda irqtbl,y
+	sta irqjmp+1
+	iny
+	lda irqtbl,y
+	sta irqjmp+2
+	iny
+	cpy #16
+	bcc irq0a
+	ldy #0
+irq0a:
+	sty irq0+1
+irqjmp:
+	jmp $ffff
+irqtbl:
+	word irq1 ;page
+	word irq2 ;time
+	word irq3 ;blanker
+	word irq4 ;lightbar
+	word irq5 ;carrier
+	word irq6 ;flag
+	word irq7 ;lightbar
+	word irq4 ;lightbar
 
-caseflag:	byte 255
+caseflag:
+	byte 255
 
-		;
-		;* chat page
-		;
-irq1:		ldy #4
-		dey
-		bpl irq1a
-		ldy #4
-irq1a:		sty irq1+1
-irq1z:		ldx #5
-		dex
-		bpl irq1b
-		lda timeset
-		bne irq1g
-		lda irq1e+1
-		eor #10
-irq1g:		sta irq1e+1
-		ldx #5
-irq1b:		stx irq1z+1
-		lda scnmode
-		bne irq1e
-		lda chatpage
-		bne irq1c
-		ldx #0
-irq1c:		lda pagecol,x
-		ldx #15
-irq1d:		sta acolr+24,x
-		dex
-		bpl irq1d
-irq1e:		lda #1
-		ldy #39
-irq1f:		sta tcolr,y
-		dey
-		bpl irq1f
-		rts
-		;
-pagecol:	byte 1
-		byte 15
-		byte 12
-		byte 11
-		byte 12
-		byte 15
-		;
-		;* update time on screen
-		;
-timeflag:	byte 0
-		;
-irq2:		lda min
-		ldx timeflag
-		bne irq2a
-		cmp bootdate+5
-		beq ha872
-irq2a:		sta bootdate+5
-		ldx #0
-		stx timeflag
-		jsr gettsr
-		beq irq2b
-		cmp #101
-		bcs irq2b
-		sec
-		sbc #1
-		jsr settsr
-irq2b:		lda hrs
-		sta bootdate+4
-		ldx ten
-		cmp #$12
-		bne ha86f
-		lda bootdate+5
-		bne ha86f
-		inc bootdate
-		lda bootdate
-		cmp #8
-		bcc ha832
-		lda #1
-		sta bootdate
-ha832:		ldy bootdate+1
-		lda bootdate+2
-		cmp ha560-1,y
-		bne ha84d
-		lda #0
-		sta bootdate+2
-		lda bootdate+1
-		sed
-		clc
-		adc #1
-		sta bootdate+1
-ha84d:		lda bootdate+2
-		sed
-		clc
-		adc #1
-		sta bootdate+2
-		cld
-		lda bootdate+1
-		cmp #$13
-		bne ha86e
-		lda #1
-		sta bootdate+1
-		lda bootdate+3
-		sed
-		clc
-		adc #1
-		sta bootdate+3
-ha86e:		cld
-ha86f:		jsr makdate
-		jsr alarm
-ha872:		lda scs
-		jsr bcdtoa
-		pha
-		txa
-		tay
-		pla
-		ldx #$17
-		jsr dispdt
-		tya
-		jsr dispdt
-		jsr gettsr
-		beq ha083
-		lda #$59
-		sed
-		sec
-		sbc scs
-		cld
-		; display tsr
-ha083:		jsr bcdtoa
-		pha
-		txa
-		tay
-		pla
-		ldx #$24
-		jsr dispdt
-		tya
-		jsr dispdt
-		lda tsr2
-		bne tchk1
-		jsr gettsr
-		beq tchk1
-		lda #<copyrite
-		sta jmptbl
-		lda #>copyrite
-		sta jmptbl+1
-tchk1:		jsr gettsr
-		cmp tsr2
-		sta tsr2
-		bne tchk2
-		jsr disptime
-tchk2:		rts
-		;
-gettsr:		txa
-		pha
-		ldx #29
-		jsr gvarptr ;tr%
-		stx getts1+1
-		sty getts1+2
-		stx setts1+1
-		sty setts1+2
-		ldy #1
-		pla
-		tax
-getts1:		lda $ffff,y
-		rts
+;
+;* chat page
+;
+irq1:
+	ldy #4
+	dey
+	bpl irq1a
+	ldy #4
+irq1a:
+	sty irq1+1
+irq1z:
+	ldx #5
+	dex
+	bpl irq1b
+	lda timeset
+	bne irq1g
+	lda irq1e+1
+	eor #10
+irq1g:
+	sta irq1e+1
+	ldx #5
+irq1b:
+	stx irq1z+1
+	lda scnmode
+	bne irq1e
+	lda chatpage
+	bne irq1c
+	ldx #0
+irq1c:
+	lda pagecol,x
+	ldx #15
+irq1d:
+	sta acolr+24,x
+	dex
+	bpl irq1d
+irq1e:
+	lda #1
+	ldy #39
+irq1f:
+	sta tcolr,y
+	dey
+	bpl irq1f
+	rts
 
-settsr:		pha
-		jsr gettsr
-		pla
-setts1:		sta $ffff,y
-		rts
+pagecol:
+	byte 1
+	byte 15
+	byte 12
+	byte 11
+	byte 12
+	byte 15
 
-		;
-		;* make string out of current date
-		;* for d1$ (convert from 6 byte to
-		;* 11 byte format)
-		;
-mkdate:		pha
-		lsr
-		lsr
-		lsr
-		lsr
-		jsr mkdate1
-		pla
-mkdate1:	and #$0f
-		ora #$30
-		sta d1str,y
-		iny
-		rts
-		;
-mult3:		tya
-		sta mult3a+1
-		asl
-		clc
-mult3a:		adc #$00
-		tay
-		rts
-		;
-makdate:	ldy #0
-		lda bootdate
-		jsr mkdate1
-		lda bootdate+3
-		jsr mkdate
-		lda bootdate+1
-		jsr mkdate
-		lda bootdate+2
-		jsr mkdate
-		lda bootdate+4
-		jsr mkdate
-		lda bootdate+5
-		jsr mkdate
-dispdate:	ldy bootdate
-		jsr mult3
-		ldx #0
-dispd1:		lda daytbl,y
-		jsr dispdt
-		iny
-		cpx #3
-		bne dispd1
-		lda #" "
-		jsr dispdt
-		lda bootdate+1
-		cmp #$10
-		bcc *+3
-		sbc #6
-		tay
-		dey
-		jsr mult3
-dispd2:		lda montbl,y
-		jsr dispdt
-		iny
-		cpx #7
-		bne dispd2
-		lda #" "
-		jsr dispdt
-		lda d1str+5
-		cmp #"0"
-		bne dispd3
-		lda #" "
+;
+;* update time on screen
+;
+timeflag:
+	byte 0
+
+irq2:
+	lda min
+	ldx timeflag
+	bne irq2a
+	cmp bootdate+5
+	beq ha872
+irq2a:
+	sta bootdate+5
+	ldx #0
+	stx timeflag
+	jsr gettsr
+	beq irq2b
+	cmp #101
+	bcs irq2b
+	sec
+	sbc #1
+	jsr settsr
+irq2b:
+	lda hrs
+	sta bootdate+4
+	ldx ten
+	cmp #$12
+	bne ha86f
+	lda bootdate+5
+	bne ha86f
+	inc bootdate
+	lda bootdate
+	cmp #8
+	bcc ha832
+	lda #1
+	sta bootdate
+ha832:
+	ldy bootdate+1
+	lda bootdate+2
+	cmp ha560-1,y
+	bne ha84d
+	lda #0
+	sta bootdate+2
+	lda bootdate+1
+	sed
+	clc
+	adc #1
+	sta bootdate+1
+ha84d:
+	lda bootdate+2
+	sed
+	clc
+	adc #1
+	sta bootdate+2
+	cld
+	lda bootdate+1
+	cmp #$13
+	bne ha86e
+	lda #1
+	sta bootdate+1
+	lda bootdate+3
+	sed
+	clc
+	adc #1
+	sta bootdate+3
+ha86e:
+	cld
+ha86f:
+	jsr makdate
+	jsr alarm
+ha872:
+	lda scs
+	jsr bcdtoa
+	pha
+	txa
+	tay
+	pla
+	ldx #$17
+	jsr dispdt
+	tya
+	jsr dispdt
+	jsr gettsr
+	beq ha083
+	lda #$59
+	sed
+	sec
+	sbc scs
+	cld
+; display tsr
+ha083:
+	jsr bcdtoa
+	pha
+	txa
+	tay
+	pla
+	ldx #$24
+	jsr dispdt
+	tya
+	jsr dispdt
+	lda tsr2
+	bne tchk1
+	jsr gettsr
+	beq tchk1
+	lda #<copyrite
+	sta jmptbl
+	lda #>copyrite
+	sta jmptbl+1
+tchk1:
+	jsr gettsr
+	cmp tsr2
+	sta tsr2
+	bne tchk2
+	jsr disptime
+tchk2:
+	rts
+
+gettsr:
+	txa
+	pha
+	ldx #29
+	jsr gvarptr ;tr%
+	stx getts1+1
+	sty getts1+2
+	stx setts1+1
+	sty setts1+2
+	ldy #1
+	pla
+	tax
+getts1:
+	lda $ffff,y
+	rts
+
+settsr:
+	pha
+	jsr gettsr
+	pla
+setts1:
+	sta $ffff,y
+	rts
+
+;
+;* make string out of current date for d1$
+;* (convert from 6 byte to 11 byte format)
+;
+mkdate:
+	pha
+	lsr
+	lsr
+	lsr
+	lsr
+	jsr mkdate1
+	pla
+mkdate1:
+	and #$0f
+	ora #$30
+	sta d1str,y
+	iny
+	rts
+
+mult3:
+	tya
+	sta mult3a+1
+	asl
+	clc
+mult3a:
+	adc #$00
+	tay
+	rts
+
+makdate:
+	ldy #0
+	lda bootdate
+	jsr mkdate1
+	lda bootdate+3
+	jsr mkdate
+	lda bootdate+1
+	jsr mkdate
+	lda bootdate+2
+	jsr mkdate
+	lda bootdate+4
+	jsr mkdate
+	lda bootdate+5
+	jsr mkdate
+dispdate:
+	ldy bootdate
+	jsr mult3
+	ldx #0
+dispd1:
+	lda daytbl,y
+	jsr dispdt
+	iny
+	cpx #3
+	bne dispd1
+	lda #" "
+	jsr dispdt
+	lda bootdate+1
+	cmp #$10
+	bcc *+3
+	sbc #6
+	tay
+	dey
+	jsr mult3
+dispd2:
+	lda montbl,y
+	jsr dispdt
+	iny
+	cpx #7
+	bne dispd2
+	lda #" "
+	jsr dispdt
+	lda d1str+5
+	cmp #"0"
+	bne dispd3
+	lda #" "
 dispd3:		jsr dispdt
 		lda d1str+6
 		jsr dispdt
@@ -623,8 +657,10 @@ chkflag4:	lda $ff
 		jmp chkflag7
 chkflag5:	and chktbl,x
 		jmp chkflag8
-		;
+
 tmpbar:		byte 0
+
+; fkey: function key routines
 
 fkey:		ldx tmpkey
 		lda 653
@@ -732,7 +768,7 @@ irq10c:		sta $d404
 		stx $d40b
 		sty $d412
 irq10d:		rts
-		;
+
 settim:		lda #$08
 		byte $2c
 setalm:		lda #$88
@@ -883,11 +919,12 @@ t2fk3:		ldx #1
 t2fk4:		ldx #10
 t2fk4a:		jsr gettsr
 		tay
-l2:			cpy #101
+@l2:
+		cpy #101
 		beq t2fk4b
 		iny
 		dex
-		bne l2
+		bne @>l2
 t2fk4b:		tya
 		jsr settsr
 		jmp disptime
@@ -896,21 +933,28 @@ t2fk5:		ldx #1
 t2fk6:		ldx #10
 t2fk6a:		jsr gettsr
 		tay
-l1:			cpy #0
-		beq t2fk6b
-		dey
-		dex
-		bne l1
-t2fk6b:		jmp t2fk4b
-t2fk7:		ldx #6
-		jmp t1init
-		;
-		;edit user's access
-ktbl3:		word t3fk1,t3fk2
-		word t3fk5,t3fk5
-		word t3fk3,t3fk3
-		word t3fk7,t3fk7
-		;
+@l1:
+	cpy #0
+	beq t2fk6b
+	dey
+	dex
+	bne @>l1
+t2fk6b:
+	jmp t2fk4b
+
+t2fk7:
+	ldx #6
+	jmp t1init
+
+;
+; edit user's access
+;
+ktbl3:
+	word t3fk1,t3fk2
+	word t3fk5,t3fk5
+	word t3fk3,t3fk3
+	word t3fk7,t3fk7
+
 t3init:		ldx #<ktbl3
 		ldy #>ktbl3
 		jsr usekey
@@ -1074,6 +1118,7 @@ alarm9:		ldx #29
 		ldy #1 ;net-r
 		jmp chkflags
 
+{ifdef:standalone}
 ; these are just here to squelch undefined symbol errors
 
 bootdate:	area 11
@@ -1112,5 +1157,4 @@ daytbl2:		ascii "Sun" ; from includes (23 bytes + $00)
 ;>C:c000  53 75 6e 4d  6f 6e 54 75   SunMonTu
 ;>C:c008  65 57 65 64  54 68 75 46   eWedThuF
 ;>C:c010  72 69 53 61  74 00 00 00   riSat...
-	
-{endasm}
+{endif}

@@ -1,12 +1,11 @@
 orig $c000
 {asm}
-{include:\Documents and Settings\User\My Documents\C64\Image BBS\v2\asm\equates-2_0.lbl}
+{uses:..\equates-2_0.lbl}
 
 ; assemble with casm 4.0
 
 ; rem open 15,8,15,"s:ml.visual":close 15
 ; for pass=1 to 3:org $c000,-(pass=3),8,"ml.visual":print"Pass:"pass
-
 
 ;
 ;*********************
@@ -32,7 +31,7 @@ numy = $15
 ;
 ; colors = $e8da
 ;
-jmp visual
+	jmp visual
 	; jsr visual31
 	; jmp visual2
 ;
@@ -84,7 +83,6 @@ visual3:
 	ldx numx
 	cpx #24
 	bcc visual3
-
 	jsr crsrpos
 visual4:
 	ldx crsry
