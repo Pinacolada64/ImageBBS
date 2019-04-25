@@ -1,0 +1,254 @@
+Variables used by Image BBS 1.3:
+
+Variable descriptions have variable letters capitalized when possible for a mnemonic aid.
+
+Items marked [?] are of uncertain purpose or description. Updates welcome.
+
+Items marked (bool) are Boolean values: 0=off/false, 1=on/true.
+
+	BBS:	Maintained by the BBS; should not be reassigned
+	User:	Holds user information/flags
+	Both:	Maintained by the BBS; can be reassigned
+
+Strings:
+a$	BBS	temporary string
+ag$	BBS	Access Group data
+ak$	BBS	Separator line + CR
+am$	BBS	date/time of last log reset
+an$	BBS	ANswer returned from MCI input routine
+
+b$
+bn$	BBS	BBS Name
+
+c$
+c1$	Both	"entering chat" message
+c2$	Both	"exiting chat" message
+c3$	BBS	"Returning to the Editor" message
+cc$	BBS	BBS identifier (e.g., "WN")
+ch$
+cm$	BBS	Current Module
+co$	BBS	COmputer name
+
+d$
+d1$	BBS	11 digit current date/time
+d2$
+d3$	BBS	last caller handle
+d4$	BBS	name of protocol loaded
+d5$
+d6$	BBS	log start date
+
+e$	BBS	usually DOS Error message
+ef$	BBS	
+ep$	BBS	Extended Command Set: Password
+
+ff$	User	First name
+f1$-f8$	BBS	Function key definitions
+fl$	BBS	user FLags
+
+g$
+
+h$
+hx$	BBS	HeXadecimal digits 0-F
+
+i$
+im$	BBS	current "im.*" module
+
+j$
+jn$	User	JoiN string
+
+k$
+
+l$
+l1$
+l2$	BBS	system reservation password: reservation frequency
+l3$		[?]
+
+ld$	BBS	Last Date (last call), same format as d1$
+ll$	User	Last name
+lm$		Last Module [?]
+lt$	User	Logon Time (message/file scan date), copy of d1$ at login
+	im.misc
+
+m$
+ml$	BBS	Machine Language module (++ *) loaded
+mp$	BBS	More Prompt text
+mt$	BBS	Modem init Text
+
+n$
+na$	User	user's handle
+nl$	BBS	NuLl byte [chr$(0)]
+nm$	BBS	NetMail run date [?]
+
+o$
+
+p$	Both	Prompt text for &,1
+ph$	User	PHone number [or email address]
+po$	BBS	main PrOmpt text
+pp$		set to "PASS" at system setup [?]
+pr$	BBS	current PRogram (+.file)
+
+q$
+qt$	BBS	Quote mark [chr$(34)]
+
+r$	BBS	Return [chr$(13)]
+rn$	BBS	Real Name (ff$ + ll$)
+
+s$
+sy$	BBS	current subsystem (Sub, U/D, U/X...)
+
+tz$	BBS	BBS time zone abbreviation/hour offset
+
+Floating point:
+
+a	BBS	Scratch variable; usually a routine's return value
+am
+
+bd	User	Blocks Downloaded
+bu	User	Blocks Uploaded
+
+ca
+cc
+cn
+cr	User	CRedits
+ct
+
+dr	BBS	System drive
+
+ec	BBS	Extended Command Set: extended command type [?]
+el	BBS	Error Line # an error occured on; used by error-trap routine at 2000
+em	User	Expert Mode (bool)
+
+id	BBS	current user's account ID
+im	BBS	which function in an im.* module is executing
+is
+
+kk	BBS	# of lines of text typed upon exiting text editor
+
+l1	BBS	next available user account #
+l2
+l3
+lc	BBS	which subsystem user is in
+le	User	Lines available in text Editor
+lf
+lk
+lp
+
+mc	Both	Macro Count (messages at main prompt)
+mf
+mw
+
+nc	BBS	credits for new user
+
+pf	BBS	
+pl	BBS	&,1 control: 1=UPPERCASE, 0=Mixed Case
+pm	User	Prompt Mode (bool)
+pr	BBS	PRotocol # ("++ <pr>") loaded
+ps
+
+qb		current baud rate
+qe
+
+rc		like 'sh', abort char
+rp
+rq
+
+sg	BBS	In Special Interest Group (bool)
+sh	BBS	Slash Hit (/), abort char
+
+uc	BBS	Upload Count [?], UD-related
+uh	BBS	
+ul
+ur	BBS	highest UseR account -1
+
+x	Both	REL record to read; variety of uses
+
+y	Both	scratch variable
+
+Integer:
+
+a%	Both	Scratch variable; usually a routine's return value
+ac%	BBS	ACcess level
+ao%	BBS	Access Old: Compare to ac%, difference means user's access level changed since logging on
+
+b%
+
+c%
+cd%
+co%	User	COmputer type
+ct%	User	Calls Today
+
+d%
+d1%	Both	temp device #
+d2%	Both	temp drive #
+d3%	Both	temp Image drive #
+da%	User	Downloads Allowed per call
+db%	User	Downloaded Blocks
+dc%
+df%	BBS	DeFault prompt color
+dv%	BBS	DeVice number
+
+e%	BBS	Usually DOS error number
+ec%	BBS	Extended Command Set: Credits to run command
+
+f%
+
+g%
+
+h%
+
+i%	BBS	Immediate mode login status
+
+j%
+
+k%	BBS	Console login (bool)
+kp%	BBS	Keypress value?
+
+l%
+lk%	BBS	Lt.Kernal HD device #
+ll%	User	Line Length
+
+m%
+mn%	BBS	current minute [?]
+mp%	User	More Prompt: screen height
+
+n%
+
+o%
+
+p%
+p1%	BBS	Prime time: time allowed per call
+p2%	BBS	Prime time: start hour
+p3%	BBS	Prime time: end hour
+
+q%
+
+r%
+
+s%
+sa%
+
+t%
+tc%	BBS	Total Calls
+tr%	Both	Time Remaining for user
+
+u%
+
+v%
+
+w%
+
+x%
+
+y%
+
+z%
+
+uf$:	User	User Flags, up to 17 positions [where?]:
+	 1: lf Line Feeds
+	 2: Message pause mode
+	 3-5?: mp%=int(ll%/256):ll%=ll%-256*mp% mp%=user screen height, ll%=user screen width
+	 6-8: 3 letter time zone abbreviation
+
+Arrays:
+hs$(10)	previous commands
+dr%()	Image drive #s
