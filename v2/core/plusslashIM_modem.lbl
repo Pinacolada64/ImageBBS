@@ -1,5 +1,7 @@
 {number:4000}
-	rem +/IM.modem - modem/rs232 config
+{alpha:alt}
+{step:2}
+	rem "+/IM.modem" - modem/rs232 config
 	gosub {:4006}:&,2,2:mt$=a$:close 2:goto {:4014}
 {:4004}
 	gosub {:4006}:print# 2,mt$:goto 1001
@@ -46,8 +48,8 @@
 	a$=mid$(tt$,8,1)
 	&"8. ATX Value: ATX{pound}$a{f6}"
 	a$="Normal":if mid$(tt$,9,1)="R"then a$="Reverse"
-	&"9. DTR Mode: {pound}$a{f6}":a$="{$c3:2}I{$d4:2}":if mid$(tt$,10,1)="1"then a$="Bell"
-	&"A. {$c3:2}I{$d4:2}/Bell: {pound}$a{f6}"
+	&"9. DTR Mode: {pound}$a{f6}":a$="CCITT":if mid$(tt$,10,1)="1"then a$="Bell"
+	&"A. CCITT/Bell: {pound}$a{f6}"
 	return
 {:4084}
 	a$=mid$(tt$,a,1):on a gosub {:4088},{:4092},{:4094},{:4096},{:4098},{:4100},{:4102},{:4104},{:4106},{:4108}
@@ -72,7 +74,7 @@
 {:4106}
 	&"DTR Mode (N=Normal,R=Reverse){f6}":b$="NR":goto {:4110}
 {:4108}
-	&"{$c3:2}I{$d4:2}/Bell (0={$c3:2}I{$d4:2},1=Bell){f6}":b$="01":goto {:4110}
+	&"CCITT/Bell (0=CCITT,1=Bell){f6}":b$="01":GOTO {:4110}
 {:4110}
 	&">"
 {:4112}
@@ -81,15 +83,15 @@
 	next:goto {:4112}
 {:4118}
 	rem default options
-	ed$(1)="2EA{$ce:2} N1N1 1670 (Old Model)"
-	ed$(2)="2EA{$c8:2} H2N1 1670 (New Model)"
-	ed$(3)="2EM{$c8:2}0H1N1 Hayes  300 No DTR"
-	ed$(4)="2DM{$c8:2}0H1N1 Hayes  300 DTR"
-	ed$(5)="2EM{$c8:2}0H1N1 Hayes 1200 No DTR"
-	ed$(6)="2DM{$c8:2}0H1N1 Hayes 1200 DTR"
-	ed$(7)="3DM{$c8:2}0H1N1 Hayes 2400 DTR"
-	ed$(8)="3DM{$c8:2}0H4N1 Supra 2400"
-	ed$(9)="3EM{$c8:2}0H4N1 Aprotek 2400"
+	ed$(1)="2EANN N1N1 1670 (Old Model)"
+	ed$(2)="2EAHH H2N1 1670 (New Model)"
+	ed$(3)="2EMHH0H1N1 Hayes  300 No DTR"
+	ed$(4)="2DMHH0H1N1 Hayes  300 DTR"
+	ed$(5)="2EMHH0H1N1 Hayes 1200 No DTR"
+	ed$(6)="2DMHH0H1N1 Hayes 1200 DTR"
+	ed$(7)="3DMHH0H1N1 Hayes 2400 DTR"
+	ed$(8)="3DMHH0H4N1 Supra 2400"
+	ed$(9)="3EMHH0H4N1 Aprotek 2400"
 	ed$(0)="3EMHN0H4N1 Custom":l=10
 	return
 	rem 0,300,1200,2400,4800,9600,19200

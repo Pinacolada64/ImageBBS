@@ -2,20 +2,23 @@
 {alpha:alt}
 {step:2}
 {:3000}
+' added: output stage of fixing it's on for A)ll, output more info
 	&"{clear}{f6} Image Stats Fixer{f6:2}"
 	&"1. Count Posts/Resps{f6}"
 	&"2. Count Uploads{f6}"
 	&"3. Count Mail{f6}"
 	&"4. Count Feedback/Sysop/New{f6}"
 	&"5. Scan User List for First Empty Slot{f6}"
-	&"A. Do A{$cc:2} of the above{f6:2}"
+	&"A. Do ALL of the above{f6:2}"
 	&"> {pound}g1":z=val(an$):if an$="A"then for z=1 to 5:gosub {:3018}:next:goto {:3000}
 	on-(z=0)goto {:3020}:gosub {:3018}:goto {:3000}
 {:3018}
 	on z goto {:3100},{:3200},{:3300},{:3400},{:3500}:return
 {:3020}
 	&"{f6:2}Now type {f5}BA{f5} to check new stats.{f6}":goto 1812
+{number:3100}
 {:3100}
+	&"Count Posts/Responses{f6}"
 	p=0:r=0:dr=3:a$="e.Sub":gosub 1011:if e%then:&:return
 	&,2,2:bz=val(a$):close 2
 	for i=1 to bz:a%=i:&"Sub {pound}%a:"
@@ -28,7 +31,9 @@
 	close 2:next
 	a%=p:b%=r:&"{f6}Totals:{pound}%a Posts{f6}       {pound}%b Responses{f6}"
 	gosub 1060:x=26:st(x)=p:gosub 1026:x=27:st(x)=r:gosub 1026:close 2:return
+{number:3200}
 {:3200}
+	&"Count Uploads{f6}"
 	u=0:dr=3:a$="e.U/D":gosub 1011:if e%then:&:return
 	&,2,2:bz=val(a$):close 2
 	for i=1 to bz:a%=i:&"U/D {pound}%a:"
@@ -38,7 +43,9 @@
 	close 2:next
 	a%=u:&"{f6}Total:{pound}%a Files{f6}"
 	gosub 1060:x=28:st(x)=u:gosub 1026:close 2:return
+{number:3300}
 {:3300}
+	&"Count Mail{f6}"
 	dr=2:gosub 1010:open 2,dv%,0,"$"+dr$+"m.*":get#2,a$,a$:&,8,2,1:n=0
 {:3302}
 	&,8,2,1:s=st:if mid$(a$,7,5)="block"or s<>. then {:3308}
@@ -46,7 +53,9 @@
 	goto {:3302}
 {:3308}
 	close 2:st(25)=n:gosub 1060:x=25:gosub 1025:close 2:return
+{number:3400}
 {:3400}
+	&"Count Feedback/Sysop/New{f6}"
 	gosub 1065:&,2,2:close 2:tt$=a$:an$=a$:&,15,1:&"{pound}$a's Mail: "
 	dr=2:a$=left$("m."+tt$,15)+",s,r":gosub {:3410}:st(24)=n
 	&"{f6}Feedback: ":dr=3:a$="e.fback,s,r":gosub {:3410}:st(23)=n
@@ -58,9 +67,12 @@
 	&,2,2:s=st:on-(a$<>"{up arrow}"and s=0)goto {:3412}:n=n+1:on-(s=0)goto {:3412}:close 2
 {:3414}
 	&"{pound}!n{f6}":return
+{number:3500}
 {:3500}
-	l=ur+1:gosub 1065:&"Scanning User List"
+	&"Scan User List for First Empty Slot{f6}":l=ur+1:gosub 1065
 	for x=1 to ur:if x/5=int(x/5)then:&"."
 	gosub 1001:&,2,2:if a$="{up arrow}"then l=x:x=ur
-	next:l1=l
+	next:l1=l:&"User ID #{pound}!l"
 	gosub 1063:x=31:gosub 1001:print# 2,l1:close 2:return
+	rem +.fixer 2019-04-25 pinacolada
+

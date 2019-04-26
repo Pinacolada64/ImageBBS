@@ -40,3 +40,6 @@
 	if an$="{f2}"then for i=1 to bz:a$=tt$(i):&"{pound}!i{pound}{back arrow}04{pound}$a{f6}":next:goto {:4128}
 	if b>0 and b<=fd then tz=1:s%(a+8,x)=b
 	goto {:4124}
+	rem "+/IM.filelist"
+
+' FIXME: unsure of the module's purpose

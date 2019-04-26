@@ -1,6 +1,8 @@
 {number:3000}
 {alpha:alt}
 {step:2}
+' a module for downloading source code files?
+' can be excluded from disk build
 	restore:gosub 1667:d1%=8:d2%=5:gosub {:3002}:goto 1812
 {:3002}
 	read f$:if f$=""then return
@@ -21,3 +23,5 @@
 	data"copyright.lst"
 	data"ml-patcher.lst","loadeditor.lst","rs232-swift.lst"
 	data""
+	rem +.get
+

@@ -1,0 +1,31 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo/num squ" automaint 8/19/1994, 4/12/2019
+	REM:ifval(left$(d1$,1)<>1thenreturn
+	cm$="Numbersquare Automaint":GOSUB 1360
+	dr=3:a$="e.num squ,s,r":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	&,2,2:w$=a$:&,2,2:CLOSE 2:an$=w$:GOSUB 1046:y=i:IF i=.THEN RETURN
+	x=i:GOSUB 1065:GOSUB 1001:FOR i=1 TO 24:&,2,2:tt$(i)=a$:NEXT
+' 250 credits now matches the announcement
+	tt$(19)=STR$(VAL(tt$(19))+250):a$="":FOR i=1 TO 24:a$=a$+tt$(i)+r$:NEXT
+	GOSUB 1001:PRINT# 2,a$:CLOSE 2:dr=3:a$="e.num squ":GOSUB 1024
+	a$="{yellow} {rvrs on}"+w$+r$+" {cyan}Weekly Numbersquare Winner"+r$+"{yellow}{pound}o{$c0}{pound}o{$c0}":GOSUB 1095
+	z=1:tt$=w$:a$="w":GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
+	PRINT# 2,"Weekly Numbersquare Winner"r$;0;r$;d1$;r$;"[Congratulations]"r$
+	PRINT# 2," {yellow}The award for winning is 250 credits."r$
+	PRINT# 2," {lt. green}Good luck again this week!"r$:PRINT# 2,"{up arrow}":CLOSE 2
+	IF y=1 THEN GOSUB 1060:x=2:i=1:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31
+	IF y=1 THEN GOSUB 1025
+	ON-(y<>1)GOSUB 1060:x=3:i=1:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:RETURN
+	REM
+	REM by:
+	REM    port commodore
+	REM    (801-423-2734)
+	REM
+	REM        nissa
+	REM
+	REM   august, 19, 1994
+	REM
+	REM numbersquare automaint

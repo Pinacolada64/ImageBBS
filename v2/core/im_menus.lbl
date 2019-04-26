@@ -1,6 +1,7 @@
 {number:60000}
-' fd%() must hold a flag
-' 29=chars per field, 0-49=# of items within struct?
+' see +.menu create for more details of struct
+' fd%(): list of records matching user's access level
+' jm%(29,49): 29=field size (zero-based, so 0-29), 49=# of records within struct, 50)
 	&,27,7:dim fd%(50),jm%(29,49)
 	x=lc:on im gosub {:60004},{:60006},{:60010}:&,28,7:return
 {:60004}
@@ -14,12 +15,23 @@
 	dr=3:gosub 1010:a$=dr$+b$
 ' load struct:
 	&,60,2,.,jm%(.,.),a$,dv%:gosub 1012:if e%then return
-' &,60,8,num,size,access,a(a,b),a%(a),start
-' num: # of items in struct
-' size seems too large: is it the width of the item in the struct?
-'	that was only 30
-' returns a% (# of matches?) and fd%(): whether user has access to item?
+' scan struct:
+' &,60,8,recs,size,access,search%(field,record),result%(element),start
+' recs:		50
+'	# of records in struct
+' size:		60
+'	size of the record in the struct (seems too large: was only DIMensioned for 30)
+' access:	2^ac%+zz%*32768
+'	access level to filter results by
+' search%(field,record):	jm%(1,.)
+'	search%()		the integer array to search
+'	field			the field within the record to search
+'	record			the record to search
+
+' returns a% (# of matches) and fd%(): list of matching records
 	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=.then return
+' &,60,1: get 50-byte string from field (or offset, if you like) 6 (zero-based)
+' of jm%( , ), assign to a$:
 	&"{f6}":for i=1 to a%:&,60,1,50,jm%(5,fd%(i)),a$:lp=1:&:i=i+a%*rc:next:return
 
 ' TODO: proposed rewrite:

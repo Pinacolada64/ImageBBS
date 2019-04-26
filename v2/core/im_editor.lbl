@@ -91,3 +91,4 @@
 	a=2:goto {:60100}
 {:60110}
 	b%=kk-1:gosub {:60020}:gosub {:60010}:poke 2031,1:a=1:goto {:60100}
+	rem im.editor

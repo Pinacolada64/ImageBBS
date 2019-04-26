@@ -1,0 +1,30 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo/payroll" - distribute paychecks
+	n=0:dr=6:a$="u.payroll,s,r":GOSUB 1011:IF e%THEN{:4012}
+{:4004}
+	n=n+1:&,2,2:a%(n)=VAL(LEFT$(a$,3)):c%(n)=VAL(MID$(a$,5)):IF st=.THEN{:4004}
+	CLOSE 2:&"{f6}Executing Credit Payroll{f6:2}"
+	GOSUB 1065:FOR i=1 TO n:x=a%(i):c%=c%(i):GOSUB {:4014}:NEXT:CLOSE 2
+	FOR k=1 TO n:tt$=tt$(k):c%=c%(k):GOSUB {:4022}:NEXT
+{:4012}
+	CLOSE 2:RETURN
+{:4014}
+	GOSUB 1001:FOR j=1 TO 23:&,2,2:ed$(j)=a$:NEXT
+	a$=ed$(1):tt$(i)=a$:IF a$="{up arrow}"THEN RETURN
+	&"{pound}$a{pound}{back arrow}25{pound}%c Credits{f6}":ed$(19)=STR$(VAL(ed$(19))+c%)
+	a$="":FOR j=1 TO 23:a$=a$+ed$(j)+r$:NEXT:GOSUB 1001:PRINT# 2,a$:RETURN
+{:4022}
+	a$=tt$:&"{pound}$a{pound}{back arrow}30Notified{f6}":IF tt$="{up arrow}"THEN{:4036}
+	z=1:a$="w":GOSUB 1062:IF e%THEN z=.:a$="a":GOSUB 1062
+	PRINT# 2,"IMAGE"r$0;r$d1$r$"[Payroll]"r$
+	PRINT# 2,"You have received"STR$(c%)" credits{f6}"r$"for this week's paycheck."
+	PRINT# 2,"{up arrow}":GOSUB 1060:i=1:x=3:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	IF y=1 THEN FOR x=2 TO 24 STEP 11:GOSUB 1025:NEXT:x=31:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:GOTO 1079
+{:4036}
+	dr=3:a$="fback":b$="a":GOSUB 1027:IF e%THEN a$="fback":b$="w":GOSUB 1027
+	PRINT# 2,"IMAGE"r$"0"d1$r$"0"r$"None"r$"IMAGE BBS"r$"Commodore 64"
+	PRINT# 2,"Paycheck To Non-Existant User:"r$tt$r$"{up arrow}":CLOSE 2:RETURN
+	copr. 1990 NEW image 12-26-90

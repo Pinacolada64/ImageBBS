@@ -1,0 +1,72 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&"{f6}{gray3}Vote for Jerk Award? ":GOSUB 1907:ON a+1 GOTO 1603
+	a=8:GOSUB 1004:q=a:GOSUB 2912:a$="n.$Jerk Award":dr=1:GOSUB 1075
+{:4004}
+	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} Port Commodore {rvrs off}{f6}{pound}{back arrow}13{green}Presents....{f6:2}{pound}{back arrow}10{white}The {rvrs on}{purple}JERK{green}{rvrs off} Award!!{f6}"
+	a$="e.jerks":dr=3:GOSUB 1011:IF e%THEN:&"{f6}Not configured{pound}w2":GOTO {:4100}
+	x=17:GOSUB 1001:&,2,2:d=VAL(a$):x=1:GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN{:4050}
+	IF a$="{$ff}"THEN{:4050}
+	n$=a$:&"{f6:3}{lt. blue}The {white}NOMINEES{lt. blue} Are: {f6}":c=.
+{:4014}
+	c%=VAL(n$):n$=MID$(n$,4)
+	b%=x:&"{f6}{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} Vote!":IF c%<>1 THEN:&"{pound}h1s"
+	&"!":x=x+1:kk=x:GOSUB 1001:&,2,2:n$=a$:IF MID$(n$,4)="DELETED"THEN c=c+1
+	IF n$<>"{up arrow}"THEN{:4014}
+{:4022}
+	&"{f6:2}{gray3}V)ote, A)dd A New Nominee Or Q)uit?{f6}15 Name Maximum.{f6}> {pound}g1{lt. green}{pound}v7{f6}"
+	IF tr%<1 THEN{:4100}
+	ON-(an$="V")-(an$="A")*2-(an$="Q")*3 GOTO {:4028},{:4054},{:4100}:GOTO {:4022}
+{:4028}
+	c=1:a$="e.jvoters,s,r":dr=3:GOSUB 1011:IF e%THEN{:4100}
+{:4030}
+	ON q GOTO {:4034}:FOR x=1 TO d:&,2,2:IF na$=a$THEN x=d:c=.
+	NEXT:ON-(c<>.)GOTO {:4034}:&"{f6:2}Sorry, You've Already Voted{pound}w2":GOTO {:4100}
+{:4034}
+	&"{f6:2}{yellow}Vote For Which Number?{cyan} {pound}i1":ON-(an$=""OR an$="Q")GOTO {:4100}
+	ON tr%+1 GOTO {:4100}:x=INT(VAL(an$)):IF x<1 OR x>kk THEN{:4030}
+	a$="e.jerks":dr=3:GOSUB 1011:IF e%THEN{:4100}
+	GOSUB 1001:&,2,2:n$=a$:c%=VAL(n$):n$=MID$(n$,4)
+	c%=c%+1:n$=RIGHT$(STR$(1000+c%),3)+n$
+	GOSUB 1001:PRINT# 2,n$:CLOSE 2:a$="e.jvoters,s,a":dr=3:GOSUB 1011:IF e%THEN{:4100}
+	IF q=.THEN PRINT# 2,na$:d=d+1:a$="e.jerks":GOSUB 1011:x=17:GOSUB 1001:PRINT# 2,d
+	&"{f6:2}Your Vote Has Been Recorded, Thanks!{f6}{pound}w2":GOTO {:4100}
+{:4050}
+	&"{f6:2}{cyan}There Are NO Nominees, Would You Like To{f6}Nominate Someone? "
+	GOSUB 1902:IF a=.THEN{:4100}
+{:4054}
+	IF kk>15 AND c=.THEN:&"{f6:2}{purple}No NOMINEES Being Accepted At This Time!{f6}":GOTO {:4022}
+	&"{f6:2}{cyan}And {rvrs on}{white} WHO {rvrs off}{cyan} Is Your Nominee?{f6:2}> {pound}i1":a=LEN(an$):IF tr%<1 THEN{:4100}
+	IF a<5 OR a>20 THEN{:4062}
+	GOSUB 1046:IF i THEN{:4064}
+{:4062}
+	&"{f6:2}Sorry, {pound}v7 Doesn't Exist!{f6}":GOTO {:4068}
+{:4064}
+	IF i=1 THEN:&"{f6:2}It's Not NICE To Fool With The Sysop!{pound}w2{f6}":GOTO {:4100}
+	GOTO {:4070}
+{:4068}
+	&"{f6:2}Would You Like To Try Again? ":GOSUB 1902:ON a GOTO {:4054}:GOTO {:4100}
+{:4070}
+	nn$=an$:dr=3:a$="e.jerks":GOSUB 1011:IF e%THEN{:4100}
+	x=.:tt$=""
+{:4074}
+	x=x+1:GOSUB 1001:&,2,2:tt$=a$:IF MID$(tt$,4)="DELETED"THEN{:4082}
+	IF MID$(tt$,4)=nn$THEN:&"{f6:2}{white}That NOMINEE Already Exists!{f6}{pound}w2{lt. green}":GOTO {:4100}
+	IF tt$<>"{up arrow}"THEN{:4074}
+	GOSUB 1001:PRINT# 2,"000"nn$:x=x+1:GOSUB 1001:PRINT# 2,"{up arrow}":GOTO {:4084}
+{:4082}
+	GOSUB 1001:PRINT# 2,"000"nn$
+{:4084}
+	CLOSE 2:&"{f6:2}{orange}Your Nominee Has Been Added!{f6}"
+	&"Nominee now being notifed via Email"
+	w=1:a$="w":tt$=nn$:GOSUB 1062:IF e%THEN a$="a":w=.:GOSUB 1062
+	PRINT# 2,"JERK{$a0}AWARD{f6}NOMINATION{$a0}COMMITTEE"r$"(UID#0)"r$;d1$
+	PRINT# 2,"[CONGRATULATIONS]":PRINT# 2,na$+" Has Nominated YOU"
+	PRINT# 2,"for the {white}{rvrs on}JERK{$a0}AWARD":PRINT# 2,"{f6}{lt. green}Your very well deserved nomination"
+	PRINT# 2,"has been accepted!!":PRINT# 2,"{up arrow}":CLOSE 2
+	&"{f6:2}Tidings sent!{pound}w2":GOTO {:4004}
+{:4100}
+	d=.:x=.:c=.:CLOSE 2:RETURN
+	rem "+/lo-jerk" - jerk award logon module
+	copr. 1994 NEW image 9/18/94

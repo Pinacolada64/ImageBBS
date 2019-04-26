@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	gosub {:3082}:goto 1811
 {:3002}
 	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
@@ -92,5 +94,4 @@
 {:3118}
 	&,2,6:tt$(kk)=a$:kk=kk+1:gosub 1373:on-(z%>100 and kk<254 and st=.)goto {:3118}
 	close 6:goto {:3110}
-	rem +.wf
-	copr. 1994 new image 9/9/94
+	rem "+.WF" copr. 1994 new image 9/9/94

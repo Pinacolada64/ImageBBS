@@ -1,0 +1,104 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM "+.JA: Jerk Award"
+	GOTO {:3006}
+{:3004}
+	CLOSE 2:RETURN
+{:3006}
+	a=8:GOSUB 1004:q=a:GOSUB 2912
+	dr=1:a$="n.$Jerk Award":GOSUB 1075:a$=" {green}JA{yellow}":GOSUB 1095
+{:3010}
+	&"{f6:2}{pound}{back arrow}12{pound}$q{lt. red}{rvrs on} Port Commodore {rvrs off}{f6}{pound}{back arrow}13{pound}$q{green}Presents....."
+	&"{f6:2}{pound}{back arrow}10{pound}$q{white}The {pound}p5{rvrs on}{purple}JERK{green}{rvrs off}{pound}p0 Award!!{f6}"
+	a$="e.jerks":dr=3:GOSUB 1011:IF e%THEN{:3092}
+	x=17:GOSUB 1001:&,2,2:d=VAL(a$):x=1:GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN{:3056}
+	IF a$="{$ff}"THEN{:3056}
+	n$=a$:&"{f6:3}{pound}$q{lt. green}The {white}NOMINEES{lt. green} Are: {f6}":c=.
+{:3022}
+	c%=VAL(n$):n$=MID$(n$,4)
+	b%=x:&"{f6}{pound}$q{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} Vote!":IF c%<>1 THEN:&"{pound}h1s"
+	&"!":x=x+1:kk=x:GOSUB 1001:&,2,2:n$=a$:IF MID$(n$,4)="DELETED"THEN c=c+1
+	IF n$<>"{up arrow}"THEN{:3022}
+{:3030}
+	&"{f6:2}{gray3}{pound}$qV)ote, A)dd A New Nominee Or Q)uit?{f6}{pound}$q15 Name Maximum.{f6}"
+	&"{pound}$q: {pound}g1{lt. green}{pound}v7{f6}"
+	IF tr%<1 THEN 1812
+	ON-(an$="V")-(an$="A")*2-(an$="Q")*3 GOTO {:3130},{:3060},{:3092}:GOTO {:3030}
+{:3038}
+	&"{f6:2}{pound}$q{yellow}Vote For Which Number?{cyan} {pound}i1":ON-(an$=""OR an$="Q")GOTO {:3092}
+	ON tr%+1 GOTO 1811
+	x=INT(VAL(an$)):IF x<1 OR x>kk THEN{:3038}
+	a$="e.jerks":dr=3:GOSUB 1011:IF e%THEN{:3092}
+	GOSUB 1001:&,2,2:n$=a$:c%=VAL(n$):n$=MID$(n$,4)
+	c%=c%+1:n$=RIGHT$(STR$(1000+c%),3)+n$
+	GOSUB 1001:PRINT# 2,n$:GOSUB {:3004}:a$="e.jvoters,s,a":dr=3:GOSUB 1011:IF e%THEN{:3092}
+	IF q=.THEN PRINT# 2,na$:d=d+1:a$="e.jerks":GOSUB 1011:x=17:GOSUB 1001:PRINT# 2,d
+	&"{f6:2}{pound}$qYour Vote Has Been Recorded, Thanks!{f6}{pound}w2":GOTO {:3092}
+{:3056}
+	&"{f6:2}{cyan}{pound}$qThere Are NO Nominees, Would You Like To{f6}Nominate Someone? "
+	GOSUB 1907:IF a=.THEN{:3092}
+{:3060}
+	IF kk>15 AND c=.THEN:&"{f6:2}{purple}No NOMINEES Are Being Accepted At This Time!{f6}":GOTO {:3030}
+	POKE 53252,20:&"{f6:2}{pound}$q{cyan}And {rvrs on}{white} WHO {rvrs off}{cyan} Is Your Nominee?{f6:2}> {pound}i1":a=LEN(an$)
+	ON tr%+1 GOTO 1811:IF a<5 THEN{:3068}
+	GOSUB 1046:IF i THEN{:3070}
+{:3068}
+	&"{f6:2}Sorry, {pound}v7 Doesn't Exist!{f6}":GOTO {:3074}
+{:3070}
+	IF i=1 THEN:&"{f6:2}It's Not NICE To Fool With The Sysop!{f6}":&,28:a$="lo":f1=2:GOTO 1016
+	GOTO {:3076}
+{:3074}
+	&"{f6:2}{pound}$qWould You Like To Try Again? ":GOSUB 1902:ON a GOTO {:3060}:GOTO {:3092}
+{:3076}
+	nn$=an$:dr=3:a$="e.jerks":GOSUB 1011:IF e%THEN{:3092}
+	x=.:tt$=""
+{:3080}
+	x=x+1:GOSUB 1001:&,2,2:tt$=a$:IF MID$(tt$,4)="DELETED"THEN{:3088}
+	IF MID$(tt$,4)=nn$THEN:&"{f6:2}{pound}$q{white}That NOMINEE Already Exists!{f6}{pound}w2{lt. green}":GOTO {:3092}
+	IF tt$<>"{up arrow}"THEN{:3080}
+	GOSUB 1001:PRINT# 2,"000"nn$:x=x+1:GOSUB 1001:PRINT# 2,"{up arrow}":GOTO {:3090}
+{:3088}
+	GOSUB 1001:PRINT# 2,"000"nn$
+{:3090}
+	GOSUB {:3004}:&"{f6:2}{orange}Your Nominee Has Been Added!{f6}":GOTO {:3136}
+{:3092}
+	d=.:x=.:c=.:GOSUB {:3004}:ON q+1 GOTO 1812
+{:3094}
+	&"{f6:2}{pound}$q{lt. green}Sysop!{f6:2}{pound}$qYou May Make Changes If You Wish.{f6}"
+{:3096}
+	&"{f6:2}{pound}$qR)estart, D)elete or Q)uit?{f6}> {pound}g1{lt. green}{pound}v7{f6}"
+	ON-(an$="Q"OR an$=""OR tr%<1)-(an$="D")*2-(an$="R")*3 GOTO 1812,{:3114},{:3100}
+{:3100}
+	&"{f6:2}{pound}$qRestart? ":GOSUB 1902:IF a=.THEN{:3096}
+	&"{f6:2}{pound}$qWorking...":dr=3:a$="e.jvoters":GOSUB 1024
+	a$="e.jerks,l,"+CHR$(30):dr=3:GOSUB 1011
+	x=18:GOSUB 1001:PRINT# 2,CHR$(255):x=1:GOSUB 1001:PRINT# 2,"{up arrow}"
+	d=1:x=17:GOSUB 1001:PRINT# 2,d
+	a$="e.jvoters,s,w":dr=3:GOSUB 1011:IF e%THEN{:3094}
+	PRINT# 2,"THE SYSOP":GOSUB {:3004}:&"{f6:2}Created!!!{f6}{pound}w2":GOTO {:3010}
+{:3114}
+	a$="e.jerks":x=.:dr=3:GOSUB 1011:IF e%THEN{:3094}
+{:3116}
+	x=x+1:GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN{:3122}
+	IF a$="{$ff}"THEN{:3122}
+	a%=x:b$=a$:&"{f6}{pound}$q {pound}%a {pound}$b":GOTO {:3116}
+{:3122}
+	x=x-1:b%=x:&"{f6:2}{lt. green}There Are {yellow}{pound}%b{lt. green} Nominees...{lt. green}"
+{:3124}
+	&"{f6}{cyan}{pound}$qDelete Number? (RET To Exit){lt. green}: {pound}i1":ON tr%+1 GOTO 1811:IF an$=""THEN{:3094}
+	a=INT(VAL(an$)):IF a<1 OR a>x THEN{:3124}
+	x=a:GOSUB 1001:PRINT# 2,"000DELETED":GOSUB {:3004}:GOTO {:3094}
+{:3130}
+	c=1:a$="e.jvoters,s,r":dr=3:GOSUB 1011:IF e%THEN{:3092}
+	ON q GOTO {:3038}:FOR x=1 TO d:INPUT# 2,nn$:IF na$=nn$THEN x=d:c=.
+	NEXT:ON-(c<>.)GOTO {:3038}:&"{f6:2}{pound}$qSorry, You've Already Voted{pound}w3":GOTO {:3092}
+{:3136}
+	&"{f6}{pound}$qNominee now being notifed via Email"
+	z=1:a$="w":tt$=nn$:GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
+	PRINT# 2,"JERK{$a0}AWARD{f6}NOMINATION{$a0}COMMITTEE"r$"(UID#0)"r$;d1$
+	PRINT# 2,"[CONGRATULATIONS]":PRINT# 2,na$+" Has Nominated YOU"
+	PRINT# 2,"for the {white}{rvrs on}JERK{$a0}AWARD":PRINT# 2,"{f6}{lt. green}Your very well deserved nomination"
+	PRINT# 2,"has been accepted!!":PRINT# 2,"{up arrow}":CLOSE 2
+	&"{f6:2}Tidings sent!{pound}w2":GOTO {:3010}
+	copr. 1994 NEW image 9/18/94

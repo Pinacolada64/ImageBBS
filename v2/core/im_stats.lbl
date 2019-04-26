@@ -1,6 +1,6 @@
 {number:60000}
 {crunch:on}
-{alpha:invert}
+{alpha:alt}
 {step:2}
 	on im goto {:60002}:return
 {:60002}
@@ -50,4 +50,4 @@
 {:sub.color}
 	gosub 1004:if a then f=f+1:&"{f6}"+mid$("{lt. green}{yellow}",(f and 1)+1,1)+a$
 	return
-	
+	rem im.stats pinacolada

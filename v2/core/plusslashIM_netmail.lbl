@@ -11,7 +11,7 @@
 ' changed: {:4330}, {:4332}, {:4344} - subroutined "net connects editor" message
 
 {:4000}
-	y$="Connect":x$="Command":rem "+/im.NETMAIL"
+	y$="Connect":x$="Command"
 {:4002}
 	v=1.3:vn$="900610":gosub {:4104}:return
 {:4004}
@@ -438,4 +438,4 @@
 {:4618}
 	poke 53252,q:return
 {crunch:off}
-	rem "+/im.NETMAIL" -- X-TEC 171221
+	rem "+/IM.netmail" -- x-tec 171221

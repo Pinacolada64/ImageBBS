@@ -1,0 +1,73 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.ud-edit"
+	ON lm GOTO {:4004},{:4006},{:4036}
+{:4004}
+	bl=.:GOSUB {:4900}:IF a<1 OR a>rn THEN 3214
+{:4006}
+	tz=.:kk=a:GOSUB {:4916}:IF a$<>nn$(a)AND q=.THEN ON bl+1 GOTO 3214:a=kk:RETURN
+{:4008}
+	POKE 53252,38:b$=STR$(d%(kk)):a$="{f6}{white}1) Comp:{pound}$b":&
+	GOSUB {:4918}:GOSUB {:4920}:z$=b$:&"{f6}2) Name: {pound}$b"
+	an$=ed$(kk):&"{f6}3) Desc:{f6}{pound}v7{f6:2}{lt. green}Edit?{lt. blue}: {pound}i1"
+	GOSUB {:4902}:IF a=.THEN ON tz GOSUB 3150:a=kk:ON bl+1 GOTO 3214:RETURN
+	GOSUB {:4910}:ON a GOSUB {:4018},{:4022},{:4032}:GOSUB {:4912}:GOTO {:4008}
+{:4018}
+	p$="{lt. green}Computer Type{lt. blue}":w$=MID$(STR$(d%(kk)),2):&,1,32
+	GOSUB {:4902}:ON-(an$=""OR a>9 OR a=d%(kk))GOTO {:4904}:d%(kk)=a:tz=1:RETURN
+{:4022}
+	POKE 53252,16:pl=.:p$="{pound}$jname":w$=z$:&,1,32
+	tt$=an$:ON-(tt$=""OR tt$="$"OR tt$=z$)GOTO {:4904}
+	dr=bn+6:GOSUB 1010:PRINT# 15,"r"+dr$+tt$+"="+dr$+z$
+	GOSUB 1012:IF e%=.THEN dt$(kk)=LEFT$(dt$(kk),22)+tt$+RIGHT$(dt$(kk),2):tz=1:RETURN
+	lp=1:&:GOSUB 1920:RETURN
+{:4032}
+	POKE 53252,76:pl=.:p$="{lt. green}Description{lt. blue}:{f6}":w$=ed$(kk):&,1,32
+	ON-(an$=""OR an$=ed$(kk))GOTO {:4904}:ed$(kk)=an$:tz=1:RETURN
+{:4036}
+	&"{f6}{pound}q0 1-> {pound}$jname{f6} 2-> {pound}$jsize{f6} 3-> Times {pound}$ked{f6:2} Sort By?: {pound}i1"
+	GOSUB {:4902}:ON-(a<1 OR a>3)GOTO 3214:a%=rn:x=a:&"{f6}Sorting {pound}%a Files..."
+	FOR i=1 TO rn:&".":a%(i)=.:FOR j=1 TO i:IF a%(j)=.THEN{:4048}
+	IF x=1 AND MID$(dt$(i),12)>MID$(dt$(a%(j)),12)THEN NEXT
+	IF x=2 AND c%(i)<c%(a%(j))THEN NEXT
+	IF x=3 AND f%(i)<f%(a%(j))THEN NEXT
+{:4048}
+	b%=a%(j):a%(j)=i:FOR j=j TO i:c%=a%(j+1):a%(j+1)=b%:b%=c%:NEXT:NEXT
+	&"{f6}":GOSUB {:4922}:FOR i=1 TO rn:a=a%(i):GOSUB {:4928}:&"{f6}":IF s+rc THEN i=rn
+	NEXT:GOSUB {:4926}:GOTO 3214
+	copr.1989 NEW image 10/28/90
+{:4900}
+	a=ABS(INT(VAL(LEFT$(MID$(an$,2),4)))):RETURN
+{:4902}
+	a=ABS(INT(VAL(an$))):RETURN
+{:4904}
+	RETURN
+{:4906}
+	IF VAL(a$)THEN IF VAL(a$)<1 THEN a$=MID$(a$,4)
+{:4908}
+	RETURN
+{:4910}
+	&"{f6}{lt. green} (RETURN To Keep Same){f6:2}":RETURN
+{:4912}
+	a$=bb$(bn):GOSUB {:4906}:p$="{green}U/D#"+MID$(STR$(bn),2)+": {lt. red}"+a$:cm$=p$
+	ON-(sg=0)GOTO {:4908}:p$=sg$+" SIG{f6:2}"+p$:RETURN
+{:4916}
+	a$=RIGHT$("0000"+MID$(STR$(id),2),4)+na$:RETURN
+{:4918}
+	b$=MID$(dt$(kk),23):RETURN
+{:4920}
+	b$=LEFT$(b$,LEN(b$)-2):RETURN
+{:4922}
+	b$="Bk's":IF co%>2 THEN b$="Kb's"
+	POKE 970,0:&"{f6}{white} ## {lt. red}{pound}$b   {green}Dl'd  {lt. blue}Name{f6}{orange}{pound}vj":RETURN
+{:4926}
+	&"{orange}{pound}vj":RETURN
+{:4928}
+	kk=a:GOSUB {:4918}:IF f%(a)>.THEN c$="{lt. blue}{f5}{pound}$b{f5}":GOTO {:4932}
+	c$="{yellow}(Unvalidated)":GOSUB {:4916}:IF(q OR a$=nn$(a))THEN c$="{white}*{lt. blue}{f5}{pound}$b{f5}"
+{:4932}
+	a%=a:b%=c%(a):c%=f%(a)-1:IF c%<.THEN c%=.
+	IF co%>2 THEN b%=(b%*254)/1024:IF b%<1 THEN b%=1
+	&" {white}{pound}#2{pound}# {pound}%a {lt. red}[{white}{pound}#4{pound}%b{lt. red}] {green}{pound}#3[{white}{pound}%c{green}] {lt. blue}"+c$+"{pound}{back arrow}39"
+	s=rc:s=s+rc:&"{pound}q0":RETURN

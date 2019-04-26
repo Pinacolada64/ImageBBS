@@ -1,0 +1,22 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-bar" - bar graph login module
+	a=ll%/2-19:l$="":IF a>0 THEN l$=LEFT$("                        ",a)
+	h$="{$a2:30}"
+	i$="                              ":j$="{$bb}"
+	&"{f6:2}{pound}$l       {white}{rvrs on} Today's Board Activity {f6:2}":sh=.:rc=.
+	&"{pound}$l                 1 1 1 1 1 2 2 2 2 2 3{f6}"
+	&"{pound}$l         2 4 6 8 0 2 4 6 8 0 2 4 6 8 0{f6}"
+	&"{pound}$l       0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0{f6}"
+	&"{pound}$l       {lt. blue}{$b0}{pound}o{$b2:12}{$ae}{f6}":FOR i=1 TO 9:d$=MID$("{cyan}{purple}{cyan}{purple}{cyan}{purple}{cyan}{purple}{cyan}",i,1)
+	c$=MID$("FbackSMailMail PostsRespsUpldsDnldsNew  Calls",i*5-4,5)
+	x=INT(st(i+11)/5+.5):b=INT(x/2+.5):IF b>28 THEN b=28
+	a$="":c=b+1:IF x>1 AND(x AND 1)THEN a$=j$:c=b+2
+	a$=LEFT$(h$,b)+a$+MID$(i$,c)
+	&"{lt. blue}{pound}$l {pound}$c {$dd}{pound}$d{pound}$a{lt. blue}{$dd}{f6}":i=i-9*(sh<>.OR rc<>.):NEXT
+	&"{pound}$l       {lt. blue}{$ad}{pound}o{$b1:12}{$bd}{f6:2}"
+	b%=st(21):c%=st(22):a=b%+c%:IF a THEN b%=INT(b%/a*100+.5):c%=100-b%
+	&"{white}{pound}$l       Used Time:{pound}#3{pound}# {pound}%b%    Idle Time:{pound}#3{pound}# {pound}%c%{f6}{lt. blue}":RETURN
+	REM
+

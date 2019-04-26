@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	on lm goto {:4012},{:4108}
 {:4002}
 	dr=3:a$="e.macros":goto 1011
@@ -87,11 +89,13 @@
 	dr=3:a$="e.fkeys":gosub 1023
 	for i=1 to 8:print# 2,tt$(i):next:close 2
 {:4138}
-	&"Activate? ":gosub 1907:if a=. then {:4148}
-	for i=1 to 8:a$=tt$(i):if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
+	&"Activate? ":gosub 1907:if a=. then return
+	for i=1 to 8:a$=tt$(i):if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+r$
 	tt$(i)=a$:next
 	f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
 	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8)
 {:4148}
 	return
 	copr. 1994 new image 9/25/94
+	rem "+/IM.macros"
+

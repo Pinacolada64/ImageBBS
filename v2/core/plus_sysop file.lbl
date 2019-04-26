@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	&"{clear} {lt. green}Sysop File Maintenance":gosub {:3176}:goto {:3012}
 {:3002}
 	dr=3:a$="e.sysop,l,"+chr$(250):goto 1011
@@ -99,10 +101,10 @@
 	&"{f6:2}Correct? ":gosub 1907:on a goto {:3160}
 	&"{f6:2}Which Number Is Not Correct? {pound}i1":on-(an$="")goto {:3160}:i=val(an$)
 	&"{f6}":&ed$(i):&"{pound}{back arrow}13:":&tt$(i)
-	if i<=3 or i=8 or i=13 then:&"New :":&ed$:&"{f6}]> {pound}i1":tt$=an$:on tr%+1 goto 1811:goto {:3156}
+	if i<=3 or i=8 or i=13 then:&"New :"+ed$+"{f6}]> {pound}i1":tt$=an$:on tr%+1 goto 1811:goto {:3156}
 	&"{f6}New :":&ed$(i):&"{f6}]> {pound}i0":on tr%+1 goto 1811:tt$=an$
 {:3156}
-	on-(an$="")goto {:3142}:&"{f6:2}Is ":&an$:" Correct? ":gosub 1907:if a=. then {:3142}
+	on-(an$="")goto {:3142}:&"{f6:2}Is {pound}v7 Correct? ":gosub 1907:if a=. then {:3142}
 	tt$(i)=tt$:goto {:3142}
 {:3160}
 	&"{f6:2}Writing Data...":tt$(.)=d1$:if tt$(12)=""then tt$(12)="None"
@@ -119,5 +121,4 @@
 	ed$(4)="Address":ed$(5)="City":ed$(6)="State":ed$(7)="Zipcode"
 	ed$(8)="Serial Number":ed$(9)="Board Name":ed$(10)="Voice Number"
 	ed$(11)="Board Number":ed$(12)="Network":ed$(13)="Node ID":return
-	rem +.sysop file
-	copr. 1994 new image 10/10/94
+	rem "+.sysop file" - copr. 1994 new image 10/10/94

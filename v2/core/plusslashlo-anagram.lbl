@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	poke 53252,30:&"{f6:2}{gray3}Play Anagrams? ":gosub 1907:on a+1 goto 1603
 	c%=25:d%=c%+5:if cr<d% then:&"{f6:2}You have insufficient credits to play."
 	if cr<d% then:&"{f6}You must have {pound}%d credits.{pound}w2":return
@@ -42,8 +44,9 @@
 	a$="e.anagram":dr=3:gosub 1011:x=fd:gosub 1001:print# 2,w$:close 2:return
 {:4064}
 	a=10
-	tt$(1)="CHA{$cc:2}ENGER":tt$(2)="HERCULES":tt$(3)="CROATIA"
+	tt$(1)="CHALLENGER":tt$(2)="HERCULES":tt$(3)="CROATIA"
 	tt$(4)="TELEPHONE":tt$(5)="DISCOVERY":tt$(6)="ELEPHANT":tt$(7)="DICTIONARY"
-	tt$(8)="CROISSANT":tt$(9)="ENTERPRISE":tt$(10)="BA{$d4:2}LESHIP"
+	tt$(8)="CROISSANT":tt$(9)="ENTERPRISE":tt$(10)="BATTLESHIP"
 	i=int(rnd(1)*a)+1:z$=tt$(i):return
-	rem on.anagram by port commodore
+	rem "+/lo-anagram by Port Commodore"
+

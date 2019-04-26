@@ -101,3 +101,5 @@
 	for i=j to b step -1:x3%(i,xx)=x3%(i-1,xx):next
 ' insert a into b:
 	x3%(b,xx)=a:return
+	rem +.sigedit
+

@@ -1,0 +1,46 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+.MM.sb-mail"
+	ON-(lm=2)GOTO {:4008}:a=VAL(MID$(an$,2,4)):IF a<1 OR a>xx%THEN s$=nn$(br):GOTO {:4008}
+	xx=a:a$=ed$(br):GOSUB 3024:GOSUB 3004:GOSUB 3464:GOSUB 3470:GOSUB 3478:x=a%:GOSUB 1001
+	&,2,2:&,2,2:&,2,2:s$=a$
+{:4008}
+	pr=-6:GOSUB {:4028}:a$=MID$(s$,5)
+	b$=MID$(a$,1-(ASC(a$)=42)):ON q GOTO {:4012}:IF ASC(a$)=42 THEN tt$="":GOTO {:4018}
+{:4012}
+	an$=b$:&,15,1:&"{f6}Reply Privately To {pound}v7:{f6}":dr=2:GOSUB 1079:IF a<35 THEN GOSUB 1978:GOTO 3464
+	IF MID$(s$,2,3)=ni$OR LEFT$(s$,1)<>"!"THEN{:4040}
+	ON-(ni$="")GOTO {:4062}:tt$="nm.M."+MID$(s$,2,3)+"/"+ni$:GOSUB {:4058}
+{:4018}
+	IF tt$=""THEN:&"{f6}User Unknown.{f6}":GOTO 3464
+	GOSUB 1604:ON-(kk=.)GOTO 3464:a$="Private Reply":GOSUB 3002
+	a$=bb$(bn):GOSUB 3006:c$="[Private Reply]":d$="Sub : {f5}"+a$+"{f5}{f6}Post: {f5}"+ed$(br)+"{f5} {f6:2}"
+	IF LEFT$(tt$,5)="nm.M."THEN{:4044}
+	c$=c$+r$+d$:GOSUB 3072:GOTO 3464
+{:4028}
+	ON-(ni$<>"")GOTO {:4034}:nn=.:a$="nm.config":dr=2:GOSUB 1011:IF e%=.THEN x=1:GOSUB 1001:&,2,2:nn=VAL(a$)
+	IF nn=.THEN{:4038}
+	a$="nm.nodes":dr=2:GOSUB 1011:ON-(e%>.)GOTO {:4038}:x=nn+1:GOSUB 1001:&,2,2:ni$=a$
+{:4034}
+	pr=-98:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:GOSUB 1012:IF e%THEN ni$="":GOTO {:4038}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOSUB 1012:IF e%THEN ni$=""
+{:4038}
+	CLOSE 2:RETURN
+{:4040}
+	an$=b$:GOSUB 1046:IF i=.THEN tt$="":GOTO {:4018}
+	tt$=b$:GOTO {:4018}
+{:4044}
+	a$=tt$+",s,w":dr=2:GOSUB 1011:IF e%THEN CLOSE 2:a$=tt$+",s,a":dr=2:GOSUB 1011
+	IF e%THEN CLOSE 2:GOTO 3464
+	b$=MID$(s$,5):b$=MID$(b$,1-(ASC(b$)=42)):PRINT# 2,b$r$na$r$0r$d1$:a$=LEFT$(bn$+"                    ",20)
+	PRINT# 2,"!"LEFT$(STR$(nn)+"    ",4)a$c$:PRINT# 2,d$:FOR x=1 TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	a$="nm.list,s,a":dr=2:GOSUB 1011:IF e%THEN a$="nm.list,s,w":dr=2:GOSUB 1011
+	IF e%THEN CLOSE 2:GOTO 3464
+	PRINT# 2,MID$(tt$,6)+"/A/"+tt$:CLOSE 2:GOTO 3464
+{:4058}
+	b$=MID$(s$,2,3):b%=.:a%=nn:&,16,1:IF MID$(an$,5)=""THEN tt$=""
+	RETURN
+{:4062}
+	&"{f6}Network Not Configured{f6:2}Private NetSub Response Impossible{f6}":GOTO 3464
+	REM copr.1990 image 06/14/90  9:41p

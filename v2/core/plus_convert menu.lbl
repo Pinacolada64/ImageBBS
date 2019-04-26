@@ -1,14 +1,19 @@
 {number:3000}
 {alpha:alt}
 {step:2}
+' TODO: if menu # is 4, change access level to 9?
 	&,28,1:dim jm%(29,49)
 {:3002}
-	&"Menu #: {pound}i1":m=val(an$):if m<>0 then gosub {:3006}:goto {:3002}
+	&"Menu #: {pound}i1":m=val(an$):if m then gosub {:3006}:goto {:3002}
 	&,28,1:goto 1812
 {:3006}
 	n=0:dr=1:a$="s.menu"+str$(m)+",s,r":gosub 1011:if e%then close 2:&:return
 {:3008}
 	&,2,2:s=st:on-(a$="{up arrow}")goto {:3012}:lp=1:&:&,60,0,50,jm%(5,n),a$
+' jm%(0,n): 1=? not implemented. flag as active command?
+' jm%(1,n): 1023=access level
+' jm%(2,n): -1=?
+' IDEA: maybe if ZZ mode needed? if user not in ZZ mode, don't list this command
 	jm%(0,n)=1:jm%(1,n)=1023:jm%(2,n)=-1:n=n+1:on-(s=0 and n<50)goto {:3008}
 {:3012}
 	if n<50 then jm%(0,n)=0:jm%(1,n)=0:n=n+1:goto {:3012}

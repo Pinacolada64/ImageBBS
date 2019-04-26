@@ -1,4 +1,7 @@
 {number:3000}
+{alpha:alt}
+{step:2}
+' TODO: add documentation about steps to recreate u.index: Load, Clear, Make, Save
 	rem +.alpha/ind - 3/24/89
 	pr=-1:a=4:gosub 1736:poke 53252,20
 {:3002}

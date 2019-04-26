@@ -1,0 +1,22 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM s%(39,60):dr=4:GOSUB 1010
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+"d.GF.*":GET#1,a$,a$:&,8,1,1:n=0
+{:3002}
+	&,8,1,1:an$=a$:&,15,6,34:ON-(an$="")GOTO {:3004}:&,15,6,34:ON-(an$="")GOTO {:3004}
+	n=n+1:tt$(n)=a$:&".":GOTO {:3002}
+{:3004}
+	CLOSE 1:&"{f6:2}":IF n=0 THEN:&"None Found.":GOTO 1812
+	&"{pound}!n Found:{f6:2}":FOR i=1 TO n:a$=tt$(i):&"Reading {f5}{pound}$a{f5}"
+	&,60,2,0,s%(0,0),dr$+tt$(i),dv%:GOSUB 1012:IF e%THEN:&:GOTO {:3017}
+	&,60,0,20,s%(15,0),MID$(tt$(i),6):IF s%(0,0)=0 THEN{:3015}
+	FOR j=1 TO s%(0,0):&,60,1,16,s%(13,j),a$:&,60,1,28,s%(21,j),b$
+	&,60,0,20,s%(27,j),a$:&,60,0,28,s%(13,j),b$:NEXT
+{:3015}
+	a$=tt$(i):&"{f6}Writing {f5}{pound}$a{f5}":PRINT# 15,"s"dr$tt$(i)
+	&,60,3,0,s%(0,0),80+80*s%(0,0),dr$+tt$(i),dv%:&"{f6}"
+{:3017}
+	NEXT:&"Done{f6}":GOTO 1812
+	rem "+.convert GF" - updates "d.GF.*" files from "+.convert GF" somehow
+' TODO: figure out what this does

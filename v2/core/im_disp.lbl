@@ -95,6 +95,7 @@
 	return
 {nice:50}
 {:60350}
+' TODO: replace {down:15} with &,61,.,14
 	a=peek(53248):poke 53248,1:&"{clear}{down:15}":poke 53248,a
 	&,69,0,14," Transfer Time: 00:00:00                ",1
 	&,69,0,15," Good: 00000  Bad: 00000  Bytes: 000000 ",1
@@ -112,4 +113,3 @@
 	return
 	rem pinacolada 2018-10-23
 	rem im.disp
-' 	

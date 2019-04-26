@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	dim fl$(15):f4=.:goto {:3080}
 {:3002}
 	on bz+1 goto {:3010}:&"{f6}":for x=1 to bz:b%=x:b$=dt$(x):&" {pound}%b. {pound}$b{f6}":next:return
@@ -72,6 +74,7 @@
 	&" (C)an Msg's{pound}{back arrow}13{white} ({pound}%g){pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
 	&" {cyan}(A)rch. New Users{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
 	&" (S)cratch Files{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
+' TODO: implement Watchdog files
 	&" (W)atchDog Files{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
 {:3100}
 	&"{f6:2} VF: {pound}g1":gosub {:3012}:if bn then:&"{pound}$k{f6}":goto {:3232}
@@ -319,4 +322,4 @@
 	data"Telecheck","telecheck",0,1
 	rem data"Add Update","address",0,1
 	data"{up arrow}"
-	copr. 1995 new image 02/11/95
+	rem "+.VF" copr. 1995 new image 02/11/95

@@ -1,0 +1,55 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	p$="":pr$="":cm$="FORCE Mail":GOSUB 1360:a=8:GOSUB 1004:IF a=.THEN{:3064}
+{:3002}
+	&"{f6} (E)rase Or, (S)end Force Mail?: {pound}i1":ON tr%+1 GOTO {:3064}
+	fl=-(an$="E"):IF fl=.AND an$<>"S"THEN{:3064}
+	POKE 53252,20:b$="Send":IF fl THEN b$="Erase"
+{:3008}
+	&"{f6}Enter Handle Or ID# Of User.{f6:2}":GOSUB 1006:x=ABS(VAL(an$)):IF x THEN{:3014}
+	GOSUB 1046:x=i:IF x THEN nn$=an$:GOTO {:3022}
+	&"{f6:2}{f5}{pound}v7{f5} Not Found.{f6}":GOTO {:3064}
+{:3014}
+	IF x<1 OR x>ur THEN{:3018}
+	GOSUB 1065:GOSUB 1001:INPUT# 2,nn$:IF nn$<>"{up arrow}"AND nn$<>"RES"THEN{:3020}
+{:3018}
+	&"{f6}Invalid Account Number.{f6}":x=.:GOTO {:3064}
+{:3020}
+	&"{f6}Handle: ":&nn$:&"{f6}Is That Correct?: ":GOSUB 1902:ON a+1 GOTO {:3008}:CLOSE 2
+{:3022}
+	ON fl GOTO {:3062}:GOSUB 1604
+	bl=.:&"{f6}Auto-Delete Message after Read?: ":GOSUB 1902:ON a+1 GOTO {:3028}
+	kk=kk+1:tt$(kk)="ERASE":bl=bl+1
+{:3028}
+	&"{f6}Auto Logoff After Read?: ":GOSUB 1902:ON a+1 GOTO {:3032}:kk=kk+1:tt$(kk)="OFF":bl=bl+1
+	IF bl=2 THEN{:3054}
+{:3032}
+	&"{f6}Delete User After Read?: ":GOSUB 1902:ON a+1 GOTO {:3036}:kk=kk+1:tt$(kk)="KILL":bl=bl+1
+	IF bl=2 THEN{:3054}
+{:3036}
+	&"{f6}Suspend User's Account?: ":GOSUB 1902:ON a+1 GOTO {:3042}
+{:3038}
+	&"{f6}Enter Date Suspension Ends (YYMMDD){f6}: {pound}i1":ON tr%+1 GOTO {:3064}:IF LEN(an$)<>6 THEN{:3038}
+	kk=kk+1:tt$(kk)="!1"+an$+"0000":bl=bl+1:IF bl=2 THEN{:3054}
+{:3042}
+	&"{f6}Change User's Handle After Read?: ":GOSUB 1902:ON a+1 GOTO {:3048}
+	&"{f6}Enter New Handle: {pound}i1":ON tr%+1 GOTO {:3064}
+	kk=kk+1:tt$(kk)="@"+an$:bl=bl+1:IF bl=2 THEN{:3054}
+{:3048}
+	&"{f6}Change Access Group After Read?: ":GOSUB 1902:ON a+1 GOTO {:3054}
+{:3050}
+	&"{f6}Enter New Access: {pound}i1":ON tr%+1 GOTO {:3064}:a=VAL(an$):IF a<.OR a>9 THEN{:3050}
+	kk=kk+1:tt$(kk)="{back arrow}"+MID$(STR$(a),2)
+{:3054}
+	IF kk=.THEN{:3002}
+	&"{f6}Filing Mail For "+nn$+"...{f6}"
+	a$="f."+LEFT$(nn$,13):dr=2:GOSUB 1023
+' TODO: &,14,2,kk [writes tt$(1 - kk)]
+	FOR x=1 TO kk:PRINT# 2,tt$(x):NEXT:CLOSE 2:GOTO {:3002}
+{:3062}
+	a$="f."+LEFT$(nn$,13):dr=2:GOSUB 1024:&"{f6}Mail Erased!{f6}":GOTO {:3002}
+{:3064}
+	RETURN
+'	REM "to use insert orz$=""FM" in line 1860 before the then."
+	rem "+.FM" 2019-04-25

@@ -1,0 +1,17 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOSUB {:3002}:GOTO 1812
+{:3002}
+	a%=0:dr=2:a$="nm.log 05,s,r":GOSUB 1011:IF e%THEN RETURN
+{:3004}
+	&,2,2:f$=a$:&,2,2:d$=a$:&,2,2:n=0
+{:3006}
+	&,2,2:s=st:IF MID$(a$,11,5)="nm.U."THEN n=n+1:tt$(n)=a$
+	ON-(s=0 AND a$<>"{up arrow}")GOTO {:3006}:a%=a%+1:&"{pound}#4{pound}# {pound}%a{left:4}":IF n=0 THEN{:3014}
+	&"{f6}";f$;":";MID$(d$,4,2);"/";MID$(d$,6,2);"/";MID$(d$,2,2);"{f6}"
+	FOR i=1 TO n:a$=tt$(i):&"{pound}$a{f6}":NEXT:&"{f6}"
+{:3014}
+	ON-(s=0)GOTO {:3004}:&"{f6}":RETURN
+	rem +.scan netlog
+

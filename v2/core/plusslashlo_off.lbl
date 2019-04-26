@@ -1,7 +1,7 @@
 {number:4000}
 {crunch:on}
 {step:2}
-	REM +/LO.OFF - LOGOFF
+	rem +/lo.off - logoff
 	gosub 1060:for x=1 to 11:gosub 1026:next:close 2
 {number:4008}
 	gosub {:4034}:a=st(4):if a then b$="{white}"+str$(a)+" {lt. blue}Post":if a<>1 then b$=b$+"s"
@@ -23,4 +23,4 @@
 	d$=b$+r$
 {:4040}
 	b$="":c$="":tr%=.:return
-	REM MODIFIED LINE 4040 171215 X-TEC
+	rem modified line 4040 171215 x-tec

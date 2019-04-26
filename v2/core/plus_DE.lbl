@@ -1,0 +1,189 @@
+	REM "+.directed as of 931004"
+	&,18,.:a1=INT(34-LEN(bn$))/2:a1$="                                        "
+{:3004}
+	GOSUB {:3010}:IF e%=.THEN{:3012}
+	CLOSE 2:dr=3:a$="e.direct,l,"+CHR$(60):GOSUB 1011
+	FOR x=1 TO 20:GOSUB 1001:PRINT# 2,"empty":NEXT:CLOSE 2:GOTO {:3004}
+{:3010}
+	dr=3:a$="e.direct":x=.:GOTO 1011
+{:3012}
+	fl=.:&"{clear}{f6} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}  {gray3}{pound}{back arrow}36{blue}{pound}{back arrow}39{rvrs off}{f6}":b$=LEFT$(a1$,a1)
+	&" {rvrs on}{blue}  {gray3}{pound}$b{pound}v5{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}  {gray3}      Direct Transfer Editor{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {gray3}{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}   {rvrs off}{pound}{back arrow}37{rvrs on}{blue}{pound}{back arrow}39{rvrs off}
+	&"{f6} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}  {cyan}{pound}{back arrow}36{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [A]dd a D/L Record{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [D]elete a D/L Record{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [E]dit a D/L Record{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [L]ist Current Records{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [W]eed Used Records{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}  [Q]uit To Main Prompt{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}"
+	&"{f6} {rvrs on}{blue}  {cyan}{pound}{back arrow}36{rvrs off} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}   {rvrs off}{pound}{back arrow}37{rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6} {rvrs on}{blue}{pound}{back arrow}39{rvrs off}{f6:2}   {white}Direct Maint:  {lt. blue}"
+{:3034}
+	&"{pound}g1":IF tr%<1 THEN{:3280}
+	ON-(an$="A")-(an$="D")*2-(an$="E")*3-(an$="L")*4 GOTO {:3040},{:3216},{:3136},{:3200}
+	ON-(an$="W")-(an$="Q")*2 GOTO {:3254},{:3280}:GOTO {:3034}
+{:3040}
+	nf=.:&"{clear}{f6:2}  {green}Add a File to be Downloaded{f6}":GOSUB {:3042}:ON-(fl<>.)GOTO {:3012}:GOTO {:3068}
+{:3042}
+	hq$="":pd$="":p$="":&"{f6:2}{lt. green}Enter The User Handle or ID#.{f6:2}"
+	nn$="":POKE 53252,20:GOSUB 1006:GOSUB {:3284}:IF an$=""THEN{:3064}
+	IF a=.THEN nn$=an$:GOTO {:3058}
+	IF a>ur THEN:&"{f6:2}Out Of Range. ":GOTO {:3042}
+	i=a:GOSUB 1065:x=i
+	GOSUB 1001:&,2,2:nn$=a$:&,2,2:pd$=a$:ON-(a$="{up arrow}"OR a$="RES")GOTO {:3062}
+	b$=nn$:&"{f6}Is {f5}{pound}$b{f5} Correct?: ":GOSUB 1907:IF a=.THEN{:3042}
+	CLOSE 2:GOTO {:3066}
+{:3058}
+	GOSUB 1046:IF i=.THEN:lp=1:&"{f6}{f5}{pound}v7{f5} Not Found In User File.{f6}":GOTO {:3042}
+	x=i:GOSUB 1065:GOSUB 1001:&,2,2:nn$=a$:&,2,2:pd$=a$:GOTO {:3066}
+{:3062}
+	&"{f6}":&nn$:&" Doesn't Exist.{f6}":GOTO {:3042}
+{:3064}
+	fl=1:CLOSE 2:RETURN
+{:3066}
+	CLOSE 2:hq$=nn$:RETURN
+{:3068}
+	&"{f6}  {lt. red}Device   : {lt. blue}({white}8{lt. blue}) {white}{pound}i1":ON tr%+1 GOTO 3283:vd$=an$:IF an$=""THEN vd$="8"
+	&"{f6}  {lt. red}Drive    : {lt. blue}({white}0{lt. blue}) {white}{pound}i1":ON tr%+1 GOTO {:3280}:rd$=an$:IF an$=""THEN rd$="0"
+	&"{f6}{cyan} Pattern{white}(*): {pound}i0":ON tr%+1 GOTO {:3280}
+	GOSUB 1500:IF an$=""THEN an$="*"
+	t$=an$:f$=rd$+":":ON tr%+1 GOTO {:3280}
+	&"{f6}{lt. red}Reading Directory...{f6:2}{white} [Y]es [N]o [A]bort{f6:2}":vd=VAL(vd$+CHR$(.))
+	CLOSE 1:OPEN 1,vd,.,"$"+f$+t$:GET#1,a$,a$:t=.:&,8,1,1:lp=1:&a$+"{f6}"
+{:3082}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{lt. green}{pound}$b{f6}":nf=1:GOTO {:3104}
+	a=VAL(a$):c$=MID$(a$,8):a$=MID$(a$,26,1)
+	FOR i=2 TO 17:IF MID$(c$,i,1)=qt$THEN c$=LEFT$(c$,i-1)
+	NEXT:tt$=c$+","+a$:b$=a$
+	a%=a:&"{lt. green}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25"
+	&"? {pound}g1"
+	x=-(an$="Y")-(an$="N")*2-(an$="A")*3:IF x=.THEN x=2
+	lp=1:&MID$("Yes  No   Abort",x*5-4,5)
+	IF x=1 THEN fd$=c$:ft$=b$
+	IF x=2 THEN{:3082}
+	IF x=3 THEN nf=1
+{:3104}
+	CLOSE 1
+	ON nf GOTO {:3012}:df$="0":w$=hq$+r$+pd$+r$+fd$+r$+ft$+r$+vd$+r$+rd$+r$+df$+r$
+	GOSUB {:3010}
+{:3110}
+	x=x+1:IF x>20 THEN{:3198}
+	GOSUB 1001:INPUT# 2,hd$:IF hd$<>"empty"THEN{:3110}
+	GOSUB 1001:PRINT# 2,w$:CLOSE 2
+	an$="DL File"
+	tt$(.)="["+an$+"]"
+	tt$(1)="{white}You have a file to download.{f6:2}"
+	tt$(2)="Access it by typing the command{f6:2}{yellow}[{lt. green}DX{yellow}] {white}at the Main Menu prompt{f6:2}"
+	tt$(3)="The file title is:  {lt. green}"+fd$+"{f6}"
+	tt$(4)="{white}The password for that file is:  {lt. green}"+pd$+"{f6:2}"
+	&"{f6}Filing DL Notice For ":&nn$:&"...{f6}"
+	z=1:a$="w":tt$=nn$:GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
+	PRINT# 2,na$r$id;r$d1$:PRINT# 2,tt$(.)r$:FOR i=1 TO 4:PRINT# 2,tt$(i):NEXT
+	PRINT# 2,"{up arrow}":CLOSE 2:GOTO {:3012}
+{:3136}
+	&"{clear}{f6:2}  {white}Edit a Record{f6:2}{pound}w2":GOSUB {:3042}:ON-(fl<>.)GOTO {:3012}
+	GOSUB {:3010}
+{:3140}
+	x=x+1:IF x>20 THEN CLOSE 2:&"{f6:2} {white}No match found!{pound}w2":GOTO {:3136}
+	GOSUB 1001:INPUT# 2,hd$:IF hd$="empty"THEN{:3140}
+	IF hd$<>hq$THEN{:3140}
+	INPUT# 2,pd$,fd$,ft$,vd$,rd$,df$
+	d9$="Yes":&"{clear}{lt. green}{rvrs on} File Name {rvrs off}  {white}":&fd$:&"{f6}{lt. green}{rvrs on} File Type {rvrs off}  {white}":&ft$
+	&"{f6}{lt. green}{rvrs on}  Password {rvrs off}  {white}":&pd$:&"{f6}{lt. green}{rvrs on}    Device {rvrs off}  {white}":&vd$:IF df$="0"THEN d9$="No"
+	&"{f6}{lt. green}{rvrs on}     Drive {rvrs off}  {white}":&rd$:&"{f6}{lt. green}{rvrs on}Downloaded {rvrs off}  {white}":&d9$
+	&"{f6:2}Edit this one? ":GOSUB 1907:ON a GOTO {:3156}:GOTO {:3140}
+{:3156}
+	bh=x:&"{clear}{f6:2} {green}User Name: ":&hq$:&"{f6} {lt. green}Change to: {pound}i1":IF an$=""THEN{:3160}
+	ON-(an$="N")GOTO {:3140}:hq$=an$
+{:3160}
+	&"{f6} {green}Password : ":&pd$:&"{f6} {lt. green}Change to: {pound}i1":IF an$=""THEN{:3164}
+	ON-(an$="N")GOTO {:3140}:pd$=an$
+{:3164}
+	&"{f6} {green}File Name: ":&fd$:&"{f6} {lt. green}Change to: {pound}i0":IF an$=""THEN{:3168}
+	ON-(an$="N"OR an$="n"GOTO {:3140}:fd$=an$
+{:3168}
+	&"{f6} {green}File Type: ":&ft$:&"{f6} {lt. green}Change to: {pound}i1":IF an$=""THEN{:3172}
+	ON-(an$="N")GOTO {:3172}:ft$=an$
+{:3172}
+	&"{f6} {green}Device   : ":&vd$:&"{f6} {lt. green}Change to: {pound}i1":IF an$=""THEN{:3176}
+	ON-(an$="N")GOTO {:3176}:vd$=an$
+{:3176}
+	&"{f6} {green}Drive    : ":&rd$:&"{f6} {lt. green}Change to: {pound}i1":IF an$=""THEN{:3180}
+	ON-(an$="N")GOTO {:3180}:rd$=an$
+{:3180}
+	qz$="Not Downloaded":IF df$="1"THEN qz$="Completed"
+	&"{f6} {green}DL Status: ":&qz$:&"{f6} {lt. green}Toggle? ":GOSUB 1907:ON a+1 GOTO {:3186}
+	df=VAL(df$):df=1-VAL(df):df$=STR$(df)
+{:3186}
+	&"{clear}{f6:2} {green}User Name: {white}":&hd$:&"{f6} {green}Password : {white}":&pd$:&"{f6} {green}File Name: {white}":&fd$
+	&"{f6} {green}File Type: {white}":&ft$:&"{f6} {green}Device   : {white}":&vd$:&"{f6} {green}Drive    : {white}":&rd$
+	qz$="Not Downloaded":IF df$="1"THEN qz$="Completed"
+	&"{f6} {green}DL Status: {white}":&qz$:&"{f6:2}  Ok? ":GOSUB 1902:ON a GOTO {:3194}:GOTO {:3136}
+{:3194}
+	w$=hq$+r$+pd$+r$+fd$+r$+ft$+r$+vd$+r$+rd$+r$+df$+r$
+	x=bh:GOSUB 1001:PRINT# 2,w$:CLOSE 2:GOTO {:3012}
+{:3198}
+	&"{f6:2} {yellow}File is Full!!!":GOTO {:3282}
+{:3200}
+	&"{clear}{f6}{lt. green} Handle{pound}{back arrow}18File Name{pound}{back arrow}35Comp{f6} ------{pound}{back arrow}18---------{pound}{back arrow}35----{f6}"
+	qz$(.)="No":qz$(1)="Yes"
+	GOSUB {:3010}
+{:3206}
+	x=x+1:IF x>20 THEN{:3214}
+	GOSUB 1001:INPUT# 2,hq$:IF hq$="empty"THEN{:3206}
+	INPUT# 2,pd$,fd$,ft$,vd$,rd$,df$:df=VAL(df$)
+	&"{f6}{cyan} ":&hq$:&"{pound}{back arrow}18":&fd$:&"{white}{pound}{back arrow}35":&qz$(df):GOTO {:3206}
+{:3214}
+	CLOSE 2:&"{f6:2}{white} Hit Any Key! {pound}g1":GOTO {:3012}
+{:3216}
+	&"{clear}{f6:2} {lt. green}Delete a Download File"
+	GOSUB {:3042}:ON-(fl<>.)GOTO {:3012}:GOSUB {:3010}
+{:3220}
+	x=x+1:IF x>20 THEN{:3252}
+	GOSUB 1001:INPUT# 2,hd$:IF hd$="empty"THEN{:3220}
+	IF hd$<>hq$THEN{:3220}
+	INPUT# 2,pd$,fd$,ft$,vd$,rd$,df$
+	bh=x:&"{f6:2} {green}User Handle - {lt. green}":&hd$:&"{f6} {green}Password    - {lt. green}":&pd$
+	&"{f6} {green}File Name   - {lt. green}":&fd$:&"{f6} {green}File Type   - {lt. green}":&ft$
+	&"{f6} {green}Device      - {lt. green}":&vd$:&"{f6} {green}Drive       - {lt. green}":&rd$
+	qz$="Not Downloaded":IF df$="1"THEN qz$="Completed"
+	&"{f6} {green}DL Status   - {lt. green}":&qz$
+	&"{f6:2} {white}Ok to Delete? ":GOSUB 1907:ON a+1 GOTO {:3220}
+	IF df$="0"THEN{:3248}
+{:3242}
+	&"{f6} {gray3}Scratch {white}":&fd$:&" {gray3}from disk? ":GOSUB 1907:ON a+1 GOTO {:3246}
+	dr=.:d1%=VAL(vd$):d2%=VAL(rd$):GOSUB 1009:a$=dr$+fd$:GOSUB 1024
+{:3246}
+	w$="empty":CLOSE 2:GOSUB {:3010}:x=bh:GOSUB 1001:PRINT# 2,w$:GOTO {:3220}
+{:3248}
+	&"{f6:2} {yellow}This record has not been completed!{f6} Do you want to {lt. red}Delete{yellow}? "
+	GOSUB 1902:ON a+1 GOTO {:3216}:GOTO {:3242}
+{:3252}
+	CLOSE 2:&"{f6:2} {white}No Match Was Found!{pound}w2":GOTO {:3216}
+{:3254}
+	&"{clear}{f6:2} {lt. green}Weed Completed Downloads"
+	&"{f6:2} {cyan}This module will delete {white}ALL {cyan}complete{f6} downloads stored in e.direct!"
+	&"{f6:2} {yellow}Continue? ":GOSUB 1907:ON a+1 GOTO {:3012}
+	&"{f6:2} {lt. red}Last Chance {f6}":GOSUB 1901:ON a+1 GOTO {:3012}
+	GOSUB {:3010}
+{:3264}
+	x=x+1:IF x>20 THEN{:3278}
+	GOSUB 1001:INPUT# 2,hd$:IF hd$="empty"THEN{:3278}
+	bh=x:INPUT# 2,pd$,fd$,ft$,vd$,rd$,df$:IF df$<>"1"THEN{:3264}
+	&"{f6}{gray3} Scratch {white}":&fd$:&"{gray3} from disk? ":GOSUB 1907:ON a+1 GOTO {:3274}
+	dr=.:d1%=VAL(vd$):d2%=VAL(rd$):GOSUB 1009:a$=dr$+fd$:GOSUB 1024:&
+{:3274}
+	&"{f6} {green}Deleting: {lt. green}":&hd$:&"{pound}{back arrow}28{gray3}":GOSUB {:3010}:w$="empty":x=bh:GOSUB 1001:PRINT# 2,w$
+	GOTO {:3264}
+{:3278}
+	CLOSE 2:&"{f6:2} {white}Finished Deleting Complete DL's!{pound}w2":GOTO {:3012}
+{:3280}
+	CLOSE 2:GOTO 1811
+{:3282}
+	CLOSE 2:GOTO {:3012}
+{:3284}
+	a=ABS(INT(VAL(an$))):RETURN
+	REM"      +.directed by Nissa
+	REM
+	"Rewritten by Der Deutscher"
+	copr. 1994 NEW image 9/20/94
