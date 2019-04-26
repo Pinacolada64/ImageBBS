@@ -1,0 +1,122 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	lc=0:q=0:IF zz THEN q=1
+	br=0:dr=4:a$="d.votes,s,r":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:3028}
+{:3004}
+	br=br+1:&,2,2:nn$(br)=a$:&,2,2:dt$(br)=a$:&,2,2:a%(br)=VAL(a$):IF st=0 THEN{:3004}
+	CLOSE 2:GOSUB {:3024}:GOTO {:3032}
+{:3008}
+	dr=3:o$="v.t."+LEFT$(nn$(b),12):RETURN
+{:3010}
+	dr=3:o$="v.r."+LEFT$(nn$(b),12):RETURN
+{:3012}
+	dr=4:GOSUB 1010:PRINT# 15,"s"dr$"d.votes"
+	a$="d.votes,s,w":GOSUB 1011:FOR i=1 TO br:PRINT# 2,nn$(i)r$dt$(i)r$a%(i):NEXT
+	CLOSE 2:RETURN
+{:3018}
+	&"{clear}{f6}{white} {$c0:19} {cyan}    Written For{f6}"
+	&"{lt. blue} {rvrs on} The Voting Booth! {rvrs off} {cyan}     IMAGE{$a0}BBS{f6}"
+	&"{white} {$c0:19} {cyan}    Version 1.3{f6}":RETURN
+{:3024}
+	FOR b=1 TO br:GOSUB {:3010}:d%(b)=0:a$=o$+",s,r":GOSUB 1011:IF e%=0 THEN d%(b)=1
+	CLOSE 2:NEXT:RETURN
+{:3028}
+	&"No Topics!":IF q THEN{:3032}
+{:3030}
+	GOTO 1812
+{:3032}
+	GOSUB {:3018}
+{:3034}
+	a%=br:s$="s":IF a%=1 THEN s$=""
+	&"{f6}{white} {pound}%a Topic{pound}$s. Enter {f5}L{f5} To List.{f6}"
+{:3038}
+	p$="Vote!":GOSUB 1098:ON-(tr%<1)GOTO {:3030}:GOSUB 1850:ON f4 GOTO 1842:IF rs THEN{:3038}
+	b=ABS(INT(VAL(an$))):IF b=>1 AND b<=br THEN GOSUB {:3100}:GOTO {:3038}
+	a$=LEFT$(an$,1):b=ABS(INT(VAL(MID$(an$,2)))):IF b<1 OR b>br THEN b=1
+	IF br THEN ON-(a$="L")-2*(a$="R")-3*(a$="V")GOSUB {:3052},{:3064},{:3100}
+	IF q THEN ON-(a$="A")-2*(a$="D")GOSUB {:3144},{:3170}
+	IF a$="{f2}"THEN GOSUB {:3082}:GOTO {:3034}
+	ON-(a$="Q")GOTO 1812:GOTO {:3038}
+{:3052}
+	&"{f6}{white}  Topic{pound}{back arrow}22Date":IF q THEN:&"{pound}{back arrow}35Accs"
+	&"{f6}{pound}vj":FOR i=b TO br:a$=LEFT$(nn$(i),18):a%=i:an$=dt$(i):&,15:b$=LEFT$(an$,12)
+	c$="":IF q THEN c$=RIGHT$("    "+STR$(a%(i)),4)
+	d$=" ":IF d%(i)THEN d$="*"
+	&"{lt. blue}{pound}$d{pound}#2{pound}# {pound}%a {white}{pound}$a{pound}{back arrow}22{lt. blue}{pound}$b {pound}$c{f6}":IF rc THEN i=br
+	NEXT:&"{white}{pound}vj":RETURN
+{:3064}
+	GOSUB {:3078}:CLOSE 2
+{:3066}
+	x=0:dr=3:GOSUB {:3010}:a$=o$+",s,r":GOSUB 1011
+	IF e%THEN:&"No Reasons on File.{f6:2}":GOTO {:3076}
+	&"{f6}Read Reason File? ":GOSUB 1902:IF a=0 THEN CLOSE 2:RETURN
+{:3072}
+	rc=0:GOSUB 1914:x=x+1:&,2,2:a%=x:&"{f6:2}Reason #{pound}%a:{pound}$a{f6:2}":&,3,2
+	IF(st=0)AND(rc=0)THEN{:3072}
+{:3076}
+	CLOSE 2:RETURN
+{:3078}
+	a$=nn$(b):&"{f6}{lt. blue}Vote Topic: {white}{pound}$a{f6:2}":GOSUB 1914
+	dr=3:GOSUB {:3008}:a$=o$+",s,r":GOSUB 1011:&,12,2:RETURN
+{:3082}
+	GOSUB {:3018}:&"{f6}  Voting Booth Commands:{f6:2}"
+	IF q THEN:&" A ... Add A Topic{f6}"
+	IF q THEN:&" D ... Delete A Topic{f6}"
+	&" Lx .. List Topics, Start At #x{f6}"
+	&" Rx .. Read Topic Reasons{f6}"
+	&" Vx .. Vote On Topic #x{f6}"
+	&" ? ... This Menu{f6}"
+	&" Q ... Quit The Voting Booth{f6}"
+	RETURN
+{:3100}
+	GOSUB {:3078}:&"{f6}":x=0:f=0:z=0
+{:3102}
+	&,2,2:IF a$<>"{up arrow}"THEN x=x+1:tt$(x)=a$:f%(x)=0:GOTO {:3102}
+	ON-(st<>0)GOTO {:3108}
+{:3106}
+	INPUT# 2,a,i,a$:f%(a)=f%(a)+1:z=z+1:f=f-(i=id AND a$=na$):ON-(st=0)GOTO {:3106}
+{:3108}
+	CLOSE 2:&"Press a key for topics ... {pound}g1{f6}":ON f GOTO {:3118}:&"{f6}"
+	FOR i=1 TO x:a$=tt$(i):a%=i:&"{pound}%a {pound}$a{f6}":NEXT:&"{f6}Choice -> {pound}g1":c=VAL(an$)
+	IF c<1 OR c>x THEN:&"Aborted!{f6}":RETURN
+	a$=tt$(c):&"{pound}$a{f6:2} Correct? ":GOSUB 1902:IF a=0 THEN RETURN
+	f%(c)=f%(c)+1:z=z+1:dr=3:a$=o$+",s,a":GOSUB 1011:PRINT# 2,c;r$id;r$na$:CLOSE 2
+{:3118}
+	IF z=0 THEN:&"{f6}No Votes so far!{f6:2}":GOTO {:3126}
+	s$="s":IF z=1 THEN s$=""
+	a%=z:&"{f6}Results From {pound}%a Vote{pound}$s:{f6:2}"
+	FOR i=1 TO x:a$=tt$(i):a%=100*f%(i)/z+.5:&"{pound}#3{pound}# {pound}%a% {pound}$a{f6}":NEXT
+{:3126}
+	ON f GOTO {:3140}:&"{f6}Would you like to leave an Anonymous{f6}reason? ":GOSUB 1902
+	IF a=0 THEN{:3140}
+	tt$(0)=CHR$(48+c)+tt$(c):GOSUB 1604:IF kk=.THEN{:3140}
+	a=b:GOSUB {:3010}:a$=o$+",s,w":GOSUB 1011:IF e%THEN a$=o$+",s,a":GOSUB 1011
+	IF e%THEN{:3138}
+	PRINT# 2,MID$(tt$(0),2):FOR i=1 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}"
+{:3138}
+	CLOSE 2:d%(b)=1
+{:3140}
+	GOSUB {:3066}
+	RETURN
+{:3144}
+	POKE 53252,30:&"{f6}Topic : {pound}i1":nn$(br+1)=an$:a$=LEFT$(an$,12):IF an$=""THEN RETURN
+	IF br THEN f=0:FOR i=1 TO br:f=f-(a$=LEFT$(nn$(i),12)):NEXT:IF f THEN RETURN
+	POKE 53252,4:&"Access: {pound}i1":a=VAL(an$):IF a<1 OR a>1023 THEN a=1023
+	a%(br+1)=a:dt$(br+1)=d1$
+	&"Enter the text for the Topic:{f6}":GOSUB 1604:x=0:IF kk=.THEN RETURN
+{:3154}
+	POKE 53252,30:x=x+1:a%=x:&"Enter Choice #{pound}%a:{f6}: {pound}i0":ed$(x)=an$
+	ON-(an$<>""AND x<9)GOTO {:3154}:IF x=1 THEN RETURN
+	IF an$=""THEN x=x-1
+	dr=3:b=br+1:GOSUB {:3008}:a$=o$+",s,w":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	FOR i=1 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}"
+	FOR i=1 TO x:PRINT# 2,ed$(i):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	br=br+1:dr=4:a$="d.votes,s,w":GOSUB 1011:IF e%THEN a$="d.votes,s,a":GOSUB 1011
+	PRINT# 2,nn$(br)r$dt$(br)r$a%(br):CLOSE 2:RETURN
+{:3170}
+	a$=nn$(b):&"Delete {f5}{pound}$a{f5}? ":GOSUB 1902:IF a=0 THEN RETURN
+	dr=3:GOSUB 1010:GOSUB {:3008}:PRINT# 15,"s"dr$o$:GOSUB {:3010}:PRINT# 15,"s"dr$o$:br=br-1
+	IF b<>br+1 THEN FOR i=b TO br:nn$(i)=nn$(i+1):dt$(i)=dt$(i+1):a%(i)=a%(i+1):NEXT
+	GOTO {:3012}
+	rem "+.VB"

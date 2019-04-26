@@ -1,0 +1,77 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:gs=25:DIM g%(3,3,3,gs):pr$="":lm$=""
+	GOSUB {:3040}:cf=0:px=0:py=0:pz=0:GOSUB {:3020}
+	x%=0:y%=0:z%=0:GOSUB {:3100}:ON cf GOSUB {:3030}:&,28,1:GOSUB 1073:GOTO 1812
+{:3006}
+	cf=0:dr=3:GOSUB 1010:a$=dr$+"grid"+STR$(lx)+STR$(ly)+STR$(lz)
+	&,69,4,19,"                       ",$8c:&,69,5,19,a$,$8c:RETURN
+{:3010}
+	px=INT(x%/4):py=INT(y%/4):pz=INT(z%/4):ax=x%-px*4:ay=y%-py*4:az=z%-pz*4
+	IF lx<>px OR ly<>py OR lz<>pz THEN ON cf GOSUB {:3030}:GOSUB {:3020}
+	RETURN
+{:3020}
+	lx=px:ly=py:lz=pz
+	GOSUB {:3006}:&,60,2,0,g%(0,0,0,0),a$,dv%:GOSUB 1012:IF e%=0 THEN RETURN
+	FOR x=0 TO 3:FOR y=0 TO 3:FOR z=0 TO 3:g%(x,y,z,0)=0:NEXT:RETURN
+{:3030}
+	GOSUB {:3006}:PRINT# 15,"s"a$:&,60,3,0,g%(0,0,0,0),128*(gs+1),a$,dv%:GOTO 1012
+{:3040}
+	&,69,0,17,"User",$8f:&,69,4,17,"                       ",$8c
+	&,69,0,18,"Loc ",$8f:&,69,4,18,"                       ",$8c
+	&,69,0,19,"File",$8f:&,69,4,19,"                       ",$8c
+	&,69,0,20,"    ",$8f:&,69,4,20,"                       ",$8c
+	&,69,0,21,"    ",$8f:&,69,4,21,"                       ",$8c
+	&,69,27,17,"PosX",$8f:&,69,31,17,"         ",$8c
+	&,69,27,18,"PosY",$8f:&,69,31,18,"         ",$8c
+	&,69,27,19,"PosZ",$8f:&,69,31,19,"         ",$8c
+	&,69,27,20,"    ",$8f:&,69,31,20,"         ",$8c
+	&,69,27,21,"    ",$8f:&,69,31,21,"         ",$8c
+	an$=na$:&,15,1:&,69,5,17,an$,$8c
+	RETURN
+{:3070}
+	a%=g%(ax,ay,az,0):a$="Empty Space"
+	IF a%AND 1 THEN:&,60,1,12,g%(ax,ay,az,1),a$
+	&,69,4,18,"                       ",$8c:&,69,5,18,a$,$8c
+	&,69,31,17,"         ",$8c:&,69,31,17,STR$(x%),$8c
+	&,69,31,18,"         ",$8c:&,69,31,18,STR$(y%),$8c
+	&,69,31,19,"         ",$8c:&,69,31,19,STR$(z%),$8c
+	RETURN
+{:3100}
+	GOSUB {:3010}:GOSUB {:3070}
+	x=x%:y=y%:z=z%:&"{f6}({pound}!x,{pound}!y,{pound}!z): {pound}$a{f6}"
+{:3104}
+	&"{f6}Option (X,Y,Z,Jump,Name,Quit)? "
+{:3106}
+	&"{pound}g1":IF tr%<1 THEN{:3126}
+	ON-(an$="Q")-2*(an$="N")-3*(an$="J")GOTO {:3128},{:3130},{:3138}
+	a=-(an$="X")-2*(an$="Y")-3*(an$="Z"):IF a=0 THEN{:3106}
+	&"Move{f6:2}{pound}v7: + or -? "
+	&"{pound}g1":IF tr%<1 THEN{:3126}
+	b=(an$="-")-(an$="+"):IF b=0 THEN{:3104}
+	&"{pound}v7{f6}":ON a GOSUB {:3120},{:3122},{:3124}:GOTO {:3100}
+{:3120}
+	x%=x%+b:RETURN
+{:3122}
+	y%=y%+b:RETURN
+{:3124}
+	z%=z%+b:RETURN
+{:3126}
+	&"Timeout{f6:2}":RETURN
+{:3128}
+	&"Quit{f6:2}":RETURN
+{:3130}
+	&"Name{f6:2}":w$="":IF g%(ax,ay,az,0)AND 1 THEN:&,60,1,12,g%(ax,ay,az,1),w$
+	p$="Sector Name":POKE 53252,12:pl=0:&,1,32:IF an$=""THEN{:3136}
+	&,60,0,12,g%(ax,ay,az,1),an$:g%(ax,ay,az,0)=g%(ax,ay,az,0)OR 1:cf=1
+{:3136}
+	GOTO {:3100}
+{:3138}
+	&"Jump{f6:2}":POKE 53252,4
+	&"X: {pound}i1":x%=VAL(an$)
+	&"Y: {pound}i1":y%=VAL(an$)
+	&"Z: {pound}i1":z%=VAL(an$)
+	GOTO {:3100}
+	rem +.grid
+' FIXME: not sure what this program is for

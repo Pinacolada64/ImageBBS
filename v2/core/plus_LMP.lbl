@@ -1,0 +1,39 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM " +.LMP 02/19/92 09:02P "
+	cm$="{rvrs on}{lt. green}LMP Tester{rvrs off}":GOSUB 1360:&"{clear}{f6:3}{pound}{back arrow}12{lt. blue}{rvrs on} LMP{$a0}FILE{$a0}TESTER {rvrs off}{f6:3}"
+	&"{f6}{lt. green}SYSOP{$a0}INSTRUCTIONS? ":GOSUB 1902:ON a GOTO {:3038}:IF tr%<1 THEN 1811
+{:3006}
+	GOSUB {:3012}:GOTO 1811
+{:3008}
+	dr=5:GOSUB 1010:a$=dr$+"+/"+hr$+fd$+b$:LOAD a$,dv%:GOSUB 1012:IF e%=.THEN 4000
+	&"{f6:2}Error Loading {f5}{pound}$a{f5} Module.{f6}":RETURN
+{:3012}
+	&,28:&"{f6}{lt. blue}Input Module Prefix?{f6} {cyan}(lo, IM, sub, etc): {white}{pound}i0":hr$=an$
+	IF tr%<1 THEN RETURN
+	&"{f6}{yellow}Input Name Of LMP File?{f6} {lt. green}(IE. news, main, etc.): {white}{pound}i0":b$=an$:IF tr%<1 THEN RETURN
+	IF an$=""THEN RETURN
+	&"{f6}What Divides Prefix And The Module?{f6}({f5}/{f5}, {f5}-{f5}) or {f5}.{f5}: {white}{pound}g1":fd$=an$
+	ON-(fd$="/")-(fd$="-")*2-(fd$=".")*3 GOTO {:3022},{:3024},{:3026}
+{:3022}
+	&"Slash {f5}/{f5}{f6}":GOTO {:3028}
+{:3024}
+	&"Hyphen {f5}-{f5}{f6}":GOTO {:3028}
+{:3026}
+	&"Period {f5}.{f5}{f6}"
+{:3028}
+	&"{f6:2}{lt. green}Is {white}+/"+hr$+fd$+b$+" {lt. green}Correct? ":GOSUB 1907:ON-(a=.)GOTO {:3012}
+	IF tr%<1 THEN RETURN
+	&"Starting Line = 4000{f6}{cyan}":GOSUB {:3008}
+	&"{f6}{lt. green}Run Another One? :":GOSUB 1902:ON a GOTO {:3012}:IF tr%<1 THEN RETURN
+	RETURN
+{:3038}
+	lp=1:&"{clear}{f6:2} {white}LMP{$a0}File Tester, This Program is To Test LMP{$a0}Files, These Files"
+	lp=1:&"Must Not Have Any Calls To A Main File That Might Be Needed. This"
+	lp=1:&"Is Very Usefull for Creating LMP Files Or Added Stand Alone"
+	lp=1:&"Modules Such As the NetWork Wall Writers.{f6}"
+	lp=1:&" You Also Have The Ability To Use Different File Dividers."
+	lp=1:&"Such As {f5}.{f5} or {f5}/{f5}.{f6:2}":GOTO {:3006}
+	REM" Written By Bucko Of The Wrong           # ][ BBS (914)/328-9078 "
+	REM " +.LMP (C) NISSA 02/19/92 "

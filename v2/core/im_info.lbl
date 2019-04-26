@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002},{:60030},{:60068},{:60074},{:60072},{:60078}:return
 {:60002}
 	an$=ff$:&,15,1:f$=an$:an$=ll$:&,15,1:l$=an$:rn$=ff$+" "+ll$
@@ -70,3 +72,4 @@
 	a=val(an$):if an$=""or a<1 or a>n then a=.:return
 	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
 	copr. 1994 new image 9/18/94
+	rem im.info

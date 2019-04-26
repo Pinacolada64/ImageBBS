@@ -81,9 +81,9 @@
 {number:1045}
 ' 1045: load "++ index", open cmd channel, get highest user # in uh% and a%
 	im=11:goto {:2400}
-' 1046
+' 1046: search for handle 'an$' in "u.config", return id in 'a%' and 'i'
 	im=10:goto {:2400}
-' 1047: ME - Exchange ID with another user (sysop only)
+' 1047: ME - Exchange ID with another user (sysop only, immediate mode only)
 	im=13:goto {:2400}
 ' 1048
 	pr$="":im$="":lm$="":return

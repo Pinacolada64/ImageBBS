@@ -1,0 +1,129 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+.MM.maint"
+	ON-(q=.)GOTO {:4032}:zz%=0:lc=-(lc=5)-(lc=9)*2:f1=3:tz=1:GOTO {:4034}
+{:4004}
+	b=ABS(VAL(a$)):f2=INT(-10*b*(b<1)):IF f2 THEN a$=MID$(a$,4)
+	zz%=-(RIGHT$(a$,1)="{up arrow}")-2*(RIGHT$(a$,1)="?"):a$=LEFT$(a$,LEN(a$)+(zz%<>.)):RETURN
+{:4008}
+	a=ABS(INT(VAL(an$))):RETURN
+{:4014}
+	&"{f6:2}(RETURN To Keep Same){f6}":RETURN
+{:4016}
+	a$=bb$(bn):GOSUB {:4004}:p$=sy$+"#"+MID$(STR$(bn),2)+":{f6}"+a$:cm$=p$:RETURN
+{:4018}
+	ON lc+1 GOTO {:4020},{:4024},{:4024}
+{:4020}
+	a=(f2 AND 3):a=a+(a>.):b$=MID$("Std AnonN-An",1+a*4,4)
+{:4022}
+	a=-((f2 AND 4)=4):RETURN
+{:4024}
+	a=(f2 AND 3):b$=MID$("CredDO-CFreeDO-F",1+a*4,4):GOTO {:4022}
+{:4026}
+	bb$(bn)="":ON f2+1 GOTO {:4028}:bb$(bn)="."+MID$(STR$(f2),2,1)+"."
+{:4028}
+	bb$(bn)=bb$(bn)+xx$+MID$("{up arrow}?",zz%-3*(zz%=0),1):RETURN
+{:4030}
+	b=.:FOR i=.TO 9:a%=i:&"Group #{pound}%a?: ":GOSUB 1902:b=b+2^i*a:NEXT:a=b:RETURN
+{:4032}
+	RETURN
+{:4034}
+	tz=1:e=1:a$="e."+sy$:dr=3:GOSUB 1011:x=e%(bn)+1:GOSUB 1001:&,2,2:yy$=a$:CLOSE 2
+{:4036}
+	lm=.:&"{clear}{f6:2}Maint Options:{f6:2}1) Edit {pound}$h Entry Files{f6}2) Edit {pound}$h Detail":GOSUB {:4144}
+	&"{f6:2} : {pound}g1{pound}v7{f6}":GOSUB {:4008}:ON-(a>lm)GOTO {:4040}:lm=-(a=3):ON a GOTO {:4046},{:4062},{:4046},{:4156}
+{:4040}
+	r=bn:ON(tz AND e)GOTO {:4032}:dr=3:a$="e."+sy$:GOSUB 1011:x=e%(bn)+1:GOSUB 1001
+	a$=yy$+r$+STR$(ac%(bn))+r$+bb$(bn)+r$+STR$(so%(bn))+r$+STR$(dv%(bn+6))+r$
+	a$=a$+STR$(dr%(bn+6))+r$+MID$(oc$,bn,1):PRINT# 2,a$:CLOSE 2:GOTO {:4032}
+{:4046}
+	&"{clear}{f6:2}Edit Entry Files:{f6:2}1) ASCII{f6}2) C/G{f6:2} : {pound}g1{pound}v7{f6}"
+	GOSUB {:4008}:ON-(a<1 OR a>2)GOTO {:4036}:a=a-1:ON-(lm=1)GOTO {:4148}
+	kk=1:dr=1:o$="s."+sy$+STR$(e%(bn))+STR$(a)
+{:4051}
+	a$=o$+",s,r":GOSUB 1011:IF e%THEN:&:GOTO {:4056}
+	&"{f6:2}Loading Text...{f6:2}"
+{:4054}
+	&,2,2:IF a$<>"{up arrow}"AND kk<101 THEN tt$(kk)=a$:kk=kk+1:&".":GOTO {:4054}
+{:4056}
+	CLOSE 2:GOSUB 1610:ON-(kk=.)GOTO {:4036}
+	&"{f6:2}Saving...":dr=1:GOSUB 1010:PRINT# 15,"s"dr$o$:a$=o$+",s,r":GOSUB 1011
+	FOR x=1 TO kk-1:PRINT# 2,tt$(x):&".":NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	&,11,.:GOTO {:4036}
+{:4062}
+	POKE 53252,38:GOSUB {:4016}:&"{clear}{f6}Details - {pound}$p:{f6:2}":b$="":IF zz%THEN b$=" (NetSub)"
+	a$=bb$(bn):GOSUB {:4004}:xx$=a$:a%=ac%(bn):&" 1) Name  : {pound}$a{pound}$b{f6} 2) Access: {pound}%a"
+	a=1-VAL(MID$(oc$,bn,1)):&"{f6} 3) Open? : ":GOSUB 1904
+	GOSUB {:4018}:&" 4) Type  : {pound}$b{f6} 5) Pswd? : ":GOSUB 1904:&" 6) Pswd  : ":&yy$
+	IF zz=.AND so%<>id THEN{:4078}
+	b$="None":IF so%(bn)>.THEN b$=cc$+MID$(STR$(so%(bn)),2)
+	ON-(zz=.)GOTO {:4078}:a%=dv%(bn+6):&"{f6} 7){pound}$i: {pound}$b{f6} 8) Device: {pound}%a"
+	b$=STR$(dr%(bn+6)):&"{f6} 9) Drive :{pound}$b"
+{:4078}
+	&"{f6:2}Maint: {pound}g1{pound}v7{f6}":GOSUB {:4008}:IF a<1 OR a>9 THEN{:4036}
+	ON a GOTO {:4082},{:4088},{:4102},{:4120},{:4136},{:4138}:ON-(id=so%AND a=7)GOTO {:4096}:ON a-zz*6 GOTO {:4096},{:4108},{:4114}
+{:4082}
+	GOSUB {:4014}:pl=.:p$="{pound}$h Name":w$=xx$:POKE 53252,27:&,1,32
+	IF LEN(an$)>2 AND an$<>xx$THEN xx$=an$:tz=.:GOSUB {:4026}
+	GOTO {:4062}
+{:4088}
+	GOSUB {:4014}:pl=1:p$="Access Code":w$=MID$(STR$(ac%(bn)),2):&,1,32:GOSUB {:4008}
+	IF an$="{f2}"THEN GOSUB {:4030}
+	IF an$<>""AND a>.AND a<1024 THEN ac%(bn)=a:tz=.
+	GOTO {:4062}
+{:4096}
+	GOSUB {:4014}:p$="Subop ID:"+cc$:w$=MID$(STR$(so%(bn)),2):&,1,32:IF an$=""THEN{:4062}
+	GOSUB {:4008}:IF a<1 OR a>ur THEN a=-1
+	so%(bn)=a:tz=.:GOTO {:4062}
+{:4102}
+	a=bn
+	a$=MID$(STR$(-VAL(MID$(oc$,a,1))+1),2):oc$=LEFT$(oc$,a-1)+a$+MID$(oc$,a+1)
+	e=1-e:GOTO {:4062}
+{:4108}
+	GOSUB {:4014}:p$="Device":w$=MID$(STR$(dv%(bn+6)),2):&,1,32:GOSUB {:4008}
+	IF a<33 AND a>6 AND a<>dv%(bn+6)THEN dv%(bn+6)=a:tz=.
+	GOTO {:4062}
+{:4114}
+	GOSUB {:4014}:POKE 53252,3:p$="Drive":w$=MID$(STR$(dr%(bn+6)),2):&,1,32:GOSUB {:4008}
+	IF an$=""OR VAL(an$)<0 OR VAL(an$)=dr%(bn+6)THEN{:4062}
+	dr%(bn+6)=VAL(an$):tz=.:GOTO {:4062}
+{:4120}
+	ON lc+1 GOTO {:4122},{:4128},{:4128}
+{:4122}
+	&"{clear}{f6}Type :{f6} (1) Standard{f6} (2) Anonymous{f6} (3) Non-Anonymous{f6:2}Type : {pound}g1{pound}v7{f6}"
+	a=VAL(an$):IF a<1 OR a>3 THEN{:4062}
+	a=-a*(a<>1):f2=(f2 AND 4)OR a:tz=.:GOSUB {:4026}:GOTO {:4062}
+{:4128}
+	&"{clear}{f6}Type :{f6} (1) Standard (Cred){f6} (2) Download Only (Cred){f6}"
+	&" (3) Standard (Free){f6} (4) Download Only (Free){f6:2}Type : {pound}g1{pound}v7{f6}"
+	a=VAL(an$):IF a<1 OR a>4 THEN{:4062}
+	a=a-1:f2=(f2 AND 4)OR a:tz=.:GOSUB {:4026}:GOTO {:4062}
+{:4136}
+	a=-4*((f2 AND 4)<>4):f2=(f2 AND 3)OR a:tz=.:GOSUB {:4026}:GOTO {:4062}
+{:4138}
+	GOSUB {:4014}:pl=1:p$="Password":w$=yy$:POKE 53252,14:&,1,32
+	IF LEN(an$)>2 AND an$<>yy$THEN tz=.:yy$=an$
+	GOTO {:4062}
+{:4144}
+	GOSUB {:4152}:IF lm>2 THEN:&"{f6}3) Edit SIG Entry Files{f6}4) Edit SIG Details"
+	RETURN
+{:4148}
+	kk=1:dr=1:o$="s.Sig"+STR$(sg)+STR$(a):GOTO {:4051}
+{:4152}
+	lm=2:IF sg THEN a=8:GOSUB 1004:lm=2-2*(a>0 OR so%=id)
+	RETURN
+{:4156}
+	&"{f6:2}Edit SIG Details:{f6:2}":dr=3:a$="e.Sig":GOSUB 1011:x=sg+1:GOSUB 1001:&,2,2
+	&,2,2:zz%=VAL(a$):&,2,2:xx%=VAL(a$)
+	p$="SIG Name":w$=sg$:a=27:b=.:GOSUB {:4172}:sg$=an$
+	p$="SIG Access":c=zz%:a=4:b=1:GOSUB {:4172}:a=VAL(an$):IF an$="{f2}"THEN GOSUB {:4030}
+	IF a>0 AND a<1024 THEN zz%=a
+	a=8:GOSUB 1004:IF a THEN p$="SigOp":c=so%:a=4:b=1:GOSUB {:4172}:so%=VAL(an$)
+	x=sg+1:GOSUB 1001:a$=sg$+r$+STR$(zz%)+r$+STR$(xx%)+r$+STR$(so%)
+	PRINT# 2,a$:CLOSE 2:GOTO {:4034}
+{:4172}
+	IF b THEN w$=MID$(STR$(c),2)
+	POKE 53252,a:POKE 53249,b:b$=w$:pl=b:&,1,32:&"{f6}":IF an$=""THEN an$=b$
+	RETURN
+	copr.1990 NEW image 12/13/90

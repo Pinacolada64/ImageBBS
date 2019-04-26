@@ -1,0 +1,11 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+/lo/blocks free" - update blocks free
+	&"{f6}Updating Blocks Free.{f6}"
+	FOR dr=1 TO 6:GOSUB 1081:tt$(dr)=STR$(bf):NEXT:a$="  {lt. green}Blocks Free:"+r$
+	GOSUB 1095:FOR i=1 TO 6
+	a$=" {lt. green}"+MID$("SysE-MEtcDirPrgUsr",i*3-2,3)+" Disk:{white}"+tt$(i)
+	GOSUB 1095:NEXT:a$=" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":GOSUB 1095:CLOSE 2:RETURN
+	CLOSE 2:RETURN
+	copr. 1994 NEW image 9/17/94

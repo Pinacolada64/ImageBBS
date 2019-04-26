@@ -1,0 +1,41 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&"{f6}Credit Pool Calculations...{f6}"
+	dr=3:a$="e.cr.pool 1,s,r":GOSUB 1011:IF e%THEN k=250:CLOSE 2:GOTO {:4020}
+	&,2,2:bl=VAL(a$):&,2,2:k=VAL(a$):CLOSE 2:IF bl=.THEN GOSUB {:4040}:GOTO {:4020}
+	dr=3:a$="e.cr.pool 2,s,r":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:4020}
+{:4008}
+	l$="":FOR i=1 TO RND(1)*bl+1:&,2,2:NEXT:an$=a$:&,15,1:m$=a$:IF a$=""THEN{:4008}
+	l$=an$+"":a$="{yellow} Credit Pool Winner: {white} "+l$+r$+" {yellow}Credits Won:{white}"+STR$(k)+r$
+	a$=a$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":GOSUB 1095:a$="":an$=m$:GOSUB 1046:y=i:IF i=.THEN{:4020}
+	x=i:GOSUB 1065:GOSUB 1001:FOR i=1 TO 23:&,2,2:tt$(i)=a$:NEXT
+	a$="":tt$(19)=STR$(VAL(tt$(19))+k):FOR i=1 TO 23:a$=a$+tt$(i)+r$:NEXT
+	GOSUB 1001:PRINT# 2,a$:CLOSE 2:GOSUB {:4026}:k=250
+{:4020}
+	dr=3:a$="e.cr.pool 2":GOSUB 1024:a$="e.cr.pool 1":GOSUB 1023
+	PRINT# 2,0;r$;k:CLOSE 2
+	&"Done!":RETURN
+{:4026}
+	z=1:a$="w":tt$=m$:GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
+	PRINT# 2,"CREDIT{$a0}POOL WINNER"r$;0;r$;d1$;r$;"[Congratulations]"r$
+	PRINT# 2," You Have WON todays {white}{rvrs on}CREDIT POOL{rvrs off}."r$
+	PRINT# 2," {lt. green}You were awarded"+STR$(k)+" Credits"r$:PRINT# 2,"{up arrow}":CLOSE 2
+	IF y=1 THEN GOSUB 1060:x=2:i=1:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31:GOSUB 1025
+	ON-(y<>1)GOSUB 1060:x=3:i=1:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:GOSUB 1081
+{:4040}
+	dr=1:a$="n.$Winner":GOSUB 1023
+	IF bl=.THEN{:4054}
+	PRINT# 2,"{pound}$q{pound}{back arrow}15{rvrs on}{white} WINNER! {rvrs off}"
+	PRINT# 2,"{f6:2}{pound}$q{yellow}Today's {lt. red}{rvrs on}Credit Pool Winner{rvrs off} {lt. green}is:"
+	PRINT# 2,"{f6:2}{pound}$q{rvrs on}{gray3}"+l$+"{rvrs off}{yellow} who won{gray3} {rvrs on}"+STR$(k)+"{rvrs off} {yellow}Credits."
+	PRINT# 2,"{f6:2}{pound}$qMaybe YOU{$a0}will be the NEXT winner!"r$r$
+{:4052}
+	PRINT# 2,"{pound}$q{white}({gray3}Any Key{white}){lt. green} {pound}g1{pound}hj":PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+{:4054}
+	PRINT# 2,"{pound}n3{pound}$q{pound}{back arrow}06{lt. green}{$b0}{$c0:21}{$ae}"
+	PRINT# 2,"{pound}$q{pound}{back arrow}06{$dd} No Winner in Todays {$dd}"
+	PRINT# 2,"{pound}$q{pound}{back arrow}06{$dd}     Credit Pool!    {$dd}"
+	PRINT# 2,"{pound}$q{pound}{back arrow}06{$ad}{$c0:21}{$bd}{pound}n2":GOTO {:4052}
+	rem "+/lo/cp maint" - copr. 1994 NEW image 9/8/94

@@ -1,0 +1,78 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.sb-edit"
+	ON lm GOTO {:4004}
+{:4004}
+	rs=.:tz=.:qq=-1:GOSUB 3010:IF a<1 OR a>rn OR ac%=.THEN 3228
+{:4006}
+	br=a:GOSUB 3464:a$=ed$(br):GOSUB 3024:GOSUB 3004:GOSUB 3470:IF e%<>.OR sh<>.THEN 3228
+{:4008}
+	ON-(rs>.AND rs<=xx%)GOTO {:4074}:a=br:GOSUB 3052:c$=nn$(a):xx=zz%:rs=.:rt$=""
+{:4010}
+	n$=na$:GOSUB 3054:IF q=.AND c$<>a$AND LEFT$(c$,4)+MID$(c$,6)<>a$THEN{:4072}
+{:4012}
+	GOSUB {:4068}:IF q THEN a$="/(K)ill Old Resp."
+	&"(E)dit/(D)el/(Q)uit/(#x) Go To Resp. #x/(N)ext/(R)ead{pound}$a{f6:2}Edit: "
+	&"{pound}i1":IF tr%=.THEN RETURN
+	ON-(an$="Q")-2*(an$="E")-3*(an$="N")-4*(an$="K")GOTO {:4026},{:4050},{:4072},{:4084}
+	ON-(an$="D")-2*(an$="")GOTO {:4028},{:4012}:IF an$="R"THEN x=xx:GOSUB 1001:&"{f6:2}":GOSUB {:4078}:GOTO {:4012}
+	a=ABS(INT(VAL(an$))):IF a>xx%THEN:&"{f6}{pound}q0Out of Range!{f6}":GOTO {:4012}
+	rs=a:ON a+1 GOTO {:4008}:GOTO {:4074}
+{:4026}
+	ON tz GOSUB 3114:ON-(qq>-1)GOTO 3228:&"{f6:2}None of these messages were from you.{f6:2}":GOTO 3228
+{:4028}
+	IF rs=.THEN:&"{f6}{pound}q0Can't Delete Original Post!{f6}":GOTO {:4012}
+	GOSUB {:4068}:&"{pound}q0Delete (Y/N)? ":GOSUB 1902:IF a=.THEN{:4012}
+	GOSUB {:4034}:GOTO {:4046}
+{:4034}
+	&"{f6:2}Deleting...{f6}":qq=-1:m%=-(rs=.):k=1:x=xx:GOSUB 1001:l=.:kk=1
+{:4036}
+	&,2,2:IF l+1+LEN(a$)>79 THEN l=.:k=k+1
+	l=l-(l>.)+LEN(a$):ON-(a$<>"{up arrow}")GOTO {:4036}:GOSUB 3426
+	tz=1:a$="10001011200":IF rs>1 THEN b%=rs-2:&,16,6:x=a%:GOSUB 1001:&,2,2:&,2,2
+	b%=rs-1:&,16,6:&,16,5:x=yy%-1:IF rs=xx%THEN dt$(br)=LEFT$(dt$(br),11)+a$
+	RETURN
+{:4046}
+	GOSUB 3452
+{:4048}
+	&,16,10:d%(br)=a%:s=br:GOSUB 3146:a=br:GOTO {:4006}
+{:4050}
+	x=xx:GOSUB 1001:kk=.:&,11,.:GOSUB 1372:&"{f6}{pound}q0Reading Text Into Editor..."
+{:4052}
+	&,2,2:kk=kk+1:IF a$<>"{up arrow}"THEN tt$(kk)=a$:GOSUB {:4066}:ON a GOTO {:4064}:GOTO {:4052}
+	&"{f6:2}":GOSUB 3422:ww=k:GOSUB {:4068}:GOSUB 1610:IF kk=.THEN GOSUB 1920:a=br:GOTO {:4006}
+	tt$(kk)="{up arrow}":a$=ed$(br):GOSUB 3024:GOSUB 3004:GOSUB 3470:xx=zz%:IF rs THEN xx=rs:GOSUB 3478:xx=a%+1
+	IF rs=.THEN k=ww:GOSUB 3426:GOSUB 3428:zz%=x:GOSUB 3446:GOTO {:4048}
+	b%=rs:&,16,5:x=xx-1:GOSUB 1001:&,2,2:b$=a$:&,2,2:c$=a$:&,2,2:d$=a$:GOSUB {:4080}:k=ww:GOSUB 3426
+	GOSUB 3428:yy=x:GOSUB 1001:PRINT# 2,b$r$c$r$d$r$rt$:b%=rs:a%=yy:&,16,4:x=yy+1:GOSUB 3446:GOTO {:4048}
+{:4064}
+	&"{f6:2}{pound}q0Not Enough Memory!{f6:2}":&,11,.:GOTO {:4012}
+{:4066}
+	z%=(PEEK(51)+PEEK(52)*256)-(PEEK(49)+PEEK(50)*256):a=-(z%<300):RETURN
+{:4068}
+	qq=rs:a%=bn:b%=br:c%=rs:d%=xx%:a$=c$:GOSUB 3088:&"{f6:2}{pound}q0{pound}#0B{pound}%a/P{pound}%b/R{pound}%c of {pound}%d By {pound}$a{f6}On {$04}"+b$:IF rt$<>""THEN:&"{f6:2}Subtopic: "+MID$(rt$,2)
+	&"{f6:2}":RETURN
+{:4072}
+	rs=rs+1:IF rs>xx%THEN rs=qq:ON-(rs>-1)GOTO {:4008}:GOTO {:4026}
+{:4074}
+	GOSUB {:4076}:GOTO {:4010}
+{:4076}
+	xx=rs:GOSUB 3478:x=a%:xx=a%+1:GOSUB 1001:&,2,2:z$=a$:&,2,2:b$=a$:&,2,2:c$=a$:GOTO {:4080}
+{:4078}
+	rc=.:sh=.:&"{pound}q0":&,16,11:RETURN
+{:4080}
+	rt$="":&,2,2:IF LEFT$(a$,1)="*"THEN rt$=a$
+	RETURN
+{:4084}
+	IF q=.OR xx%=.THEN{:4012}
+	a$=ld$:GOSUB 3032:f$=a$:&"{f6}Auto Delete Old Responses? :":GOSUB 1902
+	z%=a:rs=1
+{:4090}
+	GOSUB {:4076}:IF z$>=f$THEN{:4046}
+	GOSUB {:4068}:IF z%=.THEN:&"{f6}Delete? :":GOSUB 1007:IF a$="A"THEN:&"Abort{f6}{pound}q0":GOTO {:4046}
+	IF z%=.THEN GOSUB 1903:IF a=.THEN rs=rs+1:GOTO {:4098}
+	GOSUB {:4034}
+{:4098}
+	&,16,10:xx%=a%:ON-(xx%>=rs)GOTO {:4090}:GOTO {:4046}
+	copr.1990 NEW image 07/04/90

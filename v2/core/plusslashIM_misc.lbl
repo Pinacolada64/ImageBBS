@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	on lm goto {:4010},{:4004},{:4016},{:4030},{:4036},{:4040},{:4002},{:4046},{:4054},{:4082},{:4090},{:4062}:return
 {:4002}
 	im=3:gosub 2428:tz$=an$:return
@@ -67,4 +69,5 @@
 	if an$<>""then nc=val(an$):gosub 1063:x=58:gosub 1001:print# 2,nc:close 2
 {:4096}
 	return
-	copr. 1994 new image 9/18/94
+	rem "+/IM.misc" - copr. 1994 new image 9/18/94
+

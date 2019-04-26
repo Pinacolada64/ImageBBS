@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	i=1:on im gosub {:60100},{:60200},{:60300},{:60400},{:60500},{:60500}
 	&"{f6:2}End of Transfer.{f6:2}":return
 {:60002}
@@ -43,4 +45,5 @@
 	n=n+1:tt$(n)=mid$(str$(b),2)+":"+f$:on-(n<60)goto {:60402}
 {:60500}
 	return
+	rem im.trans
 	copr. 1994 new image 9/8/94

@@ -2,7 +2,6 @@
 {step:2}
 {crunch:on}
 {alpha:alt}
-{number:3000}
 ' edit system time (moved from +.IM)
 ' edit clock set device
 ' edit prime time options
@@ -163,4 +162,5 @@
 
 ' you can use the litebar alarm editor to automatically toggle Tsr if you want, too
 
-	rem "+/IM.time" - pinacolada 2018-02-07 
+	rem "+/IM.time" - pinacolada 2018-02-07
+

@@ -1,7 +1,7 @@
 {number:3000}
 {step:2}
 {crunch:on}
-	REM "+/LO.NUM SQU" (NUMBERSQUARE AUTOMAINT) 8/19/94
+	rem "+/lo.num squ" (numbersquare automaint) 8/19/94
 ' run on Sundays:
 	REM:IFVAL(LEFT$(D1$,1))<>1 then RETURN
 	cm$="Numbersquare Automaint":gosub 1360

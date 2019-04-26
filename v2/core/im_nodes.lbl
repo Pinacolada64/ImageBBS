@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002}:return
 {:60002}
 	&"{clear}Node List/Net Map"
@@ -67,3 +69,4 @@
 	a$="nm.map link":gosub 1075:if e%then:&"{f6:2}No Link Map Found."
 	&"{f6}{gray3}[{rvrs on}Any Key{rvrs off}] {pound}g1{pound}hj":goto {:60008}
 	copr. 1994 new image 9/27/94
+	rem im.nodes

@@ -1,0 +1,218 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM "+.NM/utils" 07-01-90
+	v=1.3:vn$="900610":cm$="IMAGE NetMail":GOSUB 1360:r$=CHR$(13):GOTO {:3092}
+{:3004}
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes":GOTO 1012
+{:3006}
+	GOSUB {:3004}:INPUT# 2,n:RETURN
+{:3008}
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes,l,"+CHR$(100):RETURN
+{:3010}
+	dr=2:a$="nm.nodes":GOTO 1011
+{:3012}
+	GOSUB {:3010}:INPUT# 2,n:RETURN
+{:3014}
+	f$="nm.list":GOSUB {:3016}:PRINT# 2,tt$:CLOSE 2:RETURN
+{:3016}
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011:RETURN
+	RETURN
+	f$="nm.sylog":GOSUB {:3016}:PRINT# 2,na$r$d1$r$tt$:CLOSE 2:RETURN
+{:3022}
+	IF x THEN x=x+1:GOSUB 1001:INPUT# 2,z$:RETURN
+	z$="{f2:3}":RETURN
+{:3026}
+	GOSUB {:3012}
+	FOR i=1 TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:RETURN
+	GOSUB {:3012}:IF a<1 OR a>n THEN 32
+{:3034}
+	x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	x=a%:GOSUB {:3022}:f$=z$:x=b%:GOSUB {:3022}:g$=z$:x=c%:GOSUB {:3022}:h$=z$:x=d%:GOSUB {:3022}:i$=z$
+	CLOSE 2:RETURN
+{:3040}
+	t$=w$:&,1,32:IF an$=""THEN an$=t$
+	IF an$<>t$THEN tz=1
+	RETURN
+{:3046}
+	&"{pound}g1":b=-(an$="Y"):IF an$<>"N"AND an$<>"Y"THEN b=a
+	IF b THEN:&"Yes.{f6}"
+	IF b=.THEN:&"No.{f6}"
+	IF a<>b THEN tz=1
+	a=b:RETURN
+{:3056}
+	&"Destination Node (?=List):{pound}i1":IF an$="{f2}"THEN GOSUB {:3026}:GOTO {:3056}
+{:3058}
+	a$=an$:a%=VAL(a$):IF a%<1 OR a%>n THEN:&,16,2
+	IF a%=0 THEN a=0:a$="":RETURN
+	GOSUB {:3010}
+	a=a%:GOTO {:3034}
+{:3066}
+	&"{lt. blue}Node {blue}({cyan}?{blue}={lt. blue}List{blue},{cyan}A{blue}={lt. blue}Add{blue}):{white}{pound}i1":IF an$="{f2}"THEN GOSUB {:3026}:GOTO {:3066}
+	GOTO {:3058}
+{:3070}
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:IF e%THEN:&:RETURN
+	GOSUB {:3086}:IF e%=0 THEN RETURN
+	GOSUB {:3010}:IF e%THEN:&:GOTO {:3084}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.nodelist,p,w":PRINT# 3,CHR$(0)CHR$(194);
+	INPUT# 2,n:PRINT# 3,CHR$(n);:IF n=0 THEN{:3084}
+	FOR i=1 TO n:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,b$,b$,a,b,c,d
+	PRINT# 3,LEFT$(a$+"---",3)CHR$(0)CHR$(a)CHR$(b)CHR$(c)CHR$(d);:NEXT
+{:3084}
+	CLOSE 3:CLOSE 2
+{:3086}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOTO 1012
+{:3088}
+	&"Sorry, only Node #1 can use this program":RETURN
+	CLOSE 2:&:&"{f6}Press a key:{pound}g1{f6}"
+{:3092}
+	GOSUB {:3254}:IF n%<>1 THEN{:3088}
+{:3094}
+	a$=nn$:&"{clear}{f6}{white}    NetMail Administration Utilities{f6:2}"
+	&"{cyan} A. {lt. blue}Edit Nodes{f6}"
+	&"{cyan} B. {lt. blue}Send Node Update{f6}"
+	&"{cyan} C. {lt. blue}Write NetNews{f6}"
+	&"{cyan} D. {lt. blue}Make {f5}nm.create{f5}{f6}"
+	&"{f6}{cyan} 0. {lt. blue}Quit{f6:2}":tz=0
+	&"{lt. blue}-->{white}{pound}g1":b=.:IF an$>="A"AND an$<="Z"THEN b=ASC(an$)AND 31
+	IF b=>1 AND b<=4 THEN ON b GOSUB {:3112},{:3190},{:3218},{:3236}:GOTO {:3094}
+	GOTO 1812
+{:3112}
+	GOSUB {:3012}:CLOSE 2:IF n%<>1 THEN RETURN
+{:3114}
+	&"{clear}{down:2}  {white}Network NodeList Editor{f6:2}":q=25:GOSUB {:3312}
+{:3116}
+	&"{lt. blue}Node {blue}({cyan}?{blue}={lt. blue}List{blue},{cyan}A{blue}={lt. blue}Add{blue}):{white}{pound}i1":IF an$="{f2}"THEN GOSUB {:3026}:GOTO {:3116}
+	IF an$="A"THEN{:3180}
+	IF an$=""THEN dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.nodelist":GOTO {:3070}
+	GOSUB {:3058}:IF a=0 THEN{:3114}
+	z%=a:tz=0:n$=a$:o%=o%AND 1
+{:3126}
+	&"{clear}{down:2}  {white}Network NodeList Editor{f6:2}     {lt. blue}Node  {blue}:{white}{pound}%z{f6}"
+	&"{blue} ({cyan}1{blue}) {lt. blue}ID    {blue}:{white}{pound}$n{f6}"
+	&"{blue} ({cyan}2{blue}) {lt. blue}Phone {blue}:{white}{pound}$b{f6}"
+	&"{blue} ({cyan}3{blue}) {lt. blue}BBS   {blue}:{white}{pound}$c{f6}"
+	&"{blue} ({cyan}4{blue}) {lt. blue}SysOp {blue}:{white}{pound}$d{f6}"
+	&"{blue} ({cyan}5{blue}) {lt. blue}Active{blue}:{white}{pound}%o{f6}"
+	&"{blue} ({cyan}6{blue}) {lt. blue}Cnxn1 {blue}:{white}{pound}#3{pound}%a ({pound}$f){f6}"
+	&"{blue} ({cyan}7{blue}) {lt. blue}Cnxn2 {blue}:{white}{pound}#3{pound}%b ({pound}$g){f6}"
+	&"{blue} ({cyan}8{blue}) {lt. blue}Cnxn3 {blue}:{white}{pound}#3{pound}%c ({pound}$h){f6}"
+	&"{blue} ({cyan}9{blue}) {lt. blue}Cnxn4 {blue}:{white}{pound}#3{pound}%d ({pound}$i){f6}"
+	&"{lt. blue} -->{white} {pound}g1":a=VAL(an$):IF a=0 THEN{:3168}
+	lp=1:&an$:ON a GOSUB {:3150},{:3152},{:3154},{:3156},{:3158},{:3160},{:3162},{:3164},{:3166}:GOTO {:3126}
+{:3150}
+	pl=1:p$="Node Identifier":w$=n$:GOSUB {:3040}:n$=an$:RETURN
+{:3152}
+	pl=1:p$="Node Phone #":w$=b$:GOSUB {:3040}:b$=an$:RETURN
+{:3154}
+	pl=0:p$="BBS Name":w$=c$:GOSUB {:3040}:c$=an$:RETURN
+{:3156}
+	pl=1:p$="BBS Sysop":w$=d$:GOSUB {:3040}:d$=an$:RETURN
+{:3158}
+	&"Active?":a=1-o%:GOSUB {:3046}:o%=1-a:RETURN
+{:3160}
+	x%=1:a=a%:GOSUB {:3184}:a%=a:f$=a$:RETURN
+{:3162}
+	x%=2:a=b%:GOSUB {:3184}:b%=a:g$=a$:RETURN
+{:3164}
+	x%=3:a=c%:GOSUB {:3184}:c%=a:h$=a$:RETURN
+{:3166}
+	x%=4:a=d%:GOSUB {:3184}:d%=a:i$=a$:RETURN
+{:3168}
+	p$="":IF tz=.THEN{:3114}
+	&"{f6}{lt. blue}Save Changes{blue}?{white} ":a=.:GOSUB {:3046}:IF a=.THEN{:3114}
+	tt$=n$+r$+b$+r$+c$+r$+d$+r$+STR$(o%OR 2)+r$
+	tt$=tt$+STR$(a%)+r$+STR$(b%)+r$+STR$(c%)+r$+STR$(d%)
+	GOSUB {:3010}:IF z%>n THEN n=z%:PRINT# 2,z%
+	x=z%+1:GOSUB 1001:PRINT# 2,tt$:CLOSE 2:GOTO {:3114}
+{:3180}
+	z%=n+1:n$="XXX":b$="0000000000":c$="Empty":d$="None":a%=0:b%=0:c%=0:d%=0
+	f$="???":g$="???":h$="???":i$="???":GOTO {:3126}
+{:3184}
+	pl=1:p$="Connection #{pound}%x":w$=STR$(a):GOSUB {:3040}:GOSUB {:3010}:a=VAL(an$)
+	IF a=0 THEN a$="???":CLOSE 2:RETURN
+	x=a+1:GOSUB 1001:&,2,2:CLOSE 2:RETURN
+{:3190}
+	IF n%<>1 THEN RETURN
+	&"{clear}{down:2}{right:2}Send NodeList Update{f6:2} Are You Sure? ":GOSUB 1902:IF a=.THEN{:3094}
+	&"{f6}Send FULL Update? ":GOSUB 1902:f=a:tt$="/A/":IF f THEN tt$="/R/"
+	o$="nm.U.nodes":dr=2:GOSUB 1010:IF f THEN PRINT# 15,"s"dr$o$
+	CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,w":GOSUB 1012
+	IF e%=63 AND f=0 THEN CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,a":GOSUB 1012
+	ON-(e%<>0)GOTO {:3216}:GOSUB {:3008}
+	FOR a=n TO 1 STEP-1:x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	ON-(f=0 AND(o%AND 2)=0)GOTO {:3210}
+	o%=o%AND 1:GOSUB {:3400}:PRINT# 3,a;r$a$r$b$r$c$r$d$r$e$
+	IF f THEN GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$e$
+{:3210}
+	NEXT:CLOSE 2:CLOSE 3
+	tt$="ALL/"+nn$+tt$+o$:GOSUB {:3014}
+	&"Done!{f6}":RETURN
+{:3216}
+	CLOSE 3:&"{f6:2}Error Creating File {f5}nm.U.nodes{f5}.{f6}":RETURN
+{:3218}
+	IF n%<>1 THEN RETURN
+	&"{clear}{f6:3}  Write NetNews:{f6:2}":GOSUB 1604:IF kk=.THEN{:3234}
+	&"{f6}Filing NetNews...":f$="nm.U.news":tt$="ALL/"+nn$+"/R/"+f$
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN CLOSE 2:a$=f$+",s,a":GOSUB 1011
+	PRINT# 2,"Net-"MID$(d1$,2)r$" {pound}o{$c0}{pound}o{$c0}"r$"  From "na$" @ "nn$r$
+	FOR i=1 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	GOSUB {:3014}
+	&"Done!{f6}":RETURN
+{:3234}
+	&"{f6}Aborted!{f6:2}":RETURN
+{:3236}
+	&"{f6:2} Making {f5}nm.create{f5}..."
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.create"
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.create,s,w":GOSUB 1012:IF e%THEN{:3252}
+	GOSUB {:3006}
+	FOR a=n TO 1 STEP-1:x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	PRINT# 3,a;r$a$r$b$r$c$r$d$r$o%AND 1;r$a%r$b%r$c%r$d%
+	NEXT:CLOSE 2:CLOSE 3
+	&"Done!{pound}w1{f6}":RETURN
+{:3252}
+	CLOSE 3:&"{f6:2}Error Creating File {f5}nm.create{f5}.{f6}":RETURN
+{:3254}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%=0 THEN:&,2,2:n=VAL(a$):GOTO {:3290}
+	dr=2:a$="nm.create,s,r":GOSUB 1011:IF e%THEN{:3282}
+	&"{f6}Creating {f5}nm.nodes{f5} file..."
+	INPUT# 2,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st:CLOSE 2
+	GOSUB {:3008}:n=0
+	x=a+1:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	IF a>n THEN n=a:x=1:GOSUB 1001:PRINT# 2,n
+	CLOSE 2:CLOSE 3:OPEN 3,dv%,3,dr$+"nm.create,s,r"
+	GOSUB {:3008}:n=0
+{:3272}
+	INPUT# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
+	GOSUB {:3400}:x=a+1:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$e$
+	IF a>n THEN n=a:x=1:GOSUB 1001:PRINT# 2,n
+	IF s=.THEN{:3272}
+	CLOSE 2:CLOSE 3:PRINT# 15,"s"dr$"nm.nodelist":GOTO {:3290}
+{:3282}
+	&"Do you wish to create a network? ":GOSUB 1902:IF a=0 THEN e%=1:RETURN
+	n=1:n%=1:nn=1:GOSUB {:3008}:PRINT# 2,1:x=2:GOSUB 1001
+	PRINT# 2,"XXX"r$"0000000000"r$"Unknown"r$"Unknown"r$;0;r$;0;r$;0;r$;0;r$;0
+	CLOSE 2:GOTO {:3298}
+{:3290}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%=0 THEN{:3306}
+	dr=2:a$="nm.nodes":GOSUB 1011:&,2,2:n=VAL(a$):CLOSE 2
+	&"{f6}Enter the Node # you were assigned: {pound}i1":nn=VAL(an$)
+	IF nn<1 OR nn>n THEN e%=1:RETURN
+{:3298}
+	CLOSE 2:dr=2:a$="nm.config,l,z":GOSUB 1011
+	x=1:GOSUB 1001:PRINT# 2,nn;r$1022;r$"{f2}"r$vn$
+	x=2:GOSUB 1001:PRINT# 2,300;r$r$r$"atdt"
+	x=3:GOSUB 1001:a$="":FOR i=0 TO 9:a$=a$+"2306"+r$:NEXT:PRINT# 2,a$;
+{:3306}
+	x=1:GOSUB 1001:&,2,2:nn=VAL(a$):CLOSE 2
+	dr=2:a$="nm.nodes":GOSUB 1011:x=nn+1:GOSUB 1001:&,2,2:nn$=a$:CLOSE 2
+	n%=nn:GOTO {:3070}
+{:3312}
+	POKE 53252,q:RETURN
+	REM
+{number:3400}
+{:3400}
+	e$=MID$(STR$(o%),2)+r$+MID$(STR$(a%),2)+r$+MID$(STR$(b%),2)+r$
+	e$=e$+MID$(STR$(c%),2)+r$+MID$(STR$(d%),2):RETURN
+	rem "+.NM/utils"

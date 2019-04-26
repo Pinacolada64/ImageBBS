@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	on lm goto {:4100},{:4200},{:4300}
 	return
 {:4004}
@@ -115,6 +117,7 @@
 {:4292}
 	c$(i)=a$:return
 	rem
+{number:4300}
 {:4300}
 	&"Loading NetMail Alarm Table..."
 	for i=0 to 23:a%(i)=i*60:next:gosub {:4308}:tz=-(e%<>0)
@@ -145,4 +148,4 @@
 	&"{f6}Save Changes? ":gosub 1902:if a then gosub {:4306}
 	&"{f6}Activate Saved Table? ":gosub 1902:if a then gosub {:4312}
 	return
-	rem
+	rem "+/IM.lightbar"

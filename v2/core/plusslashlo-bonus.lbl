@@ -1,0 +1,29 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM +/lo-bonus - add bonus credits
+	a=.:IF tc%/10=INT(tc%/10)AND tc%>1 THEN a=1
+	IF ca/100=INT(ca/100)AND ca>1 THEN a=a OR 2
+	IF ca/1000=INT(ca/1000)AND ca>1 THEN a=a OR 4
+	ON a GOTO {:4010},{:4014},{:4018},{:4030},{:4032}:RETURN
+{:4010}
+	c%=50:REM tc%  /10
+{:4012}
+	a%=tc%:&"{f6:2}{green}This is Your {pound}#0{pound}%ath Call!":GOTO {:4024}
+{:4014}
+	c%=100:REM ca /100
+	a=ca:&"{f6:2}{green}You are the {pound}!ath Caller to the System!":GOTO {:4024}
+{:4018}
+	c%=200:REM tc%/100 & ca/100
+{:4020}
+	a=ca:a%=tc%:&"{f6:2}{$0f}{green}{rvrs on}YOU HIT{$a0}THE{$a0}JACKPOT!{f6:2}{lt. red}Your {pound}#0{pound}%ath Call is also"
+	&" the {pound}$ath Call to the System!"
+{:4024}
+	cr=cr+c%:a=cr:&"{f6:2}{gray3}You Win {white}{pound}#0{pound}%c {gray3}Credits!{f6:2}"
+	&"{lt. green}You Now Have{lt. red} {pound}!a {lt. green}Credits Total!{f6:2}"
+	a$=" {yellow}Credit Winner:{white}"+STR$(c%)+"{yellow} Credits":GOTO 1095
+{:4030}
+	c%=250:GOTO {:4012}:REM ca/1000
+{:4032}
+	c%=500:GOTO {:4020}:REM tc%/10 & ca/1000
+	copr. 1994 NEW image 9/18/94

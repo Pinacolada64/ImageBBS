@@ -1,0 +1,19 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM a%(99):GOSUB {:3002}:&,28,1:GOTO 1812
+{:3002}
+	POKE 53252,3:&"{f6}Netsub #: {pound}i1":IF an$=""THEN RETURN
+	n=ABS(INT(VAL(an$))):dr=2:GOSUB 1010:o$=dr$+"nm.netsub"+STR$(n)
+	&,60,2,0,a%(0),o$,dv%:GOSUB 1012:IF e%THEN:&:GOTO {:3002}
+	tz=1:&,60,1,30,a%(0),b$:&,60,1,48,a%(15),c$
+{:3010}
+	&"{clear}Netsub {pound}!n: {pound}$b{f6:2}":FOR i=0 TO 15:a$=MID$(c$,i*3+1,3)
+	d$=CHR$(193+i):&"{pound}$d) {pound}$a  ":NEXT:&"{f6:2}Option? {pound}g1{pound}v7{f6}"
+	IF an$>="A"AND an$<="P"THEN GOSUB {:3018}:GOTO {:3010}
+	ON tz GOTO {:3002}:PRINT# 15,"s"o$:&,60,3,0,a%(0),198,o$,dv%:GOSUB 1012:&:GOTO {:3002}
+{:3018}
+	a=ASC(an$)-193:IF a<0 OR a>15 THEN RETURN
+	w$=MID$(c$,a*3+1,3):p$="Link to":POKE 53252,3:&,1,32:IF LEN(an$)<>3 THEN RETURN
+	c$=LEFT$(c$,a*3)+an$+MID$(c$,a*3+4):&,60,0,48,a%(15),c$:tz=0:RETURN
+	rem "+.NetSubEdit"

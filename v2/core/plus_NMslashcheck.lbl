@@ -1,0 +1,18 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOSUB {:3004}:GOTO 1812
+{:3002}
+	a$=a$(a%):&"{cyan}{pound}$b{lt. blue}{pound}#2{pound}%a{cyan}/{white}{pound}$a{red}":RETURN
+{:3004}
+	dr=2:a$="nm.nodes":GOSUB 1011:ON-(e%<>0)GOTO {:3018}:INPUT# 2,n:DIM a$(n),z%(n,4)
+	FOR i=1 TO n:x=i+1:GOSUB 1001:a%=i:&"{f6}{up}{pound}%a"
+	INPUT# 2,a$(i),b$,b$,b$,b$,z%(i,1),z%(i,2),z%(i,3),z%(i,4):NEXT:CLOSE 2
+	&"{f6:2}":FOR i=1 TO n:b$=""
+	a%=i:GOSUB {:3002}:b$=": ":FOR j=1 TO 4:a%=z%(i,j):ON-(a%=0)GOTO {:3016}:IF j>1 THEN b$=", "
+	GOSUB {:3002}:f=0:FOR k=1 TO 4:f=f-(z%(a%,k)=i):NEXT:IF f<>1 THEN:&"*"
+{:3016}
+	NEXT:&"{pound}q0{f6}":NEXT
+{:3018}
+	CLOSE 2:RETURN
+	rem "+.NM/check"

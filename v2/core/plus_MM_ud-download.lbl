@@ -1,0 +1,106 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.ud-download"
+	kk=a:ON bl GOTO {:4004}:GOSUB 3010:&"{f6} - {pound}$k From {pound}v8{f6}":ON-(a<>0 OR z$="DM")GOTO {:4004}
+	a%=rn:&"{f6} {lt. blue}Which #{white} (1-{pound}#0{pound}%a{f1} {f7} = Batch):{lt. green} {pound}i1":GOSUB 3012:ON tr%+1 GOTO {:4004}
+	IF an$="{f7}"THEN z$="DM"
+{:4004}
+	l=cr:v=.:ON-(z$="DM")GOTO {:4032}:IF a<1 OR a>rn THEN ON bl GOTO {:4108}:GOTO 3214
+	GOSUB 3058:IF a$<>nn$(a)AND q<1 AND f%(a)<1 THEN ON bl GOTO {:4108}:GOTO 3214
+	GOSUB 3002:kk=a
+	&"{f6}":f%=1:GOSUB {:4080}:&"{f6}":IF fl THEN ON bl GOTO {:4108}:GOTO 3214
+	GOSUB 3060:GOSUB 3062:q$=b$:an$="{f5}"+b$+"{f5}":GOSUB 3002:IF d%(kk)=co%OR d%(kk)=.OR l%OR(co%=2 AND d%(kk)=1)THEN{:4016}
+	&"{f6}{white}{pound}v7 Is For A Different{f6}Computer. Do You Still Wish To ":an$="It"
+{:4016}
+	&"{f6}{pound}$k {pound}v7?: ":GOSUB 1902:IF a=.THEN ON bl GOTO {:4108}:GOTO 3214
+	GOSUB 3002:GOSUB 3444:an$="Receive":GOSUB 3030:a$=dt$(kk):GOSUB 3028:POKE 2043,1-(RIGHT$(a$,1)="s")
+	GOSUB 3060:GOSUB 3064:a$=b$:GOSUB 3004:x=1:an$=b$:GOSUB 1011:ON-(e%<>.)GOTO {:4098}
+	&,16:CLOSE 2:GOSUB 3124:IF b=.THEN GOSUB 1920:ON bl GOTO {:4108}:GOTO 3214
+	i=1:GOSUB {:4074}:dc%=dc%+1:GOSUB 3040:GOSUB 3060:a%=1:c$=k$:tt$(1)=b$:GOSUB 3068
+	&"{f6}":IF f%(kk)<1 THEN ON bl GOTO {:4108}:GOTO 3214
+	a=7:GOSUB 1004:IF a+(f2 AND 2)=.THEN cr=cr-c%(kk)
+	f%(kk)=f%(kk)+1:dc=dc+1:bd=bd+c%(kk):GOSUB 3094
+	GOSUB 3150:GOSUB 3066:ON x GOTO 3264:ON jm GOTO 3448:ON bl GOTO {:4108}:GOTO 3214
+{:4032}
+	ON nb GOTO {:4134}:bl=.:v=.:f%=1:l=cr
+{:4034}
+	&"{f6}Start At #: {pound}i1":GOSUB 3012:IF a<1 OR a>rn THEN ON bl GOTO {:4050}:GOTO 3214
+	GOSUB {:4094}:FOR i=a TO rn:a=i:ON-(f%(a)<1 AND q=.)GOTO {:4048}:kk=i:GOSUB 3174:i=kk:&"{f6}":ON rk GOTO {:4040}:&" {pound}$k?:{lt. blue} ":GOSUB 1007
+	rk=-(an$="E"):ON-(an$="A"OR an$="S")-2*(an$="E")GOTO {:4044},{:4042}:GOSUB 1903:IF a=.THEN:&"{f6}":GOTO {:4048}
+{:4040}
+	kk=i:&"{f6}":GOSUB {:4080}:i=kk:ON fl GOTO {:4048},{:4044}:GOSUB 3060:GOSUB 3064:tt$(f%)=b$:a%(f%)=i:f%=f%+1:a=7:GOSUB 1004:ON-(a+(f2 AND 2)=.)GOTO {:4110}:GOTO {:4048}
+{:4042}
+	&"Every{f6}":GOTO {:4040}
+{:4044}
+	a$="Start":i=rn:ON-(fl=2)GOTO {:4048}:IF an$="A"THEN a$="Abort":f%=1
+	lp=1:&
+{:4048}
+	&"{f6}":NEXT:a%=f%-1:ON-(a%=.)GOTO 3214
+{:4050}
+	c%=.:FOR i=1 TO a%:b$=tt$(i):c%=c%+c%(a%(i)):b%=i:&"{f6}{lt. blue}{pound}#2{pound}# {pound}%b-{pound}$b":NEXT
+	ON-(co%>2)GOTO {:4078}:&"{f6:2}{lt. blue}{pound}#0{pound}%c Total Blocks, ":kk=.:c%(.)=c%:GOSUB 3134:a%=i-1
+{:4052}
+	rk=.:&"{f6:2}{lt. green}S)can C)lear D)load K)ill A)dd Q)uit:{lt. blue} {pound}g1{pound}v7{f6}":bl=-(an$="A"):IF an$="Q"THEN 3214
+	ON-(an$="C")-2*(an$="A")-3*(an$="D")-4*(an$="K")GOTO {:4032},{:4034},{:4056},{:4076}:ON tr%+1 GOTO 3214:GOTO {:4050}
+{:4056}
+	GOSUB 3444:f%=a%:&"{f6:2}{purple}You Now Have 20 Seconds To":an$=m$+"Receive":GOSUB 3030
+	CLOSE 2:CLOSE 3:GOSUB 3004:GOSUB 1010:&,22,200:GOSUB {:4114}:&,22,20
+	ON bb%GOSUB 1920
+	i=a%:GOSUB {:4074}:dc%=dc%+a%:GOSUB {:4096}:GOSUB 3040:a$="  "+m$+k$:GOSUB 1096:PRINT# 2,a$
+	c$=k$:ON i+1 GOTO {:4130}:a%=i:GOSUB 3068:i=a%:IF bb%THEN GOSUB {:4132}
+	dc=dc+a%:a=7:GOSUB 1004:a=-((f2 AND 2)=2)OR a:FOR i=1 TO a%
+	IF f%(a%(i))>0 THEN b=c%(a%(i)):bd=bd+b:cr=cr+b*(a=.):f%(a%(i))=f%(a%(i))+1
+	IF f%(a%(i))=>1 THEN kk=a%(i):GOSUB 3094
+	NEXT:GOSUB 3066:ON x GOTO 3264:GOSUB 3150:ON jm GOTO 3448:GOTO 3214
+{:4074}
+	GOSUB 1060:x=7:GOSUB 1025:x=18:GOSUB 1025:x=36:GOSUB 1025:CLOSE 2:RETURN
+{:4076}
+	GOSUB 3440:GOTO {:4050}
+{:4078}
+	c%=(c%*254)/1024:&"{f6:2}{lt. blue}{pound}#0 {pound}%cK Total, ":kk=.:GOSUB 3134:a%=i-1:GOTO {:4052}
+{:4080}
+	fl=1:GOSUB 3058:IF(f%(kk)<1 AND q=1)OR(f%(kk)<1 AND a$=nn$(kk))THEN fl=.:RETURN
+	IF rc OR sh THEN rk=.
+	GOSUB 3134:v=v+a%
+	v$="{f6:2}Sorry, Not Enough ":IF v>tr%AND tr%<100 THEN v=v-a%:&"{pound}$vTime!{f6}":RETURN
+	a=7:GOSUB 1004:IF a+(f2 AND 2)=.AND c%(kk)>l THEN:&"{pound}$vCredits!{f6}":fl=1:RETURN
+	IF dc%+f%<=da%OR da%=.THEN fl=.:RETURN
+	&"{f6:2}Sorry, You Have {pound}$ked Your Limit.{f6}":fl=2:rk=.:RETURN
+{:4094}
+	&"{f6}{yellow} [Y]es [N]o [E]very [S]tart [A]bort{pound}q0{f6}{pound}vj":RETURN
+{:4096}
+	ON-(da%<1 OR da%>99)GOTO 3016:b%=da%-dc%:&"{f6}{lt. blue}{pound}$k's Left This Call:{lt. green} {pound}%b{lt. blue}{f6}":RETURN
+{:4098}
+	c$=b$:&"{f6:2}{lt. blue}File Not Found!{f6}":a$="a":b$="errlog":GOSUB 1027
+	IF e%THEN a$="w":b$="errlog":GOSUB 1027
+	PRINT# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%):a$=r$+r$+"Plus File: "+pr$
+	PRINT# 2,a$r$"Area:      "cm$r$"Prompt:    U/D#"MID$(STR$(bn),2)": "bb$(bn)
+	PRINT# 2,j$"name:  "c$r$"{up arrow}":CLOSE 2:ON bl+1 GOTO 3214
+{:4108}
+	a=kk:GOTO 3296
+{:4110}
+	l=l-c%(i):an$=STR$(l):&"  {lt. green}Credits Left:{white}{pound}v7{lt. blue}":IF l<1 THEN fl=2:GOTO {:4044}
+	GOTO {:4048}
+{:4114}
+	f=1:bb%=0
+{:4116}
+	an$=tt$(f):&,15,2:a$=an$+",r":GOSUB 3004:GOSUB 1011:IF e%THEN{:4122}
+	&,16,2:&,22,10:&,16:GOSUB 3066:ON x GOTO {:4126}:GOSUB 3124:IF b=.THEN{:4126}
+{:4120}
+	&,22,10:ON-(f>=f%)GOTO {:4128}:f=f+1:GOTO {:4116}
+{:4122}
+	CLOSE 2:ON-(f=f%)GOTO {:4124}:FOR x=f TO f%-1:a%(x)=a%(x+1):tt$(x)=tt$(x+1):NEXT
+{:4124}
+	f%=f%-1:f=f-1:GOTO {:4120}
+{:4126}
+	bb%=1:b=0:jm=0:f=f-1
+{:4128}
+	an$="":&,16,2:a%=f:RETURN
+{:4130}
+	GOSUB {:4132}:GOTO 3214
+{:4132}
+	a$=" {white} Transfer Aborted{yellow}":GOTO 1095
+{:4134}
+	lp=1:&"{f6}Sorry, Batch {pound}$ks Using {pound}vl Are Not Currently Supported.":GOTO 3214
+	copr.1990 NEW image 12/19/90 12:00p

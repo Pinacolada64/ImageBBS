@@ -1,0 +1,13 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	dr=3:a$="e.sw.ports,l,"+CHR$(70):GOSUB 1011:r$=CHR$(13)
+	x=150:GOSUB 1001:PRINT# 2:x=1
+	CLOSE 3:OPEN 3,dv%,3,dr$+"port.data,s,r"
+{:3006}
+	b$="":FOR i=1 TO 9:&,2,3:b$=b$+a$+r$:NEXT:s=st:GOSUB 1001:PRINT# 2,b$;:x=x+1
+	ON-(s=0)GOTO {:3006}:CLOSE 2:CLOSE 3:GOTO 1811
+	rem "+.convert port"
+
+' FIXME: no idea what this program is for
+' something to do with LtK. hard drives?

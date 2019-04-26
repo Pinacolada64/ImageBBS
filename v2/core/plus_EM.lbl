@@ -1,6 +1,7 @@
 {number:3000}
-' 28: NetMail Enable
-	ms=1:&,52,28,3:nf=a%:lg=1:gosub {:3360}:goto {:3062}
+{step:2}
+' &,52,28: NetMail Enable
+	ms=1:&,52,28,3:nf=a%:lg=1:bh=.:ad=.:gosub {:3374}:goto {:3062}
 {:3002}
 	&"{f6}":return
 	gosub 1009:goto 1079
@@ -40,10 +41,10 @@
 {:3044}
 	a=.:a%=br:b%=d%(a%):fr$=nn$(a%):j$=left$(dt$(a%),11):tt$(.)=ed$(a%)
 {:3046}
-	if left$(tt$(.),1)="!" then {:3366}
-	an$=fr$:&"{f6}{lt. blue}Numb: {white}{pound}%a{pound}{back arrow}39 {lt. blue}From: {white}{pound}v7 {pound}{back arrow}20{cyan}(UID#{white}{pound}%b{cyan}){f6}{lt. blue}Sent: {white}{$04}"+j$:a=rc
-	a=a+rc:b$=tt$(.):if left$(b$,1)="*"then b$=mid$(b$,2)
-	&"{pound}{back arrow}39 {lt. blue}Subj: {white}{pound}$b{f6}{pound}q0":a=a+rc:return
+	IF LEFT$(tt$(.),1)="!"THEN{:3380}
+	an$=fr$:&"{f6}{blue}{pound}vj {rvrs on}{yellow}Numb:{rvrs off} {white}{pound}%a{pound}{back arrow}39  {rvrs on}{yellow}From:{rvrs off} {white}{pound}v7 {pound}{back arrow}20{cyan}(UID#{white}{pound}%b{cyan}){f6}{right}{rvrs on}{yellow}Sent:{rvrs off} {white}{$04}"+j$:a=rc
+	a=a+rc:b$=tt$(.):IF LEFT$(b$,1)="*"THEN b$=MID$(b$,2)
+	&"{pound}{back arrow}39  {rvrs on}{yellow}Subj:{rvrs off} {white}{pound}$b{f6}{blue}{pound}vj{pound}q0":a=a+rc:RETURN
 {:3054}
 	gosub {:3046}:&"{f6}":for j=1 to kk-1:lp=1:&,39,j:next:&"{f6}":return
 {:3056}
@@ -72,14 +73,17 @@
 {:3086}
 	close 2:br=.:if rn=.then:&"{f6}{cyan}You Have No {pound}$g.{f6}"
 {:3088}
-	on(r%*g%)goto {:3110}:r%=.:dr=2:close 2:lc=6:gosub {:3012}:gosub 1098:on tr%+1 goto 1811
-	gosub 1850:g%=1:on(f4 or-(an$="Q"))goto {:3252}:if rs then{:3088}
-	gosub {:3352}:if rs then{:3088}
-	g%=.:gosub {:3010}:if a>.and a<=rn then br=a-1:goto {:3110}
-	x=3:g%=1:on-(a$="S")-(a$="V")*2-(a$="O")*3 goto {:3126},{:3192},{:3252}
-	on-(a$="{f2}")-(z$="FR")*2 goto {:3104},{:3168}:if rn=. then {:3086}
-	if a$="A"then br=.:goto {:3110}
-	g%=.:on-(a$="R")-(a$="L")*2-(a$="")*3-(a$="D")*4 goto {:3126},{:3106},{:3110},{:3252}:goto {:3088}
+	ON(r%*g%)GOTO {:3110}:r%=.:dr=2:CLOSE 2:lc=6:gosub {:3012}:gosub 1098:ON tr%+1 GOTO 1811
+	gosub 1850:g%=1:ON(f4 OR-(an$="Q"))GOTO {:3270}:IF rs THEN{:3088}
+	gosub {:3370}:IF rs THEN{:3088}
+	g%=.:gosub {:3010}:IF a>.AND a<=rn THEN br=a-1:GOTO {:3110}
+	ON-(zz=.)GOTO {:3096}:ON-(z$="VL")-(z$="SL")*2 GOTO {:3500},{:3512}
+{:3096}
+	x=3:g%=1:ON-(a$="S")-(a$="V")*2-(a$="O")*3 GOTO {:3126},{:3210},{:3270}
+	ON-(a$="{f2}")-(z$="FR")*2 GOTO {:3104},{:3186}:IF rn=.THEN{:3086}
+	IF a$="A"THEN br=.:GOTO {:3110}
+	g%=.:ON-(a$="")GOTO {:3110}
+	g%=.:ON-(a$="R")-(a$="L")*2-(a$="D")*3 GOTO {:3126},{:3106},{:3270}:GOTO {:3088}
 {:3104}
 	gosub 1351:goto {:3088}
 {:3106}
@@ -91,9 +95,12 @@
 	tt$=na$:gosub {:3006}:gosub {:3044}
 	sh=.:if br<>1 then for x=1 to br-1:gosub {:3016}:next
 {:3116}
-	for j=1 to 4:&,2,2:next:gosub {:3002}:gosub 1030:on rc gosub {:3016}:if d%(br)=.then gosub {:3368}:goto {:3122}
-	b$=nn$(br):&"{f6:2}{lt. blue}Reply To {f5}{white}{pound}$b{lt. blue}{f5}{pound}q0?: {pound}g1":a=-(an$="Y"or an$="R"):gosub 1904
-	if a=1 then r%=1:goto {:3126}
+	for j=1 to 4:&,2,2:next:gosub {:3002}:gosub 1030:on rc gosub {:3016}:if d%(br)=. then gosub {:3382}:goto {:3122}
+{:3118}
+	&"{f6:2}{lt. blue}[A]gain, [F]oward, [R]eply{pound}q0?: {pound}g1":IF an$="R"THEN a=1:&"Reply{f6}":GOTO {:3120}
+	ON-(an$="A")-(an$="F")*2 GOTO {:3496},{:3495}:&"Next{f6}":r%=.:a=.
+{:3120}
+	IF a=1 THEN r%=1:GOTO {:3126}
 {:3122}
 	r%=.:on-(sh=47 or g%=.)goto {:3088}:br=br+1:on-(br>rn)goto {:3110}:gosub {:3044}:goto {:3116}
 {:3124}
@@ -113,233 +120,272 @@
 	a$=ed$(br):an$=mid$(a$,2):if left$(a$,1)="*"then an$=mid$(an$,2)
 	an$=left$(an$,len(an$)-1):&"Subject: {pound}v7{f6}"
 {:3148}
-	tt$(.)="["+an$+"]":y=i:gosub 1604:a=1:if kk=. then {:3088}
-	if ms then:&"{f6}{yellow}Return Receipt?: {cyan}":gosub 1902:a=1-a
-	tt$(.)=mid$("*",a+1,1)+tt$(.):&"{f6}Filing {pound}$g For ":&nn$:&"...{f6}"
-	if lg then fd$="Local E-Mail":gosub {:3468}
-	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
-	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
-	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
-	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
-	x=25:on z gosub 1025:close 2:gosub 1081:goto {:3088}
+	lg$=an$:&"{f6}Carbon Copy? :":gosub 1902:IF a=.THEN{:3164}
+{:3150}
+	p$="{f6}Send Carbon Copy To":bh=1
+	da$="":POKE 53252,20:gosub 1006:gosub {:3010}:IF an$=""THEN bh=.:GOTO {:3164}
+	ON-(a=.)GOTO {:3162}:ON-(a>ur)GOTO {:3088}:i=a:gosub 1065:x=a
+	gosub 1001:&,2,2:CLOSE 2:ON-(a$="{up arrow}")GOTO {:3332}:b$=a$
+	&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1902:IF a=.THEN{:3150}
+	da$=b$:GOTO {:3164}
+{:3162}
+	gosub 1046:IF i=.THEN:&"{f6}{f5}{pound}v7{f5} Not Found{f6}In User File.{f6}":GOTO {:3150}
+	da$=an$:kk=i
+{:3164}
+	an$=lg$:tt$(.)="["+an$+"]":y=i:gosub 1604:a=1:IF kk=.THEN{:3088}
+	IF ms THEN:&"{f6}{yellow}Return Receipt?: {cyan}":gosub 1902:a=1-a
 {:3168}
-	&"{clear}{f6:2}Personal File Storage.{f6:2}Enter Filename To Read Or{f6}$ For Directory:"
-	&"{f6:2}":p$="Filename":d$=mid$(str$(id),2)
-	poke 53252,10:gosub 1005:on-(an$="")goto {:3088}:fr$="m."+d$+"."+an$
-	if an$="$" then {:3182}
-	a$=fr$:dr=2:gosub 1011:on e%+1 goto {:3178}:&"{f6}File Not Found.{f6}":goto {:3088}
-{:3178}
-	gosub {:3002}:gosub 1030:close 2:&"{f6}Delete?: ":gosub 1902:if a=. then {:3088}
-	print# 15,"s"dr$fr$:goto {:3088}
-{:3182}
-	dr=2:gosub 1010:close 2:open 2,dv%,0,"$"+dr$+"m."+d$+".*"
-	get#2,a$,a$:&,8,2,1:&,8,2,1:if mid$(a$,7,5)="block" then {:3190}
+	tt$(.)=MID$("*",a+1,1)+tt$(.):&"{f6}Filing {pound}$g For ":&nn$:&"...{f6}"
+	IF lg THEN fd$="Local E-Mail":gosub {:3478}
+	z=1:a$="w":tt$=nn$:gosub 1062:IF e%THEN a$="a":z=.:gosub 1062
+	PRINT# 2,na$r$id;r$d1$:FOR x=.TO kk-1:PRINT# 2,tt$(x):NEXT:IF bh THEN PRINT# 2,"{f6}{white}CC: {yellow}"da$
+	IF ad THEN PRINT# 2,"{f6:2}This Message Was Carbon Copied From "na$" To "bh$" ...":ad=.
+	PRINT# 2,"{up arrow}":CLOSE 2:IF bh THEN nn$=da$:bh=.:ad=1:GOTO {:3168}
+	IF y=1 THEN gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
+	ON-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
+	x=25:ON z gosub 1025:CLOSE 2:gosub 1081:GOTO {:3088}
 {:3186}
-	b$=a$:&,8,2,1:if st=.then:&"{f5}":lp=1:&mid$(b$,11+len(d$),11):goto {:3186}
-{:3188}
-	close 2:&"{f6:2}Hit A Key: {pound}g1":goto {:3168}
-{:3190}
-	&"{f6}No Files.":goto {:3188}
-{:3192}
-	f2=-(z$="VE"):a=abs(int(val(mid$(an$,3)))):if a then gosub {:3022}:goto {:3196}
-	p$="Verify Mail Of":&"{f6}":gosub {:3020}
+	&"{clear}{f6:2}Personal File Storage.{f6:2}Enter Filename To Read Or{f6}$ For{$a0}Directory:"
+	&"{f6:2}":p$="Filename":d$=MID$(STR$(id),2)
+	POKE 53252,10:gosub 1005:ON-(an$="")GOTO {:3088}:fr$="m."+d$+"."+an$
+	IF an$="$"THEN{:3200}
+	a$=fr$:dr=2:gosub 1011:ON e%+1 GOTO {:3196}:&"{f6}File Not Found.{f6}":GOTO {:3088}
 {:3196}
-	d%=i:if nn$="" then {:3088}
-	a%=.:b=.:tt$=nn$:b$=nn$:gosub {:3006}:if e% then {:3202}
+	gosub {:3002}:gosub 1030:CLOSE 2:&"{f6}Delete?: ":gosub 1902:IF a=.THEN{:3088}
+	PRINT# 15,"s"dr$fr$:GOTO {:3088}
 {:3200}
-	a%=a%+1:&,2,2:b=b-(a$=na$):gosub {:3016}:if fl=. then {:3200}
-{:3202}
-	close 2:if a%=.then b$=tt$:&"{f6}{pound}$b Has No Mail.{f6}":goto {:3088}
-	g$="None":if b then g$=mid$(str$(b),2)
-	&"{f6}{pound}$b Has {pound}%a Messages,{f6}{pound}$g Of Them From You.{f6}":on f2*b+1 goto {:3088}
-	s=.:a%=.:gosub 1079:if a<50 then gosub {:3124}:goto {:3088}
-	gosub {:3006}:close 3:open 3,dv%,3,dr$+"temp,s,w":gosub 1012:if e% then {:3038}
-{:3212}
-	on-(s<>.)goto {:3242}:a%=a%+1:input# 2,fr$,b%,j$:&,2,2:tt$(.)=a$:kk=1
-	on-(fr$=na$)gosub {:3046}:ad%=b%:a$=tt$(.):&,11:gosub 1372:tt$(.)=b$
-{:3216}
-	&,2,2:tt$(kk)=a$:gosub {:3034}:on a or-(kk>le)goto {:3036}:if a$<>"{up arrow}"then kk=kk+1:goto {:3216}
-	s=st:if fr$<>na$then gosub {:3058}:goto {:3212}
+	dr=2:gosub 1010:CLOSE 2:OPEN 2,dv%,0,"$"+dr$+"m."+d$+".*"
+	GET#2,a$,a$:&,8,2,1:&,8,2,1:IF MID$(a$,7,5)="block"THEN{:3208}
+{:3204}
+	b$=a$:&,8,2,1:IF st=.THEN:&"{f5}":lp=1:&MID$(b$,11+LEN(d$),11):GOTO {:3204}
+{:3206}
+	CLOSE 2:&"{f6:2}Hit A Key: {pound}g1":GOTO {:3186}
+{:3208}
+	&"{f6}No Files.":GOTO {:3206}
+{:3210}
+	f2=-(z$="VE"):a=ABS(INT(VAL(MID$(an$,3)))):IF a THEN gosub {:3022}:GOTO {:3214}
+	p$="Verify Mail Of":&"{f6}":gosub {:3020}
+{:3214}
+	d%=i:IF nn$=""THEN{:3088}
+	a%=.:b=.:tt$=nn$:b$=nn$:gosub {:3006}:IF e%THEN{:3220}
+{:3218}
+	a%=a%+1:&,2,2:b=b-(a$=na$):gosub {:3016}:IF fl=.THEN{:3218}
 {:3220}
-	&"{f6}(A,D,E,R,S,? For Help) "
-{:3222}
-	gosub 1007:on-(a$="R")goto {:3228}:if a$="A"or tr%=. then {:3038}
-	on-(a$="D")-(a$="E")*2-(a$="{f2}")*3-(a$="S")*4 goto {:3232},{:3236},{:3226},{:3230}:goto {:3222}
-{:3226}
-	gosub {:3316}:goto {:3220}
-{:3228}
-	&"Read{f6}":gosub {:3054}:goto {:3220}
+	CLOSE 2:IF a%=.THEN b$=tt$:&"{f6}{pound}$b Has No Mail.{f6}":GOTO {:3088}
+	g$="None":IF b THEN g$=MID$(STR$(b),2)
+	&"{f6}{pound}$b Has {pound}%a Messages,{f6}{pound}$g Of Them From You.{f6}":ON f2*b+1 GOTO {:3088}
+	s=.:a%=.:gosub 1079:IF a<50 THEN gosub {:3124}:GOTO {:3088}
+	gosub {:3006}:CLOSE 3:OPEN 3,dv%,3,dr$+"temp,s,w":gosub 1012:IF e%THEN{:3038}
 {:3230}
-	&"Save{f6}":gosub {:3058}:goto {:3212}
-{:3232}
-	&"Delete{f6}":gosub 1901
-	on a+1 goto {:3220}:a%=a%-1:goto {:3212}
-{:3236}
-	&"Edit{f6}":&"{f6:2}Editor:"+str$(kk-1)+" Lines.{f6:2}"
-	gosub 1610:if kk=. then {:3038}
-	&"{f6:2}Filing Edited Mail...{f6}":b%=ad%:tt$(kk)="{up arrow}":gosub {:3058}:goto {:3212}
-{:3242}
-	&"{f6}Updating..":close 2:close 3:print# 15,"s"dr$+left$("m."+tt$,16)
-	if a%then print# 15,"r"dr$+left$("m."+tt$,16)"="dr$"temp":goto {:3248}
-	print# 15,"s"dr$"temp":gosub 1060:i=-1:x=25:gosub 1025:close 2
+	ON-(s<>.)GOTO {:3260}:a%=a%+1:INPUT# 2,fr$,b%,j$:&,2,2:tt$(.)=a$:kk=1
+	ON-(fr$=na$)gosub {:3046}:ad%=b%:a$=tt$(.):&,11:gosub 1372:tt$(.)=b$
+{:3234}
+	&,2,2:tt$(kk)=a$:gosub {:3034}:ON a OR-(kk>le)GOTO {:3036}:IF a$<>"{up arrow}"THEN kk=kk+1:GOTO {:3234}
+	s=st:IF fr$<>na$THEN gosub {:3058}:GOTO {:3230}
+{:3238}
+	&"{f6}(A,D,E,R,S,? For Help) "
+{:3240}
+	gosub 1007:ON-(a$="R")GOTO {:3246}:IF a$="A"OR tr%=.THEN{:3038}
+	ON-(a$="D")-(a$="E")*2-(a$="{f2}")*3-(a$="S")*4 GOTO {:3250},{:3254},{:3244},{:3248}:GOTO {:3240}
+{:3244}
+	gosub {:3334}:GOTO {:3238}
+{:3246}
+	&"Read{f6}":gosub {:3054}:GOTO {:3238}
 {:3248}
-	gosub {:3002}:if d%=1 then gosub 1060:x=24:st(x)=a%:gosub 1026:close 2
-	goto {:3088}
-{:3252}
-	pu$=an$
-	on-((left$(an$,1)="O")and(right$(an$,1)="!"))goto 1694:f%(.)=rn:if rn=. then {:3348}
-{:3256}
-	p$="MD":&"{f6}{lt. blue}Delete:{f6}{cyan}[A]ll, [S]ome, [N]one Of Your Mail?{f6:2}{lt. blue}MD: {white}{pound}g1"
-	on-(an$="A")-(an$="S")*2 goto {:3260},{:3270}:goto {:3268}
+	&"Save{f6}":gosub {:3058}:GOTO {:3230}
+{:3250}
+	&"Delete{f6}":gosub 1901
+	ON a+1 GOTO {:3238}:a%=a%-1:GOTO {:3230}
+{:3254}
+	&"Edit{f6}":&"{f6:2}Editor:"+STR$(kk-1)+" Lines.{f6:2}"
+	gosub 1610:IF kk=.THEN{:3038}
+	&"{f6:2}Filing Edited Mail...{f6}":b%=ad%:tt$(kk)="{up arrow}":gosub {:3058}:GOTO {:3230}
 {:3260}
-	&"All{f6:2}{pound}q0":gosub 1901:if a=. then {:3256}
-	dr=2:gosub 1010:print# 15,"s"dr$+left$("m."+na$,16):gosub 1060:i=-1:x=25
-	gosub 1025:if id=1 then x=24:st(x)=.:gosub 1026
-	close 2:for i=1 to rn:f%(i)=f%(i)+1:next:&"{f6}Mail Deleted.{f6}":rn=.:goto {:3326}
-{:3268}
-	&"None{f6:2}":goto {:3348}
+	&"{f6}Updating..":CLOSE 2:CLOSE 3:PRINT# 15,"s"dr$+LEFT$("m."+tt$,16)
+	IF a%THEN PRINT# 15,"r"dr$+LEFT$("m."+tt$,16)"="dr$"temp":GOTO {:3266}
+	PRINT# 15,"s"dr$"temp":gosub 1060:i=-1:x=25:gosub 1025:CLOSE 2
+{:3266}
+	gosub {:3002}:IF d%=1 THEN gosub 1060:x=24:st(x)=a%:gosub 1026:CLOSE 2
+	GOTO {:3088}
 {:3270}
-	&"Some{f6:2}Selective Mail Delete:{f6:2}Creating Files...{f6}":tt$=na$
-	gosub 1079:if a<50 then gosub {:3124}:goto {:3088}
-	tt$=na$:gosub {:3006}:close 3:open 3,dv%,3,dr$+"temp,s,w":gosub 1012:if e% then {:3040}
-	for i=1 to 60:a%(i)=f%(i):next:for i=1 to rn:br=i:gosub {:3044}:kk=.:&,11:gosub 1372
-	gosub {:3002}:for j=1 to 4:&,2,2:next:tt$(.)=ed$(i):gosub {:3002}
-{:3280}
-	kk=kk+1:&,2,2:tt$(kk)=a$:gosub {:3034}:on a goto {:3036}:if a$<>"{up arrow}" then {:3280}
-{:3282}
-	&"{pound}q0{f6}(A,D,F,R,S,? For Help): ":gosub 1007
-	on tr%+1 goto {:3042}:on-(a$="A")-(a$="D")*2-(a$="F")*3 goto {:3042},{:3288},{:3290}
-	rs=.:on-(a$="S")-(a$="{f2}")*2-(a$="R")*3 gosub {:3056},{:3320},{:3324}:on rs goto {:3302}:goto {:3282}
+	pu$=an$
+	on -((left$(an$,1)="O") and (right$(an$,1)="!")) goto 1694:f%(.)=rn:if rn=. then {:3366}
+{:3274}
+	p$="MD":&"{f6}{lt. blue}Delete:{f6}{cyan}[A]ll, [S]ome, [N]one Of Your Mail?{f6:2}{lt. blue}MD: {white}{pound}g1"
+	on -(an$="A")-(an$="S")*2 goto {:3278},{:3288}:goto {:3286}
+{:3278}
+	&"All{f6:2}{pound}q0":gosub 1901:if a=. then {:3274}
+	dr=2:gosub 1010:print# 15,"s"dr$+LEFT$("m."+na$,16):gosub 1060:i=-1:x=25
+	gosub 1025:IF id=1 THEN x=24:st(x)=.:gosub 1026
+	CLOSE 2:FOR i=1 TO rn:f%(i)=f%(i)+1:NEXT:&"{f6}Mail Deleted.{f6}":rn=.:GOTO {:3344}
+{:3286}
+	&"None{f6:2}":GOTO {:3366}
 {:3288}
-	&"Delete{f6}":gosub 1901:on a+1 goto {:3282}:gosub {:3014}:rn=rn-1:f%(i)=f%(i)+1:goto {:3302}
-{:3290}
-	on ms+1 goto {:3282}:&"File Away{f6:2}"
-	p$="Enter Filename":poke 53252,8:gosub 1005:on tr%+1 goto {:3042}:if an$="" then {:3282}
-	close 5:open 5,dv%,5,dr$+"m."+mid$(str$(id),2)+"."+an$+",s,w"
-	gosub 1012:if e%then:&:close 5:goto {:3282}
-	an$=j$:&,15:print# 5,"From: "fr$" (UID#"mid$(str$(b%),2)")"r$"Date: "an$"M"
-	print# 5,"Subj: "b$r$:for j=1 to kk-1:print# 5,tt$(j):&".":next:close 5:goto {:3282}
-{:3302}
-	next:close 2:close 3:a$="{f6}Updating..{f6}":a$=left$(na$,14):print# 15,"s"dr$"m."a$
-	if rn then print# 15,"r"dr$"m."a$"=temp":goto {:3308}
-	print# 15,"s"dr$"temp":gosub 1060:i=-1:x=25:gosub 1025
+	&"Some{f6:2}Selective Mail Delete:{f6:2}Creating Files...{f6}":tt$=na$
+	gosub 1079:IF a<50 THEN gosub {:3124}:GOTO {:3088}
+	tt$=na$:gosub {:3006}:CLOSE 3:OPEN 3,dv%,3,dr$+"temp,s,w":gosub 1012:IF e%THEN{:3040}
+	FOR i=1 TO 60:a%(i)=f%(i):NEXT:FOR i=1 TO rn:br=i:gosub {:3044}:kk=.:&,11:gosub 1372
+	gosub {:3002}:FOR j=1 TO 4:&,2,2:NEXT:tt$(.)=ed$(i):gosub {:3002}
+{:3298}
+	kk=kk+1:&,2,2:tt$(kk)=a$:gosub {:3034}:ON a GOTO {:3036}:IF a$<>"{up arrow}"THEN{:3298}
+{:3300}
+	&"{pound}q0{f6}(A,D,F,R,S,? For Help): ":gosub 1007
+	ON tr%+1 GOTO {:3042}:ON-(a$="A")-(a$="D")*2-(a$="F")*3 GOTO {:3042},{:3306},{:3308}
+	rs=.:ON-(a$="S")-(a$="{f2}")*2-(a$="R")*3 gosub {:3056},{:3338},{:3342}:ON rs GOTO {:3320}:GOTO {:3300}
+{:3306}
+	&"Delete{f6}":gosub 1901:ON a+1 GOTO {:3300}:gosub {:3014}:rn=rn-1:f%(i)=f%(i)+1:GOTO {:3320}
 {:3308}
-	if id=1 then gosub 1060:x=24:st(x)=rn:gosub 1026
-	close 2:goto {:3326}
-	&:goto {:3088}
-{:3314}
-	&"{f6}":&nn$(br):&" Has Been Deleted.{f6}":goto {:3088}
-{:3316}
-	&"Help{f6:2} A - Abort{f6} D - Delete{f6} E - Edit{f6} R - Read{f6} S - Save{f6}"
-	&" ? - This Menu{f6}":return
+	ON ms+1 GOTO {:3300}:&"File Away{f6:2}"
+	p$="Enter Filename":POKE 53252,8:gosub 1005:ON tr%+1 GOTO {:3042}:IF an$=""THEN{:3300}
+	CLOSE 5:OPEN 5,dv%,5,dr$+"m."+MID$(STR$(id),2)+"."+an$+",s,w"
+	gosub 1012:IF e%THEN:&:CLOSE 5:GOTO {:3300}
+	an$=j$:&,15:PRINT# 5,"From: "fr$"{$a0}(UID#"MID$(STR$(b%),2)")"r$"Date: "an$"M"
+	PRINT# 5,"Subj: "b$r$:FOR j=1 TO kk-1:PRINT# 5,tt$(j):&".":NEXT:CLOSE 5:GOTO {:3300}
 {:3320}
-	&"Help{f6:2} A - Abort{f6} D - Delete{f6} F - File Away{f6} R - Read{f6} S - Save"
-	&"{f6} ? - This Menu{f6}":return
-{:3324}
-	&"Read{f6}":goto {:3054}
+	NEXT:CLOSE 2:CLOSE 3:a$="{f6}Updating..{f6}":a$=LEFT$(na$,14):PRINT# 15,"s"dr$"m."a$
+	IF rn THEN PRINT# 15,"r"dr$"m."a$"="dr$"temp":GOTO {:3326}
+	PRINT# 15,"s"dr$"temp":gosub 1060:i=-1:x=25:gosub 1025
 {:3326}
-	&"{f6:2}Filing Receipts...":gosub 1079:on-(a<20)goto {:3088}:for i=1 to f%(.):a$="w"
-	if f%(i)<>1 or left$(ed$(i),1)<>"*" then {:3346}
-	gosub 1065:x=d%(i):gosub 1001:&,2,2:if a$<>nn$(i) then {:3346}
-	tt$=nn$(i):a$="w":gosub 1062:b=e%:if e%>0 and e%<>63 then close 2:&:goto {:3088}
-	if e%=63 then close 2:a$="a":gosub 1062
-	print# 2,"IMAGE"r$0r$d1$r$mid$(ed$(i),2)
-	print# 2,na$" (User #"str$(id)") Has"r$"Received Your E-Mail Sent On"
-	an$=dt$(i):&,15:print# 2,an$"M.  No Reply Sent."r$"{up arrow}":close 2
-	if b=.then gosub 1060:x=25:st(x)=st(x)+1:gosub 1026:close 2
-	if d%(i)=1 then gosub 1060:x=24:st(x)=st(x)+1:gosub 1026
-{:3346}
-	close 2:next
-{:3348}
-	on g%+1 goto {:3062}:r%=.:an$=pu$:a$=left$(an$,1):z$=left$(an$,2)
-	on-(a$="Q")-(a$="O")*2 goto 1811,1694:goto 1840
-{:3352}
-	if nf=.or(af%and 2^ac%)=.then rs=.:return
-	goto {:3370}
-{:3360}
-	if nf=.then return
-	gosub {:3364}:goto {:3372}
+	IF id=1 THEN gosub 1060:x=24:st(x)=rn:gosub 1026
+	CLOSE 2:GOTO {:3344}
+	&:GOTO {:3088}
+{:3332}
+	&"{f6}":&nn$(br):&" Has Been Deleted.{f6}":GOTO {:3088}
+{:3334}
+	&"Help{f6:2} A - Abort{f6} D - Delete{f6} E - Edit{f6} R - Read{f6} S - Save{f6}"
+	&" ? - This Menu{f6}":RETURN
+{:3338}
+	&"Help{f6:2} A - Abort{f6} D - Delete{f6} F - File Away{f6} R - Read{f6} S - Save"
+	&"{f6} ? - This Menu{f6}":RETURN
+{:3342}
+	&"Read{f6}":GOTO {:3054}
+{:3344}
+	&"{f6:2}Filing Receipts...":gosub 1079:ON-(a<20)GOTO {:3088}:FOR i=1 TO f%(.):a$="w"
+	IF f%(i)<>1 OR LEFT$(ed$(i),1)<>"*"THEN{:3364}
+	gosub 1065:x=d%(i):gosub 1001:&,2,2:IF a$<>nn$(i)THEN{:3364}
+	tt$=nn$(i):a$="w":gosub 1062:b=e%:IF e%>0 AND e%<>63 THEN CLOSE 2:&:GOTO {:3088}
+	IF e%=63 THEN CLOSE 2:a$="a":gosub 1062
+	PRINT# 2,"IMAGE"r$0r$d1$r$MID$(ed$(i),2)
+	PRINT# 2,na$"{$a0}(User #"STR$(id)") Has"r$"Received Your E-Mail Sent On"
+	an$=dt$(i):&,15:PRINT# 2,an$"M.  No Reply Sent."r$"{up arrow}":CLOSE 2
+	IF b=.THEN gosub 1060:x=25:st(x)=st(x)+1:gosub 1026:CLOSE 2
+	IF d%(i)=1 THEN gosub 1060:x=24:st(x)=st(x)+1:gosub 1026
 {:3364}
-	return
+	CLOSE 2:NEXT
 {:3366}
-	on nf goto {:3374}:return
-{:3368}
-	on-(nf=.or((af%and 2^ac%)=.)or left$(ed$(br),1)<>"!")goto 1603:goto {:3376}
+	ON g%+1 GOTO {:3062}:r%=.:an$=pu$:a$=LEFT$(an$,1):z$=LEFT$(an$,2)
+	ON-(a$="Q")-(a$="O")*2 GOTO 1811,1694:GOTO 1840
 {:3370}
-	rs=1:on-(z$="NS")goto {:3440}:rs=.:return
-{:3372}
-	goto {:3392}
+	IF nf=.OR(af%AND 2^ac%)=.THEN rs=.:RETURN
+	GOTO {:3384}
 {:3374}
-	goto {:3382}
-{:3376}
-	goto {:3456}
-	if ll%>40 then a$="nm.map 80":dr=2:goto 1075
-	dr=2:a$="nm.map":goto 1075
+	IF nf=.THEN RETURN
+	gosub {:3378}:GOTO {:3386}
+{:3378}
+	RETURN
+{:3380}
+	ON nf GOTO {:3388}:RETURN
 {:3382}
-	z%=val(mid$(tt$(.),2,4)):k$=mid$(dt$(a%),12)
+	ON-(nf=.OR((af%AND 2^ac%)=.)OR LEFT$(ed$(br),1)<>"!")GOTO 1603:GOTO {:3390}
+{:3384}
+	rs=1:ON-(z$="NS")GOTO {:3448}:rs=.:RETURN
+{:3386}
+	GOTO {:3406}
+{:3388}
+	GOTO {:3396}
+{:3390}
+	GOTO {:3466}
+	IF ll%>40 THEN a$="nm.map 80":dr=2:GOTO 1075
+	dr=2:a$="nm.map":GOTO 1075
+{:3396}
+	z%=VAL(MID$(tt$(.),2,4)):k$=MID$(dt$(a%),12)
 	b$=fr$:&"{f6}{lt. blue}Numb: {white}{pound}%a {pound}{back arrow}20{cyan}(NetMail){pound}{back arrow}39 {lt. blue}From: {white}{pound}$b":a=rc
-	b$=mid$(tt$(.),6,20):&"{f6}{lt. blue}Node: {white}#{pound}%z, {cyan}{pound}$b{pound}{back arrow}39 {lt. blue}Sent: {white}{$04}"+j$:a=a or rc
-	if k$<>""then:&"{f6}{lt. blue}Recv: {white}{$04}"+k$:a=a or rc
-	b$=mid$(tt$(.),26):&"{pound}{back arrow}39 {lt. blue}Subj: {white}{pound}$b{f6}{pound}q0":a=a or rc:return
-{:3392}
-	dr=2:a$="nm.config":gosub 1011:nn=.:if e% then {:3400}
-	input# 2,nn,af%,pn$,v$:close 2:if v$<"900610" then {:3400}
-	pr=-1:dr=5:gosub 1010:a$=dr$+"++ path":&,7,dv%,2:gosub 1012:if e% then {:3400}
-	dr=2:gosub 1010:a$=dr$+"nm.nodelist":&,16:gosub 1012:if e%=0 then return
-{:3400}
-	&:close 2:nf=0:return
-{:3402}
-	&"{f6}":gosub {:3412}:p$="{f6}Destination Node":gosub 1006
-{:3404}
-	a%=val(an$):a$=an$:if a%<1 then:&,16,2
-	if a%<1 then:&"{f6}No Node Found.{f6}":tt$="":return
-	x=a%:gosub {:3430}:tt$=a$+"/":x=nn:gosub {:3430}:tt$=tt$+a$
-	return
-{:3412}
-	dr=2:a$="nm.nodes":gosub 1011:input# 2,n
-	for i=1 to n:a%=i:x=i+1:gosub 1001:input# 2,a$,b$,b$,c$,b
-	if(b and 1)=0 then:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
-	i=i+rc*n:next:close 2:return
+	b$=MID$(tt$(.),6,20):&"{f6}{lt. blue}Node: {white}#{pound}%z, {cyan}{pound}$b{pound}{back arrow}39 {lt. blue}Sent: {white}{$04}"+j$:a=a OR rc
+	IF k$<>""THEN:&"{f6}{lt. blue}Recv: {white}{$04}"+k$:a=a OR rc
+	b$=MID$(tt$(.),26):&"{pound}{back arrow}39 {lt. blue}Subj: {white}{pound}$b{f6}{pound}q0":a=a OR rc:RETURN
+{:3406}
+	dr=2:a$="nm.config":gosub 1011:nn=.:IF e%THEN{:3414}
+	INPUT# 2,nn,af%,pn$,v$:CLOSE 2:IF v$<"900610"THEN{:3414}
+	pr=-1:dr=5:gosub 1010:a$=dr$+"++ path":&,7,dv%,2:gosub 1012:IF e%THEN{:3414}
+	dr=2:gosub 1010:a$=dr$+"nm.nodelist":&,16:gosub 1012:IF e%=0 THEN RETURN
+{:3414}
+	&:CLOSE 2:nf=0:RETURN
+{:3416}
+	&"{f6}":gosub {:3426}:p$="{f6}Destination Node":gosub 1006
+{:3418}
+	a%=VAL(an$):a$=an$:IF a%<1 THEN:&,16,2
+	IF a%<1 THEN:&"{f6}No Node Found.{f6}":tt$="":RETURN
+	x=a%:gosub {:3438}:tt$=a$+"/":x=nn:gosub {:3438}:tt$=tt$+a$
+	RETURN
 {:3426}
-	&"{f6}Aborted.{f6}":return
-{:3428}
-	x=nn
-{:3430}
-	dr=2:a$="nm.nodes":gosub 1011:x=x+1:gosub 1001:&,2,2:close 2:return
-{:3432}
-	f$="nm.list":gosub {:3436}:print# 2,tt$:close 2
-	f$="nm.sylog":gosub {:3436}:print# 2,na$r$d1$r$tt$:close 2:return
+	dr=2:a$="nm.nodes":gosub 1011:INPUT# 2,n
+	FOR i=1 TO n:a%=i:x=i+1:gosub 1001:INPUT# 2,a$,b$,b$,c$,b
+	IF(b AND 1)=0 THEN:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:RETURN
+{:3434}
+	&"{f6}Aborted.{f6}":RETURN
 {:3436}
-	dr=2:a$=f$+",s,w":gosub 1011:if e%then a$=f$+",s,a":gosub 1011:return
-	return
+	x=nn
+{:3438}
+	dr=2:a$="nm.nodes":gosub 1011:x=x+1:gosub 1001:&,2,2:CLOSE 2:RETURN
 {:3440}
-	p$="{f6}Send NetMail To":gosub 1006:nn$=an$:if an$="" then {:3426}
-	p$="{f6}Subject":q=20:gosub {:3466}:gosub 1005:l$=an$:gosub {:3402}:if tt$="" then {:3426}
+	f$="nm.list":gosub {:3444}:PRINT# 2,tt$:CLOSE 2
+	f$="nm.sylog":gosub {:3444}:PRINT# 2,na$r$d1$r$tt$:CLOSE 2:RETURN
 {:3444}
-	tt$(.)="!"+left$(str$(nn)+"    ",4):j$="                    "
-	tt$(.)=tt$(.)+left$(bn$+j$,20)+"["+l$+"]":gosub 1604:if kk=. then {:3426}
-	gosub {:3428}:if lg then fd$="NetMail":gosub {:3468}
+	dr=2:a$=f$+",s,w":gosub 1011:IF e%THEN a$=f$+",s,a":gosub 1011:RETURN
+	RETURN
+{:3448}
+	p$="{f6}Send NetMail To":gosub 1006:nn$=an$:IF an$=""THEN{:3434}
+	p$="{f6}Subject":q=20:gosub {:3476}:gosub 1005:l$=an$:gosub {:3416}:IF tt$=""THEN{:3434}
+{:3452}
+	tt$(.)="!"+LEFT$(STR$(nn)+"    ",4):j$="                    "
+	tt$(.)=tt$(.)+LEFT$(bn$+j$,20)+"["+l$+"]":gosub 1604:IF kk=.THEN{:3434}
+	gosub {:3436}:IF lg THEN fd$="NetMail":gosub {:3478}
 	&"{f6}Filing NetMail...":f$="nm.M."+tt$:tt$=tt$+"/A/"+f$
-	gosub {:3436}:print# 2,nn$r$na$r$0;r$d1$
-	for i=0 to kk-1:print# 2,tt$(i):next:print# 2,"{up arrow}":close 2
-	gosub {:3432}:&"Done!{f6}":return
-{:3456}
-	b$=nn$(br):&"{f6:2}{lt. blue}Reply To {f5}{white}{pound}$b{lt. blue}{f5}{pound}q0? {pound}g1":a=-(an$="Y"or an$="R"):gosub 1904
-	on a+1 goto 1603:p$="Subject":q=20:gosub {:3466}:gosub 1005:kk=val(mid$(ed$(br),2,4))
-	if an$=""then an$=mid$(ed$(br),27,len(ed$(br))-27):&"Subject: {pound}v7{f6}"
-	l$=an$:an$=str$(kk):gosub {:3404}:on-(tt$="")goto {:3426}:nn$=nn$(br):goto {:3444}
-	close 2:&"Unknown Node #!{f6}":return
+	gosub {:3444}:PRINT# 2,nn$r$na$r$0;r$d1$
+	FOR i=0 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	gosub {:3440}:&"Done!{f6}":RETURN
 {:3466}
-	poke 53252,q:return
-{:3468}
-	a$="a":b$="em log":gosub 1027:if e%then a$="w":gosub 1027:print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}{cyan}{pound}{back arrow}14E-Mail Log{f6}{blue}{pound}o{$c0}{pound}o{$c0}"
+	b$=nn$(br):&"{f6:2}{lt. blue}Reply To {f5}{white}{pound}$b{lt. blue}{f5}{pound}q0? {pound}g1":a=-(an$="Y"OR an$="R"):gosub 1904
+	ON a+1 GOTO 1603:p$="Subject":q=20:gosub {:3476}:gosub 1005:kk=VAL(MID$(ed$(br),2,4))
+	IF an$=""THEN an$=MID$(ed$(br),27,LEN(ed$(br))-27):&"Subject: {pound}v7{f6}"
+	l$=an$:an$=STR$(kk):gosub {:3418}:ON-(tt$="")GOTO {:3434}:nn$=nn$(br):GOTO {:3452}
+	CLOSE 2:&"Unknown Node #!{f6}":RETURN
+{:3476}
+	POKE 53252,q:RETURN
+{:3478}
+	a$="a":b$="em log":gosub 1027:IF e%THEN a$="w":gosub 1027:PRINT# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}{cyan}{pound}{back arrow}14E-Mail Log{f6}{blue}{pound}o{$c0}{pound}o{$c0}"
 	ad$=nn$:hr$=d1$:&,15
-	print# 2,"{cyan}Type:{white} "+fd$
-	print# 2,"{cyan}From:{white} "+na$
-	if fd$="NetMail"then ad$=ad$+" @ "+left$(tt$,3)
-	print# 2,"{cyan}To  : {white}"+ad$
-	print# 2,"{cyan}On  : {white}{$04}"+hr$
-	print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}"
-	close 2:return
-	copr.1994 new image 02/04/95 06:44p
-	rem +.em
+	PRINT# 2,"{cyan}Type:{white} "+fd$
+	PRINT# 2,"{cyan}From:{white} "+na$
+	IF fd$="NetMail"THEN ad$=ad$+" @ "+LEFT$(tt$,3)
+	PRINT# 2,"{cyan}To  : {white}"+ad$
+	PRINT# 2,"{cyan}On  : {white}{$04}"+hr$
+	PRINT# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}"
+	CLOSE 2:RETURN
+{:3495}
+	&"Forward{f6}":GOTO {:3497}
+{:3496}
+	&"Again{f6}":GOTO {:3112}
+{:3497}
+	&"{f6}Feature not fully Implemented":GOTO {:3118}
+{:3500}
+	&"{f6} Read This Month's NetLog{f6}":dr=2:l$="nm.log "+MID$(d1$,4,2):a$=l$+",s,r"
+	gosub 1011:a%=.:sh=.:IF e%THEN{:3522}
+{:3504}
+	a%=a%+1:INPUT# 2,a$,b$:&"{f6}#{pound}%a: {pound}$a{f6}    {$04}"+RIGHT$(b$,11)
+	IF LEN(b$)>11 THEN:&"{f6} To {$04}"+LEFT$(b$,11)
+	&"{f6}Files Transferred:":&,3,2:IF st=.AND sh=.THEN{:3504}
+	GOTO {:3520}
+{:3512}
+	&"{f6}Read Net Sysop Log{f6}":dr=2:l$="nm.sylog":a$=l$+",s,r":gosub 1011:a%=.:sh=.
+	IF e%THEN{:3522}
+{:3516}
+	a%=a%+1:&,2,2:f$=a$:&,2,2:b$=a$:&,2,2:c$=a$:a$=f$:s=st
+	&"{f6}#{pound}%a: Sent By {f5}{pound}$a{f5}{f6} On {$04}"+b$:&"{f6} File:{pound}$c{f6}":IF s+sh=.THEN{:3516}
+{:3520}
+	CLOSE 2:&"{f6}Delete?":gosub 1902:ON a+1 GOTO {:3088}:a$=l$:gosub 1024
+{:3522}
+	CLOSE 2:GOTO {:3088}
+	REM fixes 180824 by x-tec
+	copr.1995 NEW image 04/22/95 04:38p

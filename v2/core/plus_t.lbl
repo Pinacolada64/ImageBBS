@@ -516,12 +516,12 @@
 ' quit
 ' trap unsaved phonebook changes:
 	f1=.:if tz then f$="Save":gosub {:sub.prompt_unsaved_changes}:if a then gosub {:sub.save_phonebook}
-' hang up here does not fix the issue
+' FIXME: hang up here does not fix the issue
 '	&"{f6}Hanging Up...":x=3:gosub 4000:x=3:gosub {:sub.delay}
 ' 3244: reload e.fkeys
 	gosub {:3244}:on -(i% or id=1) goto {:3572}:poke 53248,0:ac%=16:mf=kk:a$="lo":goto 1016
 {:3572}
 	gosub 1073:goto 1811
 {crunch:off}
-	rem COPR. 1991 NEW IMAGE
-	rem +.T - X-TEC & PINACOLADA - 2/06/2018
+	rem copr. 1991 new image
+	rem +.t - x-tec & pinacolada - 2/06/2018

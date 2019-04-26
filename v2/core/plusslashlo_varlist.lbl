@@ -1,11 +1,13 @@
 ' fixed: displays 'a$ = "a$"'
-' fixme: gets into a loop (space aborts) when displaying integer variables
+' FIXME: gets into a loop (space aborts) when displaying integer variables
 
 {number:4000}
-	REM +/LO.VARLIST
+{alpha:alt}
+{step:2}
+	rem +/lo.varlist 4.1 pinacolada
 	poke 53248,1:gosub {:4004}:poke 53248,0:return
 {:4004}
-	&"{clear}{f6} Variable List 4.0{f6:2}":x=peek(45)+peek(46)*256:y=x:kk=.
+	&"{clear}{f6} Variable List 4.1{f6:2}":x=peek(45)+peek(46)*256:y=x:kk=.
 	&" Simple Variables:{f6}":sh=.
 {:4008}
 	a$=chr$(peek(x)and 127):if(peek(x+1)and 127)then a$=a$+chr$(peek(x+1)and 127)
@@ -58,4 +60,4 @@
 	b$=b$+an$:next
 {:4066}
 	&"{f5}":&b$:&"{f5}":return
-	REM +/LO.VARLIST
+	rem +/lo.varlist

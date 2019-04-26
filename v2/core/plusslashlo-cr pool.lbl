@@ -1,0 +1,32 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	ON-(cr<10 OR ct%>1)GOTO {:4006}
+	&"{f6}{green}Join The Credit Pool? ":GOSUB 1907:ON-(a=1)GOTO {:4014}:GOTO {:4006}
+{:4004}
+	a$="e.cr.pool"+STR$(p)+",s,r":dr=3:GOSUB 1011:IF e%THEN GOSUB {:4034}
+{:4006}
+	RETURN
+{:4008}
+	a$="e.cr.pool 1":dr=3:GOTO 1023
+{:4010}
+	a$="e.cr.pool 2,s,a":GOSUB 1011:IF e%THEN{:4038}
+	RETURN
+{:4014}
+	a=.:b=.:c=.:d=.:n=.:l=.
+	&"{f6}{gray3}Instructions? ":GOSUB 1902:IF a THEN a$="s.pool":dr=1:GOSUB 1075
+	&"{f6}{cyan}You Have {white}":&STR$(cr):&" {cyan}Credits.":POKE 53252,3
+{:4020}
+	&"{f6}{lt. green}({f5}Q{f5} Quits:100 Max){f6}How Many Credits? {pound}i1":ON tr%+1 GOTO 1603:IF an$="Q"THEN RETURN
+	a=INT(VAL(an$)):IF a<10 OR a>cr OR a>100 THEN:&"{f6}Sorry, Not Acceptable":GOTO {:4020}
+	p=1:GOSUB {:4004}:&,2,2:n=VAL(a$):&,2,2:b=VAL(a$):CLOSE 2
+	&"{f6:2}Present Pool Stands At":&STR$(b)
+	a%=a/10:&"{f6}You Have {pound}%a Chances To Win"
+	c=a+b:&"{f6}New Value = ":&STR$(c):&"{f6:2}Good Luck!!{f6}":cr=cr-a
+	GOSUB {:4008}:PRINT# 2,n+a%:PRINT# 2,c:CLOSE 2:GOSUB {:4010}:FOR i=1 TO a%:PRINT# 2,na$:NEXT:CLOSE 2:RETURN
+{:4034}
+	dr=3:a$="e.cr.pool 1":GOSUB 1023:PRINT# 2,0:PRINT# 2,0:a$="e.cr.pool 1,s,r"
+	GOSUB 1011:RETURN
+{:4038}
+	dr=3:a$="e.cr.pool 2":GOSUB 1023:RETURN
+	rem "+/lo-cr pool" copr. 1990 FREd dart 12-26-90

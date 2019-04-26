@@ -1,0 +1,69 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-serial" 05-14-90 10:20 pm
+	d1%=8:d2%=2:mx=999
+	dr=0:a$="or.serial":GOSUB 1011:x=id:GOSUB 1001:&,2,2:CLOSE 2
+	vf=1:ON-(LEN(a$)=5)GOTO {:4026}:vf=0:IF LEFT$(a$,1)<>"*"THEN{:4014}
+	lp=1:&"{f6:2}Your serial number is {pound}$a. This has not yet been verified by "
+	lp=1:&"New Image Software, but will be within 24 hours.{f6}"
+	a$=MID$(a$,2):GOTO {:4026}
+{:4014}
+	POKE 53252,5:&"Enter your Image BBS Serial #: {pound}i1":IF an$=""OR tr%<1 THEN RETURN
+	z$=LEFT$(an$,1):IF z$<>"G"AND z$<>"F"AND z$<>"E"THEN{:4060}
+	a=VAL(MID$(an$,2)):IF a<1 OR a>999 THEN{:4060}
+	dr=0:f$="or.serial.add,s":a$=f$+",w":GOSUB 1011:a$=f$+",a":GOSUB 1011
+	PRINT# 2,id:CLOSE 2
+	dr=0:a$="or.serial":GOSUB 1011:x=id:GOSUB 1001:PRINT# 2,"*"an$:CLOSE 2:a$=an$
+{:4026}
+	&"{f6:2}Image Owner: {pound}$a{f6:2}":sn=VAL(MID$(a$,2))
+	dr=0:a$="or.orders":GOSUB 1011:x=sn:GOSUB 1001:n=0
+{:4030}
+	&,2,2:IF a$<>"{up arrow}"THEN n=n+1:tt$(n)=a$:ON-(st=0)GOTO {:4030}:CLOSE 2
+	IF n=0 THEN lp=1:&"{f6}You have no product orders currently on file.{f6}":GOTO {:4036}
+	FOR i=1 TO n:a$=tt$(i):GOSUB {:4038}:NEXT
+{:4036}
+	ON vf GOSUB {:4064}:RETURN
+{:4038}
+	an$="1"+LEFT$(a$,6)+"1200":&,15:b$="Ordered "+LEFT$(an$,12)
+	e$=MID$(a$,7,6):an$="1"+e$+"1200":&,15:c$="Not Yet Shipped"
+	IF e$<>"000000"THEN c$="Shipped "+LEFT$(an$,12)
+	d$=MID$(a$,19):e$=MID$(a$,13,1)
+	IF e$="C"THEN e$="C.O.D."
+	IF e$="P"THEN e$="Paid Check/MO"
+	IF e$="R"THEN e$="Replacement"
+	IF e$="D"THEN e$="Dealer"
+	IF e$="F"THEN e$="Free"
+	&"{pound}$d [{pound}$e]:{f6} {pound}$b{f6} {pound}$c{f6}"
+	RETURN
+{:4060}
+	lp=1:&"Sorry, that is not a valid serial #. Examples: G0001, G0900, G0117."
+	GOTO {:4014}
+{:4064}
+	dr=0:a$="or.owners.fields,s,r":GOSUB 1011:n=0
+{:4066}
+	&,2,2:IF a$<>"{up arrow}"THEN n=n+1:ed$(n)=a$:IF st=0 THEN{:4066}
+	CLOSE 2:dr=0:a$="or.owners":GOSUB 1011:x=sn:GOSUB 1001
+	FOR i=1 TO 10:tt$(i)="{f2}":NEXT:i=0:tz=0
+{:4072}
+	i=i+1:&,2,2:tt$(i)=a$:ON-(st=0 AND a$<>"{up arrow}")GOTO {:4072}
+{:4074}
+	&"{clear}{f6:2}Image Owners Database:{f6:2}":a$=tt$(1)
+	&"Serial # {pound}$a{f6}":a$=tt$(3):b$=tt$(2)
+	&"Name:    {pound}$a {pound}$b{f6}":a$=tt$(4)
+	&"Address: {pound}$a{f6}":a$=tt$(5):b$=tt$(6):c$=tt$(7)
+	&"         {pound}$a, {pound}$b  {pound}$c{f6:2}":a$=tt$(9):b$=tt$(10):c$=tt$(8)
+	&"Voice#:  {pound}$a{f6}BBS#:    {pound}$b{f6}BBS Name:{pound}$c{f6:3}"
+	&"Is all of this correct? ":GOSUB 1902:ON tr%+1 GOTO {:4096}:IF a THEN{:4096}
+	&"{f6}(Press RETURN if correct){f6}"
+	FOR i=2 TO n:a$=ed$(i):pl=VAL(LEFT$(a$,1)):p$=MID$(a$,4)
+	POKE 53252,VAL(MID$(a$,2,2)):w$=tt$(i):&,1,32:IF an$<>""THEN tt$(i)=an$:tz=1
+	&"{f6}":NEXT:GOTO {:4074}
+{:4096}
+	IF tz=0 THEN RETURN
+	dr=0:f$="or.owners.chg,s":a$=f$+",w":GOSUB 1011:IF e%THEN a$=f$+",a":GOSUB 1011
+	FOR i=1 TO n:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	lp=1:&"{f6}Your changes have been filed... the changes will be added to the "
+	lp=1:&"database within 24 hours.{f6}":RETURN
+	REM
+

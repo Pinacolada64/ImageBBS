@@ -1,0 +1,30 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&,27,2:fd=10:bl=10:DIM s%(8+bl,fd):tz=0:GOSUB {:4002}:&,28,2:RETURN
+{:4002}
+	dr=3:a$="e.U/D":GOSUB 1011:IF e%THEN:&"{f6}Error opening UD file{f6:2}{pound}w1":RETURN
+	&,2,2:bz=VAL(a$):FOR x=2 TO bz+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:tt$(x-1)=a$:NEXT
+	CLOSE 2:tt$(0)="None":a$=dr$+"e.filelists":&,60,2,0,s%(0,0),a$,dv%:GOSUB 1012
+	s$="                                        "
+	FOR i=1 TO fd:&,60,1,16,s%(1,i),b$:IF s%(0,i)=0 OR b$=""THEN{:4038}
+	dr=3:a$="e.U/D":GOSUB 1011:x=s%(0,i)+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:&,2,2
+	&,2,2:d1%=VAL(a$):&,2,2:d2%=VAL(a$):CLOSE 2
+	dr=0:GOSUB 1010:PRINT# 15,"s"dr$b$:a$=b$+",s,w":GOSUB 1011
+	PRINT# 2,"{white}File list: {cyan}{$04}"d1$:dr=4:GOSUB 1009:CLOSE 16:OPEN 16,dv%,15
+	FOR j=1 TO bl:a=s%(8+j,i):IF a=0 THEN{:4036}
+	PRINT# 2,"{lt. blue}"tt$(a)r$
+	CLOSE 3:OPEN 3,dv%,3,dr$+"d.u/d"+STR$(a)+",s,r":INPUT# 16,e%
+	k=1:ON-(e%<>0)GOTO {:4034}:&"UD{pound}!a"
+	&,2,3:a=VAL(a$):ON-(a=0)GOTO {:4034}:FOR k=1 TO a:&,2,3:b=VAL(a$):&,2,3:&,2,3
+	d$=MID$(a$,4,2)+"/"+MID$(a$,6,2)+"/"+MID$(a$,2,2):f$=MID$(a$,23)
+	f$=LEFT$(f$,LEN(f$)-2)+","+RIGHT$(f$,1):&,2,3:b$=a$:&,2,3:&,2,3:n=VAL(a$)
+	PRINT# 2,"{white}"RIGHT$(s$+STR$(b),4);" {cyan}";LEFT$(f$+s$,20);" {white}"d$:REM print#2,b$
+	&".":NEXT:&"{f6}"
+{:4034}
+	PRINT# 2,r$;"{white}"k-1"Files"r$:CLOSE 3
+{:4036}
+	NEXT:CLOSE 2
+{:4038}
+	NEXT:RETURN
+	rem "+/lo/filelist" automaint

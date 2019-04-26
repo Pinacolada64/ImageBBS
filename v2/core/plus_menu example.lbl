@@ -1,5 +1,7 @@
-{number:3000}
-	rem menu demo/example program
+{{number:3000}
+{step:2}
+{alpha:alt}
+	rem "+.menu example" - graphic menu demo/example program
 	&,52,44,3:mm=a%:&,52,45,3:mm=mm and a%: rem check litebar verify both =1
 	dr=5:gosub 1010:a$=dr$+"++ menu2":&,7,dv%,2: rem load in protocol
 {:3006}
@@ -12,7 +14,7 @@
 	&,16,.,34,m%(.,3),"C","","Option C"
 	&,16,.,34,m%(.,4),"D","","Quit"
 	rem setup header
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image {$c2:2}S V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image BBS V2.0{pound}{back arrow}37{blue}  {f6}"
 	&"{rvrs on} {cyan}        Menu Example Program{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
 	rem enable menu
 	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"

@@ -2,9 +2,9 @@
 {step:2}
 {crunch:on}
 {alpha:alt}
-	REM +/LO.AUTOMAINT - AUTOMAINT MAIN MODULE
+	rem "+/lo.automaint - AutoMaint main moodule"
 ' enable local mode (no modem output), poke 2042,0 turns off idle screen clock?
-	poke 53248,1:poke 2042,.:z$=left$(am$,1):&"“{clear}Image v2.0 Auto-Maintenance{f6:2}"
+	poke 53248,1:poke 2042,.:z$=left$(am$,1):&"{clear}Image v2.0 Auto-Maintenance{f6:2}"
 	gosub {:4094}:REM UPDATE DAILY STATS
 ' closes file
 	gosub {:4078}:REM TOTALS AT END OF LOG
@@ -17,7 +17,9 @@
 ' todo: move extra modules, finished message from +.lo here
 	close 2:poke 53248,.:return
 {:4018}
-	&"{f6}{yellow}Reading {f5}e.data{f5}":gosub 1063:if e%then close 2:&"{f6}{rvrs on}{lt. red}{f5}e.data{f5} Not Found{f6}":return
+	&"{f6}{yellow}Reading {f5}e.data{f5}":gosub 1063
+' TODO: Log to e.log:
+	if e%then close 2:&"{f6}{rvrs on}{lt. red}{f5}e.data{f5} Not Found{f6}":return
 	x=1:gosub 1001:input# 2,ca:x=12:gosub 1001:&,2,2:ur=val(a$)-1
 	x=17:gosub 1001:input# 2,d3$:x=18:gosub 1001:input# 2,pp$
 	x=19:gosub 1001:input# 2,z$:x=20:gosub 1001:input# 2,p1%,p2%,p3%
@@ -87,5 +89,5 @@
 	a$="":for i=12 to 22:a$=a$+str$(st(i))+r$:next:print# 2,d1$r$a$;:close 2
 	return
 {crunch:off}
-	REM +/LO.AUTOMAINT - 1/16/2018
+	REM "+/lo.automaint" - 1/16/2018
 	copr. 1990 new image 12-26-90
