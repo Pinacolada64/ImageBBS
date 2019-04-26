@@ -1,0 +1,29 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOSUB 2100:GOSUB {:3002}:GOTO 1812
+{:3002}
+	dr=5:GOSUB 1010:a$=dr$+"++ netlist":&,7,dv%,2:GOSUB 1012:IF e%THEN:&:RETURN
+	GOSUB {:3100}:rn=i-1:IF rn=0 THEN:&"No netsubs Defined.":RETURN
+{:3006}
+	&"{f6:2}":FOR i=1 TO rn:a%=i:a$=nn$(i):&"{pound}#2{pound}# {pound}%a. {pound}$a{f6}":NEXT
+	POKE 53252,2:&"{f6}Which One: {pound}i1":ns=VAL(an$):IF ns<1 OR ns>rn THEN RETURN
+	GOSUB {:3012}:GOTO {:3006}
+{:3012}
+	a$=dr$+"nm.netsub"+STR$(ns):&,16,2,dv%:IF a%(0)=0 THEN:&"No Subs{f6}":RETURN
+	dr=4:GOSUB 1010:&,16:n$=a$:f$=dr$+"d.netsubs":&"{f6}Opening {f5}{pound}$f{f5}"
+	CLOSE 3:OPEN 3,dv%,3,f$+",s,w":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,f$+",s,a":GOSUB 1012
+	IF e%THEN:&:RETURN
+	FOR i=1 TO a%(0):CLOSE 2:OPEN 2,dv%,2,dr$+"d.sub"+STR$(a%(i))
+	GOSUB 1012:IF e%THEN{:3030}
+	a%=a%(i):&"{f6}Reading Sub {pound}%a":&,2,2:n=VAL(a$)
+	IF n THEN FOR x=2 TO n+1:GOSUB 1001:&,2,2:PRINT# 3,n$":"a$:&".":NEXT
+{:3030}
+	CLOSE 2:NEXT:RETURN
+{:3100}
+	&"Reading NetSubs":dr=2:GOSUB 1010
+	FOR i=1 TO 60:a$=dr$+"nm.netsub"+STR$(i):&,16,2,dv%:GOSUB 1012:IF e%THEN RETURN
+	&".":&,16:nn$(i)=a$:NEXT:RETURN
+	rem +.scan netsub
+

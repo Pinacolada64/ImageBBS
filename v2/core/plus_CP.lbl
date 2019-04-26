@@ -5,26 +5,26 @@
 	&"{f6} Mods by {blue}Wa{lt. blue}nd{cyan}er{white}er{f6}{green} Fixes {white}18 Feb. 2018 {green}By {white}X-Tec{f6}"
 	a=2:GOSUB 1736:&,5:v=lp
 {:3004}
-	GOSUB{:3118}:&"{f6:2} {white}[C]{cyan}opy Files{f6} {white}[D]{cyan}irectory"
+	GOSUB {:3118}:&"{f6:2} {white}[C]{cyan}opy Files{f6} {white}[D]{cyan}irectory"
 	&"{f6} {white}[M]{cyan}ulti-Scratch{f6} {white}[S]{cyan}end Disk Command{f6} {white}[Q]{cyan}uit{f6:2}"
-	p$="Copy":GOSUB 1006:ON-(an$="C")-(an$="D")*2-(an$="S")*3 GOTO{:3024},{:3012},{:3120}
-	ON-(an$="M")-(an$="Q"OR an$="")*2 GOTO{:3140},1811:GOTO{:3004}
+	p$="Copy":GOSUB 1006:ON-(an$="C")-(an$="D")*2-(an$="S")*3 GOTO {:3024},{:3012},{:3120}
+	ON-(an$="M")-(an$="Q"OR an$="")*2 GOTO {:3140},1811:GOTO {:3004}
 {:3012}
-	f=8:d$="":b%=8:GOSUB{:3134}:IF b%>6 AND b%<33 THEN f=b%
-	f$="0:":GOSUB{:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
-	a=f:GOSUB{:3132}:IF a THEN{:3116}
-	GOSUB{:3138}:GOSUB 1500:IF an$=""THEN an$="*"
+	f=8:d$="":b%=8:GOSUB {:3134}:IF b%>6 AND b%<33 THEN f=b%
+	f$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
+	a=f:GOSUB {:3132}:IF a THEN{:3116}
+	GOSUB {:3138}:GOSUB 1500:IF an$=""THEN an$="*"
 	&"{f6}":OPEN 2,f,0,"$"+f$+an$:&,8,2:CLOSE 2
 {:3022}
-	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off}{pound}g1":GOTO{:3004}
+	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off}{pound}g1":GOTO {:3004}
 {:3024}
-	a9$="":s1=.:c1=.:s8=.:c8=.:d$="Source":b%=8:f=8:GOSUB{:3134}:IF b%>6 AND b%<33 THEN f=b%
-	f$="0:":GOSUB{:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
-	d$="Target":b%=8-(f=8):g=b%:GOSUB{:3134}:IF b%>6 AND b%<33 THEN g=b%
-	g$="0:":GOSUB{:3136}:a=VAL(an$):IF a>.THEN g$=MID$(STR$(a),2)+":"
+	a9$="":s1=.:c1=.:s8=.:c8=.:d$="Source":b%=8:f=8:GOSUB {:3134}:IF b%>6 AND b%<33 THEN f=b%
+	f$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
+	d$="Target":b%=8-(f=8):g=b%:GOSUB {:3134}:IF b%>6 AND b%<33 THEN g=b%
+	g$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN g$=MID$(STR$(a),2)+":"
 	d1%=g:d2%=VAL(g$):dr=.:GOSUB 1079:lp=1:&"{f6}Blocks Free: "+STR$(a):kk=a
-	IF a<3 THEN GOSUB 1920:GOTO{:3004}
-	GOSUB{:3138}:GOSUB 1500:IF an$=""THEN an$="*"
+	IF a<3 THEN GOSUB 1920:GOTO {:3004}
+	GOSUB {:3138}:GOSUB 1500:IF an$=""THEN an$="*"
 	t$=an$:IF tr%<1 THEN 1811
 {:3040}
 	t=.
@@ -34,53 +34,53 @@
 	&"{f6} [8] Skip Eight Files{f6} [R]emaining Files Same As Last{f6:2}"
 	OPEN 1,f,0,"$"+f$+t$:GET#1,a$,a$:&,8,1,1:lp=1:&:&"{f6}"
 {:3050}
-	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO{:3090}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:3090}
 	a=VAL(a$):c$=MID$(a$,8):a$=MID$(a$,26,1)
 	FOR i=2 TO 17:IF MID$(c$,i,1)=qt$THEN c$=LEFT$(c$,i-1)
 	NEXT:tt$=c$+","+a$:b$=a$:IF s THEN{:3090}
-	IF s8 THEN c8=c8+1:IF c8<>8 THEN a%=a:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO{:3050}
-	IF s1 THEN c1=c1+1:IF c1<>143 THEN a%=a:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO{:3050}
+	IF s8 THEN c8=c8+1:IF c8<>8 THEN a%=a:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO {:3050}
+	IF s1 THEN c1=c1+1:IF c1<>143 THEN a%=a:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO {:3050}
 	s1=.:c1=.:c8=.:s8=.:a%=a:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25"
-	IF tz+a>kk THEN:&"Too Big!{f6}":GOTO{:3086}
-	IF b$="r"THEN:&"(Rel File){f6}":GOTO{:3086}
-	IF a9$="R"THEN x=x9:GOTO{:3072}
+	IF tz+a>kk THEN:&"Too Big!{f6}":GOTO {:3086}
+	IF b$="r"THEN:&"(Rel File){f6}":GOTO {:3086}
+	IF a9$="R"THEN x=x9:GOTO {:3072}
 	&"?: {pound}g1"
 	x=-(an$="Y")-(an$="N")*2-(an$="S")*3-(an$="A")*4-(an$="8")*5-(an$="1")*6
-	GOSUB{:3188}
+	GOSUB {:3188}
 {:3072}
 	IF x=.THEN x=2
 	lp=1:&MID$("     Yes  No   StartAbortSkip Skip ",x*5+1,5)
-	IF x=1 THEN t=t+1:tz=tz+a%:tt$(t)=tt$:IF t>143 THEN:&"Limit Reached!{f6}":x=3:GOTO{:3090}
+	IF x=1 THEN t=t+1:tz=tz+a%:tt$(t)=tt$:IF t>143 THEN:&"Limit Reached!{f6}":x=3:GOTO {:3090}
 	IF x=3 THEN{:3090}
-	IF x=4 THEN t=.:GOTO{:3090}
-	IF kk-tz<3 THEN:&"No More Room!{f6}":GOTO{:3090}
+	IF x=4 THEN t=.:GOTO {:3090}
+	IF kk-tz<3 THEN:&"No More Room!{f6}":GOTO {:3090}
 	IF x=5 THEN s8=1:x9=.
 {:3086}
 	IF x=6 THEN s1=1:x9=.
-	IF s=. then {:3050}
+	IF s=. THEN {:3050}
 {:3090}
-	CLOSE 1:a9$="":IF t=.THEN GOSUB 1920:GOTO{:3004}
-	&"{f6}":a=f:GOSUB{:3132}:ON-(a<>.)GOTO{:3116}:a=g:GOSUB{:3132}:ON-(a<>.)GOTO{:3116}
+	CLOSE 1:a9$="":IF t=.THEN GOSUB 1920:GOTO {:3004}
+	&"{f6}":a=f:GOSUB {:3132}:ON-(a<>.)GOTO {:3116}:a=g:GOSUB {:3132}:ON-(a<>.)GOTO {:3116}
 {:3094}
-	GOSUB{:3202}
+	GOSUB {:3202}
 {:3096}
 	&"{f6}[C]opy  [A]bort  [R]e-Select{f6}[S]elect More Files{f6}[D]elete Some Files :"
-	&"{pound}g1{pound}v7":ON-(an$="C")-(an$="A")*2-(an$="R")*3 GOTO{:3100},{:3184},{:3186}:GOTO{:3192}
+	&"{pound}g1{pound}v7":ON-(an$="C")-(an$="A")*2-(an$="R")*3 GOTO {:3100},{:3184},{:3186}:GOTO {:3192}
 {:3100}
 	CLOSE 15:OPEN 15,f,15:OPEN 14,g,15
 	FOR i=1 TO t:c$=tt$(i):IF c$="[Deleted]" then {:3112}
 	&"{f6}Copying:{f5}{pound}$c{f5}..."
-	OPEN 3,f,3,f$+c$+",r":INPUT# 15,a$,b$:IF a$<>"00"THEN:&"{pound}{back arrow}32{pound}$b!":GOTO{:3112}
+	OPEN 3,f,3,f$+c$+",r":INPUT# 15,a$,b$:IF a$<>"00"THEN:&"{pound}{back arrow}32{pound}$b!":GOTO {:3112}
 {:3108}
-	OPEN 2,g,2,g$+c$+",w":INPUT# 14,a$,b$:IF a$<>"00"THEN:&"{f6}{pound}$b!":GOTO{:3114}
+	OPEN 2,g,2,g$+c$+",w":INPUT# 14,a$,b$:IF a$<>"00"THEN:&"{f6}{pound}$b!":GOTO {:3114}
 	SYS 49152:INPUT# 14,a$,b$:&"{pound}{back arrow}32{pound}$b!"
 {:3112}
-	CLOSE 2:CLOSE 3:NEXT:&"{f6:2}Done!":GOTO{:3004}
+	CLOSE 2:CLOSE 3:NEXT:&"{f6:2}Done!":GOTO {:3004}
 {:3114}
-	ON-(a$<>"63")GOTO{:3112}:CLOSE 2:&"{f6}[S]kip [R]eplace [A]bort :{pound}g1"
-	ON-(an$="S")-(an$="R")*2-(an$="A")*3 GOTO{:3220},{:3222},{:3224}:GOTO{:3180}
+	ON-(a$<>"63")GOTO {:3112}:CLOSE 2:&"{f6}[S]kip [R]eplace [A]bort :{pound}g1"
+	ON-(an$="S")-(an$="R")*2-(an$="A")*3 GOTO {:3220},{:3222},{:3224}:GOTO {:3180}
 {:3116}
-	&"{f6}ERROR : Device Not Present!{f6}":GOTO{:3004}
+	&"{f6}ERROR : Device Not Present!{f6}":GOTO {:3004}
 {:3118}
 	CLOSE 1:CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:GOSUB 1073:RETURN
 {:3120}
@@ -89,13 +89,13 @@
 	&"{f6:2}Disk Command: ":GOSUB 1499:c$=an$:a$=LEFT$(c$,1):IF a$="" then {:3004}
 	IF a$="n"OR a$="s"THEN GOSUB 1901:IF a=. then {:3004}
 	CLOSE 15:OPEN 15,f,15:PRINT# 15,c$:GOSUB 1012
-	CLOSE 15:&:&"{f6} (Hit A Key) {pound}g1":GOTO{:3004}
+	CLOSE 15:&:&"{f6} (Hit A Key) {pound}g1":GOTO {:3004}
 {:3132}
 	CLOSE 15:OPEN 15,a,15:POKE 781,15:SYS 65481:SYS 65484:CLOSE 15:a=st:RETURN
 {:3134}
-	a=2:GOSUB{:3216}:&"{f6}{cyan}{pound}$d Device {white}({pound}%b): {pound}i1":b%=VAL(an$):a=38:GOTO{:3216}
+	a=2:GOSUB {:3216}:&"{f6}{cyan}{pound}$d Device {white}({pound}%b): {pound}i1":b%=VAL(an$):a=38:GOTO {:3216}
 {:3136}
-	a=4:GOSUB{:3216}:&"{cyan}{pound}$d Drive  {white}(0): {pound}i1":a=38:GOTO{:3216}
+	a=4:GOSUB {:3216}:&"{cyan}{pound}$d Drive  {white}(0): {pound}i1":a=38:GOTO {:3216}
 {:3138}
 	&"{f6}{cyan} Pattern{white}(*): {pound}i0":RETURN
 {:3140}
@@ -107,30 +107,30 @@
 	&"{f6}{yellow} [Y]es [N]o [S]tart [A]bort{pound}q0{f6}{pound}vj"
 	&,8,1,1:lp=1:&a$+"{f6}"
 {:3154}
-	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO{:3168}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:3168}
 	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$
 	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
 	NEXT:&"{f6} {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
 	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):lp=1:&MID$("No   Yes  StartAbort",x*5+1,5)
-	ON x+1 GOTO{:3170},{:3166},{:3168},{:3168}
+	ON x+1 GOTO {:3170},{:3166},{:3168},{:3168}
 {:3166}
-	f%=f%+1:a%(f%)=b%:tt$(f%)=f$:a%(f%)=b%:l=l+b%:GOTO{:3170}
+	f%=f%+1:a%(f%)=b%:tt$(f%)=f$:a%(f%)=b%:l=l+b%:GOTO {:3170}
 {:3168}
 	s=1:IF x=3 THEN f%=.:GOSUB 1920
 {:3170}
-	ON-(s=.AND f%<100)GOTO{:3154}:CLOSE 1:ON-(f%=.)GOTO{:3004}
+	ON-(s=.AND f%<100)GOTO {:3154}:CLOSE 1:ON-(f%=.)GOTO {:3004}
 	FOR i=1 TO f%:b$=tt$(i):b%=i:&"{lt. blue}{f6}{pound}#2{pound}# {pound}%b-{pound}$b":NEXT
-	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO{:3004}:FOR i=1 TO f%:b$=tt$(i):CLOSE 15
+	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO {:3004}:FOR i=1 TO f%:b$=tt$(i):CLOSE 15
 	&"{f6}Scratching {f5}{pound}$b{f5}....":CLOSE 15:OPEN 15,dv%,15,"s"+dr$+b$:GOSUB 1012:&
-	NEXT:&"{f6}":GOTO{:3022}
+	NEXT:&"{f6}":GOTO {:3022}
 {:3180}
-	ON-(an$="S")-(an$="A")*2 GOTO{:3112},{:3182}:GOTO{:3214}
+	ON-(an$="S")-(an$="A")*2 GOTO {:3112},{:3182}:GOTO {:3214}
 {:3182}
-	i=t:GOTO{:3112}
+	i=t:GOTO {:3112}
 {:3184}
-	&"{f6}Copying Aborted.":GOTO{:3004}
+	&"{f6}Copying Aborted.":GOTO {:3004}
 {:3186}
-	GOSUB{:3118}:GOTO{:3040}
+	GOSUB {:3118}:GOTO {:3040}
 {:3188}
 	a9$=an$:IF an$<>"R"THEN x9=x:RETURN
 	x=x9:RETURN
@@ -139,25 +139,25 @@
 	IF an$<>"D" then {:3100}
 	&"{f6}Delete Which Number: {pound}i1"
 	zq=VAL(an$):IF zq<1 OR zq>t THEN{:3096}
-	tt$(zq)="[Deleted]":GOTO{:3094}
+	tt$(zq)="[Deleted]":GOTO {:3094}
 {:3202}
 	FOR i=1 TO t:&"{f6}"+STR$(i)+":"+tt$(i)
 	IF i/20=INT(i/20)THEN:&"{f6}Press a key: {pound}g1"
 	NEXT:RETURN
 {:3208}
-	GOSUB{:3138}:GOSUB 1500:IF an$=""THEN an$="*"
+	GOSUB {:3138}:GOSUB 1500:IF an$=""THEN an$="*"
 	t$=an$:IF tr%<1 THEN 1811
-	GOTO{:3042}
+	GOTO {:3042}
 {:3214}
-	PRINT# 14,"s"g$c$:GOTO{:3108}
+	PRINT# 14,"s"g$c$:GOTO {:3108}
 {:3216}
 	REM:ifv>1.2then:&,59,1,a:return
 	POKE 53252,a:RETURN
 {:3220}
-	&"Skip":GOTO{:3180}
+	&"Skip":GOTO {:3180}
 {:3222}
-	&"Replace":GOTO{:3180}
+	&"Replace":GOTO {:3180}
 {:3224}
-	&"Abort":GOTO{:3180}
-	REM fixes 180218 7:13am x-tec
+	&"Abort":GOTO {:3180}
+	REM "+.CP" fixes 180218 7:13am x-tec
 	copr.1995 NEW image 01/05/95

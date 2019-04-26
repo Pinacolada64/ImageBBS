@@ -1,9 +1,13 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60006}, {:60026}, {:60004}, {:60046}, {:60062}, {:60068}, {:60074}, {:60078}, {:60082}, {:60088}
 	on im-10 goto {:60086}, {:60004}, {:60092}, {:60104}
 {:60004}
+' im=3
 	return
 {:60006}
+' im=1
 	&,40:on-(id=.)goto {:60024}:gosub 1065:uf$=mid$(str$(lf),2,1)+mid$(uf$,2)
 	a$=na$+r$+pw$+r$+ff$+r$+ll$+r$+ph$+r$+ld$+r$
 	a$=a$+mid$(hx$,ac%+1,1)+mid$(str$(af%),2)+r$+mid$(str$(ct%),2)+r$
@@ -16,6 +20,7 @@
 {:60024}
 	return
 {:60026}
+' im=2
 	gosub 1065:x=id:gosub 1001:input# 2,na$,pw$,ff$,ll$,ph$,ld$,a$
 	dd$=cc$+mid$(str$(id),2):rn$=ff$+" "+ll$
 	if left$(a$,1)=" "then a$=mid$(a$,2)
@@ -27,6 +32,7 @@
 	lf=val(left$(uf$,1)):&,52,44,val(mid$(uf$,3,1)):&,52,34,val(mid$(uf$,2,1))
 	goto 1072
 {:60046}
+' im=4
 	on peek(53256)goto {:60054}:cc=.:poke 53256,1:&"{f6}{lt. green}Reason For Chat?{f6:2}Chat: {pound}i1"
 	on-(an$="")goto {:60060}:a$=" Chat: "+an$:d$=an$:gosub 1095:a$=d$:gosub 1376
 	&,52,1,3:&,25,1,a%*255:&,52,.,3:on a%goto {:60052}:gosub {:60054}:goto 1678
@@ -39,32 +45,45 @@
 {:60060}
 	poke 53256,.:goto 1920
 {:60062}
+' im=5
 	&"{f6}Time And Date:{f6:2}Logon: {$04}"+lt$:&"{f6}Now:   {pound}v0{f6:2}Minutes Left: "
 	a%=tr%:a$="{pound}%a":if a%>99 then a$="Infinite"
 	&:return
 {:60068}
+' im=6
+' 1068: append or write "e."+b$
+' 1074: write tt$() array elements 1 - (kk-1) to open lfn#2
+' 1060: Open "e.stats"
+' FIXME: increment which BAR items?
 	gosub 1068:gosub 1074:&,11
 	gosub 1060:i=1:x=1:gosub 1025:x=12:gosub 1025:x=23:gosub 1025:x=30:gosub 1025
 	close 2:return
 {:60074}
+' im=7
 	gosub {:60088}:if i=.then return
 	a=5:goto {:60080}
 {:60078}
+' im=8
 	gosub {:60088}:a=4:if i then return
 {:60080}
 	a%=id:&,16,a:dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$:&,16,2:return
 {:60082}
+' im=9
 	if pr<>4 then gosub {:60086}:b%=.
 	&,16,6:return
 {:60086}
+' im=11
 ' load "++ index", open cmd channel, get highest user #?
 	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:uh=a%:return
 {:60088}
+' im=10
 ' 1065: open u.config
+' &,16: search index for handle 'an$', return id 'a%'
 	gosub {:60086}:gosub 1065:&,16:close 2
 	i=a%:return
 {:60092}
-	if i%=.then:&"{f6}Sorry, Instant Mode Only...{f6:2}":return
+' im=13
+	if i%=. then:&"{f6}Sorry, Instant Mode Only...{f6:2}":return
 {:60094}
 	lp=1:&"{f6}Enter the Handle or ID you wish to switch to (RETURN to Abort){f6}"
 	p$="Handle":poke 53252,20:gosub 1006:if an$=""then return
@@ -72,12 +91,16 @@
 	gosub 1065:x=i:gosub 1001:&,2,2:if a$="{up arrow}"then:&"{f6}Deleted ID!{f6:2}":goto {:60094}
 	id=i:gosub {:60026}:goto 1073
 {:60104}
+' im=14
+' prompt for user to send mail to
+' WISH: 1 subroutine for looking up/verifying user name/handle
+' WISH: 1 subroutine for emailing user
 ' check post/respond flag:
 	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60114}
 {:60108}
-	p$="":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60114}
-	on tr%+1 goto {:60148}:on-(an$="")goto {:60148}:gosub 1046:x=i:if x then nn$=an$:goto {:60122}
+	p$="":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then {:60114}
+	on tr%+1 goto {:60148}:on -(an$="") goto {:60148}:gosub 1046:x=i:if x then nn$=an$:goto {:60122}
 	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}Not Found.{f6}":goto {:60108}
 {:60114}
 	i=x:if x<1 or x>ur then{:60118}
@@ -85,7 +108,7 @@
 {:60118}
 	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:60148}
 {:60120}
-	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=. then {:60104}
+	&"{f6}{lt. green}Handle: {rvrs on}"+nn$+"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=. then {:60104}
 {:60122}
 	y=i:dr=2:gosub 1079:on-(a<20)goto {:60144}:gosub 1085:if a then gosub 1980:goto {:60148}
 	on fl goto {:60132}
@@ -93,7 +116,7 @@
 	&"{up}Subject: {pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:on tr%+1 goto {:60148}:if kk=. then {:60148}
 {:60132}
-	&"{f6}Filing {pound}$c For ":&nn$:&"...{f6}"
+	&"{f6}Filing {pound}$c For "+nn$+"...{f6}"
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
 	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
 	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
@@ -102,8 +125,16 @@
 {:60144}
 	x=2:gosub 1980
 {:60146}
-' if pr$="EM" then this should only ask if in E-Mail subsystem, not +.am.num squ
+' WISH: An idea proposed for making a subroutine in im.misc to write emails, given
+' WISH: user name, subject, body of email in tt$(), rather than
+' WISH: duplicate code in several modules. It needs some consideration, though.
+' WISH: If pr$="EM" then this should only ask in E-Mail subsystem, not "+/lo/num squ".
 	&"{f6:2}Send to another user? ":gosub 1902:if a then fl=1:goto {:60108}
 {:60148}
 	return
+
+' don't commit yet
+{:sub.get_handle}
+
 	copr. 1994 new image 9/19/94
+	rem im.misc

@@ -1,0 +1,22 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	POKE 53252,62:dr=3:a$="e.macs":GOSUB 1011:IF e%=.THEN{:3006}
+	&"{f6}{cyan}Please Wait, Setting files...{f6}":dr=3:a$="e.macs,l,"+CHR$(64):GOSUB 1011
+	x=ur*4:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:GOTO {:3000}
+{:3006}
+	x=id*4-4:FOR a=.TO 3:x=x+1:GOSUB 1001:&,2,2:ON-(a$="{up arrow}")GOSUB {:3008}:tt$(a+1)=a$:NEXT:GOTO {:3010}
+{:3008}
+	a$="Use 'MX' Command To Configure":RETURN
+{:3010}
+	&"{f6} {rvrs on}{cyan} System Macro Editor {f6:3}"
+	FOR a=1 TO 4:a%=a:an$=tt$(a):&"{white}{pound}%a> {lt. blue}{pound}v7{f6}":NEXT
+	&"{f6}{lt. blue}Edit Which:{white} {pound}i1":ON-(tr%<1)GOTO {:3022}:a=VAL(an$):IF a<1 OR a>4 THEN{:3020}
+	w$=tt$(a):a%=a:&"{lt. blue}Return Alone = Old{f6:3}":p$="{lt. blue}Edit {pound}#0{pound}%a{white}":&,1,32:IF an$=""THEN{:3010}
+	ON-(tr%<1)GOTO {:3022}:tt$(a)=an$:GOTO {:3010}
+{:3020}
+	x=id*4-4:FOR a=.TO 3:x=x+1:GOSUB 1001:PRINT# 2,tt$(a+1):NEXT
+{:3022}
+	CLOSE 2:RETURN
+	rem "+.MX" copr. 1994 NEW image 9/13/94

@@ -1,0 +1,86 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.ud-trans" (upload)
+	ON-(((f2 AND 1)=1)AND(q=.))GOTO 3048:&"{f6} - {pound}$l To {pound}v8:{f6}"
+	fl=-(z$="UM"):GOSUB 3002:ON l%GOTO {:4012}:GOSUB 3004:GOSUB 1079:IF a<250 THEN GOSUB 1978:GOTO 3214
+	ON-(co%>2)GOTO {:4008}:IF a<664 THEN b$=STR$(a):&"{f6}{lt. blue}{pound}$b Blocks Free: Room Enough? ":GOSUB 1902:ON a+1 GOTO 3214:GOTO {:4010}
+{:4008}
+	IF a<664 THEN a=INT((a*254)/1024):b$=STR$(a):&"{f6}{lt. blue}{pound}$b Kbytes Free: Room Enough? ":GOSUB 1902:ON a+1 GOTO 3214
+{:4010}
+	GOSUB 1085:IF a<.THEN GOSUB 1982:GOTO 3214
+{:4012}
+	IF rn>29 THEN GOSUB 3032:GOTO 3214
+	GOSUB 3002:IF l%THEN:&"{f6}{yellow}LOCAL MODE UPLOAD{f6}"
+	rs=tr%:ON fl GOTO {:4052}:POKE 53252,16:&"{f6}{white}({f7} = Batch) {green}{pound}$l ":GOSUB 3022:tt$=an$:IF an$="{f7}"THEN{:4052}
+	ON-(tt$=""OR tt$="$"OR LEFT$(tt$,1)="@"OR MID$(tt$,2,1)=":")GOTO 3214:GOSUB 3004
+	&"{f6}{lt. green}[P]RG (Binary) Or{f6}[S]EQ (Text) {pound}$j?{f6:2}U: {lt. blue}{pound}g1"
+	t$=CHR$(ASC(an$)AND 127):a$="SEQ{f6}":IF t$<>"s"THEN t$="p":a$="PRG{f6}"
+	&:GOSUB 3002:ON l%GOTO {:4026}:GOSUB 3004:a$=tt$+","+t$+",r":GOSUB 1011:CLOSE 2:IF e%=.THEN{:4050}
+{:4026}
+	b$=co$(co%):&"{f6}{lt. red}{pound}$b Only {pound}$j?: ":GOSUB 1902:IF a THEN z%=co%*a:GOTO {:4032}
+	&"{f6}{lt. green}Which Computer?:{f6}":FOR x=1 TO 9:b%=x:b$=co$(x):&"{f6} {pound}%b. {pound}$b":NEXT
+	&"{f6:2}{lt. blue}({white}RETURN{lt. blue} = Any Computer): {pound}g1{pound}v7{f6}":GOSUB 3012:z%=-a*(a>.AND a<10)
+{:4032}
+	&"{f6}{lt. green}Please Enter A {pound}$j Description{f6}({white}RETURN{lt. green} to abort upload):"
+	POKE 53252,78:&"{f6}{lt. blue}-{pound}i0":g$="-"+an$:IF an$=""THEN 3214
+	GOSUB 3002:IF l%THEN:&"{f6}# Blocks?: {pound}i1":GOSUB 3012:ON tr%+1 GOTO 3264:b=a:GOTO {:4042}
+	GOSUB 3444:an$="Send":GOSUB 3030:a$=tt$+","+t$+",w":GOSUB 1011
+	an$=tt$+","+t$:&,16,1:GOSUB 3124
+	GOSUB {:4078}:f=a%:&,52,22,3:cu=a%:a%=f:IF e%OR b=.THEN{:4048}
+{:4042}
+	GOSUB {:4112}:f$=d1$+d1$+tt$+"{f1}"+t$:GOSUB {:4075}:GOSUB 3150:GOSUB 3002:IF l%THEN{:4046}
+	GOSUB 3040:c$=l$:a%=1:tt$(1)=tt$:GOSUB 3068
+{:4046}
+	a%=1:d=c%(rn):GOSUB 3002:ON l%+1 GOTO {:4066},{:4068}
+{:4048}
+	GOSUB 1920:jm=.:GOSUB 3004:a$=tt$:GOSUB 1024:GOTO {:4072}
+{:4050}
+	&"{f6:2}{$0f}{orange}{pound}$j Exists.{f6}":GOTO 3214
+{:4052}
+	ON nb GOTO {:4104}:GOSUB 3444:an$=m$+"Send":GOSUB 3030:GOSUB {:4092}:rk=x:GOSUB 3124:IF b=.THEN GOSUB 1920:jm=.:b%=.
+	GOSUB {:4078}:&,52,22,3:cu=a%:a%=f:d=.:GOSUB {:4078}:lp=1
+	IF a%=.THEN GOSUB 1920:jm=.:GOTO {:4072}
+	g$=m$+l$:y%=a%:FOR i=1 TO a%:b=ASC(tt$(i)+nl$)+ASC(MID$(tt$(i),2)+nl$)*256
+	b$=MID$(tt$(i),3):a$=RIGHT$(b$,1):GOSUB 3062:tt$(i)=b$+"{f1}"+a$
+	d=d+b:z%=co%:f$=d1$+d1$+tt$(i):g$="-"+m$+l$:GOSUB {:4074}:GOSUB {:4080}:NEXT:y%=a%:GOSUB 3150
+	g$=m$+l$:GOSUB 3040:a$="  "+g$:GOSUB 1096:PRINT# 2,a$:c$=l$:a%=y%:GOSUB 3068
+{:4066}
+	x=3:GOSUB 1530:GOSUB 3004:GOSUB 1081:tr%=rs:ON-(cu=1)GOTO {:4068}:a=2:GOSUB 1004:cr=cr+(a*d)
+{:4068}
+	uc=uc+a%:bu=bu+d:GOSUB 1060
+	i=a%:x=6:GOSUB 1025:x=17:GOSUB 1025:x=28:GOSUB 1025:x=35:GOSUB 1025:CLOSE 2
+{:4072}
+	&"{f6}":GOSUB 3066:ON x GOTO 3264:ON jm GOTO 3448:GOTO 3214
+{:4074}
+	rn=rn+1:GOSUB 3058:c%(rn)=b:nn$(rn)=a$:dt$(rn)=f$:GOTO {:4076}
+{:4075}
+	rn=rn+1:GOSUB 3058:c%(rn)=f:nn$(rn)=a$:dt$(rn)=f$
+{:4076}
+	ed$(rn)=g$:d%(rn)=z%:GOSUB 3002:f%(rn)=1:ON l%GOTO 3008:f%(rn)=-cu:RETURN
+{:4078}
+	GOSUB 3074:GOSUB 1012:CLOSE 2:RETURN
+{:4080}
+	&"{f6}{lt. green}Please Enter A Description For"
+	an$="":POKE 53252,78:&"{f6}{white}{pound}$b{lt. green} (No Desc. Will KILL Upload!){f6}:{lt. blue}-{pound}i0"
+	ON-(an$=""OR an$=r$)GOTO {:4086}:ed$(rn)="-"+an$:RETURN
+{:4086}
+	GOSUB 3066:ON-(tr%<1 AND x=1)GOTO 3008:IF x=.AND rk=1 THEN RETURN
+	d=d-c%(rn):rn=rn-1:tt$(i)=tt$(i)+" (Deleted!)":y=i:i=-1:GOSUB 1060:x=28:GOSUB 1025:i=y
+	a$=b$:GOSUB 3004:GOTO 1024
+{:4092}
+	f=.
+{:4094}
+	ON-(rn+f>=60)GOTO {:4102}:an$="":&,16,3:ON-(an$="")GOTO {:4102}:f=f+1:tt$(f)=an$
+	a$=an$+",w":GOSUB 3004:GOSUB 1011:IF e%THEN CLOSE 2:f=f-1:GOTO {:4102}
+	&,16,1:GOSUB 3124:GOSUB 3066:ON x GOTO {:4102}
+	IF b=.THEN a$=LEFT$(tt$(f),LEN(tt$(f))-2):jm=0:f=f-1:GOSUB 3004:GOTO 1024
+	tt$(f)=CHR$(b AND 255)+CHR$(b/256)+tt$(f):GOSUB 3066:ON x GOTO {:4102}:GOTO {:4094}
+{:4102}
+	PRINT# 131,"{$18:3}";:GOTO 3066
+{:4104}
+	lp=1:&"{f6}Sorry, Batch {pound}$ls{$a0}Using {pound}vl Are Not Currently Supported.":GOTO 3214
+	copr.1990 NEW image 10/28/90
+{:4112}
+	IF LEFT$(d4$,1)="X"THEN f=f/2
+	RETURN

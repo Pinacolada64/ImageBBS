@@ -1,0 +1,66 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{clear}Node List/Net Map"
+{:3002}
+	dr=1:a$="s.netmenu":GOSUB 1076
+	IF zz THEN dr=1:a$="s.netmenuzz":GOSUB 1076
+{:3006}
+	n=.:b%=.:&"{f6:2}1. List All Nodes{f6}2. List Active Nodes{f6}3. Information On Node"
+	&"{f6}4. Netmap{f6}5. Menu":IF zz THEN:&"{f6}6. Read Transfer Log{f6}7. Read Sysop Log"
+	&"{f6}Q. Quit{f6:2}Opt: {pound}g1{pound}v7{f6}":IF an$="Q"THEN RETURN
+	IF an$=""THEN RETURN
+	ON tr%+1 GOTO 1603:a=VAL(an$):ON zz+1 GOTO {:3016},{:3018}
+{:3016}
+	IF a<1 OR a>5 THEN{:3006}
+{:3018}
+	IF a<1 OR a>7 THEN{:3006}
+	ON a GOTO {:3040},{:3022},{:3050},{:3046},{:3002},{:3068},{:3080}
+{:3022}
+	dr=2:a$="nm.nodes":GOSUB 1011:INPUT# 2,n
+	b%=n:&"{f6:2}There Are {pound}%b Nodes{f6}List A)ll Or Start At Number? {pound}i1{f6:2}"
+	ON tr%+1 GOTO 1603:ON-(an$="A")GOTO {:3034}:a=VAL(an$):IF a<1 OR a>n THEN{:3006}
+	FOR i=a TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,c$,b
+	IF(b AND 1)=.THEN:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:GOTO {:3006}
+{:3034}
+	FOR i=1 TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,c$,b
+	IF(b AND 1)=.THEN:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:GOTO {:3006}
+{:3040}
+	&"{f6} All NetWork Nodes:{f6:2}":dr=2:a$="nm.nodes":GOSUB 1011:INPUT# 2,n
+	FOR i=1 TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:GOTO {:3006}
+{:3046}
+	IF ll%>40 THEN a$="nm.map 80":dr=2:GOSUB 1075:ON-(e%<>.)GOTO {:3048}:CLOSE 2:GOTO {:3006}
+{:3048}
+	dr=2:a$="nm.map":GOSUB 1075:CLOSE 2:GOTO {:3006}
+{:3050}
+	dr=2:a$="nm.nodes":GOSUB 1011:INPUT# 2,n:b%=n
+	&"{f6:2}There Are {pound}%b Nodes{f6}Information On Which? {pound}i1{f6:2}":ON tr%+1 GOTO 1603
+{:3054}
+	a=ABS(VAL(an$)):IF a<1 OR a>n THEN{:3066}
+	x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%:n%=a
+	f$="Active":IF(o%AND 1)THEN f$="Inactive"
+	&"{f6}#{pound}#2{pound}%n ({pound}$a) {f5}{pound}$c{f5}{pound}{back arrow}25<{pound}$f>{f6} Sysop:{pound}$d{f6} Phone:{pound}$b{f6}"
+	&" Connected To #{pound}%a":IF b%THEN:&",#{pound}%b":IF c%THEN:&",#{pound}%c":IF d%THEN:&",#{pound}%d"
+	&"{f6:2}Another? (Number Or RETURN) {pound}i1":ON tr%+1 GOTO 1603:ON-(an$="")GOTO {:3006}:GOTO {:3054}
+{:3066}
+	CLOSE 2:&"Unknown Node #!{f6}":GOTO {:3006}
+{:3068}
+	&"{f6} Read This Month's NetLog{f6}":dr=2:l$="nm.log "+MID$(d1$,4,2):a$=l$+",s,r"
+	GOSUB 1011:a%=.:sh=.:IF e%THEN CLOSE 2:GOTO {:3006}
+{:3072}
+	a%=a%+1:INPUT# 2,a$,b$:&"{f6}#{pound}%a: {pound}$a{f6}    {$04}"+RIGHT$(b$,11)
+	IF LEN(b$)>11 THEN:&"{f6} To {$04}"+LEFT$(b$,11)
+	&"{f6}Files Transferred:":&,3,2:IF st=.AND sh=.THEN{:3072}
+	CLOSE 2:&"{f6}Delete?":GOSUB 1902:ON a+1 GOTO {:3006}:a$=l$:GOSUB 1024:CLOSE 2:GOTO {:3006}
+{:3080}
+	&"{f6}Read Net Sysop Log{f6}":dr=2:l$="nm.sylog":a$=l$+",s,r":GOSUB 1011:a%=.:sh=.
+	IF e%THEN CLOSE 2:GOTO {:3006}
+{:3084}
+	a%=a%+1:&,2,2:f$=a$:&,2,2:b$=a$:&,2,2:c$=a$:a$=f$:s=st
+	&"{f6}#{pound}%a: Sent By {f5}{pound}$a{f5}{f6} On {$04}"+b$:&"{f6} File:{pound}$c{f6}":IF s+sh=.THEN{:3084}
+	CLOSE 2:&"{f6}Delete?":GOSUB 1902:IF a=.THEN{:3006}
+	a$=l$:GOSUB 1024:CLOSE 2:GOTO {:3006}
+	rem "+.LN" copr. 1994 NEW image 9/12/94

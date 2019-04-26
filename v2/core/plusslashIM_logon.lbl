@@ -1,4 +1,6 @@
 {number:4000}
+{alpha:alt}
+{step:2}
 	on lm goto {:4016},{:4090},{:4186},{:4232}
 	return
 {:4004}
@@ -237,3 +239,5 @@
 	if x>lo or x<1 or x>15 then:&"Illegal Value!":x=.
 	return
 	copr. 1994 new image 12/19/94
+	rem "+/IM.logon"
+

@@ -1,0 +1,36 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	cm$="jerk award":GOSUB 1360:GOTO {:4006}
+{:4002}
+	t=INT((37-LEN(a$))/2):t$=MID$(STR$(t),2):IF t<10 THEN t$="0"+t$
+	RETURN
+{:4006}
+	dr=3:a$="e.jerks":GOSUB 1011:IF e%THEN RETURN
+	c=.:x=17:GOSUB 1001:&,2,2:d=VAL(a$):x=.
+{:4010}
+	x=x+1:IF x>d THEN{:4016}
+	GOSUB 1001:&,2,2:c%=VAL(a$):IF c%>c THEN c=c%:j=x
+	GOTO {:4010}
+{:4016}
+	x=j:GOSUB 1001:&,2,2:an$=MID$(a$,4):&,15,1:n$=an$
+	a$="n.$Jerk Award":dr=1:GOSUB 1023:PRINT# 2,r$"{pound}$q {$04}"+d1$
+	PRINT# 2,"{pound}$q{white}{$b0}{pound}o{$c0:18}{$ae}"r$"{pound}$q{$dd}{pound}{back arrow}37{$dd}"
+	GOSUB {:4002}:a$="{yellow}This month the {green}{rvrs on}Jerk Award{rvrs off}":PRINT# 2,"{$dd}{pound}$q{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	a$="{yellow}is proudly presented to":GOSUB {:4002}
+	PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}37{$dd}"r$"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	a$=n$:GOSUB {:4002}
+	PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}37{$dd}"r$"{pound}$q{$dd}{gray3}{pound}{back arrow}"+t$+"{rvrs on}"+n$+"{rvrs off}{pound}{back arrow}37{white}{$dd}"r$"{pound}$q{$dd}{pound}{back arrow}37{$dd}"
+	a$="{lt. red}who has exhibited qualities":GOSUB {:4002}
+	GOSUB {:4002}:PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	a$="{lt. red}that make him the overwhelming"
+	GOSUB {:4002}:PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	a$="{lt. red}choice by a vote of his peers."
+	GOSUB {:4002}:PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	PRINT# 2,"{pound}$q{$dd}{pound}{back arrow}37{$dd}"r$"{pound}$q{$ad}{pound}o{$c0:18}{$bd}"r$"{up arrow}":CLOSE 2
+	dr=3:a$="e.jvoters":GOSUB 1023:PRINT# 2,"THE SYSOP":CLOSE 2
+	a$="e.jerks":dr=3:GOSUB 1024:b$=",l,"+CHR$(30):a$=a$+b$:dr=3:GOSUB 1011
+	x=18:GOSUB 1001:PRINT# 2,CHR$(255):x=17:d=1:GOSUB 1001:PRINT# 2,d
+	x=1:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:a$=" {lt. red}Jerk Award Restarted"+r$+" {yellow}{pound}o{$c0}{pound}o{$c0}{lt. green}":GOTO 1095
+	copr. 1994 NEW image 9/18/94
+	rem "+/lo/jerk" - jerk award automaint

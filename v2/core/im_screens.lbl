@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60022},{:60024}
 	return
 {:60004}
@@ -15,3 +17,4 @@
 	a%=dv%(bn+6):b%=dr%(bn+6):goto {:60004}
 {:60024}
 	a%=d1%:b%=d2%:goto {:60004}
+	rem im.screens

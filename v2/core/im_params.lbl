@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60004},{:60056},{:60002},{:60094},{:60096}
 {:60002}
 	return
@@ -50,11 +52,11 @@
 	lp=1:if a>3 then on a-3 goto {:60074},{:60076},{:60078},{:60080}
 	z$="CBM C/G":return
 {:60074}
-	z$="ASC{$c9:2}":return
+	z$="ASCII":return
 {:60076}
-	z$="ASC{$c9:2} & IBM Graphics":return
+	z$="ASCII & IBM Graphics":return
 {:60078}
-	z$="ASC{$c9:2} & ANSI Color":return
+	z$="ASCII & ANSI Color":return
 {:60080}
 	z$="ANSI C/G":return
 {:60082}
@@ -90,3 +92,4 @@
 	a=val(mid$(uf$,2,1)):w$="Off":if a then w$="On":if a>1 then w$="Messages Only"
 	return
 	copr. 1994 new image 9/8/94
+	rem im.params

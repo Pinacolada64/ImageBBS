@@ -1,0 +1,52 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-scannew" - scan for new posts/uploads
+	l$=MID$(ld$,2,6):b=VAL(MID$(ld$,8,4))/100:GOSUB {:4010}:l=b
+	&"{f6:2}{yellow}Scan For New Posts/Responses?:{rvrs off} ":GOSUB 1902:ON a GOSUB {:4016}
+	&"{f6:2}{yellow}Scan For New Uploads?:{rvrs off} ":GOSUB 1902:ON a GOSUB {:4048}
+	RETURN
+{:4010}
+	b=b+68*(b>80):IF INT(b)=12 OR INT(b)=24 THEN b=b-12
+	a=-(b$>l$):IF a=0 THEN a=-(b>l)
+	RETURN
+{:4016}
+	dr=3:a$="e.Sub":GOSUB 1011:IF e%THEN{:4046}
+	&"{f6} Sub{pound}{back arrow}25Posts/Resps{f6}{pound}vj":&,2,2:n=VAL(a$):ON-(n=0)GOTO {:4046}:FOR i=1 TO n
+	x=i+1:GOSUB 1001:&,2,2:&,2,2:a=VAL(a$):&,2,2:IF(a AND 2^ac%)=0 THEN{:4044}
+	IF LEFT$(a$,1)="."AND MID$(a$,3,1)="."THEN a$=MID$(a$,4)
+	IF RIGHT$(a$,1)="{up arrow}"THEN a$=LEFT$(a$,LEN(a$)-1)
+	a$=LEFT$(a$,26):&" {pound}$a{pound}{back arrow}28":IF rc THEN i=n:GOTO {:4044}
+	CLOSE 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+STR$(i):GOSUB 1011:IF e%THEN{:4038}
+	&,2,2:p=VAL(a$):FOR j=1 TO p:x=j+1:GOSUB 1001:INPUT# 2,a$,a$,a$
+	b$=MID$(a$,2,6):b=VAL(MID$(a$,8,4))/100:GOSUB {:4010}:np=np+a:IF a THEN{:4036}
+	b$=MID$(a$,13,6):b=VAL(MID$(a$,19,4))/100:GOSUB {:4010}:nr=nr+a
+{:4036}
+	NEXT
+{:4038}
+	CLOSE 2:a%=np:b%=nr:c%=p
+	&"{pound}#2{pound}# {pound}%a/{pound}#2{pound}# {pound}%b Of {pound}#2{pound}# {pound}%c{f6}":IF rc THEN i=n:GOTO {:4044}
+	IF i<n-1 THEN dr=3:a$="e.Sub":GOSUB 1011
+{:4044}
+	NEXT:&"{pound}q0{pound}vj":CLOSE 2:RETURN
+{:4046}
+	CLOSE 2:&"{f6:2}No Subs!{f6}":RETURN
+{:4048}
+	dr=3:a$="e.U/D":GOSUB 1011:IF e%THEN{:4074}
+	&"{f6} U/D{pound}{back arrow}30New Files{f6}{pound}vj":&,2,2:n=VAL(a$):ON-(n=0)GOTO {:4074}:FOR i=1 TO n
+	x=i+1:GOSUB 1001:&,2,2:&,2,2:a=VAL(a$):&,2,2:IF(a AND 2^ac%)=0 THEN{:4072}
+	IF LEFT$(a$,1)="."AND MID$(a$,3,1)="."THEN a$=MID$(a$,4)
+	a$=LEFT$(a$,26):&" {pound}$a{pound}{back arrow}28":IF rc THEN i=n:GOTO {:4072}
+	CLOSE 2:u=0:nu=0:dr=4:a$="d.u/d"+STR$(i):GOSUB 1011:IF e%THEN{:4066}
+	&,2,2:u=VAL(a$):IF u=0 THEN{:4066}
+	FOR j=1 TO u:&,2,2:&,2,2:&,2,2:b$=a$:&,2,2:&,2,2:a$=b$
+	b$=MID$(a$,2,6):b=VAL(MID$(a$,8,4))/100:GOSUB {:4010}:nu=nu+a:NEXT
+{:4066}
+	CLOSE 2:a%=nu:b%=u
+	&"{pound}#2{pound}# {pound}%a Of {pound}#2{pound}# {pound}%b{f6}":IF rc THEN i=n:GOTO {:4072}
+	IF i<n-1 THEN dr=3:a$="e.U/D":GOSUB 1011
+{:4072}
+	NEXT:&"{pound}q0{pound}vj":CLOSE 2:RETURN
+{:4074}
+	CLOSE 2:&"{f6:2}No U/Ds!{f6}":RETURN
+	copr. 1990 NEW image 12-26-90

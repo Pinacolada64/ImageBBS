@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002},{:60008},{:60006},{:60012}:return
 {:60002}
 	d$="System":gosub {:60018}:if a=.then return
@@ -23,3 +25,4 @@
 	a=val(an$):if an$=""or a<1 or a>n then a=.:return
 	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
 	copr. 1994 new image 9/18/94
+	rem im.param2

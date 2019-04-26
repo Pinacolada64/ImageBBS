@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	gosub {:3002}:goto 1812
 {:3002}
 	poke 53252,16:n=.:&"{f6:2}Filename: {pound}i0{f6}":f$=an$:if an$=""then return
@@ -18,4 +20,3 @@
 {:3024}
 	&:close 2:return
 	rem +.relread
-	

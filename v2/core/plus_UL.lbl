@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:uh=a%:goto {:3008}
 {:3002}
 	for x=1 to kk:a%=x:b$=nn$(x):d$=dt$(x):if x=2 then d$=co$(val(dt$(x)))
@@ -75,5 +77,4 @@
 	&"{f6}{white}Listing Finished.{f6}":goto {:3012}
 	data"Handle","Computer Type","Area Code","First Name","Last Name"
 	data"Access Group","Phone Number"
-	rem +.ul
-	copr.1988 new image
+	rem "+.UL" copr.1988 new image

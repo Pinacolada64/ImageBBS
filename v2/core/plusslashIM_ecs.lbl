@@ -1,5 +1,7 @@
 {number:4000}
-	rem ecs editor
+{alpha:alt}
+{step:2}
+	rem "+/IM.ecs" - extended command set editor
 	&"{clear}{f6:2} Reading Command List...":z$="":for i=1 to 20:z$=z$+chr$(0):next:tz=0
 {:4004}
 	&,42,2:n=a%:goto {:4034}
@@ -146,7 +148,7 @@
 	tz=1:&"Ignore Extra? {pound}g1"
 	if an$="Y"then a=a or 4:&"Yes"
 	if an$="N"then a=a and not 4:&"No"
-	&"{f6}{$da:2} Locked? {pound}g1"
+	&"{f6}ZZ Locked? {pound}g1"
 	if an$="Y"then a=a or 1:&"Yes"
 	if an$="N"then a=a and not 1:&"No"
 	&"{f6}":return
@@ -167,6 +169,7 @@
 	l$=l$+left$(d$+z$,7)+chr$(f):return
 {:4246}
 	l$=chr$(a)+chr$(e and 255)+chr$(e/256)+b$+c$+chr$(f):return
+{crunch:off}
 	rem  a =
 	rem   1  = no lock/zz lock
 	rem   2  = unused
@@ -181,3 +184,4 @@
 	rem  d$= password
 	rem  e = access
 	rem  f = credits
+

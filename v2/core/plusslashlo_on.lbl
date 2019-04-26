@@ -6,14 +6,18 @@
 	a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}"
 	f1=.:ao%=ac%:gosub 1634
 	gosub 1063:x=1:gosub 1001:&,2,2:ca=val(a$):close 2:&,52,20,em
+' &,52,$22: check More status
+' &,52, 21: check Expert mode status
 	poke 970,.:&,52,$22,val(mid$(uf$,2,1)):&,52,21,3:if i%then qb=2400:goto {:4050}
 	&,52,4,3:if a%then qb=2400
 	if a%=. then {:4018}
 	a=3:gosub 1004:if na$<>d3$or a<>. then {:4018}
-	&"{f6}Sorry, No Back-To-Back Calls!{f6}":ac%=16:f4=1:return
+'	&"{f6}Sorry, No Back-To-Back Calls!{f6}":ac%=16:f4=1:return
+	rem
 {:4018}
 	a=17:gosub 1004:if left$(d1$,7)<>left$(d5$,7)then ct%=.
 	f2=.:ct%=ct%+1:tc%=tc%+1:if ct%<a or a=. then {:4026}
+' TODO: buy call for credits, put in credit pool
 	if ct%>a then:&"{f6}{lt. blue}Sorry, Call Limit Used Today!{f6}":f4=1:ac%=16:return
 	&"{f6:2}{white}Note{blue}:{lt. green} This Is Your Last Call Today.{f6}"
 {:4026}
@@ -24,7 +28,7 @@
 	gosub 1060:i=1:x=20:gosub 1025:close 2
 	dd$=cc$+mid$(str$(id),2):jn$="":poke 53252,3:an$=na$:&,15,1:n$=an$
 	a$=" {yellow}Caller{white}"+str$(ca)+"   {green}"+dd$+":{white} {rvrs on}"+n$+r$+"{cyan}"+str$(qb)+" Baud, "
-	&,52,16,3:b=a%:&,52,18,3:c=a%:b$="{yellow}C/G":if b then b$="{gray3}ASC{$c9:2}":if c then b$="{lt. red}ANSI"
+	&,52,16,3:b=a%:&,52,18,3:c=a%:b$="{yellow}C/G":if b then b$="{gray3}ASCII":if c then b$="{lt. red}ANSI"
 	a$=a$+b$+" Mode"+r$+" {cyan}Logon  {white}{$04}"+d1$
 	on-(tc%>1)goto {:4048}:&"New User!{f6}"
 	a$=a$+r$+" New User!":if id=.then a$=a$+" (Just Looking)"
@@ -36,9 +40,11 @@
 	if pt%=. then {:4062}
 ' prime time enabled: this gets overwritten by screen mask load later. has been moved to im.disp
 '	print"{home}{down}{rvrs on}{white}P":print"{rvrs on}{white}R":print"{rvrs on}{white}I":print"{rvrs on}{white}M":print"{rvrs on}{white}E":if g<p1% then {:4062}
+' don't disrupt line numbering:
+	rem
 	if g<p1% then {:4062}
 	a%=p1%:tr%=a%
-	&"{f6}Note - It Is Now Prime Time -{f6}A{$cc:2} Callers Are Limited To {pound}%a Minutes!{f6:2}"
+	&"{f6}Note - It Is Now Prime Time -{f6}ALL Callers Are Limited To {pound}%a Minutes!{f6:2}"
 {:4062}
 	&"{f6}":cn=cn+1:gosub 1073
 	a=17:gosub 1004:on a+1 goto {:4066}:a%=a-ct%:&"{f6}{lt. green}Calls Left Today{blue}:{white} {pound}%a{f6}"
@@ -53,15 +59,16 @@
 {:4078}
 	a$=left$("f."+na$,16)+",s,r":dr=2:gosub 1011:on e%goto {:4134}
 {:4080}
+' TODO: Move this to +/lo.fm?
 	f4=.:&"{f6}":&,2,2:c$=b$:b$=a$:if a$="{up arrow}"or st<>. then {:4088}
-	fl=-(a$="ERASE"or a$="KI{$cc:2}"or a$="O{$c6:2}"):on fl goto {:4080}
+	fl=-(a$="ERASE"or a$="KILL"or a$="OFF"):on fl goto {:4080}
 	fl=-(left$(a$,1)="!"or left$(a$,1)="{back arrow}"or left$(a$,1)="@"):on fl goto {:4080}
 	&:goto {:4080}
 {:4088}
-	a$="KI{$cc:2}":if b$=a$or c$=a$then:&"{f6:2}Terminating {pound}v2...{f6}":gosub {:4116}
+	a$="KILL":if b$=a$or c$=a$then:&"{f6:2}Terminating {pound}v2's Account...{f6}":gosub {:4116}
 	a$="!":if left$(b$,1)=a$then b$=mid$(b$,2):gosub {:4108}
 	a$="!":if left$(c$,1)=a$then b$=mid$(c$,2):gosub {:4108}
-	a$="O{$c6:2}":if b$=a$or c$=a$then f4=1
+	a$="OFF":if b$=a$or c$=a$then f4=1
 	a$="{back arrow}":if left$(b$,1)=a$then ac%=val(mid$(b$,2)):fl$=fl$(ac%)
 	a$="{back arrow}":if left$(c$,1)=a$then ac%=val(mid$(c$,2)):fl$=fl$(ac%)
 	a$="ERASE":if b$=a$or c$=a$then gosub {:4110}
@@ -106,5 +113,5 @@
 	if a then ld$=d5$
 	return
 {crunch:off}
-	REM +/LO.ON - 12/20/2017 - PRIME TIME DISPLAY FIX
+	rem +/lo.on - 12/20/2017 - prime time display fix
 	copr. 1994 new image 11/14/94

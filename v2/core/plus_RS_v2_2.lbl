@@ -1,0 +1,43 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	a%=ur+1:&"{f6:2}{pound}r1 Add RES Account:{f6:2}Start From What Account Number?"
+	&"{f6}({f5}E{f5} Will Put Account{f6}On End Of User File.){f6:2}RES: {pound}i1"
+	c=INT(VAL(an$)):ON-(tr%<1 OR an$="Q"OR an$="")GOTO {:3052}
+	IF an$="E"THEN c=a%:l=l1:IF l1>ur THEN l=c+1
+	IF c<1 OR c>ur+1 THEN:&"{f6}Invalid Account Number.":GOTO {:3000}
+	kk=.:sh=.:GOSUB 1065:FOR x=c TO ur:GOSUB 1001:&,2,2:IF a$<>"{up arrow}"THEN{:3016}
+	a%=x:&"{f6}Account {pound}%a Is Open. Use?: ":GOSUB 1902
+	IF a THEN kk=1:ON-(a%=l1)GOSUB {:3046}:x=ur:GOTO {:3018}
+{:3016}
+	&".":IF rc THEN x=ur:NEXT:GOTO {:3052}
+{:3018}
+	NEXT:IF kk THEN x=a%:GOTO {:3022}
+	x=ur+6:GOSUB 1001:PRINT# 2,0:ur=ur+1:x=ur
+{:3022}
+	FOR i=1 TO 23:tt$(i)="0":NEXT
+	tt$(1)="RES":&"{f6}Password?: {pound}i1":IF an$=""THEN an$="PASS"
+	tt$(2)=an$
+	&"{f6}Access?: {pound}g1{pound}v7{f6}":a$=an$:IF tr%<1 THEN ur=ur+(kk=.):GOTO {:3052}
+	b=VAL(an$):IF an$<"0"OR an$>"9"THEN b=.
+	tt$(7)=STR$(b)
+	&"Credits? : {pound}i1":a=VAL(an$)
+	tt$(19)=STR$(a):GOSUB {:3060}
+	f$="":FOR i=1 TO 23:f$=f$+tt$(i)+r$:NEXT:GOSUB 1065:x=a%
+	GOSUB 1001:PRINT# 2,f$:a%=x:GOSUB 1063
+	x=12:GOSUB 1001:PRINT# 2,ur+1:x=31:GOSUB 1001:PRINT# 2,l:l1=l:CLOSE 2:GOSUB 1374
+	&"{f6:2}Account {pound}vn{pound}%a Has Been Reserved.{f6}":GOTO {:3054}
+{:3046}
+	l=ur+1:FOR x=a%+1 TO ur:IF x/3=INT(x/3)THEN:&"."
+	GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN l=x:x=ur
+	NEXT:RETURN
+{:3052}
+	GOSUB 1920
+{:3054}
+	CLOSE 2:GOTO 1812
+	copr.1988 NEW image
+{:3060}
+	GOSUB 1061:x=b+1:GOSUB 1001:&,2,2:&,2,2:tt$(23)=a$:RETURN
+	REM "+.RS v2.2": reserve account v2.2 180501
+	REM:converted to 2.0 180422 x-tec

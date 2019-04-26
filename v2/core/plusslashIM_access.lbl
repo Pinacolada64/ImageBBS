@@ -1,5 +1,7 @@
 {number:4000}
-	rem access module
+{step:2}
+{alpha:alt}
+	rem "+/IM.access" module
 	&"{clear}{white}{f6:2}Loading Access Group Data...":gosub {:4072}
 	dr=3:a$="e.access":gosub 1011:for i=0 to 9:x=i+1:gosub 1001:&,2,2:tt$(i)=a$
 	&,2,2:tt$(i+10)=a$:next

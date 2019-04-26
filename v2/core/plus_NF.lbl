@@ -1,0 +1,92 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOTO {:3026}
+{:3002}
+	dr=4:a$="d.n.Main,s,"+a$:GOTO 1011
+{:3004}
+	an$=MID$(an$,2)
+{:3006}
+	rn=INT(VAL(an$)):d=-(rn<1 OR rn>br):RETURN
+{:3008}
+	tt$="n."+LEFT$(ed$(c),14):RETURN
+{:3010}
+	p$=b$:w$=an$:pl=.:&,1,32:RETURN
+{:3012}
+	&"{f6:2}{pound}$bFiling:{f6}{f5}{pound}v7{f5}{f6}":RETURN
+{:3014}
+	dr=1:a$=tt$+",s,"+a$:GOTO 1011
+{:3016}
+	a$="d.n.Main":dr=4:GOSUB 1024:IF br=.THEN RETURN
+	a$="w":GOSUB {:3002}:PRINT# 2,br
+	FOR x=1 TO br:PRINT# 2,ed$(x)r$nn$(x)r$c%(x):NEXT:CLOSE 2:GOTO 1081
+{:3022}
+	a$=tt$:dr=1:GOTO 1024
+{:3024}
+	b=.:FOR i=.TO 9:a%=i:&"Group #{pound}%a?: ":GOSUB 1902:b=b+2^i*a:NEXT:a=b:RETURN
+{:3026}
+	GOSUB 2912:q=.:&"{clear}{f6}{blue}{pound}vj {pound}$q            {cyan}News SubSystem{f6}{blue}{pound}vj{f6}":a=13:GOSUB 1004:b=a:a=8:GOSUB 1004:IF a+b THEN q=1
+	m$=LEFT$("-Maint",q*6)+""
+	br=.:t=.:a$="r":GOSUB {:3002}:ON SGN(e%)GOTO {:3040}:INPUT# 2,br
+	ON br+1 GOTO {:3040}:FOR x=1 TO br:INPUT# 2,ed$(x),nn$(x),d%(x):ON q GOTO {:3036}
+	d%(x)=d%(x)*-((d%(x)AND 2^ac%)<>.)
+{:3036}
+	IF d%(x)THEN t=t+1:ed$(t)=ed$(x):nn$(t)=nn$(x):c%(t)=d%(x)
+	NEXT:br=t
+{:3040}
+	CLOSE 2
+{:3042}
+	IF br=.THEN:&"{f6}Currently No System News Files.{f6}":GOTO {:3058}
+	v=INT(VAL(MID$(an$,2))):IF v<1 OR v>br THEN v=1
+	sh=.:FOR x=v TO br:b$=ed$(x):ON q GOTO {:3050}
+	a$=LEFT$(b$,1):IF a$="{f7}"OR a$="$"THEN b$=MID$(b$,2)
+{:3050}
+	a%=x:&"{f6} {yellow}{pound}#2{pound}# {pound}%a {cyan}Subj: {gray3}{pound}$b{pound}{back arrow}39 {lt. blue}    Date: {white}{$04}"+nn$(x)
+	IF q THEN s=rc:a%=c%(x):&"{f6}{cyan}    Accs: {white}{pound}%a"
+	IF s+rc THEN sh=.:x=br
+	NEXT
+{:3058}
+	lc=7:p$="News"+m$:cm$=p$:GOSUB 1098:ON tr%+1 GOTO 1811:GOSUB 1850
+	ON f4 GOTO 1842:ON rs GOTO {:3058}:GOSUB {:3006}:ON-(d=.)GOTO {:3066}
+	ON q+1 GOTO {:3064}:ON-(a$="A")-(a$="K")*2-(a$="E")*3 GOTO {:3068},{:3112},{:3086}
+{:3064}
+	x=3:ON-(a$="L")-(a$="Q")*2-(a$="{f2}")*3-(a$="O")*4 GOTO {:3042},1811,{:3120},1694:GOTO {:3058}
+{:3066}
+	c=rn:GOSUB {:3008}:a$=tt$:dr=1:GOSUB 1075:GOTO {:3058}
+{:3068}
+	dr=1:GOSUB 1079:IF a<35 THEN GOSUB 1978:GOTO {:3058}
+	&"{f6}":b$="Title ":an$="":pl=.:GOSUB {:3010}:IF an$=""THEN{:3058}
+	br=br+1:ed$(br)=an$:c=br:GOSUB {:3008}:nn$(br)=d1$
+{:3074}
+	b$="Access":an$="":pl=1:GOSUB {:3010}:a=VAL(an$):IF tr%<1 THEN 1811
+	ON-(an$="{f2}")GOSUB {:3024}:IF a=.THEN a=1023
+	ON-(a>1023)GOTO {:3074}:c%(br)=a:GOSUB 1604:IF kk=.THEN br=br-1:GOTO {:3058}
+	an$=ed$(br):b$="":GOSUB {:3012}:a$="w":GOSUB {:3014}
+{:3082}
+	FOR i=1 TO kk-1:PRINT# 2,tt$(i):&".":NEXT:PRINT# 2,"{up arrow}":CLOSE 2:&,11,.:GOSUB 1081
+	GOSUB {:3016}:GOTO {:3058}
+{:3086}
+	GOSUB {:3004}:ON d GOTO {:3058}:b$=ed$(rn):&"{f6}Loading {f5}{pound}$b{f5}..."
+	c=rn:GOSUB {:3008}:a$="r":GOSUB {:3014}:kk=1
+{:3090}
+	&,2,2:IF a$<>"{up arrow}"AND kk<101 THEN tt$(kk)=a$:kk=kk+1:GOTO {:3090}
+	CLOSE 2:&"{f6:2}(RETURN To Keep Original Values){f6:2}"
+	b$="Title ":an$=ed$(rn):pl=.:GOSUB {:3010}:IF an$<>""THEN ed$(rn)=an$
+{:3096}
+	&"{f6}":an$=MID$(STR$(c%(rn)),2)
+	b$="Access":pl=1:GOSUB {:3010}:a=VAL(an$):IF tr%<1 THEN 1811
+	ON-(an$="{f2}")GOSUB {:3024}:IF a=.THEN{:3104}
+	ON-(a>1023)GOTO {:3096}:c%(rn)=a
+{:3104}
+	GOSUB 1610:IF kk=.THEN{:3058}
+	&"{f6:2}Up-Date Date Of News?: ":GOSUB 1902:IF a THEN nn$(rn)=d1$
+	an$=ed$(rn):b$="Re-":GOSUB {:3012}:GOSUB {:3022}
+	a$="n."+LEFT$(an$,14)+",s,w":dr=1:GOSUB 1011:GOTO {:3082}
+{:3112}
+	GOSUB {:3004}:ON d GOTO {:3058}:c=rn:GOSUB {:3008}:an$=MID$(tt$,3)
+	&"{f6}Removing {f5}{pound}v7{f5} News...{f6:2}":GOSUB {:3022}
+	FOR x=rn TO br:ed$(x)=ed$(x+1):nn$(x)=nn$(x+1):c%(x)=c%(x+1):NEXT
+	br=br-1:GOSUB {:3016}:GOTO {:3058}
+{:3120}
+	GOSUB 1351:GOTO {:3058}
+	rem "+.NF" copr.1994 NEW image 11/26/94
