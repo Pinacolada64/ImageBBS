@@ -1,3 +1,8 @@
+' this is from image 2.0 and can probably be moved
+' there -- question is, which module? i/GF-add?
+{number:3000}
+{alpha:alt}
+{step:2}
 	ON MM goTO {:3100},{:3200},{:3300}
 {:3002}
 	W$=MID$(STR$(CM%(Y,X)),2):POKE 53252,5:PL=1:&,1,32:IF AN$=""THEN RETURN
@@ -77,3 +82,4 @@
 {:3324}
 	IF X<>CM%(0,0)THEN FOR A=X TO CM%(0,0)-1:&,60,10,100,CM%(0,A+1),CM%(0,A):NEXT
 	CM%(0,0)=CM%(0,0)-1:CF=1:RETURN
+	rem "i/GF-add"?
