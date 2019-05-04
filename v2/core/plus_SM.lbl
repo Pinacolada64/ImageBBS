@@ -1,0 +1,97 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	REM "+.SM" sysop maintenance program
+	&,52,44,3:mm=a%:&,52,45,3:mm=mm AND a%
+	dr=5:GOSUB 1010:a$=dr$+"++ menu2":&,7,dv%,2
+{:3006}
+	&,28,1
+	n=10
+	DIM m%(16,n)
+	&,16,.,34,m%(.,1),"A","","Find Access"
+	&,16,.,34,m%(.,2),"B","","Fix BA Count"
+	&,16,.,34,m%(.,3),"C","","Make Anagram"
+	&,16,.,34,m%(.,4),"D","","Scan Netlog"
+	&,16,.,34,m%(.,5),"E","","Run Alpha/Ind"
+	&,16,.,34,m%(.,6),"F","","Lt.K Utils"
+	&,16,.,34,m%(.,7),"G","","Editor Utils"
+	&,16,.,34,m%(.,8),"H","","Set Clock"
+	&,16,.,34,m%(.,9),"I","","Netfiles"
+	&,16,.,34,m%(.,10),"J","","Quit"
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image BBS V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}          Sysop Menu Program{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"
+	IF tr%<1 OR lm=n OR lm=.THEN 1811
+	ON lm GOTO {:3044},{:3052},{:3054},{:3056},{:3058},{:3064},{:3090},{:3060},{:3062}
+	GOTO 1811
+{:3044}
+	a$="find acs":GOSUB {:3046}:GOTO {:3006}
+{:3046}
+	&"{f6}Loading {pound}$a module.."
+	IF lm$<>"SM."+a$THEN dr=5:GOSUB 1010:lm$="SM."+a$:a$=dr$+"+/"+lm$:LOAD a$,dv%
+	&"{f6}":GOTO 4000
+{:3052}
+	a$="fixer":GOSUB {:3046}:GOTO {:3006}
+{:3054}
+	a$="make anagra":GOSUB {:3046}:GOTO {:3006}
+{:3056}
+	a$="scan netlog":GOSUB {:3046}:GOTO {:3006}
+{:3058}
+	a$="alpha/ind":GOSUB {:3046}:GOTO {:3000}
+{:3060}
+	a$="cmdclock":GOSUB {:3046}:GOTO {:3006}
+{:3062}
+	a$="netfile":GOSUB {:3046}:GOTO {:3000}
+{:3064}
+	ON lk%+1 GOTO {:3128}:&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image BBS V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}         Lt. Kernal Programs{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,28,1:n=3
+	DIM m%(16,n)
+	&,16,.,34,m%(.,1),"A","","Run Backups"
+	&,16,.,34,m%(.,2),"B","","Lt.K File Utils"
+	&,16,.,34,m%(.,3),"C","","Quit"
+	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"
+	IF tr%<1 OR lm=n OR lm=.THEN{:3000}
+	ON lm GOTO {:3084},{:3086}
+{:3084}
+	a$="bu":GOSUB {:3046}:GOTO {:3064}
+{:3086}
+	a$="lk util":GOSUB {:3046}:GOTO {:3000}
+	GOTO {:3000}
+{:3090}
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}            Image BBS V2.0{pound}{back arrow}37{blue}  {f6}"
+	&"{rvrs on} {cyan}            Editor Programs{pound}{back arrow}37{rvrs off} {rvrs on}{blue} {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	&,28,1:n=8
+	DIM m%(16,n)
+	&,16,.,34,m%(.,1),"A","","Run Reledit"
+	&,16,.,34,m%(.,2),"B","","Convert Sigs"
+	&,16,.,34,m%(.,3),"C","","Run Sigedit"
+	&,16,.,34,m%(.,4),"D","","Edit Menus"
+	&,16,.,34,m%(.,5),"E","","Edit Text Msg"
+	&,16,.,34,m%(.,6),"F","","Edit B.A.R."
+	&,16,.,34,m%(.,7),"G","","Edit Sayings"
+	&,16,.,34,m%(.,8),"H","","Quit"
+	&,16,2,34,m%(.,1),n,17,2,n/2+.5,2,6,.:lm=a%+1:&,70,.,n/2+8.5:&"{white}"
+	IF tr%<1 OR lm=n OR lm=.THEN{:3000}
+	ON lm GOTO {:3116},{:3117},{:3118},{:3120},{:3122},{:3124},{:3125}
+{:3116}
+	a$="reledit":GOSUB {:3046}:GOTO {:3000}
+{:3117}
+	a$="consig1":GOSUB {:3046}:a$="consig2":GOSUB {:3046}:GOTO {:3090}
+{:3118}
+	a$="sigedit":GOSUB {:3046}:GOTO {:3090}
+{:3120}
+	a$="menuedit":GOSUB {:3046}:GOTO {:3090}
+{:3122}
+	a$="textedit":GOSUB {:3046}:GOTO {:3090}
+{:3124}
+	a$="baredit":GOSUB {:3046}:GOTO {:3090}
+{:3125}
+	a$="sayedit":GOSUB {:3046}:GOTO {:3090}
+	GOTO {:3000}
+{:3128}
+	&"{f6}{yellow}Sorry, these utilities are for {f6}Lt. Kernal use only.{pound}w3{f6}":GOTO {:3000}
+	REM sysop menu 180209 x-tec
+	copr. 1994 NEW image 10/25/94
+	REM sysop menu 180801 x-tec

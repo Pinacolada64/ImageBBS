@@ -1,0 +1,39 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	GOSUB {:4006}
+	RETURN
+	REM lt.k backups 180119
+{:4006}
+	&"{f6:2}{white}Performing Backups{f6:2}"
+	RESTORE:READ dv%,dr$
+{:4010}
+	READ b$:IF b$="-1"THEN{:4022}
+	CLOSE 15:OPEN 15,dv%,15,b$:GOSUB 1012:IF e%THEN CLOSE 15:&:GOTO {:4010}
+	d$=dr$+":"+MID$(b$,3)+LEFT$(d1$,1)
+	PRINT# 15,"s"d$:&"{f6}{lt. red}Scratch{white}: "+d$:&"{f6}{lt. green}Copying{white}: "+b$+" {lt. green}To {white}"+d$
+	PRINT# 15,"c"+d$+"="+b$
+	GOTO {:4010}
+{:4022}
+	&"{f6:2}{white}Done!{f6:2}":RETURN
+	DATA8,"6"
+	DATA"0:u.config"
+	DATA"0:e.data"
+	DATA"0:e.stats"
+	DATA"0:e.cr.pool1"
+	DATA"0:e.daily stats"
+	DATA"0:u.index"
+	DATA"0:u.weedinfo"
+	DATA"0:e.nark"
+	DATA"0:e.top ten"
+	DATA"0:e.log1"
+	DATA"0:e.log2"
+	DATA"0:e.log3"
+	DATA"0:e.log4"
+	DATA"0:e.log5"
+	DATA"0:e.log6"
+	DATA"0:e.log7"
+	DATA"-1"
+	REM"Backups for Lazy Sysops by X-Tec v2.0 180109
+	REM "+/SM.bu": sysop menu 180210 x-tec
+

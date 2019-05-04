@@ -1,0 +1,24 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+{:4000}
+	GOSUB {:4016}:GOSUB {:4002}:&"{f6}{rvrs on} Scan Another? {rvrs off}":GOSUB 1907:ON a GOTO {:4000}:RETURN
+{:4002}
+	dr=2:a$="nm.log "+an$+",s,r":GOSUB 1011:a%=.:sh=.:IF e%THEN{:4014}
+{:4004}
+	a%=a%+1:INPUT# 2,a$,b$:&"{f6}{white}#{pound}%a:{rvrs on}{yellow} {pound}$a {rvrs off}{f6}    {green}{$04}"+RIGHT$(b$,11)
+	IF LEN(b$)>11 THEN:&"{f6} To {green}{$04}"+LEFT$(b$,11)
+	&"{f6}{white}Files Transferred:":&,3,2:IF st=.AND sh=.THEN{:4004}
+	CLOSE 2
+{:4012}
+	CLOSE 2:RETURN
+{:4014}
+	&"{f6:2}{white}No Log Found":GOTO {:4012}
+{:4016}
+	&"{clear}{f6}{green}Scan which log?{f6}{white}(Enter ? for list){f6}nm.log {pound}i0":ON-(an$="{f2}")GOTO {:4020}
+	RETURN
+{:4020}
+	dr=2:GOSUB 1009:CLOSE 1:OPEN 1,dv%,0,"$"+dr$+"nm.log*":&"{f6}{white}":&,8,1:CLOSE 1
+	&"{pound}{back arrow}10{f6}{rvrs on}Any Key{rvrs off}{pound}g1":GOTO {:4016}
+	REM "+/SM.scan netlog" sysop menu 180228 x-tec
+
