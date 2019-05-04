@@ -1,30 +1,30 @@
 {number:4000}
-{alpha:alt}
 {step:2}
-	REM "+/lo/bingo" - 8/19/94
-	REM:ifval(left$(d1$,1)<>1thenreturn
-	cm$="Bingo Automaint":GOSUB 1360
-	dr=3:a$="e.bscore,s,r":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
-	&,2,2:w$=a$:&,2,2:CLOSE 2:an$=w$:GOSUB 1046:y=i:IF i=.THEN RETURN
-	x=i:GOSUB 1065:GOSUB 1001:FOR i=1 TO 24:&,2,2:tt$(i)=a$:NEXT
-	tt$(19)=STR$(VAL(tt$(19))+100):a$="":FOR i=1 TO 24:a$=a$+tt$(i)+r$:NEXT
-	GOSUB 1001:PRINT# 2,a$:CLOSE 2:dr=3:a$="e.bscore":GOSUB 1024
-	a$="{green} {rvrs on}"+w$+r$+" {lt. green}Won Weekly Bingo Pool"+r$+"{yellow}{pound}o{$c0}{pound}o{$c0}":GOSUB 1095
-	z=1:tt$=w$:a$="w":GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
-	PRINT# 2,"Weekly Bingo Winner"r$;0;r$;d1$;r$;"[Congratulations]"r$
-	PRINT# 2," {green}The award for winning is 100 credits."r$
-	PRINT# 2," {yellow}Good luck again this week!"r$:PRINT# 2,"{up arrow}":CLOSE 2
-	IF y=1 THEN GOSUB 1060:x=2:i=1:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31
-	IF y=1 THEN GOSUB 1025
-	ON-(y<>1)GOSUB 1060:x=3:i=1:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
-	x=25:ON z GOSUB 1025:CLOSE 2:RETURN
-	REM
-	REM by:
-	REM    port commodore
-	REM    (801-423-2734)
-	REM
-	REM        nissa
-	REM
-	REM   august, 19, 1994
-	REM
-	REM bingo automaint
+{alpha:alt}
+	rem "+/lo/bingo" - bingo automaint 8/19/94
+	rem:ifval(left$(d1$,1)<>1thenreturn
+	cm$="Bingo Automaint":gosub 1360
+	dr=3:a$="e.bscore,s,r":gosub 1011:if e%then close 2:return
+	&,2,2:w$=a$:&,2,2:close 2:an$=w$:gosub 1046:y=i:if i=.then return
+	x=i:gosub 1065:gosub 1001:for i=1 to 24:&,2,2:tt$(i)=a$:next
+	tt$(19)=str$(val(tt$(19))+100):a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next
+	gosub 1001:print# 2,a$:close 2:dr=3:a$="e.bscore":gosub 1024
+	a$="{green} {rvrs on}"+w$+r$+" {lt. green}Won Weekly Bingo Pool"+r$+"{yellow}{pound}o{$c0}{pound}o{$c0}":gosub 1095
+	z=1:tt$=w$:a$="w":gosub 1062:if e%then a$="a":z=.:gosub 1062
+	print# 2,"Weekly Bingo Winner"r$;0;r$;d1$;r$;"[Congratulations]"r$
+	print# 2," {green}The award for winning is 100 credits."r$
+	print# 2," {yellow}Good luck again this week!"r$:print# 2,"{up arrow}":close 2
+	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31
+	if y=1 then gosub 1025
+	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
+	x=25:on z gosub 1025:close 2:return
+	rem
+	rem by:
+	rem    port commodore
+	rem    (801-423-2734)
+	rem
+	rem        nissa
+	rem
+	rem   august, 19, 1994
+	rem
+	rem "+/lo/bingo" - bingo automaint

@@ -1,0 +1,51 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.netsub4"
+	GOSUB 1060:x=4:st(x)=pn:GOSUB 1026
+	x=15:i=pn:GOSUB 1025:x=26:i=pn:GOSUB 1025:x=33:i=pn:GOSUB 1025
+	x=5:st(x)=rn:GOSUB 1026
+	x=16:i=rn:GOSUB 1025:x=27:i=rn:GOSUB 1025:x=34:i=rn:GOSUB 1025:CLOSE 2
+	dr=5:GOSUB 1010:a$=dr$+"++ netlist":&,7,dv%,2:GOSUB 1012:IF e%THEN{:4068}
+	&"{f6:2}  {cyan}{rvrs on} Checking for Outgoing Messages... "
+	dr=2:a$="nm.P.sub*,s,r":GOSUB 1011:CLOSE 2:IF e%THEN{:4068}
+	FOR i=1 TO 60:dr=2:GOSUB 1010:a$=dr$+"nm.netsub"+STR$(i):&,16,2,dv%:GOSUB 1012
+	IF e%THEN i=60:NEXT:GOTO {:4068}
+	r=0:&,16:z$=a$+"":IF a%(0)=0 THEN NEXT:GOTO {:4068}
+	&"{f6:2} {rvrs on}{gray3} Checking {f5}{pound}$z{f5}..."
+	bl$=an$+"":FOR ii=1 TO a%(0):a$="nm.P.sub"+STR$(a%(ii))+",s,r":dr=2:GOSUB 1011
+	IF e%THEN NEXT:NEXT:GOTO {:4068}
+	FOR xx=1 TO LEN(bl$)STEP 3:IF MID$(bl$,xx,3)="---"THEN NEXT:GOSUB {:4056}:NEXT:NEXT:GOTO {:4068}
+	y$=nn$:&"{f6:2}{lt. blue}Distributing {f5}{pound}$z{f5}{f6}NetSub Messages from {pound}$y to "+MID$(bl$,xx,3)+"..."
+	a$="nm.P.sub"+STR$(a%(ii))+",s,r":dr=2:GOSUB 1011
+	b$=dr$+"nm.P."+MID$(bl$,xx,3)+"/"+nn$+",s,":CLOSE 3:OPEN 3,dv%,3,b$+"a"
+	GOSUB 1012:IF e%THEN CLOSE 3:OPEN 3,dv%,3,b$+"w"
+{:4038}
+	&,2,2:a=-(st=.):ON a+1 GOTO {:4054}:&,2,2:a=-(st=.):bb$(5)="mt: "+a$:ON a+1 GOTO {:4054}
+	&,2,2:a=-(st=.):bb$(2)="fr: "+a$:ON a+1 GOTO {:4054}:&,2,2:bb$(7)="st:":yy=7
+	IF LEFT$(a$,1)="*"THEN bb$(7)="ms: "+MID$(a$,2):bb$(8)="st:":yy=8
+	ON a+1 GOTO {:4054}:&,2,2:a=-(st=.):bb$(4)="tr:"+a$:ON a+1 GOTO {:4054}
+	bb$(1)="to: "+z$
+	bb$(6)="sd: "+d1$:bb$(3)="id: "+nn$:FOR x=1 TO yy:PRINT# 3,bb$(x):NEXT
+{:4050}
+	&,2,2:a=-(st=.):PRINT# 3,a$:IF a=1 AND a$<>"{up arrow}"THEN{:4050}
+	IF a$<>"{up arrow}"THEN PRINT# 3,"{up arrow}"
+{:4054}
+	ON a GOTO {:4038}:CLOSE 2:CLOSE 3:GOSUB {:4058}:NEXT:GOSUB {:4056}:NEXT:NEXT:GOTO {:4068}
+{:4056}
+	dr=2:a$="nm.P.sub"+STR$(a%(ii)):GOTO 1024
+{:4058}
+	b$=MID$(bl$,xx,3)+"/"+nn$:b$=b$+"/A/nm.P."+b$
+	a$="nm.list,s,r":dr=2:GOSUB 1011:IF e%THEN a$="nm.list,s,w":GOTO {:4066}
+{:4062}
+	&,2,2:IF a$=b$THEN CLOSE 2:RETURN
+	ON-(st=.)GOTO {:4062}:CLOSE 2:a$="nm.list,s,a"
+{:4066}
+	tz=1:dr=2:GOSUB 1011:PRINT# 2,b$:CLOSE 2:RETURN
+{:4068}
+	IF tz=.THEN:&"{f6:2}{orange}No Messages Sent{pound}q0{f6:2}":GOTO {:4072}
+	&"{f6:2}{lt. green}Message Transfer Complete{pound}q0{f6:2}"
+{:4072}
+	x=3:GOSUB 3002:a%=.:pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ net":&,7,dv%,2:RETURN
+	copr.1990 NEW image 12/18/90 10:00p
+

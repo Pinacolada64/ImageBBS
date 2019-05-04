@@ -1,0 +1,42 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&"{f6:2} {gray3}{rvrs on} Image NetSubs V2.0  10/11/94  8:40PM"
+	&"{f6:2}{green}Processing NetSubs...":CLOSE 3:tt=.:pr=-1:pn=.:rn=.:tz=.
+	dr=2:a$="nm.list,s,r":GOSUB 1011:IF e%=.THEN{:4008}
+{:4006}
+	CLOSE 2:&"{f6:2}        {lt. red}{rvrs on} No Incoming Messages...{f6}":GOTO {:4040}
+{:4008}
+	dr=2:a$="nm.list,s,r":GOSUB 1011
+{:4010}
+	&,2,2:b$=a$:a=-(st=.)
+	IF MID$(b$,11,8)="nm.P."+nn$THEN tt=tt+1:tt$(tt)=MID$(b$,11)+",s,r":GOTO {:4020}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.templist,s,a":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,dr$+"nm.templist,s,w"
+	PRINT# 3,b$:CLOSE 3
+{:4020}
+	ON a GOTO {:4010}:CLOSE 2:a$="nm.list":GOSUB 1024
+	PRINT# 15,"r"+dr$+"nm.list="+dr$+"nm.templist":CLOSE 15:IF tt=.THEN{:4006}
+	&"{f6:2}{lt. green}Reading NetSub Configuration..."
+	dr=5:GOSUB 1010:a$=dr$+"++ netlist":&,7,dv%,2:GOSUB 1012:IF e%THEN RETURN
+	a%=.:dr=2:GOSUB 1010:FOR i=1 TO 60:a$=dr$+"nm.netsub"+STR$(i):&,16,2,dv%
+	GOSUB 1012:IF e%THEN i=60:GOTO {:4036}
+	an$="":a$="":&,16:a%=a%+1:bn=LEN(an$):dt$(i)=an$+a$
+	PRINT# 15,"s"dr$"nm.P.temp"+STR$(i)
+{:4036}
+	NEXT:n=a%:CLOSE 15:&"{f6:2}{yellow}{pound}#0{pound}%a NetSubs Defined...":ON a%+1 GOTO {:4040}:GOSUB {:4050}
+	ON x GOTO {:4040}:a$="netsub2":GOSUB 3641:GOTO 2600
+{:4040}
+	a$="netsub4":GOSUB 3641:GOTO 2600
+{:4042}
+	x=1:&"{f6} {orange}{rvrs on} Error - Incoming Messages Not Sorted! ":RETURN
+{:4044}
+	dr=2:GOSUB 1010:b$="nm.P.track"+STR$(i)+STR$(x):a$=dr$+b$:&,16,2,dv%
+	GOSUB 1012:IF e%THEN RETURN
+	&,16,7:a$=b$:dr=2:GOSUB 1024:a$=dr$+b$:&,16,3,dv%:x=x+1:GOTO {:4044}
+{:4050}
+	dr=5:GOSUB 1010:a$=dr$+"++ netsub":&,7,dv%,2:GOSUB 1012:IF e%THEN{:4042}
+	&"{f6:2}{white}Message Tracking System Initialized...":x=.:RETURN
+	copr. 1994 NEW image 10/14/94
+	rem "+/NM.netsub1"
+

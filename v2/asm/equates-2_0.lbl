@@ -1,7 +1,7 @@
 ;
 ; image 2.0 equates
 ;
-	var	= $61	; $61-$66: FAC1, Floating Point Accumulator #1
+	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
 	chrget	= $0073	; two bytes for zero-page JSR
 	chrgot	= $0079 ; same
 	status	= $90	; Kernal I/O Status Word
@@ -72,17 +72,23 @@
 	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
 
 ; Image routines:
-
+; "use_build" is un-defined in build.lbl so the labels defined here which most other modules use
+; don't result in "redefined label" errors in build.lbl which has them defined already.
+; FastAssembler apparently didn't output an error upon label redefinition.
 	jmptbl	= $a000
 	outastrp= $cd00
+{ifndef:use_build}
 	usetbl1	= $cd03
 	swapper	= $cd06
 	swapagn	= $cd09
+{endif}
 	trace	= $cd0c
+{ifndef:use_build}
 	chkspcl	= $cd0f
 	convchr	= $cd12
-	buffer	= $ce77
 	buf2	= $ce27
+	buffer	= $ce77
+{endif}
 ;
 ; serial # stuff
 ;
@@ -334,4 +340,4 @@
 	loadprg	= wedgemem+6
 	arraysav= wedgemem+9
 	arrayres= wedgemem+12
-	forcegc	= wedgemem+15
+	forcegc	= wedgemem+15

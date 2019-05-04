@@ -62,6 +62,8 @@ Exit with error or conditionally exit with error
         .error "Unfinished here..."
         .cerror * > $1200, "Program too long by ", * - $1200, " bytes"
 
+===
+
 Regarding telnet binary mode:
 https://github.com/FozzTexx/tcpser/commit/321b2ff26087dacb85032e7bea5315b4924ced8e
 mentions "set parity to space" to enable 8-bit binary transmission. Interesting.
@@ -79,3 +81,19 @@ http://stanislavs.org/helppc/hayes_modem_info.html
  `----------- 8th bit, 0=space,1=mark (8 bit only)
 
 ats13=%00011010 = 26
+
+===
+
+Regex to format source code:
+(^[^\t;].+[^:])$ -> \t\1
+
+Not starting with tab or comment, capture lines not ending with ':' (this excludes labels)
+Replace with leading tab and capture group
+
+"git stash list" - Neatening Jack's modules - "git pop" will apply changes
+is there a way to view the stash without popping it?
+
+v2/asm/rs232 pr #46 is newer than local git repo, merge that
+
+casm: locks up if "align $<addr>" is given
+(should be "align <number_of_bytes>")

@@ -1,4 +1,5 @@
 orig $c000
+{uses:equates-2_0.lbl}
 ; include "equat.s",8
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.ecs"
 ; print pass: a=0
@@ -26,7 +27,7 @@ orig $c000
 ; 24-31..password (7 chars)
 ; 32.....credits
 ;
-ecs:
+@ecs:
 	cpx #0
 	bne ecs1
 	jmp ecschk
@@ -102,7 +103,8 @@ ecsc3:
 	sta var+3
 	lda #>ecsdefs
 	sta var+4
-ecsscan: lda (var+3),y
+ecsscan:
+	lda (var+3),y
 	tax
 	and #64
 	beq ecsnext
@@ -111,7 +113,8 @@ ecsscan: lda (var+3),y
 	beq ecsscan1
 	and zzf
 	beq ecsnext
-ecsscan1:ldy #1
+ecsscan1:
+	ldy #1
 	lda (var+3),y
 	and acc
 	bne ecsscan2
@@ -119,19 +122,23 @@ ecsscan1:ldy #1
 	lda (var+3),y
 	and acc+1
 	beq ecsnext
-ecsscan2:ldy #0
+ecsscan2:
+	ldy #0
 	lda (var+3),y
 	pha
 	and #8
 	bne ecsscan3
 	jsr ecslong
 	jmp ecsscan4
-ecsscan3:jsr ecsshort
-ecsscan4:pla
+ecsscan3:
+	jsr ecsshort
+ecsscan4:
+	pla
 	bcc ecsnext
 ; got it!
 	bmi ecsscan5
-	lda #5:bne ecsquit
+	lda #5
+	bne ecsquit
 ecsscan5:
 	lsr
 	lsr
@@ -140,7 +147,8 @@ ecsscan5:
 	and #3
 	clc
 	adc #1
-ecsquit: sta var+1
+ecsquit:
+	sta var+1
 	lda #0
 	sta var
 	sta var+2
@@ -169,14 +177,19 @@ ecsnext1:
 	adc var+4
 	sta var+4
 	cmp #>ecsdefnd
-	bne ecsscan
+;	bne ecsscan	; FIXME: can't reach ecsscan
+; start pina addition:
+	beq ecsnext2
+	jmp ecsscan
+ecsnext2:
+; end pina addition
 	lda #0
 	beq ecsquit
 
 acc:
-	word 0
+	word $0000
 zzf:
-	byte 0
+	byte $00
 
 ; check long command, exits with carry clear=not equal
 ecslong:
@@ -409,7 +422,7 @@ ecspl2:
 	adc $6a
 	sta $6a
 	rts
-;
+
 getln:
 	lda #35
 	jmp usetbl1
@@ -463,13 +476,16 @@ ecssave:
 	lda #var
 	jmp savef
 
+; FIXME: not sure what this is doing - aligning to 32-byte boundary?
 ; if int(*/32)<>(*/32) then for i=*-int(*/32)*32 to 31:byte 0:next
 
 ecsdefs:
-	byte 0
+	byte $00
 ; end of ecs defs? - rns
-	ecsdefnd = ecs+$a00
-
+	orig $c9ff
+;	ecsdefnd = ecs + $a00
+ecsdefnd:
+	byte $00
 ; next pass:close 8
 ; print *-ecs "Bytes"
 ; a=ecsdefnd - ecsdefs

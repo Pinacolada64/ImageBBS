@@ -1,0 +1,189 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/SM.netfile"
+	v=1.2:GOSUB {:4062}:GOSUB 1073:RETURN
+{:4004}
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011
+	RETURN
+{:4008}
+	GOSUB {:4038}:IF e%THEN tt$="":RETURN
+{:4010}
+	&"{f6}":p$="{f6}{yellow}Destination Node ({rvrs on}{cyan}? List{rvrs off}{yellow})":GOSUB 1006:IF an$="{f2}"THEN GOSUB {:4020}:GOTO {:4010}
+	a%=VAL(an$):a$=an$:IF a%<1 THEN:&,16,2
+	IF a%<1 THEN:&"{f6}No Node Found.{f6}":tt$="":RETURN
+	GOSUB {:4026}:x=a%+1:GOSUB {:4018}:tt$=a$+"/"+zn$:RETURN
+{:4018}
+	GOSUB 1001:&,2,2:RETURN
+{:4020}
+	GOSUB {:4026}:FOR i=1 TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,c$,b
+	IF b=.THEN:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:NEXT:CLOSE 2:RETURN
+{:4026}
+	dr=2:a$="nm.nodes":GOSUB 1011:INPUT# 2,n:RETURN
+{:4028}
+	POKE 53252,2:e%=0:&"{f6}{lt. green}Device: {white}{pound}i1":d1%=VAL(an$):IF d1%>0 AND d1%<7 THEN dr=d1%:GOTO {:4034}
+	dr=0:IF d1%<7 OR d1%>32 THEN e%=1:RETURN
+	POKE 53252,3:&"{lt. green}Drive : {white}{pound}i1":d2%=VAL(an$):IF d2%<.OR d2%>255 THEN e%=1:RETURN
+{:4034}
+	GOSUB 1010:d1%=dv%:d2%=VAL(dr$):CLOSE 15:IF st THEN e%=1:&"{f6}{lt. red}Device Not Present!{f6}"
+	GOTO 1010
+{:4038}
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:GOSUB 1012:IF e%THEN RETURN
+	GOSUB {:4054}:IF e%=0 THEN RETURN
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN:&:GOTO {:4054}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.nodelist,p,w":PRINT# 3,CHR$(0)CHR$(194);
+	INPUT# 2,n:PRINT# 3,CHR$(n);:IF n=0 THEN{:4054}
+	FOR i=1 TO n:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,b$,b$,a,b,c,d
+	PRINT# 3,LEFT$(a$+"---",3)CHR$(0)CHR$(a)CHR$(b)CHR$(c)CHR$(d);
+	NEXT
+{:4054}
+	CLOSE 3:CLOSE 2:dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOTO 1012
+{:4056}
+	CLOSE 2:&"{white}Network {lt. red}Not Configured!{f6:2}":RETURN
+{:4058}
+	CLOSE 2:&"{lt. red}Configuration Error!{f6:2}":RETURN
+{:4060}
+	&"{f6:2}{lt. red}Only {white}the SysOp can use this!{f6}":RETURN
+{:4062}
+	&"{clear}{f6:2}{white}NetFile Utility:  {lt. blue}Reading Nodes":IF id>1 THEN{:4060}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN{:4056}
+	&,2,2:nn=VAL(a$):nh=nn:CLOSE 2:dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN{:4056}
+	&,2,2:n=VAL(a$):IF nn>n THEN{:4058}
+	x=nn+1:GOSUB 1001:&,2,2:nn$=a$:CLOSE 2
+	yy=0:dr=2:a$="nm.F.*,s,r":GOSUB 1011:CLOSE 2:IF e%THEN{:4080}
+	OPEN 2,dv%,0,"$"+dr$+"nm.F."+nn$+"*":GET#2,a$,a$:&,8,2,1
+{:4076}
+	&,8,2,1:IF MID$(a$,7,1)=CHR$(34)THEN yy=yy+1:tt$(yy)=a$:GOTO {:4076}
+	CLOSE 2
+{:4080}
+	n%=nn:n$=nn$:zn$=n$:&"{home}{f6:2}{white}NetFile Utility: {lt. blue}{pound}$n{pound}{back arrow}39 {f6}"
+	s$="":q$="is":IF yy<>1 THEN s$="s":q$="are"
+	IF yy=0 THEN{:4092}
+	a%=yy:&"There {pound}$q {pound}%a {f5}nm.F.{f5} file{pound}$s waiting:{f6:2}"
+	FOR z=1 TO yy:a$=LEFT$(tt$(z),24)
+	&"{pound}$a Dissolve? ":GOSUB 1902:a$=tt$(z):ON a GOSUB {:4132}:NEXT z
+{:4092}
+	&"{f6:2}{cyan}Want to send files? {yellow}":GOSUB 1902:ON a GOSUB {:4100}
+	RETURN
+{:4096}
+	GOSUB {:4008}:IF tt$=""THEN{:4124}
+	a=2:GOSUB 1736:d1%=yy:d2%=yz:GOTO {:4108}
+{:4100}
+	GOSUB {:4008}:IF tt$=""THEN{:4124}
+	a=2:GOSUB 1736
+	GOSUB {:4028}:IF e%THEN{:4124}
+	dr=0:GOSUB {:4190}:IF kk=0 THEN{:4124}
+{:4108}
+	dr=2:f$="nm.F."+tt$:GOSUB {:4004}:IF e%THEN:&:GOTO {:4124}
+	d$=MID$(STR$(d2%),2)+":"
+	FOR i=1 TO kk:o$=tt$(i):PRINT# 2,o$r$"("ed$(i)")"
+	CLOSE 3:OPEN 3,d1%,3,d$+o$+",r":&"{clear}{pound}no{pound}n6Scanning File...":SYS 49155
+	CLOSE 3:OPEN 3,d1%,3,d$+o$+",r":&"Copying...":SYS 49152:CLOSE 3:NEXT:CLOSE 2
+	b$=tt$+"/A/"+f$:f$="nm.list":GOSUB {:4004}:IF e%THEN{:4124}
+	PRINT# 2,b$:CLOSE 2
+	GOSUB {:4222}
+{:4124}
+	ON-(kk=.)GOTO {:4128}:tt$="":&"{f6:2}Send same file(s) to another node? {yellow}":GOSUB 1902
+	ON-(a=.)GOTO {:4128}:GOTO {:4096}
+{:4128}
+	&"{f6:2}{cyan}Send More Files? {yellow}":GOSUB 1902:IF a THEN{:4100}
+	RETURN
+{:4132}
+	a=2:GOSUB 1736:o$=MID$(tt$(z),8,12)
+	GOSUB {:4028}:IF e%THEN RETURN
+	dr=0:GOSUB 1010
+	dr=2:GOSUB 1009:CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,r":kk=.
+{:4140}
+	&"{clear}{lt. green}":kk=kk+1:&,2,3:f$=a$:ed$(kk)=f$:&,2,3:d$=a$:ON-(st<>.)GOTO {:4158}:&"{f5}{pound}$f{f5}:"
+{:4142}
+	dr=.:GOSUB 1009:CLOSE 2:OPEN 2,dv%,2,dr$+f$+",w":GOSUB 1012:&"{yellow}{pound}$e{f6:2}":IF e%=.THEN{:4156}
+	&"{white}1.  {lt. blue}Change Name{f6}{white}2.  {lt. blue}Replace{f6}"
+{:4146}
+	&"{pound}g1":ON tr%+1 GOTO {:4158}:ON VAL(an$)GOTO {:4150},{:4148}:GOTO {:4146}
+{:4148}
+	PRINT# 15,"s"dr$+f$:GOTO {:4156}
+{:4150}
+	q=16:GOSUB {:4264}:&"{f6}New Filename:  "
+{:4152}
+	&"{pound}i0":ON-(tr%<1)GOTO {:4158}:IF an$=""THEN{:4152}
+	f$=an$+RIGHT$(f$,2):GOTO {:4142}
+{:4156}
+	&"{clear}{pound}no{pound}n6{f5}{pound}$f{f5}{pound}{back arrow}16{pound}$d":SYS 49158:CLOSE 2:GOTO {:4140}
+{:4158}
+	CLOSE 3:IF tr%<1 THEN RETURN
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$o$
+	&"{clear}{yellow}Sending receipt...."
+	gh$=RIGHT$(o$,3):GOSUB {:4178}:zy$=gh$+"/"+zn$:f$="nm.M."+zy$:GOSUB {:4248}
+	l$="[{rvrs on}NM/file{rvrs off}]":n$=STR$(nh-1):GOSUB {:4252}
+	PRINT# 2,"The following files were dissolved:"r$r$
+	FOR x=1 TO kk:PRINT# 2,ed$(x):NEXT:PRINT# 2,"{up arrow}"
+	CLOSE 2:e1$=zy$+"/A/nm.M."+zy$
+	f$="nm.list":GOSUB {:4248}:PRINT# 2,e1$:CLOSE 2
+	RETURN
+{:4178}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN{:4246}
+	x=1:GOSUB 1001:&,2,2:nh=VAL(a$)+1
+	dr=2:a$="nm.nodes":GOSUB 1011
+	x=1:GOSUB 1001:&,2,2:nn=VAL(a$)
+	FOR x=2 TO nn+1:GOSUB 1001:&,2,2:IF a$=gh$THEN:&,2,2:&,2,2:&,2,2:z$=a$:x=nn+1
+	NEXT:RETURN
+{:4190}
+	POKE 53252,16:&"{lt. blue}{f6}Pattern: ":GOSUB 1499:py$=an$
+	GOSUB {:4258}:&"{f6}"
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+py$:GET#1,a$,a$:&,8,1,1:lp=1:&a$+"{f6}":kk=.
+{:4196}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:4210}
+	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$:IF g$<>"p"AND g$<>"s"THEN{:4196}
+	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
+	NEXT:hn=hn+1:ON-(hn<hm)GOTO {:4196}:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
+	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):&MID$("No   Yes  StartAbort",x*5+1,5)
+	&"{f6}":ON x+1 GOTO {:4212},{:4208},{:4210},{:4210}
+{:4208}
+	kk=kk+1:tt$(kk)=f$+","+g$:GOTO {:4212}
+{:4210}
+	s=1:IF x=3 THEN kk=.
+{:4212}
+	ON-(s=.AND kk<100)GOTO {:4196}:CLOSE 1:IF kk=.THEN RETURN
+	&"{f6:2}":FOR i=1 TO kk:b$=tt$(i):b%=i:&"{pound}#2{pound}# {pound}%b-{pound}$b{f6}":NEXT
+	&"{f6:2}Correct? ":GOSUB 1902:IF a=0 THEN kk=0:RETURN
+	FOR i=1 TO kk:a%=i:a$=tt$(i):&"Describe {f5}{pound}$a{f5}: "
+	q=30:GOSUB {:4264}:&"> {pound}i0":ed$(i)=an$:NEXT:yy=d1%:yz=d2%:RETURN
+{:4222}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN{:4246}
+	x=1:GOSUB 1001:&,2,2:nh=VAL(a$)+1
+	dr=2:a$="nm.nodes":GOSUB 1011
+	x=1:GOSUB 1001:&,2,2:nn=VAL(a$)
+	FOR x=2 TO nn+1:GOSUB 1001:&,2,2:gh$=a$:&,2,2:&,2,2:&,2,2:z$=a$:&,2,2:dy$=a$
+	IF gh$=LEFT$(tt$,3)THEN f$="nm.M."+gh$+"/":f$=f$+zn$:tt$=RIGHT$(f$,7):x=nn+1
+	NEXT
+	&"{f6:2}{white}Mail for:  {lt. blue}{pound}$z":GOSUB {:4248}
+	l$="*[{rvrs on}NM/file{rvrs off}]":n$=STR$(nh-1):GOSUB {:4252}
+	FOR x=1 TO i-1
+	PRINT# 2,tt$(x)r$ed$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:e1$=tt$+"/A/nm.M."+tt$
+	dr=2:a$="nm.list,s,a":GOSUB 1011:PRINT# 2,e1$
+{:4246}
+	FOR x=1 TO 15:CLOSE x:NEXT:RETURN
+{:4248}
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011
+	RETURN
+{:4252}
+	tt$(.)="!"+LEFT$(n$+"    ",4):j$="                    "
+	tt$(.)=tt$(.)+LEFT$(bn$+j$,20)+l$
+	PRINT# 2,z$r$na$r$" 0";r$d1$r$tt$(.)r$:RETURN
+{:4258}
+	&"{f6}Skip how many? ":POKE 53252,4
+	hm=.:&"{pound}i1":ON tr%+1 GOTO {:4267}
+	hm=INT(ABS(VAL(an$))):RETURN
+{:4264}
+	IF v=1.3 THEN:&,59,1,q:RETURN
+	POKE 53252,q:RETURN
+{:4267}
+	RETURN
+	REM "(c) ACT 940214"
+	REM"converted from 1.2 x-tec 171226
+	REM sysop menu 180210 x-tec
+

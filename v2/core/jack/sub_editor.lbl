@@ -1,0 +1,101 @@
+{number:60000}
+{alpha:alt}
+{step:2}
+	on im goto {:60076},{:60082}:return
+{:60002}
+	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 5
+{:60004}
+	p$="Filename":b$=b$+" File"
+{:60006}
+	&"{pound}$b {pound}g1":fl=0:if an$<>r$then:&"{pound}h"+chr$(65+len(b$)):fl=1:return
+	&"{f6}":return
+{:60010}
+	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}Total Lines:{f6}Available  : {pound}%a"
+	&"{f6}In Memory  : {pound}%b{f6}Remaining  : {pound}%c":if zz then:&"{f6}Free Memory: {pound}%z"
+	&"{f6:2}":return
+{:60016}
+	p$=pu$:goto 12
+{:60018}
+	pu$=p$:v$="":return
+{:60020}
+	poke 53249,0:poke 1016,kk:poke 1018,4:poke 1019,kk
+	poke 1023,87:a=14:gosub 11:&,52,31,3:if a%=0 then poke 1023,87+a*8
+	pl=.:poke 1022,le+1:gosub {:60120}:a=int((z%-300)/79)+1:if le>a then poke 1022,a+1
+	poke 53252,ll%-2:if zz then poke 1022,254
+	return
+{:60030}
+	b$="Get":gosub {:60004}:on fl goto {:60102}:gosub {:60106}:if v$="" then {:60104}
+{:60032}
+	gosub {:60114}:gosub 350:if a then gosub {:60112}:goto {:60032}
+	gosub 3:a$="r":gosub {:60002}:gosub {:60120}:if e%then close 6:&:goto {:60104}
+{:60036}
+	&,2,6:tt$(kk)=a$:kk=kk+1:gosub {:60122}:on-(z%>100 and kk<254 and st=0)goto {:60036}
+	close 6:goto {:60104}
+{:60040}
+	on kk goto {:60102}:b$="put":gosub {:60004}:on fl goto {:60102}:gosub {:60106}:if v$="" then {:60104}
+{:60042}
+	gosub {:60114}:gosub 350:if a then gosub {:60112}:goto {:60042}
+	gosub 3
+{:60046}
+	a$="w":gosub {:60002}:if e%=. then {:60056}
+{:60048}
+	close 6:&:if e%<>63 then {:60060}
+	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then {:60060}
+	if an$="R"then a$=v$:print# 15,"s"dr$a$:goto {:60046}
+	on-(an$<>"A")goto {:60048}:a$="a":gosub {:60002}:if e% then {:60060}
+{:60056}
+	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
+	next:&,14,6,kk-1
+{:60060}
+	close 6:goto {:60104}
+{:60062}
+	b$="View Directory":gosub {:60006}:on fl goto {:60102}:gosub {:60116}:goto {:60104}
+{:60064}
+	&"Query{f6}":goto {:60104}
+{:60066}
+	b$="Disk Command":gosub {:60006}:on fl goto {:60102}:&"{f6:2}":gosub 360:goto {:60104}
+{:60068}
+	b$="Read":gosub {:60004}:on fl goto {:60102}:gosub {:60106}:if v$="" then {:60104}
+	gosub {:60114}:gosub 350:if a then gosub {:60112}:goto {:60104}
+	gosub 3:a$="r":gosub {:60002}:if e%then close 6:&:goto {:60104}
+	&,3,6:close 6:goto {:60104}
+{:60076}
+	gosub {:60018}:kk=1:if le<1 then p$=pu$:kk=.:return
+	gosub {:60020}:dr=1:a$="s.editor":gosub 14
+	b%=.:gosub {:60010}:a=0:goto {:60094}
+{:60082}
+' im=2
+	gosub {:60018}:if le<1 then p$=pu$:kk=.:return
+	goto {:60104}
+{:60086}
+	kk=peek(1016):on a goto {:60088},{:60096},{:60092}:&"{f6:2}":b%=kk-1:kk=.:goto {:60016}
+{:60088}
+	poke 2031,0:b%=kk-1:&"{f6}{pound}%b Lines Used.{f6}":if kk=1 then a=0:goto {:60086}
+	b%=kk:goto {:60016}
+{:60092}
+	poke 2031,0:dr=1:a$="s.menu 3":gosub 13:goto {:60082}
+{:60094}
+	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:60086}
+{:60096}
+	b%=kk-1:if an$="Q" then {:60064}
+	if zz then on-(an$="g")-(an$="p")*2-(an$="$")*3 goto {:60030},{:60040},{:60062}
+	if zz then on-(an$="@")-(an$="&")*2 goto {:60066},{:60068}
+{:60102}
+	a=2:goto {:60094}
+{:60104}
+	b%=kk-1:gosub {:60020}:gosub {:60010}:poke 2031,1:a=1:goto {:60094}
+{:60106}
+	&"{f6:2}":w$=v$:poke 53252,16:&,1,32:if an$=""then an$=v$
+	if an$<>v$then v$=an$
+	return
+{:60112}
+	&"Device Not Present!{f6}":return
+{:60114}
+	&"{f6}Device,Drive: {pound}i1":an$="  "+an$:return
+{:60116}
+	gosub {:60114}:gosub 350:on a goto {:60112}:&"{f6}Pattern: {pound}i0":&,15,2
+	close 1:open 1,dv%,0,"$"+dr$+an$:&"{f6}":&,8,1:close 1:return
+{:60120}
+	&,40
+{:60122}
+	z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return

@@ -89,7 +89,7 @@ visual4:
 	jsr getdes
 
 visual5:
-	jsr xgetin
+	jsr @>xgetin
 	pha
 	and #$7f
 	cmp #32
@@ -280,7 +280,7 @@ getdes:
 putdes:
 	lda #34
 	jmp usetbl1
-xgetin:
+@xgetin:
 	lda #23
 	jmp usetbl1
 xchrout1:

@@ -1,74 +1,77 @@
 {number:4000}
 {step:2}
+{alpha:alt}
 {def:debug}
-' +/lo-question - sysop questions
-' question text does not display
+' FIXME: don't commit yet
+	rem "+/lo-question" - sysop questions
+' FIXME: question text does not display
 ' fd: whether this gets shadowed to feedback
-	DR=3:A$="E.SYSOP":GOSUB 1011:X=ID:GOSUB 1001
-	&,2,2:ON -(A$="N") GOTO {:4006}:IF A$="{up arrow}" THEN {:4050}
-	IF AC%<=3 THEN{:4006}
+' TODO: Look at using &,27,1 and &,28,1 to save/restore variable pointers?
+	dr=3:a$="e.sysop":gosub 1011:x=id:GOSUB 1001
+	&,2,2:on -(a$="n")-2*(a$="{up arrow}") goto {:4006},{:4050}
+	if ac%<=3 THEN{:4006}
 {ifndef:debug}
 ' take this monthly:
-	IF MID$(D1$,4,2)<>MID$(A$,4,2) THEN {:4008}
+	if mid$(d1$,4,2)<>mid$(a$,4,2) THEN {:4008}
 {endif}
 {:4006}
 ' new: clear tt$()/ed$() arrays:
 	&,11,0:&,11,3:CLOSE 2:RETURN
 {:4008}
-	ED$(1)="HANDLE":ED$(2)="FIRST":ED$(3)="LAST":ED$(4)="ADDRESS"
-	ED$(5)="CITY":ED$(6)="STATE":ED$(7)="ZIPCODE":ED$(8)="IMAGE S#"
-	ED$(9)="BOARD NAME":ED$(10)="VOICE NO.":ED$(11)="BOARD NO."
-	ED$(12)="NODE ID."
-	&"{f6:2}GETTING YOUR CURRENT INFO..."
-	X=ID:GOSUB 1001:FD=.
-	&,2,2:IF A$="{up arrow}" THEN {:4050}
-	GOSUB 1001:FOR I=.TO 12:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
-	TT$(I)=A$:NEXT:FD=.
+	ed$(1)="Handle":ed$(2)="First":ed$(3)="Last":ed$(4)="Address"
+	ed$(5)="City":ed$(6)="State":ed$(7)="ZIP Code":ed$(8)="IMAGE S#"
+	ed$(9)="Board Name":ed$(10)="Voice No.":ed$(11)="Board No."
+	ed$(12)="Node ID"
+	&"{f6:2}Getting Your Current Info..."
+	x=id:GOSUB 1001:fd=.
+	&,2,2:IF a$="{up arrow}" THEN {:4050}
+	GOSUB 1001:FOR i=.TO 12:&,2,2:IF ASC(a$+nl$)=32 THEN a$=MID$(a$,2)
+	tt$(i)=a$:NEXT:fd=.
 {:4026}
-	&"{f6:2}PLEASE VERIFY THE FOLLOWING INFORMATION: "
+	&"{f6:2}Please Verify The Following Information: "
 {:4028}
-	&"{f6:2}NO.{pound}{back arrow}03:INFO:{pound}{back arrow}17CURRENT VALUE{f6}"
-	FOR I=1 TO 12
-	&"{pound}!I{pound}{back arrow}03:"+ED$(I)+"{pound}{back arrow}17:"+TT$(I)+"{f6}"
-	NEXT:&"{f6}IS THIS CORRECT? ":GOSUB 1907:IF FD THEN{:4062}
-	ON A GOTO{:4064}
-	FD=.:&"{f6:2}WHICH NO. IS WRONG? {pound}I1":I=VAL(AN$):IF AN$=""THEN RETURN
-	&"{f6:2}INPUT NEW "+ED$(I)+":{f6}[> "
-	IF I<4 OR I=8 THEN:&"{pound}I1":GOTO {:4046}
-	&"{pound}I0"
+	&"{f6:2}No.{pound}{back arrow}03:Info:{pound}{back arrow}17Current Value:{f6}"
+	FOR i=1 TO 12:b%=i
+	&"{pound}%b{pound}{back arrow}03:"+ed$(i)+"{pound}{back arrow}17:"+tt$(i)+"{f6}"
+	NEXT:&"{f6}Is This Correct? ":GOSUB 1907:IF fd THEN{:4062}
+	ON a GOTO{:4064}
+	fd=.:&"{f6:2}Which No. Is Wrong? {pound}i1":i=VAL(an$):IF an$=""THEN RETURN
+	&"{f6:2}Input New "+ed$(i)+":{f6}[> "
+	IF i<4 OR i=8 THEN:&"{pound}i1":goto {:4046}
+	&"{pound}i0"
 {:4046}
 ' 1907: default to yes
-	ON TR%+1 GOTO 1603:t$=an$:&"{f6:2}IS {pound}$T CORRECT? ":GOSUB 1907:if a then TT$(I)=T$:FD=1
-	GOTO {:4026}
+	on tr%+1 goto 1603:tt$=an$:&"{f6:2}Is {f5}"+tt$+"{f5} Correct? ":gosub 1907:if a=. then {:4026}
+	tt$(i)=tt$:fd=1:goto {:4026}
 {:4050}
-	&"{f6:2}PLEASE PROVIDE THE FOLLOWING INFORMATION: ":POKE 53252,30
-	TT$(1)=NA$:TT$(2)=FF$:TT$(3)=LL$:FOR I=4 TO 12
-	& ED$(I)+"{pound}{back arrow}13: ":IF I=8 THEN:"{pound}I1":goto {:4058}
-	&"{pound}I0"
+	&"{f6:2}Please Provide The Following Information:{f6}":POKE 53252,30
+	tt$(1)=na$:tt$(2)=ff$:tt$(3)=ll$:FOR i=4 TO 12
+	&ed$(i)+"{pound}{back arrow}13: ":IF I=8 THEN:"{pound}i1":goto {:4058}
+	&"{pound}i0"
 {:4058}
-	TT$(I)=AN$:NEXT:if tr%<1 then return
+	tt$(i)=an$:next:if tr%<1 then return
 ' display answers:
-	& "{f6}":FOR I=1 TO 12:& ED$(I)+"{pound}{back arrow}17:"+TT$(I)+"{f6}":NEXT
-	&"{f6:2}IS THIS CORRECT? :":GOSUB 1907:FD=1:if a=. then {:4028}
+	&"{f6}":FOR i=1 TO 12:&ed$(i)+"{pound}{back arrow}17:"+tt$(i)+"{f6}":next
+	&"{f6:2}Is This Correct?: ":gosub 1907:fd=1:if a=. then {:4028}
 {:4062}
-	&"{f6:2}WRITING DATA..."
+	&"{f6:2}Writing Data..."
 {:4064}
-	TT$(.)=D1$:W$="":FOR I=.TO 12:W$=W$+TT$(I)+R$:NEXT
-	X=ID:GOSUB 1001:PRINT# 2,W$:CLOSE 2:IF FD=.THEN RETURN
-	B$="FBACK":GOSUB 1068
-	PRINT# 2,NA$R$ID;R$D1$R$AC%;R$PH$R$RN$R$CO$(CO%)
-	PRINT# 2,AK$+R$+"CHANGED SYSOP DATA"+R$R$
-	PRINT# 2,"HANDLE: "+TT$(1)
-	PRINT# 2,"FIRST:  "+TT$(2)
-	PRINT# 2,"LAST:   "+TT$(3)
-	PRINT# 2,"ADDRESS:{pound}{back arrow}17"+TT$(4)
-	PRINT# 2,"CITY, STATE ZIP: "+TT$(5)+", "+TT$(6)+" "+TT$(7)
-	PRINT# 2,"IMAGE S#:{pound}{back arrow}17"+TT$(8)
-	PRINT# 2,"BOARD NAME:{pound}{back arrow}17"+TT$(9)
-	PRINT# 2,"VOICE NO.:{pound}{back arrow}17"+TT$(10)
-	PRINT# 2,"BOARD NO.:{pound}{back arrow}17"+TT$(11)
-	PRINT# 2,"NODE ID :{pound}{back arrow}17"+TT$(12)
+	tt$(.)=d1$:w$="":FOR i=.TO 12:w$=w$+tt$(i)+r$:NEXT
+	x=id:GOSUB 1001:PRINT# 2,w$:CLOSE 2:IF fd=.THEN RETURN
+	b$="fback":GOSUB 1068
+	PRINT# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)
+	PRINT# 2,"{pound}vjChanged Sysop Data{f6:2}"
+	PRINT# 2,"Handle: "+tt$(1)
+	PRINT# 2,"First:  "+tt$(2)
+	PRINT# 2,"Last:   "+tt$(3)
+	PRINT# 2,"Address:{pound}{back arrow}17"+tt$(4)
+	PRINT# 2,"City, State ZIP: "+tt$(5)+", "+tt$(6)+" "+tt$(7)
+	PRINT# 2,"IMAGE S#:{pound}{back arrow}17"+tt$(8)
+	PRINT# 2,"Board Name:{pound}{back arrow}17"+tt$(9)
+	PRINT# 2,"Voice No.:{pound}{back arrow}17"+tt$(10)
+	PRINT# 2,"Board No.:{pound}{back arrow}17"+tt$(11)
+	PRINT# 2,"Node ID :{pound}{back arrow}17"+tt$(12)
 	PRINT# 2,"{up arrow}"
-	CLOSE 2:GOSUB 1060:I=1:X=1:GOSUB 1025:X=12:GOSUB 1025:X=23:GOSUB 1025
-	X=30:GOSUB 1025:CLOSE 2:RETURN
-	COPR. 1994 NEW IMAGE 9/6/94
+	CLOSE 2:GOSUB 1060:i=1:x=1:GOSUB 1025:x=12:GOSUB 1025:x=23:GOSUB 1025
+	x=30:gosub 1025:close 2:return
+	copr. 1994 new image 9/6/94

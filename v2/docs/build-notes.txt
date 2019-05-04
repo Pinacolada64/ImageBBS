@@ -1,25 +1,31 @@
 12/13/2007
 ==========
 
-To build ML 2.0 (build.s -- runs off drive 8)
+To build "ml 2.0" (build.s -- runs off drive 8)
 
 === START ===
 Pre-build requirements:
 
-Source file:	Builds:		OK?
-===================================
-equat.s		---
-wedge.s		ml.wedge	Yes
-editor.s	ml.editor	Yes
-gc.s		ml.gc		Yes
-ecs.s		ml.ecs		Yes
-struct.s	ml.struct	Yes
-swap1.s		ml.swap1	Yes
-swap2.s		ml.swap2	Yes
-swap3.s		ml.swap3	Yes
+These files are all {include}d into the final "ml 2.0" binary.
+Since many modules share the same load address, they are "linked"
+in, and sections are relocated to their proper load address
+using the "swapper" routine.
+
+FastAssembler			c64list 3.50 or
+source file:	Builds:		casm assembles? Object file:
+=============== =============== =============== ============
+equat.s		n/a		n/a		n/a
+wedge.s		ml.wedge	casm	Yes	wedge.prg
+editor.s	ml.editor	casm	Yes	editor.prg
+gc.s		ml.gc		casm	Yes	garbage-collect.prg
+ecs.s		ml.ecs		casm	Yes	ecs.prg
+struct.s	ml.struct	casm	Yes	struct.prg
+swap1.s		ml.swap1			swap1.prg
+swap2.s		ml.swap2			swap2.prg
+swap3.s		ml.swap3			swap3.prg
 
 Source file:	Builds:		Requires
-================================================
+=============== =============== ================
 rs232/user.s	ml.rs232/user
 rs232/swift.s	ml.rs232/swift
 
@@ -33,7 +39,7 @@ t1.rs232.s	ml.rs232
 (probably the best choice for now)
 
 		- ORG $4300 -
-		(handles 300,600,1200,2400)
+(user port)	(handles 300,600,1200,2400)
 t.rs232.s	ml.rs232
 (18 blocks)	(719 bytes)
 
@@ -41,21 +47,22 @@ image.s		image 2.0	scn.imagelogo
 				col.imagelogo
 				chr.imagelogo
 
-build.s calls:
-================
-jmptb.s
-strio.s
-mcicm.s
-chrio.s
-dskio.s
-irqhn.s
-setup.s
-varbl.s
-miscl.s
-shdlr.s
-modem.s
-calls.s
-intro.s
+build.s		build.lbl
+includes:	includes:
+=========	================
+jmptb.s		jump-table.lbl
+strio.s		string-io.lbl
+mcicm.s		mci-commands.lbl
+chrio.s		character-io.lbl
+dskio.s		disk-io.lbl
+irqhn.s		irq-handler.lbl
+setup.s		setup.lbl
+varbl.s		variables.lbl
+miscl.s		miscellaneous.lbl
+shdlr.s		screen-handler.lbl
+modem.s		modem.lbl
+calls.s		calls.lbl
+intro.s		intro.lbl
 
 ===== END ======
 
@@ -63,6 +70,7 @@ Other files:
 ml patcher.s	ml patcher
 ecsed.s		ml.ecsed
 ecs.s		ml.ecs
+remote.s	ml.remote
 
 Errors:
 inline.s:	Not build requirement? Seems pretty major
