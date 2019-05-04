@@ -1,49 +1,50 @@
-{asm}
-; to include:
-; {uses:..\asm\equates-2_0.lbl}
-	; image 2.0 equates
-	;
-	var	= $61
-	chrget	= $73
-	chrgot	= $79
-	ridbe	= $29b
-	ridbs	= $29c
+;
+; image 2.0 equates
+;
+	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
+	chrget	= $0073	; two bytes for zero-page JSR
+	chrgot	= $0079 ; same
+	status	= $90	; Kernal I/O Status Word
+	ridbe	= $029b	; RS-232: Index to End of Receive Buffer
+	ridbs	= $029c	; RS-232: Index to Start of Receive Buffer
 
-	; cia #2 tod clock stuff
-	ten	= $dc08
-	scs	= $dc09
-	min	= $dc0a
-	hrs	= $dc0b
-;	carrier = $dd01
-
+; CIA #2 Time-of-Day clock stuff
+	ten	= $dc08	; tenths of a second
+	scs	= $dc09 ; seconds
+	min	= $dc0a ; minutes
+	hrs	= $dc0b ; hours
+;	carrier = $dd01 ; FIXME: This definition conflicts with $d009;
+			; "carrier" is referenced by irqhn.s
+			; 56577: CIA #2 Data Port B
+			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
 	colors	= $e8da	; flashing chat page color table
 
-	; kernal routines:
+; Kernal routines:
 
-	getin	= $ffe4
-	chkout	= $ffc9
-	chrout	= $ffd2
-	clrchn	= $ffcc
-	chkin	= $ffc6
-	setnam	= $ffbd
-	setlfs	= $ffba
-	loadf	= $ffd5
-	savef	= $ffd8
-	readst	= $ffb7
-	chrin	= $ffcf
 	setmsg	= $ff90
+	readst	= $ffb7
+	setlfs	= $ffba
+	setnam	= $ffbd
 	openf	= $ffc0
 	closef	= $ffc3
+	chkin	= $ffc6
+	chkout	= $ffc9
+	clrchn	= $ffcc
+	chrin	= $ffcf
+	chrout	= $ffd2
+	loadf	= $ffd5
+	savef	= $ffd8
+	getin	= $ffe4
 
-	; extended basic tokens:
+; Extended BASIC tokens:
 
 	poketok	= 151	; poke $addr,$val
 	peektok	= 194	; peek($addr)
 	systok	= 158	; sys $addr
-	loadtok	= 147
-	newtok	= 162	; "new <line_num>" erases <line_num> on
+	loadtok	= 147	; load"filename",<device>,<segment>
+	newtok	= 162	; "new <line_num>" erases <line_num>-
 
-	; BASIC routines:
+; BASIC routines:
 
 	error	= $a437
 	linkprg	= $a533
@@ -68,26 +69,32 @@
 	retval	= $bc49
 
 	syscll	= $e130
-	getfile	= $e1d4 ; 57812 (print last filename)
+	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
 
-	; image routines:
-
+; Image routines:
+; "use_build" is un-defined in build.lbl so the labels defined here which most other modules use
+; don't result in "redefined label" errors in build.lbl which has them defined already.
+; FastAssembler apparently didn't output an error upon label redefinition.
 	jmptbl	= $a000
 	outastrp= $cd00
+{ifndef:use_build}
 	usetbl1	= $cd03
 	swapper	= $cd06
 	swapagn	= $cd09
+{endif}
 	trace	= $cd0c
+{ifndef:use_build}
 	chkspcl	= $cd0f
 	convchr	= $cd12
-	buffer	= $ce77
 	buf2	= $ce27
-	;
-	; serial # stuff
-	;
+	buffer	= $ce77
+{endif}
+;
+; serial # stuff
+;
 	bsnpre	= $02fd	; 765 serial # prefix (a/b/g...)
 	bsnval	= $02fe	; 766 serial # lo byte, 767=hi byte
-	;
+
 	death	= $1800
 	prgstart= $1801
 	bmpstart= $2001
@@ -97,30 +104,30 @@
 	imstart	= $5001
 	protostart = $c000
 	protoend= $ca80
-	;
-	; module line #s/sizes:
-	;
+;
+; module line #s/sizes:
+;
 	mainline= 1000
 	trapline= 2000
 	imodline= 2300
 	immdline= 3000
 	immdsize= $a00
-	;
-	; screen display stuff:
-	;
-	tdisp	= $0400+960
-	tcolr	= $d800+960
-	sdisp	= $0400+920
-	scolr	= $d800+920
+;
+; screen display stuff:
+;
 	ldisp	= $0400+640
 	lcolr	= $d800+640
 	adisp	= $0400+880
 	acolr	= $d800+880
+	sdisp	= $0400+920
+	scolr	= $d800+920
+	tdisp	= $0400+960
+	tcolr	= $d800+960
 
 ; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
 
 	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
-	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
+ 	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
 
 	cassbuff= 828
 	idlemax	= 830
@@ -133,7 +140,7 @@
 	wrapbuf	= 870 ; 80 bytes
 	wrapflg	= 950
 	modclmn	= 951 ; user's screen width
-	ptrclmn	= 952 ; printer column?
+	ptrclmn	= 952 ; printer column [?]
 	wrapind	= 953
 	wrapdmp	= 954
 	ptrclm	= 955
@@ -151,12 +158,12 @@
 	blnkcntr= 967	; screen blank counter
 	ptrlin	= 968
 	ptrlinm	= 969
-	usrlin	= 970   ; mp%: user's screen height?
-	usrlinm	= 971	; how many lines output to modem?
+	usrlin	= 970   ; mp%: user's screen height [?]
+	usrlinm	= 971	; how many lines output to modem [?]
 	fredmode= 972
-	montbl	= 973	; 36 bytes (12*3)
+	montbl	= 973	; month names, 36 bytes (12*3)
 	emptym1	= 1009	; 1 byte
-	timeset	= 1010	; "time has been set" flag
+	timeset	= 1010	; "time has been set" flag: 0=no, flash bottom screen line
 	flag1	= 1011
 	case1	= 1012
 	temp3	= 1015
@@ -164,87 +171,87 @@
 	comm	= 1017
 	flags	= 1018
 	cline	= 1019
-	lines	= 1022 ; $03F8: kk, # of lines in text editor buffer
+	lines	= 1022 ; $03f8: kk, # of lines in text editor buffer
 	modes	= 1023
-	;
-	; garbage collection stuff?
-	;
-	gc	= $c000
-	gchide	= $e000
-	gclen	= 4
-	;
-	; extended command set stuff:
-	;
-	ecs	= $c000
-	ecshide	= $e400
-	ecslen	= 10
-	;
-	; screen parameters
-	;
-	mreverse= 199	; $c7
+;
+; garbage collection stuff
+;
+	gc	= $c000	; module load addr
+	gchide	= $e000	; swaps to
+	gclen	= 4	; # pages
+;
+; extended command set stuff:
+;
+	ecs	= $c000	; module load addr
+	ecshide	= $e400	; swaps to
+	ecslen	= 10	; # pages (seems like a lot)
+;
+; screen parameters
+;
+	rvs	= 199	; $c7 Flag: Print Reverse Characters? 0=No
 	crsrflg	= 204	; $cc
 	undchr	= 206	; $ce
-	crsrmode= 207	; $cf, Flag: Was Last Cursor Blink on or off?
-	; This location keeps track of whether, during the current cursor blink,
-	; the character under the cursor was reversed, or was restored to
-	; normal. This location will contain a 0 if the character is reversed,
-	; and a 1 if the character is restored to its non-reversed status.
+	crsrmode= 207	; $cf Flag: Was Last Cursor Blink on or off?
 	curptr	= 209	; $d1
 	scnpos	= 211	; $d3, current screen column (0-39)
-	scnclm	= scnpos
+	scnclm	= scnpos; screen column
 	sline	= 214	; $d6, current screen row (0-24)
 	colptr	= 243	; $f3
 
-	mcolor	= 646	; $0286
+; original docs had this labeled "mcolor," same as $07ec (MCI color).
+; I'm favoring "color," "Mapping the C64"'s label:
+	color	= 646	; $0286: Current Foreground Color for Text
 	undcol	= 647	; $0287
-	;
-	; Message Command Interpreter variables:
-	;
-	mjump	= $07e8	; 2024
-	mresult	= $07e9	; 2025
-	mspeed	= $07ea	; 2026
-	mprint	= $07eb	; 2027
-;	mcolor	= $07ec	; 2028
-;	mprtr	= $07ed	; 2029
-;	mreverse= $07ee	; 2030
-	mci	= $07ef	; 2031
-	mdigits	= $07f0	; 2032
+;
+; Message Command Interpreter variables:
+;
+	mjump	= $07e8	; 2024: # of lines to skip for £J, £E, £D
+	mresult	= $07e9	; 2025: Result of £A, £T
+	mspeed	= $07ea	; 2026: Print speed for £S
+	mprint	= $07eb	; 2027: Print mode for £P
+	mcolor	= $07ec	; 2028: Current color for £C
+	mprtr	= $07ed	; 2029: Printer flag for £L
+	mreverse= $07ee	; 2030: Reverse mode flag for £R
+	mci	= $07ef	; 2031: 0=don't interpret MCI
+	mdigits	= $07f0	; 2032: Number of digits for £#
 
 	carrst	= $07f1	; 2033: modem carrier status
 	tsp1	= $07f2	; 2034: transmit speed lo-byte
 	tsp2	= $07f3	; 2035: transmit speed hi-byte
-	chks	= $07f4	; 2036
-	readmode= $07f6	; 2038
-	filenum	= $07f7	; 2039
+	chks	= $07f4	; 2036: Checkmark flag for Lightbar (left side)
+; unofficially added by Pinacolada:
+	chk_rt	= $07f5 ; 2037: Checkmark flag for Lightbar (right side)
+	readmode= $07f6	; 2038: [1.2] Stores the unabortable file read flag
+	filenum	= $07f7	; 2039: [1.2] Stores the file number for read0/dskin
 	tmp5	= $07f8	; 2040
-	abtchr	= $07f9	; 2041
-	clock	= $07fa ; 2042
-	filetyp	= $07fb	; 2043
+	abtchr	= $07f9	; 2041: [1.2] Alternate abort character (works like <space>)
+	clock	= $07fa ; 2042: [1.2] 1=Turns on idle screen big clock
+	filetyp	= $07fb	; 2043: [1.2] Filetype for Punter transfer protocol
 	tmp1	= $07fc	; 2044
 	tmp2	= $07fd	; 2045
 	tmp3	= $07fe	; 2046
 	tmp4	= $07ff	; 2047
 
-	; BBS flags
+; BBS flags (really VIC-II registers)
 
-	local	= $d000 ; 53248
+	local	= $d000 ; 53248: 1=no modem output with &
 	case	= $d001 ; 53249
 	editor	= $d002 ; 53250
-	tsr	= $d003 ; 53251 - needed by inline.s, I think
-	llen	= $d004 ; 53252 - input line length
+	tsr	= $d003 ; 53251: needed by inline.s, I think
+	llen	= $d004 ; 53252: input line length
 	flag	= $d005 ; 53253
 	chat	= $d006 ; 53254
 	inchat	= $d007 ; 53255
-	chatpage= $d008 ; 53256
-	carrier	= $d009 ; 53257
+	chatpage= $d008 ; 53256: 1=chat page on
+	access	= $d009 ; 53257: [from 1.2] 2.0 was labeled "carrier"
 	mxor	= $d00a ; 53258
 	mkolor	= $d00b ; 53259
 	mupcase	= $d00c ; 53260
 	irqcount= $d00d ; 53261
 	trans	= $d00e ; 53262
 	index	= $d00f ; 53263
-	;
-	tempscn = $1000 ;$140 bytes
+
+	tempscn = $1000 ; $140 bytes
 	tempscn0= tempscn+000
 	tempscn1= tempscn+040
 	tempscn2= tempscn+080
@@ -263,7 +270,7 @@
 	tempcol6= tempcol+240
 	tempcol7= tempcol+280
 	emptym3	= $1280 ; 4736, 96 bytes
-	;
+
 	idlejif	= $12e0	; 4832
 	idlesec	= $12e1	; 4833
 	idleten	= $12e2	; 4834
@@ -271,13 +278,13 @@
 	curdsp	= $12e4	; 4836
 	bar	= $12e5	; 4837
 	tsr2	= $12e6	; 4838
-	mright	= $12e7	; 4839
-	mleft	= $12e8	; 4840
+	mright	= $12e7	; 4839: £m> right margin
+	mleft	= $12e8	; 4840: £m< left margin
 	cphase	= $12e9	; 4841
 	key	= $12ea	; 4842
 	shft	= $12eb	; 4843
 
-	ptrlnfd	= $12f0	; 4848 printer linefeed - +/IM.misc has 17136 ($42f0)
+	ptrlnfd	= $12f0	; 4848: printer linefeed. 1.3's +/IM.misc is $42f0 (17136)
 	ha577	= $12f1	; 4849
 	mask	= $12f2	; 4850
 	scnmode	= $12f3	; 4851
@@ -292,9 +299,9 @@
 	tmp6	= $12fc	; 4860
 	tmp7	= $12fd	; 4861
 	freq	= $12fe	; 4862
-	;
-	; rs232 jump table
-	;
+;
+; rs232 jump table
+;
 	rs232	= $0800
 	rsinabl = rs232 + $03
 	rsdisab = rs232 + $06
