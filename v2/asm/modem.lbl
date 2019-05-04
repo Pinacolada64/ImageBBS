@@ -66,7 +66,7 @@ outmodh:
 	ldx interm
 	bne outmodh1
 	jsr outm
-	lda #" "
+	lda #' '
 	jsr outm
 outmodh1:
 	lda #08	; ctrl-h
@@ -258,11 +258,12 @@ ansi2:
 
 ansiclrs:	ascii "7716524333107247"
 ansiints:	ascii "0100000100110110"
-ansibuf:	ascii 27,"[0;"
+ansibuf:	ascii "{27}[0;"
 ansiint:	ascii "0;"
 ansir1:		ascii "3"
 ansicol:	ascii "1;"
 ansir2:		ascii "4"
 ansibak:	ascii "0"
 		byte $6d, 0
-==== BASE ====
+
+

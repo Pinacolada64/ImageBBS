@@ -1,0 +1,90 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-grf2" - wallwriter logon module
+	&"{f6}{yellow}Read {lt. blue}{rvrs on}{$dd:3}{lt. red}Wall{lt. green}Writer?:{rvrs off} ":GOSUB 1902:IF a=.THEN{:4134}
+{:4004}
+	&,5:v=lp:gf=1:nn=1:s$="                    ":s$=s$+s$+s$+s$
+	ON gf+1 GOTO {:4016}:dr=2:a$="nm.config":GOSUB 1011:IF e%THEN nn=.:GOTO {:4016}
+	INPUT# 2,nn,a%:IF((a%AND 2^ac%)=.)OR nn<1 THEN CLOSE 2:nn=.:GOTO {:4016}
+	x=4:GOSUB 1001:&,2,2:kk$=a$:&,2,2:kk$=kk$+"{f1} "+a$
+	a$="nm.nodes":dr=2:GOSUB 1011:IF e%THEN nn=.:GOTO {:4016}
+	x=nn+1:GOSUB 1001:&,2,2:nn$=a$:CLOSE 2
+{:4016}
+	dr=2:a$="nm.grf2":GOSUB 1011:&,2,2:a1=VAL(a$):&,2,2:a2=VAL(a$)
+	&,2,2:a3=VAL(a$):IF a3=.THEN:&"{f6}{yellow}Wall not CONFIGURED!{f6}":CLOSE 2:GOTO {:4118}
+	GOSUB 2912:lp=1:&"{clear}{f6}{blue}{pound}vj{yellow}{pound}{back arrow}05{pound}$qWallWriter v2.0{pound}q0"
+	a$="e.walladds":dr=3:GOSUB 1011:IF e%THEN CLOSE 2:&"{f6}{lt. red}{pound}vz{f6}":GOTO {:4032}
+	x=1:GOSUB 1001:&,2,2:x=VAL(a$):x=INT(RND(.)*x)+2:GOSUB 1001:&,2,2:b$=a$
+	&,2,2:c$=a$:CLOSE 2:a=INT((ll%/2)-(LEN(b$)/2)):b=INT((ll%/2)-(LEN(c$)/2))
+	l$=LEFT$(s$,a):j$=LEFT$(s$,b):&"{f6}{pound}$l{pound}$b{f6}{pound}$j{pound}$c{f6}{blue}{pound}vj{f6}"
+{:4032}
+	a$="nm.grf2":dr=2:GOSUB 1011:IF a1=.THEN:&"{yellow}The Wall Is BLANK!{f6}":GOTO {:4038}
+	&"{purple}Scanning For New Writings{pound}k1..."
+	x=a1:q=.:GOSUB {:4056}:IF q=.THEN:&"{pound}q0{f6:2}{yellow}No New Writings!{f6}"
+{:4038}
+	&"{f6}{lt. green}Wanna Add your words of wisdom? ":GOSUB 1902:IF a=.THEN{:4046}
+	n=76:GOSUB {:4132}:pl=.:&"{f6}{purple}Go ahead and write:{f6}:{yellow} ":&,1,5:IF an$=""THEN{:4046}
+	a$=d1$:b$=RIGHT$(STR$(10000+id),4)+na$:c$="{up arrow}":d$=an$:GOSUB {:4048}
+	x=1:GOSUB 1001:PRINT# 2,a1;r$a2;r$a3:GOSUB 1001:CLOSE 2:ON gf GOSUB {:4078}
+{:4046}
+	CLOSE 2:RETURN
+{:4048}
+	IF a1=.THEN a1=2:a2=2
+	x=a2:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$:a2=a2+1:IF a2=>a3 THEN a2=2
+	IF a2=a1 THEN a1=a1+1:IF a1=>a3 THEN a1=2
+	RETURN
+{:4056}
+	GOSUB 1001:GOSUB {:4086}:IF MID$(a$,2,6)<MID$(ld$,2,6)THEN:&".":GOTO {:4070}
+	IF q=.THEN q=1:&"{pound}q0{f6:2}{yellow}New Writings!{f6:2}{orange}{pound}vz"
+	a$=LEFT$(b$,4):an$=MID$(b$,5):&,15,1:b$=an$:IF c$="{up arrow}"THEN c$=""
+	b=VAL(a$):IF b THEN b$=b$+"-"+cc$+MID$(STR$(b),2):GOTO {:4066}
+	b$=b$+" @ "+MID$(a$,2)
+{:4066}
+	a$=b$:GOSUB {:4076}:b$=a$:IF c$<>""THEN a$=c$:GOSUB {:4076}:c$=a$
+	lp=1:&"{pound}q0{yellow} {pound}$d{f6:2}{pound}$b{pound}$c{f6}{lt. red}{pound}vj"
+{:4070}
+	x=x+1:IF x=>a3 THEN x=2
+	IF x<>a2 AND x<>a1 AND rc=.THEN{:4056}
+	RETURN
+{:4076}
+	a$=RIGHT$(s$+MID$("{cyan}{green}{yellow}{lt. red}{lt. green}{gray3}{white}",INT(RND(1)*7)+1,1)+a$,ll%):RETURN
+{:4078}
+	IF nn=.THEN RETURN
+	a$="nm.B.temp,s,a":dr=2:GOSUB 1011:IF e%THEN a$="nm.B.temp,s,w":GOSUB 1011
+	a$="!"+nn$+na$:PRINT# 2,a$r$kk$r$an$
+{:4084}
+	CLOSE 2:RETURN
+{:4086}
+	&,2,2:e$=a$:&,2,2:b$=a$:&,2,2:c$=a$:&,2,2:d$=a$:a$=e$:s=st:RETURN
+	IF q=.THEN q=1:&"{f6}"
+	a$=LEFT$(b$,4):an$=MID$(b$,5):&,15,1:b$=an$:IF c$="{up arrow}"THEN c$=""
+	b=VAL(a$):IF b THEN b$=b$+"-"+cc$+MID$(STR$(b),2):GOTO {:4096}
+	b$=b$+" @ "+MID$(a$,2)
+{:4096}
+	a$=b$:GOSUB {:4106}:b$=a$:IF c$<>""THEN a$=c$:GOSUB {:4106}:c$=a$
+	lp=1:&"{yellow} {pound}$d{f6:2}{pound}$b{pound}$c{f6}{lt. red}{pound}vj":q=1
+	x=x+1:IF x=>a3 THEN x=2
+	IF x<>a2 AND x<>a1 AND rc=.THEN{:4084}
+	RETURN
+{:4106}
+	a$=RIGHT$(s$+MID$("{cyan}{green}{yellow}{lt. red}{lt. green}{gray3}{white}",INT(RND(1)*7)+1,1)+a$,ll%):RETURN
+	IF nn=.THEN RETURN
+	a$="nm.B.temp,s,a":dr=2:GOSUB 1011:IF e%THEN a$="nm.B.temp,s,w":GOSUB 1011
+	a$="!"+nn$+na$:PRINT# 2,a$r$kk$r$an$
+	CLOSE 2:RETURN
+	&,2,2:e$=a$:&,2,2:b$=a$:&,2,2:c$=a$:&,2,2:d$=a$:a$=e$:s=st:RETURN
+{:4118}
+	IF zz=.THEN RETURN
+	&"{f6}Configure it? ":GOSUB 1907:IF a=.THEN RETURN
+{:4122}
+	n=3:GOSUB {:4132}:&"{f6}Enter max # of messages: {pound}i1":IF an$=""THEN RETURN
+	n=VAL(an$)+3:IF n<23 THEN:&"{f6}Sorry, that is too low.{f6}":GOTO {:4122}
+	&"Building file..."
+	dr=2:a$="nm.grf2,l,"+CHR$(160):GOSUB 1011:x=n:GOSUB 1001:PRINT# 2,"{up arrow}"
+	x=1:GOSUB 1001:PRINT# 2,.;r$;.;r$;n:GOSUB 1001:CLOSE 2:GOTO {:4004}
+{:4132}
+	POKE 53252,n:RETURN
+{:4134}
+	RETURN
+	copr. 1994 NEW image 9/5/94

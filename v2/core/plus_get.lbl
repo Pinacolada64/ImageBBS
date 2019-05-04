@@ -1,12 +1,16 @@
 {number:3000}
+{alpha:alt}
+{step:2}
+' a module for downloading source code files?
+' can be excluded from disk build
 	restore:gosub 1667:d1%=8:d2%=5:gosub {:3002}:goto 1812
 {:3002}
 	read f$:if f$=""then return
-	t$="s":&"{pound}$f,{pound}$t: [{$d9}/{$ce}/{$d1}] {pound}g1":if an$="{$d1}"then:&"{$d1}uit{f6}":return
-	if an$<>"{$d9}"then:&"{$ce}o{f6}":goto {:3002}
-	&"{$d9}es{f6}":poke 2043,1-(t$="s"):an$=f$:a$=f$+","+t$+",r":dr=0:gosub 1011
+	t$="s":&"{pound}$f,{pound}$t: [Y/N/Q] {pound}g1":if an$="Q"then:&"Quit{f6}":return
+	if an$<>"Y"then:&"No{f6}":goto {:3002}
+	&"Yes{f6}":poke 2043,1-(t$="s"):an$=f$:a$=f$+","+t$+",r":dr=0:gosub 1011
 	x=1:an$=f$+","+t$:gosub 2103:&,16,0:close 2
-	if rc=.then:&"{f6}{$a0}{$c1}borted!{f6}"
+	if rc=.then:&"{f6} Aborted!{f6}"
 	&,22,10:goto {:3002}
 	data"xmodem.lst"
 	data"copier.lst","editor.lst","indexr.lst","chksum.lst","kwload.lst"
@@ -19,3 +23,5 @@
 	data"copyright.lst"
 	data"ml-patcher.lst","loadeditor.lst","rs232-swift.lst"
 	data""
+	rem +.get
+

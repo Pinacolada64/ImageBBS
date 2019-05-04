@@ -773,7 +773,7 @@ copy0a:
 	dex
 	cpx numy
 	bcc copy1
-	copy0:
+copy0:
 	jmp cpylns
 	copy1:
 	lda mline

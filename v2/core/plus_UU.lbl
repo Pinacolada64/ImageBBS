@@ -1,114 +1,119 @@
-	R=INT(VAL(MID$(AN$,3,3))):DR=5:GOSUB 1010:A$=DR$+"++ MENU2":&,7,DV%,2
-	&,28,1:DIM M%(22,25,6),U$(50,3),AC$(15,1),YN$(1):PR$=""
-	YN$(0)="{$ce}O":YN$(1)="{$d9}ES":GOSUB 1061
-	FOR I=0 TO 9:X=I+1:GOSUB 1001:&,2,2:AC$(I,0)=A$:&,2,2:AC$(I,1)=A$:NEXT
-	CLOSE 2:IF R THEN AN$="":X=R:goTO {:3016}
+{number:3000}
+{alpha:alt}
+{step:2}
+	r=INT(VAL(MID$(an$,3,3))):dr=5:GOSUB 1010:a$=dr$+"++ menu2":&,7,dv%,2
+	&,28,1:DIM m%(22,25,6),u$(50,3),ac$(15,1),yn$(1):pr$=""
+	yn$(0)="No":yn$(1)="Yes":GOSUB 1061
+	FOR i=0 TO 9:x=i+1:GOSUB 1001:&,2,2:ac$(i,0)=a$:&,2,2:ac$(i,1)=a$:NEXT
+	CLOSE 2:IF r THEN an$="":x=r:GOTO {:3016}
 {:3010}
-	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} {$c9}{$cd}{$c1}{$c7}{$c5} {$d5}SER {$c1}CCOUNT {$c5}DITOR {f6}{cyan}":P$="{$d5}SER {$c5}DIT"
-	A%=UR:&"{f6} {$d5}SERS: {pound}%A{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}DIT.{f6:2}":GOSUB 1006
-	ON-(AN$="")GOTO 1811:X=ABS(INT(VAL(LEFT$(AN$,4))))
+	&"{clear}{f6}{pound}{back arrow}09{white}{rvrs on} IMAGE User Account Editor {f6}{cyan}":p$="User Edit"
+	a%=ur:&"{f6} Users: {pound}%a{f6:2}Enter Handle Or ID# Of User To Edit.{f6:2}":GOSUB 1006
+	ON-(an$="")GOTO 1811:x=ABS(INT(VAL(LEFT$(an$,4))))
 {:3016}
-	IF(X<=UR)AND X>.THEN{:3020}
-	I=0:ON-(AN$<>"")GOSUB 1046:X=I:IF I=0 THEN:&"{f6}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}{pound}W2":goTO {:3010}
+	IF(x<=ur)AND x>.THEN{:3020}
+	i=0:ON-(an$<>"")GOSUB 1046:x=i:IF i=0 THEN:&"{f6}{f5}{pound}v7{f5} Not Found.{f6}{pound}w2":GOTO {:3010}
 {:3020}
-	GOSUB 1065:GOSUB 1001:FOR I=1 TO 24:&,2,2:IF ASC(A$+NL$)=32 THEN A$=MID$(A$,2)
-	U$(I,0)=A$:NEXT:A$=U$(13,0):U$(13,0)=LEFT$(A$,1)
-	FOR I=2 TO 5:U$(22+I,0)=MID$(A$,I,1):NEXT:U$(28,0)=MID$(A$,6)
-	A=VAL(U$(11,0)):U$(30,0)=MID$(STR$(INT(A/256)),2)
-	U$(29,0)=MID$(STR$(INT(A AND 255)),2)
-	A$=U$(23,0):FOR I=1 TO 20:U$(30+I,0)=MID$(A$,I,1):NEXT:U$(48,0)=MID$(A$,18,2)
-	RESTORE:FOR I=1 TO 50:READ T,P,X,U$(I,3):U$(I,1)=U$(I,0):U$(I,2)=" "
-	A$=CHR$(192+X):ON T goSUB {:3040},{:3042},{:3044},{:3046}:IF M%(0,0,P)<X THEN M%(0,0,P)=X
-	NEXT:PG=1:goSUB {:3100}:goTO {:3010}
+	GOSUB 1065:GOSUB 1001:FOR i=1 TO 24:&,2,2:IF ASC(a$+nl$)=32 THEN a$=MID$(a$,2)
+	u$(i,0)=a$:NEXT:a$=u$(13,0):u$(13,0)=LEFT$(a$,1)
+	FOR i=2 TO 5:u$(22+i,0)=MID$(a$,i,1):NEXT:u$(28,0)=MID$(a$,6)
+	a=VAL(u$(11,0)):u$(30,0)=MID$(STR$(INT(a/256)),2)
+	u$(29,0)=MID$(STR$(INT(a AND 255)),2)
+	a$=u$(23,0):FOR i=1 TO 20:u$(30+i,0)=MID$(a$,i,1):NEXT:u$(48,0)=MID$(a$,18,2)
+	RESTORE:FOR i=1 TO 50:READ t,p,x,u$(i,3):u$(i,1)=u$(i,0):u$(i,2)=" "
+	a$=CHR$(192+x):ON t GOSUB {:3040},{:3042},{:3044},{:3046}:IF m%(0,0,p)<x THEN m%(0,0,p)=x
+	NEXT:pg=1:GOSUB {:3100}:GOTO {:3010}
 {:3040}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+U$(I,0):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+u$(i,0):RETURN
 {:3042}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+AC$(VAL(LEFT$(U$(I,0),1)),0):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+ac$(VAL(LEFT$(u$(i,0),1)),0):RETURN
 {:3044}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+CO$(VAL(U$(I,0))):RETURN
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+co$(VAL(u$(i,0))):RETURN
 {:3046}
-	&,16,0,46,M%(0,X,P),A$,U$(I,2),U$(I,3)+YN$(VAL(U$(I,0))):RETURN
-	DATA1,1,1,"{$c8}ANDLE:       "
-	DATA1,1,2,"{$d0}ASSWORD:     "
-	DATA1,1,3,"{$c6}IRST {$ce}AME:   "
-	DATA1,1,4,"{$cc}AST {$ce}AME:    "
-	DATA1,1,5,"{$d0}HONE {$ce}UMBER: "
-	DATA1,1,7,"{$cd}ESSAGE {$c4}ATE: "
-	DATA2,1,6,"{$c1}CCESS {$c7}ROUP: "
-	DATA1,2,8,"{$c3}ALLS {$d4}ODAY:  "
-	DATA1,2,9,"{$d4}OTAL {$c3}ALLS:  "
-	DATA3,3,1,"{$c3}OMPUTER:     "
-	DATA0,0,0,"{$cc}INELEN/{$d3}CREEN"
-	DATA0,0,0,"{$d5}PPER/{$cc}OWER   "
-	DATA0,0,0,"USERFLAGS     "
-	DATA1,3,6,"{$c5}XPERT {$cd}ODE:  "
-	DATA1,2,1,"{$c4}OWNLOADS:    "
-	DATA1,2,2,"{$d5}PLOADS:      "
-	DATA1,2,3,"{$c2}LOCKS {$c4}{$cc}'ED: "
-	DATA1,2,4,"{$c2}LOCKS {$d5}{$cc}'ED: "
-	DATA1,2,7,"{$c3}REDITS:      "
-	DATA1,2,5,"{$d0}OSTS:        "
-	DATA1,2,6,"{$d2}ESPONSES:    "
-	DATA1,1,8,"{$cc}AST {$c3}ALL:    "
-	DATA0,0,0,"ACCESSFLAGS   "
-	DATA1,3,4,"{$cd}ORE {$d0}ROMPT:  "
-	DATA1,3,5,"{$c3}URSOR {$cd}ENUS: "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA0,0,0,"{$d3}OME {$c6}LAG     "
-	DATA1,3,7,"{$d4}IME {$da}ONE:    "
-	DATA1,3,2,"{$cc}INE {$cc}ENGTH:  "
-	DATA1,3,3,"{$d3}CREEN {$cc}INES: "
-	DATA4,5,1,"{$ce}ON-{$d7}EED:       "
-	DATA1,4,10,"{$c3}REDIT {$d2}ATIO:   "
-	DATA4,5,2,"{$cc}OCAL {$cd}AINT:    "
-	DATA4,4,1,"{$d0}OST/{$d2}ESPOND:   "
-	DATA4,4,2,"{$d5}/{$c4} {$c1}CCESS:     "
-	DATA1,4,5,"{$c5}DITOR {$cc}INES:   "
-	DATA4,5,3,"{$d5}NLIMITED {$c4}{$cc}'S: "
-	DATA4,5,4,"{$d2}EMOTE {$cd}AINT:   "
-	DATA4,4,3,"{$c5}-{$cd}AIL:         "
-	DATA4,4,4,"{$d5}SER {$cc}IST:      "
-	DATA4,5,8,"{$c2}{$c1}{$d2}/{$cc}OG {$d6}IEW:   "
-	DATA4,5,5,"{$d3}UBMAINT:       "
-	DATA4,5,6,"{$c6}ILES {$cd}AINT:    "
-	DATA4,5,8,"{$cd}{$c3}{$c9} {$c1}CCESS:     "
-	DATA4,5,7,"{$d0}RIMETIME {$d5}{$c4}S:  "
-	DATA1,4,6,"{$cd}AX {$c9}DLE {$d4}IME:  "
-	DATA1,4,7,"{$c3}ALLS/{$c4}AY:      "
-	DATA1,4,8,"{$d4}IME/{$c3}ALL:      "
-	DATA0,0,0,"TIME/CALL"
-	DATA1,4,9,"{$c4}{$cc}'S/{$c3}ALL:      "
+	&,16,0,46,m%(0,x,p),a$,u$(i,2),u$(i,3)+yn$(VAL(u$(i,0))):RETURN
+	DATA1,1,1,"Handle:       "
+	DATA1,1,2,"Password:     "
+	DATA1,1,3,"First Name:   "
+	DATA1,1,4,"Last Name:    "
+	DATA1,1,5,"Phone Number: "
+	DATA1,1,7,"Message Date: "
+	DATA2,1,6,"Access Group: "
+	DATA1,2,8,"Calls Today:  "
+	DATA1,2,9,"Total Calls:  "
+	DATA3,3,1,"Computer:     "
+	DATA0,0,0,"Linelen/Screen"
+	DATA0,0,0,"Upper/Lower   "
+	DATA0,0,0,"userflags     "
+	DATA1,3,6,"Expert Mode:  "
+	DATA1,2,1,"Downloads:    "
+	DATA1,2,2,"Uploads:      "
+	DATA1,2,3,"Blocks DL'ed: "
+	DATA1,2,4,"Blocks UL'ed: "
+	DATA1,2,7,"Credits:      "
+	DATA1,2,5,"Posts:        "
+	DATA1,2,6,"Responses:    "
+	DATA1,1,8,"Last Call:    "
+	DATA0,0,0,"accessflags   "
+	DATA1,3,4,"More Prompt:  "
+	DATA1,3,5,"Cursor Menus: "
+	DATA0,0,0,"Some Flag     "
+	DATA0,0,0,"Some Flag     "
+	DATA1,3,7,"Time Zone:    "
+	DATA1,3,2,"Line Length:  "
+	DATA1,3,3,"Screen Lines: "
+	DATA4,5,1,"Non-Weed:       "
+	DATA1,4,10,"Credit Ratio:   "
+	DATA4,5,2,"Local Maint:    "
+	DATA4,4,1,"Post/Respond:   "
+	DATA4,4,2,"U/D Access:     "
+	DATA1,4,5,"Editor Lines:   "
+	DATA4,5,3,"Unlimited DL's: "
+	DATA4,5,4,"Remote Maint:   "
+	DATA4,4,3,"E-Mail:         "
+	DATA4,4,4,"User List:      "
+	DATA4,5,8,"BAR/Log View:   "
+	DATA4,5,5,"Submaint:       "
+	DATA4,5,6,"Files Maint:    "
+	DATA4,5,8,"MCI Access:     "
+	DATA4,5,7,"Primetime UDs:  "
+	DATA1,4,6,"Max Idle Time:  "
+	DATA1,4,7,"Calls/Day:      "
+	DATA1,4,8,"Time/Call:      "
+	DATA0,0,0,"time/call"
+	DATA1,4,9,"DL's/Call:      "
 {:3100}
-	IF TR%<1 THEN RETURN
-	LM=0:goSUB {:3150}:KK=M%(0,0,PG):N=KK
-	IF PG<>1 THEN B$="/{$c9}":A$="{$c5}DIT {$d5}SER {$c9}NFORMATION":goSUB {:3152}
-	IF PG<>2 THEN B$="/{$d3}":A$="{$c5}DIT {$d5}SER {$d3}TATS":goSUB {:3152}
-	IF PG<>3 THEN B$="/{$d4}":A$="{$c5}DIT {$d4}ERMINAL {$d0}ARAMETERS":goSUB {:3152}
-	IF PG<>4 THEN B$="/{$c6}":A$="{$c5}DIT {$d5}SER {$c6}LAGS":goSUB {:3152}
-	IF PG<>5 THEN B$="/{$cd}":A$="{$c5}DIT {$d5}SER {$cd}AINT {$c6}LAGS":goSUB {:3152}
-	B$="/{$d1}":A$="{$d1}UIT":goSUB {:3152}
-	&,16,2,46,M%(0,1,PG),N,36,1,N,3,5,0:LM=A%+1:&,70,0,23
-	IF TR%<1 OR LM=N OR LM=0 THEN RETURN
-	IF LM>KK THEN A=LM-KK:PG=A-(A>=PG):goTO {:3100}
-	goSUB {:3150}:goTO {:3100}
+	IF tr%<1 THEN RETURN
+	lm=0:GOSUB {:3150}:kk=m%(0,0,pg):n=kk
+	IF pg<>1 THEN b$="/I":a$="Edit User Information":GOSUB {:3152}
+	IF pg<>2 THEN b$="/S":a$="Edit User Stats":GOSUB {:3152}
+	IF pg<>3 THEN b$="/T":a$="Edit Terminal Parameters":GOSUB {:3152}
+	IF pg<>4 THEN b$="/F":a$="Edit User Flags":GOSUB {:3152}
+	IF pg<>5 THEN b$="/M":a$="Edit User Maint Flags":GOSUB {:3152}
+	b$="/Q":a$="Quit":GOSUB {:3152}
+	&,16,2,46,m%(0,1,pg),n,36,1,n,3,5,0:lm=a%+1:&,70,0,23
+	IF tr%<1 OR lm=n OR lm=0 THEN RETURN
+	IF lm>kk THEN a=lm-kk:pg=a-(a>=pg):GOTO {:3100}
+	GOSUB {:3150}:GOTO {:3100}
 {:3124}
 	RETURN
 {:3150}
-	ON PG goTO {:3154},{:3158},{:3162},{:3166},{:3170}:RETURN
+	ON pg GOTO {:3154},{:3158},{:3162},{:3166},{:3170}:RETURN
 {:3152}
-	N=N+1:&,16,0,46,M%(0,N,PG),B$,"",A$:RETURN
+	n=n+1:&,16,0,46,m%(0,n,pg),b$,"",a$:RETURN
 {:3154}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c9}NFORMATION{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           User Information{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	ON lm GOTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3158}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          {$d5}SER {$d3}TATISTICS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}          User Statistics{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	ON lm GOTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3162}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        {$d4}ERMINAL {$d0}ARAMETERS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}        Terminal Parameters{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	ON lm GOTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3166}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           {$d5}SER {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}           User Flags{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	ON lm GOTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
 {:3170}
-	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      {$d5}SER {$cd}AINT {$c6}LAGS{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
-	ON LM goTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	&"{clear}{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}      User Maint Flags{pound}{back arrow}37{rvrs on}{blue}  {f6}{rvrs on}  {rvrs off}{pound}{back arrow}38{rvrs on} {f6}"
+	ON lm GOTO {:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124},{:3124}:RETURN
+	rem "+.UU"
+

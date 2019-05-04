@@ -1,0 +1,48 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+/lo/autoweed" - autoweed automaint
+	GOSUB 1063:x=39:GOSUB 1001:&,2,2:w=VAL(a$):CLOSE 2:IF w=0 THEN{:4072}
+	a%=w:&"{f6}Autoweed: {pound}%a Months Back{f6}"
+	c$=MID$(d1$,2,6):a=VAL(MID$(c$,3,2))-w:b=VAL(LEFT$(c$,2))
+{:4008}
+	IF a<1 THEN a=a+12:b=b-1:GOTO {:4008}
+	c$=RIGHT$(STR$(100+b),2)+RIGHT$(STR$(100+a),2)+MID$(c$,5)
+	a=4:GOSUB 1736:dr=6:GOSUB 1010:a$=dr$+"u.weedinfo":&,16,1:GOSUB 1012
+	IF e%THEN CLOSE 2:&"Error!{f6}":GOTO {:4072}
+	&"{pound}%a Users in weedinfo file{f6:2}":b%=0:n=a%
+	GOSUB 1065:q=0:&"Cutoff={pound}$c{f6}"
+{:4020}
+	&,16,6:ON-(a%=0)GOTO {:4034}
+	x=a%:GOSUB 1001:FOR i=1 TO 24:&,2,2:tt$(i)=a$:NEXT:a$=tt$(1)
+	b$=MID$(tt$(22),2,6):a=VAL(LEFT$(tt$(23),1)):b=-(b$<c$):d$=MID$(" *",a+1,1)
+	&"{lt. blue} {pound}#3{pound}# {pound}%a{pound}$d{pound}$a{pound}{back arrow}28{pound}$b":IF rc THEN{:4034}
+	a=VAL(LEFT$(tt$(23),1)):b=-(b$<c$)
+	IF b=1 AND a=0 THEN q=q+1:a%(q)=a%:ed$(q)=tt$(1):&" {back arrow}{$c0}"
+	&"{f6}":IF q<30 AND b=1 THEN{:4020}
+{:4034}
+	CLOSE 2:ON-(q=0)GOTO {:4070}
+	dr=6:GOSUB 1010:a$=dr$+"u.weedinfo":&,16,1
+	b$="log":a$="w":GOSUB 1027:IF e%THEN a$="a":GOSUB 1027
+	PRINT# 2,"  {lt. blue}Auto User Weed"r$
+	FOR i=1 TO q:PRINT# 2," {lt. blue}>{white} "RIGHT$(STR$(1000+a%(i)),3)" "ed$(i)
+{:4044}
+	a%=a%(i):&,16,8:IF a%THEN:&,16,5:GOTO {:4044}
+	NEXT:PRINT# 2," {pound}q0{pound}o{$c0}{pound}o{$c0}":CLOSE 2:&"{f6:2}Removing Users:{f6}"
+	dr=6:GOSUB 1010:a$=dr$+"u.weedinfo":PRINT# 15,"s"a$:&,16,2:GOSUB 1012:&
+	dr=6:GOSUB 1010:a$=dr$+"u.index":&,16,1
+	FOR z=1 TO q:a%=a%(z):tt$=ed$(z):a$=tt$:&" {pound}#3{pound}%a  {pound}$a{f6}"
+{:4054}
+	a%=a%(z):&,16,8:IF a%THEN:&,16,5:GOTO {:4054}
+	GOSUB 1065:a$="{up arrow}"+r$+"del"+r$
+	FOR i=3 TO 23:a$=a$+"0"+r$:NEXT:x=a%(z):GOSUB 1001:PRINT# 2,a$:CLOSE 2
+	IF x<l1 THEN l1=x:x=31:GOSUB 1063:GOSUB 1001:PRINT# 2,l1:CLOSE 2
+	a$="r":GOSUB 1062:CLOSE 2:IF e%=.THEN GOSUB 1060:i=-1:x=25:GOSUB 1025:CLOSE 2
+	dr=2:b$=LEFT$(tt$,13):a$="m."+b$:GOSUB 1024:a$="f."+b$:GOSUB 1024
+	NEXT:GOSUB 1081
+	dr=6:GOSUB 1010:a$=dr$+"u.index":PRINT# 15,"s"a$:&,16,2
+{:4070}
+	a%=q:&"{f6} {pound}%a Users Weeded!{f6}"
+{:4072}
+	RETURN
+	copr. 1990 NEW image 12-26-90

@@ -1,0 +1,34 @@
+\EB BBBA A BBAA 
+\X\MA\
+_____________________
+    INVESTMENT MENU    
+  
+ (1) Armies   - $   10..Per Man  
+ (2) Markets  - $ 1000..Each     
+ (3) Mills    - $ 2000..Each     
+ (4) Palace   - $10000..Per Unit 
+ (5) Foundries- $ 7000..Each     
+ (6) Shipyards- $ 8000..Each     
+ (7) Nobles   - $25000..Each     
+ (8) Ships    - $ 5000..Each     
+ (9) Stables  - $10000..Each     
+ (Y)our Current Stats            
+  
+_                       _
+
+\X\MB\
+                    _____________________
+                        INVESTMENT MENU    
+                      
+                     (1) Armies   - $   10..Per Man  
+                     (2) Markets  - $ 1000..Each     
+                     (3) Mills    - $ 2000..Each     
+                     (4) Palace   - $10000..Per Unit 
+                     (5) Foundries- $ 7000..Each     
+                     (6) Shipyards- $ 8000..Each     
+                     (7) Nobles   - $25000..Each     
+                     (8) Ships    - $ 5000..Each     
+                     (9) Stables  - $10000..Each     
+                     (Y)our Current Stats            
+                      
+                    _                       _

@@ -1,0 +1,14 @@
+   Your tournament is a sight to behold with the flags and crests of all the
+nobility in attendance making for a colorful and impressive display.
+
+   Now one of your rivals, Prince Draconas, has suggested a small wager on
+the outcome of the match between his champion and yours.  You hesitantly
+agree.
+
+   Now it is time for the match.  The two Nobles sit astride their charges,
+awaiting the sound of the trumpets.  The trumpets sound, the two champions
+charge, and with a crash of armor, Prince Draconas' champion flies from
+his horse!  You have won!
+
+You win 2 tons of timber!
+               <Press any Key>\g1

@@ -1,0 +1,58 @@
+   A few additions to the game are at
+the main menu, if you hit "H", you
+will hold a tournament.  There are
+12 possibilities: 6 winners and 6
+losers.
+
+   After the battle, you now have the
+option of going on a quest.  There are
+8 regular quests, and then there's
+Zircon's Help.  Zircon's Help is a
+multi-outcome quest.  You may get up
+to five things, and they will not be
+the same each time!  Also, you may
+enrage Zircon!  In this case you will
+LOSE some of your possessions!  Zircon
+may be too busy to see you, also.
+  
+   Also, now you will need a point
+rating of 300 to win on points!!
+
+   There are some other changes but,
+like any good game, you will have to
+discover them, for yourself!
+
+   OK, there is a new routine in the
+ATTACK phase.  You now have the option
+of using a "Sneak Attack".  Please
+note you will lose a turn if you use
+this.  Also, you may not recruit rebel
+forces, attack Nobles, attack the
+Palace, or attack Armies.
+
+   The way this works is your forces
+sneak into your opponent's territory.
+They strike without warning, possibly
+killing some Nobles and Soldiers.
+They may also burn down some Markets,
+Mills, Foundries, Shipyards, Ships,
+and Stables.  They may also steal
+some grain and horses, or may kidnap
+some serfs.  You, on the other hand,
+may lose some of your Nobles,
+Soldiers, and Horses.  The routine
+takes 10% of your opponent's item,
+then selects a random number of that
+10%.  It then subtracts 2 from that
+number.  If the number ends up being
+=<0, then you didn't destroy any of
+that item.  Your losses are figured
+on a 5% basis, allowing for the
+elements of surprise and stealth.
+
+   Also, if you should attack yourself
+(have a Civil War), then, you may lose
+some of everything -- NOT JUST HALF
+YOUR SERFS!  Civil Wars are costly!
+
+           XEVIOUS

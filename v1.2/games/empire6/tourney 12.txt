@@ -1,0 +1,13 @@
+    Your tournament has gone well, and now the upstart Baron Newsome in
+all his arrogance has suggested a small wager between you.  Thinking to
+put this pup in his place, you accept!
+
+    Now it is time for the match! The trumpets sound, and the two Nobles
+charge.  On the first pass, neither scores a hit.  On the second pass, your
+champion scores a solid hit, unfortunately he too is hit solidly!  Baron
+Newsome's champion manages to remain in the saddle; unfortunately, your
+champion is laying on the ground!
+
+    You have lost!  You lose 2 tons of timber!
+
+               <Press any Key>\g1

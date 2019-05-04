@@ -1,0 +1,8 @@
+
+
+;mdl.emp.delx.prg ==1c01==
+ 9000 gosub 3680:draw"{$0a}Entering the empire...
+ 9010 a$="mdl.emp.delx1":goto 9090
+ 9050 sys c(52):if left$(a$,4)<>"mdl."then 1980
+ 9090 gosub 489:a$=dr$+a$:sys c(10),dv,2
+

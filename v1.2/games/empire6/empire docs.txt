@@ -1,0 +1,419 @@
+                    EMPIRE II (C)1990 - The "Wag" Version
+
+Welcome to Empire II! This is Dirty Laundry's very own rendition of the famous
+online game Empire. In my opinion, this is one of the most professional and
+challenging versions I have ever played! Guaranteed to give even the most
+experienced player a run for their money! Both new players and veterans will
+want to read through these new docs completely. Covered are all aspects of the
+basic game-play and all new or changed rules.
+
+The OBJECT of Empire II is to build your Empire while destroying your
+opponents. Once you reach a certain level you will be declared KING.
+
+Only 30 Players will be allowed to play at one time. All positions are
+available on a first come, first serve basis. The number of turns you receive
+each day will depend on the number of players in the game:
+
+ 1-10 players get 3 turns per day
+11-20 players get 4 turns per day
+21-30 players get 5 turns per day.
+
+All NEW players will start with:
+
+ 5000 Acres
+ 2000 Serfs (approx.)
+    3 Nobles
+   40 Soldiers
+20000 Bushels of Grain
+    2 Foundries
+10000 Gold
+   50 Horses (approx.)
+
+(Remember, entering a 'Y' at most any prompt will give you a listing of your
+current stats.)
+
+Each player will also have 1 island. Your island must be stocked, developed
+and maintained during your rein.
+
+To win at Empire II, you must build your stats up to the following levels:
+
+  30,000 Acres
+   9,000 Serfs (mainland) 5,000 Serfs (island)
+ 250,000 Gold
+     200 Nobles
+    100% Palace
+     200 Markets
+     200 Mills
+      50 Shipyards
+      50 Forts
+
+(Any player with a point rating of 150 or higher will automatically become to
+new KING! Point ratings are based on your current assets.)
+
+Once attained, you will become the new KING! All kings receive a lump amount
+of d/l credits (based on acres owned at the time) and will also receive 20
+credits per day for every day you REMAIN king! You must enter Empire II to
+collect these credits. However, they will accumulate and do not need to be
+collected on a daily basis.
+
+Good Luck! I know you're going to enjoy playing this new version. Now that you
+know all about the start and finish of the game, let's take a stroll through a
+complete turn and examine each of the games various options and components:
+
+-THE MAIN PROMPT-
+
+Upon entering EMPIRE II, the first place you'll stop is at the MAIN PROMPT.
+You may enter the game up to this prompt WITHOUT using any turns (even if you
+have NO plays left!). Pressing 'Q' will take you back to the BBS leaving all
+stats as they were (including number of plays remaining). The following
+options are available at this prompt:
+
+NEWS - 'N' will show a record of the past 2 days' activities. Among the items
+recorded here are wins, loses, ransacks, kills, ships lost and islands
+plundered.
+
+LIST OF EMPERORS - 'L' will show you a current list of all the other players,
+the amount of land they have and their point rating.
+
+YOUR STATS - 'Y' will produce a list of your game stats. You can use this
+command at almost ANY prompt throughout the game. Refer to it often!
+
+QUIT - 'Q' will exit you back out to the BBS. Along that same line, using
+'CTRL-P' from anywhere in the game will return you to the BBS. Your current
+stats will be saved at the same time!
+
+CONTINUE - 'C' takes you into the game!
+
+After selecting 'C', you will see your production for this turn. Production is
+determined by the amount of LAND, SERFS, MILLS, etc. you have in your Empire.
+
+-BUYING/SELLING LAND-
+
+The next prompt will give you an opportunity to buy or sell land. Prices will
+vary from turn to turn. If it's not an emergency, you may want to wait and
+look for a better price on your next turn.
+
+WARNING: You must maintain a minimum LAND:SERF ratio of 7:1. That means you
+must have at least 1 serf for every 7 acres. Do not buy more land than your
+serfs can handle. You will lose your Empire if this should happen!
+
+-BUYING/SELLING GRAIN-
+
+At this time you may buy or sell grain. Again, prices here will vary from turn
+to turn. Now is the time to be SURE you have the grain to support your Empire
+for this turn! Press 'Y' to check your stats!
+
+-FEEDING YOUR SERFS-
+
+At this prompt you will supply your serfs with food. The figure shown is based
+on 5 bushels per serf. This is only the RECOMMENDED amount. (Pressing RETURN
+will automatically supply the recommended amount without you having to enter
+the digits). TIP: The experienced Emperor knows that there is a definite
+strategy to overfeeding and underfeeding your serfs. If your population has
+grown overly large, underfeeding will help kill off some of your serfs. Use
+caution! Extreme or repeated underfeeding will cause the masses to plunder
+your Empire! It's better to do a little over several turns rather than one BIG
+famine. On the other hand, overfeeding will usually helps insure an increase
+your population.
+
+-FEEDING YOUR ARMIES-
+
+Be sure to save enough grain to feed your armies. They will REQUIRE 8 bushels
+per soldier. Should you be unable to feed them the required amount, they will
+be 'on strike' for the remainder of that turn. You may also lose some to the
+rebel forces when underfeeding armies!
+
+-STATUS REPORT-
+
+After feeding the masses, a status chart will show any changes in your serfs
+population and the new TOTAL. You will also be informed of any tax money
+earned for that turn. If you have developed any forts on your island, at this
+time you must pay your island taxes. This is collected automatically. If you
+do not have the full amount you will lose 1 fort.
+
+-THE INVESTMENT PROMPT-
+
+At this stage you must replenish your Empire. There are 9 items available
+here. They are:
+
+1 - SOLDIERS: $10 each. You may purchase up to 20 men for every noble and/or
+40 men for every foundry. Soldiers are your main line of defense and offense.
+Naturally, the more you have, the more powerful your Empire will be.
+
+2 - MARKETS: $1000 each. Markets are a low-return investment. However, they
+help stimulate the economy and the population.
+
+3- MILLS: $2000 each. Mills are a low-return investment also. Mills directly
+effect the results of each years harvests. Likewise, large harvests tend to
+cause the mills to pay better dividends.
+
+4 - PALACE: $10,000 per unit. 10 units max. The palace does not pay dividends.
+However, with each investment in the palace you will also receive 1 noble. The
+palace also adds to your defenses.
+
+5 - FOUNDRIES: $7000 each. Foundries are necessary for you to increase the
+size of your army. For each foundry you may purchase up to 40 soldiers
+(provided you have the required number of nobles). In addition, foundries will
+also pay dividends each turn!
+
+6 - SHIPYARDS: $8000 each. Shipyards are a high-return investment. They are
+also needed to increase the size of your fleet (ships).
+
+7- NOBLES: $25000 each. Nobles are needed to increase the size of your army.
+You may have up to 20 soldiers per noble.
+
+8 - SHIPS: $5000 each. Ships are needed to transport people and goods to and
+from your island. When buying ships, your total cannot exceed a 1:1
+ship:shipyard ratio.
+
+9 - STABLES: $10000 each. You can put up to 40 horses in each stable you own.
+Horses not kept in a stable are subject to get stolen by rebel forces. Stables
+will also return a profit at the end of each turn.
+
+Once all purchases are completed, (check your stats!), select '0'. Now you
+may...
+
+(S)ail To Your Island, (V)isit The Dry Dock, Or (G)o To The Battlefields
+
+Pressing 'G' will take you directly to the attack prompt, bypassing both the
+dry dock and sailing options entirely.
+
+'V' will send you to the dry dock without you having to sail to your island
+first (as in the previous versions). This gives you a chance to sell any
+exports you may have stored there. Once all transactions are complete, or if
+you have no exports, you will be sent to the attack prompt.
+
+'S'ailing, the final option, is an important aspect of your Empire. Your
+island is capable of producing a lot of money for you, but it also must be
+properly managed and fortified! This must be accomplished over a period of
+time. Selecting 'S' will take you to...
+
+-THE LOADING DOCKS-
+
+This is where you will load your ship(s) for the journey. There are two
+separate loading docks, one on your mainland and one on your island. There are
+SOME differences between them in regards to what can be loaded and where. For
+example, at the mainland loading docks you may load GRAIN, SERFS, NOBLES (and
+soldiers), NAVIGATORS and SPICES. At the island loading docks, NOBLES and
+NAVIGATORS are loaded automatically and SOLDIERS must be loaded separately.
+You may also take GRAIN, SERFS, HORSES and EXPORTS.
+
+Each item loaded into your ship(s) will take up a certain amount of space.
+When selecting an item to load, you will see the amount you have on board and
+the max you will be allowed to load (determined by the amount of room left on
+board, the amount you own, or cash you have -- Whichever applies). Once
+loaded, an item may NOT be removed. You may take as much or as little (or
+none) of any of the items as you like. Your ships can not exceed 100%
+capacity.
+
+- GRAIN - Your ship(s) will carry up to 1000 bushels each. While on your
+island, you'll need to feed your serfs, armies and horses. You'll want to
+bring grain with you should you island not already have enough grain to
+support your people/animals. Likewise, if you have an abundance of grain on
+your island, you may bring it to the mainland to sell or feed to the mainland
+serfs.
+
+- SERFS - You may load up to 100 serfs per ship. Be careful not to remove too
+many from the mainland (watch that land:serf ratio!).
+
+- NOBLES - (Mainland) You may load up to 5 nobles per ship. Each noble will
+automatically bring along 20 soldiers. You will want the nobles along to
+protect your ships from the pirates roaming the open sea or should you run
+across an enemy island. (Island) Nobles are loaded automatically. However, you
+do have the option to load soldiers here. You may load up to 20 soldiers per
+noble. Be sure to leave enough behind to protect your island!
+
+- NAVIGATORS - You may load up to 100 navigators per ship. These guys will
+lead your ships safely to and from your island. Without them, ships blown
+off-course may become lost forever! For their services, navigators require a
+fee of $2000 apiece. A wise captain will have one on each ship.
+
+- SPICES - You may load up to 100 ton/spices per ship. Spices may only be
+bought at the mainland loading dock. Each ton costs $1000. Spices are used on
+the island to trade for EXPORTS (which may be returned to the mainland and
+sold for profit) or TIMBER which may be used to build FORTS and SHIPS on your
+island.
+
+- HORSES -  You may load up to 100 horses per ship. Horses may only be loaded
+at the ISLAND loading dock.
+
+- EXPORTS - You may load up to 20 exports per ship. Exports may only be loaded
+at the ISLAND loading dock.
+
+-BEGIN YOUR VOYAGE-
+
+As you can imagine, sailing the open sea is, at best, a dangerous proposition.
+You'll encounter many natural obstacles for which you have no defenses.
+Hurricanes and raging storms are abundant, not to mention pirates! You also
+may encounter an...
+
+
+
+-ENEMY ISLAND-
+
+In this situation you will have 2 options:
+
+(A)ttack the island or (C)ontinue your voyage
+
+Choosing 'C' will cause your navigators to change course and sail you safely
+past the enemy and on to your destination...
+
+There are several things you'll want to consider before choosing to 'A'ttack
+the island. First, unless you've attacked the island before, you will not know
+how strong the opponent may be. Nobles, ships and soldiers will determine your
+strength. Forts, cannons and soldiers (on the island only) will determine the
+enemy's strength (an island with no forts developed cannot be attacked). If
+you defeat your opponent, you will destroy his fort and all possessions
+contained in that fort will be seized by you. This includes any serfs, grain,
+cannons, horses, timber, exports, spices and gold. If you lose, the amount of
+damage incurred will depend on how badly the fort trashes your ship(s).
+Rarely, though, will you lose the entire expedition.
+
+Surviving any battles or natural disasters (consider yourself successful if
+losses were kept to a minimum!), you will eventually arrive...
+
+-AT YOUR ISLAND-
+
+Upon your arrival you will be at the...
+
+-TRADING PROMPT-
+
+(Remember, pressing 'Y' at most any prompt will display your current stats).
+Here you may trade your spices for exports or timber. Each export costs 3
+spices. Each timber cost 2 spices. All unused spices, timber and exports (that
+are left on your island) will be saved and available for use when you return
+to the island.
+
+-BUILDING FORT AND SHIPS-
+
+5 tons of timber will build 1 fort. With each fort you build, you will also
+get 3 cannons. These will help protect your island from enemy attacks. TIP:
+Your forts hold all your island's possessions (equally). Once you start
+building them, it's recommended to build a number of them as quickly as
+possible. This will help to diversify your goods in the event that your
+island gets plundered!
+
+3 tons of timber will build 1 ship. The main advantage to building ships here
+(rather than buying them on the mainland) is that you are not restricted by
+the number of shipyards you own.
+
+-FEEDING YOUR SERFS, ARMIES AND HORSES-
+
+Feeding your population here is very much like it is on the mainland, although
+there are several exceptions; Your serf population cannot be influenced by the
+amount of grain you give them. There is no benefit to overfeeding.
+Underfeeding may result in severe losses to your island! Underfeeding your
+armies will result in the loss of some or all of your soldiers! Overfeeding
+provides no additional benefits. Same for horses (except underfeeding will
+lose a random amount. Handy should your horse population grow too large).
+
+Once you are done dispersing your grain, your stats will be displayed and your
+ships loaded for the return trip.
+
+-DRY DOCK-
+
+If you make it home with any exports, or should you have exports stored in dry
+dock, you will have the following options:
+
+BARTER, SELL & HOLD:
+
+(B)artering is risky. You never know when the Market Master will turn and walk
+away! If he offers a price you like (anything over $7000 is considered good),
+then you'll want to select (S)ell. You may sell any or all of your exports.
+Any exports not sold, or should you select the (H)old option. Any remaining
+exports will be held in dry dock until your next turn. There is a $100 per ton
+fee for this service.
+
+-THE ATTACK PROMPT-
+
+At this prompt, you can select to attack any of the other players, provided
+you haven't attacked them on a previous turn. Simply enter the number of the
+player you have in mind, or a '?' to see the current list. You also may press
+'N' here to view the NEWS file. It may be at this prompt where that info will
+be most valuable to you! Enter a '0' if you do not wish to attack anybody.
+
+-REBEL FORCES-
+
+Once your opponent has be selected and verified, you may have the option to
+recruit rebel forces. Rebels are soldiers that have turned against an Emperor!
+Each player may or may not have rebels. When recruiting rebels, they are taken
+FROM your opponent and added directly to your armies.
+
+-THE BATTLE COMMAND PROMPT-
+
+Your options here are:
+
+1 - ATTACK ARMIES: This is the name of the game! Once selected, your remaining
+men will clash head-on with your opponent's army in a battle to the death!
+Regardless of the outcome, you will manage to pick up a chunk of land. Of
+course, defeating your opponent will result in a LARGER portion than if you
+had lost. The actual amount will depend on the size of each players army and
+the intensity of the battle. Attacking an opponent that is considerably weaker
+than yourself may surprise you. You'll stand a good chance of getting ambushed
+under these conditions! Likewise, if you are attacked by a much stronger
+player, you will ambush a number of their armies. Once the battle is complete,
+you will be sent to the 'end-of-turn' options. You may only select the "attack
+armies" option once per turn. Should you manage to take ALL of your opponent's
+land, you will, in effect, KILL that player and seize any possessions left in
+their Empire. This includes serfs, grain, gold, nobles, etc. These will all
+become part of your Empire, like it or not! This is also where your horses
+come into play! A soldier on a horse has a distinct advantage over a foot
+soldier. If you have any horses (on your mainland) your men will automatically
+ride them into battle. You can only take as many horses into battle as you
+have men. A horse is of no use without a man to ride it!
+
+2 - ATTACK THE PALACE: With this option you may attempt to destroy a portion
+of your opponent's palace. If he has none, you will be returned to the Battle
+Command prompt. Should you manage to destroy a part of the palace, in most
+cases you will find some portion of your opponent's gold also (where else would
+you keep it?). This, naturally, will be seized by you and added to your stats.
+You may attempt to attack your opponent's palace as many times as you wish.
+Your only limit is the size of your army. You will suffer loses each time,
+regardless of the outcome.
+
+3 - ATTACK A NOBLE: This option will let you attempt to ambush one of your
+opponent's nobles. As with the palace, your armies will suffer losses,
+regardless of whether they are successful or not. You may use this option
+until you deplete your armies or your opponent runs out of nobles. An
+excessive land:noble ratio may cause your armies to refuse! All nobles
+ambushed will be added to your Empire. This is the only way to effectively
+reduce the size of an opponent's army!
+
+4 - SUPPLY REBEL TROOPS: Here you may sell your armies to the rebels. These
+men will be added to your opponent's rebel forces. This allows several players
+to "gang up" on a larger player. Rebels will pay $15 per man.
+
+5 - NO ATTACK: This will allow you to leave the Battle Command prompt WITHOUT
+having to attack your opponent's armies.
+
+-COMPLETING YOUR TURN-
+
+Once you have completed the battle segment of your turn, the results (if any)
+will be printed to the news file for all to see. Next you will be shown this
+year's profits for all investments that you may own. This money is immediately
+added to your Empire.
+
+Next you will see a current list of all your stats and you will be given the
+opportunity to replenish your troops. The price of these soldiers will vary
+from turn to turn. TIP: Normally, the only time you will want to purchase
+soldiers here is when you are leaving the game (to protect your Empire while
+you are gone). If you intend to play another turn, then buy them at the
+investment prompt when you get back around. They are usually cheaper and this
+saves you from having to feed them extra grain! If you are leaving the game,
+then you will need to buy them at whatever price they are offered (provided
+you have the gold to pay for them!)
+
+Provided you have at least 1 play remaining, you will now return to the
+beginning of the game. You may play all your turns during one call or split
+them up any way you like. If you have no plays left, you will have a chance to
+leave a message to the next player. This could be any tips, info, threats or
+promises you may wish to pass on. Pressing RETURN here will leave the message
+unchanged. 
+
+                     Empire II (C) Written By Steve Wagy
+                            The Dirty Laundry BBS
+                      912-953-2998 - 2400/1200 - 24 Hrs
+                             Centerville, Georgia
+                      Member of the Color 64 BBS Network
+
+				Quests converted to Image BBS by Pinacolada 

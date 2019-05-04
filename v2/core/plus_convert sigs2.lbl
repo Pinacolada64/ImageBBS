@@ -1,0 +1,17 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM x%(60,2):GOSUB {:3002}:&,28,1:GOTO 1811
+{:3002}
+	xx=0
+{:3004}
+	xx=xx+1:dr=3:a$="e.Sig"+STR$(xx)+",s,r":GOSUB 1011:IF e%THEN RETURN
+	x%(0,0)=0:x%(0,1)=0:x%(0,2)=0:a=xx:&"Sig {pound}!a ":&,2,2
+{:3008}
+	&,2,2:s=st:IF a$="{up arrow}"THEN{:3014}
+	b$=LEFT$(a$,3):a=VAL(MID$(a$,4)):x=-(b$="U/D")-2*(b$="U/X")
+	i=x%(0,x)+1:x%(i,x)=a:x%(0,x)=i:&".":IF s=0 THEN{:3008}
+{:3014}
+	&"{f6}":CLOSE 2
+	&,60,3,0,x%(0,0),366,dr$+"e.Siglist"+STR$(xx),dv%:GOSUB 1012:&:GOTO {:3004}
+	rem "+.convert sigs2"

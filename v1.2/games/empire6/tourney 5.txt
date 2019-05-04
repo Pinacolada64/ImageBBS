@@ -1,0 +1,14 @@
+   Your tournament has gone well, but now your greatest rival, King
+Urigard, has made a claim that his champion is the best in the land.  He
+further states that he will meet any wager offered.
+
+   Enraged by his boastful manner, you suggest that if your champion were to
+lose, you would give him to the victor.  You ask King Urigard if he
+is willing to do the same.  He seems a little nervous, but agrees.
+
+   Now the match is under way, and with four passes already completed,
+you begin to worry.  Then on the fifth pass, your champion finally
+succeeds in unseating King Urigard's champion!  You have won!
+
+You win 1 Noble!
+               <Press any Key>\g1

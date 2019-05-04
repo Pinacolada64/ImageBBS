@@ -1,0 +1,158 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM +.bingo @ compusoft-online
+	IF nl=.THEN:&"{clear}{pound}n7{pound}{back arrow}07Must Be In Graphics Mode!{pound}w2":GOTO 1811
+	c$="{right:13}":d$="             ":c%=.
+	&,18,.:&"{clear}":DIM x(25),y(76):d%=75:GOSUB {:3010}:GOSUB {:3222}:IF cd THEN c%=3:GOTO {:3164}
+{:3008}
+	GOSUB {:3036}:GOSUB {:3010}:GOTO {:3018}
+{:3010}
+	&"{home}{yellow}{pound}{back arrow}09{rvrs on} Full House BINGO {rvrs off}{f6:2}{pound}{back arrow}09{lt. blue}[{white}I{lt. blue}]{lt. green}nstrucions"
+	IF c%<=3 THEN b%=c%+1:&"{f6}{pound}{back arrow}09{lt. blue}[{white}P{lt. blue}]{lt. green}lay Card #{white}{pound}%b":b%=b%-1
+	&"{f6}{pound}{back arrow}09{lt. blue}[{white}Q{lt. blue}]{lt. green}uit{f6}"
+	&"{f6}{pound}{back arrow}09{lt. blue}[{white} {lt. blue}]{lt. green}Choice{pound}{back arrow}39{left:29}{white}":RETURN
+{:3018}
+	&"{pound}g1":ON tr%+1 GOTO {:3174}:IF an$="I"THEN{:3208}
+	IF an$="P"THEN{:3042}
+	IF an$="Q"THEN{:3170}
+	GOTO {:3018}
+{:3026}
+	dr=3:a$="e.bscore,s,r":GOSUB 1011:IF e%THEN d%=74:RETURN
+	&,2,2:an$=a$:&,15,1:l$=an$:&,2,2:s$=a$:CLOSE 2
+	&"{home}{pound}no{pound}n7{white}BINGO Leader:{pound}$l,{pound}$sNumbers.{pound}{back arrow}39":d%=VAL(s$)-1:RETURN
+{:3032}
+	dr=3:a$="e.bscore":GOSUB 1023
+	PRINT# 2,na$r$z%:CLOSE 2:RETURN
+{:3036}
+	&"{home}{pound}n7{f6}   {white}Weekly  {f6}{lt. blue}{$b0}{$c0:2}{white}Jackpot{lt. blue}{$c0:2}{$ae}{f6}{$dd}{white}100 Credits{lt. blue}{$dd}"
+	&"{f6}{$ad}{$c0:11}{$bd}{f6}            {f6}             {f6}         {f6}         "
+	&"{f6}   {white}Leader{f6}{lt. blue}{$b0}{$c0:2}{white}Jackpot{lt. blue}{$c0:2}{$ae}{f6}{$dd}{white} 50 Credits{lt. blue}{$dd}{f6}{$ad}{$c0:11}{$bd}{f6}":RETURN
+{:3042}
+	c%=c%+1:&"{f6}{up} {white}Getting Card #{pound}%c{pound}{back arrow}39"
+	&"{home}{pound}n8{pound}$d{cyan}{$b0}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$ae}{f6}"
+	&"{pound}$d{$dd} B  {$dd} I  {$dd} N  {$dd} G  {$dd} O  {$dd}{f6}{pound}$d{$ab}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$b3}{f6}":FOR a=1 TO 4
+	&"{pound}$d{$dd}    {$dd}    {$dd}    {$dd}    {$dd}    {$dd}{f6}{pound}$d{$ab}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$db}{$c0:4}{$b3}{f6}":NEXT
+	&"{pound}$d{$dd}    {$dd}    {$dd}    {$dd}    {$dd}    {$dd}{f6}{pound}$d{$ad}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$bd}{f6}{pound}{back arrow}39":GOSUB {:3026}
+	FOR a=1 TO 5:b(a)=.
+{:3054}
+	b=INT(RND(1)*15)+1
+	FOR t=1 TO a:IF b(t)=b THEN{:3054}
+	NEXT:b(a)=b:x(a)=b:NEXT
+	FOR a=1 TO 5:i(a)=.
+{:3062}
+	i=INT(RND(1)*15)+16
+	FOR t=1 TO a:IF i(t)=i THEN{:3062}
+	NEXT:i(a)=i:x(a+5)=i:NEXT
+	FOR a=1 TO 5:n(a)=.
+{:3070}
+	n=INT(RND(1)*15)+31
+	FOR t=1 TO a:IF n(t)=n THEN{:3070}
+	NEXT:n(a)=n:x(a+10)=n:NEXT
+	FOR a=1 TO 5:g(a)=.
+{:3078}
+	g=INT(RND(1)*15)+46
+	FOR t=1 TO a:IF g(t)=g THEN{:3078}
+	NEXT:g(a)=g:x(a+15)=g:NEXT
+	FOR a=1 TO 5:o(a)=.
+{:3086}
+	o=INT(RND(1)*15)+61
+	FOR t=1 TO a:IF o(t)=o THEN{:3086}
+	NEXT:o(a)=o:x(a+20)=o:NEXT
+	&"{home}{pound}nk":FOR a=1 TO 5
+	IF a=3 THEN:&"{pound}$c{cyan}{$dd}{white}":&STR$(b(a)):&"{pound}{back arrow}18{cyan}{$dd}{white}":&STR$(i(a))
+	IF a=3 THEN:&"{pound}{back arrow}23{cyan}{$dd}{yellow}{rvrs on}Free{rvrs off}{cyan}{$dd}{white}":&STR$(g(a))
+	IF a=3 THEN:&"{pound}{back arrow}33{cyan}{$dd}{white}":&STR$(o(a)):&"{f6}":GOTO {:3104}
+	&"{pound}$c{cyan}{$dd}{white}":&STR$(b(a)):&"{pound}{back arrow}18{cyan}{$dd}{white}":&STR$(i(a)):&"{pound}{back arrow}23{cyan}{$dd}{white}":&STR$(n(a))
+	&"{pound}{back arrow}28{cyan}{$dd}{white}":&STR$(g(a)):&"{pound}{back arrow}33{cyan}{$dd}{white}":&STR$(o(a)):&"{f6}"
+{:3104}
+	&"{f6}":NEXT
+	x=.:&"{home}{pound}n6{pound}{back arrow}09{lt. blue}[{white}P{lt. blue}]{lt. green}laying Card #{white}{pound}%c {lt. green}of{white} 3{pound}{back arrow}39"
+	by=.:FOR i=1 TO 75:y(i)=.:NEXT:FOR x=1 TO d%
+{:3110}
+	d=INT(RND(1)*75)+1:IF y(d)<>.THEN{:3110}
+	y(d)=1:GOSUB {:3136}
+	IF tr%<1 THEN x=d%
+	ON-(x=1)GOTO {:3118}:IF an$="L"THEN x=x-1:by=by+1:GOSUB {:3176}:GOSUB {:3136}
+{:3118}
+	IF an$="M"THEN by=by+1:GOSUB {:3176}
+	IF an$="N"THEN{:3124}
+	IF an$="Q"THEN x=d%
+{:3124}
+	IF by=24 THEN x=d%
+	NEXT
+	IF by=24 THEN{:3134}
+	IF an$="Q"THEN{:3164}
+	&"{home}{yellow}{pound}no{pound}n6{right:14}Sorry, No BINGO.{pound}{back arrow}39{f6}":GOTO {:3164}
+{:3134}
+	&"{home}{lt. blue}{pound}no{pound}n6{right:14}BINGO":cr=cr+50:GOTO {:3156}
+{:3136}
+	z$="B":IF d>15 THEN z$="I":IF d>30 THEN z$="N":IF d>45 THEN z$="G":IF d>60 THEN z$="O"
+	z%=x:&"{home}{white}{pound}n8 #{pound}%z of {pound}%d  ":a$=STR$(d):&"{f6}{lt. blue}{$b0}{$c0:11}{$ae}"
+	&"{f6}{$dd}   {white}{pound}$z{pound}$a{pound}{back arrow}12{lt. blue}{$dd}{f6}{$ad}{$c0:11}{$bd}":IF x>1 THEN:&"{f6}[{white}L{lt. blue}]{lt. green}ast  "
+	&"{f6}[{white}M{lt. blue}]{lt. green}ark  {f6}[{white}N{lt. blue}]{lt. green}ext  {f6}{lt. blue}[{white}Q{lt. blue}]{lt. green}uit  {f6}      {f6}"
+{:3144}
+	&"[ ]Choice{left:8}{white}{pound}g1":ON tr%+1 GOTO 1603
+	IF an$="L"AND x>1 THEN:&"L{lt. blue}]{lt. green}ast   ":RETURN
+	IF an$="M"THEN:&"M{lt. blue}]{lt. green}ark   ":RETURN
+	IF an$="N"THEN:&"N{lt. blue}]{lt. green}ext   ":tz=d:RETURN
+	IF an$="Q"THEN:&"Q{lt. blue}]{lt. green}uit   ":RETURN
+	GOTO {:3144}
+{:3156}
+	&"{home}{pound}n9{pound}$c{$dd}{rvrs on}{white} B {rvrs off}{cyan} {$dd}{rvrs on}{white} I {rvrs off}{cyan} {$dd}{rvrs on}{white} N {rvrs off}{cyan} {$dd}{rvrs on}{white} G {rvrs off}{cyan} {$dd}{rvrs on}{white} O {rvrs off}{cyan} {$dd}{f6}"
+	&"{home}{pound}n6  {yellow}You Win Leader's Jackpot: {white}50 Credits{yellow}!{pound}w4":GOTO {:3160}
+{:3160}
+	&"{home}{white}{pound}no{pound}n6{right:14}BINGO!{pound}{back arrow}39"
+	GOSUB {:3032}:GOSUB {:3026}
+{:3164}
+	IF c%=3 THEN:&"{home}{pound}n6  {yellow}You Have Played Your 3 Card Limit!    {pound}w2":cd=1:GOTO {:3174}
+	IF an$="Q"THEN:&"{home}{yellow}{pound}no{pound}n6{right:14}Quit.{pound}{back arrow}39":GOTO {:3170}
+	GOTO {:3008}
+{:3170}
+	&"{f6}{up} {lt. green}Are You Sure You Want To Quit? {lt. blue}({white}Y{lt. blue}/{white}N{lt. blue}) {lt. green}{pound}g1"
+	IF an$="N"THEN{:3008}
+{:3174}
+	&"{clear}":GOTO 1811
+{:3176}
+	&"{home}{pound}n9"
+	ON-(an$="L")GOTO {:3202}:FOR j=1 TO 25:i=j:IF d=x(i)THEN j=25
+	NEXT:tx=d:ON-(d=x(i))GOTO {:3182}:GOTO {:3202}
+{:3182}
+	IF i<=5 THEN j=1:k=i
+	IF i>=6 THEN j=2:k=i-5
+	IF i>=11 THEN j=3:k=i-10
+	IF i>=16 THEN j=4:k=i-15
+	IF i>=21 THEN j=5:k=i-20
+	IF j=3 AND k=3 THEN a$="":GOTO {:3206}
+	&"{right:9}":a$=STR$(tx):FOR jj=1 TO j:&"{right:5}":NEXT
+	FOR jj=1 TO k:&"{down:2}":NEXT:&"{yellow}{rvrs on}{pound}$a {rvrs off}":IF an$="M"THEN d=.:tz=.
+	IF VAL(a$)<10 THEN:&"{rvrs on} {rvrs off}"
+	i=25:RETURN
+{:3202}
+	FOR j=1 TO 25:i=j:IF tz=x(i)AND an$="L"THEN j=25
+	NEXT
+{:3206}
+	tx=tz:ON-(tz=x(i)AND an$="L")GOTO {:3182}:&"{pound}n8{yellow}{rvrs on}NO MATCH{rvrs off}{pound}w2":by=by-1:RETURN
+{:3208}
+	&"{home}{pound}n8{pound}$c{cyan}{$b0}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$ae}{f6}"
+	&"{pound}$c{$dd} B  {$dd} I  {$dd} N  {$dd} G  {$dd} O  {$dd}{f6}{pound}$c{$ab}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b3}{f6}"
+	&"{pound}$c{$dd} {white}You may play up to 3   {cyan}{$dd}{f6}{pound}$c{$dd} {white}NEW cards each call.   {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}To win you must get a  {cyan}{$dd}{f6}{pound}$c{$dd} {white}BINGO in LESS numbers  {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}than the BINGO Leader. {cyan}{$dd}{f6}{pound}$c{$dd} {white}Select 'P'{$a0}to Play     {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}'M' to Mark the number {cyan}{$dd}{f6}{pound}$c{$dd} {white}'N' for Next number    {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}'Q' to Quit Card.      {cyan}{$dd}{f6}{pound}$c{$ad}{$c0:24}{$bd}":GOTO {:3008}
+{:3222}
+	&"{home}{pound}n8{pound}$c{cyan}{$b0}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$b2}{$c0:4}{$ae}{f6}{pound}$c{$dd} B  {$dd} I  {$dd} N  {$dd} G  {$dd} O  {$dd}{f6}"
+	&"{pound}$c{$ab}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b1}{$c0:4}{$b3}{f6}{pound}$c{$dd} {white}                       {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}by: ROUGH{$a0}RIDER{$a0:6}  {cyan}{$dd}{f6}{pound}$c{$dd} {white}at: CompuSoft-Online   {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}    Thunder Bay,ON     {cyan}{$dd}{f6}{pound}$c{$dd} {white}    Canada.            {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}                       {cyan}{$dd}{f6}{pound}$c{$dd} {white}    (807)-473-5647     {cyan}{$dd}{f6}"
+	&"{pound}$c{$dd} {white}                       {cyan}{$dd}{f6}{pound}$c{$dd} {white}                       {cyan}{$dd}{f6}"
+	&"{pound}$c{$ad}{$c0:24}{$bd}":GOTO {:3026}
+	REM add  cd=.  to list of variables in a line between 261-266 of +.lo
+	REM and to a line in setup
+	REM   by: rough rider (c. reedhead)
+	REM   at: compusoft-online
+	REM call: (807) 473-5647
+	REM prog: +.bingo v3
+

@@ -1,16 +1,16 @@
 {number:4000}
 {crunch:on}
 {step:2}
-	REM +/LO.OFF - LOGOFF
+	rem +/lo.off - logoff
 	gosub 1060:for x=1 to 11:gosub 1026:next:close 2
 {number:4008}
-	gosub {:4034}:a=st(4):if a then b$="{white}"+str$(a)+" {lt. blue}{$d0}ost":if a<>1 then b$=b$+"s"
-	a=st(5):if a then c$="{white}"+str$(a)+" {lt. blue}{$d2}esponse":if a<>1 then c$=c$+"s"
+	gosub {:4034}:a=st(4):if a then b$="{white}"+str$(a)+" {lt. blue}Post":if a<>1 then b$=b$+"s"
+	a=st(5):if a then c$="{white}"+str$(a)+" {lt. blue}Response":if a<>1 then c$=c$+"s"
 	gosub {:4034}:a$=d$
-	a=st(3):if a then b$="{white}"+str$(a)+" {lt. blue}{$cd}ail"
-	a=st(1):if a then c$="{white}"+str$(a)+" {lt. blue}{$c6}eedback"
+	a=st(3):if a then b$="{white}"+str$(a)+" {lt. blue}Mail"
+	a=st(1):if a then c$="{white}"+str$(a)+" {lt. blue}Feedback"
 	gosub {:4034}
-	a$=a$+d$+" {lt. blue}{$cc}ogoff {white}{$04}"+d1$+r$
+	a$=a$+d$+" {lt. blue}Logoff {white}{$04}"+d1$+r$
 	a$=a$+" {pound}q0{pound}o{$c0}{pound}o{$c0}":gosub 1095
 	x=2:gosub 1530:gosub 1070:close 2
 	d3$=na$
@@ -23,4 +23,4 @@
 	d$=b$+r$
 {:4040}
 	b$="":c$="":tr%=.:return
-	REM MODIFIED LINE 4040 171215 X-TEC
+	rem modified line 4040 171215 x-tec

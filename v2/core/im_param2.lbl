@@ -1,12 +1,14 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002},{:60008},{:60006},{:60012}:return
 {:60002}
-	d$="{$d3}ystem":gosub {:60018}:if a=.then return
+	d$="System":gosub {:60018}:if a=.then return
 	tz$=an$:gosub 1063:x=45:gosub 1001:print# 2,tz$:close 2
 {:60006}
 	an$=tz$:gosub {:60016}:poke 866,x:poke 867,y:return
 {:60008}
-	d$="{$d9}our":gosub {:60018}:if a=.then return
+	d$="Your":gosub {:60018}:if a=.then return
 	uf$=left$(uf$,5)+an$
 {:60012}
 	an$=mid$(uf$,6):gosub {:60016}:poke 868,x:poke 869,y
@@ -17,9 +19,10 @@
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e%then close 2:return
 {:60020}
 	&,2,2:if a$<>"{up arrow}"then n=n+1:tt$(n)=a$:on-(st=.)goto {:60020}
-	close 2:&"{f6}{$d3}elect {pound}$d {$d4}ime {$da}one:{f6:2}"
+	close 2:&"{f6}Select {pound}$d Time Zone:{f6:2}"
 	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
-	poke 53252,2:&"{f6}{$d7}hich {$cf}ne? {pound}i1"
+	poke 53252,2:&"{f6}Which One? {pound}i1"
 	a=val(an$):if an$=""or a<1 or a>n then a=.:return
 	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
 	copr. 1994 new image 9/18/94
+	rem im.param2

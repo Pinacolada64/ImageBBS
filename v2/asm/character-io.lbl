@@ -302,16 +302,16 @@ prdel:
 ;* handle mci access
 xgetin:
 	jsr xgetchr
-	cmp #"."
+	cmp #'{home}'
 	beq xgetin
-	cmp #"{pound}"
+	cmp #'{pound}'
 	bne xgetin2
 	lda editor
 	and #$08
 	bne xgetin1
 	jmp xgetin
 xgetin1:
-	lda #"{pound}"
+	lda #'{pound}'
 xgetin2:
 	rts
 
@@ -565,16 +565,16 @@ outadj:
 	beq outadj1
 	cmp #20
 	beq outadj3
-	cmp #"."
+	cmp #'{right}'
 	beq outadj4
-	cmp #"."
+	cmp #'{left}'
 	beq outadj3
-	cmp #""
+	cmp #'{down}'
 	beq outadj7
-	cmp #""
+	cmp #'{up}'
 	beq outadj6
 	and #$7f
-	cmp #"."
+	cmp #'{home}'
 	beq outadj8
 	cmp #32
 	bcs outadj4
@@ -605,4 +605,3 @@ outadj8:
 	ldx #0
 	ldy #0
 	rts
-

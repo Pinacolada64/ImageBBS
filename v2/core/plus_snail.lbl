@@ -1,0 +1,215 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	a=VAL(MID$(uf$,2,1)):fd=.:IF a THEN fd=1:a=.:GOSUB 1883
+	ON-(RND(1)>.50)GOSUB {:3316}:GOTO {:3010}
+{:3004}
+	j$="0":RETURN
+{:3006}
+	&" {white}{pound}o{$c0:10}{pound}n1":RETURN
+{:3008}
+	&"   {gray2}any key {pound}g1{clear}{pound}n3":RETURN
+{:3010}
+	dr=3:a$="e.snail":GOSUB 1011:IF e%THEN:&"{clear}{down:2} {lt. red}Writing File...":GOSUB {:3138}
+	ON-(cr>99)GOTO {:3016}:b%=25+(RND(1)*75)+1:cr=cr+b%
+	&"{clear}{down}{lt. green}{pound}%b credits{pound}n1 {gray2}compliments of{pound}n1 {pound}v5{pound}n1"
+{:3016}
+	FOR x=1 TO 5:GOSUB 1001:INPUT# 2,c$(x),a%(x),b%(x):NEXT:CLOSE 2
+	b$=c$(5):&"{pound}n2 {gray2}Last Player: {lt. green}{pound}$b{pound}n2{gray2} Won:{white}{pound}{back arrow}08":&STR$(a%(5)):&"{pound}n1"
+	&" {gray2}Lost:{white}{pound}{back arrow}08":&STR$(b%(5)):GOSUB {:3008}:c$(5)=na$:a%(5)=.:b%(5)=.
+{:3022}
+	&" {gray3}Snail Exacta:           {left:9}{white}{pound}i1":jk$=an$:IF an$="{f2}"THEN GOSUB {:3226}
+	ON tr%+1 GOTO {:3358}:&"{pound}n1":IF LEN(an$)>4 OR LEN(an$)<4 THEN:&"{up}":GOTO {:3022}
+	wc=.:wd=.:we=.:wf=.:wj=.:&"{clear}":GOSUB {:3178}
+	&"{clear}{down}"
+	GOSUB {:3006}
+	i=1:GOSUB {:3190}:wl=ky
+	&" {gray2}Odds on {yellow}Snail 1 {gray2}are{white}{pound}{back arrow}20":&STR$(wl):&"{pound}{back arrow}23{gray2} to {white}1{pound}n1"
+	i=2:GOSUB {:3190}:wm=ky
+	&" {gray2}Odds on {lt. blue}Snail 2 {gray2}are{white}{pound}{back arrow}20":&STR$(wm):&"{pound}{back arrow}23{gray2} to {white}1{pound}n1"
+	i=3:GOSUB {:3190}:wn=ky
+	&" {gray2}Odds on {red}Snail 3 {gray2}are{white}{pound}{back arrow}20":&STR$(wn):&"{pound}{back arrow}23{gray2} to {white}1{pound}n1"
+	i=4:GOSUB {:3190}:wo=ky
+	&" {gray2}Odds on {orange}Snail 4 {gray2}are{white}{pound}{back arrow}20":&STR$(wo):&"{pound}{back arrow}23{gray2} to {white}1{pound}n1"
+	GOSUB {:3006}
+	&" {gray2}You have{white}":&STR$(cr):&"{gray2} credits.{pound}n1"
+	GOSUB {:3006}
+	IF cr<6 THEN:&"{pound}f1{pound}n3 {lt. red}No credits. No play.{pound}n1":GOTO {:3358}
+{:3056}
+	&" {white}{rvrs on} Your Bet: {rvrs off}      {left:5}{pound}i1":wh=VAL(an$):ON tr%+1 GOTO {:3358}
+	IF wh>cr THEN:&"{up}":GOTO {:3056}
+	IF an$="{f2}"THEN GOSUB {:3256}:&"{pound}n1{up}":GOTO {:3056}
+{:3062}
+	cr=cr-wh:&" {white}{rvrs on} On Snail# {rvrs off}      {left:5}{pound}g1":b%=VAL(an$):ON tr%+1 GOTO {:3358}
+	IF an$="{f2}"THEN GOSUB {:3286}:&"{pound}n1{up}":GOTO {:3062}
+	IF b%<1 OR b%>4 THEN:&"{pound}n1{up}":GOTO {:3062}
+	jl=b%:GOSUB {:3346}:&"{pound}$f{white}{pound}w2"
+	&"{clear}{down:9}     {red}*{white}*{blue}*{red}*{white}*{blue}*{red}*{white}*{blue}* {lt. blue}Wooly's {red}*{white}*{blue}*{red}*{white}*{blue}*{red}*{white}*{blue}*   {pound}n1"
+	&"{white}    Great American Snail Race {pound}n1"
+	&"{red}    {pound}o{$a3:12} {pound}n1"
+	&"{pound}w3{clear}"
+	&"{home}{down}{white}{$ab}{$c0:13}{$b3}{pound}n1"
+	FOR jw=1 TO 4:&"{down}{white}{$ab}{$c0:13}{$b3}{pound}n1":NEXT
+	&"  {gray2}Bet is on {pound}%b"
+{:3084}
+	g$="{gray2}>{rvrs on}{yellow}:1 {rvrs off}   ":ja=wc:wc=wc+INT(RND(1)*3)-1:IF wc<.THEN wc=.
+	IF ja<wc THEN g$="{rvrs on}{yellow} 1:{rvrs off}{gray2}<   "
+	b$="{gray2}>{rvrs on}{lt. blue}:2 {rvrs off}   ":jb=wd:wd=wd+INT(RND(1)*3)-1:IF wd<.THEN wd=.
+	IF b<wd THEN b$="{rvrs on}{lt. blue} 2:{rvrs off}{gray2}<   "
+	c$="{gray2}>{rvrs on}{red}:3 {rvrs off}   ":jc=we:we=we+INT(RND(1)*3)-1:IF we<.THEN we=.
+	IF jc<we THEN c$="{rvrs on}{red} 3:{rvrs off}{gray2}<   "
+	d$="{gray2}>{rvrs on}{orange}:4 {rvrs off}   ":jd=wf:wf=wf+INT(RND(1)*3)-1:IF wf<.THEN wf=.
+	IF jd<wf THEN d$="{rvrs on}{orange} 4:{rvrs off}{gray2}<   "
+	&"{home}{down:2}":FOR wa=1 TO wc:&"{yellow}*":NEXT:&"{pound}$g{f6:2}":FOR wa=1 TO wd:&"{lt. blue}*":NEXT:&"{pound}$b{f6:2}"
+	FOR wa=1 TO we:&"{red}*":NEXT:&"{pound}$c{f6:2}":FOR wa=1 TO wf:&"{orange}*":NEXT:&"{pound}$d{f6:2}"
+	IF wc=15 THEN wj=1:c%=wl:GOTO {:3114}
+	IF wd=15 THEN wj=2:c%=wm:GOTO {:3114}
+	IF we=15 THEN wj=3:c%=wn:GOTO {:3114}
+	IF wf=15 THEN wj=4:c%=wo:GOTO {:3114}
+	GOTO {:3084}
+{:3114}
+	a%(wj)=a%(wj)+1:FOR i=1 TO 4:b%(i)=b%(i)+1:NEXT:b%(wj)=b%(wj)-1
+	jl=wj:GOSUB {:3346}:&"{pound}n1  {pound}$f{white} Wins! {pound}n1"
+	IF b%<>wj THEN:&" {yellow}Lose":&STR$(wh):&" credits.{pound}n1":b%(5)=b%(5)+wh
+	IF cr<6 THEN{:3358}
+	IF b%=wj THEN:&" {cyan}Pays {pound}%c to 1{pound}n1"
+	IF b%=wj THEN wq=wh*c%
+	IF b%=wj THEN:&" {yellow}Win":&STR$(wq):&" credits.{pound}n1":cr=cr+wq:a%(5)=a%(5)+wq
+	GOSUB {:3208}:&" {lt. green}Exacta: ":&jt$:IF jt$=jk$THEN:&" {white}100 Credit Bonus!"
+	IF jt$=jk$THEN cr=cr+100:a%(5)=a%(5)+100
+	jt$="":&"{pound}n2 {white}Race 'em Again? ":GOSUB 1902:ON tr%+1 GOTO {:3358}
+	IF a THEN:&"{clear}{pound}n3":GOTO {:3022}
+	&"{clear}{down}":GOTO {:3150}
+{:3138}
+	jw$=na$+r$+"0"+r$+"0"+r$
+	dr=3:a$="e.snail,l,"+CHR$(150):GOSUB 1011:x=5:GOSUB 1001:PRINT# 2,jw$
+	x=6:GOSUB 1001:PRINT# 2,"dead"
+	FOR x=1 TO 4:jw$="Snail"+STR$(x)+r$+"0"+r$+"0"+r$
+	GOSUB 1001:PRINT# 2,jw$:NEXT
+	RETURN
+{:3150}
+	dr=3:a$="e.snail":GOSUB 1011
+	IF e%THEN:&"{pound}n1 {red}Snail Error!{pound}n1":GOTO {:3358}
+	&" {gray2}Putting away {yellow}Snail {pound}$g"
+	jw$=c$(1)+r$+STR$(a%(1))+r$+STR$(b%(1))+r$:x=1:GOSUB 1001:PRINT# 2,jw$
+	&"{f6}{pound}{back arrow}14{lt. blue}Snail {pound}$b"
+	jw$=c$(2)+r$+STR$(a%(2))+r$+STR$(b%(2))+r$:x=2:GOSUB 1001:PRINT# 2,jw$
+	&"{f6}{pound}{back arrow}14{red}Snail {pound}$c"
+	jw$=c$(3)+r$+STR$(a%(3))+r$+STR$(b%(3))+r$:x=3:GOSUB 1001:PRINT# 2,jw$
+	&"{f6}{pound}{back arrow}14{orange}Snail {pound}$d"
+	jw$=c$(4)+r$+STR$(a%(4))+r$+STR$(b%(4))+r$:x=4:GOSUB 1001:PRINT# 2,jw$
+	&"{f6} {gray2}Returning to main prompt.{pound}n2"
+	jw$=na$+r$+STR$(a%(5))+r$+STR$(b%(5))+r$:x=5:GOSUB 1001:PRINT# 2,jw$
+	&" {gray2}Bye ":&ff$:&"{pound}w3{pound}f1{pound}n3"
+	CLOSE 2:GOTO {:3358}
+{:3178}
+	&"{clear}{down} {gray2}PRE-RACE 'SCOOP' SHEET{pound}n1 {red}{pound}o{$a3:6}{pound}n1"
+	&" {yellow}":&c$(1):&"{gray2} won:{white}{pound}{back arrow}13":&STR$(a%(1)):&"{pound}{back arrow}19{gray2}lost:{white}{pound}{back arrow}23":&STR$(b%(1)):&"{pound}n1"
+	&" {lt. blue}":&c$(2):&"{gray2} won:{white}{pound}{back arrow}13":&STR$(a%(2)):&"{pound}{back arrow}19{gray2}lost:{white}{pound}{back arrow}23":&STR$(b%(2)):&"{pound}n1"
+	&" {red}":&c$(3):&"{gray2} won:{white}{pound}{back arrow}13":&STR$(a%(3)):&"{pound}{back arrow}19{gray2}lost:{white}{pound}{back arrow}23":&STR$(b%(3)):&"{pound}n1"
+	&" {orange}":&c$(4):&"{gray2} won:{white}{pound}{back arrow}13":&STR$(a%(4)):&"{pound}{back arrow}19{gray2}lost:{white}{pound}{back arrow}23":&STR$(b%(4)):&"{pound}n1"
+	GOTO {:3008}
+{:3190}
+	IF b%(i)>a%(i)THEN{:3200}
+	jc=a%(i)-b%(i)
+	IF jc>10 THEN ky=2:GOTO {:3198}
+	ky=jc:IF ky<2 THEN ky=2
+{:3198}
+	RETURN
+{:3200}
+	jc=b%(i)-a%(i)
+	IF jc>10 THEN ky=10:GOTO {:3206}
+	ky=jc:IF ky<2 THEN ky=2
+{:3206}
+	RETURN
+{:3208}
+	jt$="":je=16:FOR jf=1 TO 17
+	je=je-1:IF je<>wc AND je<>wd AND je<>we AND je<>wf THEN{:3222}
+	IF je=wc THEN j$="1":IF wc=wd OR wc=we OR wc=wf THEN GOSUB {:3004}
+	IF je=wd THEN j$="2":IF wd=wc OR wd=we OR wd=wf THEN GOSUB {:3004}
+	IF je=we THEN j$="3":IF we=wc OR we=wd OR we=wf THEN GOSUB {:3004}
+	IF je=wf THEN j$="4":IF wf=wc OR wf=wd OR wf=we THEN GOSUB {:3004}
+	jt$=jt$+j$
+{:3222}
+	NEXT
+	RETURN
+{:3226}
+	&"{clear}{down}"
+	&"  {red}{$b0}{pound}o{$c0:17}{$ae}{red}{pound}n1"
+	&"  {red}{$dd}{gray3} The Snail Exacta.                {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} You can win 100 bonus credits by {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} predicting the exact finishing   {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} order of the four snails. Use    {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} the snails' numbers to indicate  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} the finishing order. Use zeroes  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} to indicate a tied position. An  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} example might be 3241 or 2010.   {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} Does not affect regular bet.     {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$ad}{pound}o{$c0:17}{$bd}{red}{pound}n1"
+	GOTO {:3008}
+{:3256}
+	&"{clear}{down}"
+	&"  {red}{$b0}{pound}o{$c0:17}{$ae}{red}{pound}n1"
+	&"  {red}{$dd}{gray3} Betting on the Snails.           {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} You are playing with your cred-  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} its. The number you enter here   {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} will be deducted from your cred- {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} its, should you lose.            {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} No bets greater than your credit {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} account, and no bets which will  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} leave you broke.                 {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$ad}{pound}o{$c0:17}{$bd}{red}{pound}n1"
+	GOTO {:3008}
+{:3286}
+	&"{clear}{down}"
+	&"  {red}{$b0}{pound}o{$c0:17}{$ae}{red}{pound}n1"
+	&"  {red}{$dd}{gray3} The Snails.                      {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} Tricky little mindless critters, {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} with no sense of time or desire  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} to win.                          {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} By number [1-4], pick the snail  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} you think most likely to win the {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} race. This choice does not af-   {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} fect the Snail Exacta.           {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$ad}{pound}o{$c0:17}{$bd}{red}{pound}n1"
+	GOTO {:3008}
+{:3316}
+	&"{clear}{down}"
+	&"  {red}{$b0}{pound}o{$c0:17}{$ae}{red}{pound}n1"
+	&"  {red}{$dd}{gray3}  The Great American Snail Race.  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} Four personable little critters  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} are here to entertain you. They  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} might even increase your credits {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} account. Unpredictable & fickle, {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} they have surely removed them-   {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} selves from 'Life in the Fast    {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} Lane'. Enter ? for help. Journey {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3} now to the track of the snails.  {red}{$dd}{pound}n1"
+	&"  {red}{$dd}{gray3}                                  {red}{$dd}{pound}n1"
+	&"  {red}{$ad}{pound}o{$c0:17}{$bd}{red}{pound}n1"
+	GOTO {:3008}
+{:3346}
+	ON jl GOTO {:3348},{:3350},{:3352},{:3354}:GOTO {:3356}
+{:3348}
+	f$="{rvrs on}{yellow} 1:{rvrs off}{gray2}<":GOTO {:3356}
+{:3350}
+	f$="{rvrs on}{lt. blue} 2:{rvrs off}{gray2}<":GOTO {:3356}
+{:3352}
+	f$="{rvrs on}{red} 3:{rvrs off}{gray2}<":GOTO {:3356}
+{:3354}
+	f$="{rvrs on}{orange} 4:{rvrs off}{gray2}<"
+{:3356}
+	jl=.:RETURN
+{:3358}
+	IF fd THEN a=1:GOSUB 1883
+	GOTO 1812
+	REM +.snail ***05/01/90***

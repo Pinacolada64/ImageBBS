@@ -1,0 +1,27 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM s%(39,60):dr=4:GOSUB 1010
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+"d.f.*":GET#1,a$,a$:&,8,1,1:n=0
+{:3002}
+	&,8,1,1:an$=a$:&,15,6,34:ON-(an$="")GOTO {:3004}:&,15,6,34:ON-(an$="")GOTO {:3004}
+	n=n+1:tt$(n)=a$:&".":GOTO {:3002}
+{:3004}
+	CLOSE 1:&"{f6:2}":IF n=0 THEN:&"None Found.":GOTO 1812
+	&"{pound}!n Found:{f6:2}":FOR i=1 TO n:a$=tt$(i):&"Reading {f5}{pound}$a{f5}"
+	GOSUB 1011:IF e%THEN:&:GOTO {:3017}
+	&,2,2:s%(0,0)=VAL(a$):&,60,0,30,s%(25,0),MID$(tt$(i),5)
+	s%(1,0)=0:s%(2,0)=0:s%(3,0)=dv%(4):s%(4,0)=dr%(4):IF s%(0,0)=0 THEN{:3015}
+	FOR j=1 TO s%(0,0):x=j+1:GOSUB 1001:&"."
+	&,2,2:s%(1,j)=VAL(a$):&,2,2:&,60,0,28,s%(21,j),a$:&,2,2
+	s%(2,j)=VAL(LEFT$(a$,1)):&,60,0,16,s%(13,j),MID$(a$,2)
+	&,2,2:s%(3,j)=VAL(a$):&,2,2:s%(4,j)=VAL(a$):&,2,2:s%(6,j)=VAL(a$)
+	&,2,2:&,60,4,0,s%(7,j),LEFT$(a$,11):&,60,4,0,s%(10,j),MID$(a$,12)
+	&,2,2:s%(6,j)=VAL(a$):NEXT
+{:3015}
+	a$="d.GF."+MID$(tt$(i),5):&"{f6}Writing {f5}{pound}$a{f5}"
+	&,60,3,0,s%(0,0),80+80*s%(0,0),dr$+a$,dv%:&"{f6}"
+{:3017}
+	NEXT:&"Done{f6}":GOTO 1812
+	rem "+.convert f-GF"
+	rem converts 1.3's "d.f.*" rel files into "d.GF.*" struct files

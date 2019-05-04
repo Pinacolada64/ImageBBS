@@ -1,32 +1,35 @@
 {number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
 	on im goto {:60002},{:60008}:return
 {:60002}
-	gosub {:60004}:&"{pound}{back arrow}13{rvrs on} {$d0}{$d2}{$c5}{$d3:2} {$c1}{$a0}{$cb}{$c5}{$d9} {pound}g1{f6}":return
+	gosub {:60004}:&"{pound}{back arrow}13{rvrs on} PRESS A KEY {pound}g1{f6}":return
 {:60004}
 	a=11:gosub 1004:on-(a<>.)goto {:60008}:return
 	gosub 1060:for x=1 to 38:gosub 1001:&,2,2:st(x)=val(a$):next:close 2
 {:60008}
-	b$=d6$:&"{clear}  {$d2}estarted: {pound}$b"
-	&"{f6} {rvrs on}{yellow}  {$c2}.{$c1}.{$d2}.  {white} {$d4}his   {$cc}og  {$c3}urrent {$d3}ystem "
-	&"{f6} {rvrs on}{yellow}  {$d3}tats   {white} {$c3}all  {$d4}otal  {$d4}otal  {$d4}otal  ":restore
+	b$=d6$:&"{clear}  Restarted: {pound}$b"
+	&"{f6} {rvrs on}{yellow}  B.A.R.  {white} This   Log  Current System "
+	&"{f6} {rvrs on}{yellow}  Stats   {white} Call  Total  Total  Total  ":restore
 	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c  {pound}%d {rvrs on} "
-	b$="{$c6}eedback  ":x=1:gosub {:60060}
-	b$="{$d3}ysop {$cd}ail":x=2:gosub {:60060}
-	b$="{$d5}sers {$cd}ail":x=3:gosub {:60060}
-	b$="{$d0}osts     ":x=4:gosub {:60060}
-	b$="{$d2}esponses ":x=5:gosub {:60060}
-	b$="{$d5}ploads   ":x=6:gosub {:60060}
-	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b    {$ce}/{$c1}  {pound}%d {rvrs on} "
-	b$="{$c4}ownloads ":x=7:gosub {:60060}
-	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c    {$ce}/{$c1} {rvrs on} ":c=st(29):c%=c+(c>32767)*65536
-	b$="{$ce}ew {$d5}sers ":x=8:gosub {:60062}
-	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}    {$cc}og   {$d4}ot  "
-	b$="{$c3}alls/{$cc}og ":x=9:gosub {:60062}
+	b$="Feedback  ":x=1:gosub {:60060}
+	b$="Sysop Mail":x=2:gosub {:60060}
+	b$="Users Mail":x=3:gosub {:60060}
+	b$="Posts     ":x=4:gosub {:60060}
+	b$="Responses ":x=5:gosub {:60060}
+	b$="Uploads   ":x=6:gosub {:60060}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b    N/A  {pound}%d {rvrs on} "
+	b$="Downloads ":x=7:gosub {:60060}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b  {pound}%c    N/A {rvrs on} ":c=st(29):c%=c+(c>32767)*65536
+	b$="New Users ":x=8:gosub {:60062}
+	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}    Log   Tot  "
+	b$="Calls/Log ":x=9:gosub {:60062}
 	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%c   {pound}%d  {rvrs on} "
 	x=21:gosub {:60052}:x=37:gosub {:60064}
-	b$="{$d4}ime {$d5}sed ":x=10:gosub {:60062}
+	b$="Time Used ":x=10:gosub {:60062}
 	a$="{f6} {rvrs on}{pound}$b{rvrs off}{pound}#5{pound}# {pound}%a  {pound}%b {rvrs on}%{rvrs off} {pound}#3{pound}#  {pound}%e   {pound}%f  {rvrs on} "
-	b$="{$d4}ime {$c9}dle ":x=11:gosub {:60062}
+	b$="Time Idle ":x=11:gosub {:60062}
 	&"{f6} {rvrs on}{pound}o {pound}o {cyan}{f6}":return
 {:60052}
 	c%=100:e%=0:a=st(x):b=st(x+1):if a+b=0 then return
@@ -42,3 +45,4 @@
 	if a=.then f%=100:d%=0:return
 	if b=.then d%=100:f%=0:return
 	d%=a/(a+b)*100+.5:f%=100-d%:return
+	rem im.bar

@@ -1,4 +1,6 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002},{:60030},{:60068},{:60074},{:60072},{:60078}:return
 {:60002}
 	an$=ff$:&,15,1:f$=an$:an$=ll$:&,15,1:l$=an$:rn$=ff$+" "+ll$
@@ -10,37 +12,37 @@
 	on a goto {:60022},{:60026},{:60014},{:60074},{:60030}
 {:60014}
 	a1$=mid$(ph$,2,3):a2$=mid$(ph$,7,8)
-	&"{f6}":w$=a1$:pl=1:poke 53252,3:p$="{$c1}rea {$c3}ode":&,1,32:if len(an$)=3 then a1$=an$
-	&"{f6}":w$=a2$:pl=1:poke 53252,8:p$="{$d0}hone {$ce}o":&,1,32:if len(an$)=8 then a2$=an$
+	&"{f6}":w$=a1$:pl=1:poke 53252,3:p$="Area Code":&,1,32:if len(an$)=3 then a1$=an$
+	&"{f6}":w$=a2$:pl=1:poke 53252,8:p$="Phone No":&,1,32:if len(an$)=8 then a2$=an$
 	ph$="["+a1$+"] "+a2$:return
 {:60022}
-	w$=ff$:p$="{$c6}irst {$ce}ame":pl=1:poke 53252,15:&,1,32:if an$<>""then ff$=an$
+	w$=ff$:p$="First Name":pl=1:poke 53252,15:&,1,32:if an$<>""then ff$=an$
 	return
 {:60026}
-	w$=ll$:p$="{$cc}ast {$ce}ame":pl=1:poke 53252,15:&,1,32:if an$<>""then ll$=an$
+	w$=ll$:p$="Last Name":pl=1:poke 53252,15:&,1,32:if an$<>""then ll$=an$
 	return
 {:60030}
-	on abs(pw$=""or i%)goto 1603:&"{f6}{$cf}ld {$d0}assword?: ":&,6:on-(an$<>pw$)goto 1920
+	on abs(pw$=""or i%)goto 1603:&"{f6}Old Password?: ":&,6:on-(an$<>pw$)goto 1920
 {:60032}
-	&"{f6:2}{$d7}ould you like to:{f6:2} ({$c1}) {$c5}nter a password{f6} ({$c2}) {$c7}enerate a {$d2}andom "
-	&"{$d0}assword{f6} ({$c3}) {$ce}ot change your password{f6:2}> {pound}g1"
-	if tr%>.then on-(an$="{$c1}")-2*(an$="{$c2}")-3*(an$="{$c3}")goto {:60042},{:60052},{:60040}:goto {:60032}
-	&"{$c3}{f6:2}"
+	&"{f6:2}Would you like to:{f6:2} (A) Enter a password{f6} (B) Generate a Random "
+	&"Password{f6} (C) Not change your password{f6:2}> {pound}g1"
+	if tr%>.then on-(an$="A")-2*(an$="B")-3*(an$="C")goto {:60042},{:60052},{:60040}:goto {:60032}
+	&"C{f6:2}"
 {:60040}
 	return
 {:60042}
-	poke 53252,14:&"{$c1}{f6:2}{$d0}lease {$c5}nter {$c1} {$d0}assword {$d4}o {$d5}se{f6}"
-	&"for your account on this {$c2:2}{$d3}.{f6:2}: {pound}i1":on tr%+1 goto {:60040}:if an$=""then{:60032}
-	pw$=an$:poke 53252,20:if na$=pw$or tr%<1 then{:60050}
-	if na$=an$then:&"{f6}{$d0}lease {$c4}o {$ce}ot {$d5}se {$d9}our {$c8}andle{f6}{$c1}s {$c1} {$d0}assword.{f6}":goto {:60042}
+	poke 53252,14:&"A{f6:2}Please Enter A Password To Use{f6}"
+	&"for your account on this BBS.{f6:2}: {pound}i1":on tr%+1 goto {:60040}:if an$="" then {:60032}
+	pw$=an$:poke 53252,20:if na$=pw$ or tr%<1 then{:60050}
+	if na$=an$ then:&"{f6}Please Do Not Use Your Handle{f6}As A Password.{f6}":goto {:60042}
 {:60050}
 	pw$=an$:return
 {:60052}
-	&"{$c2}{f6:2}":gosub {:60058}:&"{$d9}our random password is {f5}{pound}$b{f5}{f6:2}{$c9}s this ok? ":gosub 1907
+	&"B{f6:2}":gosub {:60058}:&"Your random password is {f5}{pound}$b{f5}{f6:2}Is this OK? ":gosub 1907
 	if a then pw$=b$:return
 	goto {:60032}
 {:60058}
-	b$="":v$="{$c1}{$c5}{$c9}{$cf}{$d5}":c$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":n$="{$ce}{$d4}{$d2}{$d3}{$c2}"
+	b$="":v$="AEIOU":c$="S{$d4:2}RSHSCBLFL":n$="NTRSB"
 	gosub {:60064}:gosub {:60066}:gosub {:60064}:gosub {:60066}:gosub {:60064}:gosub {:60066}
 	b$=b$+mid$(n$,int(rnd(1)*len(n$))+1,1):return
 {:60064}
@@ -48,12 +50,12 @@
 {:60066}
 	b$=b$+mid$(v$,int(rnd(1)*len(v$))+1,1):return
 {:60068}
-	d$="{$d3}ystem":gosub {:60084}:if a=.then return
+	d$="System":gosub {:60084}:if a=.then return
 	tz$=an$:gosub 1063:x=45:gosub 1001:print# 2,tz$:close 2
 {:60072}
 	an$=tz$:gosub {:60082}:poke 866,x:poke 867,y:return
 {:60074}
-	d$="{$d9}our":gosub {:60084}:if a=.then return
+	d$="Your":gosub {:60084}:if a=.then return
 	uf$=left$(uf$,5)+an$
 {:60078}
 	an$=mid$(uf$,6):gosub {:60082}:poke 868,x:poke 869,y
@@ -64,9 +66,10 @@
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e%then close 2:return
 {:60086}
 	&,2,2:if a$<>"{up arrow}"then n=n+1:tt$(n)=a$:on-(st=.)goto {:60086}
-	close 2:&"{f6}{$d3}elect {pound}$d {$d4}ime {$da}one:{f6:2}"
+	close 2:&"{f6}Select {pound}$d Time Zone:{f6:2}"
 	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
-	poke 53252,2:&"{f6}{$d7}hich {$cf}ne? {pound}i1"
+	poke 53252,2:&"{f6}Which One? {pound}i1"
 	a=val(an$):if an$=""or a<1 or a>n then a=.:return
 	c$=mid$(tt$(a),8):an$=left$(tt$(a),7):return
 	copr. 1994 new image 9/18/94
+	rem im.info

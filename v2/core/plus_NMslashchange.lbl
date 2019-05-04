@@ -1,0 +1,68 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:IF e%THEN{:3012}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOSUB 1012:IF e%THEN{:3012}
+	a$="nm.nodes":GOSUB 1011:IF e%THEN{:3012}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.changes":GOSUB 1012:IF e%THEN{:3012}
+{:3008}
+	&,2,3:s=st:ON-(a$<>"")GOSUB {:3014}:ON-(s=0)GOTO {:3008}
+	a$="DONE{f6}"
+{:3012}
+	&:CLOSE 2:CLOSE 3:GOTO 1812
+{:3014}
+	an$=a$:&,15,6,58:b$=a$:&,15,6,58:c$=a$:IF c$=""THEN:&">No Command){f6}":RETURN
+	a$=LEFT$(b$,3):&,16,2:ON-(c$="ADD")GOTO {:3066}:IF a%=0 THEN:&">{pound}$b not found{f6}":RETURN
+	x=a%+1:GOSUB {:3078}
+	ON-(c$="BBS")-2*(c$="NUM")GOTO {:3028},{:3030}
+	ON-(c$="SYS")-2*(c$="CNX")GOTO {:3036},{:3038}
+	ON-(c$="DED")-2*(c$="DEL")GOTO {:3052},{:3054}
+	RETURN
+{:3028}
+	tt$(3)=an$:&"BBS: {pound}$b -> {pound}v7{f6}":GOTO {:3080}
+{:3030}
+	&,15,6,45:d$=a$:&,15,6,45:d$=d$+a$:&,15,6,45:d$=d$+a$
+	IF LEN(d$)<>10 THEN:&"NUM: Phone number incorrect{f6}":s=1:RETURN
+	tt$(2)=d$:&"NUM: {pound}$b -> {pound}$d{f6}":GOTO {:3080}
+{:3036}
+	tt$(4)=an$:&"SYS: {pound}$b -> {pound}v7{f6}":GOTO {:3080}
+{:3038}
+	i=6
+{:3040}
+	IF an$=""THEN{:3048}
+	&,15,6,58:&,16,2:IF a%=0 THEN:&"CNX: {pound}$a not found{f6}":s=1:RETURN
+	&"CNX: {pound}$b -> {pound}$a{f6}":tt$(i)=STR$(a%):i=i+1:IF i<11 THEN{:3040}
+	&"CNX: Too many connections{f6}":s=1:RETURN
+{:3048}
+	IF i<10 THEN tt$(i)="0":i=i+1:GOTO {:3048}
+	GOTO {:3080}
+{:3052}
+	tt$(5)="1":GOTO {:3080}
+{:3054}
+	FOR z=1 TO 4:a%(z)=VAL(tt$(z+5)):NEXT
+	FOR z=1 TO 4:IF a%(z)THEN x=a%(z)+1:GOSUB {:3078}:GOSUB {:3082}:GOSUB {:3080}
+	NEXT:x=a%+1:GOSUB {:3078}
+	tt$(5)="1":tt$(6)="0":tt$(7)="0":tt$(8)="0":tt$(9)="0"
+	x=a%+1:GOSUB {:3080}
+	&"DEL: {pound}$b{f6}":RETURN
+{:3066}
+	IF a%THEN:&"ADD: {pound}$b Already Exists{f6}":s=1:RETURN
+	a%=VAL(MID$(b$,5)):IF a%=0 THEN:&"ADD: Bad Node Number{f6}":s=1:RETURN
+	tt$(1)=LEFT$(b$,3):tt$(2)="{f2}":tt$(3)="{f2}":tt$(4)="{f2}":tt$(5)="0"
+	tt$(6)="0":tt$(7)="0":tt$(8)="0":tt$(9)="0"
+	x=a%+1:GOSUB {:3080}
+	&"ADD: {pound}$b{f6}":RETURN
+{:3078}
+	GOSUB 1001:FOR i=1 TO 9:&,2,2:tt$(i)=a$:NEXT:RETURN
+{:3080}
+	GOSUB 1001:&,14,2,9:RETURN
+{:3082}
+	FOR i=6 TO 9:IF VAL(tt$(i))=a%THEN tt$(i)="0"
+	NEXT:i=6:j=6
+{:3086}
+	IF VAL(tt$(i))THEN tt$(j)=tt$(i):j=j+1
+	i=i+1:IF i<10 THEN{:3086}
+{:3090}
+	IF j<10 THEN tt$(j)="0":j=j+1:GOTO {:3090}
+	RETURN
+	REM "+.NM/change"

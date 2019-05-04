@@ -1,0 +1,11 @@
+   Your tournament has gone well, and your champion seems invincible.  Baron
+Stallworth approaches you and suggests a small wager on the joust between his
+champion and yours.  With confidence, you agree.
+   As the two champions await the signal for the contest to begin, Baron
+Stallworth's champion suddenly leans forward, and falls from his horse.
+   Physicians rush forward as the crowd is silenced by the scene.  It is
+determined that Baron Stallworth's champion has had an attack of
+appendicitis and can't continue.  You claim the victory, by default!
+
+You win 1,000 gold!!
+               <Press any Key>\g1

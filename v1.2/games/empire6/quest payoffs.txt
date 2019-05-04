@@ -1,0 +1,37 @@
+Tourney  1: Win  100 acres
+Tourney  2: Lose 100 acres
+Tourney  3: Win  1,000 gold
+Tourney  4: Lose 1,000 gold
+Tourney  5: Win  1 noble
+Tourney  6: Lose 1 noble
+Tourney  7: Win  7,000 bushels of grain
+Tourney  8: Lose 7,000 bushels of grain
+Tourney  9: Win  1 Shipyard and 100 acres
+Tourney 10: Lose 1 shipyard and 100 acres
+Tourney 11: Win  2 tons of timber
+Tourney 12: Lose 2 tons of timber
+
+Isle  1: Win 90,000 gold
+Isle  2: Flotilla damaged
+Isle  3: Win 10 Cannons, 3 Nobles, 30 Soldiers, and 250 Serfs
+Isle  4: Forces are severely damaged
+Isle  5: Win 100 horses, 20 tons of timber
+Isle  6: Forces suffer "some losses"
+
+Quest 1: 90,000 gold
+Quest 2: 30 horses
+Quest 3: 15 tons of timber
+Quest 4: 40,000 bushels of grain
+Quest 5: 4,000 acres
+Quest 6: 40 tons of spice
+Quest 7: 4 nobles
+Quest 8: 6 cannons
+Quest 9: Lose 2,000 acres, 600 serfs, 4 Nobles, 9,000 gold
+
+Wreck 1: 2 Nobles, 15 Soldiers, and 30 serfs
+Wreck 2: Lose a few ships from sea serpent attack
+Wreck 3: 5 tons of exports
+Wreck 4: Flotilla damaged from waterspout
+Wreck 5: 16 tons of spice
+Wreck 6: 3 Nobles, 25 soldiers, and 15,000 gold
+Wreck 7: Your ships are devastated!

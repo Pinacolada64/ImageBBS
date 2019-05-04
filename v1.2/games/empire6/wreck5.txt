@@ -1,0 +1,10 @@
+    You have found a long trail of wreckage floating on the waves. 
+Evidently the work of a storm or pirates.
+
+    As the wreckage drifts by, you notice that some of the crates appear
+to be undamaged.  You order them hauled aboard.
+
+    Upon closer examination you discover that they are full of spice: 16
+tons of spice!
+
+               <Press any Key>\g1

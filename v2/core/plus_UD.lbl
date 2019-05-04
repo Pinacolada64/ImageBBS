@@ -1,0 +1,352 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	pr$="":lc=5:GOSUB {:3050}:ON-(f1=3)GOTO {:3214}:it=0:yy%=.:GOTO {:3184}
+	l%=-(pr=2):RETURN
+{:3004}
+	dr=bn+6:RETURN
+{:3006}
+	IF VAL(a$)THEN IF VAL(a$)<1 THEN a$=MID$(a$,4)
+{:3008}
+	RETURN
+{:3010}
+	a=ABS(INT(VAL(LEFT$(MID$(an$,2),4)))):RETURN
+{:3012}
+	a=ABS(INT(VAL(an$))):RETURN
+{:3014}
+	br=a+1:IF br<1 OR br>rn THEN br=1
+{:3016}
+	RETURN
+{:3018}
+	&"{f6}{white}No {pound}$js In This {pound}$h.{f6}":RETURN
+{:3020}
+	&"{f6}{lt. green} (RETURN To Keep Same){f6:2}":RETURN
+{:3022}
+	&"{green}{pound}$jname?{lt. blue}: {pound}i0":RETURN
+	&"{clear}{f6}{pound}q0End Of Transfer.{f6}":GOTO 1073
+{:3026}
+	a$=bb$(bn):GOSUB {:3006}:p$="{green}U/D#"+MID$(STR$(bn),2)+": {lt. blue}"+a$+"{white}":cm$=p$
+	ON-(sg=0)GOTO {:3008}:p$=sg$+" SIG{f6:2}"+p$:RETURN
+{:3028}
+	a$=MID$(a$,23):RETURN
+	&"{f6}{lt. red}Go To {pound}v7 {pound}$js Mode!{f6}":RETURN
+	&"{f6}{$0f}{orange}Sorry, {pound}$h Full.{f6}":RETURN
+{:3034}
+	b=.:ON-(LEFT$(a$,1)<>"."OR MID$(a$,3,1)<>".")GOTO {:3008}:b=VAL(MID$(a$,2,1)):RETURN
+{:3036}
+	ON-(a$="N")-(a$="L")*2-(a$="{f2}")*3 GOTO {:3288},{:3324},1351:fl=.:RETURN
+{:3038}
+	CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:RETURN
+{:3040}
+	ON-(s$=d2$)GOTO {:3092}:a$="  "+d2$:GOSUB 1095:s$=d2$:GOTO {:3092}
+{:3042}
+	dr=4:a$="d.u/d"+STR$(e%(bn)):RETURN
+{:3044}
+	CLOSE 15:OPEN 15,a,15:CLOSE 15:a=st:RETURN
+	ON-(a%=1)GOTO {:3016}:&"s":RETURN
+	&"{f6}Sorry, {pound}$ks Only{f6}":GOTO {:3214}
+{:3050}
+	h$="Library":j$="File":k$="Download":l$="Upload":m$="Multi-"
+	i$=" SubOp ":RETURN
+{:3054}
+	an$=MID$(a$,5):&,15,1:IF LEFT$(a$,1)="!"THEN an$=an$+"{cyan} @ "+MID$(a$,2,3):RETURN
+	an$=an$+"{cyan}-"+cc$+MID$(STR$(VAL(LEFT$(a$,4))),2):RETURN
+{:3058}
+	a$=RIGHT$("0000"+MID$(STR$(id),2),4)+na$:RETURN
+{:3060}
+	b$=MID$(dt$(kk),23):RETURN
+{:3062}
+	b$=LEFT$(b$,LEN(b$)-2):RETURN
+{:3064}
+	b$=LEFT$(b$,LEN(b$)-2)+","+RIGHT$(b$,1):RETURN
+	x=-(((PEEK(2033)AND 127)=1)AND(zz=.)):RETURN
+	y%=a%:FOR i=1 TO a%:a$=" "+c$+": {white}{f5}"+tt$(i)+"{f5}{yellow}":GOSUB 1096:PRINT# 2,a$:a%=y%:NEXT:CLOSE 2:RETURN
+	&"{f6:2}{lt. green}Correct?: ":GOTO 1902
+{:3072}
+	&"{f6}{yellow} [Y]es [N]o [S]tart [A]bort{pound}q0{f6}{pound}vj":RETURN
+	POKE 668,PEEK(667):RETURN
+	z=1:a$="w":GOSUB 1062:IF e%THEN z=.:a$="a":GOSUB 1062
+	PRINT# 2,na$r$id;r$d1$r$c$:FOR x=1 TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	GOSUB 1081:GOSUB 1060:i=1:x=3:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	IF y=1 THEN FOR x=2 TO 24 STEP 11:GOSUB 1025:NEXT:x=31:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:RETURN
+	rn=rn-1:ON rn+1 GOTO {:3008}:FOR x=kk TO rn:u%=x:v%=x+1:GOSUB {:3088}:NEXT:RETURN
+{:3088}
+	c%(u%)=c%(v%):d%(u%)=d%(v%):f%(u%)=f%(v%):dt$(u%)=dt$(v%)
+	nn$(u%)=nn$(v%):ed$(u%)=ed$(v%):RETURN
+{:3092}
+	a$="a":GOTO 1064
+	dt$(kk)=LEFT$(dt$(kk),11)+d1$+MID$(dt$(kk),23):RETURN
+{:3096}
+	a%=bn:&"{f6}{green}U/D {pound}$h #{pound}%a: {lt. red}":a$=bb$(bn):GOSUB {:3006}:lp=1:&:d2$=a$
+	ON em GOTO {:3100}:dr=1:GOSUB 1010:a$="s.U/D"+STR$(e%(bn))+STR$(nl):GOSUB 1076
+{:3100}
+	q=.:a=12:GOSUB 1004:b=a:a=8:GOSUB 1004:IF a+b THEN q=1
+	IF id>.AND id=so%(bn)OR id=so%THEN q=1:&"{f6}{$0f}{lt. red} - You Have{pound}$iAccess Here.{f6}"
+	rn=.:GOSUB {:3042}:a$=a$+",s,r":FOR x=2 TO 4:&,11,x:NEXT
+	GOSUB 1011:IF e%THEN{:3114}
+	INPUT# 2,a$:rn=VAL(a$):IF rn=.THEN{:3114}
+	FOR x=1 TO rn:INPUT# 2,c%(x),nn$(x):&,2,2
+	dt$(x)=a$:&,2,2:ed$(x)=a$:INPUT# 2,d%(x),f%(x):NEXT
+{:3114}
+	CLOSE 2:GOTO {:3004}
+{:3116}
+	a%=.:IF rn=.THEN{:3122}
+	FOR x=1 TO rn:IF MID$(dt$(x),2,10)>MID$(ld$,2)THEN a%=a%+1
+	NEXT:IF a%THEN:&"{f6}{blue} -{lt. blue} New {pound}$js  {blue}:{white} {pound}%a"
+{:3122}
+	a%=rn:&"{f6}{blue} -{lt. blue} Total {pound}$js{blue}:{white} {pound}%a":RETURN
+	b=-(rc<>0)*INT(rc/254+.999):RETURN
+{:3126}
+	b$="Bk's":IF co%>2 THEN b$="Kb's"
+	POKE 970,0:&"{pound}f1{white} ## {lt. red}{pound}$b   {green}Dl'd  {lt. blue}Name{f6}{orange}{pound}vj":RETURN
+{:3130}
+	&"{orange}{pound}vj":RETURN
+	b=.:FOR i=.TO 9:a%=i:&"Group #{pound}%a?: ":GOSUB 1902:b=b+2^i*a:NEXT:a=b:RETURN
+{:3134}
+	x=1000/qb/85/60
+	a=c%(kk)*254*x:a%=a:b%=(a-a%)*60:&"{lt. blue}Transfer Time: {white}{pound}#2{pound}%a:{pound}%b{lt. blue}":RETURN
+{:3138}
+	kk=a:GOSUB {:3060}:IF f%(a)>.THEN c$="{lt. blue}{f5}{pound}$b{f5}":GOTO {:3142}
+	c$="{yellow}(Unvalidated)":GOSUB {:3058}:IF(q OR a$=nn$(a))THEN c$="{white}*{lt. blue}{f5}{pound}$b{f5}"
+{:3142}
+	a%=a:b%=c%(a):c%=f%(a)-1:IF c%<.THEN c%=.
+	IF co%>2 THEN b%=(b%*254)/1024:IF b%<1 THEN b%=1
+	&" {white}{pound}#2{pound}# {pound}%a {lt. red}[{white}{pound}#4{pound}%b{lt. red}] {green}{pound}#3[{white}{pound}%c{green}] {lt. blue}"+c$+"{pound}{back arrow}39"
+	s=rc:s=s+rc:&"{pound}q0":RETURN
+{:3150}
+	&"{f6}{lt. blue}Updating Directory...":a$="d.temp"+STR$(e%(bn)):dr=4:GOSUB 1023
+	PRINT# 2,rn:IF rn=.THEN CLOSE 2:GOTO {:3158}
+	FOR x=1 TO rn:PRINT# 2,c%(x)r$nn$(x)r$dt$(x)r$ed$(x)r$d%(x)r$f%(x)
+	NEXT:CLOSE 2
+{:3158}
+	GOSUB {:3042}:GOSUB 1010:PRINT# 15,"s"dr$a$:PRINT# 15,"r"dr$a$"="dr$"d.temp"STR$(e%(bn))
+	&"{f6:2}":GOTO 1081
+{:3162}
+	ON-(rn=.)GOTO {:3018}:kk=.:a=rn:&"{f6}":d$="New":IF z$="SU"THEN fl=1:d$="Unvalidated"
+	rq=.
+{:3166}
+	IF fl THEN ON-(f%(a)<1)GOTO {:3170}:GOTO {:3172}
+	IF MID$(dt$(a),2,10)<MID$(ld$,2)THEN a=1:GOTO {:3172}
+{:3170}
+	&MID$(" {f6}",2+((rq AND 1)=1),1):GOSUB {:3138}:rq=rq+1:kk=kk+1:IF s+rc THEN a=1
+{:3172}
+	a=a-1:ON SGN(a)GOTO {:3166}:rq=.:fl=.:&"{f6}":ON SGN(kk)GOTO {:3016}:&"No {pound}$d {pound}$js.{f6}":RETURN
+{:3174}
+	bl=1:GOSUB {:3126}:GOSUB {:3138}:GOSUB {:3058}:IF a$<>nn$(a)AND q=.AND f%(a)<1 THEN:&"{f6}":RETURN
+	a$=nn$(a):GOSUB {:3054}:&"{f6} {lt. blue}User: {pound}v7{f6} {purple}Date: {$04}"+LEFT$(dt$(a),11)+"{f6} {cyan}Last: {$04}"+MID$(dt$(a),12,11)
+	b$="Any Computer":IF d%(a)THEN b$=co$(d%(a))
+	IF co%=2 AND d%(a)=1 THEN b$=co$(2)+" (In 64 Mode)"
+	c$=ed$(a):&"{f6} {green}Comp: {pound}$b{f6} ":kk=a:GOSUB {:3134}:a=kk:lp=1:&"{f6} {yellow}Info:{lt. blue}{f6} {pound}$c{f6}{orange}{pound}vj":RETURN
+{:3184}
+	lm$="":r$=CHR$(13):ON tr%+1 GOTO {:3262}:q=.:a=8:GOSUB 1004:IF a THEN q=1
+	IF it THEN a=tr%:tr%=it+a:it=a
+{:3188}
+	sy$="U/D"+"":GOSUB {:3394}:ON lm GOTO {:3214},{:3264}
+	a=ul:&,52,4,3:IF a%THEN a=2
+	GOSUB 1667:bn=.:r=ABS(INT(VAL(an$)))
+{:3194}
+	a=r:IF r=.AND bz>.THEN an$="":GOSUB {:3312}:p$="{f6}{lt. blue}Which U/D?":GOSUB 1006:GOSUB {:3012}
+	ON-(a=.)GOTO {:3256}:r=a
+{:3198}
+	a=.:IF r<1 OR r>bz THEN r=1:&"{f6} {orange}Unknown {pound}$h Number.{f6}":ON-(bn<>.)GOTO {:3208}:r=.:GOTO {:3194}
+	a$=bb$(r):GOSUB {:3034}:f2=b
+	IF(f2 AND 4)=4 THEN a%=r:GOSUB {:3362}:IF an$<>c$THEN r=bn:GOTO {:3198}
+	ON-(MID$(oc$,r,1)="0")GOTO {:3210}:&"{f6}":a$=bb$(r):GOSUB {:3006}:lp=1:&
+	x=1:GOSUB 1980:IF id>.AND id=so%(r)OR id=so%OR q THEN{:3210}
+{:3208}
+	ON SGN(bn)GOTO {:3214}:a=1:ON r GOTO {:3210}:r=1:GOTO {:3198}
+{:3210}
+	ON a GOTO {:3264}:IF r=bn THEN GOSUB {:3116}:GOTO {:3214}
+	bn=r:br=1:GOSUB {:3096}:GOSUB {:3116}
+{:3214}
+	an$=STR$(cr):a=7:GOSUB 1004:IF a THEN an$=" Unlimited"
+	GOSUB {:3004}:GOSUB 1079:b$=STR$(a):IF co%>2 THEN a=INT((a*254)/1024):b$=STR$(a)
+	IF id>.AND id=so%(bn)OR id=so%THEN q=1
+	d$="Blocks":IF co%>2 THEN d$="Kbytes"
+	&"{f6}{blue} -{lt. blue} Protocol   {blue}:{white} {pound}vl{f6}{blue} -{lt. blue} Credit Pts {blue}:{white}{pound}v7{f6}{blue} -{lt. blue} {pound}$d Free{blue}:{white}{pound}$b"
+	GOSUB 1372
+	f1=.:fl=.:bl=.:lc=5:GOSUB {:3026}:GOSUB 1098:g$=RIGHT$(an$,1):IF tr%<1 THEN{:3264}
+	IF an$="LD"THEN GOSUB {:3364}:GOSUB {:3116}:GOTO {:3214}
+	GOSUB 1850:ON f4 GOTO {:3258}:IF rs THEN lm$="":GOTO {:3214}
+	GOSUB {:3012}:IF a THEN r=a:GOTO {:3198}
+	IF z$=">>"OR z$="<<"OR z$="SG"THEN GOSUB {:3394}:ON lm GOTO {:3214},{:3264}:GOTO {:3194}
+	lm=-(z$="AS")-2*(z$="MS")-3*(z$="AC")-4*(z$="ID")-5*(z$="VS"):IF lm THEN{:3398}
+	IF a$=">"OR a$="<"OR a$="{f4}"OR a$=";"THEN r=bn+(a$="<"OR a$=";")*2+1:GOTO {:3198}
+	ON-(z$="SA")-(a$="U")*2-(a$="M")*3-(z$="Q")*4 GOTO {:3276},{:3346},{:3360},{:3264}
+	x=2:ON-(a$="V")-(a$="Z")*2-(a$="O")*3 GOTO {:3352},{:3396},1694
+	GOSUB {:3036}:IF rn=.THEN GOSUB {:3018}:GOTO {:3214}
+	ON-(a$="R")-(a$="D")*2-(a$="E")*3 GOTO {:3326},{:3348},{:3370}
+	IF z$="SS"THEN lm=3:GOTO {:3392}
+	IF a$="K"THEN GOSUB {:3456}:br=1:GOTO {:3214}
+	ON-(a$="S"OR a$="{f7}"OR a$="")-(a$="A")*2-(z$="V")*3 GOTO {:3266},{:3292},{:3352}:GOTO {:3214}
+{:3256}
+	ON-(sg=.OR tz=1)GOTO {:3264}:sg=.:an$="":GOTO {:3188}
+{:3258}
+	s$="":lm$="":sg=-sg*(z$="SB"OR z$="UX"):os=sg:sb$=LEFT$(sb$,-2*(sg<>.))
+	ON-(it=.)GOTO 1842:tr%=it:GOTO 1842
+{:3262}
+	s$="":lm$="":sg=.:os=.:sb$="":GOTO 1811
+{:3264}
+	s$="":lm$="":sg=.:os=.:sb$="":ON-(it=.OR tr%=.)GOTO 1811:tr%=it:GOTO 1811
+{:3266}
+	ON-(z$="SA")GOTO {:3276}:fl=.:IF z$="SN"OR a$="{f7}"OR z$="SU"THEN GOSUB {:3162}:GOTO {:3214}
+	GOSUB {:3010}:rs=br:IF a>.AND a<=rn THEN rs=a
+	r%=(rs AND 1):IF rn=.THEN GOSUB {:3018}:GOTO {:3214}
+	GOSUB {:3126}:FOR a=rs TO rn:GOSUB {:3014}:GOSUB {:3138}:&MID$(" {f6}",2+((a AND 1)=r%),1)
+	a=a+s*rn:NEXT:&"{f6}":GOSUB {:3130}:GOTO {:3214}
+{:3276}
+	ON-(z$="VA")GOSUB {:3354}:ON-(z$="SA")GOSUB {:3162}:g=bn
+{:3278}
+	bn=bn+1:vl=.:GOSUB {:3026}:GOSUB 1360:IF bn>bz OR rc OR tr%<1 THEN bn=g:GOTO {:3214}
+	a$=bb$(bn):GOSUB {:3034}:f2=b
+	ON-(MID$(oc$,bn,1)="1")GOTO {:3278}
+	IF(f2 AND 4)=4 THEN a%=bn:GOSUB {:3362}:IF an$<>c$THEN:&"{f6}":GOTO {:3278}
+	g=bn:GOSUB {:3096}:ON-(z$="VA")GOSUB {:3354}:ON-(z$="SA")GOSUB {:3162}:GOTO {:3278}
+{:3288}
+	GOSUB {:3010}:IF a<1 OR a>bz THEN a=bn
+	a%=a:&"{f6}{pound}$h #{pound}%a ":a$=bb$(a):GOSUB {:3006}:lp=1:&:RETURN
+	a=f2%:br=a:GOSUB {:3042}:f2%=.:IF a<1 OR a >rn THEN a=br:GOTO {:3294}
+{:3292}
+	GOSUB {:3010}:IF a<1 OR a>rn THEN a=br
+{:3294}
+	IF rn=.THEN GOSUB {:3018}:GOTO {:3214}
+{:3296}
+	jm=.:bl=.:GOSUB {:3014}
+	GOSUB {:3174}:GOSUB 2250:a%=.:&"{white}N-Next {pound}$j{f6}{cyan}L-Last {pound}$j":IF f%(a)>.OR q>.THEN:&"{f6}{lt. blue}M-Mail {pound}$ler":a%=1
+	GOSUB {:3058}:ON-((a$<>nn$(a))AND(q=.AND f%(a)<1))GOTO {:3304}:&"{f6}{purple}D-{pound}$k {pound}$j":GOSUB {:3058}:IF a$=nn$(a)OR q=1 THEN:&"{f6}{yellow}E-Edit {pound}$j":IF f%(a)>.AND q=1 THEN:&"{f6}U-Unvalidate"
+	a$=dt$(a):GOSUB {:3028}:&"{f6}{green}C-Comments Read/Add{f6}{lt. red}R-Read {pound}$j"
+	kk=.:IF q>.AND f%(a)<1 THEN:&"{f6}{yellow}V-Validate {pound}$j":kk=1
+{:3304}
+	&"{f6:2}{lt. green} -> {lt. blue}{pound}g1{pound}v7{f6}":GOTO {:3480}
+{:3306}
+	ON-(an$="N")-(an$="D")*2-(an$="R")*3-(an$="L")*4-(an$="C")*5 GOTO {:3308},{:3348},{:3328},{:3310},{:3384}
+	ON-(an$="E")-(an$="M"AND a%=1)*2-(an$="U"AND q=1)*3 GOSUB {:3372},{:3358},{:3374}:ON jm GOTO {:3448}:ON bl GOTO {:3296}:GOTO {:3214}
+{:3308}
+	a=a+1:ON-(a<=rn)GOTO {:3296}:IF a>rn THEN a=1:GOTO {:3296}
+{:3310}
+	a=a-1:ON-(a=>1)GOTO {:3296}:IF a<1 THEN a=rn:GOTO {:3296}
+{:3312}
+	GOSUB {:3010}:r%=(a AND 1):IF a<1 OR a>bz THEN a=1:r%=1
+	&"{f6}{purple}Available Libraries:{f6:2}{orange}{pound}vj":FOR x=a TO bz:c$=" ":IF id>.AND so%(x)=id THEN c$=">"
+	a$=bb$(x):GOSUB {:3034}:b$=MID$("{lt. blue}Cred{green}DO-C{purple}Free{yellow}DO-F{purple}PwCr{lt. red}PwDC{lt. green}PwFr{blue}PwDF",b*5+1,5)
+	a%=x:a$=bb$(x):GOSUB {:3006}:&" {white}{rvrs on}{pound}#2{pound}# {pound}%a{lt. red}{pound}$c{pound}$b {pound}$a{pound}{back arrow}38 {rvrs off}":a%=rc:IF a%THEN x=bz
+	IF x<>bz THEN:&MID$(" {f6}",2+((x AND 1)=r%),1)
+	NEXT:&"{f6}{orange}{pound}vj":RETURN
+{:3324}
+	GOSUB {:3312}:&"{cyan}  {rvrs on} To Change, Enter New {pound}$h Number. {f6}":RETURN
+{:3326}
+	GOSUB {:3010}:IF a<1 OR a>rn THEN{:3214}
+{:3328}
+	kk=a:IF q<1 AND f%(a)<1 THEN{:3336}
+	y%=.:a=7:GOSUB 1004:IF a+q+(f2 AND 2)=.THEN ON-(cr<c%(kk))GOTO {:3344}:y%=yy%
+	&"{pound}q0":a$=dt$(kk):GOSUB {:3028}:IF RIGHT$(a$,1)<>"s"THEN{:3338}
+	a$=LEFT$(a$,LEN(a$)-2):GOSUB {:3004}:GOSUB 1075:a%=c%(kk):IF s=.THEN a%=.
+{:3336}
+	cr=cr-a%*y%:a=kk:ON bl GOTO {:3296}:GOTO {:3214}
+{:3338}
+	dr=5:GOSUB 1010:a$=dr$+"++ read":&,7,dv%,2:GOSUB 1012:IF e%THEN{:3342}
+	a$=dt$(kk):GOSUB {:3028}:a$=LEFT$(a$,LEN(a$)-2)+",p,r":GOSUB {:3004}:GOSUB 1011:&,16,0,ll%
+{:3342}
+	GOSUB 1667:GOTO {:3336}
+{:3344}
+	&"{f6}{orange}Sorry, Not Enough Credits!{f6}":GOTO {:3336}
+{:3346}
+	ON-(an$="UM"AND pr=2)GOTO {:3366}:lm=2:GOTO {:3386}
+{:3348}
+	ON-(pr=2)GOTO {:3368}:lm=1:GOTO {:3400}
+	lm=3:GOTO {:3386}
+{:3352}
+	lm=1:GOTO {:3390}
+{:3354}
+	lm=2:GOTO {:3390}
+{:3356}
+	lm=3:GOTO {:3390}
+{:3358}
+	lm=4:GOTO {:3390}
+{:3360}
+	lm=5:GOTO {:3390}
+{:3362}
+	lm=6:GOTO {:3390}
+{:3364}
+	b$="ld":GOTO {:3402}
+{:3366}
+	lm=1:GOTO {:3388}
+{:3368}
+	lm=2:GOTO {:3388}
+{:3370}
+	lm=1:GOTO {:3392}
+{:3372}
+	lm=2:GOTO {:3392}
+{:3374}
+	lm=7:GOTO {:3390}
+{:3384}
+	b$="u/d/c":GOTO {:3402}
+{:3386}
+	b$="ud-trans":GOTO {:3402}
+{:3388}
+	b$="ud-local":GOTO {:3402}
+{:3390}
+	b$="ud-misc":GOTO {:3402}
+{:3392}
+	b$="ud-edit":GOTO {:3402}
+{:3394}
+	b$="load":GOTO {:3402}
+{:3396}
+	b$="maint":ON q GOSUB {:3402}:GOTO {:3214}
+{:3398}
+	b$="subop":GOSUB {:3402}:GOTO {:3214}
+{:3400}
+	b$="ud-download":GOTO {:3402}                          
+{:3402}
+	IF lm$<>b$THEN lm$=b$:dr=5:GOSUB 1010:LOAD dr$+"+.MM."+lm$,dv%
+	cm$="MM."+lm$:GOSUB 1360:GOTO 4000
+	GOSUB {:3038}:GOSUB {:3004}:GOSUB 1009:a%=dv%:c$=dr$:&"{f6}Source: {pound}%a{f6}Target: {pound}i1"
+	d$="0:":c=dv%:IF an$=""THEN d=c+1:a%=d:&"{up}Target: {pound}%a{f6}":GOTO {:3416}
+	an$="  "+an$:GOSUB 1470:d=dv%
+{:3416}
+	GOSUB {:3060}:f$=STR$(r)
+	GOSUB {:3064}:o$=b$
+	f%=.:a=c:GOSUB {:3044}:ON-(a<>.)GOTO {:3426}:a=d:GOSUB {:3044}:ON-(a<>.)GOTO {:3426}
+	GOSUB {:3020}:GOSUB {:3022}:IF an$<>""THEN o$=an$+RIGHT$(o$,2)
+	GOSUB {:3428}:GOTO {:3214}
+{:3426}
+	ON-(st<>.)GOSUB 1995:&"ABORTED!{f6}":GOSUB {:3038}:ON f%GOTO {:3016}:GOTO {:3214}
+{:3428}
+	POKE 142,.:GOSUB {:3038}:OPEN 15,c,15:OPEN 14,d,15:OPEN 3,c,3,c$+b$+",r":GOSUB 1012
+	OPEN 2,d,2,d$+o$+",w":INPUT# 14,a$,f$:b=VAL(a$)
+	f%=1:ON SGN(e%+b)GOTO {:3426}:b$=o$:&"{f6:2}Copying {f5}{pound}$b{f5}...":SYS 49152
+	GOSUB 1012:INPUT# 14,a$,f$:GOSUB {:3038}:&"Done!{f6}"
+	&,25:&"{f6}Status:{f6:2}Source: {pound}$e{f6}Target: {pound}$f{f6}":RETURN
+	&"{f6:2}{lt. blue}Kill Which?: {pound}i1":GOSUB {:3012}:ON tr%+1 GOTO 1811:IF a<1 OR a>a%THEN RETURN
+	a%=a%-1:ON a%+1 GOTO {:3008}:FOR i=a TO a%:tt$(i)=tt$(i+1):NEXT:RETURN
+	jm=a%:&,52,23,3:IF a%=.THEN a%=jm:jm=.:RETURN
+	a%=jm:&"{f6}{lt. blue}Auto-Logoff when Completed?: ":GOSUB 1902:jm=a:RETURN
+{:3448}
+	ld$=lt$:f1=2:GOTO 1700
+	dt$(kk)=d1$+d1$+b$
+	c%(rn+1)=c%(kk):nn$(rn+1)=nn$(kk):dt$(rn+1)=dt$(kk):ed$(rn+1)=ed$(kk)
+	d%(rn+1)=d%(kk):f%(rn+1)=f%(kk):FOR x=kk TO rn:u%=x:v%=x+1:GOSUB {:3088}:NEXT:RETURN
+{:3456}
+	GOSUB {:3010}:ON-(a>rn)GOTO {:3016}:a=a-(a=.):x%=a:GOSUB {:3072}:GOSUB {:3014}:&,11,5:tz=.
+	FOR i=x%TO rn:GOSUB {:3058}:IF q=.AND a$<>nn$(i)THEN{:3468}
+	kk=i:GOSUB {:3060}:GOSUB {:3062}:tt$(i)=b$:a=i:GOSUB {:3174}:&"{orange}Kill?: ":GOSUB 1007
+	ON-(a$="A"OR a$="S")GOTO {:3464}:GOSUB 1903:a%(i)=a:a$="":GOTO {:3466}
+{:3464}
+	a=.:i=rn:a$="Start":IF an$="A"THEN a$="Abort":tz=.
+{:3466}
+	lp=1:&:IF a THEN tz=tz+1:&"Scratch?: ":GOSUB 1902:IF a THEN a%(i)=2
+{:3468}
+	NEXT:ON-(tz=.)GOTO {:3016}:i=-tz:GOSUB 1060:x=28:GOSUB 1025:CLOSE 2:GOSUB {:3040}
+	&"{f6}":u%=1:FOR i=1 TO rn:IF a%(i)=.THEN v%=i:GOSUB {:3088}:u%=u%+1:GOTO {:3478}
+	b$=tt$(i):&"Killing: {f5}{pound}$b{f5}{f6}":kk=i:a$=" Kill:"+b$:GOSUB 1095
+	z$="e.ss."+LEFT$(tt$(i),13):lx=dr:dr=3:a$=z$:GOSUB 1024:dr=lx:lx=.
+	ON a%(i)GOTO {:3478}:a$=tt$(i):GOSUB {:3004}:GOSUB 1024
+	GOSUB {:3058}:IF a$=nn$(i)AND q=.THEN a=2:GOSUB 1004:cr=cr-c%(i)*a:IF cr<1 THEN cr=.
+{:3478}
+	NEXT:GOSUB 1081:rn=rn-tz:GOTO {:3150}
+{:3480}
+	ON-(tr%<1)GOTO {:3264}:bl=-(an$="E"OR an$="M"OR an$="U"OR an$="V"OR an$="R"OR an$="D")
+	IF kk AND q=1 AND an$="V"THEN kk=a:GOSUB {:3356}:a=kk:jm=.:GOTO {:3296}
+	GOTO {:3306}
+	rem "+.UD" copr.1990 NEW image 10/28/90

@@ -1,15 +1,17 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	gosub {:3082}:goto 1811
 {:3002}
 	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
 {:3004}
-	p$="{$c6}ilename":b$=b$+" {$c6}ile"
+	p$="Filename":b$=b$+" File"
 {:3006}
 	&"{pound}$b {pound}g1":fl=.:if an$<>r$then:&"{pound}h"+chr$(65+len(b$)):fl=1:return
 	&"{f6}":return
 {:3010}
-	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{white}{rvrs on}{$d4}otal {$cc}ines:{f6}{gray3}{$c1}vailable  : {yellow}{pound}%a"
-	&"{pound}{back arrow}20{gray3}{$c9}n {$cd}emory  : {yellow}{pound}%b{f6}{gray3}{$d2}emaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}{$c6}ree {$cd}emory: {yellow}{pound}%z"
+	a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}{white}{rvrs on}Total Lines:{f6}{gray3}Available  : {yellow}{pound}%a"
+	&"{pound}{back arrow}20{gray3}In Memory  : {yellow}{pound}%b{f6}{gray3}Remaining  : {yellow}{pound}%c":if zz then:&"{pound}{back arrow}20{gray3}Free Memory: {yellow}{pound}%z"
 	&"{lt. green}{f6:2}":return
 {:3016}
 	p$=pu$:goto 1914
@@ -22,7 +24,7 @@
 	poke 53252,ll%-2:if zz then poke 1022,254
 	return
 {:3030}
-	b$="{$c7}et":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:3110}
+	b$="Get":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:3110}
 {:3032}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3032}
 	gosub 1010:a$="r":gosub {:3002}:gosub 1372:if e%then close 6:&:goto {:3110}
@@ -30,34 +32,34 @@
 	&,2,6:tt$(kk)=a$:kk=kk+1:gosub 1373:on-(z%>100 and kk<254 and st=.)goto {:3036}
 	close 6:goto {:3110}
 {:3040}
-	on kk goto {:3108}:b$="{$d0}ut":gosub {:3004}:on fl goto {:3108}:&"{f6:2}"
+	on kk goto {:3108}:b$="Put":gosub {:3004}:on fl goto {:3108}:&"{f6:2}"
 	if v$<>""then poke 53252,16:w$=v$:&,1,32:goto {:3046}
-	gosub 1005:if an$=""then{:3110}
+	gosub 1005:if an$="" then {:3110}
 {:3046}
 	if an$<>""then v$=an$
 {:3048}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3048}
 	gosub 1010
 {:3052}
-	a$="w":gosub {:3002}:if e%=.then{:3062}
+	a$="w":gosub {:3002}:if e%=. then {:3062}
 {:3054}
 	close 6:&:if e%<>63 then{:3066}
-	&"{f6} [{$c1}]ppend [{$d2}]eplace [{$d1}]uit: {pound}i1":if an$="{$d1}"or tr%<1 then{:3066}
-	if an$="{$d2}"then a$=v$:gosub 1024:goto {:3052}
-	on-(an$<>"{$c1}")goto {:3054}:a$="a":gosub {:3002}:if e%then{:3066}
+	&"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":if an$="Q"or tr%<1 then{:3066}
+	if an$="R"then a$=v$:gosub 1024:goto {:3052}
+	on-(an$<>"A")goto {:3054}:a$="a":gosub {:3002}:if e% then {:3066}
 {:3062}
 	for i=1 to kk-1:if tt$(i)="{f8}"then tt$(i)="{up arrow}"
 	next:&,14,6,kk-1
 {:3066}
 	close 6:gosub 1081:goto {:3110}
 {:3068}
-	b$="{$d6}iew {$c4}irectory":gosub {:3006}:on fl goto {:3108}:gosub 1008:gosub 1089:goto {:3110}
+	b$="View Directory":gosub {:3006}:on fl goto {:3108}:gosub 1008:gosub 1089:goto {:3110}
 {:3070}
-	&"{$d1}uery{f6}":goto {:3110}
+	&"Query{f6}":goto {:3110}
 {:3072}
-	b$="{$c4}isk {$c3}ommand":gosub {:3006}:on fl goto {:3108}:&"{f6:2}":gosub 1450:goto {:3110}
+	b$="Disk Command":gosub {:3006}:on fl goto {:3108}:&"{f6:2}":gosub 1450:goto {:3110}
 {:3074}
-	b$="{$d2}ead":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$=""then{:3110}
+	b$="Read":gosub {:3004}:on fl goto {:3108}:&"{f6:2}":gosub 1005:v$=an$:if v$="" then {:3110}
 	gosub 1008:gosub 1470:if a then gosub 1995:goto {:3110}
 	gosub 1010:a$="r":gosub {:3002}:if e%then close 6:&:goto {:3110}
 	&,3,6:close 6:goto {:3110}
@@ -71,14 +73,14 @@
 {:3092}
 	kk=peek(1016):on a goto {:3094},{:3102},{:3098}:&"{f6:2}":b%=kk-1:kk=.:goto {:3016}
 {:3094}
-	poke 2031,.:b%=kk-1:&"{f6}{pound}%b {$cc}ines {$d5}sed.{f6}":if kk=1 then a=.:goto {:3092}
+	poke 2031,.:b%=kk-1:&"{f6}{pound}%b Lines Used.{f6}":if kk=1 then a=.:goto {:3092}
 	b%=kk:goto {:3016}
 {:3098}
 	poke 2031,.:dr=1:a$="s.menu 3":gosub 1075:goto {:3088}
 {:3100}
 	&,54,a:a=peek(781):an$=chr$(peek(780)and 127):goto {:3092}
 {:3102}
-	b%=kk-1:on-(an$="u")goto {:3112}:if an$="q"then{:3070}
+	b%=kk-1:on-(an$="u")goto {:3112}:if an$="q" then {:3070}
 	if zz then on-(an$="g")-(an$="p")*2-(an$="$")*3 goto {:3030},{:3040},{:3068}
 	if zz then on-(an$="@")-(an$="&")*2 goto {:3072},{:3074}
 {:3108}
@@ -86,11 +88,10 @@
 {:3110}
 	b%=kk-1:gosub {:3020}:gosub {:3010}:poke 2031,1:a=1:goto {:3100}
 {:3112}
-	b$="{$d3}ignature":gosub {:3004}:on fl goto {:3100}:&"{lt. green}{$d7}hich signature? (0-9) {pound}g1"
+	b$="Signature":gosub {:3004}:on fl goto {:3100}:&"{lt. green}Which signature? (0-9) {pound}g1"
 	&"{f6:2}":v$="ps."+an$+na$:dr=3:a$="r":gosub 1010:gosub {:3002}:gosub 1372
 	a=1948:if e%then close 6:&:goto {:3110}
 {:3118}
 	&,2,6:tt$(kk)=a$:kk=kk+1:gosub 1373:on-(z%>100 and kk<254 and st=.)goto {:3118}
 	close 6:goto {:3110}
-	rem +.wf
-	copr. 1994 new image 9/9/94
+	rem "+.WF" copr. 1994 new image 9/9/94

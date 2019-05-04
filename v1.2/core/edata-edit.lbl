@@ -1,0 +1,60 @@
+{number:0}
+{step:1}
+	n$=chr$(0):r$=chr$(13):goto {:100}
+{number:1}
+{:1}
+	gosub {:2}:for s=1 to 50:next
+{number:2}
+{:2}
+	print# 15,"p{$02}"chr$(x and 255)chr$(x/256)"{$01}":return
+{number:5}
+{:5}
+	x=rn:gosub {:1}:ed$=""
+{number:6}
+{:6}
+	get#2,b$:b$=chr$(asc(b$+n$)):if b$<>chr$(13) then ed$=ed$+b$:goto {:6}
+	return
+{number:10}
+{:10}
+	for i=1 to len(ed$):z$=mid$(ed$,i,1):a=asc(z$+n$)
+	if (a>32 and a<128) or a>159 then print z$;:goto {:15}
+	if a<>34 then print"{rvrs on}"chr$(a+64)"{rvrs off}";:goto {:15}
+	print z$ chr$(20)z$;:goto {:15}
+{number:15}
+{:15}
+	next:print:return
+{number:100}
+{:100}
+	rn=.:print"{clear}{lower}Insert Your Etcetera Disk In Any{$a0}Drive."
+	input"Device   8{left:3}";dv%:input" Drive   0{left:3}";dr$
+	open 15,dv%,15:open 2,dv%,2,dr$+":e.data":input# 15,a,a$:if a then {:900}
+{:103}
+	rn=rn+1:if rn>32 then rn=32
+{:104}
+	print"{down:2}Record # To Edit, {rvrs on}L{rvrs off} To List All,":print"Or {rvrs on}Q{rvrs off}{$a0}to Quit   ";
+	print mid$(str$(rn),2)"{left:4}";:if rn<10 then print"{right}";
+	input a$:if a$="q" OR a$="Q" then close 2:close 15:end
+	if a$="l" or a$="L" then {:350}
+	rn=abs(int(val(left$(a$,2)))):if rn<1 or rn>32 then rn=1:goto {:104}
+	gosub {:5}:gosub {:10}:b$="":print"{down}Type Changes.  Return When Finished."
+{number:112}
+{step:2}
+{:112}
+	if len(b$)=32 then {:126}
+{:114}
+	print"{rvrs on} {rvrs off}{left}";:wait 198,1:get a$:a=asc(a$+n$):on -(a=34) goto {:122}:if a=13 then {:124}
+	if (a>32 and a<128) or a>159 then b$=b$+a$:print a$;:goto {:112}
+	if (a<>20 and a<>148) or peek(653)=4 then b$=b$+chr$(a):print"{rvrs on}"chr$(a+64)"{rvrs off}";:goto {:112}
+	on len(b$)+1 goto {:114}:b$=left$(b$,len(b$)-1):print a$;:goto {:112}
+{:122}
+	print a$ chr$(20)a$;:b$=b$+a$:goto {:112}
+{:124}
+	IF LEN(b$)=. then b$=ed$:print"(Unchanged.)":goto {:103}
+{:126}
+	print:print "Writing...":x=rn:gosub {:1}:print# 2,b$:goto {:103}
+{number:350}
+{:350}
+	for rn=1 to 32:print rn":";:gosub {:5}:gosub {:10}:rn=rn+peek(198)*32:next:rn=1:goto {:104}
+{number:900}
+{:900}
+	print"Disk Error: "a","a$:close 2:close 15:end

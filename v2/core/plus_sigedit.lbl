@@ -1,4 +1,4 @@
-{alpha:upper}
+{alpha:alt}
 {number:3000}
 {step:2}
 	&,28,1:dim x1%(17,60),x3%(60,2):gosub{:3100}:&,28,1:goto{:3008}
@@ -11,29 +11,29 @@
 {:3008}
 	goto 1812
 {:3010}
-	dr=3:gosub {:3002}:&,60,2,0,x1%(0,0),dr$+"e.{$d3}iglist",dv%:goto {:3004}
+	dr=3:gosub {:3002}:&,60,2,0,x1%(0,0),dr$+"e.Siglist",dv%:goto {:3004}
 {:3012}
-	dr=3:gosub {:3002}:&,60,2,0,x3%(0,0),dr$+"e.{$d3}iglist"+str$(x),dv%:goto {:3004}
+	dr=3:gosub {:3002}:&,60,2,0,x3%(0,0),dr$+"e.Siglist"+str$(x),dv%:goto {:3004}
 {:3014}
-	a$="e.{$d3}iglist":gosub {:3018}:&,60,3,0,x1%(0,0),2196,dr$+a$,dv%:goto {:3004}
+	a$="e.Siglist":gosub {:3018}:&,60,3,0,x1%(0,0),2196,dr$+a$,dv%:goto {:3004}
 {:3016}
-	a$="e.{$d3}iglist"+str$(x):gosub {:3018}:&,60,3,0,x3%(0,0),366,dr$+a$,dv%:goto {:3004}
+	a$="e.Siglist"+str$(x):gosub {:3018}:&,60,3,0,x3%(0,0),366,dr$+a$,dv%:goto {:3004}
 {:3018}
 	dr=3:gosub {:3002}:print# 15,"s"dr$a$:return
 {:3020}
 	a%=i:&,60,1,30,x1%(3,i),a$:b%=x1%(1,i):c%=x1%(2,i):a=x1%(0,i)
 	b$=chr$(48+sgn(a and 1))+chr$(48+sgn(a and 2))+chr$(48+sgn(a and 4))
-	&"{pound}#2{pound}# {pound}%a) {pound}$a{f6}    {pound}#5{pound}# {$c1}c:{pound}%b {$cf}p:{pound}%c {$c6}l:{pound}$b{f6}":return
+	&"{pound}#2{pound}# {pound}%a) {pound}$a{f6}    {pound}#5{pound}# Ac:{pound}%b Op:{pound}%c Fl:{pound}$b{f6}":return
 {nice:100}
 {:3100}
 	tz=0:gosub {:3010}:if e%then x1%(0,0)=0
 {:3102}
-	a%=x1%(0,0):&"{clear}{$d3}ig{$c5}dit 2.0: {pound}%a {$d3}igs {$c4}efined.{f6:2}"
+	a%=x1%(0,0):&"{clear}SigEdit 2.0: {pound}%a Sigs Defined.{f6:2}"
 	if a%then for i=1 to a%:gosub {:3020}:next
-	&"{f6}{$c5}dit {$d7}hich ({$c1}={$c1}dd): {pound}i1":x=abs(int(val(an$)))
-	if an$="{$c1}"then gosub {:3200}:goto {:3102}
+	&"{f6}Edit Which (A=Add): {pound}i1":x=abs(int(val(an$)))
+	if an$="A"then gosub {:3200}:goto {:3102}
 	if x>0 and x<=x1%(0,0) then gosub {:3204}:goto {:3102}
-	if tz then:&"{$d3}ave changes? ":gosub {:3006}:on a gosub {:3014}
+	if tz then:&"Save changes? ":gosub {:3006}:on a gosub {:3014}
 	return
 {nice:100}
 {:3200}
@@ -42,14 +42,14 @@
 {:3204}
 	x3%(0,0)=0:x3%(0,1)=0:x3%(0,2)=0:gosub {:3012}
 {:3206}
-	&"{clear}{$d3}ig #{pound}!x{f6:2}":&,60,1,30,x1%(3,x),a$:b%=x1%(1,x):c%=x1%(2,x):a=x1%(0,x)
-	&"1. {$ce}ame: {pound}$a{f6}"
-	&"2. {$c1}ccs: {pound}%b{f6}"
-	&"3. {$cf}per: {pound}%c{f6}"
-	&"4. {$d3}ubs: ";mid$("{$d9}es{$ce}o ",4-3*sgn(a and 1),3):a%=x3%(0,0):&" ({pound}%a){f6}"
-	&"5. {$d5}/{$c4}s: ";mid$("{$d9}es{$ce}o ",4-3*sgn(a and 2),3):a%=x3%(0,1):&" ({pound}%a){f6}"
-	&"6. {$d5}/{$d8}s: ";mid$("{$d9}es{$ce}o ",4-3*sgn(a and 4),3):a%=x3%(0,2):&" ({pound}%a){f6}"
-	&"{f6}{$c3}hange which?: {pound}g1{pound}v7{f6}":a=val(an$)
+	&"{clear}Sig #{pound}!x{f6:2}":&,60,1,30,x1%(3,x),a$:b%=x1%(1,x):c%=x1%(2,x):a=x1%(0,x)
+	&"1. Name: {pound}$a{f6}"
+	&"2. Accs: {pound}%b{f6}"
+	&"3. Oper: {pound}%c{f6}"
+	&"4. Subs: ";mid$("YesNo ",4-3*sgn(a and 1),3):a%=x3%(0,0):&" ({pound}%a){f6}"
+	&"5. U/Ds: ";mid$("YesNo ",4-3*sgn(a and 2),3):a%=x3%(0,1):&" ({pound}%a){f6}"
+	&"6. U/Xs: ";mid$("YesNo ",4-3*sgn(a and 4),3):a%=x3%(0,2):&" ({pound}%a){f6}"
+	&"{f6}Change which?: {pound}g1{pound}v7{f6}":a=val(an$)
 	if a then on a gosub{:3232},{:3236},{:3242},{:3226},{:3228},{:3230}:goto {:3206}
 	return
 {:3226}
@@ -59,41 +59,41 @@
 {:3230}
 	xx=2:goto {:3300}
 {:3232}
-	&,60,1,30,x1%(3,x),w$:poke 53252,30:p$="{$ce}ame":pl=0:&,1,32:if an$=""then return
+	&,60,1,30,x1%(3,x),w$:poke 53252,30:p$="Name":pl=0:&,1,32:if an$=""then return
 	&,60,0,30,x1%(3,x),an$:tz=1:return
 {:3236}
-	w$=mid$(str$(x1%(1,x)),2):poke 53252,5:p$="{$c1}ccs":pl=1:&,1,32
+	w$=mid$(str$(x1%(1,x)),2):poke 53252,5:p$="Accs":pl=1:&,1,32
 	if an$=""then return
 	x1%(1,x)=val(an$):tz=1:return
 {:3242}
-	w$=mid$(str$(x1%(2,x)),2):poke 53252,5:p$="{$cf}per":pl=1:&,1,32
+	w$=mid$(str$(x1%(2,x)),2):poke 53252,5:p$="Oper":pl=1:&,1,32
 	if an$=""then return
 	x1%(2,x)=val(an$):tz=1:return
 {nice:100}
 {:3300}
-	s$=mid$("{$d3}ub{$d5}/{$c4}{$d5}/{$d8}",xx*3+1,3):&"{$c8}ave {pound}$ss? ":gosub {:3006}
+	s$=mid$("SubU/DU/X",xx*3+1,3):&"Have {pound}$ss? ":gosub {:3006}
 	b=2^xx:if a=0 then x1%(0,x)=x1%(0,x)and not b:tz=1:return
 	x1%(0,x)=x1%(0,x)or b
 {:3306}
-	a%=x3%(0,xx):&"{clear}{$d3}ig {pound}!x: {pound}%a {pound}$ss{f6:2}"
+	a%=x3%(0,xx):&"{clear}Sig {pound}!x: {pound}%a {pound}$ss{f6:2}"
 	if a%then for i=1 to a%:b%=x3%(i,xx):&"{pound}#4{pound}# {pound}%b":next:&"{f6:2}"
-	&"{$c1}dd {$c4}elete {$c9}nsert: {pound}g1":a=-(an$="{$c1}")-2*(an$="{$c4}")-3*(an$="{$c9}")
+	&"Add Delete Insert: {pound}g1":a=-(an$="A")-2*(an$="D")-3*(an$="I")
 	if a then on a gosub {:3316},{:3322},{:3330}:goto {:3306}
 	goto {:3016}
 {:3316}
 	if x3%(0,xx)=60 then return
-	&"{$c1}dd #{pound}i1":a=val(an$):if a<1 or a>999 then return
+	&"Add #{pound}i1":a=val(an$):if a<1 or a>999 then return
 	i=x3%(0,xx)+1:x3%(i,xx)=a:x3%(0,xx)=i:return
 {:3322}
 	if x3%(0,xx)=0 then return
-	&"{$c4}elete #{pound}i1":a=val(an$):if a<1 or a>999 then return
+	&"Delete #{pound}i1":a=val(an$):if a<1 or a>999 then return
 	j=0:for i=1 to x3%(0,xx):if x3%(i,xx)<>a then j=j+1:x3%(j,xx)=x3%(i,xx)
 	next:x3%(0,xx)=j:return
 {:3330}
 ' pina: add Insert function 2018-05-12
 	j=x3%(0,xx):if j=0 then return
-	&"{$c9}nsert #: {pound}i1":a=val(an$):if a<1 or a>999 then return
-	&"{$c9}nsert where? {pound}i1":b=val(an$):if b<1 or b>j then return
+	&"Insert #: {pound}i1":a=val(an$):if a<1 or a>999 then return
+	&"Insert where? {pound}i1":b=val(an$):if b<1 or b>j then return
 ' test insert into sig list
 ' update count j:
 	j=j+1:x3%(0,xx)=j
@@ -101,3 +101,5 @@
 	for i=j to b step -1:x3%(i,xx)=x3%(i-1,xx):next
 ' insert a into b:
 	x3%(b,xx)=a:return
+	rem +.sigedit
+

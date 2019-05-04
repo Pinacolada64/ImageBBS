@@ -1,0 +1,63 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-newsM][H" - news subsystem--m][p 9103-9105
+	GOSUB 1377:a$="M][P!!":GOSUB 1376
+	&"{f6:2}{lt. blue} Scanning News Files{pound}s1.....{f6}":GOSUB {:4060}
+	FOR i=1 TO t:sh=.:f2=-(MID$(nn$(i),2)<MID$(d5$,2))*-(tc%>1)
+	GOSUB {:4072}
+	IF f2=.OR e1=1 THEN{:4016}
+	NEXT i
+	GOTO {:4028}
+{:4016}
+	&"{f6}{yellow}{pound}v5 News:{f6}{white}{rvrs on}{pound}$b{white}{f6:2}":dr=1:b$=a$:ON-(e1=1)GOTO {:4018}:GOTO {:4020}
+{:4018}
+	GOSUB 2912:a$="n."+LEFT$(ed$(i),14)+",s,r":dr=1:GOSUB 1076:GOTO {:4022}
+{:4020}
+	a$="n."+LEFT$(ed$(i),14)+",s,r":dr=1:GOSUB 1011:ON-(e%<>.)GOTO {:4022}:&,12,2:CLOSE 2
+{:4022}
+	CLOSE 2:GOSUB 1914:IF tr%<1 THEN i=t
+	&"{pound}w1"
+	ON-(tr%<1)GOTO {:4070}:NEXT i
+{:4028}
+	i=.
+	&"{clear}{f6:2}{lt. red} -=<{lt. blue}{rvrs on} {pound}v5 News SubSystem {rvrs off}{lt. red}>=-{f6:3}{lt. blue}{pound}vj":kk=1
+	FOR i=1 TO t:sh=.:c$="*NEW*":f2=-(MID$(nn$(i),2)<MID$(d5$,2))*-(tc%>1)
+	GOSUB {:4072}
+	IF f2 THEN c$=" --- "
+	IF e1=1 THEN c$="*REM*"
+	an$=nn$(i):&,15:&"{pound}{back arrow}01{lt. red}{pound}$c "+STR$(i)+")  {yellow}{pound}$b{pound}{back arrow}39             {cyan}{pound}v7M{f6}":NEXT i
+	&"{lt. blue}{pound}vj{f6:2}{gray3}Enter Number To Read or RETURN: {pound}i1":ON-(tr%<1)GOTO {:4070}
+	ON-(an$=""OR an$=" ")GOTO {:4082}:ck=ASC(an$+CHR$(0)):ON-(ck<48 OR ck>57)GOTO {:4028}
+	ON-(tr%<1)GOTO {:4070}:x=VAL(an$):ON-(x<0 OR x>t)GOTO {:4028}
+	GOSUB {:4080}
+	&"{f6}{yellow}{pound}v5 News:{f6}{white}{rvrs on}{pound}$b{rvrs off}{f6}{cyan}({$04}"+nn$(x)+"){f6:2}":dr=1:b$=a$
+	a$="n."+LEFT$(ed$(x),14)+",s,r":GOSUB 1011:ON-(e%<>.)GOTO {:4054}:&,12,2
+{:4054}
+	CLOSE 2:GOSUB 1914:IF tr%<1 THEN i=t
+	&"{pound}w1"
+	ON-(tr%<1)GOTO {:4070}:GOTO {:4028}
+{:4060}
+	cm$="News":GOSUB 1360:kk=.:b=.:t=.:dr=4:a$="d.n.Main,s,r":GOSUB 1011
+	ON SGN(e%)GOTO {:4070}:INPUT# 2,b:IF b<1 THEN{:4070}
+	t=.:FOR x=1 TO b:INPUT# 2,ed$(x),nn$(x),d%(x):d%(x)=d%(x)*-((d%(x)AND 2^ac%)<>.)
+	IF d%(x)THEN t=t+1:ed$(t)=ed$(x):nn$(t)=nn$(x):c%(t)=d%(x)
+	NEXT:CLOSE 2
+{:4070}
+	RETURN
+{:4072}
+	b$=ed$(i)
+	e1=.:IF LEFT$(b$,1)="$"THEN e1=1
+	IF e1=1 THEN b$=MID$(b$,2)
+	RETURN
+{:4080}
+	i=x:GOTO {:4072}
+{:4082}
+	GOSUB 1377:a$=ch$:GOSUB 1376:RETURN
+	REM   news menu mod by phydoux
+	REM   nowhere bbs--(208)/238-0001
+	REM   news menu mod 07/04/90
+	rem nissa modded! converted to +.on
+	rem modules and major modifications
+	rem by uss menahga ][ productions 9105!
+	REM converted to 2.0 12/31/17 by x-tec

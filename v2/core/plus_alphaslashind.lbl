@@ -1,54 +1,57 @@
 {number:3000}
+{alpha:alt}
+{step:2}
+' TODO: add documentation about steps to recreate u.index: Load, Clear, Make, Save
 	rem +.alpha/ind - 3/24/89
 	pr=-1:a=4:gosub 1736:poke 53252,20
 {:3002}
-	&"{clear}{f6:2}1.{$c3}lear{f6}2.{$cc}oad{f6}3.{$d3}earch{f6}4.{$c9}nsert{f6}5.{$c4}elete{f6}6.{$d3}ave{f6}7.{$cc}ist{f6}8.{$cd}ake{f6}9.{$cb}ill{f6}"
-	&"{f6}0.{$d1}uit{f6:2} =>{pound}g1{pound}v7{f6}":a=val(an$):if a then on a gosub {:3012},{:3014},{:3018},{:3024},{:3034},{:3016},{:3044},{:3058},{:3068}:goto {:3002}
+	&"{clear}{f6:2}1.Clear{f6}2.Load{f6}3.Search{f6}4.Insert{f6}5.Delete{f6}6.Save{f6}7.List{f6}8.Make{f6}9.Kill{f6}"
+	&"{f6}0.Quit{f6:2} =>{pound}g1{pound}v7{f6}":a=val(an$):if a then on a gosub {:3012},{:3014},{:3018},{:3024},{:3034},{:3016},{:3044},{:3058},{:3068}:goto {:3002}
 	pr$="":pr=-1:close 2:goto 1812
 {:3008}
 	dr=6:a$="u.config":goto 1011
 {:3012}
-	&"{$c3}leared...{f6}":&,16,3:return
+	&"Cleared...{f6}":&,16,3:return
 {:3014}
-	&"{$cc}oading...":dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:&"{pound}%a {$d5}sers.{pound}w1{f6}":return
+	&"Loading...":dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:&"{pound}%a Users.{pound}w1{f6}":return
 {:3016}
-	&"{$d3}aving...":dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$:&,16,2:return
+	&"Saving...":dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$:&,16,2:return
 {:3018}
 	gosub {:3008}
 {:3020}
-	&"{$c8}{$c1}{$ce}{$c4}{$cc}{$c5}:{pound}i1":if an$=""then close 2:return
+	&"HANDLE:{pound}i1":if an$=""then close 2:return
 	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":goto {:3020}
 {:3024}
 	gosub {:3008}
 {:3026}
-	&"{$c9}nsert:{$c9}{$c4}={pound}i1":a=val(an$):if a=.then close 2:return
+	&"Insert:ID={pound}i1":a=val(an$):if a=.then close 2:return
 	x=a:gosub 1001:&,2,2:an$=a$:lp=1:&
-	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%then:&"{$c1}lready {$d4}here!{f6}":goto {:3026}
-	&"{$c1}dding at {pound}%b.{f6}":a%=a:&,16,4:goto {:3026}
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%then:&"Already There!{f6}":goto {:3026}
+	&"Adding at {pound}%b.{f6}":a%=a:&,16,4:goto {:3026}
 {:3034}
 	gosub {:3008}
 {:3036}
-	&"{$c4}elete:{$c9}{$c4}={pound}i1":a=val(an$):if a=.then close 2:return
+	&"Delete:ID={pound}i1":a=val(an$):if a=.then close 2:return
 	x=a:gosub 1001:&,2,2:an$=a$:lp=1:&
-	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%=.then:&"{$ce}ot {$d4}here!{f6}":goto {:3036}
-	&"{$c4}eleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3036}
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%=.then:&"Not There!{f6}":goto {:3036}
+	&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3036}
 {:3044}
 	gosub {:3008}
 	open 3,dv%,3,dr$+"u.index,p,r":get#3,a$,a$:z$=chr$(0)
-	get#3,a$,b$:n%=asc(b$+z$)+asc(a$+z$)*256:&"{f6}{pound}%n {$d5}sers.{f6}":if n%=.then{:3056}
+	get#3,a$,b$:n%=asc(b$+z$)+asc(a$+z$)*256:&"{f6}{pound}%n Users.{f6}":if n%=. then {:3056}
 	for i=1 to n%:get#3,a$,b$:a%=asc(b$+z$)+asc(a$+z$)*256
 	x=a%:gosub 1001:input# 2,a$:&"{pound}%a - {pound}$a{f6}"
 	i=i+rc*n%:next
 {:3056}
-	close 3:&"{$d0}ress {$c1} {$cb}ey {pound}g1{f6}":close 2:return
+	close 3:&"Press A Key {pound}g1{f6}":close 2:return
 {:3058}
 	gosub {:3008}:for i=1 to ur:x=i:gosub 1001:input# 2,a$
-	if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then{:3066}
-	a%=i:an$=a$:&"{pound}#3{pound}# {pound}%a. {pound}$a{pound}{back arrow}30":&,16:if a%then:&"{$c4}upe={pound}%a{f6}":goto {:3066}
-	a%=i:&,16,4:&"{$c1}t {pound}%b{f6}"
+	if a$="{up arrow}"or a$="RES" then {:3066}
+	a%=i:an$=a$:&"{pound}#3{pound}# {pound}%a. {pound}$a{pound}{back arrow}30":&,16:if a%then:&"Dupe={pound}%a{f6}":goto {:3066}
+	a%=i:&,16,4:&"At {pound}%b{f6}"
 {:3066}
 	next:close 2:return
 {:3068}
-	&"{$cb}ill  :{$d0}os={pound}i1":a=val(an$):if a=.then close 2:return
-	b%=a:&"{$c4}eleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3068}
+	&"Kill  :Pos={pound}i1":a=val(an$):if a=.then close 2:return
+	b%=a:&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3068}
 	rem copr.1989 new image

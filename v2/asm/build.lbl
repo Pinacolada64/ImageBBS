@@ -625,4 +625,3 @@ versnum:
 ;	include f$,8
 ;	print "{up}"tab(30) (*-label) tab(38) " "
 ;	return
-

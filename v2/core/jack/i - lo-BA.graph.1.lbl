@@ -2,17 +2,17 @@
 	A=LL%/2-19:L$="":IF A>0 THEN L$=LEFT$("                        ",A-1)
 	H$="{$a2:30}"
 	I$="                              ":J$="{$bb}"
-	&"{f6:2}{pound}$L       {white}{rvrs on} {$d4}ODAY'S {$c2}OARD {$c1}CTIVITY {f6:2}":SH=.:RC=.
+	&"{f6:2}{pound}$L       {white}{rvrs on} TODAY'S BOARD ACTIVITY {f6:2}":SH=.:RC=.
 	&"{pound}$L                 1 1 1 1 1 2 2 2 2 2 3{f6}"
 	&"{pound}$L         2 4 6 8 0 2 4 6 8 0 2 4 6 8 0{f6}"
 	&"{pound}$L       0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0{f6}"
 	&"{pound}$L       {lt. blue}{$b0}{pound}O{$b2:12}{$ae}{f6}":FOR I=1 TO 9:D$=MID$("{cyan}{purple}{cyan}{purple}{cyan}{purple}{cyan}{purple}{cyan}",I,1)
-	C$=MID$("{$c6}BACK{$d3}{$cd}AIL{$cd}AIL {$d0}OSTS{$d2}ESPS{$d5}PLDS{$c4}NLDS{$ce}EW  {$c3}ALLS",I*5-4,5)
+	C$=MID$("FBACKSMAILMAIL POSTSRESPSUPLDSDNLDSNEW  CALLS",I*5-4,5)
 	X=INT(ST(I+11)/5+.5):B=INT(X/2+.5):IF B>28 THEN B=28
 	A$="":C=B+1:IF X>1 AND(X AND 1)THEN A$=J$:C=B+2
 	A$=LEFT$(H$,B)+A$+MID$(I$,C)
 	&"{lt. blue}{pound}$L {pound}$C {$dd}{pound}$D{pound}$A{lt. blue}{$dd}{f6}":I=I-9*(SH<>.OR RC<>.):NEXT
 	&"{pound}$L       {lt. blue}{$ad}{pound}O{$b1:12}{$bd}{f6:2}"
 	B%=ST(21):C%=ST(22):A=B%+C%:IF A THEN B%=INT(B%/A*100+.5):C%=100-B%
-	&"{white}{pound}$L       {$d5}SED {$d4}IME:{pound}#3{pound}# {pound}%B%    {$c9}DLE {$d4}IME:{pound}#3{pound}# {pound}%C%{f6}{lt. blue}":RETURN
+	&"{white}{pound}$L       USED TIME:{pound}#3{pound}# {pound}%B%    IDLE TIME:{pound}#3{pound}# {pound}%C%{f6}{lt. blue}":RETURN
 	REM

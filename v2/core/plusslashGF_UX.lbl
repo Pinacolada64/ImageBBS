@@ -1,0 +1,208 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	a=rk:rk=0:ON a GOTO {:4002},{:4010},{:4020}:RETURN
+{:4002}
+	lc=9:j$="File":k$="Download":l$="Upload":m$="Multi-"
+	r$=CHR$(13):sy$="U/X"
+	a=ul:&,52,4,3:IF a%THEN a=2
+	GOSUB 1667:dr=7:GOTO 1081
+{:4010}
+	an$=STR$(cr):a=7:GOSUB 1004:IF a THEN an$=" Unlimited"
+	dr=7:GOSUB 1079:d$="Blocks":IF co%>2 THEN a=INT((a*254)/1024):d$="Kbytes"
+	&"{f6} - Protocol   : {pound}vl{f6} - Credit Pts :{pound}v7{f6} - {pound}$d Free: {pound}!a"
+	RETURN
+{:4020}
+	rs=1:ON-(a$="$"OR a$="S")-2*(a$="R")GOTO {:4100},{:4110}
+	ON-(a$="U")-2*(a$="D")GOTO {:7000},{:6000}
+	IF a$="L"OR a$="A"OR a$="E"OR a$="K"THEN RETURN
+	rs=0:RETURN
+{:4030}
+	d%=.:POKE 53252,16:&"{f6}{pound}$j name: {pound}i0":f$=an$:a$=LEFT$(f$,1)
+	IF f$=""OR a$="$"OR a$="@"THEN f$="":d%=1:RETURN
+	&"S=SEQ (Text), P=PRG(Binary){f6}{pound}$j type: {pound}g1":a=1-(an$="P")
+	t$=MID$("sp",a,1):a$=MID$("SeqPrg",a*3-2,3):&"{pound}$a{f6}"
+	dr=7:a$=f$+","+t$+",r":GOSUB 1011:CLOSE 2:b%=.:IF e%THEN f$="":&:RETURN
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+f$:GET#1,a$,a$:&,8,1,1:&,8,1,1
+	CLOSE 1:b%=VAL(a$):RETURN
+{:4050}
+	dr=7:GOSUB 1010:CLOSE 15:IF st THEN RETURN
+	&"{f6}Pattern: ":GOSUB 1499:b$="*"
+	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
+	NEXT:an$=an$+b$:&"{f6}":CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$:RETURN
+{number:4100}
+{:4100}
+	GOSUB {:4050}:IF co%<3 THEN:&,8,1:CLOSE 1:RETURN
+	GET#1,a$,a$:&,8,1,1:&"{pound}$a{f6}":rc=.:sh=.
+{:4104}
+	&,8,1,1:an$=a$:&,15,6,34:a%=VAL(a$)*254/1024
+	IF an$<>""THEN:&"{pound}%aK{pound}{back arrow}07{f5}{pound}v7{f6}":GOTO {:4104}
+	&"{pound}%aK Free{f6:2}":CLOSE 1:RETURN
+{:4110}
+	GOSUB {:4030}:IF f$=""THEN RETURN
+	dr=7:a$=f$:ON-(t$="s")-2*(t$="p")GOTO 1075,{:4114}:RETURN
+{:4114}
+	dr=5:GOSUB 1010:a$=dr$+"++ read":&,7,dv%,2:GOSUB 1012
+	IF e%=0 THEN dr=7:a$=f$+","+t$+",r":GOSUB 1011:&"{lt. blue}":&,16,0,ll%:CLOSE 2
+	GOTO 1667
+{number:5000}
+{:5000}
+	&,18,1:&"{clear}{f6}End Of Transfer.{f6}":RETURN
+{:5002}
+	&"{f6}Go To {pound}v7 {pound}$js Mode!{f6}":RETURN
+{:5004}
+	PRINT# 15,"s"dr$b$:GOTO 1081
+{:5006}
+	ON-(s$=d2$)GOTO {:5020}:a$="  "+d2$:GOSUB 1095:s$=d2$:GOTO {:5020}
+	CLOSE 15:OPEN 15,a,15:CLOSE 15:a=st:RETURN
+{:5010}
+	b$=f$+","+t$:RETURN
+{:5012}
+	&,52,4,3:x=-((PEEK(2033)AND 127=1)AND(a%=0)):RETURN
+{:5014}
+	y%=a%:FOR i=1 TO a%:a$=" "+c$+": {f5}"+tt$(i)+"{f5}":GOSUB 1096:PRINT# 2,a$:a%=y%:NEXT:CLOSE 2:RETURN
+{:5016}
+	&"{f6:2} [Y]es [N]o [E]very [S]tart [A]bort{f6:2}":RETURN
+{:5018}
+	POKE 668,PEEK(667):RETURN
+{:5020}
+	a$="a":GOTO 1064
+{:5022}
+	b=-(rc<>0)*INT(rc/254+.999):RETURN
+{number:5100}
+{:5100}
+	fl=1:a=b%*(50+pr*34)/qb:a%=a:c%=(a-a%)*60:v$="{f6}Sorry, you "
+	d$="Blocks":IF co%>2 THEN d$="Kbytes":b%=b%*254/1024
+	&"{pound}%b {pound}$d Total, Transfer Time: {pound}#2{pound}%a:{pound}%c{f6}"
+	IF a%>tr%AND tr%<100 THEN lp=1:&"{pound}$vdon't have enough Time!":RETURN
+	a=7:GOSUB 1004:IF a=0 AND b%>l THEN lp=1:&"{pound}$vdon't have enough Credits!":RETURN
+	IF dc%>=da%AND da%<>0 THEN lp=1:&"{pound}$v have {backspace}downloaded your limit!":RETURN
+	fl=0:RETURN
+{number:5200}
+{:5200}
+	RETURN
+{number:6000}
+{:6000}
+	IF pr=2 THEN RETURN
+	l=cr:v=0:ON-(z$="DM")GOTO {:6100}
+	GOSUB {:4030}:IF f$=""THEN RETURN
+	GOSUB {:5100}:IF fl THEN RETURN
+	&"{f6:2}{pound}$k {f5}{pound}$f{f5}?: ":GOSUB 1902:IF a=0 THEN RETURN
+	GOSUB {:6200}:an$="Receive":GOSUB {:5002}
+	tt$(1)=MID$(STR$(dv%(7)),2)+":"+MID$(STR$(dv%(7)),2)+":"+f$+","+t$
+	im=1:GOSUB 2424:IF b=.THEN GOSUB 1920:a$=" Transfer Aborted!":GOTO 1095
+	GOSUB 1060:i=1:x=7:GOSUB 1025:x=18:GOSUB 1025:x=36:GOSUB 1025:CLOSE 2
+	dc%=dc%+1:GOSUB {:5006}:GOSUB {:5010}:a%=1:c$=k$:tt$(1)=b$:GOSUB {:5014}
+	&"{f6}":dc=dc+1:bd=bd+b:a=7:GOSUB 1004:IF a+(f2 AND 2)=.THEN cr=cr-b
+	GOSUB {:5012}:ON x GOTO {:5200}:ON jm GOTO {:6204}:GOTO {:5200}
+{:6026}
+	f=1:bb%=0
+{:6028}
+	an$=tt$(f):&,15,2:a$=an$+",r":dr=7:GOSUB 1011:IF e%THEN{:6034}
+	&,16,2:&,22,10:x=1:GOSUB 2103:&,16:GOSUB {:5012}:ON x GOTO {:6038}:GOSUB {:5022}:IF b=.THEN{:6038}
+{:6032}
+	&,22,10:ON-(f>=f%)GOTO {:6040}:f=f+1:GOTO {:6028}
+{:6034}
+	CLOSE 2:ON-(f=f%)GOTO {:6036}:FOR x=f TO f%-1:e%(x)=e%(x+1):tt$(x)=tt$(x+1):NEXT
+{:6036}
+	f%=f%-1:f=f-1:GOTO {:6032}
+{:6038}
+	bb%=1:b=0:jm=0:f=f-1
+{:6040}
+	an$="":&,16,2:a%=f:RETURN
+	GOSUB {:6044}:GOTO {:5200}
+{:6044}
+	a$=" Transfer Aborted":GOTO 1095
+{number:6100}
+{:6100}
+	ON nb GOTO {:7056}:f%=1
+{:6102}
+	GOSUB {:4050}:GET#1,a$,a$
+	GOSUB {:5016}:bb=.:dl%=.:bl=.:&,8,1,1:lp=1:&a$+"{f6}"
+{:6106}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:6122}
+	y%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$:b%=y%:IF co%>2 THEN y%=(f%*254)/1024:IF y%<1 THEN y%=1
+	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
+	NEXT:&" {pound}#4{pound}# {pound}%y: {f5}{pound}$f,{pound}$g{f5}":ON bl GOTO {:6118}:&"{pound}{back arrow}30?: {pound}g1":a$=an$
+	x=-(a$="Y")-2*(a$="S")-3*(a$="A")-4*(a$="E"):&MID$("No   Yes  StartAbortEvery",x*5+1,5)+"{f6}"
+	bl=-(a$="E"):ON x+1 GOTO {:6124},{:6118},{:6122},{:6122},{:6118}
+{:6118}
+	&MID$(" {f6}",bl+1,1):d%=b%:b%=dl%+b%:GOSUB {:5100}:b%=d%:ON fl GOTO {:6122}:dl%=dl%+d%
+	GOSUB {:5010}:tt$(f%)=b$:e%(f%)=b%:l=l-b%::f%=f%+1:GOTO {:6124}
+{:6122}
+	s=1:IF x=3 THEN f%=1
+{:6124}
+	ON-(s=.AND f%<60)GOTO {:6106}:CLOSE 1:a%=f%-1:ON-(a%=.)GOTO {:5200}
+{:6126}
+	b%=.:FOR i=1 TO a%:b$=tt$(i):c%=i:b%=b%+e%(i):&"{f6}{pound}#2{pound}# {pound}%c-{pound}$b":NEXT
+	&"{f6:2}":bb=1:bl=a%:GOSUB {:5100}:a%=bl
+{:6130}
+	&"{f6}S)can C)lear D)load K)ill A)dd Q)uit: {pound}g1{pound}v7{f6}":IF an$="Q"THEN{:5200}
+	ON-(an$="C")-2*(an$="A")-3*(an$="D")-4*(an$="K")GOTO {:6100},{:6102},{:6134},{:6152}:GOTO {:6126}
+{:6134}
+	GOSUB {:6200}:f%=a%:&"{f6:2}You Now Have 20 Seconds To":an$=m$+"Receive":GOSUB {:5002}
+	CLOSE 2:CLOSE 3:dr=7:GOSUB 1010:&,22,200:&"{clear}":GOSUB {:6026}:&,22,20:IF bb%THEN GOSUB 1920:jm=.:GOTO {:6140}
+	GOSUB {:5000}
+{:6140}
+	a%=f:GOSUB 1060:i=a%:x=7:GOSUB 1025:x=18:GOSUB 1025:x=36:GOSUB 1025:CLOSE 2
+	dc%=dc%+i:i=a%:GOSUB {:5006}:a$="  "+m$+k$:GOSUB 1096:a%=i:PRINT# 2,a$
+	c$=k$:GOSUB {:5014}:IF bb%THEN a$=" Transfer Aborted!":GOSUB 1095
+	dc=dc+a%:a=7:GOSUB 1004:a=-((f2 AND 2)=2)OR a:FOR i=1 TO a%
+	b=e%(i):bd=bd+b:cr=cr+b*(a=.):NEXT
+	GOSUB {:5012}:ON x GOTO {:5200}:ON jm GOTO {:6204}:GOTO {:5200}
+{:6152}
+	&"{f6:2}Kill Which?: {pound}i1":a=ABS(INT(VAL(an$)):IF tr%<1 THEN RETURN
+	IF a<1 OR a>a%THEN{:6130}
+	f%=f%-1:a%=a%-1:ON a%+1 GOTO {:6100}:FOR i=a TO a%:tt$(i)=tt$(i+1):NEXT:GOTO {:6126}
+{number:6200}
+{:6200}
+	jm=a%:&,52,23,3:IF a%=.THEN a%=jm:jm=.:RETURN
+	a%=jm:&"{f6}{lt. blue}Auto-Logoff when Completed?: ":GOSUB 1902:jm=a:RETURN
+{:6204}
+	ld$=lt$:tr%=0:RETURN
+	GOSUB 1060:i=n:x=7:GOSUB 1025:x=18:GOSUB 1025:x=36:GOSUB 1025:CLOSE 2
+	FOR i=1 TO n:an$=tt$(i):&,15,6,58:a$=" "+c$+": {f5}"+an$+"{f5}":GOSUB 1096
+	FOR i=1 TO n:a$=" "+c$+": {f5}"+tt$(i)+"{f5}":GOSUB 1096:PRINT# 2,a$:a%=y%:NEXT
+	CLOSE 2:RETURN
+{number:7000}
+{:7000}
+	ON-(pr=2)GOTO {:5200}
+	&"{f6} - {pound}$l:{f6}":fl=-(z$="UM"):GOSUB 1079:IF a<50 THEN GOSUB 1978:GOTO {:5200}
+	GOSUB 1085:IF a<.THEN GOSUB 1982:GOTO {:5200}
+	rs=tr%:ON fl GOTO {:7020}
+	GOSUB {:4030}:ON d%GOTO {:5200}:IF e%=.THEN:&"{pound}$b":GOTO {:5200}
+	GOSUB {:6200}:an$="Send":GOSUB {:5002}:dr=7:a$=f$+","+t$+",w":tt$=f$+","+t$:GOSUB 1011
+	an$=f$+","+t$:x=2:GOSUB 2103:&,16,1:GOSUB {:5022}:d=b:GOSUB {:7054}:GOSUB {:5000}:IF e%OR b=.THEN{:7018}
+	GOSUB {:5006}:c$=l$:a%=1:tt$(1)=tt$:GOSUB {:5014}
+	a%=1:GOTO {:7034}
+{:7018}
+	GOSUB 1920:b$=f$:GOSUB {:5004}:GOSUB 1012:&:GOTO {:7040}
+{:7020}
+	ON nb GOTO {:7056}:GOSUB {:6200}:a%=100:an$=m$+"Send":GOSUB {:5002}:dr=7:GOSUB 1010
+	&"{clear}":GOSUB {:7042}:GOSUB {:5022}:IF b=.THEN GOSUB 1920:jm=.:b%=.
+	GOSUB {:7054}:GOSUB {:5000}:a%=f:d=.:IF b%=.THEN b$=MID$(tt$(a%+1),3):GOSUB {:5004}
+	IF a%=.THEN GOSUB 1920:GOTO {:7040}
+	g$=m$+l$:FOR i=1 TO a%:b=ASC(tt$(i)+nl$)+ASC(MID$(tt$(i),2)+nl$)*256
+	d=d+b:tt$(i)=MID$(tt$(i),3):NEXT
+	a=a%:GOSUB {:5006}:a$="  "+g$:GOSUB 1096:PRINT# 2,a$:c$=l$:a%=a:GOSUB {:5014}:a%=a
+{:7034}
+	x=3:GOSUB 1530:dr=7:GOSUB 1081:tr%=rs
+	uc=uc+a%:bu=bu+d:a=2:GOSUB 1004:cr=INT(cr+d*a):GOSUB 1060
+	i=a%:x=6:GOSUB 1025:x=17:GOSUB 1025:x=28:GOSUB 1025:x=35:GOSUB 1025:CLOSE 2
+{:7040}
+	GOSUB {:5012}:ON g%OR x GOTO {:5200}:ON jm GOTO {:6204}:GOTO {:5200}
+{:7042}
+	f=.
+{:7044}
+	ON-(rn+f>=60)GOTO {:7052}:&,16,3:ON-(an$="")GOTO {:7052}:f=f+1:tt$(f)=an$:a$=an$+",w":dr=7:GOSUB 1011:IF e%THEN CLOSE 2:f=f-1:GOTO {:7052}
+	x=2:GOSUB 2103:&,16,1:GOSUB {:5022}:GOSUB {:5012}:ON x GOTO {:7052}
+	IF b=.THEN a$=LEFT$(tt$(f),LEN(tt$(f))-2):jm=.:f=f-1:dr=7:GOTO 1024
+	tt$(f)=CHR$(b AND 255)+CHR$(b/256)+tt$(f):GOSUB {:5012}:ON x GOTO {:7052}:GOTO {:7044}
+{:7052}
+	PRINT# 131,"{$18:3}";:GOTO {:5012}
+{:7054}
+	GOSUB {:5012}:g%=x:GOSUB {:5018}:GOSUB 1012:CLOSE 2:RETURN
+{:7056}
+	lp=1:&"{f6}Sorry, Batch {pound}$ks Using {pound}vl Are Not Currently Supported.":GOTO {:5200}
+	copr.1990 NEW image 10/28/90
+	rem "+/GF.UX"

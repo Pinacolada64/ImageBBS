@@ -1,0 +1,58 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	DIM ba$,bz,lm,oc$,r,sg,sg$,tz:&,27,2:DIM x1%(17,60),x2%(60),x3%(60,2)
+	lm=1:GOSUB {:4100}:x=lm:y=sg:z=tz:&,28,2:RETURN
+{:4004}
+	&,15,6,133:r=ABS(INT(VAL(a$))):RETURN
+{:4006}
+	dr=3:GOSUB 1010:&,60,2,0,x1%(0,0),dr$+"e.Siglist",dv%:GOTO 1012
+{:4008}
+	dr=3:GOSUB 1010:&,60,2,0,x3%(0,0),dr$+"e.Siglist"+STR$(sg),dv%:GOTO 1012
+{:4010}
+	lp=1:&"Sorry, that function is temporarily not available.":RETURN
+{:4100}
+	q=.:a=12:GOSUB 1004:b=a:a=8:GOSUB 1004:IF a+b THEN q=1
+	GOSUB {:4006}:IF e%<>0 OR x1%(0,0)=0 THEN{:4146}
+	xx=-(sy$="U/D")-2*(sy$="U/X"):f=4096+2^xx
+	&,60,6,x1%(0,0),0,x1%(0,1),x1%(1,1),36,4096,2^ac%
+	&,60,6,x1%(0,0),5,x1%(0,1),x1%(0,1),36,8192,f
+	&,60,6,x1%(0,0),7,x1%(0,1),x1%(0,1),36,16384,id
+	&,60,8,x1%(0,0),36,8192+16384,x1%(0,1),x2%(1),1:x2%(0)=a%
+	a$=LEFT$(an$,2):an$=MID$(an$,3):IF a%=0 THEN{:4146}
+	IF a$=">>"OR a$="<<"THEN r=sg+1+2*(a$="<<"):ON-(r<>0)GOTO {:4124}
+	tz=0:GOSUB {:4004}:ON-(r<>0)GOTO {:4124}:IF a%=1 THEN r=1:tz=1:GOTO {:4124}
+{:4120}
+	&"{f6}{white} ##  SIG Name{f6:2}":FOR i=1 TO x2%(0):a%=i:x=x2%(i):&,60,1,30,x1%(3,x),b$
+	&"{white}{pound}#3{pound}# {pound}%a  {cyan}{pound}$b{f6}":NEXT:&"{white}{f6}":p$="Which SIG?":GOSUB 1006:GOSUB {:4004}
+{:4124}
+	IF r<1 OR r>x2%(0)THEN{:4168}
+	sg=x2%(r):r=0:so%=x1%(2,sg):&,60,1,30,x1%(3,sg),s$
+	sg$=s$:GOSUB {:4008}:bz=0:IF e%THEN{:4144}
+	bz=x3%(0,xx):IF bz<1 THEN{:4144}
+	IF bz>30 THEN bz=30
+	FOR b=1 TO bz:e%(b)=x3%(b,xx):NEXT
+	b$=sg$:&"{f6}Welcome to the {pound}$b SIG!{f6}"
+	dr=1:a$="s.Sig"+STR$(sg)+STR$(nl):GOSUB 1076
+	dr=6:a$="u.config":GOSUB 1011:x=so%:GOSUB 1001:&,2,2:CLOSE 2
+	b$=an$:an$=a$:&,15,1:&"{f6}Your SIG Host here is {pound}v7.{f6}":an$=b$:GOTO {:4152}
+{:4144}
+	&"{f6}This SIG has no "+sy$+" Boards.{f6:2}":sg=0:bz=0:GOTO {:4120}
+{:4146}
+	sg=0:CLOSE 2:dr=3:a$="e."+sy$:GOSUB 1011:IF e%THEN{:4010}
+	&,2,2:bz=VAL(a$):CLOSE 2:IF bz>30 THEN bz=30
+	FOR i=1 TO bz:e%(i)=i:NEXT
+{:4152}
+	dr=3:a$="e."+sy$:GOSUB 1011:IF e%THEN{:4010}
+	ba$="":oc$="":b=0:FOR s=1 TO bz:x=e%(s)+1:GOSUB 1001:&,2,2:&,2,2:a=VAL(a$)
+	&,2,2:IF((a AND 2^ac%)=0)THEN{:4166}
+	b=b+1:ac%(b)=a:bb$(b)=a$:&,2,2:a=ABS(INT(VAL(a$))):so%(b)=a+(a=0)
+	&,2,2:dv%(b+6)=VAL(a$):&,2,2:dr%(b+6)=VAL(a$):e%(b)=e%(s)
+	d$="0":IF(so%(b)=id)OR(so%=id)OR q THEN d$="1"
+	ba$=ba$+d$:&,2,2:oc$=oc$+MID$(STR$(VAL(a$)),2)
+{:4166}
+	NEXT:CLOSE 2:bz=b:ON-(bz=0 AND sg>0)GOTO {:4144}:lm=0:RETURN
+{:4168}
+	IF sg THEN lm=1:RETURN
+	lm=2:RETURN
+	rem "+.MM.load"

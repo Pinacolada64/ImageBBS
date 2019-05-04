@@ -1,21 +1,22 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	gosub {:3002}:goto 1812
 {:3002}
-	poke 53252,16:n=.:&"{f6:2}{$c6}ilename: {pound}i0{f6}":f$=an$:if an$=""then return
+	poke 53252,16:n=.:&"{f6:2}Filename: {pound}i0{f6}":f$=an$:if an$=""then return
 	if d1%<7 then d1%=8
-	a%=d1%:b%=d2%:&"{$c4}evice ({pound}%a,{pound}%b): {pound}i1":dr=val(an$)
-	if dr>6 then d1%=dr:dr=0:&"{$c4}rive: {pound}i1":d2%=val(an$)
+	a%=d1%:b%=d2%:&"Device ({pound}%a,{pound}%b): {pound}i1":dr=val(an$)
+	if dr>6 then d1%=dr:dr=0:&"Drive: {pound}i1":d2%=val(an$)
 	on-(dr<0)goto {:3002}:gosub 1474:if a then{:3022}
 	close 15:open 15,dv%,15:close 2:open 2,dv%,2,dr$+f$:gosub 1012:if e% then {:3024}
 {:3014}
-	&"{f6}{$d2}ecord: {pound}i1{f6}":x=val(an$):if x<1 then close 2:&"{f6}":return
+	&"{f6}Record: {pound}i1{f6}":x=val(an$):if x<1 then close 2:&"{f6}":return
 	gosub 1001
 {:3018}
 	get#2,a$:a=asc(a$+chr$(0)):if(a and 127)<32 then a$="{rvrs on}"+chr$(a+64)+"{rvrs off}"
 	&:on-(st=.)goto {:3018}:&"{f6}":goto {:3014}
 {:3022}
-	a$="{f6}{$c5}rror: {$c4}evice {$ce}ot {$d0}resent{f6}"
+	a$="{f6}Error: Device Not Present{f6}"
 {:3024}
 	&:close 2:return
 	rem +.relread
-	

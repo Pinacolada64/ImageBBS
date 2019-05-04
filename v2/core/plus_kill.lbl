@@ -1,0 +1,6 @@
+{number:3000}
+{step:2}
+' TODO: ask for confirmation like 1.2's +.kill does
+	PRINT# 131,"ath"
+	POKE 49152,32:POKE 49153,226:POKE 49154,252:&,16
+	rem +.kill

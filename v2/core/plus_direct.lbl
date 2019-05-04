@@ -1,0 +1,126 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	bh$="Direct System":a=1:GOSUB 1667
+	dr=5:GOSUB 1009:d1%=dv%:d2%=VAL(dr$)
+	GOTO {:3028}
+{:3006}
+	f$="":a$="Seq":b$="s":POKE 53252,16:&"  FileName:{pound}i0":IF an$=""THEN RETURN
+	f$=an$:&"  FileType:{pound}g1":IF an$<>"S"THEN an$="P":a$="Prg":b$="p"
+	&"{pound}$a{f6}":f$=f$+","+b$
+	a$="a":b$="dirlog":GOSUB 1027:IF e%THEN a$="w":b$="dirlog":GOSUB 1027
+	PRINT# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)r$bh$
+	tt$=f$+" Was "+hr$+"ed,"+r$+ad$+" Device"+STR$(d1%)+" Drive"+STR$(d2%)
+	PRINT# 2,tt$:PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+{:3020}
+	CLOSE 15:OPEN 15,d1%,15:CLOSE 15:s=st:OPEN 15,d1%,15
+	IF s THEN:&"Device Not Present"
+	RETURN
+{:3026}
+	&"{f6:2}Press a key...{pound}g1{f6}"
+{:3028}
+	ON zz GOTO {:3032}
+	GOTO {:3132}
+{:3032}
+	a%=d1%:b%=d2%:a$=d4$:&"{clear}{f6:2} Direct Access 1.2{f6:2}"
+	&"1. Download{f6}2. Proto:{pound}$a{f6}"
+	IF zz THEN:&"3. Upload{f6}4. Device/Drive:{pound}%a,{pound}%b{f6}5. DOS Commands{f6}6. Read File{f6}"
+	IF zz THEN:&"7. Directory{f6}"
+	&"0. Quit{f6}> {pound}g1":a=VAL(an$)
+	IF a THEN:&"{pound}v7{f6}":ON a GOSUB {:3074},1666,{:3066},{:3046},{:3058},{:3082},{:3092}:GOTO {:3026}
+	&"  Quit{f6:2}":GOTO 1812
+{:3046}
+	a%=d1%:&"{f6:2} Device# : {pound}%a{f6}New #?   : {pound}i1{f6}":a=VAL(an$)
+	IF a>0 AND a<7 THEN dr=a:GOSUB 1009:d1%=dv%:d2%=VAL(dr$):RETURN
+	IF a=>7 AND a<=15 THEN d1%=a
+	a%=d2%:&"Drive#  : {pound}%a{f6}New #?   : {pound}i1":a=VAL(an$)
+	IF an$<>""AND a=>.AND a<=9 THEN d2%=VAL(an$)
+	RETURN
+{:3058}
+	GOSUB {:3020}:IF s THEN RETURN
+	&"{f6:2} Dos: {pound}i0":GOSUB 1500:IF an$>""THEN PRINT# 15,an$
+	GOSUB 1012
+{:3064}
+	&:RETURN
+{:3066}
+	GOSUB {:3020}:IF s THEN RETURN
+	&" Upload A File{f6}":hr$="Upload":ad$="To":GOSUB {:3006}:IF f$=""THEN RETURN
+	dr=0:a$=f$+",w":GOSUB 1011:IF e%THEN:&:&"{f6:2}":CLOSE 2:RETURN
+	&"{clear}Transfer Now!{f6:16}":SYS 49155:CLOSE 2:&"{pound}w1":RETURN
+{:3074}
+	GOSUB {:3020}:IF s THEN RETURN
+	&" Download A File{f6}":hr$="Download":ad$="From":GOSUB {:3006}:IF f$=""THEN RETURN
+	dr=0:a$=f$+",r":GOSUB 1011:IF e%THEN:&:&"{f6:2}":CLOSE 2:RETURN
+	&"{clear}Transfer ":&fd$:&" Now!{pound}w2{f6:16}":SYS 49152:CLOSE 2:&"{pound}w1":RETURN
+{:3082}
+	GOSUB {:3020}:IF s THEN RETURN
+	&" Read A File{f6}":GOSUB {:3006}:IF f$=""THEN RETURN
+	dr=0:a$=f$+",r":GOSUB 1011:IF e%THEN:&:&"{f6:2}":CLOSE 2:RETURN
+{:3088}
+	&,3,2:IF rc=0 AND st=0 THEN{:3088}
+	CLOSE 2:RETURN
+{:3092}
+	GOSUB {:3020}:IF s THEN RETURN
+	&" Pattern: {pound}i0":IF an$=""THEN an$="*"
+	CLOSE 2:GOSUB 1500:OPEN 2,d1%,0,"$"+CHR$(48+d2%)+":"+an$:&,8,2:CLOSE 2:RETURN
+	fl=1:&"{clear}{f6:6}Multi-Download: Waiting For Start...{f6}":a%=100
+	dv%=d1%:dr$=CHR$(48+d2%)+":":GOSUB 68:SYS 49161:GOTO 814
+	&"{clear}":GOSUB 38
+	POKE 53252,40:b$=an$
+	OPEN 2,d1%,0,"$"+CHR$(d2%+48)+":"+an$:a%=.:GET#2,a$,a$:&,8,2,1:lp=1
+{:3108}
+	&,8,2,1:a$=LEFT$(a$,28):b$=a$:IF st THEN{:3128}
+{:3110}
+	IF MID$(a$,26,1)<>"p"AND MID$(a$,26,1)<>"s"THEN lp=1:&:GOTO {:3108}
+	&:&"{pound}{back arrow}30Y/N/S/A:{pound}g1{pound}h9"
+	FOR i=26 TO 8 STEP-1:IF MID$(b$,i,1)<>CHR$(34)THEN NEXT
+	f$=MID$(b$,8,i-8)+","+MID$(b$,26,1)
+	IF an$="A"THEN:&" Abort{f6}":CLOSE 2:GOTO {:3064}
+	IF(an$="S")THEN:&" Start{f6}":GOTO {:3128}
+	IF(an$="Y")THEN:&" Yes{f6}":a%=a%+1:tt$(a%)=f$:GOTO {:3108}
+	IF(an$="N")THEN:&" No{f6}":GOTO {:3108}
+	GOTO {:3110}
+{:3128}
+	CLOSE 2:IF a%=.THEN:&"{f6}No Files Selected.{f6}{pound}w2":RETURN
+	dv%=d1%:dr$=CHR$(48+d2%)+":":GOSUB 68:SYS 49158:GOTO 814
+{:3132}
+	REM ** non-zz access
+	a%=d1%:b%=d2%:a$=d4$:&"{clear}{f6:2} Direct Access 1.2{f6:2}"
+	&"1. Download{f6}2. Proto:{pound}$a{f6}"
+	&"0. Quit{f6}> {pound}g1":a=VAL(an$)
+	IF a THEN:&"{pound}v7{f6}":ON a GOSUB {:3144},1666:GOTO {:3026}
+	&"  Quit{f6:2}":GOTO 1812
+{:3144}
+	REM ** download with password
+	x=0
+{:3148}
+	dr=3:a$="e.direct":GOSUB 1011
+{:3150}
+	x=x+1:IF x>20 THEN{:3178}
+	GOSUB 1001:INPUT# 2,hd$:IF hd$="empty"THEN{:3150}
+	IF hd$<>na$THEN{:3150}
+	bh=x:INPUT# 2,pd$,fd$,ft$,vd$,rd$,df$:IF df$<>"0"THEN{:3150}
+	CLOSE 2:d1%=VAL(vd$):GOSUB {:3020}:IF s THEN RETURN
+	f$=fd$:b$=ft$:fd$=f$:f$=f$+","+b$
+	&"{f6} Download "+f$+"{f6:2} Enter Password: ":&,6:IF an$=""THEN{:3180}
+	IF an$=pd$THEN{:3168}
+	&"{f6:2} Password Rejected!{pound}w2":GOTO 1811
+{:3168}
+	dr=0:a$=f$+",r":d2%=VAL(rd$):GOSUB 1011
+	IF e%THEN:&"{f6:2} Error Finding File!":CLOSE 2:RETURN
+	&"{clear}Transfer ":&fd$:&" Now!{pound}w2{f6:16}":SYS 49152:CLOSE 2:&"{pound}w1"
+	dr=3:a$="e.direct":GOSUB 1011:x=bh:GOSUB 1001:INPUT# 2,hd$,pd$,fd$,ft$,vd$,rd$
+	w$=hd$+r$+pd$+r$+fd$+r$+ft$+r$+vd$+r$+rd$+r$+"1"+r$:GOSUB 1001:PRINT# 2,w$
+{:3178}
+	CLOSE 2:GOTO {:3182}
+{:3180}
+	x=bh:GOTO {:3148}
+{:3182}
+	a$="a":b$="dx log":GOSUB 1027:IF e%THEN a$="w":GOSUB 1027
+	hr$=d1$:&,15
+	PRINT# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{white}"
+	PRINT# 2,na$+"{cyan} Downloaded "+fd$+"{f6}On {white}{$04}"+hr$
+	CLOSE 2:RETURN
+	REM "REL file non zz access"
+	REM "(C) NISSA 7/21/91 Dr Moffett"
+	REM "+.direct - copr. New Image 1990"

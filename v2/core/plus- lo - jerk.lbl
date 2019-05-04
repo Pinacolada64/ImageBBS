@@ -12,9 +12,9 @@
 	goto {:4010}
 {:4016}
 	x=j:gosub 1001:&,2,2:an$=mid$(a$,4):&,15,1:n$=an$
-	a$="n.${$ca}erk {$c1}ward":dr=1:gosub 1023:print# 2,r$"{pound}$q {$04}"+d1$
+	a$="n.$Jerk Award":dr=1:gosub 1023:print# 2,r$"{pound}$q {$04}"+d1$
 	print# 2,"{pound}$q{white}{$b0}{pound}o{$c0:18}{$ae}"r$"{pound}$q{$dd}{pound}{back arrow}37{$dd}"
-	gosub {:4002}:a$="{yellow}{$d4}his month the {green}{rvrs on}{$ca}erk {$c1}ward{rvrs off}":print# 2,"{$dd}{pound}$q{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
+	gosub {:4002}:a$="{yellow}This month the {green}{rvrs on}Jerk Award{rvrs off}":print# 2,"{$dd}{pound}$q{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
 	a$="{yellow}is proudly presented to":gosub {:4002}
 	print# 2,"{pound}$q{$dd}{pound}{back arrow}37{$dd}"r$"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
 	a$=n$:gosub {:4002}
@@ -26,8 +26,8 @@
 	a$="{lt. red}choice by a vote of his peers."
 	gosub {:4002}:print# 2,"{pound}$q{$dd}{pound}{back arrow}"+t$+a$+"{pound}{back arrow}37{white}{$dd}"
 	print# 2,"{pound}$q{$dd}{pound}{back arrow}37{$dd}"r$"{pound}$q{$ad}{pound}o{$c0:18}{$bd}"r$"{up arrow}":close 2
-	dr=3:a$="e.jvoters":gosub 1023:print# 2,"{$d4}{$c8}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}":close 2
+	dr=3:a$="e.jvoters":gosub 1023:print# 2,"THE SYSOP":close 2
 	a$="e.jerks":dr=3:gosub 1024:b$=",l,"+chr$(30):a$=a$+b$:dr=3:gosub 1011
 	x=18:gosub 1001:print# 2,chr$(255):x=17:d=1:gosub 1001:print# 2,d
-	x=1:gosub 1001:print# 2,"{up arrow}":close 2:a$=" {lt. red}{$ca}erk {$c1}ward {$d2}estarted"+r$+" {yellow}{pound}o{$c0}{pound}o{$c0}{lt. green}":goto 1095
+	x=1:gosub 1001:print# 2,"{up arrow}":close 2:a$=" {lt. red}Jerk Award Restarted"+r$+" {yellow}{pound}o{$c0}{pound}o{$c0}{lt. green}":goto 1095
 	copr. 1994 new image 9/18/94

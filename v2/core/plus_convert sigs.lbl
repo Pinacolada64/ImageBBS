@@ -1,10 +1,12 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	&,28,1:dim x%(17,60):gosub {:3002}:&,28,1:goto 1811
 {:3002}
-	dr=3:a$="e.{$d3}ig":gosub 1011:if e%then close 2:&:return
+	dr=3:a$="e.Sig":gosub 1011:if e%then close 2:&:return
 	&,2,2:x%(0,0)=val(a$):if x%(0,0)=0 then close 2:return
 	for i=1 to x%(0,0):x=i+1:gosub 1001:&,2,2:input# 2,x%(1,i),x%(0,i),x%(2,i)
 	if x%(2,i)<0 then x%(2,i)=0
 	&,60,0,30,x%(3,i),a$:next:close 2
-	&,60,3,0,x%(0,0),36+x%(0,0)*36,dr$+"e.{$d3}iglist",dv%:gosub 1012:&:return
+	&,60,3,0,x%(0,0),36+x%(0,0)*36,dr$+"e.Siglist",dv%:gosub 1012:&:return
 	rem +.convert sigs

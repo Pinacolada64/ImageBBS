@@ -6,3 +6,14 @@ irqhn.lbl:
 5/Jun/2015 11:11
 irqhn.lbl:
 	+ lda #'a' (single quotes only) for a character value (except space) works
+
+2018-11-14 10:57
+Note: "*.s" is native c64 "fast assembler" source
+
+equat.s:
+* un-commented missing "carrier" label
+
+irqhn.s:
+* does not crash with "missing label" error on pass 3 of running build.s
+
+"ml 2.0": 25339 bytes

@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	goto {:3010}
 {:3002}
 	poke 53252,l:&,1:a=abs(int(val(an$))):return
@@ -10,44 +12,44 @@
 	print# 16,"p{stop}"chr$(x and 255)chr$(x/256)"{$01}":return
 {:3010}
 	&,5:if lp<1.3 then gosub {:3020}:goto {:3014}
-	dr=5:gosub 1009:a$=dr$+"++ copier":&,7,dv%,2:d4$="{$c3}opier":gosub {:3052}
+	dr=5:gosub 1009:a$=dr$+"++ copier":&,7,dv%,2:d4$="Copier":gosub {:3052}
 {:3014}
 	goto 1812
 {:3016}
-	a%=ng:lp=1:&"{f6}{$d1}uitting now would leave {pound}%a message(s) {f5}lost{f5}.{f6:2}"
+	a%=ng:lp=1:&"{f6}Quitting now would leave {pound}%a message(s) {f5}lost{f5}.{f6:2}"
 	return
 {:3020}
-	lp=1:&"{$d3}orry, this program will not run on versions of {$c9}mage {$c2:2}{$d3} less than "
+	lp=1:&"Sorry, this program will not run on versions of Image BBS less than "
 	lp=1:&"1.3{f6:2}":return
 {:3024}
-	&"{f6}{$c7}rabbed {$cd}essages:{f6:2}"
+	&"{f6}Grabbed Messages:{f6:2}"
 ' 13=<Return>
 	for i=1 to ng:an$=tt$(i):&,15,6,13
 	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
 	return
 {:3032}
-	&"{f6}{$c1}vailable {$cd}essages:{f6:2}"
+	&"{f6}Available Messages:{f6:2}"
 	for i=1 to n:x=i+1:gosub 1001:&,2,2
 	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
 	return
 {:3040}
-	&"{f6}{$c1}vailable {$d3}ubs:{f6:2}"
+	&"{f6}Available Subs:{f6:2}"
 	for i=1 to n:x=i+1:gosub 1001:&,2,2:&,2,2:&,2,2
 	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
 	if right$(a$,1)="?"then a$=left$(a$,len(a$)-1)
 	a%=i:&"{pound}#3{pound}# {pound}%a) {pound}$a{f6}":if rc=0 then next
 	return
 {:3052}
-	ng=0:l$="{clear}{$c0:20}{f6}{$cd}essage {$cd}ove {$d5}tility{f6}"
-	l$=l$+" {$c5}nter {f5}?{f5} for {$c8}elp {f6}{$c0:20}{f6:2}":ng=0
+	ng=0:l$="{clear}{$c0:20}{f6}Message Move Utility{f6}"
+	l$=l$+" Enter {f5}?{f5} for Help {f6}{$c0:20}{f6:2}":ng=0
 {:3056}
-	dr=3:a$="e.{$d3}ub":gosub 1011:if e%then close 2:&:return
+	dr=3:a$="e.Sub":gosub 1011:if e%then close 2:&:return
 	x=1:gosub 1001:&,2,2:n=val(a$)
 {:3060}
-	a%=n:b%=ng:&"{pound}$l{pound}%a {$d3}ub(s) {$c1}vailable{f6}{pound}%b {$cd}essage(s) {$c7}rabbed{f6}"
+	a%=n:b%=ng:&"{pound}$l{pound}%a Sub(s) Available{f6}{pound}%b Message(s) Grabbed{f6}"
 {:3062}
-	p$="{f6}{$d7}hich {$d3}ub ({$cc}={$cc}ist)":l=3:gosub {:3002}:if an$="{f2}"then gosub {:3140}:goto {:3062}
-	if an$="{$cc}"then gosub {:3040}:goto {:3062}
+	p$="{f6}Which Sub (L=List)":l=3:gosub {:3002}:if an$="{f2}"then gosub {:3140}:goto {:3062}
+	if an$="L"then gosub {:3040}:goto {:3062}
 	if an$=""and ng>0 then gosub {:3016}:goto {:3062}
 	if an$=""or tr%=0 then close 2:return
 	if a<1 or a>n then{:3060}
@@ -55,30 +57,30 @@
 	sb=a:close 2:dr=4:a$="d.sub"+str$(sb):gosub 1011:if e%=0 then:&,2,2:n=val(a$)
 	if e%then close 2:a$="d.sub"+str$(sb)+",l,"+chr$(80):gosub 1011:print# 2,0:n=0
 {:3078}
-	a%=sb:b%=n:c%=ng:&"{pound}$l{$d3}ub {pound}%a {$d3}elected{f6}{pound}%b {$cd}essage(s), {pound}%c {$c7}rabbed{f6}"
+	a%=sb:b%=n:c%=ng:&"{pound}$lSub {pound}%a Selected{f6}{pound}%b Message(s), {pound}%c Grabbed{f6}"
 {:3080}
-	p$="{f6}{$d7}hich {$cd}essage ({$cc}={$cc}ist,{$c4}={$c4}rop)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3148}:goto {:3080}
-	if an$="{$cc}"and n>0 then gosub {:3032}:goto {:3080}
+	p$="{f6}Which Message (L=List,D=Drop)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3148}:goto {:3080}
+	if an$="L"and n>0 then gosub {:3032}:goto {:3080}
 	if an$=""or tr%=0 then close 2:goto {:3056}
-	if an$="{$c4}"and ng>0 and n<60 then{:3100}
+	if an$="D"and ng>0 and n<60 then{:3100}
 	if a<1 or a>n then{:3078}
-	m=a:x=m+1:gosub 1001:&,2,2:&"{$c7}rab {f5}{pound}$a{f5}? ":gosub 1902:if a=0 then{:3078}
+	m=a:x=m+1:gosub 1001:&,2,2:&"Grab {f5}{pound}$a{f5}? ":gosub 1902:if a=0 then{:3078}
 	b$=right$(str$(sb),2):gosub {:3004}:ng=ng+1:tt$(ng)=b$:a%(ng)=d1%:f%(ng)=d2%
-	&"{$d2}emoving {$cd}essage from {$d3}ub..."
+	&"Removing Message from Sub..."
 	if m<n then for j=m+1 to n:x=j+1:b$="":gosub {:3004}:x=j:gosub 1001:print# 2,b$;:next
 	n=n-1:x=1:gosub 1001:print# 2,n:gosub 1001:goto {:3078}
 {:3100}
-	a%=sb:b%=n:c%=ng:&"{pound}$l{$d3}ub {pound}%a {$d3}elected{f6}{pound}%b {$cd}essage(s), {pound}%c {$c7}rabbed{f6}"
+	a%=sb:b%=n:c%=ng:&"{pound}$lSub {pound}%a Selected{f6}{pound}%b Message(s), {pound}%c Grabbed{f6}"
 {:3102}
-	p$="{f6}{$c4}rop {$d7}hich ({$cc}={$cc}ist)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3158}:goto {:3102}
-	if an$="{$cc}"and ng>0 then gosub {:3024}:goto {:3102}
+	p$="{f6}Drop Which (L=List)":l=2:gosub {:3002}:if an$="{f2}"then gosub {:3158}:goto {:3102}
+	if an$="L"and ng>0 then gosub {:3024}:goto {:3102}
 	if an$=""or tr%=0 then{:3078}
 	if a<1 or a>ng then{:3100}
 	an$=tt$(a):a%=a%(a):f%=f%(a):n=n+1:x=n+1:gosub 1001:print# 2,mid$(an$,3)
 	x=1:gosub 1001:print# 2,n:gosub 1001:close 2
 	if a<ng then for i=a to ng-1:tt$(i)=tt$(i+1):a%(i)=a%(i+1):f%(i)=f%(i+1):next
 	tt$(ng)="":ng=ng-1
-	if sb=val(left$(an$,2))then{:3138}
+	if sb=val(left$(an$,2)) then {:3138}
 ' 13=<Return>
 	&,15,6,13:a$=left$(a$,16):b$=right$(str$(sb),2)+mid$(a$,3):dr=0:gosub 1010
 	fr$=mid$(str$(f),2)+":"
@@ -86,28 +88,27 @@
 	if a%=d1%then print# 15,"c"dr$b$"="fr$a$:goto {:3138}
 	close 15:open 15,a%,15:close 2:open 2,a%,2,fr$+a$
 	close 16:open 16,dv%,16:close 3:open 3,dv%,3,dr$+b$+",l,"+chr$(81)
-	&,18,0:&"{clear}{$c3}opying...   ":x=1
+	&,18,0:&"{clear}Copying...   ":x=1
 {:3134}
 	b%=x:&"{pound}h3{pound}#3{pound}%b":gosub 1001:gosub 1012:gosub {:3006}:if e%=0 then:&,16:x=x+1:goto {:3134}
 	close 2:close 3::print# 15,"s"fr$a$
 {:3138}
 	dr=4:a$="d.sub"+str$(sb):gosub 1011:goto {:3100}
 {:3140}
-	lp=1:&"{$c1}t this prompt you may select a sub to grab messages from, or to "
-	lp=1:&"drop messages into. {$d9}ou may enter {f5}{$cc}{f5} to list the subs that are "
-	lp=1:&"available. {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to quit the program. {$ce}ote that you cannot "
-	lp=1:&"quit while you still have messages that ara grabbed.{f6:2}":return
+	lp=1:&"At this prompt you may select a sub to grab messages from, or to "
+	lp=1:&"drop messages into. You may enter {f5}L{f5} to list the subs that are "
+	lp=1:&"available. Press RETURN to quit the program. Note that you cannot "
+	lp=1:&"quit while you still have messages that are grabbed.{f6:2}":return
 {:3148}
-	lp=1:&"{$c1}t this prompt you may select a message to grab. {$c7}rabbed messages "
+	lp=1:&"At this prompt you may select a message to grab. Grabbed messages "
 	lp=1:&"are removed from the sub that you are in, and the header is kept "
-	lp=1:&"in memory until you drop it into another sub. {$d9}ou may enter {f5}{$c4}{f5} to "
-	lp=1:&"select messages to drop in this sub. {$d9}ou may also enter {f5}{$cc}{f5} to "
+	lp=1:&"in memory until you drop it into another sub. You may enter {f5}D{f5} to "
+	lp=1:&"select messages to drop in this sub. You may also enter {f5}L{f5} to "
 	lp=1:&"list the messages that are in this sub.{f6:2}":return
 {:3158}
-	lp=1:&"{$c1}t this prompt you may select a message to drop. {$c4}ropped messages "
+	lp=1:&"At this prompt you may select a message to drop. Dropped messages "
 	lp=1:&"will be added onto the end of the list of messages for this sub, "
-	lp=1:&"and the header will be removed from memory. {$ca}ust press {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} to "
-	lp=1:&"exit to {$c7}rab mode. {$d9}ou may also enter {f5}{$cc}{f5} to list the headers "
+	lp=1:&"and the header will be removed from memory. Just press RETURN to "
+	lp=1:&"exit to Grab mode. You may also enter {f5}L{f5} to list the headers "
 	lp=1:&"that are currently in memory.{f6:2}":return
-	rem +.mu
-	
+	rem "+.MU"

@@ -1,0 +1,10 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM u%(uh+1):GOSUB {:3002}:GOTO 1812
+{:3002}
+	dr=6:GOSUB 1010:a$=dr$+"u.index":&,60,2,0,u%(0),a$,dv%
+	GOSUB 1065:a$="":FOR i=1 TO u%(0):x=u%(i):GOSUB 1001:b$=a$:x=u%(i):&,2,2
+	&"{pound}$a{f6}":IF a$<=b$THEN:&" >***<{f6}"
+	NEXT:RETURN
+	rem "+.check index"

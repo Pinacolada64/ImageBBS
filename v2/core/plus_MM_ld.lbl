@@ -1,0 +1,36 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+.MM.ld"
+{:4002}
+	nr=1:&"{f6}{cyan}Last Call: {$04}"+ld$+"{f6:2}Add Or Subtract How Many Days? {f6:2}Last: {pound}i1"
+	a=INT(VAL(an$)):IF tr%<1 THEN RETURN
+	ON-(a=.)GOTO {:4032}:IF a<-999 OR a>999 THEN:&"{f6}Out Of Range!{f6}":GOTO {:4002}
+	b=VAL(LEFT$(ld$,1))+a:c=VAL(MID$(ld$,2,2)):d=VAL(MID$(ld$,4,2))
+	e=VAL(MID$(ld$,6,2))+a:a$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
+{:4012}
+	IF e<=ASC(MID$(a$,d))THEN{:4018}
+	e=e-ASC(MID$(a$,d)):d=d+1:IF d<13 THEN{:4012}
+	d=1:c=c+1:GOTO {:4012}
+{:4018}
+	IF e>.THEN{:4024}
+	d=d-1:e=e+ASC(MID$(a$,d-12*(d=.))):IF d>.THEN{:4018}
+	d=12:c=c-1:GOTO {:4018}
+{:4024}
+	IF b>7 THEN b=b-7:GOTO {:4024}
+{:4026}
+	IF b<1 THEN b=b+7:GOTO {:4026}
+	a$=RIGHT$("0"+MID$(STR$(c),2),2)+RIGHT$("0"+MID$(STR$(d),2),2)
+	ld$=CHR$(48+b)+a$+RIGHT$("0"+MID$(STR$(e),2),2)+RIGHT$(ld$,4)
+{:4032}
+	&"{f6}Change Time?: ":GOSUB 1902:ON a GOSUB {:4036}
+	&"{f6}Last Date: {$04}"+ld$:&"{f6:2}":RETURN
+{:4036}
+	&"{f6}Enter Time In This Format:{f6:2}Example:  9:20 AM--920A{f6}"
+	&"{pound}{back arrow}0911:23 PM--1123P{f6:2}Last: {pound}i1"
+	a$=RIGHT$(an$,1):IF an$=""THEN RETURN
+	an$=LEFT$(an$,LEN(an$)-1):IF(a$<>"A"AND a$<>"P")OR VAL(RIGHT$(an$,2))>59 THEN{:4036}
+	IF VAL(an$)>1259 OR VAL(an$)<100 THEN{:4036}
+	t=-(a$="P")*8000
+	ld$=LEFT$(ld$,7)+RIGHT$("0"+MID$(STR$(VAL(an$)+t),2),4):RETURN
+	copr.1990 NEW image 01/02/90

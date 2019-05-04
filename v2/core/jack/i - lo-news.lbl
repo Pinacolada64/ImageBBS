@@ -1,11 +1,11 @@
 	REM - NEWS MODULE -
-	KK=.:B=.:T=.:DR=4:A$="D.N.{$cd}AIN,S,R":GOSUB 4
+	KK=.:B=.:T=.:DR=4:A$="D.N.MAIN,S,R":GOSUB 4
 	ON SGN(E%)GOTO{:4526}:INPUT# 2,B:IF B<1 THEN{:4526}
 	T=.:FOR X=1 TO B:INPUT# 2,ED$(X),NN$(X),D%(X):D%(X)=D%(X)*-((D%(X)AND 2^AC%)<>.)
 	IF D%(X)THEN T=T+1:ED$(T)=ED$(X):NN$(T)=NN$(X):C%(T)=D%(X)
-	NEXT:CLOSE 2:IF T=.THEN{:4526}
-	FOR I=1 TO T:SH=.:C$="{$ce}EW {$ce}EWS":F2=-(MID$(NN$(I),2)<MID$(D5$,2))*-(TC%>1)
-	IF F2 THEN C$="{$d2}EMINDER":IF LEFT$(ED$(I),1)<>"$"THEN{:4524}
+	NEXT:CLOSE 2:IF T=. then {:4526}
+	FOR I=1 TO T:SH=.:C$="NEW NEWS":F2=-(MID$(NN$(I),2)<MID$(D5$,2))*-(TC%>1)
+	IF F2 THEN C$="REMINDER":IF LEFT$(ED$(I),1)<>"$" then {:4524}
 	B$=ED$(I):IF LEFT$(B$,1)="$"THEN B$=MID$(B$,2)
 	&"{f6}{yellow}{pound}$C:{white} {pound}$B{f6}{cyan}({$04}"+NN$(I):&"){pound}Q0{f6:2}":KK=1:DR=1:B$=A$
 	A$="N."+LEFT$(ED$(I),14)+",S,R":GOSUB 4:ON-(E%<>.)GOTO{:4522}:&,3-9*(F2=.),2
@@ -14,6 +14,6 @@
 {:4524}
 	NEXT:RETURN
 {:4526}
-	CLOSE 2:IF KK=.THEN:&"{f6}{$ce}O {$ce}EW {$ce}EWS.{f6}"
+	CLOSE 2:IF KK=.THEN:&"{f6}NO NEW NEWS.{f6}"
 	RETURN
 	COPR 1990 NEW IMAGE  12-26-90

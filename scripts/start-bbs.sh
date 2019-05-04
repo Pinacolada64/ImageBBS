@@ -11,7 +11,13 @@ basedir="~/c64/Image\ BBS/v2"
 # -drive10type	1581
 # -10		attach disk image
 
-x64 +acia -rsdev1 -rsuserdev1 "|nc -p 3064 127.0.0.1 25232" -rsuser -rsdev1baud 2400 -drive8type 1581 -8 "($basedir)/image\ 2_0\ boot-e.d81" -drive9type 1581 -9 "($basedir)/image\ 2_0\ s-nm.d81"
+x64 -verbose \
++acia \
+-rsdev1 0 \
+# -rsuserdev1 \|nc\ -p\ 3064\ 127.0.0.1\ 25232 
+-rsuser \
+-rsdev1baud 2400 \
+-drive10type 1581 -10 "($basedir)/image\ 2_0\ boot-e.d81" -drive11type 1581 -11 "($basedir)/image\ 2_0\ s-nm.d81"
 
 # FIXME
 #Error - Cannot attach disk image `~/c64/Image\ BBS/v2/image\ 2_0\ boot-e.d81' to unit 10.

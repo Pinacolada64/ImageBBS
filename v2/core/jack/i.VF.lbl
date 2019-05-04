@@ -24,7 +24,7 @@
 	RETURN
 {:3030}
 	&,2,2:H$=A$:&,2,2:F$=A$:&,2,2:D$=A$:&,2,2:S$=A$:&,2,2:T$=A$:&,2,2:C$=A$
-	&,2,2:Z$=A$:&,2,2:Y$=A$:K=1:A=A+1:IF H$=""THEN H$="{$ce}ONE"
+	&,2,2:Z$=A$:&,2,2:Y$=A$:K=1:A=A+1:IF H$=""THEN H$="NONE"
 {:3034}
 	&,2,2:TT$(K)=A$:K=K+1:ON-(A$<>"{up arrow}"AND PEEK(144)=.)GOTO{:3034}:RETURN
 {:3036}
@@ -35,10 +35,10 @@
 	IF Y=1 THEN FOR X=2 TO 24 STEP 11:GOSUB 16:NEXT:X=31:GOSUB 16
 	X=25:ON Z GOSUB 16:CLOSE 2:RETURN
 {:3046}
-	IF ZZ=.THEN{:3116}
+	IF ZZ=. then {:3116}
 {:3048}
-	F1=F1-(F1=.):&"{f6}{$d7}HICH {$cd}SG?: {pound}I1":GOSUB{:3008}:ON TR%+1 GOTO{:3414}:IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3048}
-	ON-(LEFT$(AN$,1)="{$d2}")GOTO{:3060}:IF A<1 OR A>BZ THEN{:3116}
+	F1=F1-(F1=.):&"{f6}WHICH MSG?: {pound}I1":GOSUB{:3008}:ON TR%+1 GOTO{:3414}:IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3048}
+	ON-(LEFT$(AN$,1)="R")GOTO{:3060}:IF A<1 OR A>BZ THEN{:3116}
 	K=1:TT$(.)="["+DT$(A)+"]":DR=1:A$="S.CAN MSG"+STR$(A)+",S,R":GOSUB 4:GOTO{:3152}
 {:3054}
 	BZ=.:A$="S.CAN MSG,S,R":DR=1:GOSUB 4:IF E%THEN CLOSE 2:RETURN
@@ -61,100 +61,100 @@
 {:3078}
 	A%(I)=A:NEXT:RETURN
 {:3080}
-	&"{clear}{f6}{lt. blue} {rvrs on} {$d6}IEW {$c6}EEDBACK/{$c5}RRLOG/{$d4}ELECHECK {pound}Q0{f6:2}{lt. blue}  {$c7}ETTING {cyan}{$cd}ESSAGES{lt. blue} {$c1}ND {cyan}{$c9}NFORMATION{lt. blue}..."
+	&"{clear}{f6}{lt. blue} {rvrs on} VIEW FEEDBACK/ERRLOG/TELECHECK {pound}Q0{f6:2}{lt. blue}  GETTING {cyan}MESSAGES{lt. blue} AND {cyan}INFORMATION{lt. blue}..."
 	GOSUB{:3066}:GOSUB{:3062}:GOSUB{:3054}
 {:3084}
 	G%=BZ:GOSUB 12:F4=.:GOSUB 90:LP=1
-	&"{clear}{f6}{blue}{pound}VJ {cyan}{pound}{back arrow}11{pound}$Q{$d6}IEW {$c6}EEDBACK 2.0{pound}{back arrow}39{f6}{blue}{pound}VJ{pound}Q0{f6}":X=.
+	&"{clear}{f6}{blue}{pound}VJ {cyan}{pound}{back arrow}11{pound}$QVIEW FEEDBACK 2.0{pound}{back arrow}39{f6}{blue}{pound}VJ{pound}Q0{f6}":X=.
 	FOR I=1 TO RN:A$=LEFT$(NN$(I),1):B$=MID$(NN$(I),2):A%=A%(I):IF X>1 THEN:&"{f6}":X=.
 	&" ({pound}$A){pound}$B{pound}{back arrow}13 {white}({pound}%A){cyan}{pound}{back arrow}18":X=X+1:NEXT
 	ON-(ZZ=.)GOTO{:3100}:IF X>1 THEN:&"{f6}":X=.
-	&" ({$c3})AN {$cd}SG'S{pound}{back arrow}13{white} ({pound}%G){pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
-	&" {cyan}({$c1})RCH. {$ce}EW {$d5}SERS{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
-	&" ({$d3})CRATCH {$c6}ILES{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
-	&" ({$d7})ATCH{$c4}OG {$c6}ILES{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
+	&" (C)AN MSG'S{pound}{back arrow}13{white} ({pound}%G){pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
+	&" {cyan}(A)RCH. NEW USERS{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
+	&" (S)CRATCH FILES{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
+	&" (W)ATCHDOG FILES{pound}{back arrow}18":X=X+1:IF X>1 THEN:&"{f6}":X=.
 {:3100}
-	&"{f6:2} {$d6}{$c6}: {pound}G1":GOSUB{:3012}:IF BN THEN:&"{pound}$K{f6}":GOTO{:3230}
-	IF ZZ THEN ON-(AN$="{$c1}")-2*(AN$="{$c3}")-3*(AN$="{$d3}")-4*(AN$="{$d7}")GOTO{:3216},{:3274},{:3174},{:3416}
-	&"{$d1}UIT{f6}":GOTO{:3414}
+	&"{f6:2} VF: {pound}G1":GOSUB{:3012}:IF BN THEN:&"{pound}$K{f6}":GOTO{:3230}
+	IF ZZ THEN ON-(AN$="A")-2*(AN$="C")-3*(AN$="S")-4*(AN$="W")GOTO{:3216},{:3274},{:3174},{:3416}
+	&"QUIT{f6}":GOTO{:3414}
 {:3106}
-	&"{f6}":GOSUB{:3024}:IF E%THEN:&"{$ce}O {pound}$K.":CLOSE 2:GOTO{:3084}
+	&"{f6}":GOSUB{:3024}:IF E%THEN:&"NO {pound}$K.":CLOSE 2:GOTO{:3084}
 	ON L GOTO{:3112}:FOR I=1 TO L-1
 {:3110}
 	&,2,2:ON-(A$<>"{up arrow}"AND PEEK(144)=.)GOTO{:3110}:NEXT
 {:3112}
 	GOSUB{:3030}
 {:3114}
-	F1=.:F4=.:GOSUB{:3202}:&,52,12,3:IF A%THEN{:3170}
+	F1=.:F4=.:GOSUB{:3202}:&,52,12,3:IF A% then {:3170}
 {:3116}
 	GOSUB 12:ON-(F4=3)GOTO{:3274}
-	B$="":IF ZZ THEN B$="{$c1})CCS {$c3})AN {$c3}{$d2})ED {$c4})EL {$d6})IEW {$d0})RINT "
-	A%=L:LP=1:&"{f6:2}#{pound}%A:{pound}$B{$c6})WRD {$d2})SPD {$ce})EXT {$cf})VER {$d1})UIT {$ce})EW #: {white}{pound}I1"
+	B$="":IF ZZ THEN B$="A)CCS C)AN CR)ED D)EL V)IEW P)RINT "
+	A%=L:LP=1:&"{f6:2}#{pound}%A:{pound}$BF)WRD R)SPD N)EXT O)VER Q)UIT N)EW #: {white}{pound}I1"
 	A=VAL(AN$):IF A>.AND A<=Z%THEN L=A:CLOSE 2:GOTO{:3106}
-	IF TR%<1 THEN AN$="{$d1}"
-	IF AN$="{$cf}"THEN ON-(F1=2)GOTO{:3106}:GOSUB{:3204}:GOTO{:3116}
-	ON-(AN$="{$c1}")-(AN$="{$d2}")*2-(AN$="{$d1}")*3-(AN$="{$c6}")*4 GOTO{:3134},{:3156},{:3172},{:3248}
-	ON-((AN$="{$ce}")OR(AN$=""))-(AN$="{$c3}")*2-(AN$="{$c3}{$d2}")*3 GOTO{:3170},{:3046},{:3334}
-	ON-(AN$="{$d6}")-2*(AN$="{$c4}")-3*(AN$="{$d0}")GOTO{:3368},{:3346},{:3410}:GOTO{:3116}
+	IF TR%<1 THEN AN$="Q"
+	IF AN$="O"THEN ON-(F1=2)GOTO{:3106}:GOSUB{:3204}:GOTO{:3116}
+	ON-(AN$="A")-(AN$="R")*2-(AN$="Q")*3-(AN$="F")*4 GOTO{:3134},{:3156},{:3172},{:3248}
+	ON-((AN$="N")OR(AN$=""))-(AN$="C")*2-(AN$="CR")*3 GOTO{:3170},{:3046},{:3334}
+	ON-(AN$="V")-2*(AN$="D")-3*(AN$="P")GOTO{:3368},{:3346},{:3410}:GOTO{:3116}
 {:3134}
-	IF ZZ=.THEN{:3116}
-	CLOSE 2:F1=F1-(F1=.):&"{f6}{yellow}{$c1}CCESS?: {pound}G1{pound}V7{lt. green}{f6}":G=VAL(AN$)
-	IF AN$=R$OR VAL(F$)=.THEN{:3116}
+	IF ZZ=. then {:3116}
+	CLOSE 2:F1=F1-(F1=.):&"{f6}{yellow}ACCESS?: {pound}G1{pound}V7{lt. green}{f6}":G=VAL(AN$)
+	IF AN$=R$OR VAL(F$)=. then {:3116}
 	GOSUB 35:X=VAL(F$):GOSUB 1:FOR I=1 TO 23:&,2,2:ED$(I)=A$:NEXT
 	ED$(7)=STR$(G):ED$(23)=FL$(VAL(AN$)):A$=""
 	FOR I=1 TO 23:A$=A$+ED$(I)+R$:NEXT:GOSUB 1:PRINT# 2,A$:CLOSE 2
-	IF N$<>"NEW"THEN{:3116}
-	&"{f6}{gray3}{$d3}END {$ce}EW {$d5}SER {$d7}ELCOME?: ":GOSUB 96:IF A=.THEN{:3116}
-	K=1:TT$(.)="[{$d7}ELCOME!]":DR=1:A$="S.NU WELCOME"+STR$(G)+",S,R":GOSUB 4
+	IF N$<>"NEW" then {:3116}
+	&"{f6}{gray3}SEND NEW USER WELCOME?: ":GOSUB 96:IF A=. then {:3116}
+	K=1:TT$(.)="[WELCOME!]":DR=1:A$="S.NU WELCOME"+STR$(G)+",S,R":GOSUB 4
 {:3152}
 	IF E%THEN:&:GOTO{:3116}
 {:3154}
 	&,2,2:TT$(K)=A$:K=K+1:ON-(ST=.)GOTO{:3154}:KK=K:K=1:GOTO{:3166}
 {:3156}
 	CLOSE 2:F1=2
-	&"{f6}{$d3}UBJECT?: {pound}I0":IF AN$=""THEN AN$="{$d2}{$c5}: "+Y$
-	&"{up}{$d3}UBJECT : {pound}V7{f6}"
+	&"{f6}SUBJECT?: {pound}I0":IF AN$=""THEN AN$="RE: "+Y$
+	&"{up}SUBJECT : {pound}V7{f6}"
 	TT$(.)="["+AN$+"]":IM=1:GOSUB 440:IF KK<1 THEN{:3116}
 	DR=2:GOSUB 61:IF A<35 THEN X=2:GOSUB 390:GOTO{:3116}
 {:3166}
-	A%=KK-1:&"{f6}{$c6}ILING {$cd}AIL {$c6}OR {pound}$H...":C$=H$:TT$=H$
+	A%=KK-1:&"{f6}FILING MAIL FOR {pound}$H...":C$=H$:TT$=H$
 	Y=VAL(F$):F1=2:GOSUB{:3036}:&"{f6}":ON-(F4=3)GOTO{:3274}:GOTO{:3116}
 {:3170}
 	L=L+1:ON T GOTO{:3172}:ON F1+1 GOTO{:3112},{:3106},{:3106}
 {:3172}
-	CLOSE 2:ON-(AN$="{$d1}")GOTO{:3084}:&"{f6:2}{$c5}ND {$cf}F {pound}$K.":GOTO{:3084}
+	CLOSE 2:ON-(AN$="Q")GOTO{:3084}:&"{f6:2}END OF {pound}$K.":GOTO{:3084}
 {:3174}
-	&"{$d3}CRATCH{f6:2}":X=.:FOR I=1 TO RN:A$=LEFT$(NN$(I),1):B$=MID$(NN$(I),2):IF X>1 THEN:&"{f6}":X=.
+	&"SCRATCH{f6:2}":X=.:FOR I=1 TO RN:A$=LEFT$(NN$(I),1):B$=MID$(NN$(I),2):IF X>1 THEN:&"{f6}":X=.
 	C$=""
 	&" ({pound}$A){pound}$B{pound}$C {pound}{back arrow}18":X=X+1:NEXT
-	&"{f6:2} ({$d8}) {$c1}LL > {pound}G1":ON TR%+1 GOTO{:3414}:IF AN$="{$d8}"THEN{:3192}
+	&"{f6:2} (X) ALL > {pound}G1":ON TR%+1 GOTO{:3414}:IF AN$="X" then {:3192}
 	GOSUB{:3012}:ON-(BN=.)GOTO{:3084}:&"{pound}$K{f6:2}"
-	&"{f6}{$d3}CRATCH {f5}E.{pound}$N{f5}{f6:2}({$d3})ELECTIVE OR ({$c1})UTO: {pound}G1":ON TR%+1 GOTO 300
-	IF AN$="{$d3}"THEN:&"{$d3}ELECTIVE{f6}":GOTO{:3386}
-	&"{$c1}UTO{f6}":GOSUB 93:ON A+1 GOTO{:3084}:&"{f6}{$d3}CRATCHING: E.{pound}$N..."
+	&"{f6}SCRATCH {f5}E.{pound}$N{f5}{f6:2}(S)ELECTIVE OR (A)UTO: {pound}G1":ON TR%+1 GOTO 300
+	IF AN$="S"THEN:&"SELECTIVE{f6}":GOTO{:3386}
+	&"AUTO{f6}":GOSUB 93:ON A+1 GOTO{:3084}:&"{f6}SCRATCHING: E.{pound}$N..."
 	DR=3:A$="E."+N$:GOSUB 19:K%=.:GOSUB{:3026}:GOTO{:3084}
 {:3192}
-	&"{$c1}UTO {$d3}CRATCH {$c1}LL!{f6:2}":GOSUB 93:IF A=.THEN{:3084}
-	&"{f6}{$d3}CRATCHING... ":FOR BN=1 TO RN:IF A%(BN)=.THEN{:3200}
+	&"AUTO SCRATCH ALL!{f6:2}":GOSUB 93:IF A=. then {:3084}
+	&"{f6}SCRATCHING... ":FOR BN=1 TO RN:IF A%(BN)=. then {:3200}
 	A$="E."+BB$(BN):L=LEN(A$)-2:&:GOSUB 19
 	K%=.:GOSUB{:3026}:&"{pound}H"+MID$(STR$(L),2)+"{pound}H2"
 {:3200}
-	NEXT:&"{white}{$c4}ONE!":GOTO{:3084}
+	NEXT:&"{white}DONE!":GOTO{:3084}
 {:3202}
 	T=-(ST<>.)
 {:3204}
-	A%=L:SH=.:&"{clear}{pound}Q0{blue}{pound}VJ {cyan}#{pound}%A {$d5}SER:{white}{pound}{back arrow}13{pound}$H [#{pound}$F]":S=RC
-	&"{f6} {cyan}{$c4}ATE:{white}{pound}{back arrow}13{$04}"+D$+"{f6}{cyan} {$c1}CCESS:{white} {pound}$S{pound}{back arrow}13{cyan}{$d0}HONE:{white}{pound}{back arrow}13{pound}$T":S=S+RC
-	&"{f6}{cyan} {$ce}AME:{white}{pound}{back arrow}13{pound}$C{f6}{cyan} {$c3}OMP:{white}{pound}{back arrow}13{pound}$Z{f6} {cyan}{$d3}UBJ:{white}{pound}{back arrow}13{pound}$Y{f6}{blue}{pound}VJ{cyan}":S=S+RC
+	A%=L:SH=.:&"{clear}{pound}Q0{blue}{pound}VJ {cyan}#{pound}%A USER:{white}{pound}{back arrow}13{pound}$H [#{pound}$F]":S=RC
+	&"{f6} {cyan}DATE:{white}{pound}{back arrow}13{$04}"+D$+"{f6}{cyan} ACCESS:{white} {pound}$S{pound}{back arrow}13{cyan}PHONE:{white}{pound}{back arrow}13{pound}$T":S=S+RC
+	&"{f6}{cyan} NAME:{white}{pound}{back arrow}13{pound}$C{f6}{cyan} COMP:{white}{pound}{back arrow}13{pound}$Z{f6} {cyan}SUBJ:{white}{pound}{back arrow}13{pound}$Y{f6}{blue}{pound}VJ{cyan}":S=S+RC
 {:3210}
 	I=1
 {:3212}
 	A$=TT$(I):IF A$<>"{up arrow}"AND RC=.THEN LP=1:&:I=I+1:GOTO{:3212}
 	&"{pound}Q0":RETURN
 {:3216}
-	AN$="{$ce}":GOSUB{:3012}:&"{f6:2}{$c1}RCHIVE {pound}$K.{f6}":GOSUB 95:ON A+1 GOTO{:3084}
+	AN$="N":GOSUB{:3012}:&"{f6:2}ARCHIVE {pound}$K.{f6}":GOSUB 95:ON A+1 GOTO{:3084}
 	DR=3:GOSUB 61:IF A<35 THEN X=2:GOSUB 390:GOTO{:3084}
-	&"{f6:2}{$c1}RCHIVING {pound}$K...":A$="E.NARK,S,R":DR=3:GOSUB 4:CLOSE 2:IF E%THEN{:3226}
+	&"{f6:2}ARCHIVING {pound}$K...":A$="E.NARK,S,R":DR=3:GOSUB 4:CLOSE 2:IF E% then {:3226}
 	A$="TEMP":GOSUB 19:PRINT# 15,"C"DR$"TEMP=E.NARK,E.NEW":A$="E.NARK":GOSUB 19
 	PRINT# 15,"R"DR$"E.NARK=TEMP":GOTO{:3228}
 {:3226}
@@ -162,91 +162,91 @@
 {:3228}
 	GOSUB 62:GOTO{:3084}
 {:3230}
-	&"{f6:2}{$d3}TART {$c1}T ({$ce}={$ce}EW)?: {pound}I1":IF LEFT$(AN$,1)="{$ce}"THEN{:3236}
+	&"{f6:2}START AT (N=NEW)?: {pound}I1":IF LEFT$(AN$,1)="N" then {:3236}
 	L=VAL(AN$):IF L<1 OR L>Z%THEN L=1
 	GOTO{:3106}
 {:3236}
-	&"{f6:2}{$d3}CANNING {$c6}OR {pound}$K{f6}{$d3}INCE {pound}V1...{f6}":L=.
-	A=1:A$=LD$:GOSUB{:3016}:KK$=A$:GOSUB{:3024}:IF E%THEN:&"{$ce}O {pound}$K.":CLOSE 2:GOTO{:3084}
+	&"{f6:2}SCANNING FOR {pound}$K{f6}SINCE {pound}V1...{f6}":L=.
+	A=1:A$=LD$:GOSUB{:3016}:KK$=A$:GOSUB{:3024}:IF E%THEN:&"NO {pound}$K.":CLOSE 2:GOTO{:3084}
 {:3240}
 	L=A:GOSUB{:3030}:&"."
 	T=-(ST<>.):A$=D$:GOSUB{:3016}:X=1:IF A$<KK$THEN ON 1-T GOTO{:3240}:X=.
-	IF X=.THEN LP=1:&"{f6} {$ce}O {pound}$K {$d3}INCE {pound}V1. {pound}W1{f6}":GOTO{:3084}
+	IF X=.THEN LP=1:&"{f6} NO {pound}$K SINCE {pound}V1. {pound}W1{f6}":GOTO{:3084}
 	GOTO{:3114}
 {:3248}
-	CLOSE 2:F1=F1-(F1=.):FB=L:&"{f6:2}{$c6}ORWARD {$c1}S {$c5}-{$cd}AIL...{f6}"
+	CLOSE 2:F1=F1-(F1=.):FB=L:&"{f6:2}FORWARD AS E-MAIL...{f6}"
 {:3250}
-	&"{f6}{$c5}NTER {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} {$cf}R {$c9}{$c4}# {$cf}F {$d4}HE {$d0}ERSON {$d4}O{f6}{$d3}END {$d4}HIS {$cd}ESSAGE {$d4}O.{f6}: {pound}I1"
-	IF AN$=""OR AN$="{f8}"THEN{:3116}
+	&"{f6}ENTER HANDLE OR ID# OF THE PERSON TO{f6}SEND THIS MESSAGE TO.{f6}: {pound}I1"
+	IF AN$=""OR AN$="{f8}" then {:3116}
 	B$=AN$:GOSUB{:3008}:KK=A:ON KK+1 GOTO{:3260}:IF KK>UR THEN{:3116}
-	GOSUB 35:X=KK:GOSUB 1:&,2,2:CLOSE 2:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3272}
-	B$=A$:&"{f6}{$c9}S {f5}{pound}$B{f5} {$c3}ORRECT?: ":GOSUB 96:IF A=.THEN{:3250}
+	GOSUB 35:X=KK:GOSUB 1:&,2,2:CLOSE 2:IF A$="{up arrow}"OR A$="RES" then {:3272}
+	B$=A$:&"{f6}IS {f5}{pound}$B{f5} CORRECT?: ":GOSUB 96:IF A=. then {:3250}
 {:3260}
 	AN$=B$:GOSUB 505:Y=I
-	IF I=.THEN:&"{f6}{f5}{pound}$B{f5} {$ce}OT {$c6}OUND{f6}{$c9}N {$c3}URRENT {$d5}SER {$c6}ILES.{f6}":GOTO{:3250}
-	TT$(.)="[{$c6}ORWARDED {$c6}ROM {$c6}EEDBACK]":KK=K:TT$=B$
+	IF I=.THEN:&"{f6}{f5}{pound}$B{f5} NOT FOUND{f6}IN CURRENT USER FILES.{f6}":GOTO{:3250}
+	TT$(.)="[FORWARDED FROM FEEDBACK]":KK=K:TT$=B$
 	Z=.:A$="W":GOSUB 32:IF E%THEN A$="A":GOSUB 32:Z=1
-	PRINT# 2,H$R$F$R$D1$R$TT$(.)R$"{$d3}ENT:{$04}"D$:FOR K=1 TO KK-1:PRINT# 2,TT$(K):NEXT
+	PRINT# 2,H$R$F$R$D1$R$TT$(.)R$"SENT:{$04}"D$:FOR K=1 TO KK-1:PRINT# 2,TT$(K):NEXT
 	CLOSE 2:GOSUB{:3040}:&"{f6}":L=FB:GOTO{:3106}
 {:3272}
-	&"{f6} {pound}$B {$c8}AS {$c2}EEN {$c4}ELETED.":GOTO{:3116}
+	&"{f6} {pound}$B HAS BEEN DELETED.":GOTO{:3116}
 {:3274}
-	&"{f6:2} ({$c1})DD ({$c5})DIT ({$cb})ILL ({$cc})IST ({$d3})END? {pound}G1{pound}V7":ON TR%+1 GOTO{:3414}:IF AN$="{$d3}"THEN{:3320}
-	ON-(AN$="{$c5}")-(AN$="{$c1}")*2-(AN$="{$cb}")*3-(AN$="{$cc}")*4 GOTO{:3280},{:3294},{:3306},{:3278}:GOTO{:3084}
+	&"{f6:2} (A)DD (E)DIT (K)ILL (L)IST (S)END? {pound}G1{pound}V7":ON TR%+1 GOTO{:3414}:IF AN$="S" then {:3320}
+	ON-(AN$="E")-(AN$="A")*2-(AN$="K")*3-(AN$="L")*4 GOTO{:3280},{:3294},{:3306},{:3278}:GOTO{:3084}
 {:3278}
-	ON BZ+1 GOTO{:3280}:&"{f6:2} {$c1}VAILABLE {$cd}SG'S:{f6}":GOSUB{:3002}:GOTO{:3274}
+	ON BZ+1 GOTO{:3280}:&"{f6:2} AVAILABLE MSG'S:{f6}":GOSUB{:3002}:GOTO{:3274}
 {:3280}
-	IF BZ=.THEN:&"{f6:2}{$ce}O {$cd}ESSAGES {$c5}XIST!{f6:2}":GOTO{:3274}
+	IF BZ=.THEN:&"{f6:2}NO MESSAGES EXIST!{f6:2}":GOTO{:3274}
 {:3282}
-	&"{f6:2}{$c5}DIT {$d7}HICH?: {pound}I1":IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3282}
+	&"{f6:2}EDIT WHICH?: {pound}I1":IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3282}
 	BB=VAL(AN$):ON TR%+1 GOTO{:3414}:IF BB<1 OR BB>BZ THEN{:3274}
-	&"{f6}":PL=.:P$="{$d4}ITLE":W$=DT$(BB):&,1,32:IF AN$=""THEN AN$=DT$(BB)
+	&"{f6}":PL=.:P$="TITLE":W$=DT$(BB):&,1,32:IF AN$=""THEN AN$=DT$(BB)
 	DT$(BB)=AN$:K=1:A$="S.CAN MSG"+STR$(BB)+",S,R":DR=1:GOSUB 3
 	IF E%THEN:&:GOTO{:3274}
 {:3292}
 	&,2,2:TT$(K)=A$:K=K+1:ON-(ST=.)GOTO{:3292}:KK=K:K=1:IM=2:GOSUB 440:GOTO{:3300}
 {:3294}
-	BB=BZ+1:IF BZ>59 THEN:&"{f6:2}{$d9}OU {$c1}RE {$cf}NLY {$c1}LLOWED 60 {$cd}ESSAGES!{f6}":GOTO{:3274}
-	&"{f6:2}{$c5}NTER {$d4}HE {$d4}ITLE OF YOUR {$cd}ESSAGE{f6:2}: {pound}I0":ON TR%+1 GOTO{:3414}:IF AN$=""THEN{:3274}
+	BB=BZ+1:IF BZ>59 THEN:&"{f6:2}YOU ARE ONLY ALLOWED 60 MESSAGES!{f6}":GOTO{:3274}
+	&"{f6:2}ENTER THE TITLE OF YOUR MESSAGE{f6:2}: {pound}I0":ON TR%+1 GOTO{:3414}:IF AN$="" then {:3274}
 	DT$(BB)=AN$:IM=1:GOSUB 440
 {:3300}
-	ON-(KK=.)GOTO{:3274}:&"{f6:2}{$c6}ILING {$d9}OUR {$cd}ESSAGE.....":BZ=BB
+	ON-(KK=.)GOTO{:3274}:&"{f6:2}FILING YOUR MESSAGE.....":BZ=BB
 	A$="S.CAN MSG"+STR$(BB):DR=1:GOSUB 18:FOR K=1 TO KK:PRINT# 2,TT$(K):NEXT:CLOSE 2
 {:3304}
 	A$="S.CAN MSG":DR=1:GOSUB 18:PRINT# 2,BZ:FOR X=1 TO BZ:PRINT# 2,DT$(X):NEXT:CLOSE 2:GOTO{:3274}
 {:3306}
-	IF BZ=.THEN:&"{f6:2}{$ce}O {$cd}ESSAGES {$c5}XIST!{f6:2}":GOTO{:3274}
+	IF BZ=.THEN:&"{f6:2}NO MESSAGES EXIST!{f6:2}":GOTO{:3274}
 {:3308}
-	&"{f6:2}{$cb}ILL {$d7}HICH?: {pound}I1":IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3308}
+	&"{f6:2}KILL WHICH?: {pound}I1":IF AN$="{f2}"THEN GOSUB{:3002}:GOTO{:3308}
 	A=VAL(AN$):IF A<1 OR A>BZ THEN{:3274}
-	B$=DT$(A):&"{f6:2}{$cb}ILLING {pound}$B {$cd}SG....{f6}":A$="S.CAN MSG"+STR$(A):DR=1:GOSUB 19
+	B$=DT$(A):&"{f6:2}KILLING {pound}$B MSG....{f6}":A$="S.CAN MSG"+STR$(A):DR=1:GOSUB 19
 	FOR X=A TO BZ-1:DT$(X)=DT$(X+1)
 	DR=1:GOSUB 3:PRINT# 15,"R"DR$"S.CAN MSG"STR$(X)"=S.CAN MSG"STR$(X+1):GOSUB 5
 	CLOSE 15:NEXT:BZ=BZ-1:GOTO{:3304}
 {:3320}
-	&"{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER {$d4}O {$c5}-{$cd}AIL{f6:2}: {pound}I1":A=ABS(VAL(AN$)):IF A THEN{:3326}
+	&"{f6:2}ENTER HANDLE OR ID# OF USER TO E-MAIL{f6:2}: {pound}I1":A=ABS(VAL(AN$)):IF A THEN{:3326}
 	GOSUB 505:A=I:IF A THEN H$=AN$:GOTO{:3332}
-	&"{f6:2}{f5}{pound}V7{f5} {lt. green}{$ce}OT {$c6}OUND.{f6}":GOTO{:3274}
+	&"{f6:2}{f5}{pound}V7{f5} {lt. green}NOT FOUND.{f6}":GOTO{:3274}
 {:3326}
 	IF A<1 OR A>UR THEN{:3330}
-	X=A:GOSUB 35:GOSUB 1:&,2,2:H$=A$:IF H$<>"{up arrow}"OR H$<>"{$d2}{$c5}{$d3}"THEN{:3332}
+	X=A:GOSUB 35:GOSUB 1:&,2,2:H$=A$:IF H$<>"{up arrow}"OR H$<>"RES" then {:3332}
 {:3330}
-	&"{f6}{$c9}NVALID {$c9}{$c4} {$ce}UMBER.{f6}":X=.:GOTO{:3274}
+	&"{f6}INVALID ID NUMBER.{f6}":X=.:GOTO{:3274}
 {:3332}
-	&"{f6}{lt. green}{$c8}ANDLE: {pound}$H{f6:2}{$c9}S {$d4}HAT {$c3}ORRECT?: ":GOSUB 96:ON A+1 GOTO{:3274}:F4=3:GOTO{:3046}
+	&"{f6}{lt. green}HANDLE: {pound}$H{f6:2}IS THAT CORRECT?: ":GOSUB 96:ON A+1 GOTO{:3274}:F4=3:GOTO{:3046}
 {:3334}
-	CLOSE 2:F1=F1-(F1=.):X=VAL(F$):IF X=.THEN:&"{f6}{$ce}O {$c1}CCOUNT!{f6:2}":GOTO{:3116}
+	CLOSE 2:F1=F1-(F1=.):X=VAL(F$):IF X=.THEN:&"{f6}NO ACCOUNT!{f6:2}":GOTO{:3116}
 	GOSUB 35:GOSUB 1:FOR I=1 TO 23:INPUT# 2,ED$(I):NEXT
-	&"{f6}":P$="{$c3}REDITS":W$=ED$(19):&,1,32:P$="":IF AN$=""THEN{:3116}
+	&"{f6}":P$="CREDITS":W$=ED$(19):&,1,32:P$="":IF AN$="" then {:3116}
 	ED$(19)=STR$(VAL(AN$)):A$=""
 	FOR I=1 TO 23:A$=A$+ED$(I)+R$:NEXT:GOSUB 1:PRINT# 2,A$
 {:3344}
 	CLOSE 2:GOTO{:3116}
 {:3346}
-	IF ZZ=.THEN{:3116}
+	IF ZZ=. then {:3116}
 	CLOSE 2:F1=F1-(F1=.):X=VAL(F$)
-	IF X=.OR H$="{up arrow}"OR H$="{$d2}{$c5}{$d3}"THEN:&"{f6}{$ce}O {$c1}CCOUNT!{f6:2}":GOTO{:3116}
-	TT$=H$:&"{f6:2}{$c4}ELETE {f5}{pound}$H{f5}{f6}":GOSUB 93:IF A=.THEN{:3344}
+	IF X=.OR H$="{up arrow}"OR H$="RES"THEN:&"{f6}NO ACCOUNT!{f6:2}":GOTO{:3116}
+	TT$=H$:&"{f6:2}DELETE {f5}{pound}$H{f5}{f6}":GOSUB 93:IF A=. then {:3344}
 	AN$=TT$:GOSUB 507
 	TT$(1)="{up arrow}":TT$(2)="D":FOR I=3 TO 23:TT$(I)="0":NEXT:GOSUB 35:A$=""
 	FOR I=1 TO 23:A$=A$+TT$(I)+R$:NEXT:GOSUB 1:PRINT# 2,A$;:CLOSE 2
@@ -255,68 +255,68 @@
 	DR=2:B$=LEFT$(TT$,13):A$="F."+B$:GOSUB 19:A$="M."+B$:GOSUB 19
 	GOTO{:3344}
 {:3368}
-	ON ZZ+1 GOTO{:3116}:CLOSE 2:F1=F1-(F1=.):X=VAL(F$):IF X=.THEN:&"{f6}{$ce}O {$c1}CCOUNT!{f6:2}":GOTO{:3116}
+	ON ZZ+1 GOTO{:3116}:CLOSE 2:F1=F1-(F1=.):X=VAL(F$):IF X=.THEN:&"{f6}NO ACCOUNT!{f6:2}":GOTO{:3116}
 	GOSUB 35:GOSUB 1:FOR I=1 TO 23:INPUT# 2,ED$(I):NEXT
-	B$=ED$(1):C$=ED$(3)+" "+ED$(4):&"{f6:2}{$c8}ANDLE{pound}{back arrow}20: {pound}$B{f6}{$d2}EAL {$ce}AME{pound}{back arrow}20: {pound}$C"
-	B$=ED$(5):C$=ED$(7):&"{f6}{$d0}HONE {$ce}UMBER{pound}{back arrow}20: {pound}$B{f6}{$c1}CCESS{pound}{back arrow}20: {pound}$C"
-	B$=ED$(9):C$=ED$(8):&"{f6}{$c3}ALLS {$d4}ODAY{pound}{back arrow}20: {pound}$C{f6}{$d4}OTAL {$c3}ALLS{pound}{back arrow}20: {pound}$B"
-	B$=ED$(19):C$=ED$(20):&"{f6}{$c3}REDITS{pound}{back arrow}20: {pound}$B{f6}{$d4}OTAL {$d0}OSTS{pound}{back arrow}20: {pound}$C"
-	B$=ED$(21):&"{f6}{$d4}OTAL {$d2}ESPONSES{pound}{back arrow}20: {pound}$B"
-	B$=ED$(16):C$=ED$(18):&"{f6}{$d4}OTAL {$d5}PLOADS{pound}{back arrow}20: {$c6}ILES {pound}$B, {$c2}LKS {pound}$C"
-	B$=ED$(15):C$=ED$(17):&"{f6}{$d4}OTAL {$c4}OWNLOADS{pound}{back arrow}20: {$c6}ILES {pound}$B, {$c2}LKS {pound}$C{f6}":GOTO{:3116}
+	B$=ED$(1):C$=ED$(3)+" "+ED$(4):&"{f6:2}HANDLE{pound}{back arrow}20: {pound}$B{f6}REAL NAME{pound}{back arrow}20: {pound}$C"
+	B$=ED$(5):C$=ED$(7):&"{f6}PHONE NUMBER{pound}{back arrow}20: {pound}$B{f6}ACCESS{pound}{back arrow}20: {pound}$C"
+	B$=ED$(9):C$=ED$(8):&"{f6}CALLS TODAY{pound}{back arrow}20: {pound}$C{f6}TOTAL CALLS{pound}{back arrow}20: {pound}$B"
+	B$=ED$(19):C$=ED$(20):&"{f6}CREDITS{pound}{back arrow}20: {pound}$B{f6}TOTAL POSTS{pound}{back arrow}20: {pound}$C"
+	B$=ED$(21):&"{f6}TOTAL RESPONSES{pound}{back arrow}20: {pound}$B"
+	B$=ED$(16):C$=ED$(18):&"{f6}TOTAL UPLOADS{pound}{back arrow}20: FILES {pound}$B, BLKS {pound}$C"
+	B$=ED$(15):C$=ED$(17):&"{f6}TOTAL DOWNLOADS{pound}{back arrow}20: FILES {pound}$B, BLKS {pound}$C{f6}":GOTO{:3116}
 {:3386}
 	F1=.:K%=.:GOSUB{:3024}:ON-(E%<>.)GOTO{:3408}:DR=3:GOSUB 2
 	OPEN 3,DV%,3,DR$+"E.TEMP,S,W":GOTO{:3390}
 {:3388}
 	ON T+1 GOTO{:3390}:CLOSE 2:CLOSE 3:GOTO{:3402}
 {:3390}
-	L=K%+1:GOSUB{:3030}:GOSUB{:3202}:&"{f6} ({$c4})ELETE ({$cb})EEP ({$c1})BORT: {pound}G1":ON TR%+1 GOTO 300
-	IF AN$="{$c4}"THEN:&"{$c4}ELETE{f6}":&,22,2:GOTO{:3388}
-	IF AN$="{$c1}"THEN:&"{$c1}BORT!{f6}":&,22,2:CLOSE 2:CLOSE 3:A$="E.TEMP":DR=3:GOSUB 19:GOTO{:3084}
-	K%=K%+1:&"{$cb}EEP{f6}":&,22,2:PRINT# 3,H$R$F$R$D$R$S$R$T$R$C$R$Z$R$Y$
+	L=K%+1:GOSUB{:3030}:GOSUB{:3202}:&"{f6} (D)ELETE (K)EEP (A)BORT: {pound}G1":ON TR%+1 GOTO 300
+	IF AN$="D"THEN:&"DELETE{f6}":&,22,2:GOTO{:3388}
+	IF AN$="A"THEN:&"ABORT!{f6}":&,22,2:CLOSE 2:CLOSE 3:A$="E.TEMP":DR=3:GOSUB 19:GOTO{:3084}
+	K%=K%+1:&"KEEP{f6}":&,22,2:PRINT# 3,H$R$F$R$D$R$S$R$T$R$C$R$Z$R$Y$
 	FOR KK=1 TO K-1:PRINT# 3,TT$(KK):NEXT:GOTO{:3388}
 	GOTO{:3388}
 {:3402}
 	DR=3:GOSUB 3:PRINT# 15,"S"+DR$+"E."+N$
-	ON K%+1 GOTO{:3406}:PRINT# 15,"R"+DR$+"E."+N$+"=E.TEMP":CLOSE 15:GOSUB{:3026}:&"{f6:2} {yellow}{$c4}ONE!{f6:2}":GOTO{:3084}
+	ON K%+1 GOTO{:3406}:PRINT# 15,"R"+DR$+"E."+N$+"=E.TEMP":CLOSE 15:GOSUB{:3026}:&"{f6:2} {yellow}DONE!{f6:2}":GOTO{:3084}
 {:3406}
-	DR=3:A$="E.TEMP":GOSUB 19:&"{f6:2}{$c4}ONE!{f6:2}":GOSUB{:3026}:GOTO{:3084}
+	DR=3:A$="E.TEMP":GOSUB 19:&"{f6:2}DONE!{f6:2}":GOSUB{:3026}:GOTO{:3084}
 {:3408}
-	&"{f6:2} {f5}E.{pound}$N{f5} {$ce}OT {$c6}OUND.{f6:2}":CLOSE 2:GOTO{:3084}
+	&"{f6:2} {f5}E.{pound}$N{f5} NOT FOUND.{f6:2}":CLOSE 2:GOTO{:3084}
 {:3410}
-	IF ZZ THEN:&"{$c8}EADER ALSO? ":GOSUB 94:&,52,12,1:ON A+1 GOSUB{:3210},{:3204}:&,52,12,.
+	IF ZZ THEN:&"HEADER ALSO? ":GOSUB 94:&,52,12,1:ON A+1 GOSUB{:3210},{:3204}:&,52,12,.
 	GOTO{:3116}
 {:3414}
 	F1=.:GOTO 300
 {:3416}
 	IF ID<>1 THEN{:3446}
 {:3418}
-	GOSUB 2912:LP=1:&"{clear}{f6:2}{blue}{pound}VJ {cyan}{pound}{back arrow}12{pound}$Q{$d7}ATCH{$c4}OG {$c6}ILES{pound}{back arrow}39{f6}{blue}{pound}VJ{pound}Q0"
-	&"{f6}{cyan} 1.{white} {$cc}OCAL {$cd}AINT {$c6}ILE"
-	&"{f6}{cyan} 2.{white} {$c5}-{$cd}AIL {$d3}ENT {$c6}ILE"
-	&"{f6}{cyan} 3.{white} {$c2}LACK{$cc}IST {$cc}OG{$cf}N {$c6}ILE"
+	GOSUB 2912:LP=1:&"{clear}{f6:2}{blue}{pound}VJ {cyan}{pound}{back arrow}12{pound}$QWATCHDOG FILES{pound}{back arrow}39{f6}{blue}{pound}VJ{pound}Q0"
+	&"{f6}{cyan} 1.{white} LOCAL MAINT FILE"
+	&"{f6}{cyan} 2.{white} E-MAIL SENT FILE"
+	&"{f6}{cyan} 3.{white} BLACKLIST LOGON FILE"
 	&"{f6:2}   {lt. blue}=> {pound}G1":A=VAL(AN$):IF TR%<1 THEN{:3446}
 	ON A GOTO{:3432},{:3434},{:3436}
 	GOTO{:3446}
 {:3432}
-	&"{clear}{f6}{$cc}OCAL {$cd}AINT {$c6}ILE{f6:2}":B$="ZZ LOG":GOSUB{:3438}:GOTO{:3418}
+	&"{clear}{f6}LOCAL MAINT FILE{f6:2}":B$="ZZ LOG":GOSUB{:3438}:GOTO{:3418}
 {:3434}
-	&"{clear}{f6}{$c5}MAIL {$d3}ENT {$c6}ILE{f6:2}":B$="EM LOG":GOSUB{:3438}:GOTO{:3418}
+	&"{clear}{f6}EMAIL SENT FILE{f6:2}":B$="EM LOG":GOSUB{:3438}:GOTO{:3418}
 {:3436}
-	&"{clear}{f6}{$c2}LACK{$cc}IST {$cc}OG{$cf}N {$c6}ILE{f6:2}":B$="NU LOG":GOSUB{:3438}:GOTO{:3418}
+	&"{clear}{f6}BLACKLIST LOGON FILE{f6:2}":B$="NU LOG":GOSUB{:3438}:GOTO{:3418}
 {:3438}
-	A$="E."+B$:DR=3:GOSUB 14:IF E%THEN:&"{f6}{$ce}O {$cc}OG {$c6}OUND.":RETURN
-	&"{blue}{pound}O{$c0}{pound}O{$c0}{cyan}{f6:2}{$c4}ELETE E."+B$+" ? ":GOSUB 94:IF TR%<1 THEN RETURN
+	A$="E."+B$:DR=3:GOSUB 14:IF E%THEN:&"{f6}NO LOG FOUND.":RETURN
+	&"{blue}{pound}O{$c0}{pound}O{$c0}{cyan}{f6:2}DELETE E."+B$+" ? ":GOSUB 94:IF TR%<1 THEN RETURN
 	ON-(A<>1)GOTO{:3445}
 	PRINT# 15,"S"DR$"E."+B$
 {:3445}
 	RETURN
 {:3446}
 	CLOSE 15:GOTO{:3084}
-	DATA"{$c6}EEDBACK","FBACK",23,0
-	DATA"{$ce}EW {$d5}SERS","NEW",29,0
-	DATA"{$c5}RROR {$cc}OG","ERRLOG",0,0
-	DATA"{$d4}ELECHECK","TELECHECK",0,1
-	REM DATA"{$c1}DD {$d5}PDATE","ADDRESS",0,1
+	DATA"FEEDBACK","FBACK",23,0
+	DATA"NEW USERS","NEW",29,0
+	DATA"ERROR LOG","ERRLOG",0,0
+	DATA"TELECHECK","TELECHECK",0,1
+	REM DATA"ADD UPDATE","ADDRESS",0,1
 	DATA"{up arrow}"
 	COPR. 1994 NEW IMAGE 01/24/95

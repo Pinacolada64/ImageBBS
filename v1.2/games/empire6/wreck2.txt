@@ -1,0 +1,12 @@
+    Your lookouts have spotted the wreckage of another ship.  Broken
+beams, splintered planks, and crushed crates are all that remains.
+
+    As you sail along the trail of wreckage, you hear a terrified cry
+from one of your lookouts.  Looking up, you see a huge Sea Serpent bearing
+down on your ships!
+
+    Quickly, you give the order for battle stations, but, it's already too
+late!  The monster charges your ships, doing considerable damage, before your
+cannon fire drives it away...
+
+               <Press any Key>\g1

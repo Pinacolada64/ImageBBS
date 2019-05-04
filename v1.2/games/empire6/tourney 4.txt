@@ -1,0 +1,12 @@
+   You are very pleased with the turnout for your tournament.  Now one
+of your rivals has approached you suggesting that his champion can
+easily defeat yours.  You take offence at his attitude, and offer a small
+wager.  He accepts with a grin.
+   Now it is time for the match. Your champion looks confident as the
+trumpets sound and the two knights charge.  On the first pass, only
+glancing blows are delivered.  Now they charge each other again!  With a
+crash of armor they meet, and this time your champion is knocked from
+his horse.  You have lost!
+
+You lose 1,000 gold!!
+               <Press any Key>\g1

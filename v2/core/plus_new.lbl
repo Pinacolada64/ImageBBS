@@ -1,29 +1,31 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	close 2:dr=3:gosub 1079:if a>20 then{:3008}
-	&"{f6:2}{$d3}orry, {$d4}here {$c9}s {$ce}ot {$c5}nough {$c4}isk {$d3}pace{f6}{$c6}or {$d9}ou {$d4}o {$cc}ogon {$c1}t {$d4}his {$d4}ime."
-	&"{f6}{$d0}lease {$d4}ry {$c1}gain {$cc}ater!{f6:2}":goto {:3088}
+	&"{f6:2}Sorry, There Is Not Enough Disk Space{f6}For You To Logon At This Time."
+	&"{f6}Please Try Again Later!{f6:2}":goto {:3088}
 	return
 {:3008}
 	if l1=.then gosub 1063:x=31:gosub 1001:&,2,2:l1=val(a$):close 2
 	tr%=10:&"{f6}":dr=5:a=1:gosub 1003
-	&,25,.,4:an$=dd$+" {$d5}ser {$cc}ogin":&,15,1:cm$=an$:gosub 1360
+	&,25,.,4:an$=dd$+" User Login":&,15,1:cm$=an$:gosub 1360
 	dr=1:gosub 1010:open 5,dv%,5,dr$+"s.new user,s,r":&,12,5:close 5:gosub 1914
 	jn$="":l=l1:ac%=.:id=.:cr=nc:f$=cc$:ld$="1"+"8001011201":p$=""
 	gosub 1061:&,2,2:ag$=a$:&,2,2:fl$=a$:close 2
-	on-(dd$<>"{$d2}{$c5}{$d3}")goto {:3034}:e=1:&,25,.,2:b=.
+	on-(dd$<>"RES")goto {:3034}:e=1:&,25,.,2:b=.
 {:3022}
 	b=b+1:if b=5 then{:3088}
-	close 2:&"{f6:2}{$d0}lease {$c5}nter {$d9}our{f6}{$d2}{$c5}{$d3} {$c1}ccount {$ce}umber: {pound}i1":on tr%+1 goto {:3088}
+	close 2:&"{f6:2}Please Enter Your{f6}RES Account Number: {pound}i1":on tr%+1 goto {:3088}
 	id=int(abs(val(an$))):if id<1 or id>ur then{:3022}
-	gosub 1071:if na$<>"{$d2}{$c5}{$d3}"then{:3022}
-	&"{f6:2}{$d0}lease {$c5}nter {$d9}our{f6}{$d2}{$c5}{$d3} {$d0}assword : ":&,6:if tr%<1 or b>4 then{:3088}
-	if an$<>pw$then:&"{f6}{$c9}ncorrect {$d0}assword.{f6}":goto {:3022}
+	gosub 1071:if na$<>"RES" then {:3022}
+	&"{f6:2}Please Enter Your{f6}RES Password : ":&,6:if tr%<1 or b>4 then{:3088}
+	if an$<>pw$then:&"{f6}Incorrect Password.{f6}":goto {:3022}
 {:3034}
 	na$="":rn$="":ct%=.:tc%=.:ll%=40:lf=1:em=.:ul=.:co%=1:ff$="":ll$="":d5$=lt$
 	tr%=30:gosub {:3090}:on tr%+1 goto {:3088}
 	if pw$=""then id=.:&"{f6}":ao%=ac%:gosub 1634:goto {:3064}
-	gosub 1073:if id<>.then{:3054}
-	gosub 1065:&"{f6:2}{$d5}pdating account info...":id=l1
+	gosub 1073:if id<>. then {:3054}
+	gosub 1065:&"{f6:2}Updating account info...":id=l1
 	l=l1+1:if l1>ur then e=.:goto {:3052}
 	e=1:on-(l1=ur)goto {:3052}:for x=l to ur:if x/3=int(x/3)then:&"."
 	gosub 1001:&,2,2:if a$="{up arrow}"then l=x:x=ur:next:goto {:3052}
@@ -31,14 +33,14 @@
 {:3052}
 	close 2
 {:3054}
-	a%=id:&"{clear}{f6}{pound}vj {$d9}our {$cc}ogin {$c9}{$c4} --> {pound}$f{pound}%a"
-	b$=pw$:&"{f6} {$d9}our {$d0}assword --> {f5}{pound}$b{f5}{f6}{pound}vj"
-	&"{f6}{rvrs on} {$d7}rite {$d4}hese {$c4}own! "
-	&"{f6:2}{$d9}ou {$d7}ill {$ce}eed {$d4}hem {$d4}o {$d3}ign {$c2}ack {$cf}nto{f6}{$d4}he {$d3}ystem.{f6}"
-	&"{f6}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$c3}ontinue.{f6:2}: {$07}{pound}i1"
+	a%=id:&"{clear}{f6}{pound}vj Your Login ID --> {pound}$f{pound}%a"
+	b$=pw$:&"{f6} Your Password --> {f5}{pound}$b{f5}{f6}{pound}vj"
+	&"{f6}{rvrs on} Write These Down! "
+	&"{f6:2}You Will Need Them To Sign Back Onto{f6}The System.{f6}"
+	&"{f6}Press RETURN To Continue.{f6:2}: {$07}{pound}i1"
 {:3064}
 	gosub {:3188}:on tr%+1 goto {:3088}
-	if pw$=""then{:3086}
+	if pw$="" then {:3086}
 	gosub {:3202}:on tr%+1 goto {:3088}
 	gosub {:3236}:on tr%+1 goto {:3088}
 	gosub {:3264}:on tr%+1 goto {:3088}
@@ -55,66 +57,66 @@
 {:3088}
 	e%=1:f1=4:a$="lo":goto 1016
 {:3090}
-	&"{f6}{$d0}art {$c9}: {$c7}eneral {$c9}nformation:{f6}"
+	&"{f6}Part I: General Information:{f6}"
 	for t=1 to 5:on t gosub {:3106},{:3150},{:3126},{:3140},{:3142}:t=t-5*(tr%<1):next
 	if tr%<1 then return
 {:3096}
-	b$=pw$:&"{clear}{f6}{$c7}eneral {$c9}nformation:{f6:2}1) {$c8}andle    : {pound}v2{f6}2) {$d0}assword  : {f5}{pound}$b{f5}"
-	b$=ff$:c$=ll$:&"{f6}3) {$d0}hone #   : {pound}v4{f6}4) {$c6}irst {$ce}ame: {pound}$b{f6}5) {$cc}ast {$ce}ame : {pound}$c"
-	&"{f6:2}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$c3}hange, {$cf}r{f6}{$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}o {$c3}ontinue:{f6:2}> {pound}g1"
+	b$=pw$:&"{clear}{f6}General Information:{f6:2}1) Handle    : {pound}v2{f6}2) Password  : {f5}{pound}$b{f5}"
+	b$=ff$:c$=ll$:&"{f6}3) Phone #   : {pound}v4{f6}4) First Name: {pound}$b{f6}5) Last Name : {pound}$c"
+	&"{f6:2}Enter # Of Item To Change, Or{f6}Press RETURN To Continue:{f6:2}> {pound}g1"
 	a=val(an$):if a then on a gosub {:3106},{:3150},{:3126},{:3140},{:3142}:goto {:3096}
 	return
 {:3106}
 	poke 53252,20:if f1 then f1=.:na$=g$:return
-	&"{f6}{$c5}nter {$d4}he {$c8}andle {$d4}hat {$d9}ou {$d7}ish{f6}{$d4}o {$d5}se {$cf}n {$d4}his {$d3}ystem:{f6:2}: {pound}i1"
+	&"{f6}Enter The Handle That You Wish{f6}To Use On This System:{f6:2}: {pound}i1"
 	if tr%<1 then na$="":return
 	a=len(an$):if a<5 or a>20 then{:3122}
-	if left$(an$,1)<"{$c1}"then{:3122}
-	&"{f6}{$c3}hecking {$d4}o {$d3}ee {$c9}f {$c1}nybody {$c9}s {$c1}lready{f6}{$d5}sing {$d4}hat {$c8}andle..."
+	if left$(an$,1)<"A" then {:3122}
+	&"{f6}Checking To See If Anybody Is Already{f6}Using That Handle..."
 	gosub 1046:if i=.then na$=an$:return
-	a%=i:&"{f6:2}{$d4}hat handle is now used by {pound}$f{pound}%a.{f6}":goto {:3106}
+	a%=i:&"{f6:2}That handle is now used by {pound}$f{pound}%a.{f6}":goto {:3106}
 {:3122}
-	&"{f6}{$d9}our handle must be at least 5 but no{f6}more than 20 characters long and"
+	&"{f6}Your handle must be at least 5 but no{f6}more than 20 characters long and"
 	&"begin{f6}with an alphabetic character.{f6}":goto {:3106}
 {:3126}
-	poke 53252,12:&"{f6}{$c5}nter {$d9}our {$d0}hone {$ce}umber {$c9}n {$d4}he {$c6}orm{f6}801-423-2734:{f6:2}: {pound}i1"
-	if tr%<1 then ph$="[{$d8:3}] {$d8:3}-{$d8:4}":return
-	if an$=""then{:3126}
+	poke 53252,12:&"{f6}Enter Your Phone Number In The Form{f6}801-423-2734:{f6:2}: {pound}i1"
+	if tr%<1 then ph$="[XXX] XXX-XXXX":return
+	if an$="" then {:3126}
 	an$=left$(an$,3)+mid$(an$,5,3)+right$(an$,4):if len(an$)<>10 then{:3138}
 	g=.:for x=1 to 10:b$=mid$(an$,x,1):g=-(b$<"0"or b$>"9")or g:next:on g goto {:3138}
 	ph$="["+left$(an$,3)+"] "+mid$(an$,4,3)+"-"+right$(an$,4):return
 {:3138}
-	&"{f6}{$c9}ncorrect {$cf}r {$cd}issing {$d0}hone {$ce}umber.{f6}{$d0}lease {$d2}e-{$c5}nter.{f6}":goto {:3126}
+	&"{f6}Incorrect Or Missing Phone Number.{f6}Please Re-Enter.{f6}":goto {:3126}
 {:3140}
-	a$="{$c6}irst":gosub {:3144}:ff$=an$:rn$=ff$+" "+ll$:return
+	a$="First":gosub {:3144}:ff$=an$:rn$=ff$+" "+ll$:return
 {:3142}
-	a$="{$cc}ast":gosub {:3144}:ll$=an$:rn$=ff$+" "+ll$:return
+	a$="Last":gosub {:3144}:ll$=an$:rn$=ff$+" "+ll$:return
 {:3144}
-	&"{f6}{$c5}nter {$d9}our {pound}$a {$ce}ame:{f6:2}: {pound}i1":if tr%=.then return
-	if(left$(an$,1)>="{$c1}"and right$(an$,1)>="{$c1}")then return
-	&"{f6}{$ce}on-{$c1}cceptable {$c5}ntry.{f6}":goto {:3140}
+	&"{f6}Enter Your {pound}$a Name:{f6:2}: {pound}i1":if tr%=.then return
+	if(left$(an$,1)>="A"and right$(an$,1)>="A")then return
+	&"{f6}Non-Acceptable Entry.{f6}":goto {:3140}
 {:3150}
-	&"{f6:2}{$d7}ould you like to:{f6:2} ({$c1}) {$c5}nter a password{f6}
-	&" ({$c2}) {$c7}enerate a {$d2}andom {$d0}assword{f6} ({$c3}) {$c8}ave no password, and have only a{f6}"
-	&"     {$d4}{$c5}{$cd}{$d0}{$cf}{$d2}{$c1}{$d2}{$d9} account on this {$c2:2}{$d3}{f6:2}> {pound}g1"
-	if tr%>.then on-(an$="{$c1}")-2*(an$="{$c2}")-3*(an$="{$c3}")goto {:3162},{:3172},{:3158}:goto {:3150}
+	&"{f6:2}Would you like to:{f6:2} (A) Enter a password{f6}
+	&" (B) Generate a Random Password{f6} (C) Have no password, and have only a{f6}"
+	&"     TEMPORARY account on this BBS{f6:2}> {pound}g1"
+	if tr%>.then on-(an$="A")-2*(an$="B")-3*(an$="C")goto {:3162},{:3172},{:3158}:goto {:3150}
 {:3158}
-	&"{$c3}{f6:2}"
+	&"C{f6:2}"
 {:3160}
 	pw$="":return
 {:3162}
-	poke 53252,14:&"{$c1}{f6:2}{$d0}lease {$c5}nter {$c1} {$d0}assword {$d4}o {$d5}se{f6}"
-	&"for your account on this {$c2:2}{$d3}.{f6:2}: {pound}i1":on tr%+1 goto {:3160}:if an$=""then{:3150}
+	poke 53252,14:&"A{f6:2}Please Enter A Password To Use{f6}"
+	&"for your account on this {$c2:2}S.{f6:2}: {pound}i1":on tr%+1 goto {:3160}:if an$="" then {:3150}
 	if tr%<1 then{:3170}
-	if na$=an$then:&"{f6}{$d0}lease {$c4}o {$ce}ot {$d5}se {$d9}our {$c8}andle{f6}{$c1}s {$c1} {$d0}assword.{f6}":goto {:3162}
+	if na$=an$then:&"{f6}Please Do Not Use Your Handle{f6}As A Password.{f6}":goto {:3162}
 {:3170}
 	pw$=an$:return
 {:3172}
-	&"{$c2}{f6:2}":gosub {:3178}:&"{$d9}our random password is {f5}{pound}$b{f5}{f6:2}{$c9}s this {$cf}k? ":gosub 1907
+	&"B{f6:2}":gosub {:3178}:&"Your random password is {f5}{pound}$b{f5}{f6:2}Is this Ok? ":gosub 1907
 	if a then pw$=b$:return
 	goto {:3150}
 {:3178}
-	b$="":v$="{$c1}{$c5}{$c9}{$cf}{$d5}":c$="{$d3}{$d4:2}{$d2}{$d3}{$c8}{$d3}{$c3}{$c2}{$cc}{$c6}{$cc}":n$="{$ce}{$d4}{$d2}{$d3}{$c2}"
+	b$="":v$="AEIOU":c$="STTRSHSCBLFL":n$="NTRSB"
 	gosub {:3184}:gosub {:3186}:gosub {:3184}:gosub {:3186}:gosub {:3184}:gosub {:3186}
 	b$=b$+mid$(n$,int(rnd(1)*len(n$))+1,1):return
 {:3184}
@@ -122,80 +124,80 @@
 {:3186}
 	b$=b$+mid$(v$,int(rnd(1)*len(v$))+1,1):return
 {:3188}
-	&"{f6}{$d0}art {$c9:2}: {$d4}erminal {$d0}arameters:{f6:2}"
+	&"{f6}Part {$c9:2}: Terminal Parameters:{f6:2}"
 {:3190}
 	co%=1:&"{f6}":for x=1 to 9:a%=x:b$=co$(x):&"{pound}%a> {pound}$b{f6}":next
-	&"{f6}{$d7}hich type of computer are you using?{f6:2}> {pound}g1":if tr%<1 then return
+	&"{f6}Which type of computer are you using?{f6:2}> {pound}g1":if tr%<1 then return
 	co%=val(an$):on-(co%=.)goto {:3190}:an$=co$(co%):&"{pound}v7{f6:2}":&,9
 	a$=mid$("402400802400802421402421802421802421802421802421402421",co%*6-5,6)
 	ll%=val(left$(a$,2)):mp%=val(mid$(a$,3,2)):ul=val(mid$(a$,5,1))
 	lf=val(mid$(a$,6,1)):a=1:gosub 1661:goto 1073
 {:3202}
-	&"{f6:2}{$d0}art {$c9:3}: {$cd}iscellaneous {$d1}uestions:{f6:2}"
-	&"{white}{f6}   {$d9}our {$c1}nswers {$d4}o {$d4}he {$c6}ollowing{f6}{$d1}uestions {$d7}ill {$c2}e {$cb}ept {$d3}trictly{f6}"
-	&"{$c3}onfidential {$c1}nd {$c1}re {$c6}or {$d4}he {$d3}ysop's{f6}{$d2}ecords {$cf}nly.{f6}{cyan}":b=6
+	&"{f6:2}Part {$c9:3}: Miscellaneous Questions:{f6:2}"
+	&"{white}{f6}   Your Answers To The Following{f6}Questions Will Be Kept Strictly{f6}"
+	&"Confidential And Are For The Sysop's{f6}Records Only.{f6}{cyan}":b=6
 	p$="":for i=1 to b:gosub {:3210}:gosub {:3224}:next:goto {:3226}
 {:3210}
 	poke 53252,38:on i goto {:3212},{:3214},{:3216},{:3218},{:3220},{:3222}
 {:3212}
-	a$="{$d3}treet {$c1}ddress":return
+	a$="Street Address":return
 {:3214}
-	a$="{$c3}ity":return
+	a$="City":return
 {:3216}
-	a$="{$d3}tate":return
+	a$="State":return
 {:3218}
-	a$="{$da}{$c9}{$d0} or {$d0}ostal {$c3}ode":return
+	a$="ZIP or Postal Code":return
 {:3220}
-	a$="{$c2}irthdate":return
+	a$="Birthdate (yymmdd)":RETURN
 {:3222}
-	a$="{$cf}ccupation":return
+	a$="Occupation":return
 {:3224}
-	&"{f6}{$d9}our {pound}$a?{f6}":gosub 1006:&,15,1:ed$(i)=an$:return
+	&"{f6}Your {pound}$a?{f6}":gosub 1006:&,15,1:ed$(i)=an$:return
 {:3226}
-	&"{clear}{f6}{$cd}iscellaneous {$d1}uestions:{f6:2}"
+	&"{clear}{f6}Miscellaneous Questions:{f6:2}"
 	for i=1 to b:gosub {:3210}:b$=ed$(i):a%=i:&"{cyan}{pound}%a> {pound}$a:{f6} {white}{pound}$b{f6}":next
-	&"{cyan}{f6}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$d2}e-{$c5}nter {$cf}r {$d0}ress{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}f {$c3}orrect: {pound}g1{pound}v7{f6}"
+	&"{cyan}{f6}Enter # Of Item To Re-Enter Or Press{f6}RETURN If Correct: {pound}g1{pound}v7{f6}"
 	if tr%>.then a=val(an$):if a>.and a<=b then i=a:gosub {:3210}:gosub {:3224}:goto {:3226}
 	return
 {:3236}
-	q=.:&"{f6:2}{$c1}re {$d9}ou {$c1}n {$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$cf}wner? ":gosub 1902:q=a:if a=.then{:3262}
+	q=.:&"{f6:2}Are You An IMAGE BBS Owner? ":gosub 1902:q=a:if a=. then {:3262}
 	b=5:p$="":for i=1 to b:gosub {:3240}:gosub {:3252}:next:goto {:3254}
 {:3240}
 	poke 53252,38:on i goto {:3242},{:3244},{:3246},{:3248},{:3250}
 {:3242}
-	a$="{$c2:2}{$d3} {$ce}ame":return
+	a$="BBS Name":return
 {:3244}
-	a$="{$c2:2}{$d3} {$d0}hone":return
+	a$="BBS Phone":return
 {:3246}
-	a$="{$d3}erial #":return
+	a$="Serial #":return
 {:3248}
-	a$="{$ce}etwork":return
+	a$="Network":return
 {:3250}
-	a$="{$ce}ode {$c9}{$c4}":return
+	a$="Node ID":return
 {:3252}
-	&"{f6}{$d9}our {pound}$a?{f6}":gosub 1006:&,15,1:dt$(i)=an$:return
+	&"{f6}Your {pound}$a?{f6}":gosub 1006:&,15,1:dt$(i)=an$:return
 {:3254}
-	&"{clear}{f6}{$c9}mage {$d3}ysop {$d1}uestionnaire:{f6:2}"
+	&"{clear}{f6}Image Sysop Questionnaire:{f6:2}"
 	for i=1 to b:gosub {:3240}:b$=dt$(i):&"{cyan}{pound}!i> {pound}$a:{f6} {white}{pound}$b{f6}":next
-	&"{cyan}{f6}{$c5}nter # {$cf}f {$c9}tem {$d4}o {$d2}e-{$c5}nter {$cf}r {$d0}ress{f6}{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$c9}f {$c3}orrect: {pound}g1{pound}v7{f6}"
+	&"{cyan}{f6}Enter # Of Item To Re-Enter Or Press{f6}RETURN If Correct: {pound}g1{pound}v7{f6}"
 	if tr%>.then a=val(an$):if a>.and a<=b then i=a:gosub {:3240}:gosub {:3252}:goto {:3254}
 {:3262}
 	return
 {:3264}
-	&"{f6:2}{$d0}art {$c9}{$d6}: {$d0}ersonal {$d3}tatement:{f6}"
-	&"{f6}   {$c7}ive {$d5}s {$d3}ome {$c9}nfo {$c1}bout {$d9}ourself.{f6}{$c1}nything {$c9}nteresting, {$c1}nd {$d0}lease{f6}"
-	&"{$d4}ell {$d5}s {$d7}here {$d9}ou {$c7}ot {$cf}ur {$ce}umber.{f6:2}{rvrs on}{yellow} {$ce}{$cf}{$d4}{$c5}: {rvrs off}{lt. red} {$c1}borting {$d4}his {$d7}ill "
-	&"{$d2}esult {$c9}n {$c1}n{f6} {$c1}utomatic {$cc}ogoff!{f6}"
+	&"{f6:2}Part IV: Personal Statement:{f6}"
+	&"{f6}   Give Us Some Info About Yourself.{f6}Anything Interesting, And Please{f6}"
+	&"Tell Us Where You Got Our Number.{f6:2}{rvrs on}{yellow} NOTE: {rvrs off}{lt. red} Aborting This Will "
+	&"Result In An{f6} Automatic Logoff!{f6}"
 	le=10*(val(mid$(fl$,6,1))+1):gosub 1604:if kk=.then tr%=.
 	return
 {:3276}
-	tr%=5:&"{f6:2}  {$c6}iling {$ce}ew {$d5}ser {$c9}nformation.{f6}  {$d0}lease {$c2}e {$d0}atient {$c8}ere!"
-	gosub {:3076}:b$="new":ad$="{$ce}ew {$d5}ser {$d2}egistration":gosub 1068
-	print# 2,"{$ce}{$c5}{$d7} {$d5}{$d3}{$c5}{$d2}:"r$r$rn$r$ed$(1)r$ed$(2)", "ed$(3)" "ed$(4)
-	print# 2,"{$c2}irthdate : "ed$(5)r$"{$cf}ccupation: "ed$(6)r$"{$c2}aud {$d2}ate:"str$(qb)r$
-	if q=.then{:3290}
-	print# 2,r$"{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}"r$r$"{$c2}oard {$ce}ame:  "dt$(1)r$"{$c2}oard {$d0}hone: "dt$(2)
-	print# 2,"{$d3}erial #:    "dt$(3)r$"{$ce}etwork:     "dt$(4)r$"{$ce}ode {$c9}{$c4}:      "dt$(5)r$
+	tr%=5:&"{f6:2}  Filing New User Information.{f6}  Please Be Patient Here!"
+	gosub {:3076}:b$="new":ad$="New User Registration":gosub 1068
+	print# 2,"NEW USER:"r$r$rn$r$ed$(1)r$ed$(2)", "ed$(3)" "ed$(4)
+	print# 2,"Birthdate : "ed$(5)r$"Occupation: "ed$(6)r$"Baud Rate:"str$(qb)r$
+	if q=. then {:3290}
+	print# 2,r$"IMAGE SYSOP"r$r$"Board Name:  "dt$(1)r$"Board Phone: "dt$(2)
+	print# 2,"Serial #:    "dt$(3)r$"Network:     "dt$(4)r$"Node ID:      "dt$(5)r$
 {:3290}
 	&"{f6}":gosub 1074:&"{f6:2}"
 	dr=3:a$="e.sysop":gosub 1011:x=id:gosub 1001
@@ -207,7 +209,6 @@
 	b$="new temp":a$="a":gosub 1027:if e%then a$="w":gosub 1027
 	print# 2,na$+r$+ed$(2)+r$+ed$(3)
 	close 2:an$=na$:gosub 1038:gosub 1060:i=1:x=19:gosub 1025:x=29:gosub 1025:close 2
-	a$="e.macs":dr=3:gosub 1011:if e%then{:3088}
+	a$="e.macs":dr=3:gosub 1011:if e% then {:3088}
 	for x=id*4-4 to id*4:gosub 1001:print# 2,"{up arrow}":next:close 2:goto {:3086}
-	rem +.new
-	copr. 1995 new image 02/08/95
+	rem "+.new" copr. 1995 new image 02/08/95

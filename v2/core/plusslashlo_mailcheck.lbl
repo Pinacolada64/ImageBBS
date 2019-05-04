@@ -1,0 +1,13 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{crunch:on}
+' TODO: use routine at 1046 to allow entering UID# or handle
+	rem +/lo.mailcheck 2019-04-25 pinacolada
+	&"MailCheck{f6:2}Enter the HANDLE of the user you want{f6}to check for.{f6:2}"
+' ----+----+----+----+----+----+----+----
+' Enter the HANDLE of the user you want
+' to check for.
+	poke 53252,20:&"> {pound}i1":if tr%<1 or an$=""then return
+	a$="r":tt$=an$:gosub 1062:close 2:&"{f6}{pound}v7 has ":if e% then:&"no "
+	&"mail.{f6}":return

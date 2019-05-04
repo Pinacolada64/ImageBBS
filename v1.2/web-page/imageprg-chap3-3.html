@@ -1,0 +1,552 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- $MVD$:app("MicroVision WebExpress","770") --><!-- $MVD$:template("","0","0") --><!-- $MVD$:color("18","80ff","Orange","1") --><!-- $MVD$:color("19","ffd6ce","Lavender","1") --><!-- $MVD$:color("20","adcfeb","Light Tan","0") -->
+  
+  
+  
+  
+  
+  
+  <title>Image BBS Programming Reference Guide</title><meta name="GENERATOR" content="MicroVision Development / WebExpress"></head>
+ <body>
+  <!-- $MVD$:pgfblock("page4.html","423f7206") -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       <center>
+        <p align="center">
+         <a href="../index.html">Ryan's Web Page</a> | <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter
+          II</a> | Chapter III | <a href="imageprg-chap4.html">Chapter IV</a> 
+         | Chapter V</p></center></td>
+     </tr>
+    </tbody></table></p>
+   </center>
+  <!-- $MVD$:pgfblock() -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td valign="top" width="100%">
+       <h1>
+        Chapter III: Machine Language Subroutines</h1>
+       <h2>
+        <table border="0" cellpadding="2" cellspacing="0" width="100%">
+         <tbody><tr>
+          <td bgcolor="#ebcfad" valign="top" width="100%">
+           <center>
+            <p align="center">
+             <a href="imageprg-chap3-1.html#jumptab">Jump Table Routines</a> | <a href="imageprg-chap3-2.html">Memory
+              Locations</a> | <a href="imageprg-chap3-3.html#usingmodules">Using Modules</a> 
+             | <a href="#usingmlmodules">Using ML Modules</a> | <a href="#rs232">RS232
+              Routines</a> | <a href="#theswapper">The Swapper</a> | <a href="#thelightbar">The
+              Lightbar</a> | <a href="#theeditor">The Editor</a></p></center></td>
+         </tr>
+        </tbody></table></h2>
+       <h2>
+        Using Modules<a name="usingmodules"></a></h2>
+       <p>
+        In IMAGE BBS, the "main" program, also known as the 
+        "im" file, resides at $4601 in memory. Other modules, 
+        called "plus files," load at $0801. The area designated for 
+        plus files is $0801-$4000, which is about 14k. (This is about 56 CBM 
+        1541 "blocks.") The main file starts at line 1000. Modules 
+        start at line 1. When you enter a module, it is <i>always</i> entered 
+        with either a GOTO 1, or GOSUB 1.</p>
+       <p>
+        When a module starts to become too large for the 14k buffer, you can 
+        further divide it into sub-modules. The most common way is to use 
+        "mini-modules." These are modules that can be up to 4k in 
+        length, or about 17 disk blocks. The mini-modules load at $3001 in 
+        memory. When one is loaded, it is effectively appended on to the end 
+        of the plus file that is currently in memory. Therefore, you cannot 
+        start a mini-module at line 1. All of the line numbers in the 
+        mini-module <i>must</i> come <i>after</i> the line numbers in the 
+        plus file. If there is an overlap, it may crash the system, forcing 
+        you to reboot. For this reason, be <i>very</i> careful when you 
+        program using modules.</p>
+       <p>
+        There are a few restrictions that you must be aware of. First, the 
+        mini-module and the plus file must share the same area of memory. So, 
+        even though the maximum size of a plus file is 14k, if you are using 
+        a mini-module, the maximum size for the plus file becomes 10k, and 
+        the mini module is 4k, which is a total of 14k. There are other sizes 
+        of modules, and here is a chart to explain them:</p>
+       <center>
+        <p align="center">
+         <table border="2" cellpadding="2" cellspacing="0">
+          <tbody><tr>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p align="left">
+             <b>Size of modules:</b></p></td>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p align="left">
+             <b>Plus file length:</b></p></td>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p align="left">
+             <b>Module length:</b></p></td>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p align="left">
+             <b>Module address:</b></p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             No module</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>14k / 56 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;</tt></p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             Mini-module</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>10k / 41 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;4k / 17 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>$3001</tt></p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             Small module</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;6k / 25 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;8k / 33 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>$2001</tt></p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             Large module</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>&nbsp;2k /&nbsp; 9 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>12k / 49 blocks</tt></p></td>
+           <td bgcolor="SILVER" valign="top">
+            <p align="left">
+             <tt>$1001</tt></p></td>
+          </tr>
+         </tbody></table></p>
+        </center>
+       <h2>
+        Using ML Modules:<a name="usingmlmodules"></a></h2>
+       <p>
+        If you wish to use ML modules, more commonly known as "<tt>++</tt>"
+         files, the <tt>&amp;,7,dv%,2</tt> command will load them for you. 
+        You can call any of the normal IMAGE &amp; routines by loading the 
+        Accumulator with the &amp; number, and X and Y with the parameters. 
+        Then a <tt>JSR $DD01</tt> will call the routine. The area set aside 
+        for ML modules is from <tt>$C000-CA7F</tt>.</p>
+       <h2>
+        RS232 Routines:<a name="rs232"></a></h2>
+       <p>
+        The RS232 routines that IMAGE uses reside in memory from <tt>$4300-$45FF</tt>.
+         There is a jump table at <tt>$4300</tt> which has the ONLY safe 
+        entry points into these routines. NOTE: Calling some of these 
+        routines will result in "strange" things happening, be <i>very</i> careful.</p>
+       <p>
+        <table border="0" cellpadding="2" cellspacing="0">
+         <tbody><tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$4300</tt> Install</p></td>
+          <td valign="top" width="78%">
+           <p>
+            This is the install routine that is called when the system is booted. <i>Do
+             not</i> call this routine, since it <i>will</i> crash your system.</p></td>
+         </tr>
+         <tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$4303</tt> Enable</p></td>
+          <td valign="top" width="78%">
+           <p>
+            This routine enables the NMI interrupts that perform the RS232 I/O. 
+            Note that during such things as disk access these must be turned off, 
+            and then turned back on when disk access is finished. IMAGE handles 
+            this for you, and you should never need to call this routine.</p></td>
+         </tr>
+         <tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$4306</tt> Disable</p></td>
+          <td valign="top" width="78%">
+           <p>
+            See above for "Enable."</p></td>
+         </tr>
+         <tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$4309</tt> RSGet</p></td>
+          <td valign="top" width="78%">
+           <p>
+            This gets a character from the RS232 device. Note that RS232 has a 
+            256-byte "ring" buffer so that characters which are 
+            received when the system is busy are not lost. The character is 
+            returned in the Accumulator.</p></td>
+         </tr>
+         <tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$430C</tt> RSOut</p></td>
+          <td valign="top" width="78%">
+           <p>
+            This will output a character to the RS232 device. The character is 
+            passed in the Accumulator. Note that the routines use a technique 
+            called "double buffering" which means that while one 
+            character is being transmitted, another can be put into a 
+            "holding" buffer, until the first character is done. This 
+            allows the system to output a character, and then go back to doing 
+            more processing while it is being sent. This keeps the screen cursor 
+            sychronized with the cursor on the user's side, while still gaining 
+            the benefit of a buffered I/O system.</p></td>
+         </tr>
+         <tr>
+          <td valign="top" width="22%">
+           <p>
+            <tt>$430F</tt> SetBaud</p></td>
+          <td valign="top" width="78%">
+           <p>
+            This will set the baud rate as defined by an internal table. See the 
+            listing for &amp;,41.</p></td>
+         </tr>
+        </tbody></table></p>
+       <h2>
+        The Swapper<a name="theswapper"></a></h2>
+       <p>
+        IMAGE uses a sort of virtual memory mechanism to allow the 12k of RAM 
+        that is "hidden" in the 64 to be used. RAM from $D000-$FFFF 
+        is used to store many of the routines that IMAGE does not need to use 
+        as often as others. Examples are the disk input routine (&amp;,2) and 
+        the entire editor system! These routines are accessed using the 
+        "swapper." This is a routine that swaps the needed routines 
+        into memory, and swaps whatever is in that memory to the hidden RAM. 
+        The routines are then executed, and then swapped back to the hidden 
+        RAM. Thus, the 12k of hidden RAM can be used to store more ML for the 
+        IMAGE system. In IMAGE 1.2, all but 2k of this RAM is used, and in 
+        future versions, that last 2k will be used!</p>
+       <p>
+        The swapper is located at $CA80. To use it, you set the Accumulator 
+        and the Y register with the starting page numbers to swap, and the X 
+        register to how many pages of RAM to swap. Thus, to swap memory from $C000-$C2FF
+         with the memory from $C300-$C5FF, you would do this:</p>
+       <blockquote>
+        <p>
+         <tt>LDA #$C0</tt><br>
+         <tt>LDY #$C3</tt><br>
+         <tt>LDX #$03</tt><br>
+         <tt>JSR $CA80</tt></p>
+        </blockquote>
+       <p>
+        To swap it back again, repeat the same sequence of commands. Be very 
+        careful when using this routine, since it does not care <i>what</i> 
+        it swaps, and will try to swap anything you tell it to!</p>
+       <h2>
+        The Lightbar<a name="thelightbar"></a></h2>
+       <p>
+        The lightbar is controlled by IRQ routines which read the function 
+        keys, and make the necessary screen/memory changes that are 
+        requested. There is an &amp; [command] which allows you to get or set 
+        the status of the lightbar. This is &amp;,52.</p>
+       <p>
+        There are several functions implemented in this command in version 
+        1.2. You can clear/set/toggle/read any individual checkmark. Here are 
+        some examples:</p>
+       <blockquote>
+        <p>
+         <tt>&amp;,52,0,0</tt> Clear the check on the left side of <tt>Sys</tt>.</p>
+        <p>
+         <tt>&amp;,52,0,1</tt> Set the check on the left side of <tt>Sys</tt>.</p>
+        <p>
+         <tt>&amp;,52,0,2</tt> Toggle the check on the left side of <tt>Sys</tt>.</p>
+        <p>
+         <tt>&amp;,52,0,3</tt> Read the check on the left side of&nbsp; of <tt>Sys</tt>.</p>
+        <p>
+         [Additionally, there is another function I discovered.</p>
+        <p>
+         <tt>&amp;,52,x,4</tt> moves the "lit" section to positions 
+         1-8 (page 1) or 9-16 (page 2). Very useful.</p>
+        <p>
+         Also, mainly because I get tired of flipping through the sysop 
+         documentation for IMAGE, I'll include a section here on what the 
+         various positions on the Lightbar are for:</p>
+        </blockquote>
+       <center>
+        <p align="center">
+         <table style="text-align: left;" border="2" cellpadding="2" cellspacing="0">
+          <tbody><tr>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p align="right">
+             Left</p></td>
+           <td bgcolor="DARKGRAY" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;L Chk R</tt></p></blockquote></td>
+           <td bgcolor="DARKGRAY" valign="top">
+            <p>
+             Right</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Sysop available</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;0 Sys 1</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Trace mode on</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Change access</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;2 Acs 3</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Block 300 baud users</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Local logon</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;4 Loc 5</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Pseudo-local mode</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Alter time</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;6 Tsr 7</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Toggle prime time</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Enter chat</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>&nbsp;8 Cht 9</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Toggle local bells</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Private system</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>10 New 11</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Disable screen blanking</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Print output</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>12 Prt 13</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Print log entries</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Close U/Ds</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>14 U/D 15</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             No 300 baud callers</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             ASCII translation on</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>16 Asc 17</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Linefeeds on</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             ANSI graphics on</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>18 Ans 19</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             IBM graphics on</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Expert mode on</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>20 Exp 21</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Main prompt macros on</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Credit when file validated</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>22 Fn5 23</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Log off after file transfer complete</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Undefined in stock system</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>24 Fn4 25</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Undefined in stock system</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Undefined in stock system</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>26 Fn3 27</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Undefined in stock system</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Undefined in stock system</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>28 Fn2 29</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             MCI off</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top">
+            <p align="right">
+             Undefined in stock system</p></td>
+           <td bgcolor="SILVER" valign="top">
+            <blockquote>
+             <p>
+              <tt>30 Fn1 31</tt></p></blockquote></td>
+           <td bgcolor="SILVER" valign="top">
+            <p>
+             Undefined in stock system</p></td>
+          </tr>
+         </tbody></table></p>
+        </center>
+       <blockquote>
+        <p>
+         Certain mods like the Graphic Menu or Callback Validator will use the 
+         Fn areas for their own use.]</p>
+        </blockquote>
+       <h2>
+        The Editor:<a name="theeditor"></a></h2>
+       <p>
+        The programming of the IMAGE editor is best left to those who know a <i>lot</i> 
+        about the IMAGE system. There is an &amp; [command] which will make 
+        the necessary calls into the editor ML. This ML resides from <tt>$D000-$DFFF</tt>,
+         and is swapped into memory from <tt>$1000-$1FFF</tt> by the swapper 
+        when it is called. There are 3 legal entry points, which are accessed 
+        by &amp;,54, &amp;,54,1, and &amp;,54,2. The first entry point is the 
+        "normal" entry. This puts the user into the editor with an 
+        empty buffer. The second entry does not clear the buffer. The last 
+        entry is the entry that you would use in [writing] an extended 
+        command, if the command which was typed was not a recognized command.</p>
+       <center>
+        <p align="center">
+         <table border="0" cellpadding="2" cellspacing="0" width="100%">
+          <tbody><tr>
+           <td bgcolor="#ebcfad" valign="top" width="100%">
+            <center>
+             <p align="center">
+              <a href="imageprg-chap3-1.html#jumptab">Jump Table Routines</a> | <a href="imageprg-chap3-2.html">Memory
+               Locations</a> | <a href="imageprg-chap3-3.html#usingmodules">Using Modules</a> 
+              | <a href="#usingmlmodules">Using ML Modules</a> | <a href="#rs232">RS232
+               Routines</a> | <a href="#theswapper">The Swapper</a> | <a href="#thelightbar">The
+               Lightbar</a> | <a href="#theeditor">The Editor</a></p></center></td>
+          </tr>
+         </tbody></table></p></center></td>
+     </tr>
+    </tbody></table></p>
+   </center>
+  <!-- $MVD$:pgfblock("page4.html","423f7206") -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       <center>
+        <p align="center">
+         <a href="../index.html">Ryan's Web Page</a> | <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter
+          II</a> | Chapter III | <a href="imageprg-chap4.html">Chapter IV</a> 
+         | Chapter V</p></center></td>
+     </tr>
+    </tbody></table>
+ </p></center></body></html>

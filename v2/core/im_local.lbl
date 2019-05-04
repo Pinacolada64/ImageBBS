@@ -1,14 +1,16 @@
 {number:60000}
+{alpha:alt}
+{step:2}
 	on im goto {:60002},{:60006},{:60008},{:60010},{:60016},{:60018},{:60026},{:60032}
 {:60002}
-	&"{f6:2}#{$c3}redits?: {pound}i1":cr=cr+int(val(left$(an$,6)))
-	b$=str$(cr):&"{f6}{$ce}ow:{pound}$b {$c3}redits{f6}":return
+	&"{f6:2}#Credits?: {pound}i1":cr=cr+int(val(left$(an$,6)))
+	b$=str$(cr):&"{f6}Now:{pound}$b Credits{f6}":return
 {:60006}
 	dr=1:a$="s.menu 4":goto 1075
 {:60008}
 	gosub 1094:goto 1372
 {:60010}
-	gosub 1470:on a goto 1995:&"{f6:2}{$c6}ilename?: ":gosub 1499:if an$=""then return
+	gosub 1470:on a goto 1995:&"{f6:2}Filename?: ":gosub 1499:if an$=""then return
 	a$=an$+",s,r":gosub 1011:if e%then:&:return
 {:60014}
 	&,3,2:s=st:on-(rc+s=.)goto {:60014}:goto 1032
@@ -16,19 +18,19 @@
 	gosub 1470:on a goto 1995:gosub 1081:a%=dv%:b$=dr$:&"{f6:2}{pound}%a:{pound}$b":&str$(a):return
 {:60018}
 	dr=5:gosub 1010:pr=-1:a$=dr$+"++ read":&,7,dv%,2:gosub 1012:if e%then return
-	gosub 1470:on a goto 1995:poke 53252,16:&"{f6:2}{$c6}ilename: ":gosub 1499:if an$=""then return
+	gosub 1470:on a goto 1995:poke 53252,16:&"{f6:2}Filename: ":gosub 1499:if an$=""then return
 	a$=an$+",p,r":gosub 1011:if e%then:&:close 2:return
 	&,16,nl,ll%:close 2:return
 {:60026}
 	&,52,4,3:if a%then zz=1-zz:&,52,5,zz:return
-	a=3:gosub 1004:if a then a=zz:b$="{$cc}ocal":gosub 1870:zz=a:&,52,5,zz:return
+	a=3:gosub 1004:if a then a=zz:b$="Local":gosub 1870:zz=a:&,52,5,zz:return
 	rs=.:return
 {:60032}
 	if tt$=""then return
 ' 94=^
 	an$=mid$(tt$,5):&,15,6,94:b$=an$:an$=a$
 	if left$(tt$,1)="!"then b$=mid$(tt$,2,3)+b$
-	if b$<>""then{:60046}
+	if b$<>"" then {:60046}
 	c$=left$("m."+an$,15):gosub {:60064}:if e%then close 2:&:return
 	an$=right$(str$(id+10000),4)+na$
 	print# 2,an$r$id:goto {:60062}
@@ -39,10 +41,11 @@
 	dr=2:a$="nm.nodes":gosub 1011
 	gosub 1001:&,2,2:close 2:if len(a$)<>3 then return
 	n$=a$:a$=left$(b$,3):b$=mid$(b$,4):if len(b$)=3 then a$=a$+"-"+b$
-	c$="nm.{$c5}."+a$+"/"+n$:gosub {:60064}:if e%then close 2:&:return
+	c$="nm.E."+a$+"/"+n$:gosub {:60064}:if e%then close 2:&:return
 	print# 2,tt$r$"!"n$na$d$r$0
 {:60062}
 	print# 2,d1$r$tt$(0):&,14,2,kk:print# 2,"{up arrow}":close 2:return
 {:60064}
 	dr=2:a$=c$+",s,w":gosub 1011:if e%then a$=c$+",s,a":gosub 1011
 	return
+	rem im.local

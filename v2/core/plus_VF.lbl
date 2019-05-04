@@ -1,4 +1,6 @@
 {number:3000}
+{alpha:alt}
+{step:2}
 	dim fl$(15):f4=.:goto {:3080}
 {:3002}
 	on bz+1 goto {:3010}:&"{f6}":for x=1 to bz:b%=x:b$=dt$(x):&" {pound}%b. {pound}$b{f6}":next:return
@@ -25,7 +27,7 @@
 	return
 {:3030}
 	&,2,2:h$=a$:&,2,2:f$=a$:&,2,2:d$=a$:&,2,2:s$=a$:&,2,2:t$=a$:&,2,2:c$=a$
-	&,2,2:z$=a$:&,2,2:y$=a$:k=1:a=a+1:if h$=""then h$="{$ce}one"
+	&,2,2:z$=a$:&,2,2:y$=a$:k=1:a=a+1:if h$=""then h$="None"
 {:3034}
 	&,2,2:tt$(k)=a$:k=k+1:on-(a$<>"{up arrow}"and peek(144)=.)goto {:3034}:return
 {:3036}
@@ -36,17 +38,18 @@
 	if y=1 then for x=2 to 24 step 11:gosub 1025:next:x=31:gosub 1025
 	x=25:on z gosub 1025:close 2:return
 {:3046}
-	if zz=.then{:3116}
+	if zz=. then {:3116}
 {:3048}
-	f1=f1-(f1=.):&"{f6}{$d7}hich {$cd}sg?: {pound}i1":gosub {:3008}:on tr%+1 goto {:3416}:if an$="{f2}"then gosub {:3002}:goto {:3048}
-	on-(left$(an$,1)="{$d2}")goto {:3060}:if a<1 or a>bz then{:3116}
+	f1=f1-(f1=.):&"{f6}Which Msg?: {pound}i1":gosub {:3008}:on tr%+1 goto {:3416}:if an$="{f2}"then gosub {:3002}:goto {:3048}
+	on-(left$(an$,1)="R")goto {:3060}:if a<1 or a>bz then{:3116}
 	k=1:tt$(.)="["+dt$(a)+"]":dr=1:a$="s.can msg"+str$(a)+",s,r":gosub 1011:goto {:3154}
 {:3054}
 	bz=.:a$="s.can msg,s,r":dr=1:gosub 1011:if e%then close 2:return
 	&,2,2:bz=val(a$):if bz=.then close 2:return
 	for x=1 to bz:&,2,2:dt$(x)=a$:next:close 2:return
 {:3060}
-	gosub {:3006}:on-(a<1 or a>bz)goto {:3048}:a$="s.can msg"+str$(a):dr=1:gosub 1076:goto {:3062}
+	gosub {:3006}:on-(a<1 or a>bz)goto {:3048}:a$="s.can msg"+str$(a):dr=1:gosub 1076
+{:3062}
 	dr=3:a$="e.access":gosub 1011:for i=.to 9:x=i+1:gosub 1001:&,2,2:&,2,2:fl$(i)=a$
 	next:return
 {:3066}
@@ -61,23 +64,24 @@
 {:3078}
 	a%(i)=a:next:return
 {:3080}
-	&"{clear}{f6}{lt. blue} {rvrs on} {$d6}iew {$c6}eedback/{$c5}rrlog/{$d4}elecheck {pound}q0{f6:2}{lt. blue}  {$c7}etting {cyan}{$cd}essages{lt. blue} {$c1}nd {cyan}{$c9}nformation{lt. blue}..."
+	&"{clear}{f6}{lt. blue} {rvrs on} View Feedback/Errlog/Telecheck {pound}q0{f6:2}{lt. blue}  Getting {cyan}Messages{lt. blue} And {cyan}Information{lt. blue}..."
 	gosub {:3066}:gosub {:3062}:gosub {:3054}
 {:3084}
-	g%=bz:gosub 1914:f4=.:gosub 2912:lp=1:&"{clear}{f6}{blue}{pound}vj {cyan}{pound}{back arrow}11{pound}$q{$d6}iew {$c6}eedback 2.0{pound}{back arrow}39{f6}{blue}{pound}vj{pound}q0{f6}":x=.
+	g%=bz:gosub 1914:f4=.:gosub 2912:lp=1:&"{clear}{f6}{blue}{pound}vj {cyan}{pound}{back arrow}11{pound}$qView Feedback 2.0{pound}{back arrow}39{f6}{blue}{pound}vj{pound}q0{f6}":x=.
 	for i=1 to rn:a$=left$(nn$(i),1):b$=mid$(nn$(i),2):a%=a%(i):if x>1 then:&"{f6}":x=.
 	&" ({pound}$a){pound}$b{pound}{back arrow}13 {white}({pound}%a){cyan}{pound}{back arrow}18":x=x+1:next
 	on-(zz=.)goto {:3100}:if x>1 then:&"{f6}":x=.
-	&" ({$c3})an {$cd}sg's{pound}{back arrow}13{white} ({pound}%g){pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
-	&" {cyan}({$c1})rch. {$ce}ew {$d5}sers{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
-	&" ({$d3})cratch {$c6}iles{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
-	&" ({$d7})atch{$c4}og {$c6}iles{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
+	&" (C)an Msg's{pound}{back arrow}13{white} ({pound}%g){pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
+	&" {cyan}(A)rch. New Users{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
+	&" (S)cratch Files{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
+' TODO: implement Watchdog files
+	&" (W)atchDog Files{pound}{back arrow}18":x=x+1:if x>1 then:&"{f6}":x=.
 {:3100}
-	&"{f6:2} {$d6}{$c6}: {pound}g1":gosub {:3012}:if bn then:&"{pound}$k{f6}":goto {:3232}
-	if zz then on-(an$="{$c1}")-2*(an$="{$c3}")-3*(an$="{$d3}")-4*(an$="{$d7}")goto {:3218},{:3276},{:3176},{:3418}
-	&"{$d1}uit{f6}":goto {:3416}
+	&"{f6:2} VF: {pound}g1":gosub {:3012}:if bn then:&"{pound}$k{f6}":goto {:3232}
+	if zz then on-(an$="A")-2*(an$="C")-3*(an$="S")-4*(an$="W")goto {:3218},{:3276},{:3176},{:3418}
+	&"Quit{f6}":goto {:3416}
 {:3106}
-	&"{f6}":gosub {:3024}:if e%then:&"{$ce}o {pound}$k.":close 2:goto {:3084}
+	&"{f6}":gosub {:3024}:if e%then:&"No {pound}$k.":close 2:goto {:3084}
 	on l goto {:3112}:for i=1 to l-1
 {:3110}
 	&,2,2:on-(a$<>"{up arrow}"and peek(144)=.)goto {:3110}:next
@@ -87,24 +91,24 @@
 	f1=.:f4=.:gosub {:3204}:&,52,12,3:if a%then{:3172}
 {:3116}
 	gosub 1914:on-(f4=3)goto {:3276}
-	b$="":if zz then b$="{$c1})ccs {$c3})an {$c3}{$d2})ed {$c4})el {$d6})iew {$d0})rint "
-	a%=l:lp=1:&"{f6:2}#{pound}%a:{pound}$b{$c6})wrd {$d2})spd {$ce})ext {$cf})ver {$d1})uit {$ce})ew #: {white}{pound}i1"
+	b$="":if zz then b$="A)ccs C)an CR)ed D)el V)iew P)rint "
+	a%=l:lp=1:&"{f6:2}#{pound}%a:{pound}$bF)wrd R)spd N)ext O)ver Q)uit N)ew #: {white}{pound}i1"
 	a=val(an$):if a>.and a<=z%then l=a:close 2:goto {:3106}
-	if tr%<1 then an$="{$d1}"
-	if an$="{$cf}"then on-(f1=2)goto {:3106}:gosub {:3206}:goto {:3116}
-	on-(an$="{$c1}")-(an$="{$d2}")*2-(an$="{$d1}")*3-(an$="{$c6}")*4 goto {:3134},{:3158},{:3174},{:3250}
-	on-((an$="{$ce}")or(an$=""))-(an$="{$c3}")*2-(an$="{$c3}{$d2}")*3 goto {:3172},{:3046},{:3336}
-	on-(an$="{$d6}")-2*(an$="{$c4}")-3*(an$="{$d0}")goto {:3370},{:3348},{:3412}:goto {:3116}
+	if tr%<1 then an$="Q"
+	if an$="O"then on-(f1=2)goto {:3106}:gosub {:3206}:goto {:3116}
+	on-(an$="A")-(an$="R")*2-(an$="Q")*3-(an$="F")*4 goto {:3134},{:3158},{:3174},{:3250}
+	on-((an$="N")or(an$=""))-(an$="C")*2-(an$="CR")*3 goto {:3172},{:3046},{:3336}
+	on-(an$="V")-2*(an$="D")-3*(an$="P")goto {:3370},{:3348},{:3412}:goto {:3116}
 {:3134}
 	if zz=.then{:3116}
-	close 2:f1=f1-(f1=.):&"{f6}{yellow}{$c1}ccess?: {pound}g1{pound}v7{lt. green}{f6}":g=val(an$)
+	close 2:f1=f1-(f1=.):&"{f6}{yellow}Access?: {pound}g1{pound}v7{lt. green}{f6}":g=val(an$)
 	if an$=r$or val(f$)=.then{:3116}
 	gosub 1065:x=val(f$):gosub 1001:for i=1 to 23:&,2,2:ed$(i)=a$:next
 	ed$(7)=str$(g):ed$(23)=fl$(val(an$)):a$=""
 	for i=1 to 23:a$=a$+ed$(i)+r$:next:gosub 1001:print# 2,a$:close 2
 	if n$<>"new"then{:3116}
-	&"{f6}{gray3}{$d3}end {$ce}ew {$d5}ser {$d7}elcome?: ":gosub 1907:if a=.then{:3116}
-	k=1:tt$(.)="[{$d7}elcome!]":dr=1:a$="s.nu welcome"+str$(g)+",s,r":gosub 1011
+	&"{f6}{gray3}Send New User Welcome?: ":gosub 1907:if a=.then{:3116}
+	k=1:tt$(.)="[Welcome!]":dr=1:a$="s.nu welcome"+str$(g)+",s,r":gosub 1011
 	if e%then dr=1:a$="s.nu welcome,s,r":gosub 1011
 {:3154}
 	if e%then:&:goto {:3116}
@@ -112,49 +116,49 @@
 	&,2,2:tt$(k)=a$:k=k+1:on-(st=.)goto {:3156}:kk=k:k=1:goto {:3168}
 {:3158}
 	close 2:f1=2
-	&"{f6}{$d3}ubject?: {pound}i0":if an$=""then an$="{$d2}{$c5}: "+y$
-	&"{up}{$d3}ubject : {pound}v7{f6}"
+	&"{f6}Subject?: {pound}i0":if an$=""then an$="RE: "+y$
+	&"{up}Subject : {pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:if kk<1 then{:3116}
 	dr=2:gosub 1079:if a<35 then gosub 1978:goto {:3116}
 {:3168}
-	a%=kk-1:&"{f6}{$c6}iling {$cd}ail {$c6}or {pound}$h...":c$=h$:tt$=h$
+	a%=kk-1:&"{f6}Filing Mail For {pound}$h...":c$=h$:tt$=h$
 	y=val(f$):f1=2:gosub {:3036}:&"{f6}":on-(f4=3)goto {:3276}:goto {:3116}
 {:3172}
 	l=l+1:on t goto {:3174}:on f1+1 goto {:3112},{:3106},{:3106}
 {:3174}
-	close 2:on-(an$="{$d1}")goto {:3084}:&"{f6:2}{$c5}nd {$cf}f {pound}$k.":goto {:3084}
+	close 2:on-(an$="Q")goto {:3084}:&"{f6:2}End Of {pound}$k.":goto {:3084}
 {:3176}
-	&"{$d3}cratch{f6:2}":x=.:for i=1 to rn:a$=left$(nn$(i),1):b$=mid$(nn$(i),2):if x>1 then:&"{f6}":x=.
+	&"Scratch{f6:2}":x=.:for i=1 to rn:a$=left$(nn$(i),1):b$=mid$(nn$(i),2):if x>1 then:&"{f6}":x=.
 	c$=""
 	&" ({pound}$a){pound}$b{pound}$c {pound}{back arrow}18":x=x+1:next
-	&"{f6:2} ({$d8}) {$c1}ll > {pound}g1":on tr%+1 goto {:3416}:if an$="{$d8}"then{:3194}
+	&"{f6:2} (X) All > {pound}g1":on tr%+1 goto {:3416}:if an$="X"then{:3194}
 	gosub {:3012}:on-(bn=.)goto {:3084}:&"{pound}$k{f6:2}"
-	&"{f6}{$d3}cratch {f5}e.{pound}$n{f5}{f6:2}({$d3})elective or ({$c1})uto: {pound}g1":on tr%+1 goto 1811
-	if an$="{$d3}"then:&"{$d3}elective{f6}":goto {:3388}
-	&"{$c1}uto{f6}":gosub 1901:on a+1 goto {:3084}:&"{f6}{$d3}cratching: e.{pound}$n..."
+	&"{f6}Scratch {f5}e.{pound}$n{f5}{f6:2}(S)elective or (A)uto: {pound}g1":on tr%+1 goto 1811
+	if an$="S"then:&"Selective{f6}":goto {:3388}
+	&"Auto{f6}":gosub 1901:on a+1 goto {:3084}:&"{f6}Scratching: e.{pound}$n..."
 	dr=3:a$="e."+n$:gosub 1024:k%=.:gosub {:3026}:goto {:3084}
 {:3194}
-	&"{$c1}uto {$d3}cratch {$c1}ll!{f6:2}":gosub 1901:if a=.then{:3084}
-	&"{f6}{$d3}cratching... ":for bn=1 to rn:if a%(bn)=.then{:3202}
+	&"Auto Scratch All!{f6:2}":gosub 1901:if a=.then{:3084}
+	&"{f6}Scratching... ":for bn=1 to rn:if a%(bn)=.then{:3202}
 	a$="e."+bb$(bn):l=len(a$)-2:&:gosub 1024
 	k%=.:gosub {:3026}:&"{pound}h"+mid$(str$(l),2)+"{pound}h2"
 {:3202}
-	next:&"{white}{$c4}one!":goto {:3084}
+	next:&"{white}Done!":goto {:3084}
 {:3204}
 	t=-(st<>.)
 {:3206}
-	a%=l:sh=.:&"{clear}{pound}q0{blue}{pound}vj {cyan}#{pound}%a {$d5}ser:{white}{pound}{back arrow}13{pound}$h [#{pound}$f]":s=rc
-	&"{f6} {cyan}{$c4}ate:{white}{pound}{back arrow}13{$04}"+d$+"{f6}{cyan} {$c1}ccess:{white} {pound}$s{pound}{back arrow}13{cyan}{$d0}hone:{white}{pound}{back arrow}13{pound}$t":s=s+rc
-	&"{f6}{cyan} {$ce}ame:{white}{pound}{back arrow}13{pound}$c{f6}{cyan} {$c3}omp:{white}{pound}{back arrow}13{pound}$z{f6} {cyan}{$d3}ubj:{white}{pound}{back arrow}13{pound}$y{f6}{blue}{pound}vj{cyan}":s=s+rc
+	a%=l:sh=.:&"{clear}{pound}q0{blue}{pound}vj {cyan}#{pound}%a User:{white}{pound}{back arrow}13{pound}$h [#{pound}$f]":s=rc
+	&"{f6} {cyan}Date:{white}{pound}{back arrow}13{$04}"+d$+"{f6}{cyan} Access:{white} {pound}$s{pound}{back arrow}13{cyan}Phone:{white}{pound}{back arrow}13{pound}$t":s=s+rc
+	&"{f6}{cyan} Name:{white}{pound}{back arrow}13{pound}$c{f6}{cyan} Comp:{white}{pound}{back arrow}13{pound}$z{f6} {cyan}Subj:{white}{pound}{back arrow}13{pound}$y{f6}{blue}{pound}vj{cyan}":s=s+rc
 {:3212}
 	i=1
 {:3214}
 	a$=tt$(i):if a$<>"{up arrow}"and rc=.then lp=1:&:i=i+1:goto {:3214}
 	&"{pound}q0":return
 {:3218}
-	an$="{$ce}":gosub {:3012}:&"{f6:2}{$c1}rchive {pound}$k.{f6}":gosub 1901:on a+1 goto {:3084}
+	an$="N":gosub {:3012}:&"{f6:2}Archive {pound}$k.{f6}":gosub 1901:on a+1 goto {:3084}
 	dr=3:gosub 1079:if a<35 then gosub 1978:goto {:3084}
-	&"{f6:2}{$c1}rchiving {pound}$k...":a$="e.nark,s,r":dr=3:gosub 1011:close 2:if e%then{:3228}
+	&"{f6:2}Archiving {pound}$k...":a$="e.nark,s,r":dr=3:gosub 1011:close 2:if e%then{:3228}
 	a$="temp":gosub 1024:print# 15,"c"dr$"temp=e.nark,e.new":a$="e.nark":gosub 1024
 	print# 15,"r"dr$"e.nark=temp":goto {:3230}
 {:3228}
@@ -162,82 +166,82 @@
 {:3230}
 	gosub 1081:goto {:3084}
 {:3232}
-	&"{f6:2}{$d3}tart {$c1}t ({$ce}={$ce}ew)?: {pound}i1":if left$(an$,1)="{$ce}"then{:3238}
+	&"{f6:2}Start At (N=New)?: {pound}i1":if left$(an$,1)="N"then{:3238}
 	l=val(an$):if l<1 or l>z%then l=1
 	goto {:3106}
 {:3238}
-	&"{f6:2}{$d3}canning {$c6}or {pound}$k{f6}{$d3}ince {pound}v1...{f6}":l=.
-	a=1:a$=ld$:gosub {:3016}:kk$=a$:gosub {:3024}:if e%then:&"{$ce}o {pound}$k.":close 2:goto {:3084}
+	&"{f6:2}Scanning For {pound}$k{f6}Since {pound}v1...{f6}":l=.
+	a=1:a$=ld$:gosub {:3016}:kk$=a$:gosub {:3024}:if e%then:&"No {pound}$k.":close 2:goto {:3084}
 {:3242}
 	l=a:gosub {:3030}:&"."
 	t=-(st<>.):a$=d$:gosub {:3016}:x=1:if a$<kk$then on 1-t goto {:3242}:x=.
-	if x=.then lp=1:&"{f6} {$ce}o {pound}$k {$d3}ince {pound}v1. {pound}w1{f6}":goto {:3084}
+	if x=.then lp=1:&"{f6} No {pound}$k Since {pound}v1. {pound}w1{f6}":goto {:3084}
 	goto {:3114}
 {:3250}
-	close 2:f1=f1-(f1=.):fb=l:&"{f6:2}{$c6}orward {$c1}s {$c5}-{$cd}ail...{f6}"
+	close 2:f1=f1-(f1=.):fb=l:&"{f6:2}Forward As E-Mail...{f6}"
 {:3252}
-	&"{f6}{$c5}nter {$c8}{$c1}{$ce}{$c4}{$cc}{$c5} {$cf}r {$c9}{$c4}# {$cf}f {$d4}he {$d0}erson {$d4}o{f6}{$d3}end {$d4}his {$cd}essage {$d4}o.{f6}: {pound}i1"
+	&"{f6}Enter HANDLE Or ID# Of The Person To{f6}Send This Message To.{f6}: {pound}i1"
 	if an$=""or an$="{f8}"then{:3116}
 	b$=an$:gosub {:3008}:kk=a:on kk+1 goto {:3262}:if kk>ur then{:3116}
-	gosub 1065:x=kk:gosub 1001:&,2,2:close 2:if a$="{up arrow}"or a$="{$d2}{$c5}{$d3}"then{:3274}
-	b$=a$:&"{f6}{$c9}s {f5}{pound}$b{f5} {$c3}orrect?: ":gosub 1902:if a=.then{:3252}
+	gosub 1065:x=kk:gosub 1001:&,2,2:close 2:if a$="{up arrow}"or a$="RES"then{:3274}
+	b$=a$:&"{f6}Is {f5}{pound}$b{f5} Correct?: ":gosub 1902:if a=.then{:3252}
 {:3262}
 	an$=b$:gosub 1046:y=i
-	if i=.then:&"{f6}{f5}{pound}$b{f5} {$ce}ot {$c6}ound{f6}{$c9}n {$c3}urrent {$d5}ser {$c6}iles.{f6}":goto {:3252}
-	tt$(.)="[{$c6}orwarded {$c6}rom {$c6}eedback]":kk=k:tt$=b$
+	if i=.then:&"{f6}{f5}{pound}$b{f5} Not Found{f6}In Current User Files.{f6}":goto {:3252}
+	tt$(.)="[Forwarded From Feedback]":kk=k:tt$=b$
 	z=.:a$="w":gosub 1062:if e%then a$="a":gosub 1062:z=1
-	print# 2,h$r$f$r$d1$r$tt$(.)r$"{$d3}ent:{$04}"d$:for k=1 to kk-1:print# 2,tt$(k):next
+	print# 2,h$r$f$r$d1$r$tt$(.)r$"Sent:{$04}"d$:for k=1 to kk-1:print# 2,tt$(k):next
 	close 2:gosub {:3040}:&"{f6}":l=fb:goto {:3106}
 {:3274}
-	&"{f6} {pound}$b {$c8}as {$c2}een {$c4}eleted.":goto {:3116}
+	&"{f6} {pound}$b Has Been Deleted.":goto {:3116}
 {:3276}
-	&"{f6:2} ({$c1})dd ({$c5})dit ({$cb})ill ({$cc})ist ({$d3})end? {pound}g1{pound}v7":on tr%+1 goto {:3416}:if an$="{$d3}"then{:3322}
-	on-(an$="{$c5}")-(an$="{$c1}")*2-(an$="{$cb}")*3-(an$="{$cc}")*4 goto {:3282},{:3296},{:3308},{:3280}:goto {:3084}
+	&"{f6:2} (A)dd (E)dit (K)ill (L)ist (S)end? {pound}g1{pound}v7":on tr%+1 goto {:3416}:if an$="S"then{:3322}
+	on-(an$="E")-(an$="A")*2-(an$="K")*3-(an$="L")*4 goto {:3282},{:3296},{:3308},{:3280}:goto {:3084}
 {:3280}
-	on bz+1 goto {:3282}:&"{f6:2} {$c1}vailable {$cd}sg's:{f6}":gosub {:3002}:goto {:3276}
+	on bz+1 goto {:3282}:&"{f6:2} Available Msg's:{f6}":gosub {:3002}:goto {:3276}
 {:3282}
-	if bz=.then:&"{f6:2}{$ce}o {$cd}essages {$c5}xist!{f6:2}":goto {:3276}
+	if bz=.then:&"{f6:2}No Messages Exist!{f6:2}":goto {:3276}
 {:3284}
-	&"{f6:2}{$c5}dit {$d7}hich?: {pound}i1":if an$="{f2}"then gosub {:3002}:goto {:3284}
+	&"{f6:2}Edit Which?: {pound}i1":if an$="{f2}"then gosub {:3002}:goto {:3284}
 	bb=val(an$):on tr%+1 goto {:3416}:if bb<1 or bb>bz then{:3276}
-	&"{f6}":pl=.:p$="{$d4}itle":w$=dt$(bb):&,1,32:if an$=""then an$=dt$(bb)
+	&"{f6}":pl=.:p$="Title":w$=dt$(bb):&,1,32:if an$=""then an$=dt$(bb)
 	dt$(bb)=an$:k=1:a$="s.can msg"+str$(bb)+",s,r":dr=1:gosub 1011
 	if e%then:&:goto {:3276}
 {:3294}
 	&,2,2:tt$(k)=a$:k=k+1:on-(st=.)goto {:3294}:kk=k:k=1:gosub 1610:goto {:3302}
 {:3296}
-	bb=bz+1:if bz>59 then:&"{f6:2}{$d9}ou {$c1}re {$cf}nly {$c1}llowed 60 {$cd}essages!{f6}":goto {:3276}
-	&"{f6:2}{$c5}nter {$d4}he {$d4}itle of your {$cd}essage{f6:2}: {pound}i0":on tr%+1 goto {:3416}:if an$=""then{:3276}
+	bb=bz+1:if bz>59 then:&"{f6:2}You Are Only Allowed 60 Messages!{f6}":goto {:3276}
+	&"{f6:2}Enter The Title of your Message{f6:2}: {pound}i0":on tr%+1 goto {:3416}:if an$=""then{:3276}
 	dt$(bb)=an$:gosub 1604
 {:3302}
-	on-(kk=.)goto {:3276}:&"{f6:2}{$c6}iling {$d9}our {$cd}essage.....":bz=bb
+	on-(kk=.)goto {:3276}:&"{f6:2}Filing Your Message.....":bz=bb
 	a$="s.can msg"+str$(bb):dr=1:gosub 1023:for k=1 to kk:print# 2,tt$(k):next:close 2
 {:3306}
 	a$="s.can msg":dr=1:gosub 1023:print# 2,bz:for x=1 to bz:print# 2,dt$(x):next:close 2:goto {:3276}
 {:3308}
-	if bz=.then:&"{f6:2}{$ce}o {$cd}essages {$c5}xist!{f6:2}":goto {:3276}
+	if bz=.then:&"{f6:2}No Messages Exist!{f6:2}":goto {:3276}
 {:3310}
-	&"{f6:2}{$cb}ill {$d7}hich?: {pound}i1":if an$="{f2}"then gosub {:3002}:goto {:3310}
+	&"{f6:2}Kill Which?: {pound}i1":if an$="{f2}"then gosub {:3002}:goto {:3310}
 	a=val(an$):if a<1 or a>bz then{:3276}
-	b$=dt$(a):&"{f6:2}{$cb}illing {pound}$b {$cd}sg....{f6}":a$="s.can msg"+str$(a):dr=1:gosub 1024
+	b$=dt$(a):&"{f6:2}Killing {pound}$b Msg....{f6}":a$="s.can msg"+str$(a):dr=1:gosub 1024
 	for x=a to bz-1:dt$(x)=dt$(x+1)
 	dr=1:gosub 1010:print# 15,"r"dr$"s.can msg"str$(x)"=s.can msg"str$(x+1):gosub 1012
 	close 15:next:bz=bz-1:goto {:3306}
 {:3322}
-	&"{f6:2}{$c5}nter {$c8}andle {$cf}r {$c9}{$c4}# {$cf}f {$d5}ser {$d4}o {$c5}-{$cd}ail{f6:2}: {pound}i1":a=abs(val(an$)):if a then{:3328}
+	&"{f6:2}Enter Handle Or ID# Of User To E-Mail{f6:2}: {pound}i1":a=abs(val(an$)):if a then{:3328}
 	gosub 1046:a=i:if a then h$=an$:goto {:3334}
-	&"{f6:2}{f5}{pound}v7{f5} {lt. green}{$ce}ot {$c6}ound.{f6}":goto {:3276}
+	&"{f6:2}{f5}{pound}v7{f5} {lt. green}Not Found.{f6}":goto {:3276}
 {:3328}
 	if a<1 or a>ur then{:3332}
-	x=a:gosub 1065:gosub 1001:&,2,2:h$=a$:if h$<>"{up arrow}"or h$<>"{$d2}{$c5}{$d3}"then{:3334}
+	x=a:gosub 1065:gosub 1001:&,2,2:h$=a$:if h$<>"{up arrow}"or h$<>"RES"then{:3334}
 {:3332}
-	&"{f6}{$c9}nvalid {$c9}{$c4} {$ce}umber.{f6}":x=.:goto {:3276}
+	&"{f6}Invalid ID Number.{f6}":x=.:goto {:3276}
 {:3334}
-	&"{f6}{lt. green}{$c8}andle: {pound}$h{f6:2}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1902:on a+1 goto {:3276}:f4=3:goto {:3046}
+	&"{f6}{lt. green}Handle: {pound}$h{f6:2}Is That Correct?: ":gosub 1902:on a+1 goto {:3276}:f4=3:goto {:3046}
 {:3336}
-	close 2:f1=f1-(f1=.):x=val(f$):if x=.then:&"{f6}{$ce}o {$c1}ccount!{f6:2}":goto {:3116}
+	close 2:f1=f1-(f1=.):x=val(f$):if x=.then:&"{f6}No Account!{f6:2}":goto {:3116}
 	gosub 1065:gosub 1001:for i=1 to 23:input# 2,ed$(i):next
-	&"{f6}":p$="{$c3}redits":w$=ed$(19):&,1,32:p$="":if an$=""then{:3116}
+	&"{f6}":p$="Credits":w$=ed$(19):&,1,32:p$="":if an$=""then{:3116}
 	ed$(19)=str$(val(an$)):a$=""
 	for i=1 to 23:a$=a$+ed$(i)+r$:next:gosub 1001:print# 2,a$
 {:3346}
@@ -245,8 +249,8 @@
 {:3348}
 	if zz=.then{:3116}
 	close 2:f1=f1-(f1=.):x=val(f$)
-	if x=.or h$="{up arrow}"or h$="{$d2}{$c5}{$d3}"then:&"{f6}{$ce}o {$c1}ccount!{f6:2}":goto {:3116}
-	tt$=h$:&"{f6:2}{$c4}elete {f5}{pound}$h{f5}{f6}":gosub 1901:if a=.then{:3346}
+	if x=.or h$="{up arrow}"or h$="RES"then:&"{f6}No Account!{f6:2}":goto {:3116}
+	tt$=h$:&"{f6:2}Delete {f5}{pound}$h{f5}{f6}":gosub 1901:if a=.then{:3346}
 	an$=tt$:gosub 1034
 	tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 23:tt$(i)="0":next:gosub 1065:a$=""
 	for i=1 to 23:a$=a$+tt$(i)+r$:next:gosub 1001:print# 2,a$;:close 2
@@ -255,67 +259,67 @@
 	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024
 	goto {:3346}
 {:3370}
-	on zz+1 goto {:3116}:close 2:f1=f1-(f1=.):x=val(f$):if x=.then:&"{f6}{$ce}o {$c1}ccount!{f6:2}":goto {:3116}
+	on zz+1 goto {:3116}:close 2:f1=f1-(f1=.):x=val(f$):if x=.then:&"{f6}No Account!{f6:2}":goto {:3116}
 	gosub 1065:gosub 1001:for i=1 to 23:input# 2,ed$(i):next
-	b$=ed$(1):c$=ed$(3)+" "+ed$(4):&"{f6:2}{$c8}andle{pound}{back arrow}20: {pound}$b{f6}{$d2}eal {$ce}ame{pound}{back arrow}20: {pound}$c"
-	b$=ed$(5):c$=ed$(7):&"{f6}{$d0}hone {$ce}umber{pound}{back arrow}20: {pound}$b{f6}{$c1}ccess{pound}{back arrow}20: {pound}$c"
-	b$=ed$(9):c$=ed$(8):&"{f6}{$c3}alls {$d4}oday{pound}{back arrow}20: {pound}$c{f6}{$d4}otal {$c3}alls{pound}{back arrow}20: {pound}$b"
-	b$=ed$(19):c$=ed$(20):&"{f6}{$c3}redits{pound}{back arrow}20: {pound}$b{f6}{$d4}otal {$d0}osts{pound}{back arrow}20: {pound}$c"
-	b$=ed$(21):&"{f6}{$d4}otal {$d2}esponses{pound}{back arrow}20: {pound}$b"
-	b$=ed$(16):c$=ed$(18):&"{f6}{$d4}otal {$d5}ploads{pound}{back arrow}20: {$c6}iles {pound}$b, {$c2}lks {pound}$c"
-	b$=ed$(15):c$=ed$(17):&"{f6}{$d4}otal {$c4}ownloads{pound}{back arrow}20: {$c6}iles {pound}$b, {$c2}lks {pound}$c{f6}":goto {:3116}
+	b$=ed$(1):c$=ed$(3)+" "+ed$(4):&"{f6:2}Handle{pound}{back arrow}20: {pound}$b{f6}Real Name{pound}{back arrow}20: {pound}$c"
+	b$=ed$(5):c$=ed$(7):&"{f6}Phone Number{pound}{back arrow}20: {pound}$b{f6}Access{pound}{back arrow}20: {pound}$c"
+	b$=ed$(9):c$=ed$(8):&"{f6}Calls Today{pound}{back arrow}20: {pound}$c{f6}Total Calls{pound}{back arrow}20: {pound}$b"
+	b$=ed$(19):c$=ed$(20):&"{f6}Credits{pound}{back arrow}20: {pound}$b{f6}Total Posts{pound}{back arrow}20: {pound}$c"
+	b$=ed$(21):&"{f6}Total Responses{pound}{back arrow}20: {pound}$b"
+	b$=ed$(16):c$=ed$(18):&"{f6}Total Uploads{pound}{back arrow}20: Files {pound}$b, Blks {pound}$c"
+	b$=ed$(15):c$=ed$(17):&"{f6}Total Downloads{pound}{back arrow}20: Files {pound}$b, Blks {pound}$c{f6}":goto {:3116}
 {:3388}
 	f1=.:k%=.:gosub {:3024}:on-(e%<>.)goto {:3410}:dr=3:gosub 1009:open 3,dv%,3,dr$+"e.temp,s,w":goto {:3392}
 {:3390}
 	on t+1 goto {:3392}:close 2:close 3:goto {:3404}
 {:3392}
-	l=k%+1:gosub {:3030}:gosub {:3204}:&"{f6} ({$c4})elete ({$cb})eep ({$c1})bort: {pound}g1":on tr%+1 goto 1811
-	if an$="{$c4}"then:&"{$c4}elete{f6}":&,22,2:goto {:3390}
-	if an$="{$c1}"then:&"{$c1}bort!{f6}":&,22,2:close 2:close 3:a$="e.temp":dr=3:gosub 1024:goto {:3084}
-	k%=k%+1:&"{$cb}eep{f6}":&,22,2:print# 3,h$r$f$r$d$r$s$r$t$r$c$r$z$r$y$
+	l=k%+1:gosub {:3030}:gosub {:3204}:&"{f6} (D)elete (K)eep (A)bort: {pound}g1":on tr%+1 goto 1811
+	if an$="D"then:&"Delete{f6}":&,22,2:goto {:3390}
+	if an$="A"then:&"Abort!{f6}":&,22,2:close 2:close 3:a$="e.temp":dr=3:gosub 1024:goto {:3084}
+	k%=k%+1:&"Keep{f6}":&,22,2:print# 3,h$r$f$r$d$r$s$r$t$r$c$r$z$r$y$
 	for kk=1 to k-1:print# 3,tt$(kk):next:goto {:3390}
 	goto {:3390}
 {:3404}
 	dr=3:gosub 1010:print# 15,"s"+dr$+"e."+n$
-	on k%+1 goto {:3408}:print# 15,"r"+dr$+"e."+n$+"=e.temp":close 15:gosub {:3026}:&"{f6:2} {yellow}{$c4}one!{f6:2}":goto {:3084}
+	on k%+1 goto {:3408}:print# 15,"r"+dr$+"e."+n$+"=e.temp":close 15:gosub {:3026}:&"{f6:2} {yellow}Done!{f6:2}":goto {:3084}
 {:3408}
-	dr=3:a$="e.temp":gosub 1024:&"{f6:2}{$c4}one!{f6:2}":gosub {:3026}:goto {:3084}
+	dr=3:a$="e.temp":gosub 1024:&"{f6:2}Done!{f6:2}":gosub {:3026}:goto {:3084}
 {:3410}
-	&"{f6:2} {f5}e.{pound}$n{f5} {$ce}ot {$c6}ound.{f6:2}":close 2:goto {:3084}
+	&"{f6:2} {f5}e.{pound}$n{f5} Not Found.{f6:2}":close 2:goto {:3084}
 {:3412}
-	if zz then:&"{$c8}eader also? ":gosub 1902:&,52,12,1:on a+1 gosub {:3212},{:3206}:&,52,12,.
+	if zz then:&"Header also? ":gosub 1902:&,52,12,1:on a+1 gosub {:3212},{:3206}:&,52,12,.
 	goto {:3116}
 {:3416}
 	f1=.:goto 1811
 {:3418}
 	if id<>1 then{:3458}
 {:3420}
-	gosub 2912:lp=1:&"{clear}{f6:2}{blue}{pound}vj {cyan}{pound}{back arrow}12{pound}$q{$d7}atch{$c4}og {$c6}iles{pound}{back arrow}39{f6}{blue}{pound}vj{pound}q0"
-	&"{f6}{cyan} 1.{white} {$cc}ocal {$cd}aint {$c6}ile"
-	&"{f6}{cyan} 2.{white} {$c5}-{$cd}ail {$d3}ent {$c6}ile"
-	&"{f6}{cyan} 3.{white} {$c2}lack{$cc}ist {$cc}og{$cf}n {$c6}ile"
+	gosub 2912:lp=1:&"{clear}{f6:2}{blue}{pound}vj {cyan}{pound}{back arrow}12{pound}$qWatchDog Files{pound}{back arrow}39{f6}{blue}{pound}vj{pound}q0"
+	&"{f6}{cyan} 1.{white} Local Maint File"
+	&"{f6}{cyan} 2.{white} E-Mail Sent File"
+	&"{f6}{cyan} 3.{white} BlackList LogOn File"
 	&"{f6:2}   {lt. blue}=> {pound}g1":a=val(an$):if tr%<1 then{:3458}
 	on a goto {:3434},{:3436},{:3438}
 	goto {:3458}
 {:3434}
-	&"{clear}{f6}{$cc}ocal {$cd}aint {$c6}ile{f6:2}":b$="zz log":gosub {:3440}:goto {:3420}
+	&"{clear}{f6}Local Maint File{f6:2}":b$="zz log":gosub {:3440}:goto {:3420}
 {:3436}
-	&"{clear}{f6}{$c5}mail {$d3}ent {$c6}ile{f6:2}":b$="em log":gosub {:3440}:goto {:3420}
+	&"{clear}{f6}Email Sent File{f6:2}":b$="em log":gosub {:3440}:goto {:3420}
 {:3438}
-	&"{clear}{f6}{$c2}lack{$cc}ist {$cc}og{$cf}n {$c6}ile{f6:2}":b$="nu log":gosub {:3440}:goto {:3420}
+	&"{clear}{f6}BlackList LogOn File{f6:2}":b$="nu log":gosub {:3440}:goto {:3420}
 {:3440}
-	a$="e."+b$:dr=3:gosub 1076:if e%then:&"{f6}{$ce}o {$cc}og {$c6}ound.":return
-	&"{f6:2}{$c4}elete e."+b$+" ? ":gosub 1902:if tr%<1 then return
+	a$="e."+b$:dr=3:gosub 1076:if e%then:&"{f6}No Log Found.":return
+	&"{f6:2}Delete e."+b$+" ? ":gosub 1902:if tr%<1 then return
 	on-(a<>1)goto {:3456}
 	dr=3:a$="e."+b$:gosub 1024
 {:3456}
 	return
 {:3458}
 	close 15:goto {:3084}
-	data"{$c6}eedback","fback",23,0
-	data"{$ce}ew {$d5}sers","new",29,0
-	data"{$c5}rror {$cc}og","errlog",0,0
-	data"{$d4}elecheck","telecheck",0,1
-	rem data"{$c1}dd {$d5}pdate","address",0,1
+	data"Feedback","fback",23,0
+	data"New Users","new",29,0
+	data"Error Log","errlog",0,0
+	data"Telecheck","telecheck",0,1
+	rem data"Add Update","address",0,1
 	data"{up arrow}"
-	copr. 1995 new image 02/11/95
+	rem "+.VF" copr. 1995 new image 02/11/95

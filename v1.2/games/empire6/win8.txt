@@ -1,0 +1,20 @@
+    You have long heard the story, of a ship at the base of a mountain. 
+Knowing that no one would build a ship so far from the ocean, you have
+dismissed the tale as serfs' superstition.
+
+    Then, one day, you came across an ancient manuscript.  It told of a great
+tidal wave which hit the land long ago, carrying houses for miles inland.  You
+wonder if a ship could have been carried as far as the mountains.  With your
+curiosity aroused, you set off with some of your Nobles in search of the ship. 
+
+    After many weeks of searching, you are about to give up when one of
+your men gives a shout!  You look up, and see he is pointing at something.
+
+    Climbing to the top of a small hill, you look in the direction he is
+pointing.  There, before your eyes, is the rotting remains of a small ship. 
+Upon closer examination, you find some cannon, which may be useful, otherwise,
+the ship is a total loss.
+
+   You gain 6 cannons!
+
+               <Press any Key>\g1

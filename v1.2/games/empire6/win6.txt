@@ -1,0 +1,21 @@
+    You have heard of a distant land which is rich in the finest spices. 
+You have thought many times about setting sail in search of this land.  Now 
+you have decided to look for this land.
+
+    You have hired a small vessel, and with some of your Nobles and their
+men, you set sail on your adventure.
+
+    After many weeks, you are considering turning back.  Then the call "Land
+ho!" comes down from the crow's nest.  
+
+    Sure enough: in the hazy distance there is the outline of a large island.
+Having seen other islands without finding the "Island of Spice," you still
+hold a faint hope.  But you decide that if this one turns out to be just
+another island, you will set sail for home.
+
+    However, on approaching the island, your nostrils detect the sweet scent
+of spices -- you have found the fabled "Island of Spice!"
+
+   You gain 40 tons of Spices!!
+
+               <Press any Key>\g1

@@ -1,0 +1,63 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{clear}{rvrs on}{yellow} Rel File Editor {rvrs off}":GOSUB {:3002}:CLOSE 15:GOTO 1812
+{:3002}
+	POKE 53252,16:n=.:&"{f6:2}Filename: {pound}i0{f6}":f$=an$:IF an$=""THEN RETURN
+	IF d1%<7 THEN d1%=8
+	a%=d1%:b%=d2%:&"Device ({pound}%a,{pound}%b): {pound}i1":dr=VAL(an$)
+	IF dr>6 THEN d1%=dr:dr=0:&"Drive: {pound}i1":d2%=VAL(an$)
+	ON-(dr<0)GOTO {:3002}:GOSUB 1474:IF a THEN{:3022}
+	CLOSE 15:OPEN 15,dv%,15:CLOSE 2:OPEN 2,dv%,2,dr$+f$:GOSUB 1012:IF e%THEN{:3024}
+	&"{f6}Do a search? {pound}i1{f6}":IF an$="Y"THEN{:3200}
+{:3014}
+	&"{f6}Record: {pound}i1{f6}":x=VAL(an$):IF x<1 THEN CLOSE 2:&"{f6}":GOTO {:3300}
+	GOSUB 1001:tt$=""
+{:3018}
+	GET#2,a$
+	tt$=tt$+a$:&:ON-(st=.)GOTO {:3018}:&"{f6}"
+	&"{f6}Edit?: ":GOSUB 1902:ON-(a=.)GOTO {:3014}:GOSUB {:3100}:GOTO {:3014}
+{:3022}
+	a$="{f6}Error: Device Not Present{f6}"
+{:3024}
+	&:CLOSE 2:RETURN
+	REM
+{:3100}
+	&"{f6}":POKE 53252,80:w$=tt$:p$=":":&,1,45:IF an$<>""THEN b$=an$
+	&"{f6}Save Changes?: ":GOSUB 1902:ON-(a=.)GOTO {:3110}
+	&"{f6}Saving record...{f6}"
+	GOSUB 1001:PRINT# 2,b$
+{:3110}
+	RETURN
+{:3200}
+	x=1:GOSUB 1001:s$=""
+{:3202}
+	GET#2,a$
+	s$=s$+a$:&:ON-(st=.)GOTO {:3202}
+	y%=ABS(INT(VAL(s$))):y=y%
+	&"{f6}There are {pound}%y records.{f6}Enter one character: {pound}i0{f6}{lt. blue}":s$=an$
+	&"{f6}Enter record # to start at: {pound}i0{f6}":x=VAL(an$):x=x-1
+{:3210}
+	x=x+1:&x:&"{f6}{lt. blue}":IF x=y THEN{:3300}
+	GOSUB 1001
+{:3212}
+	GET#2,a$:IF a$=s$THEN{:3214}
+	ON-(st=.)GOTO {:3212}:GOTO {:3210}
+{:3214}
+	&"{lt. green}":tt$="":GOSUB 1001
+{:3216}
+	GET#2,a$
+	tt$=tt$+a$:&:ON-(st=.)GOTO {:3216}:&"{f6}"
+	&"{f6}{yellow}Edit?: (Y)es, (A)bort, (J)ump, [No]{pound}g1":&"{f6}"
+	d$=an$:ON-(d$="Y")-(d$="A")*2-(d$="J")*3 GOTO {:3250},{:3300},{:3260}:GOTO {:3210}
+{:3250}
+	GOSUB {:3100}:GOTO {:3210}
+{:3260}
+	&"{f6}Enter jump value: {pound}i1":&"{f6}"
+	x=VAL(an$):x=x-1:GOTO {:3210}
+{:3300}
+	&"{f6}{lt. green}Start over?: ":GOSUB 1902:ON-(a=.)GOTO {:3304}:GOTO {:3002}
+{:3304}
+	&"{f6}Closing file..":CLOSE 2:RETURN
+	rem +.rfe
+

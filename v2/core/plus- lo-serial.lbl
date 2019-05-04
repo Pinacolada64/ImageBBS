@@ -2,40 +2,40 @@
 	rem "+.lo.serial" 05-14-90 10:20 pm
 	d1%=8:d2%=2:mx=999
 	dr=0:a$="or.serial":gosub 1011:x=id:gosub 1001:&,2,2:close 2
-	vf=1:on-(len(a$)=5)goto {:4026}:vf=0:if left$(a$,1)<>"*"then{:4014}
-	lp=1:&"{f6:2}{$d9}our serial number is {pound}$a. {$d4}his has not yet been verified by "
-	lp=1:&"{$ce}ew {$c9}mage {$d3}oftware, but will be within 24 hours.{f6}"
+	vf=1:on-(len(a$)=5)goto {:4026}:vf=0:if left$(a$,1)<>"*" then {:4014}
+	lp=1:&"{f6:2}Your serial number is {pound}$a. This has not yet been verified by "
+	lp=1:&"New Image Software, but will be within 24 hours.{f6}"
 	a$=mid$(a$,2):goto {:4026}
 {:4014}
-	poke 53252,5:&"{$c5}nter your {$c9}mage {$c2:2}{$d3} {$d3}erial #: {pound}i1":if an$=""or tr%<1 then return
-	z$=left$(an$,1):if z$<>"{$c7}"and z$<>"{$c6}"and z$<>"{$c5}"then{:4060}
+	poke 53252,5:&"Enter your Image {$c2:2}S Serial #: {pound}i1":if an$=""or tr%<1 then return
+	z$=left$(an$,1):if z$<>"G"and z$<>"F"and z$<>"E" then {:4060}
 	a=val(mid$(an$,2)):if a<1 or a>999 then{:4060}
 	dr=0:f$="or.serial.add,s":a$=f$+",w":gosub 1011:a$=f$+",a":gosub 1011
 	print# 2,id:close 2
 	dr=0:a$="or.serial":gosub 1011:x=id:gosub 1001:print# 2,"*"an$:close 2:a$=an$
 {:4026}
-	&"{f6:2}{$c9}mage {$cf}wner: {pound}$a{f6:2}":sn=val(mid$(a$,2))
+	&"{f6:2}Image Owner: {pound}$a{f6:2}":sn=val(mid$(a$,2))
 	dr=0:a$="or.orders":gosub 1011:x=sn:gosub 1001:n=0
 {:4030}
 	&,2,2:if a$<>"{up arrow}"then n=n+1:tt$(n)=a$:on-(st=0)goto {:4030}:close 2
-	if n=0 then lp=1:&"{f6}{$d9}ou have no product orders currently on file.{f6}":goto {:4036}
+	if n=0 then lp=1:&"{f6}You have no product orders currently on file.{f6}":goto {:4036}
 	for i=1 to n:a$=tt$(i):gosub {:4038}:next
 {:4036}
 	on vf gosub {:4064}:return
 {:4038}
-	an$="1"+left$(a$,6)+"1200":&,15:b$="{$cf}rdered "+left$(an$,12)
-	e$=mid$(a$,7,6):an$="1"+e$+"1200":&,15:c$="{$ce}ot {$d9}et {$d3}hipped"
-	if e$<>"000000"then c$="{$d3}hipped "+left$(an$,12)
+	an$="1"+left$(a$,6)+"1200":&,15:b$="Ordered "+left$(an$,12)
+	e$=mid$(a$,7,6):an$="1"+e$+"1200":&,15:c$="Not Yet Shipped"
+	if e$<>"000000"then c$="Shipped "+left$(an$,12)
 	d$=mid$(a$,19):e$=mid$(a$,13,1)
-	if e$="{$c3}"then e$="{$c3}.{$cf}.{$c4}."
-	if e$="{$d0}"then e$="{$d0}aid {$c3}heck/{$cd}{$cf}"
-	if e$="{$d2}"then e$="{$d2}eplacement"
-	if e$="{$c4}"then e$="{$c4}ealer"
-	if e$="{$c6}"then e$="{$c6}ree"
+	if e$="C"then e$="C.O.D."
+	if e$="P"then e$="Paid Check/MO"
+	if e$="R"then e$="Replacement"
+	if e$="D"then e$="Dealer"
+	if e$="F"then e$="Free"
 	&"{pound}$d [{pound}$e]:{f6} {pound}$b{f6} {pound}$c{f6}"
 	return
 {:4060}
-	lp=1:&"{$d3}orry, that is not a valid serial #. {$c5}xamples: {$c7}0001, {$c7}0900, {$c7}0117."
+	lp=1:&"Sorry, that is not a valid serial #. Examples: G0001, G0900, G0117."
 	goto {:4014}
 {:4064}
 	dr=0:a$="or.owners.fields,s,r":gosub 1011:n=0
@@ -46,14 +46,14 @@
 {:4072}
 	i=i+1:&,2,2:tt$(i)=a$:on-(st=0 and a$<>"{up arrow}")goto {:4072}
 {:4074}
-	&"{clear}{f6:2}{$c9}mage {$cf}wners {$c4}atabase:{f6:2}":a$=tt$(1)
-	&"{$d3}erial # {pound}$a{f6}":a$=tt$(3):b$=tt$(2)
-	&"{$ce}ame:    {pound}$a {pound}$b{f6}":a$=tt$(4)
-	&"{$c1}ddress: {pound}$a{f6}":a$=tt$(5):b$=tt$(6):c$=tt$(7)
+	&"{clear}{f6:2}Image Owners Database:{f6:2}":a$=tt$(1)
+	&"Serial # {pound}$a{f6}":a$=tt$(3):b$=tt$(2)
+	&"Name:    {pound}$a {pound}$b{f6}":a$=tt$(4)
+	&"Address: {pound}$a{f6}":a$=tt$(5):b$=tt$(6):c$=tt$(7)
 	&"         {pound}$a, {pound}$b  {pound}$c{f6:2}":a$=tt$(9):b$=tt$(10):c$=tt$(8)
-	&"{$d6}oice#:  {pound}$a{f6}{$c2:2}{$d3}#:    {pound}$b{f6}{$c2:2}{$d3} {$ce}ame:{pound}$c{f6:3}"
-	&"{$c9}s all of this correct? ":gosub 1902:on tr%+1 goto {:4096}:if a then{:4096}
-	&"{f6}({$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce} if correct){f6}"
+	&"Voice#:  {pound}$a{f6}{$c2:2}S#:    {pound}$b{f6}{$c2:2}S Name:{pound}$c{f6:3}"
+	&"Is all of this correct? ":gosub 1902:on tr%+1 goto {:4096}:if a then{:4096}
+	&"{f6}(Press RETURN if correct){f6}"
 	for i=2 to n:a$=ed$(i):pl=val(left$(a$,1)):p$=mid$(a$,4)
 	poke 53252,val(mid$(a$,2,2)):w$=tt$(i):&,1,32:if an$<>""then tt$(i)=an$:tz=1
 	&"{f6}":next:goto {:4074}
@@ -61,6 +61,6 @@
 	if tz=0 then return
 	dr=0:f$="or.owners.chg,s":a$=f$+",w":gosub 1011:if e%then a$=f$+",a":gosub 1011
 	for i=1 to n:print# 2,tt$(i):next:print# 2,"{up arrow}":close 2
-	lp=1:&"{f6}{$d9}our changes have been filed... the changes will be added to the "
+	lp=1:&"{f6}Your changes have been filed... the changes will be added to the "
 	lp=1:&"database within 24 hours.{f6}":return
 	rem

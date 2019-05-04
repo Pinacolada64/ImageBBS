@@ -127,7 +127,7 @@
 ; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
 
 	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
- 	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
+	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
 
 	cassbuff= 828
 	idlemax	= 830
@@ -340,5 +340,4 @@
 	loadprg	= wedgemem+6
 	arraysav= wedgemem+9
 	arrayres= wedgemem+12
-	forcegc	= wedgemem+15
-{endasm}
+	forcegc	= wedgemem+15

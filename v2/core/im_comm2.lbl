@@ -1,16 +1,19 @@
 {number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
 	on im goto {:60002}:return
 {:60002}
 	&,18,0:gosub 1914:if peek(1063)<>250 then print# 131,"ate1v1m1"
 {:60004}
-	&,52,16,3:a$="{$c3}/{$c7}":if a%then a$="{$c1}{$d3}{$c3}{$c9:2}"
-	a%=qb:&"{f6:2}{white}{$c9}mage {$cd}ini-{$d4}erm, {white}{pound}%a {lt. blue}{$c2}{$d0}{$d3}, {white}{pound}$a {lt. blue}{$cd}ode{f6}"
-	&"{white}{$c2}{lt. blue}aud{blue}, {white}{$d4}{lt. blue}erm{blue}, {white}{$cd}{lt. blue}ode{blue}, {white}{$d1}{lt. blue}uit{blue}: {white}"
+	&,52,16,3:a$="C/G":if a%then a$="ASC{$c9:2}"
+	a%=qb:&"{f6:2}{white}Image Mini-Term, {white}{pound}%a {lt. blue}BPS, {white}{pound}$a {lt. blue}Mode{f6}"
+	&"{white}B{lt. blue}aud{blue}, {white}T{lt. blue}erm{blue}, {white}M{lt. blue}ode{blue}, {white}Q{lt. blue}uit{blue}: {white}"
 {:60010}
-	&"{pound}g1":if tr%<1 or an$="{$d1}"then:&"{$d1}uit{f6:2}":a$="e0v0":goto {:60026}
-	if an$="{$d4}"then:&"{$d4}erm{f6:2}({$d0}ress {f5}{$c3}= {$c3}{$d4}{$d2}{$cc}{f5} to {$c5}xit){f6:2}":&,10:goto {:60004}
-	if an$="{$cd}"then:&"{$cd}ode{f6}":&,52,16,2:goto {:60004}
-	if an$="{$c2}"then:&"{$c2}aud{f6}":gosub {:60020}:goto {:60004}
+	&"{pound}g1":if tr%<1 or an$="Q"then:&"Quit{f6:2}":a$="e0v0":goto {:60026}
+	if an$="T"then:&"Term{f6:2}(Press {f5}C= CTRL{f5} to Exit){f6:2}":&,10:goto {:60004}
+	if an$="M"then:&"Mode{f6}":&,52,16,2:goto {:60004}
+	if an$="B"then:&"Baud{f6}":gosub {:60020}:goto {:60004}
 	goto {:60010}
 {:60020}
 	lp=1:&"1-300 2-600 3-1200 4-2400 5-4800 6-9600 7-19200 8-38400: "
@@ -19,3 +22,4 @@
 {:60026}
 	if peek(1063)<>250 then print# 131,"at"
 	return
+	rem im.comm2
