@@ -1,0 +1,102 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.sort" 05-19-91
+	ON nn GOSUB {:4400}:GOSUB {:4800}
+	RETURN
+{:4400}
+	REM process reports
+	g$="nm.R.":&"{f6}Checking for Reports..."
+	dr=2:a$="nm.list,s,r":GOSUB 1011:kk=0:IF e%THEN CLOSE 2:GOTO {:4414}
+{:4406}
+	&,2,2:kk=kk+1:ed$(kk)=a$:ON-(st=0 AND kk<61)GOTO {:4406}:CLOSE 2
+	FOR i=1 TO kk:o$=MID$(ed$(i),11):IF LEFT$(o$,8)=g$+nn$THEN GOSUB {:4420}:ed$(i)=""
+	NEXT:x=0:FOR i=1 TO kk:IF ed$(i)<>""THEN x=x+1:ed$(x)=ed$(i)
+	NEXT:kk=x
+{:4414}
+	PRINT# 15,"s"dr$"nm.list"
+	IF kk THEN a$="nm.list,s,w":GOSUB 1011:FOR i=1 TO kk:PRINT# 2,ed$(i):NEXT:CLOSE 2
+	&"{f6}Done{f6}":RETURN
+{:4420}
+	dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.reports,s,a":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,dr$+"nm.reports,s,w":GOSUB 1012
+{:4426}
+	&,2,2:s=st:PRINT# 3,a$:ON-(s=0)GOTO {:4426}:PRINT# 3,"{up arrow}":CLOSE 3:CLOSE 2
+	PRINT# 15,"s"dr$o$:RETURN
+	REM
+	&"{f6} Adding NetNews..."
+	dr=4:a$="d.n.Main,s,r":GOSUB 1011:n=0:ON-(e%<>0)GOTO {:4606}:&,2,2:n=VAL(a$)
+	IF n THEN FOR i=1 TO n:b$="":FOR j=1 TO 3:&,2,2:b$=b$+a$+r$:NEXT:tt$(i)=b$:NEXT
+{:4606}
+	CLOSE 2
+	dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:4634}
+{:4610}
+	f=1:&,2,2:a$=a$+r$:ON-(n=0)GOTO {:4616}:a=LEN(a$)
+	FOR i=1 TO n:IF LEFT$(tt$(i),a)=a$THEN tt$(i)=a$+d1$+STR$(af%)+r$:f=0:i=n
+	NEXT
+{:4616}
+	IF f THEN n=n+1:tt$(n)=a$+d1$+r$+STR$(af%)+r$
+{:4618}
+	&,2,2:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4618}:ON-(s=0)GOTO {:4610}:CLOSE 2
+	dr=1:GOSUB 1010:dr=2:GOSUB 1009:CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,r":dr=1
+{:4622}
+	GOSUB 1009:&,2,3:f$=LEFT$("n."+a$,16)+",s,w":CLOSE 2:OPEN 2,dv%,2,dr$+f$+",s,w"
+	GOSUB 1012:ON-(e%=0)GOTO {:4628}:CLOSE 2:PRINT# 15,"s"dr$f$
+	OPEN 2,dv%,2,dr$+f$+",s,w":GOSUB 1012
+{:4628}
+	&,2,3:s=st:PRINT# 2,a$:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4628}:CLOSE 2:ON-(s=0)GOTO {:4622}
+	CLOSE 3:dr=4:GOSUB 1010:PRINT# 15,"s"dr$"d.n.Main"
+	a$="d.n.Main,s,w":GOSUB 1011:PRINT# 2,n:FOR i=1 TO n:PRINT# 2,tt$(i);:NEXT:CLOSE 2
+{:4634}
+	RETURN
+	REM
+{:4800}
+	REM sort files
+	x=1:GOSUB 3002:IF e%THEN RETURN
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:IF e%THEN{:4808}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOSUB 1012:IF e%=0 THEN{:4810}
+{:4808}
+	&"{f6}ERROR!{f6}":RETURN
+{:4810}
+	&"Reading File List..."
+	kk=0:dr=2:a$="nm.list,s,r":GOSUB 1011:IF e%THEN CLOSE 2:&"No Files!{f6}":GOTO {:4816}
+{:4814}
+	&,2,2:kk=kk+1:tt$(kk)=a$:ON-(st=0 AND kk<254)GOTO {:4814}:CLOSE 2:&"{f6}"
+{:4816}
+	IF kk=0 THEN RETURN
+	&"Sorting Files...{f6}":FOR u=1 TO kk:c$=tt$(u):GOSUB {:4824}:NEXT
+	FOR u=1 TO kk:o$=MID$(tt$(u),11):ON-(LEFT$(o$,8)="nm.F."+nn$)GOSUB {:4854}:NEXT
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.list":&"Done{f6}":RETURN
+{:4824}
+	n$=MID$(c$,5,3):b$=LEFT$(c$,3):&"{pound}$c{pound}{back arrow}32":b%=0:ON-(b$="ALL")GOTO {:4836}
+	IF b$=nn$THEN:&"Keep{f6}":o$="nm.keep":ON nn GOTO {:4850}:RETURN
+{:4828}
+	a%=nn:&,16,1:IF an$=""AND nn<>1 THEN b%=1:GOTO {:4828}
+	IF an$=""THEN{:4840}
+	an$=MID$(an$,6):IF bb>4 THEN FOR x=5 TO bb:a$=dt$(x):&,16,3:NEXT
+	a$=LEFT$(an$,3):&"{pound}$a{f6}":GOTO {:4842}
+{:4836}
+	&"ALL{f6}":FOR i=1 TO 4:a$=dt$(i):IF a$<>""AND a$<>n$AND a$<>"{up arrow}"THEN GOSUB {:4842}
+	NEXT:b$=MID$(c$,11):x=4:GOTO 3002
+{:4840}
+	o$="nm.zone":&"Zone{f6}":GOTO {:4850}
+{:4842}
+	o$="nm.l."+a$:c$=LEFT$(c$,4)+nn$+MID$(c$,8)
+	dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN{:4850}
+{:4846}
+	&,2,2:IF a$=c$THEN CLOSE 2:RETURN
+	ON-(st=0)GOTO {:4846}:CLOSE 2
+{:4850}
+	a$=o$+",s,w":GOSUB 1011:IF e%THEN a$=o$+",s,a":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	PRINT# 2,c$:CLOSE 2:RETURN
+{:4854}
+	f$="m."+LEFT$(sy$,13):m$="Net File Package from "+RIGHT$(o$,3)
+	dr=2:a$=f$+",s,w":GOSUB 1011:f%=e%:IF e%THEN a$=f$+",s,a":GOSUB 1011
+	PRINT# 2,"NetMail"r$" 0"r$d1$r$"["m$"]"r$"{up arrow}":CLOSE 2
+	GOSUB 1060:i=1
+	x=13:GOSUB 1025:x=24:GOSUB 1025:x=31:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	IF f%=.THEN x=25:GOSUB 1025
+	CLOSE 2:RETURN
+	REM removed updates and zones 180205 x-tec
+
