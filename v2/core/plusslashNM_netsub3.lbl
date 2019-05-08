@@ -1,0 +1,110 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.netsub3"
+	FOR q=1 TO n:dr=2:a$="nm.P.temp"+STR$(q)+",s,r":GOSUB 1011:IF e%THEN NEXT:GOTO {:4146}
+	CLOSE 2:dr=5:GOSUB 1010:a$=dr$+"++ netlist":&,7,dv%,2:CLOSE 14:dr=2:GOSUB 1010
+	a$=dr$+"nm.netsub"+STR$(q):&,16,2,dv%:GOSUB 1012:IF e%THEN NEXT:GOTO {:4146}
+	&,16:nb$=an$+"":d$=a$+"":GOSUB {:4090}
+	dr=5:GOSUB 1010:a$=dr$+"++ post":&,7,dv%,2:GOSUB 1012:IF e%THEN{:4148}
+	dr=3:a$="e.Sub":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:4148}
+	f=a%(0):IF f=0 THEN CLOSE 2:GOTO {:4072}
+	FOR i=1 TO f:x=a%(i)+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:&,2,2:&,2,2:c%(i)=VAL(a$)
+	&,2,2:d%(i)=VAL(a$):NEXT:CLOSE 2
+	a$="nm.P.temp"+STR$(q)+",s,r":dr=2:GOSUB 1011:IF e%THEN CLOSE 2:NEXT:GOTO {:4146}
+{:4022}
+	&,2,2:a=-(st=0):ON a+1 GOTO {:4072}:&,2,2:a=-(st=0):ON a+1 GOTO {:4072}:h$=MID$(a$,5)
+	&,2,2:a=-(st=0):ON a+1 GOTO {:4072}:h$="!"+MID$(a$,5)+h$:td$=d1$+"10001011200"
+	&,2,2:a=-(st=0):ON a+1 GOTO {:4072}:&,2,2:a=-(st=0):t$=MID$(a$,5):ON a+1 GOTO {:4072}
+	f=a%(0):FOR i=1 TO f:GOSUB {:4118}
+	IF e%THEN NEXT:GOTO {:4056}
+	x=1:GOSUB {:4140}:&,2,3:aa=VAL(a$):IF aa=.THEN CLOSE 3:NEXT:GOTO {:4056}
+	FOR x=2 TO aa+1:GOSUB {:4140}:&,2,3:IF a$<>t$AND a$<>"{f8}"+t$THEN NEXT:NEXT:GOTO {:4056}
+	IF LEFT$(a$,1)="{f8}"THEN:&"{f6}{white}--> Fzn Post: {f5}{pound}$t{f5}...":GOTO {:4084}
+	mn=x:dn=i:FOR x=1 TO 1:NEXT:FOR i=1 TO 1:NEXT:x=mn:GOSUB {:4140}:&,2,3:sh$=h$
+	&,2,3:h$=a$:&,2,3:an$=d1$:td$=LEFT$(a$,11)+an$:GOSUB {:4128}:cd$=a$
+	GOSUB {:4122}:GOSUB {:4126}:IF e%THEN CLOSE 3:GOTO {:4084}
+	x=1:GOSUB {:4140}:&,2,3:yy%=VAL(a$):&,2,3:zz%=VAL(a$):&,2,3:ww%=VAL(a$):b%=2
+	zz$="":&,16,8:xx%=a%:IF a%>511 THEN:&"{f6}{lt. red}--> 512 Resp: {f5}{pound}$t{f5}...":GOTO {:4084}
+{:4048}
+	&,2,2:a=-(st=0):IF LEFT$(a$,3)="ms:"THEN zz$="*"+MID$(a$,5)
+	ON-(a=1 AND LEFT$(a$,3)<>"st:"AND a$<>"{up arrow}")GOTO {:4048}:IF a=0 THEN{:4072}
+	ON-(a$="{up arrow}")GOTO {:4070}:x=yy%:GOSUB {:4140}:PRINT# 3,cd$r$RIGHT$(td$,11)r$sh$r$zz$
+	b%=xx%+1:a%=x:&,16,4:&"{f6}{lt. blue}--> New Resp: {f5}{pound}$t{f5}...":rn=rn+1:x=x+1:GOTO {:4064}
+{:4056}
+	FOR i=1 TO f:GOSUB {:4118}:IF e%THEN CLOSE 3:GOSUB {:4120}:x=1:GOSUB {:4140}:PRINT# 3,0
+	x=1:GOSUB {:4140}:&,2,3:IF VAL(a$)>29 THEN CLOSE 3:NEXT:GOTO {:4084}
+	mn=VAL(a$)+2:dn=i:FOR i=1 TO 1:NEXT:GOSUB {:4098}:ON-(a$="{up arrow}"OR a=.)GOTO {:4070}:GOSUB {:4124}:GOSUB {:4126}:IF e%THEN CLOSE 3:GOTO {:4084}
+	yy%=3:zz%=3:ww%=0:x=2:GOSUB {:4140}:PRINT# 3,nl$nl$nl$:&,16,3:x=3:GOSUB {:4088}
+{:4064}
+	GOSUB {:4102}:&,16,10:xx%=a%:i=dn:GOSUB {:4118}:x=mn:GOSUB {:4140}
+	PRINT# 3,t$r$h$r$td$r$0r$xx%:x=1:GOSUB {:4140}:&,2,3
+	IF VAL(a$)+1<mn THEN x=1:GOSUB {:4140}:PRINT# 3,mn-1
+{:4070}
+	CLOSE 3:ON a GOTO {:4022}
+{:4072}
+	FOR i=1 TO LEN(nb$)STEP 3:CLOSE 2:a$="nm.P.temp"+STR$(q)+",s,r":dr=2:GOSUB 1011
+	dr=2:c$=MID$(nb$,i,3):IF c$="---"OR c$=MID$(tt$(tt),10,3)THEN{:4082}
+	b$="nm.P."+c$+"/"+nn$+",s,":GOSUB {:4094}:a$=b$+"a":GOSUB {:4136}
+	&"{f6:2}{cyan}Distributing {f5}{pound}$d{f5}{f6}NetSub Messages from {pound}$z to {pound}$c...":tz=1:IF e%THEN a$=b$+"w":GOSUB {:4136}
+{:4080}
+	&,2,2:a=-(st=0):PRINT# 3,a$:ON a GOTO {:4080}:IF a$<>"{up arrow}"THEN PRINT# 3,"{up arrow}"
+{:4082}
+	CLOSE 3:CLOSE 2:NEXT:a$="nm.P.temp"+STR$(q):dr=2:GOSUB 1024:GOSUB {:4144}:NEXT:GOTO {:4146}
+{:4084}
+	FOR x=1 TO 1:NEXT:FOR i=1 TO 1:NEXT
+{:4086}
+	&,2,2:a=-(st=0):ON-(a$<>"{up arrow}"AND a=1)GOTO {:4086}:GOTO {:4070}
+{:4088}
+	&"{f6}{green}--> New Post: {f5}{pound}$t{f5}...":pn=pn+1:RETURN
+{:4090}
+	z$=MID$(tt$(tt),10,3):&"{f6:2} {yellow}{rvrs on} Processing NetSub Messages From {pound}$z {f6}"
+	&"{f6}{orange}NetSub ID: {pound}$d{f6}":RETURN
+{:4094}
+	a$="nm.list,s,a":dr=2:GOSUB {:4136}:IF e%THEN a$="nm.list,s,w":GOSUB {:4136}
+	PRINT# 3,c$"/"nn$"/A/nm.P."c$"/"nn$:CLOSE 3:RETURN
+{:4098}
+	&,2,2:a=-(st=.):IF a$<>"st:"AND a$<>"{up arrow}"AND a=1 GOTO {:4098}
+	RETURN
+{:4102}
+	l=.:GOSUB {:4140}:yy$=""
+{:4104}
+	&,2,2:a=-(st=0)
+{:4106}
+	IF l+LEN(a$)>79 THEN l=.:PRINT# 3,yy$:x=x+1:GOSUB {:4140}:yy$=""
+	yy$=yy$+LEFT$(r$,-(yy$<>""))+a$:l=LEN(yy$):IF(a=1)AND(a$<>"{up arrow}")THEN{:4104}
+	IF a$<>"{up arrow}"THEN a$="{up arrow}":GOTO {:4106}
+	PRINT# 3,yy$:yy$="":IF x+1>yy%THEN yy%=x+1
+	b%=2:a%=yy%:&,16,9:IF b%>=yy%THEN yy%=b%+1
+	x=yy%:GOSUB {:4140}:PRINT# 3,nl$:x=1:GOSUB {:4140}:PRINT# 3,yy%r$zz%r$ww%:CLOSE 3:RETURN
+{:4118}
+	a$="d.sub"+STR$(a%(i)):dr=4:GOTO {:4136}
+{:4120}
+	a$="d.sub"+STR$(a%(i))+",l,p":dr=4:GOTO {:4136}
+{:4122}
+	a$=RIGHT$(STR$(a%(dn)),2-(a%(dn)>99))+LEFT$(t$,14+(a%(dn)>99)):RETURN
+{:4124}
+	GOSUB {:4122}:a$=a$+",l,q":RETURN
+{:4126}
+	d1%=c%(dn):d2%=d%(dn):&,16,13,3:dr=0:GOSUB {:4136}:&,16,12,ff:RETURN
+{:4128}
+	a$=MID$(an$,2):an$=MID$(a$,7,2):a=-1*(an$="12")-3*(an$="92"):a=a-5*(a=0)
+	a$=LEFT$(a$,6)+MID$("0012"+an$,a,2)+MID$(a$,9):RETURN
+{:4132}
+	ff=15:x=dr:dr=2:GOSUB 1009:dr=x:x=dv%:GOSUB 1009:IF dv%=x THEN RETURN
+	ff=14:CLOSE 14:OPEN 14,dv%,15:RETURN
+{:4136}
+	CLOSE 3:GOSUB {:4132}:OPEN 3,dv%,3,dr$+a$
+	INPUT# ff,e%,e$,t%,s%:a$="{f6}Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":RETURN
+{:4140}
+	GOSUB {:4142}:&,22,1
+{:4142}
+	PRINT# ff,"p{stop}"CHR$(x AND 255)CHR$(x/256)"{$01}":RETURN
+{:4144}
+	FOR ii=1 TO a%(0):d1%=c%(ii):d2%=d%(ii):dr=0:GOSUB 1081:NEXT:RETURN
+{:4146}
+	tt=tt-1:IF tt THEN a$="netsub2":GOSUB 3641:GOTO 2600
+{:4148}
+	a$="netsub4":GOSUB 3641:GOTO 2600
+	copr.1990 NEW image 12/01/90  2:34a
+

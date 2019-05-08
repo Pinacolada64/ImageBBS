@@ -1,0 +1,203 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "Lt. Kernal Utility"
+	cm$="LK Util":GOSUB 1360:GOTO {:4060}
+{:4004}
+' TODO: d$=mid$(hx$,val(d$)+1,1)
+	ON-(VAL(d$)<10)GOTO {:4018}
+	IF d$="10"THEN d$="a"
+	IF d$="11"THEN d$="b"
+	IF d$="12"THEN d$="c"
+	IF d$="13"THEN d$="d"
+	IF d$="14"THEN d$="e"
+	IF d$="15"THEN d$="f"
+{:4018}
+	RETURN
+{:4020}
+	m$="l"+MID$(STR$(dv%),2)+MID$(STR$(dr),2)+d$
+	CLOSE 15:OPEN 15,dv%,15:PRINT# 15,m$:CLOSE 15:RETURN
+{:4024}
+' TODO: m$="l800":gosub {:4022}
+	CLOSE 15:OPEN 15,dv%,15:PRINT# 15,"l800":CLOSE 15:RETURN
+{:4026}
+	&"{lt. blue}{f6}Pattern: ":GOSUB 1499:b$="*":&"{f6:2}     [Y]es [N]o [S]tart [A]bort{f6}"
+	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
+	NEXT:an$=an$+b$:&"{f6}"
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$:GET#1,a$,a$:&,8,1,1:lp=1:&a$+"{f6}":kk=0
+{:4034}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:4050}
+	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$:IF mo=1 THEN IF g$<>"s"THEN{:4034}
+	IF mo=2 THEN IF g$<>"p"THEN{:4034}
+	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
+	NEXT:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
+	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):&MID$("No   Yes  StartAbort",x*5+1,5)
+	&"{f6}":ON x+1 GOTO {:4052},{:4048},{:4050},{:4050}
+{:4048}
+	kk=kk+1:tt$(kk)=f$:GOTO {:4052}
+{:4050}
+	s=1:IF x=3 THEN kk=.
+{:4052}
+	ON-(s=.AND kk<250)GOTO {:4034}:CLOSE 1:IF kk=0 THEN RETURN
+	&"{f6:2}":FOR i=1 TO kk:b$=tt$(i):b%=i:&"{pound}#2{pound}# {pound}%b-{pound}$b{f6}":NEXT
+	&"{f6:2}Correct?: ":GOSUB 1902:IF a=0 THEN kk=0
+	RETURN
+{:4060}
+	REM **** main menu ****
+	&"{pound}f1":g=dv%:POKE 53252,16
+{:4064}
+	&"{f6:2}{lt. blue} Lt. Kernal File Utility{f6}{lt. red}      (c)NISSA 1992"
+	&"{f6:2}{white}1. {lt. blue}Directory{f6}{white}2. {lt. blue}Copy File{f6}{white}3. {lt. blue}Disk Command"
+	&"{f6}{white}4. {lt. blue}Multi-File Copy{f6}{white}5. {lt. blue}Multi-File Scratch"
+	&"{f6}{white}6. {lt. blue}Read Sequential Files{f6}{white}7. {lt. blue}Read Basic Program Files"
+	&"{f6}{white}8. {lt. blue}Quit{f6:2}{white}Choice {pound}g1"
+	ON VAL(an$)GOTO {:4082},{:4096},{:4144},{:4162},{:4198},{:4222},{:4244},{:4080}
+	IF tr%<1 THEN{:4080}
+	GOTO {:4060}
+{:4080}
+	GOSUB {:4024}:RETURN
+{:4082}
+	REM **** directory ****
+	&"{f6:2}{white} Disk Directory"
+	&"{f6} On (user#): {pound}i0":ON-(tr%<1)GOTO {:4094}:d$=an$:GOSUB {:4004}:GOSUB 1008
+	GOSUB {:4020}
+	GOSUB 1089
+	&"{f6:2} Press any key to continue...{pound}g1":ON-(tr%<1)GOTO {:4094}
+{:4094}
+	GOSUB {:4024}:GOTO {:4064}
+{:4096}
+	REM **** copy files ****
+	&"{f6}{white}Copy File"
+{:4100}
+	&"{f6}From (dev,lu,user): {pound}i1":ON-(tr%<1)GOTO {:4080}
+	f=VAL(LEFT$(an$,1)):c$=MID$(an$,3,1):d$=MID$(an$,5)
+	IF f<>dv%THEN:&"{f6}Illegal Device{f6}":GOTO {:4100}
+	&"          Filename: {pound}i0":ON-(tr%<1)GOTO {:4080}:g$=an$:IF g$=""THEN{:4064}
+	f$=c$+":"+d$+":"+g$
+{:4110}
+	&"  To (dev,lu,user): {pound}i1":ON-(tr%<1)GOTO {:4080}
+	t=VAL(LEFT$(an$,1)):c$=MID$(an$,3,1):d$=MID$(an$,5)
+	IF t<>dv%THEN:&"{f6}Illegal Device{f6}":GOTO {:4110}
+	&"          Filename: {pound}i0":ON-(tr%<1)GOTO {:4080}:t$=an$:IF t$=""THEN t$=g$
+	t$=c$+":"+d$+":"+t$
+	IF t<>f THEN:&"{f6}Sorry, must be same device{f6}":GOTO {:4096}
+	&"{f6:2}Copy "+f$+"{f6}  To "+t$+" ?":ON-(tr%<1)GOTO {:4080}
+	GOSUB 1902:ON a GOTO {:4128}
+	GOTO {:4064}
+{:4128}
+	ft$="c"+t$+"="+f$
+{:4130}
+	CLOSE 15:OPEN 15,dv%,15,ft$:GOSUB 1012:&:IF e%THEN ON-(e%=63)GOTO {:4140}:CLOSE 15:GOTO {:4064}
+	CLOSE 15
+	&"{f6}Copied "+f$+"{f6}    To "+t$+"{f6}"
+	CLOSE 15:OPEN 15,dv%,15,t$:GOSUB 1012:&
+	CLOSE 15:GOTO {:4064}
+{:4140}
+	&"{f6}Replace File? ":GOSUB 1902:ON a GOTO {:4142}:GOTO {:4064}
+{:4142}
+	PRINT# 15,"s"+t$:GOTO {:4130}
+{:4144}
+	REM **** disk command ****
+	&"{f6:2}{white} Disk Command"
+	&"{f6} On (user#): {pound}i0":ON-(tr%<1)GOTO {:4080}:d$=an$:GOSUB {:4004}
+	GOSUB {:4020}
+	GOSUB 1470:ON a GOTO 1995:&"{f6}Disk Command?: ":POKE 53252,58
+	GOSUB 1499:z$=an$:IF z$=""OR z$="@"THEN GOSUB 1010:GOSUB 1012:&:GOTO {:4160}
+	b$=LEFT$(z$,1):IF b$="n"OR b$="s"THEN GOSUB 1901:IF a=.THEN{:4160}
+	GOSUB 1010:PRINT# 15,z$:GOSUB 1012:&
+{:4160}
+	GOSUB {:4024}:GOTO {:4064}
+{:4162}
+	REM **** multi-copy ****
+	&"{f6:2}{white} Multi-Copy"
+	&"{f6} From (user#): {pound}i0":ON-(tr%<1)GOTO {:4080}:d$=an$:e$=d$:GOSUB {:4004}:GOSUB 1008
+	dr$=MID$(an$,5)+":":fd$=dr$+e$+":"
+	GOSUB {:4020}
+	GOSUB {:4026}:IF kk=0 THEN{:4196}
+{:4174}
+	&"{f6}{lt. blue} To (dev,lu,user): {pound}i1":ON-(tr%<1)GOTO {:4080}
+	t=VAL(LEFT$(an$,1)):c$=MID$(an$,3,1):d$=MID$(an$,5):td$=c$+":"+d$+":"
+	IF t<>dv%THEN:&"{f6}Illegal Device{f6}":GOTO {:4174}
+	FOR i=1 TO kk:t$=td$+tt$(i):f$=fd$+tt$(i):ft$="c"+t$+"="+f$
+{:4182}
+	CLOSE 15:OPEN 15,dv%,15,ft$:GOSUB 1012:&:IF e%THEN ON-(e%=63)GOTO {:4192}
+	CLOSE 15
+	&"{f6}Copied "+f$+"{f6}    To "+t$+"{f6}"
+	CLOSE 15:OPEN 15,dv%,15,t$:GOSUB 1012:&
+{:4190}
+	CLOSE 15:NEXT:GOTO {:4196}
+{:4192}
+	&"{f6}Replace File? ":GOSUB 1902:ON a GOTO {:4194}:GOTO {:4190}
+{:4194}
+	PRINT# 15,"s"+t$:GOTO {:4182}
+{:4196}
+	GOSUB {:4024}:GOTO {:4064}
+{:4198}
+	REM **** multi-scratch ****
+	&"{f6:2}{white} Multi-Scratch"
+	&"{f6} From (user#): {pound}i0":ON-(tr%<1)GOTO {:4080}:d$=an$:e$=d$:GOSUB {:4004}:GOSUB 1008
+	dr$=MID$(an$,5)+":":fd$=dr$+e$+":"
+	GOSUB {:4020}
+	GOSUB {:4026}:IF kk=0 THEN{:4220}
+	FOR i=1 TO kk:f$=fd$+tt$(i):fs$="s"+f$
+	CLOSE 15:OPEN 15,dv%,15,fs$:GOSUB 1012:&
+	CLOSE 15
+	&"Scratched "+f$+"{f6}"
+	NEXT:GOTO {:4220}
+{:4220}
+	GOSUB {:4024}:GOTO {:4064}
+{:4222}
+	REM **** multi-read seq ****
+	&"{f6:2}{white} Multi-Read Sequential"
+	&"{f6} From (user#): {pound}i0":ON-(tr%<1)GOTO {:4080}:d$=an$:e$=d$:GOSUB {:4004}:GOSUB 1008
+	GOSUB 1470
+	GOSUB {:4020}
+	mo=1:GOSUB {:4026}:mo=.:IF kk=0 THEN{:4242}
+	FOR i=1 TO kk:&"{f6}{rvrs on} "+tt$(i)+" {rvrs off}{f6}":a$=tt$(i)+",s,r":GOSUB 1011:IF e%THEN:&:GOTO {:4240}
+{:4236}
+	&,2,2:s=st:lp=-(LEN(a$)<>80):&:ON-(rc+s=.)GOTO {:4236}:GOSUB 1032
+	&"{f6:2} <Key...>{pound}g1
+{:4240}
+	NEXT
+{:4242}
+	GOSUB {:4024}:GOTO {:4064}
+{:4244}
+	REM **** multi-read prg ****
+	a$="++ read":dr=5:GOSUB 1010:pr=-2:POKE 53252,16
+	a$=dr$+a$:&,7,dv%,2:GOSUB 1012:IF e%THEN:&"Error Loading {f5}++ read{f5}:":&:GOTO {:4288}
+	&"{f6:2}{white} Multi-Read Program"
+	&"{f6} From (user#): {pound}i0":ON-(tr%<1)GOTO {:4080}:d$=an$:e$=d$:GOSUB {:4004}:GOSUB 1008
+	GOSUB 1470
+	GOSUB {:4020}
+	mo=2:GOSUB {:4026}:mo=.:IF kk=0 THEN{:4288}
+	FOR i=1 TO kk
+	a$=tt$(i)+",p,r":&"{f6}{rvrs on} "+tt$(i)+" {rvrs off}{f6}"
+{:4264}
+	dr=.:GOSUB 1011:IF e%THEN:&:GOTO {:4270}
+	GOSUB {:4274}:GOSUB {:4282}:&,16,x,y:&"{f6:2}{pound}#0{pound}%a Blocks Read{f6:2} << Key...>>{pound}g1"
+	CLOSE 2:CLOSE 15
+{:4270}
+	NEXT:GOTO {:4288}
+	&"{f6}Device Not Present{f6}":GOTO {:4264}
+{:4274}
+	&,52,16,3:IF a%=.THEN{:4280}
+	&,52,18,3:IF a%=.THEN x=.:RETURN
+	&,52,19,3:IF a%=.THEN x=.:RETURN
+{:4280}
+	&"{f6}Display Control Codes in{f6}Expanded Form (BASIC ONLY)?: ":GOSUB 1902:x=a:RETURN
+{:4282}
+	a%=ll%:&"{f6}Screen Width (RETURN={pound}#0{pound}%a): {pound}i1":y=VAL(an$):IF y<22 OR y>80 THEN y=ll%
+	RETURN
+	copr.1990 image 02/08/90
+{:4288}
+	GOSUB {:4024}:GOTO {:4064}
+	REM "Lt. Kernal Fast File Utility
+	REM "by X-TEC
+	REM "Commodore Image BBS
+	REM "cib.dyndns.org:6400
+	REM "(c)NISSA '92
+	REM "Holiday Disk '92
+	REM "Do Not Remove Credits
+	REM "10/15/92 2.0 conversion 01/18/18
+	REM "+/SM.lk util" sysop menu 180210 x-tec
+

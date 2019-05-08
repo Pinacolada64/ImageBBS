@@ -1,0 +1,163 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.mail" 05-19-91
+	GOSUB {:4500}:GOSUB {:4600}:GOSUB {:4900}
+	RETURN
+{:4500}
+	REM process mail
+	dr=2:a$="nm.forward":GOSUB 1011:IF e%THEN{:4520}
+	&"Checking Forward List...":x=1:GOSUB 1001:&,2,2:n=VAL(a$):&,2,2
+	IF n=0 THEN:&"Empty!":GOTO {:4520}
+	IF a$=MID$(d1$,2,6)THEN:&"Already Done!":GOTO {:4520}
+	x=1:GOSUB 1001:PRINT# 2,n;r$MID$(d1$,2,6):CLOSE 2
+	FOR xx=1 TO n:dr=2:a$="nm.forward":GOSUB 1011:IF e%THEN{:4520}
+	x=xx+1:GOSUB 1001:INPUT# 2,a1$,a2$,a3$:CLOSE 2
+	lp=.:IF a3$<>""THEN lp=1:&"{f6}From:"+a1$+"{f6}To:"+a2$+"{f6}Node:"+a3$:GOSUB {:4522}
+	NEXT
+{:4520}
+	CLOSE 2:&"{f6}":RETURN
+{:4522}
+	dr=2:a$="m."+LEFT$(a1$,13)+",s,r":GOSUB 1011:CLOSE 2:IF e%THEN RETURN
+	f$="nm.M."+a3$+"/"+nn$:dr=2
+	a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	CLOSE 3:OPEN 3,dv%,3,dr$+"m."+LEFT$(a1$,13)
+{:4530}
+	&".":PRINT# 2,a2$:&,2,3:PRINT# 2,a$:&,2,3:PRINT# 2,0:&,2,3:PRINT# 2,a$:&,2,3
+	IF LEFT$(a$,1)="!"THEN{:4536}
+	a$="!"+LEFT$(STR$(nn)+"    ",4)+LEFT$(bn$+"                    ",20)+a$
+{:4536}
+	PRINT# 2,a$:PRINT# 2,">This Message Was Forwarded From "r$bn$
+{:4538}
+	&,2,3:s=st:PRINT# 2,a$:IF a$<>"{up arrow}"THEN{:4538}
+	IF s=.THEN{:4530}
+	CLOSE 2:CLOSE 3:b$=a3$+"/"+nn$+"/A/"+f$:GOSUB 3030
+	PRINT# 15,"s"dr$"m."LEFT$(a1$,13)
+	GOSUB 1060:i=-1:x=25:GOSUB 1025:CLOSE 2:RETURN
+{:4600}
+	dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:GOSUB 1012:pr=-1:IF e%THEN:&:RETURN
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOSUB 1012:IF e%THEN:&:RETURN
+	g$="nm.M.":dr=2:a$="nm.list,s,r":GOSUB 1011:kk=0:IF e%THEN CLOSE 2:GOTO {:4618}
+{:4606}
+	&,2,2:kk=kk+1:ed$(kk)=a$:ON-(st=0 AND kk<61)GOTO {:4606}:CLOSE 2:u=1
+{:4608}
+	o$=MID$(ed$(u),11):IF LEFT$(o$,8)=g$+nn$THEN GOSUB {:4620}:ed$(u)=""
+	u=u+1:ON-(u<=kk)GOTO {:4608}:x=0:FOR i=1 TO kk:IF ed$(i)<>""THEN x=x+1:ed$(x)=ed$(i)
+	NEXT:kk=x
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.list"
+	IF kk THEN a$="nm.list,s,w":GOSUB 1011:FOR i=1 TO kk:PRINT# 2,ed$(i):NEXT:CLOSE 2
+{:4618}
+	RETURN
+{:4620}
+	&"Delivering NetMail{f6}":n=0:a%=0
+	dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+{:4624}
+	&,2,2:&:b$=a$:n=n+1:nn$(n)=a$:e%(n)=1
+	CLOSE 3:OPEN 3,dv%,3,dr$+"m."+LEFT$(b$,13)+",s,w":GOSUB 1012
+	IF e%THEN e%(n)=.:CLOSE 3:OPEN 3,dv%,3,dr$+"m."+LEFT$(b$,13)+",s,a"
+	&,2,2:PRINT# 3,a$:&,2,2:PRINT# 3,a$:&,2,2:PRINT# 3,a$d1$
+{:4632}
+	&,2,2:s=st:PRINT# 3,a$:IF a$<>"{up arrow}"AND s=.THEN{:4632}
+	&"{f6}":ON-(s=0)GOTO {:4624}:CLOSE 2:CLOSE 3:PRINT# 15,"s"dr$o$:&"Updating Stats{f6}"
+	FOR z=1 TO n:an$=nn$(z):GOSUB 1046:IF i=0 THEN GOSUB {:4650}:GOTO {:4644}
+	st(3)=st(3)+1:st(14)=st(14)+1:st(32)=st(32)+1
+	IF i=1 THEN st(2)=st(2)+1:st(13)=st(13)+1:st(24)=st(24)+1:st(31)=st(31)+1
+	st(25)=st(25)+e%(z)
+{:4644}
+	NEXT z:GOSUB 1060
+	x=13:GOSUB 1026:x=14:GOSUB 1026:x=24:GOSUB 1026:x=31:GOSUB 1026:x=32:GOSUB 1026
+	CLOSE 2:RETURN
+{:4650}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	&,2,2:n=VAL(a$):a$=nn$(z):&"No User:{pound}$a - Returning{f6}"
+	CLOSE 3:OPEN 3,dv%,3,dr$+"m."+LEFT$(nn$(z),13)+",s,r"
+	GOSUB 1012:IF e%THEN{:4680}
+{:4658}
+	&,2,3:tt$(1)=a$:&,2,3:&,2,3:tt$(2)=a$:&,2,3:a=VAL(MID$(a$,2,4))
+	ON-(a<1 OR a>n)GOTO {:4682}:x=a+1:GOSUB 1001:&,2,2
+	b$=a$+"/"+nn$:f$="nm.M."+b$:tt$=b$+"/A/"+f$
+	lp=1:&tt$:f=1:ON-(kk=0)GOTO {:4668}:FOR i=1 TO kk:IF ed$(i)=tt$THEN f=0
+	NEXT
+{:4668}
+	IF f THEN kk=kk+1:ed$(kk)=tt$
+	CLOSE 2:OPEN 2,dv%,2,dr$+f$+",s,w":GOSUB 1012
+	IF e%THEN CLOSE 2:OPEN 2,dv%,2,dr$+f$+",s,a":GOSUB 1012:IF e%THEN CLOSE 2:GOTO {:4682}
+	PRINT# 2,tt$(1)r$"NetMail"r$;0;r$d1$r$"[Handle Not Found:"+nn$(z)+"]"
+	PRINT# 2,">This message was returned from "r$bn$r$">On {$04}"d1$
+{:4678}
+	&,2,3:s=st:PRINT# 2,a$:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4678}:CLOSE 2:ON-(s=0)GOTO {:4684}
+{:4680}
+	CLOSE 3:PRINT# 15,"s"dr$"m."LEFT$(nn$(z),13):RETURN
+{:4682}
+	&,2,3:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4682}:ON-(s<>0)GOTO {:4680}
+{:4684}
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes":GOTO {:4658}
+	REM
+{:4900}
+	REM process netwall
+	g1=1:g2=1:&"{f6}Processing NetWall/NetGrf..."
+	dr=2:a$="nm.list,s,r":GOSUB 1011:kk=0:IF e%THEN CLOSE 2:GOTO {:4918}
+{:4906}
+	&,2,2:kk=kk+1:tt$(kk)=a$:ON-(st=0 AND kk<61)GOTO {:4906}:CLOSE 2
+	FOR i=1 TO kk:o$=MID$(tt$(i),11):b$=LEFT$(o$,8):c$=RIGHT$(o$,3)
+	IF b$="nm.G."+nn$THEN GOSUB {:4962}
+	IF b$="nm.B."+nn$THEN GOSUB {:4944}
+	NEXT:x=0:FOR i=1 TO kk:IF tt$(i)<>""THEN x=x+1:tt$(x)=tt$(i)
+	NEXT:kk=x
+{:4918}
+	&"{f6}Checking local grf":o$="nm.B.temp":k=8:GOSUB {:4928}
+	&"{f6}Checking local netwall":o$="nm.G.temp":k=7:GOSUB {:4928}
+	PRINT# 15,"s"dr$"nm.list"
+	IF kk THEN a$="nm.list,s,w":GOSUB 1011:FOR i=1 TO kk:PRINT# 2,tt$(i):NEXT:CLOSE 2
+	&"{f6}Done{f6}":RETURN
+{:4928}
+	GOSUB {:4982}
+	FOR j=1 TO 8:IF MID$(o$,10,3)=ed$(j)OR nn$=ed$(j)OR ed$(j)="{up arrow}"THEN{:4942}
+	a$=o$+",s,r":dr=2:GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	a$=ed$(j):&"{f6} Distributing to {pound}$a..."
+	f$=LEFT$(o$,5)+a$+"/"+nn$:GOSUB {:4988}:IF e%THEN{:4942}
+	tt$=ed$(j)+"/"+nn$+"/A/"+f$:GOSUB {:4994}
+{:4940}
+	&,2,2:s=st:PRINT# 3,a$:ON-(s=.)GOTO {:4940}
+{:4942}
+	CLOSE 3:CLOSE 2:NEXT:dr=2:GOSUB 1010:PRINT# 15,"s"dr$o$:RETURN
+{:4944}
+	k=8:GOSUB {:4972}:IF a=0 THEN RETURN
+	tt$(i)="":dr=2:a$="nm.grf2":GOSUB 1011:&,2,2:a1=VAL(a$):&,2,2:a2=VAL(a$)
+	&,2,2:a3=VAL(a$):IF a3=0 THEN CLOSE 2:GOTO {:4928}
+	CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,r":GOSUB 1012:IF e%THEN CLOSE 3:CLOSE 2:RETURN
+	a$=c$:&"{f6}Net Graffiti from {pound}$a"
+{:4954}
+	&,2,3:b$=a$:&,2,3:c$=a$:&,2,3:d$=a$:a$=d1$:s=st:IF a1=0 THEN a1=2:a2=2
+	x=a2:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$:a2=a2+1:IF a2=>a3 THEN a2=2
+	IF a2=a1 THEN a1=a1+1:IF a1=>a3 THEN a1=2
+	ON-(s=0)GOTO {:4954}:x=1:GOSUB 1001:PRINT# 2,a1;r$a2;r$a3:GOSUB 1001:CLOSE 2:GOTO {:4928}
+{:4962}
+	k=7:GOSUB {:4972}:IF a=0 THEN RETURN
+	tt$(i)="":dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN{:4970}
+	a$=MID$(o$,10,3):&"{f6}NetWall from {pound}$a":f$="nm.wall":GOSUB {:4988}:IF e%THEN{:4970}
+	FOR s=0 TO 1:PRINT# 3,d1$:FOR j=0 TO 1:&,2,2:s=st:PRINT# 3,a$:j=s-(a$="{up arrow}"):NEXT j,s
+{:4970}
+	CLOSE 2:CLOSE 3:GOTO {:4928}
+{:4972}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN{:4978}
+	x=k:GOSUB 1001:FOR j=1 TO 8:&,2,2:IF a$=c$AND a$<>"{up arrow}"THEN a=1:GOTO {:4980}
+	IF st=0 THEN NEXT
+{:4978}
+	a=0
+{:4980}
+	CLOSE 2:RETURN
+{:4982}
+	FOR j=1 TO 8:ed$(j)="{up arrow}":NEXT:dr=2:a$="nm.config":GOSUB 1011:IF e%THEN RETURN
+	x=k:GOSUB 1001:FOR j=1 TO 8:&,2,2:ed$(j)=a$:IF st=0 THEN NEXT
+	RETURN
+{:4988}
+	CLOSE 3:OPEN 3,dv%,3,dr$+f$+",s,w":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,dr$+f$+",s,a":GOSUB 1012
+	RETURN
+{:4994}
+	f=0:IF kk THEN FOR k=1 TO kk:f=(tt$=tt$(k))OR f:NEXT
+	IF f=0 THEN kk=kk+1:tt$(kk)=tt$
+	RETURN
+	REM
+

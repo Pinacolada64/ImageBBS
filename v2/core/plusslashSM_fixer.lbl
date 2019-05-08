@@ -1,0 +1,68 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+{:4000}
+	&"{clear}{f6} Image Stats Fixer{f6:2}"
+	&"1. Count Posts/Resps{f6}"
+	&"2. Count Uploads{f6}"
+	&"3. Count Mail{f6}"
+	&"4. Count Feedback/Sysop/New{f6}"
+	&"5. Scan User List for First Empty Slot{f6}"
+	&"A. Do ALL of the above{f6:2}"
+	&"> {pound}g1":z=VAL(an$):IF an$="A"THEN FOR z=1 TO 5:GOSUB {:4018}:NEXT:GOTO {:4000}
+	ON-(z=0)GOTO {:4020}:GOSUB {:4018}:GOTO {:4000}
+{:4018}
+	ON z GOTO {:4022},{:4042},{:4058},{:4068},{:4084}:RETURN
+{:4020}
+	&"{f6:2}Now type {f5}BA{f5} to check new stats.{f6}":RETURN
+{:4022}
+	p=0:r=0:dr=3:a$="e.Sub":GOSUB 1011:IF e%THEN:&:RETURN
+	&,2,2:bz=VAL(a$):CLOSE 2
+	FOR i=1 TO bz:a%=i:&"Sub {pound}%a:"
+	dr=4:a$="d.sub"+STR$(i):GOSUB 1011:IF e%THEN:&"{pound}$e{f6}":GOTO {:4036}
+	&,2,2:rn=VAL(a$):b%=rn:c%=0:IF rn=0 THEN{:4034}
+	FOR x=2 TO rn+1:GOSUB 1001:INPUT# 2,a$,a$,a$,a$,a$:c%=c%+VAL(a$):NEXT
+{:4034}
+	p=p+b%:r=r+c%:&"{pound}%b Posts, {pound}%c Resps{f6}"
+{:4036}
+	CLOSE 2:NEXT
+	a%=p:b%=r:&"{f6}Totals:{pound}%a Posts{f6}       {pound}%b Responses{f6}"
+	GOSUB 1060:x=26:st(x)=p:GOSUB 1026:x=27:st(x)=r:GOSUB 1026:CLOSE 2:RETURN
+{:4042}
+	u=0:dr=3:a$="e.U/D":GOSUB 1011:IF e%THEN:&:RETURN
+	&,2,2:bz=VAL(a$):CLOSE 2
+	FOR i=1 TO bz:a%=i:&"U/D {pound}%a:"
+	dr=4:a$="d.u/d"+STR$(i):GOSUB 1011:IF e%THEN:&"{pound}$e{f6}":GOTO {:4052}
+	&,2,2:a%=VAL(a$):u=u+a%:&"{pound}%a Files{f6}"
+{:4052}
+	CLOSE 2:NEXT
+	a%=u:&"{f6}Total:{pound}%a Files{f6}"
+	GOSUB 1060:x=28:st(x)=u:GOSUB 1026:CLOSE 2:RETURN
+{:4058}
+	dr=2:GOSUB 1010:OPEN 2,dv%,0,"$"+dr$+"m.*":GET#2,a$,a$:&,8,2,1:n=0
+{:4060}
+	&,8,2,1:s=st:IF MID$(a$,7,5)="block"OR s<>.THEN{:4066}
+	IF VAL(MID$(a$,10))=0 THEN n=n+1:a%=n:&"#{pound}%a{pound}{back arrow}05>{pound}$a{f6}"
+	GOTO {:4060}
+{:4066}
+	CLOSE 2:st(25)=n:GOSUB 1060:x=25:GOSUB 1025:CLOSE 2:RETURN
+{:4068}
+	GOSUB 1065:&,2,2:CLOSE 2:tt$=a$:an$=a$:&,15,1:&"{pound}$a's Mail: "
+	dr=2:a$=LEFT$("m."+tt$,15)+",s,r":GOSUB {:4078}:st(24)=n
+	&"{f6}Feedback: ":dr=3:a$="e.fback,s,r":GOSUB {:4078}:st(23)=n
+	&"{f6}New Users: ":dr=3:a$="e.new,s,r":GOSUB {:4078}:st(29)=n
+	GOSUB 1060:x=23:GOSUB 1026:x=24:GOSUB 1026:x=29:GOSUB 1026:CLOSE 2:RETURN
+{:4078}
+	GOSUB 1011:n=0:IF e%THEN{:4082}
+{:4080}
+	&,2,2:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4080}:n=n+1:ON-(s=0)GOTO {:4080}:CLOSE 2
+{:4082}
+	&"{pound}!n{f6}":RETURN
+{:4084}
+	l=ur+1:GOSUB 1065:&"Scanning User List"
+	FOR x=1 TO ur:IF x/5=INT(x/5)THEN:&"."
+	GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN l=x:x=ur
+	NEXT:l1=l
+	GOSUB 1063:x=31:GOSUB 1001:PRINT# 2,l1:CLOSE 2:RETURN
+	REM "+/SM.fixer" sysop menu 180209 x-tec
+

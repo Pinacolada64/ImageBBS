@@ -16,6 +16,7 @@ Image BBS 2.0 IM line number translation:
 1006	6	goto 6		Command stacking, return uppercase input: an$
 1007	7	goto 7		Get uppercase character: an$
 1008	8 -> 96	goto 1008	jlf: remove [rns: I think it should be goto 96]
+1907	8			1.3: display [Yes]
 				emu: device/drive prompt, return
 1009	2	goto 2		Get device/drive of system drive 'dr'
 1010	3	goto 3		Close/reopen command channel
@@ -36,6 +37,7 @@ Image BBS 2.0 IM line number translation:
 1026	17			write stat #x back to e.stats
 1027	36
 	12			Reset MCI defaults?
+1046				1.3: im.misc: open u.config, search for handle 'an$', return id 'a%'
 1075	13			Clear screen...
 1076	14			...and read file in a$
 	15			close logical file #2
@@ -109,15 +111,19 @@ Image BBS 2.0 IM line number translation:
 
 		2414 -> 2500	load "im.bar"
 		24xx -> 2500	load "im.screens"
-1666	442			nis: load "im.params"
-				jlf: load "im.protos"
+2406	430			 430 2.0: load "sub.param1"
+				2406 1.3: load "im.params"
+	431			     2.0: load "im.params2"
+	441			2.0: load "sub.handles"
+1666	442			1.3: load "im.params"
+				jlf: load "sub.protos"
 	443	2426 -> 43	load "im.display"
 		2428 -> 47	load "im.info"
 
 1065	35
-1068	37
-1069	38
-1074	39
+1068	37			append or write "e."+b$
+1069	38			write user account data to open "u.config" file
+1074	39			write tt$() array elements 1 - (kk-1) to open lfn#2
 1075	13
 1076	14
 1079	61

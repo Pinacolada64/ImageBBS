@@ -1,0 +1,13 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM x%(17,60):GOSUB {:4002}:&,28,1:RETURN
+{:4002}
+	dr=3:a$="e.Sig":GOSUB 1011:IF e%THEN CLOSE 2:&:RETURN
+	&,2,2:x%(0,0)=VAL(a$):IF x%(0,0)=0 THEN CLOSE 2:RETURN
+	FOR i=1 TO x%(0,0):x=i+1:GOSUB 1001:&,2,2:INPUT# 2,x%(1,i),x%(0,i),x%(2,i)
+	IF x%(2,i)<0 THEN x%(2,i)=0
+	&,60,0,30,x%(3,i),a$:NEXT:CLOSE 2
+	&,60,3,0,x%(0,0),36+x%(0,0)*36,dr$+"e.Siglist",dv%:GOSUB 1012:&:RETURN
+	REM "+/SM.consig1" sysop menu 180801 x-tec
+

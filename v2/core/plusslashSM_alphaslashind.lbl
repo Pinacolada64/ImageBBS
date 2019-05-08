@@ -1,0 +1,58 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	pr=-1:a=4:GOSUB 1736:POKE 53252,20
+{:4002}
+	&"{clear}{f6:2}1.Clear{f6}2.Load{f6}3.Search{f6}4.Insert{f6}5.Delete{f6}6.Save{f6}7.List{f6}8.Make{f6}9.Kill{f6}"
+	&"{f6}0.Quit{f6:2} =>{pound}g1{pound}v7{f6}":a=VAL(an$):IF a THEN ON a GOSUB {:4012},{:4014},{:4018},{:4024},{:4034},{:4016},{:4044},{:4058},{:4068}:GOTO {:4002}
+	pr$="":pr=-1:CLOSE 2:RETURN
+{:4008}
+	dr=6:a$="u.config":GOTO 1011
+	REM 3/24/89
+{:4012}
+	&"Cleared...{f6}":&,16,3:RETURN
+{:4014}
+	&"Loading...":dr=6:GOSUB 1010:a$=dr$+"u.index":&,16,1:&"{pound}%a Users.{pound}w1{f6}":RETURN
+{:4016}
+	&"Saving...":dr=6:GOSUB 1010:a$=dr$+"u.index":PRINT# 15,"s"a$:&,16,2:RETURN
+{:4018}
+	GOSUB {:4008}
+{:4020}
+	&"HANDLE:{pound}i1":IF an$=""THEN CLOSE 2:RETURN
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":GOTO {:4020}
+{:4024}
+	GOSUB {:4008}
+{:4026}
+	&"Insert:ID={pound}i1":a=VAL(an$):IF a=.THEN CLOSE 2:RETURN
+	x=a:GOSUB 1001:&,2,2:an$=a$:lp=1:&
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":IF a%THEN:&"Already There!{f6}":GOTO {:4026}
+	&"Adding at {pound}%b.{f6}":a%=a:&,16,4:GOTO {:4026}
+{:4034}
+	GOSUB {:4008}
+{:4036}
+	&"Delete:ID={pound}i1":a=VAL(an$):IF a=.THEN CLOSE 2:RETURN
+	x=a:GOSUB 1001:&,2,2:an$=a$:lp=1:&
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":IF a%=.THEN:&"Not There!{f6}":GOTO {:4036}
+	&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:GOTO {:4036}
+{:4044}
+	GOSUB {:4008}
+	OPEN 3,dv%,3,dr$+"u.index,p,r":GET#3,a$,a$:z$=CHR$(0)
+	GET#3,a$,b$:n%=ASC(b$+z$)+ASC(a$+z$)*256:&"{f6}{pound}%n Users.{f6}":IF n%=.THEN{:4056}
+	FOR i=1 TO n%:GET#3,a$,b$:a%=ASC(b$+z$)+ASC(a$+z$)*256
+	x=a%:GOSUB 1001:INPUT# 2,a$:&"{pound}%a - {pound}$a{f6}"
+	i=i+rc*n%:NEXT
+{:4056}
+	CLOSE 3:&"Press A Key {pound}g1{f6}":CLOSE 2:RETURN
+{:4058}
+	GOSUB {:4008}:FOR i=1 TO ur:x=i:GOSUB 1001:INPUT# 2,a$
+	IF a$="{up arrow}"OR a$="RES"THEN{:4066}
+	a%=i:an$=a$:&"{pound}#3{pound}# {pound}%a. {pound}$a{pound}{back arrow}30":&,16:IF a%THEN:&"Dupe={pound}%a{f6}":GOTO {:4066}
+	a%=i:&,16,4:&"At {pound}%b{f6}"
+{:4066}
+	NEXT:CLOSE 2:RETURN
+{:4068}
+	&"Kill  :Pos={pound}i1":a=VAL(an$):IF a=.THEN CLOSE 2:RETURN
+	b%=a:&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:GOTO {:4068}
+	REM copr.1989 new image
+	REM "+/SM.alpha/ind" sysop menu 180209 x-tec
+

@@ -166,16 +166,16 @@ struct%(0,0) holds # of records in a struct
 		&,60,3,.,fb%(.,.),960,a$,dv%
 	
 	PutDate: put date string into structure (BCD)
-	Usage:	&,60,4,0,struct%(array(a,b),<string$>
-		does 0 param always have to be 0?
-		array(a,b)	starting element
+	Usage:	&,60,4,0,struct%(f,r),string$
+		does "0" param always have to be 0?
+		struct%(f,r)	field,record to put date into
 		string$		the date string
 
 	GetDate: get date string from structure (BCD)
 
-	Usage:	&,60,5,struct%(a,b),string$
+	Usage:	&,60,5,struct%(f,r),string$
 
-		struct(a,b)	starting element
+		struct%(f,r)	field,record to get date from
 		string$		the date string
 	
 	DoScan	Scan records (yikes)

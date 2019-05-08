@@ -1,0 +1,42 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&"{clear}{f6:2}{pound}{back arrow}10{white}Text Message Editor{f6}{lt. green}{f6}Instructions? ":GOSUB 1902:IF a THEN{:4034}
+{:4002}
+	&"{clear}{f6} 1) List Text Messages{f6:2} 2) Edit{f6:2} 3) Quit{f6:2} ME: {pound}g1{pound}v7{f6}":ON tr%+1 GOTO 1812
+	a=VAL(an$):IF a<1 OR a>3 THEN{:4054}
+	ON a GOTO {:4008},{:4016},{:4054}:GOTO {:4002}
+{:4008}
+	a$="e.text":dr=3:GOSUB 1011:IF e%THEN{:4052}
+	FOR x=1 TO 6:GOSUB 1001:&,2,2
+	b%=x:&"{f6}({pound}%b)":&
+	NEXT:&"{f6:2} Any Key {pound}g1":GOTO {:4002}
+{:4016}
+	&"{f6:2} Edit Which? {pound}i1":IF tr%<1 GOTO {:4054}
+	ON-(an$="")GOTO {:4002}:x=VAL(an$):IF x<1 OR x>6 THEN{:4016}
+	a$="e.text":dr=3:GOSUB 1011:IF e%THEN{:4052}
+	GOSUB 1001:&,2,2:&"{f6}Edit {f6}":&
+	pl=.:POKE 53252,254:p$="{f6:2}Enter new text, 254 Character Max.{f6} ":&,1,43
+	n$=an$:&"{f6}{pound}$n{f6:2} Ok? {pound}g1":IF tr%<1 THEN{:4054}
+	IF an$<>"Y"THEN{:4016}
+	GOSUB 1001:PRINT# 2,n$:GOSUB 1012:IF e%THEN{:4050}
+	GOTO {:4002}
+{:4034}
+	&"{clear}{f6:2}{pound}{back arrow}13{rvrs on} INSTRUCTIONS {rvrs off}"
+	&"{f6}The text messages are the messages that{f6}your users see when they try"
+	&"{f6}to do something they do not have the{f6}proper access for or have not been"
+	&"{f6}cleared to do.  The text messages{f6}may be edited to a certain extent"
+	&"{f6}and this file will help you do that.{f6:2}It is self prompting and will"
+	&"{f6}request verification before writing{f6}to your text file.{f6}"
+	&"{f6}We recommend that you make a backup of{f6}your original file before you{f6}"
+	&"proceed.{f6:2}(Any Key) {pound}g1":ON tr%+1 GOTO 1812:GOTO {:4002}
+{:4050}
+	&"{f6:2}Error writing to {f5}e.text{f5}{pound}w3":GOTO {:4054}
+{:4052}
+	&"{f6:2}Error opening {f5}e.text{f5}{pound}w3"
+{:4054}
+	&,28,1:RETURN
+	REM text msg editor 8/23
+	REM converted to 2.0 12/31/2017 by x-tec
+	REM "+/SM.textedit" sysop menu 180210 x-tec
+

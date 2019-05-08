@@ -282,56 +282,56 @@ getvarp:
 ; TODO: find out if these are the same variables/order as in varbl.lbl
 ; if so, turn them into an include
 varlist:
-	byte "aN"	; an$ 0
-	byte "a",$80	; a$  1
-	byte "b",$80	; b$  2
-	byte "tR"	; tr$ 3
-	byte "d",$b1	; d1$ 4
-	byte "d",$b2	; d2$ 5
-	byte "d",$b3	; d3$ 6
-	byte "d",$b4	; d4$ 7
-	byte "d",$b5	; d5$ 8
-	byte "lD"	; ld$ 9
-	byte "tT"	; tt$ 10
-	byte "nA"	; na$ 11
-	byte "rN"	; rn$ 12
-	byte "pH"	; ph$ 13
-	byte "aK"	; ak$ 14
-	byte "lp"	; lp  15
-	byte "pl"	; pl  16
-	byte "rc"	; rc  17
-	byte "sh"	; sh  18
-	byte "mw"	; mw  19
-	byte "nl"	; nl  20
-	byte "ul"	; ul  21
-	byte "qe"	; qe  22
-	byte "rq"	; rq  23
-	byte "AC"	; ac% 24
-	byte "ef"	; ef  25
-	byte "lf"	; lf  26
-	byte "w",$80	; w$  27
-	byte "p",$80	; p$  28
-	byte "TR"	; tr% 29
-	byte "A",$80	; a%  30
-	byte "B",$80	; b%  31
-	byte "DV"	; dv% 32
-	byte "dR"	; dr$ 33
-	byte "c",$b1	; c1$ 34
-	byte "c",$b2	; c2$ 35
-	byte "cO"	; co$ 36
-	byte "cH"	; ch$ 37
-	byte "KP"	; kp% 38
-	byte "c",$b3	; c3$ 39
-	byte "f",$b1	; f1$ 40
-	byte "f",$b2	; f2$ 41
-	byte "f",$b3	; f3$ 42
-	byte "f",$b4	; f4$ 43
-	byte "f",$b5	; f5$ 44
-	byte "f",$b6	; f6$ 45
-	byte "f",$b7	; f7$ 46
-	byte "f",$b8	; f8$ 47
-	byte "mP"	; mp$ 48
-	byte "MN"	; mn% 49
+	ascii "aN"	; an$ 0
+	ascii "a{$80}"	; a$  1
+	ascii "b{$80}"	; b$  2
+	ascii "tR"	; tr$ 3
+	ascii "d{$b1}"	; d1$ 4
+	ascii "d{$b2}"	; d2$ 5
+	ascii "d{$b3}"	; d3$ 6
+	ascii "d{$b4}"	; d4$ 7
+	ascii "d{$b5}"	; d5$ 8
+	ascii "lD"	; ld$ 9
+	ascii "tT"	; tt$ 10
+	ascii "nA"	; na$ 11
+	ascii "rN"	; rn$ 12
+	ascii "pH"	; ph$ 13
+	ascii "aK"	; ak$ 14
+	ascii "lp"	; lp  15
+	ascii "pl"	; pl  16
+	ascii "rc"	; rc  17
+	ascii "sh"	; sh  18
+	ascii "mw"	; mw  19
+	ascii "nl"	; nl  20
+	ascii "ul"	; ul  21
+	ascii "qe"	; qe  22
+	ascii "rq"	; rq  23
+	ascii "AC"	; ac% 24
+	ascii "ef"	; ef  25
+	ascii "lf"	; lf  26
+	ascii "w{$80}"	; w$  27
+	ascii "p{$80}"	; p$  28
+	ascii "TR"	; tr% 29
+	ascii "A{$80}"	; a%  30
+	ascii "B{$80}"	; b%  31
+	ascii "DV"	; dv% 32
+	ascii "dR"	; dr$ 33
+	ascii "c{$b1}"	; c1$ 34
+	ascii "c{$b2}"	; c2$ 35
+	ascii "cO"	; co$ 36
+	ascii "cH"	; ch$ 37
+	ascii "KP"	; kp% 38
+	ascii "c{$b3}"	; c3$ 39
+	ascii "f{$b1}"	; f1$ 40
+	ascii "f{$b2}"	; f2$ 41
+	ascii "f{$b3}"	; f3$ 42
+	ascii "f{$b4}"	; f4$ 43
+	ascii "f{$b5}"	; f5$ 44
+	ascii "f{$b6}"	; f6$ 45
+	ascii "f{$b7}"	; f7$ 46
+	ascii "f{$b8}"	; f8$ 47
+	ascii "mP"	; mp$ 48
+	ascii "MN"	; mn% 49
 
 ; find all vars used by ml,
 ; get their pointers
@@ -366,13 +366,13 @@ copytran:
 	sta tblatc,y
 	iny
 	cpy #128
-	bcc @>l1
+	bcc <@l1
 	ldy #0
 @l2:
 	lda tr2,y
 	sta tblcta,y
 	iny
-	bne @>l2
+	bne <@l2
 	ldy #0
 @l3:
 	lda tr3,y
@@ -383,42 +383,44 @@ copytran:
 	sta tblcta3,y
 	iny
 	cpy #32
-	bcc @>l3
+	bcc <@l3
 	rts
 
 ; tblatc - ascii -> commodore character translation
 tr1:
 	byte 0,0,2,0,4,0,0,0,20,9,0,0,147,13,14,15
 	byte 0,17,0,19,20,21,22,23,24,25,0,27,0,0,0,0
-	byte " !{34}#$%&'()*+,-./"
-	byte "0123456789:;<=>?"
-	byte "@ABCDEFGHIJKLMNO"
-	byte "PQRSTUVWXYZ[{pound}]{up arrow}{back arrow}"
-	byte 0,"abcdefghijklmno"
-	byte "pqrstuvwxyz",0,0,0,0,20
+	ascii " !{34}#$%&'()*+,-./"
+	ascii "0123456789:;<=>?"
+	ascii "@ABCDEFGHIJKLMNO"
+	ascii "PQRSTUVWXYZ[{pound}]{up arrow}{back arrow}"
+	ascii "{0}abcdefghijklmno"
+	ascii "pqrstuvwxyz{0:4}{20}"
 
 ; tblcta - commodore -> ascii character translation
 tr2:
 	byte 0,1,2,3,4,5,6,7,8,9,10,11,12,$0d,0,$0f
 	byte 16,17,18,19,8,21,22,23,24,25,26,27,28,29,30,31
-	byte " !{34}#$%&'()*+,-./"
-	byte "0123456789:;<=>?"
-	byte "@",97,98,99,100,101,102,103,104,105,106,107,108,109,110,111
-	byte 112,113,114,115,116,117,118,119,120,121,122,"[{pound}]{up arrow}{back arrow}"
-	byte "-abcdefghijklmno"
-	byte "pqrstuvwxyz*-!**"
+	ascii " !{34}#$%&'()*+,-./"
+	ascii "0123456789:;<=>?@"
+	byte 97,98,99,100,101,102,103,104,105,106,107,108,109,110,111
+	byte 112,113,114,115,116,117,118,119,120,121,122
+	ascii "[{pound}]{up arrow}{back arrow}"
+	ascii "-abcdefghijklmno"
+	ascii "pqrstuvwxyz*-!**"
 ; $0d=141=Shift-Return ($0d+$80)
 	byte 0,129,0,0,0,0,0,0,0,0,0,0,0,$0d,0,0
 ; 144-158
-	byte 0,"{crsr up}{rvrs off}",12,0,149,150,151,152,153,154,155,156,157,158,159
-; 160 ($a0): shift-space -> " "
+	ascii "{0}{up}{rvrs off}"
+	byte 12,0,149,150,151,152,153,154,155,156,157,158,159
+; 160 ($a0): shift-space -> ' '
 ; 160-175
-	byte " !---!*!-*!****-"
-	byte "****!!!---******"
-	byte "-abcdefghijklmno"
-	byte "pqrstuvwxyz*!!**"
-	byte " !---!*!-*!****-"
-	byte "****!!!---******"
+	ascii " !---!*!-*!****-"
+	ascii "****!!!---******"
+	ascii "-abcdefghijklmno"
+	ascii "pqrstuvwxyz*!!**"
+	ascii " !---!*!-*!****-"
+	ascii "****!!!---******"
 
 ; tblcta1
 tr3:

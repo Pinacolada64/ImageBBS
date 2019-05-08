@@ -1,0 +1,69 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.netsub2"
+{:4002}
+	tt$="sttofridtrmt":dr=5:GOSUB 1010:a$=dr$+"++ netsub":&,7,dv%,2:GOSUB {:4056}
+{:4004}
+	cc=0:dr=2:a$=tt$(tt):GOSUB 1011:IF e%THEN CLOSE 2:tt=tt-1:ON tt+1 GOTO {:4076}:GOTO {:4004}
+{:4006}
+	c=LEN(tt$)/2-1:&,11,1:CLOSE 3
+{:4008}
+	&,2,2:a=-(st=0):GOSUB {:4062}:ON b+1 GOTO {:4010}:ON-(c=30)GOTO {:4044}:GOTO {:4008}
+{:4010}
+	FOR i=1 TO n:IF MID$(bb$(1),5)=MID$(dt$(i),bn+1)THEN b=i:FOR i=1 TO 1:NEXT:GOTO {:4014}
+	NEXT:&"{f6:2}{yellow}--> Unknown NetSub ID":GOTO {:4022}
+{:4014}
+	FOR i=1 TO LEN(tt$)/2-1:IF bb$(i)=""THEN:&"{f6:2}{green}--> Error Reading File":GOTO {:4022}
+	NEXT:r=0:b$=MID$(tt$(tt),10,3)
+	FOR i=1 TO bn STEP 3:IF b$=MID$(dt$(b),i,3)THEN FOR i=1 TO 1:NEXT:GOTO {:4024}
+	NEXT:&"{f6:2}{orange}--> Unauthorized Message{f6}      NetSub ID: "+MID$(dt$(b),bn+1):GOTO {:4030}
+{:4022}
+	b$=MID$(tt$(tt),10,3):GOTO {:4030}
+{:4024}
+	b$=MID$(bb$(3),5):an$=b$:qe=0:r=0:ON-(bb$(6)="sd: CONVERTED")GOTO {:4034}:GOSUB {:4046}
+	ON-(qe<VAL(MID$(bb$(4),5)))GOTO {:4032}:IF VAL(MID$(bb$(4),5))>rc THEN{:4034}
+	&"{f6:2}{cyan}--> Repeat Rejected!{f6}      NetSub ID: "+MID$(dt$(b),bn+1)
+{:4030}
+	FOR i=1 TO 1:NEXT:&"{f6}       Board ID: {pound}$b":GOTO {:4044}
+{:4032}
+	qe=VAL(MID$(bb$(4),5)):&,16,1:GOSUB {:4050}
+{:4034}
+	b$="temp"+STR$(b)
+{:4036}
+	a$="a":GOSUB {:4068}:IF e%THEN a$="w":GOSUB {:4068}
+	fs=7 AND fs+1:&MID$("{green}{purple}{cyan}{brown}{gray1}{lt. red}{gray3}{orange}",fs+1,1):cc=1:FOR i=1 TO c:PRINT# 3,bb$(i):NEXT:PRINT# 3,bb$(0)
+{:4040}
+	&,2,2:a=-(st=0):PRINT# 3,a$:ON-(a$<>"{up arrow}"AND a=1)GOTO {:4040}:CLOSE 3:ON a GOTO {:4006}
+	CLOSE 2:a$=LEFT$(tt$(tt),LEN(tt$(tt))-4):dr=2:GOSUB 1024:GOTO {:4074}
+{:4044}
+	b$="rejects":ON 2 GOTO {:4070},{:4036}
+{:4046}
+	GOSUB {:4054}:&,16:IF qe=-1 THEN r=r+1:GOTO {:4046}
+	RETURN
+{:4050}
+	PRINT# 15,"s"dr$"nm.P.track"+STR$(b)+STR$(r)
+	a$=dr$+"nm.P.track"+STR$(b)+STR$(r):&,16,3,dv%:RETURN
+{:4054}
+	dr=2:GOSUB 1009:a$=dr$+"nm.P.track"+STR$(b)+STR$(r):&,16,2,dv%:RETURN
+{:4056}
+	&"{f6:2} {lt. blue}{rvrs on} Sorting NetSub Messages From "+MID$(tt$(tt),10,3)+"... ":fs=0:RETURN
+{:4058}
+	&"{f6:2}{orange} {rvrs on} No Valid Messages Received from "+MID$(tt$(tt),10,3)+" "
+	tt=tt-1:ON-(tt>0)GOTO {:4002}:GOTO {:4076}
+{:4062}
+	FOR i=0 TO LEN(tt$)/2-1:IF LEFT$(a$,3)=MID$(tt$,i*2+1,2)+":"THEN{:4066}
+	NEXT:ON-(a$="{up arrow}")GOTO {:4072}:c=c+1:bb$(c)=a$:b=c:RETURN
+{:4066}
+	bb$(i)=a$:b=i:FOR i=1 TO 1:NEXT:RETURN
+{:4068}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.P."+b$+",s,"+a$:GOTO 1012
+{:4070}
+	&,2,2:a=-(st=0):IF a AND a$<>"{up arrow}"THEN{:4070}
+{:4072}
+	RETURN
+{:4074}
+	ON cc+1 GOTO {:4058}:a$="netsub3":GOSUB 3641:GOTO 2600
+{:4076}
+	a$="netsub4":GOSUB 3641:GOTO 2600
+	copr.1990 NEW image 12/06/90 11:55p
