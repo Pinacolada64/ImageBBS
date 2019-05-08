@@ -1,0 +1,385 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	lg=1:z1=.:z2=.:&,5:v=lp:nd$="29101070400":GOSUB {:3600}:GOTO {:3004}
+	ON x GOTO {:3060},{:3090},{:3040},{:3034}:RETURN
+{:3004}
+	GOSUB {:3154}:GOSUB {:3040}:ON f1 GOTO {:3172},{:3276}:GOTO {:3166}
+{:3008}
+	a=-(PEEK(653)=2 OR t<.):rc=-(PEEK(653)=2)OR rc:RETURN
+	&,4:a$=CHR$(PEEK(780)):RETURN
+	t=500
+{:3014}
+	&,4:t=t-1:ON-(t>.AND PEEK(780)=.AND(PEEK(653)AND 2)=.)GOTO {:3014}:RETURN
+	dr=2:a$="nm."+a$:GOTO 1011
+{:3018}
+	rc=-(PEEK(653)=2 OR t<.OR(PEEK(2033)AND 128)<>128)OR rc:a=-(t<.)OR rc:RETURN
+{:3020}
+	f$="nm.log "+MID$(ct$,4,2)
+{:3022}
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011
+	RETURN
+{:3026}
+	dr=2:a$="nm.nodes":GOTO 1011
+{:3028}
+	dr=2:a$="nm.connect":GOTO 1011
+{:3030}
+	f$="nm.list":GOSUB {:3022}:PRINT# 2,b$:CLOSE 2:RETURN
+{:3032}
+	f$="nm.errors":GOSUB {:3022}:PRINT# 2,b$"{f3}"h$:CLOSE 2:RETURN
+{:3034}
+	f$="nm.s.ALL":GOSUB {:3022}:PRINT# 2,b$:CLOSE 2:RETURN
+{:3036}
+	f$="nm.l."+dt$(m):GOSUB {:3022}:PRINT# 2,b$:CLOSE 2:RETURN
+{:3038}
+	dr=2:a$="nm.l."+dt$(m)+",s,r":GOTO 1011
+{:3040}
+	dr=2:a$="nm.config":GOSUB 1011:nn=.:IF e%THEN{:3056}
+	INPUT# 2,nn,af%,pn$,v$:IF v$<"900610"THEN e%=1:GOTO {:3056}
+	x=3:GOSUB 1001:FOR i=.TO 9:&,2,2:bb$(i)=a$:NEXT:x=2:GOSUB 1001:&,2,2:br%=VAL(a$)
+	&,2,2:m1$=a$:&,2,2:m2$=a$:&,2,2:m3$=a$:x=6:GOSUB 1001:&,2,2:s1$=a$:&,2,2
+	s2$=a$:&,2,2:s3$=a$:CLOSE 2:GOSUB {:3028}:IF e%THEN{:3056}
+	FOR i=1 TO 4:x=i:GOSUB {:3070}:NEXT:CLOSE 2:bb=4:CLOSE 2
+	GOSUB {:3026}:ON-(e%<>.)GOTO {:3056}:x=nn+1:GOSUB 1001:&,2,2:nn$=a$:&,2,2:ph$=a$
+	&,2,2:bb$=a$:&,2,2:sy$=a$:CLOSE 2:dt$(0)=nn$:nn$(0)=pn$:ed$(0)=ph$:RETURN
+{:3056}
+	&"Error!"
+{:3058}
+	CLOSE 2:RETURN
+{:3060}
+	&"{f6}Loading Config...":GOSUB {:3040}:ON-(e%<>.)GOTO {:3058}:GOSUB {:3028}:IF e%THEN{:3056}
+	x=5:GOSUB 1001:&,2,2:a=VAL(a$):IF a>.THEN bb=4+a:FOR i=5 TO 4+a:x=i+1:GOSUB {:3070}:NEXT
+	CLOSE 2:pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:GOSUB 1012:IF e%THEN{:3056}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOSUB 1012:IF e%THEN{:3056}
+	GOSUB {:3026}:ON-(e%<>.)GOTO {:3056}:GOTO {:3104}
+{:3070}
+	d=VAL(LEFT$(d1$,1)):GOSUB 1001:&,2,2:dt$(i)=a$:&,2,2:nn$(i)=a$:&,2,2:b$=a$
+	&,2,2:ed$(i)=a$:&,2,2:c$=a$:&,2,2:a=VAL(a$):&,2,2:&,2,2:&,2,2
+	d$=MID$(a$,2,6):a$=MID$(c$,d,1):ON-(a$="+")-2*(a$="0")GOTO {:3078},{:3086}:b=VAL(a$)
+	IF d$=MID$(d1$,2,6)AND b<=a THEN{:3086}
+{:3078}
+	f%(i)=1:a$=MID$(b$,d,1):ON-(a$="+")-2*(a$="-")GOTO {:3088},{:3086}:a$=bb$(VAL(a$))
+	a%=VAL(LEFT$(a$,2)):b%=VAL(RIGHT$(a$,2)):a=VAL(MID$(d1$,8,2)):a=a+68*(a>80)
+	a=a+12*(a=12 OR a=24):IF b%<a%THEN ON 1-(a>b%AND a<a%)GOTO {:3088},{:3086}
+	ON 1-(a>b%OR a<a%)GOTO {:3088},{:3086}
+{:3086}
+	f%(i)=.
+{:3088}
+	RETURN
+{:3090}
+	&"{f6}Loading Zone Config...":dr=2:a$="nm.zoneconnect":GOSUB 1011:IF e%THEN{:3056}
+	FOR i=1 TO 4:x=i:GOSUB {:3070}:NEXT:bb=4:x=5:GOSUB 1001:&,2,2:a=VAL(a$)
+	IF a>.THEN bb=4+a:FOR i=5 TO 4+a:x=i+1:GOSUB {:3070}:NEXT
+	CLOSE 2:pr=-1:dr=5:GOSUB 1010
+	a$=dr$+"++ path":&,7,dv%,2:GOSUB 1012:IF e%THEN{:3056}
+	dr=2:GOSUB 1010:a$=dr$+"nm.zonelist":&,16:GOSUB 1012:IF e%THEN{:3056}
+	dr=2:a$="nm.zones":GOSUB 1011:IF e%THEN{:3056}
+{:3104}
+	FOR i=1 TO bb:a%(i)=.:a$=dt$(i):IF a$<>""AND a$<>"{up arrow}"THEN:&,16,2:a%(i)=a%
+	NEXT:FOR i=1 TO bb:x=a%(i)+1:a$="":ON-(x>1)GOSUB {:3110}:NEXT:CLOSE 2
+	a%=bb:&"{pound}%a Connections{f6}":RETURN
+{:3110}
+	GOSUB 1001:&,2,2:dt$(i)=a$:b$=LEFT$(ed$(i),1):ON-(b$="/")-2*(b$="+")GOTO {:3116},{:3118}
+	&,2,2:IF LEFT$(a$,3)=LEFT$(ed$(0),3)THEN a$=MID$(a$,4)
+	ed$(i)=ed$(i)+a$:RETURN
+{:3116}
+	ed$(i)=MID$(ed$(i),2):RETURN
+{:3118}
+	&,2,2:ed$(i)="+"+RIGHT$(a$,7)+MID$(ed$(i),2):RETURN
+{:3120}
+	FOR m=1 TO bb:IF a%(m)=.OR dt$(m)=""OR dt$(m)="{up arrow}"THEN f%(m)=.:GOTO {:3130}
+	GOSUB {:3038}:CLOSE 2:IF e%THEN f%(m)=.:GOTO {:3130}
+	IF nn$(m)="{f2}"THEN a$=dt$(m):&"{f6}{pound}$a - No Password":f%(m)=.:GOTO {:3130}
+	IF f%(m)=.THEN a$=dt$(m):&"{f6}{pound}$a - No Call Allowed":GOTO {:3130}
+	a$=dt$(m):&"{f6}{pound}$a - Files Waiting"
+{:3130}
+	NEXT:&"{f6:2}Done.{f6}":RETURN
+{:3132}
+	GOSUB {:3490}:GOSUB {:3496}:ON zf GOTO {:3136}
+	GOSUB {:3060}:g$="nm.connect":GOTO {:3138}
+{:3136}
+	GOSUB {:3090}:g$="nm.zoneconnect"
+{:3138}
+	GOSUB {:3120}:GOTO {:3152}
+{:3140}
+	POKE 53248,q:RETURN
+	GOSUB {:3494}
+{:3144}
+	ON-(m1$="")GOTO {:3150}:PRINT# 131,m1$r$;:RETURN
+{:3146}
+	ON-(m2$="")GOTO {:3150}:PRINT# 131,m2$r$;:RETURN
+	ON-(m3$="")GOTO {:3150}:PRINT# 131,m3$c$r$;:&,22,50:RETURN
+{:3150}
+	RETURN
+{:3152}
+	dr=5:GOSUB 1010:a$=dr$+"++ net":pr=-1:&,7,dv%,2:GOTO 1012
+{:3154}
+	q=1:GOSUB {:3140}:&"{clear}{f6} IMAGE NetMail (C)1995 New Image{f6} Update {$04}"+nd$+"{f6}"
+	&,52,17,.:&,52,29,.:ad$="":ON-(ad$="")GOTO {:3162}:ad=(ad$<=MID$(d1$,2,6))
+	IF ad THEN:&"New Features are ACTIVE{f6}"
+	IF ad=.THEN:&"New Features become active ":&ad$:&"{f6}"
+{:3162}
+	ON-(f1<>1)GOTO {:3164}
+{:3164}
+	q$=CHR$(34):r$=CHR$(13):cm$="IMAGE NetMail":GOTO {:3640}
+{:3166}
+	&"{f6:2} ImageNet V1.2.5 (C)1995 New Image{f6:2}":GOSUB {:3350}:GOTO 1812
+{:3168}
+	&"{clear}{f6:2}Node Not Configured!{f6:2}":nm=.:PRINT# 131,"{stop:3}"
+{:3170}
+	GOSUB {:3440}:q=.:GOSUB {:3140}:f1=1:&,52,29,3:ON a%GOTO {:3000}:f1=3:a$="lo":GOTO 1016
+{:3172}
+	ON-(nn=.)GOTO {:3168}:GOSUB {:3350}:GOSUB {:3490}
+	q=1:GOSUB {:3140}:an$=s1$:GOSUB 1500:s1$=an$
+	zf=.:GOSUB {:3180}:IF nn=1 THEN zf=1:GOSUB {:3180}
+	GOTO {:3170}
+{:3180}
+	n2=.:GOSUB {:3132}
+{:3182}
+	n1=.:n2=n2+1:ON-(n2>3)GOTO {:3496}:a=.:FOR i=1 TO bb:a=a OR f%(i):NEXT:IF a=.THEN{:3188}
+	a%=n2:&"{pound}vj {rvrs on} Pass {pound}%a{pound}{back arrow}39{rvrs off}"
+{:3186}
+	n1=n1+1:ON-(n1>bb)GOTO {:3182}:ON f%(n1)GOSUB {:3190}:GOTO {:3186}
+{:3188}
+	&"{pound}vj":RETURN
+{:3190}
+	a%=n1:b$=dt$(n1):c$=ed$(n1):&"{f6}{pound}vj#{pound}%a: {pound}$b {pound}$c{f6}"
+	IF PEEK(49155)<>255 THEN POKE 49155,.
+	rc=.:s1=1:ON-(LEFT$(c$,1)="+")GOSUB {:3390}:an$=c$:GOSUB 1500:c$=an$
+	IF LEFT$(c$,1)="*"THEN c$=MID$(c$,2):IF PEEK(49155)<>255 THEN POKE 49155,1
+	a=.:ON s1 GOSUB {:3486},{:3392}:ON a GOTO {:3200},{:3202}:GOTO {:3202}
+{:3200}
+	rf=.:GOSUB {:3204}:fr=.:ON z1 GOSUB {:3290}:GOSUB {:3490}:GOSUB {:3496}:ON fr GOSUB {:3350}:ON rf GOSUB {:3132}
+{:3202}
+	GOTO {:3496}
+{:3204}
+	ct$=d1$:cm$="Connected:"+dt$(n1):GOSUB {:3640}:&,22,30:GOSUB {:3500}:t=650
+{:3207}
+	PRINT# 131,"{$01}";
+{:3208}
+	t=t-1:GOSUB {:3018}:ON a GOTO {:3260}:&,4:b=PEEK(780)AND 127
+	ON-(b=3)GOTO {:3260}:ON-(b=2)GOTO {:3211}
+	ON-(t/30=INT(t/30))GOTO {:3207}:GOTO {:3208}
+{:3211}
+	GOSUB {:3472}:GOSUB {:3500}
+	&"Accepted!{f6}":GOSUB {:3670}
+{:3214}
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.password":a$="nm.password,s,w":GOSUB 1011
+	PRINT# 2,nn$(n1)r$nn$(0):CLOSE 2
+	b$=dt$(n1)+"/"+dt$(0)+"/R/nm.password":GOSUB {:3660}:&,16,2:IF PEEK(512)THEN{:3260}
+	dr=2:a$="nm.password,s,r":GOSUB 1011:GOSUB {:3660}:&,16,.:CLOSE 2
+	IF PEEK(512)THEN{:3260}
+	&"{clear}PW Xfer Complete.{f6}"
+	m=n1:GOSUB {:3038}:kk=.:IF e%THEN CLOSE 2:GOTO {:3260}
+{:3228}
+	&,2,2:kk=kk+1:tt$(kk)=a$:ON-(st=.)GOTO {:3228}:a%=kk:&"{clear}sending {pound}%a file(s){f6}"
+	CLOSE 2:PRINT# 15,"s"dr$"nm.l."dt$(n1):GOSUB {:3266}:dc$=d1$
+	dr=2:GOSUB 1010:FOR i=1 TO kk:a$=LEFT$(tt$(i),3)
+	IF a$<>"ALL"AND a$<>"ZZZ"AND tt$(i)<>""THEN PRINT# 15,"s"dr$MID$(tt$(i),11)
+	NEXT:&"Files Scratched.{f6}":dr=2:GOSUB 1081
+	GOSUB {:3020}:PRINT# 2,"From "dt$(0)" to "dt$(n1)r$dc$ct$r$kk"Files"
+	IF kk THEN FOR i=1 TO kk:PRINT# 2,tt$(i):NEXT
+	PRINT# 2,"{up arrow}":CLOSE 2:f%(n1)=.
+	a$=dc$:GOSUB {:3262}:n=a:a$=ct$:GOSUB {:3262}:n=n-a:IF n<.THEN n=n+1440
+	dr=2:a$=g$:GOSUB 1011:x=m:IF n1>4 THEN x=x+1
+	GOSUB 1001:FOR i=1 TO 9:&,2,2:tt$(i)=a$:NEXT
+	a=VAL(tt$(6)):b=VAL(tt$(7)):IF MID$(tt$(9),2,6)<>MID$(ct$,2,6)THEN a=.
+	tt$(9)=ct$:tt$(7)=MID$(STR$(b+n),2):tt$(6)=MID$(STR$(a+1),2)
+	GOSUB 1001:a$="":FOR i=1 TO 9:a$=a$+tt$(i)+r$:NEXT
+	PRINT# 2,a$;:GOSUB 1001:CLOSE 2
+	a1$="To "+dt$(n1):fr=kk:a2$=" Files Sent":ON lg GOSUB {:3452}:RETURN
+{:3260}
+	RETURN
+{:3262}
+	a=VAL(MID$(a$,8,2)):a=a+68*(a>12):IF a=12 OR a=24 THEN a=a-12
+	a=a*60+VAL(MID$(a$,10,2)):RETURN
+{:3266}
+	FOR i=1 TO kk:GOSUB {:3268}:NEXT:RETURN
+{:3268}
+	b$=tt$(i):dr=2:a$=MID$(tt$(i),11)+",s,r":GOSUB {:3650}
+	IF e%THEN tt$(i)="":h$=STR$(e%)+"{f1}"+e$:GOTO {:3032}
+	GOSUB {:3660}:&,16,2:IF PEEK(512)=.THEN:&,16,.:IF PEEK(512)=.THEN RETURN
+	m=n1:tt$(i)="":GOTO {:3036}
+{:3276}
+	ct$=lt$:ON-(nn=.)GOTO {:3168}:q=1:GOSUB {:3140}:GOSUB {:3472}
+	GOSUB {:3152}:IF e%THEN{:3284}
+	GOSUB {:3490}:GOSUB {:3292}:ON z2 GOSUB {:3286}:GOSUB {:3496}:&,22,10:GOSUB {:3496}
+	IF rf THEN fr=kk:GOSUB {:3350}:a1$="From "+dt$:a2$=" Files Received":ON lg GOSUB {:3452}
+{:3284}
+	GOTO {:3170}
+{:3286}
+	GOSUB {:3060}:n1=1
+{:3288}
+	ON-(nn$(n1)=dt$)GOTO {:3214}:n1=n1+1:ON-(n1<bb)GOTO {:3288}:RETURN
+{:3290}
+	PRINT# 131,"{$18:10}"
+{:3292}
+	&,22,30:t=650:kk=.
+{:3294}
+	t=t-1:GOSUB {:3018}:ON a GOTO {:3324}:&,4:b=PEEK(780)AND 127:ON-(b<>1)GOTO {:3294}
+	kk=.:PRINT# 131,"{$02:10}";:GOSUB {:3018}:ON a GOTO {:3324}
+	GOSUB {:3670}:GOSUB {:3660}:b$="":&,16,3
+	ON PEEK(512)GOTO {:3324}:IF MID$(b$,11)<>"nm.password"THEN{:3324}
+	&"{f6:2}B$={f5}{pound}$b{f5}{f6}":dt$=MID$(b$,5,3):IF LEFT$(b$,3)<>nn$THEN{:3324}
+	cm$="Connected:"+dt$:GOSUB {:3640}
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.password":a$="nm.password,s,w":GOSUB 1011
+	GOSUB {:3660}:&,16,1:CLOSE 2:ON PEEK(512)GOTO {:3324}
+	&"{clear}nm.password Transfer Complete{f6}"
+	dr=2:a$="nm.password,s,r":GOSUB 1011:&,2,2:c$=a$:&,2,2:d$=a$:CLOSE 2
+	IF c$<>nn$(0)THEN h$="Incorrect Password":&"{pound}$h{f6}":GOSUB {:3032}:dc$=d1$:GOTO {:3324}
+	GOSUB {:3326}:&"{clear}Transfers Complete.{f6}":dc$=d1$:cn=cn+1:ca=ca+1
+	GOSUB {:3020}
+	PRINT# 2,"From "dt$" to "dt$(0):PRINT# 2,dc$ct$:PRINT# 2,kk" Files"
+	IF kk THEN FOR i=1 TO kk:PRINT# 2,tt$(i):NEXT
+	PRINT# 2,"{up arrow}":CLOSE 2
+{:3324}
+	rf=-(kk<>.):fr=kk:RETURN
+{:3326}
+	kk=.:FOR i=.TO 1:GOSUB {:3328}:NEXT:RETURN
+{:3328}
+	GOSUB {:3660}:&,16,3:i=PEEK(512):IF i THEN RETURN
+{:3330}
+	o$=MID$(b$,11):IF LEFT$(o$,3)="nm."AND ASC(MID$(o$,4,1)+nl$)>192 THEN{:3334}
+	b$=LEFT$(b$,10)+"nm.X"+MID$(b$,15):o$=MID$(b$,11):IF LEN(o$)<5 THEN{:3348}
+{:3334}
+	z$=MID$(b$,9,1):dr=2:a$=o$+",s,w":GOSUB {:3650}:IF e%=.THEN{:3344}
+	CLOSE 2:IF e%=63 THEN ON-(z$="A")-2*(z$="R")GOTO {:3340},{:3342}
+{:3338}
+	CLOSE 2:i=1:h$=STR$(e%)+"{f1}"+e$:GOTO {:3032}
+{:3340}
+	a$=o$+",s,a":GOSUB {:3650}:ON SGN(e%)GOTO {:3338}:GOTO {:3344}
+{:3342}
+	CLOSE 2:PRINT# 15,"s"dr$o$:GOTO {:3330}
+{:3344}
+	&,16,1:CLOSE 2:i=PEEK(512):ON i GOTO {:3346}:kk=kk+1:tt$(kk)=b$:GOTO {:3030}
+{:3346}
+	e$="Aborted":GOTO {:3338}
+{:3348}
+	e$="Bad Name":GOTO {:3338}
+{:3350}
+	GOSUB {:3144}:nm=.:nm$=MID$(d1$,8,2):cm$="Processing":GOSUB {:3640}
+	b$=MID$(d1$,2,6):dr=2:a$="nm.config":GOSUB 1011:x=5:GOSUB 1001:&,2,2
+	IF LEFT$(d1$,1)<>"1"OR a$=b$THEN{:3368}
+	&"Sending Network Report{f6:2}"
+	x=5:GOSUB 1001:PRINT# 2,b$
+	x=4:GOSUB 1001:&,2,2:c$=a$:&,2,2:d$=a$:CLOSE 2:a$="nm.nodes":GOSUB 1011
+	x=2:GOSUB 1001:&,2,2:CLOSE 2:b$=a$+"/"+dt$(0):PRINT# 15,"s"dr$"nm.R."b$
+	dr=2:a$="nm.R."+b$+",s,w":GOSUB 1011:PRINT# 2,dt$(0)r$d1$"/v"nd$r$bn$r$c$r$d$r$"{up arrow}"
+	b$=b$+"/A/"+"nm.R."+b$:GOSUB {:3030}
+{:3368}
+	CLOSE 2
+	&"Processing{f6:2}"
+	a$="mail":GOSUB {:3641}:GOSUB {:3488}
+	a$="netsub1":GOSUB {:3641}:GOSUB {:3488}
+	a$="update":GOSUB {:3641}:GOSUB {:3488}
+	REM:a$="update3":gosub3641:gosub3488
+	a$="sort":GOSUB {:3641}:GOSUB {:3488}
+	REM:a$="compiler":gosub3641:gosub3488
+	GOSUB {:3440}:rf=1:GOTO {:3146}
+{:3390}
+	n$=MID$(c$,2,7):d$=s2$+":"+MID$(c$,9)+";"+s3$:c$=s1$:s1=2:RETURN
+{:3392}
+	REM n$=b#,c$=t#,d$=u/n/p
+	an$=c$:GOSUB 1500:c$=an$:b$="Tymnet ("+b$+")":GOSUB {:3486}:IF a<>1 THEN RETURN
+	x=.
+{:3398}
+	PRINT# 131,r$;:IF x=.THEN:&,22,50
+	a$="":c$="ier":GOSUB {:3418}:ON rc GOTO {:3416}:ON a GOTO {:3398}
+{:3402}
+	a$="a":c$="in: ":GOSUB {:3418}:ON rc GOTO {:3416}:ON a GOTO {:3402}
+{:3404}
+	a$=d$+r$:c$=">":GOSUB {:3418}:ON rc GOTO {:3416}:ON a GOTO {:3404}
+{:3406}
+	a$="bps"+STR$(qb)+r$:c$=">":GOSUB {:3418}:ON rc GOTO {:3416}:ON a GOTO {:3406}
+	a$="d "+n$+r$:c$=">":GOSUB {:3418}:ON rc GOTO {:3416}:IF a THEN:&,52,16,.:RETURN
+	a$="r"+r$:c$=">":GOSUB {:3418}:ON rc GOTO {:3416}:IF a THEN:&,52,16,.:RETURN
+	a$="r"+r$:c$=">":GOSUB {:3418}:ON rc GOTO {:3416}:IF a THEN:&,52,16,.:RETURN
+	a$="logout"+r$:c$="in: ":GOSUB {:3418}:ON rc GOTO {:3416}:f%(n1)=.
+{:3416}
+	&,52,16,.:GOSUB {:3496}:a=.:&"{f6}":RETURN
+{:3418}
+	&,16,6,LEN(c$):a=-(b$<>c$):x=x*a+a:rc=rc OR-(x>4):RETURN
+	PRINT# 131,a$;:a$=b$:t=20:b$="":l=LEN(a$)
+{:3422}
+	&,4:a=PEEK(780)AND 127:a=a+32*(a>95):IF(a<32 OR a>90)AND a<>13 THEN{:3426}
+	&CHR$(a):b$=RIGHT$(b$+CHR$(a),l):t=20:GOTO {:3422}
+{:3426}
+	IF PEEK(2033)AND 128 THEN rc=1:a=1:RETURN
+	t=t-1:GOSUB {:3008}:ON-(a=.AND t>.)GOTO {:3422}:a=-(b$<>a$):x=x*a+a:IF x=5 THEN rc=1
+	RETURN
+{:3440}
+	dr=2:a$="nm.l.*,s,r":GOSUB 1011:IF e%=.THEN{:3450}
+	dr=2:a$="nm.s.ALL,s,r":GOSUB 1011:IF e%THEN{:3450}
+{:3444}
+	&,2,2:s=-(st=.):IF LEFT$(a$,3)="nm."THEN PRINT# 15,"s"dr$a$
+	ON s GOTO {:3444}:CLOSE 2:PRINT# 15,"s"dr$"nm.s.ALL":&"Old Files Scratched.{f6}"
+	dr=2:GOSUB 1081
+{:3450}
+	CLOSE 2:RETURN
+{:3452}
+	d3$="NetMail "+a1$:a$=" {lt. green}"+d3$+r$+"{gray3}"+STR$(qb)+" {green}Baud"+r$
+	a$=a$+" {cyan}Logon  {white}{$04}"+ct$+r$:IF fr THEN a$=a$+"{white}"+STR$(fr)+"{yellow}"+a2$+r$
+	a$=a$+" {cyan}Logoff {white}{$04}"+dc$:GOSUB 1095:a$=""
+	b$="":a=st(4):c$="Post":GOSUB {:3476}:a=st(5):c$="Response":GOSUB {:3476}:GOSUB {:3482}
+	b$="":a=st(3):c$="Mail":GOSUB {:3478}:a=st(2):c$="Sysop Mail":GOSUB {:3478}:GOSUB {:3482}
+	a$=a$+" {cyan}Finish {white}{$04}"+d1$+r$+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}":GOSUB 1095:an$=d1$
+	GOSUB 1063:x=17:GOSUB 1001:PRINT# 2,d3$:x=19:GOSUB 1001:PRINT# 2,an$:CLOSE 2
+	&,15:d2$=an$+"M":GOTO {:3474}
+{:3472}
+	FOR x=1 TO 10:st(x)=.:NEXT
+{:3474}
+	GOSUB 1060:FOR x=1 TO 10:GOSUB 1026:NEXT:CLOSE 2:RETURN
+{:3476}
+	IF a>1 THEN c$=c$+"s"
+{:3478}
+	ON-(a=.)GOTO {:3484}:IF b$<>""THEN b$=b$+","
+	b$=b$+"{white}"+STR$(a)+" {lt. green}"+c$:RETURN
+{:3482}
+	IF b$<>""THEN a$=a$+b$+r$
+{:3484}
+	RETURN
+{:3486}
+	b=VAL(mt$):GOTO {:3498}
+{:3488}
+	GOTO 2600
+{:3490}
+	a$="modem":GOSUB {:3641}:GOTO 2630
+{:3494}
+	x=10:GOTO 4000
+{:3496}
+	x=3:GOTO 4000
+{:3498}
+	x=6:GOTO 4000
+{:3500}
+	x=9:GOTO 4000
+{:3600}
+	&,69,.,17,"               ",1
+	&,69,.,18," Image Net 2.0 ",1
+	&,69,.,19,"   (c)  1994   ",1
+	&,69,.,20,"   New Image   ",1
+	&,69,.,21,"               ",1
+	&,69,15,17,"File",$8f
+	&,69,15,18,"Stat",$8f
+	&,69,15,19,"Area",$8f
+	&,69,15,20,"Mode",$8f
+	&,69,15,21,"    ",$8f
+' TODO: consolidate these lines:
+	&,69,19,17,"                     ",1
+	&,69,19,18,"                     ",1
+	&,69,19,19,"                     ",1
+	&,69,19,20,"                     ",1
+	&,69,19,21,"                     ",1
+	RETURN
+{:3640}
+	&,69,19,19,"                     ",1:&,69,20,19,cm$,1:RETURN
+{:3641}
+	&,69,19,20,"                     ",1:&,69,20,20,a$,1:RETURN
+{:3650}
+	&,69,20,17,"{f5}"+a$+"{f5}",1:GOSUB 1011:&,69,19,18,STR$(e%)+":"+e$,1:RETURN
+{:3660}
+	&"{clear}{down:15}{white} Good: 00000  Bad: 00000  Bytes: 000000{up}{f6}":RETURN
+	&"{down:15}":RETURN
+{:3670}
+	&,69,19,20," Normal              ",1:RETURN
+	rem "+.NM/auto" copr. 1995 NEW image 3/14/95

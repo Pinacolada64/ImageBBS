@@ -1,0 +1,45 @@
+{number:4000}
+	&,27,2:fd=10:bl=10:dim s%(8+bl,fd):tz=0:gosub {:4002}:&,28,2:return
+{:4002}
+	dr=3:a$="e.U/D":gosub 1011:if e%then:&"{f6}Error opening UD file{f6:2}{pound}w1":return
+	&,2,2:bz=val(a$):for x=2 to bz+1:gosub 1001:&,2,2:&,2,2:&,2,2:tt$(x-1)=a$:next
+	close 2:tt$(0)="None":a$=dr$+"e.filelists":&,60,2,0,s%(0,0),a$,dv%:gosub 1012
+{:4008}
+	&"{clear}Filelists{f6}{pound}o{$c0}{pound}o{$c0}{f6}"
+	for i=1 to fd:&,60,1,16,s%(1,i),a$:b$=tt$(s%(0,i)):&"{pound}!i{pound}{back arrow}03{pound}$a{pound}{back arrow}20{pound}$b{f6}":next
+	&"{pound}o{$c0}{pound}o{$c0}{f6}"
+	poke 53252,2:&"#: {pound}i1":if tr%<1 then return
+	x=val(an$):if x<1 or x>fd then{:4020}
+	gosub {:4100}:goto {:4008}
+{:4020}
+	if tz then:&"Save Changes? ":gosub 1902:on a gosub {:4024}
+	return
+{:4024}
+	dr=3:gosub 1010:a$=dr$+"e.filelists":print# 15,"s"a$
+	&,60,3,0,s%(0,0),2*(9+bl)*(fd+1),a$,dv%:gosub 1012:&:return
+{:4100}
+	&"{clear}#{pound}!x:{f6}":&,60,1,16,s%(1,x),a$
+	&"1. Filename: {f5}{pound}$a{f5}{f6}":a$=tt$(s%(0,x))
+	&"2. Destination UD: {pound}$a{f6}"
+	&"3. Edit UD List{f6}"
+	&"{f6}> {pound}g1{pound}v7{f6:2}":on val(an$)goto {:4110},{:4116},{:4124}:return
+{:4110}
+	p$="Filename":&,60,1,16,s%(1,x),w$:poke 53252,16:pl=0:&,1,32
+	if an$<>""then tz=1:&,60,0,16,s%(1,x),an$
+	goto {:4100}
+{:4116}
+	poke 53252,3:&"UD # (?=List): {pound}i1":a=val(an$)
+	if an$="{f2}"then for i=1 to bz:a$=tt$(i):&"{pound}!i{pound}{back arrow}04{pound}$a{f6}":next:goto {:4116}
+	if a>0 and a<=fd then tz=1:s%(0,x)=a
+	goto {:4100}
+{:4124}
+	&"{clear}{pound}o{$c0}{pound}o{$c0}{f6}":for i=1 to bl:a$=tt$(s%(8+i,x)):&"{pound}!i{pound}{back arrow}04{pound}$a{f6}":next:&"{pound}o{$c0}{pound}o{$c0}{f6}"
+	poke 53252,2:&"#: {pound}i1":a=val(an$):if a<1 or a>bl then{:4100}
+{:4128}
+	poke 53252,3:&"UD # (?=List): {pound}i1":b=val(an$)
+	if an$="{f2}"then for i=1 to bz:a$=tt$(i):&"{pound}!i{pound}{back arrow}04{pound}$a{f6}":next:goto {:4128}
+	if b>0 and b<=fd then tz=1:s%(a+8,x)=b
+	goto {:4124}
+	rem "+/IM.filelist"
+
+' FIXME: unsure of the module's purpose

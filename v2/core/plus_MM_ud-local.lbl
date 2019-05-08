@@ -1,0 +1,87 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.ud-local"
+	ON lm GOTO {:4004},{:4064}
+{:4004}
+	f%=.:l=.:GOSUB 3004:GOSUB 1010:CLOSE 15:IF st THEN 3214
+	&"{lt. blue}{f6}Pattern: ":GOSUB 1499:b$="*"
+	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
+	NEXT:an$=an$+b$:&"{f6}"
+	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$:GET#1,a$,a$
+	GOSUB 3072:&,8,1,1:lp=1:&a$+"{f6}"
+{:4016}
+	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:4034}
+	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$:IF g$="r"OR g$="u"OR g$="c"THEN{:4016}
+	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
+	NEXT:&" {pound}#4{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}3058?: {pound}g1":a$=an$
+	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):lp=1:&MID$("No   Yes  StartAbort",x*5+1,5)
+	ON x+1 GOTO {:4036},{:4028},{:4034},{:4034}
+{:4028}
+	f%=f%+1:a%(f%)=b%:tt$(f%)=f$+"{f1}"+g$:a%(f%)=b%:l=l+b%
+	FOR kk=1 TO rn:GOSUB 3060:IF b$=tt$(f%)THEN f%=f%-1:kk=rn:&"File Exists!{f6}":l=l-b%
+	NEXT:GOTO {:4036}
+{:4034}
+	s=1:IF x=3 THEN f%=.
+{:4036}
+	ON-(s=.AND f%+rn<30)GOTO {:4016}:ON-(f%+rn=30)GOSUB 3032:CLOSE 1:ON-(f%=.)GOTO 3214
+	FOR i=1 TO f%:c%=a%(i):b$=tt$(i):b%=i:&"{lt. blue}{f6}{pound}#2{pound}# {pound}%b-{pound}$b ({pound}#0{pound}%c blks.)":NEXT
+	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO 3214
+	f4=.:POKE 53252,78:&"{f6}{lt. blue}[{yellow}A{lt. blue}]uto or [{yellow}M{lt. blue}]anual Descriptions: {pound}g1":ON tr%+1 GOTO 3214
+	ON-(an$="M")GOTO {:4054}:&"{yellow}Auto{lt. blue}{f6}":s$="Your Uploads":GOSUB {:4048}:GOTO {:4056}
+{:4046}
+	s$="{white}{f5}"+tt$(i)+"{f5}"
+{:4048}
+	&"{f6}{lt. green}Enter A Decription For {pound}$s{f6:2}:{lt. blue} {pound}i0"
+	ON tr%+1 GOTO 3214:IF an$=""THEN an$=" (sysop to lazy to add description)
+	RETURN
+{:4054}
+	&"{yellow}Manual{lt. blue}{f6}":f4=1
+{:4056}
+	FOR i=1 TO f%:a=i+rn:c%(a)=a%(i):GOSUB 3058:nn$(a)=a$:dt$(a)=d1$+d1$+tt$(i)
+	ON f4 GOSUB {:4046}:ed$(a)=an$:d%(a)=co%:f%(a)=1:NEXT:rn=rn+f%:GOSUB 3150
+	uc=uc+f%:bu=bu+l:a=2:GOSUB 1004:cr=cr+(l*a):GOSUB 1070:GOSUB 1060
+	i=f%:x=6:GOSUB 1025:x=17:GOSUB 1025:x=28:GOSUB 1025:x=35:GOSUB 1025:CLOSE 2:GOTO 3214
+{:4064}
+	ON bl GOTO {:4066}:GOSUB 3010:ON-(z$="DM")GOTO {:4072}:IF a<1 OR a>rn THEN 3214
+{:4066}
+	kk=a:&"{f6}{pound}$j Copy:{f6}":GOSUB 3060:GOSUB 3064:an$="{f5}"+b$+"{f5}"
+	&"{f6}{pound}$k {pound}v7?: ":GOSUB 1902:ON-(a=.AND bl=1)GOTO {:4070}:ON a+1 GOTO 3214:f%=.:i=1:GOSUB {:4094}:ON bl GOTO {:4070}:GOTO 3214
+{:4070}
+	a=kk:GOTO 3296
+{:4072}
+	ON-(pr<>2)GOTO 3214:&"{f6:2}{lt. blue}{pound}$m{pound}$j Copy:{f6:2}Start At #: {pound}i1":GOSUB 3012:IF a<1 OR a>rn THEN 3214
+	GOSUB 3072:f%=.:FOR i=a TO rn:a=i:GOSUB 3174:&"{lt. blue}Copy?: ":GOSUB 1007
+	ON-(an$="A"OR an$="S")GOTO {:4080}:GOSUB 1903:ON-(a=.)GOTO {:4084}:kk=i
+	GOSUB 3060:GOSUB 3064:f%=f%+1:tt$(f%)=b$:GOTO {:4084}
+{:4080}
+	a$="Start":i=rn:IF an$="A"THEN a$="Abort":f%=.
+	lp=1:&:&"{f6}"
+{:4084}
+	NEXT:ON-(f%=.)GOTO 3214
+	FOR i=1 TO f%:b$=tt$(i):b%=i:&"{f6}{pound}#2{pound}# {pound}%b-{pound}$b":NEXT
+	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO 3214
+	FOR j=1 TO f%:b$=tt$(j):IF j=1 THEN GOSUB {:4094}:NEXT:GOTO 3214
+	c=bl:d=jm:c$=bl$:d$=jm$:GOSUB {:4100}:NEXT:GOTO 3214
+{:4094}
+	GOSUB 3038:GOSUB 3004:GOSUB 1009:a%=dv%:c$=LEFT$(dr$,LEN(dr$)-1):&"{f6}Source: {pound}%a{f1}{pound}$c{f6}Target: {pound}i1"
+	c$=dr$:d$="0":c=dv%:IF an$=""THEN d=c+1:a%=d:&"{up}Target: {pound}%a{f1}{pound}$d{f6}":d$=d$+":":GOTO {:4100}
+	an$="  "+an$:GOSUB 1470:d=dv%:d$=dr$
+{:4100}
+	f$=STR$(r):IF f%>.THEN bl=c:jm=d:bl$=c$:jm$=d$
+	GOSUB 3064:o$=b$
+	a=c:GOSUB 3044:ON-(a<>.)GOTO {:4122}:a=d:GOSUB 3044:ON-(a<>.)GOTO {:4122}
+	IF f%=.THEN GOSUB 3020:GOSUB 3022:IF an$<>""THEN o$=an$+RIGHT$(o$,2)
+	GOTO {:4112}
+{:4110}
+	ON-(st<>.)GOSUB {:4120}:&"ABORTED!{f6}":GOSUB 3038:RETURN
+{:4112}
+	POKE 142,.:GOSUB 3038:OPEN 15,c,15:OPEN 14,d,15:OPEN 3,c,3,c$+b$+",r":GOSUB 1012
+	OPEN 2,d,2,d$+o$+",w":INPUT# 14,a$,f$:b=VAL(a$)
+	ON-(e%+b<>.)GOTO {:4110}:b$=o$:&"{f6:2}Copying {f5}{pound}$b{f5}...":SYS 49152
+	GOSUB 1012:INPUT# 14,a$,f$:GOSUB 3038:&"Done!{f6}"
+{:4120}
+	&,25:&"{f6}Status:{f6:2}Source: {pound}$e{f6}Target: {pound}$f{f6}":RETURN
+{:4122}
+	GOSUB 1995:j=f%:RETURN
+	copr.1990 NEW image 10/28/90

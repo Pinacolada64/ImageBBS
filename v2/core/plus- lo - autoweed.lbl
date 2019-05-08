@@ -1,15 +1,15 @@
 {number:4000}
 	rem autoweed
 	gosub 1063:x=39:gosub 1001:&,2,2:w=val(a$):close 2:if w=0 then{:4072}
-	a%=w:&"{f6}{$c1}utoweed: {pound}%a {$cd}onths {$c2}ack{f6}"
+	a%=w:&"{f6}Autoweed: {pound}%a Months Back{f6}"
 	c$=mid$(d1$,2,6):a=val(mid$(c$,3,2))-w:b=val(left$(c$,2))
 {:4008}
 	if a<1 then a=a+12:b=b-1:goto {:4008}
 	c$=right$(str$(100+b),2)+right$(str$(100+a),2)+mid$(c$,5)
 	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.weedinfo":&,16,1:gosub 1012
-	if e%then close 2:&"{$c5}rror!{f6}":goto {:4072}
-	&"{pound}%a {$d5}sers in weedinfo file{f6:2}":b%=0:n=a%
-	gosub 1065:q=0:&"{$c3}utoff={pound}$c{f6}"
+	if e%then close 2:&"Error!{f6}":goto {:4072}
+	&"{pound}%a Users in weedinfo file{f6:2}":b%=0:n=a%
+	gosub 1065:q=0:&"Cutoff={pound}$c{f6}"
 {:4020}
 	&,16,6:on-(a%=0)goto {:4034}
 	x=a%:gosub 1001:for i=1 to 24:&,2,2:tt$(i)=a$:next:a$=tt$(1)
@@ -22,11 +22,11 @@
 	close 2:on-(q=0)goto {:4070}
 	dr=6:gosub 1010:a$=dr$+"u.weedinfo":&,16,1
 	b$="log":a$="w":gosub 1027:if e%then a$="a":gosub 1027
-	print# 2,"  {lt. blue}{$c1}uto {$d5}ser {$d7}eed"r$
+	print# 2,"  {lt. blue}Auto User Weed"r$
 	for i=1 to q:print# 2," {lt. blue}>{white} "right$(str$(1000+a%(i)),3)" "ed$(i)
 {:4044}
 	a%=a%(i):&,16,8:if a%then:&,16,5:goto {:4044}
-	next:print# 2," {pound}q0{pound}o{$c0}{pound}o{$c0}":close 2:&"{f6:2}{$d2}emoving {$d5}sers:{f6}"
+	next:print# 2," {pound}q0{pound}o{$c0}{pound}o{$c0}":close 2:&"{f6:2}Removing Users:{f6}"
 	dr=6:gosub 1010:a$=dr$+"u.weedinfo":print# 15,"s"a$:&,16,2:gosub 1012:&
 	dr=6:gosub 1010:a$=dr$+"u.index":&,16,1
 	for z=1 to q:a%=a%(z):tt$=ed$(z):a$=tt$:&" {pound}#3{pound}%a  {pound}$a{f6}"
@@ -40,7 +40,7 @@
 	next:gosub 1081
 	dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$:&,16,2
 {:4070}
-	a%=q:&"{f6} {pound}%a {$d5}sers {$d7}eeded!{f6}"
+	a%=q:&"{f6} {pound}%a Users Weeded!{f6}"
 {:4072}
 	return
 	copr. 1990 new image 12-26-90

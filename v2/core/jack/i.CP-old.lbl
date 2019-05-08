@@ -1,12 +1,12 @@
-	&"{clear}{f6}{cyan} *{$c9}{$cd}{$c1}{$c7}{$c5} {$c3}OPY-{$c1}LL 2.0*{f6:2} {$d3}PECIAL {$d4}HANKS {$d4}O {$ca}IM {$c2}UTTERFIELD!"
-	REM "I.{$c3}{$d0}
-	&"{f6} {$cd}ODS BY {blue}{$d7}A{lt. blue}ND{cyan}ER{white}ER{f6}":A$="COPIER":GOSUB 28
+	&"{clear}{f6}{cyan} *IMAGE COPY-ALL 2.0*{f6:2} SPECIAL THANKS TO JIM BUTTERFIELD!"
+	REM "I.CP
+	&"{f6} MODS BY {blue}WA{lt. blue}ND{cyan}ER{white}ER{f6}":A$="COPIER":GOSUB 28
 	&,5:V=1.2
 {:3004}
-	GOSUB{:3118}:&"{f6:2} {white}[{$c3}]{cyan}OPY {$c6}ILES{f6} {white}[{$c4}]{cyan}IRECTORY"
-	&"{f6} {white}[{$cd}]{cyan}ULTI-{$d3}CRATCH{f6} {white}[{$d3}]{cyan}END {$c4}ISK {$c3}OMMAND{f6} {white}[{$d1}]{cyan}UIT{f6:2}"
-	P$="{$c3}OPY":GOSUB 6:ON-(AN$="{$c3}")-(AN$="{$c4}")*2-(AN$="{$d3}")*3 GOTO{:3024},{:3012},{:3120}
-	ON-(AN$="{$cd}")-(AN$="{$d1}"OR AN$="")*2 GOTO{:3140},{:3500}:GOTO{:3004}
+	GOSUB{:3118}:&"{f6:2} {white}[C]{cyan}OPY FILES{f6} {white}[D]{cyan}IRECTORY"
+	&"{f6} {white}[M]{cyan}ULTI-SCRATCH{f6} {white}[S]{cyan}END DISK COMMAND{f6} {white}[Q]{cyan}UIT{f6:2}"
+	P$="COPY":GOSUB 6:ON-(AN$="C")-(AN$="D")*2-(AN$="S")*3 GOTO{:3024},{:3012},{:3120}
+	ON-(AN$="M")-(AN$="Q"OR AN$="")*2 GOTO{:3140},{:3500}:GOTO{:3004}
 {:3012}
 	F=DV%(1):D$="":B%=DV%(1):GOSUB{:3134}:IF B%>6 AND B%<33 THEN F=B%
 	F$="0:":GOSUB{:3136}:A=VAL(AN$):IF A>.THEN F$=MID$(STR$(A),2)+":"
@@ -14,102 +14,102 @@
 	GOSUB{:3138}:&,15,2:IF AN$=""THEN AN$="*"
 	&"{f6}":OPEN 2,F,0,"$"+F$+AN$:&,8,2:CLOSE 2
 {:3022}
-	&"{f6}{pound}{back arrow}12{rvrs on} {$d0}RESS {$c1} {$cb}EY: {rvrs off}{pound}G1":GOTO{:3004}
+	&"{f6}{pound}{back arrow}12{rvrs on} PRESS A KEY: {rvrs off}{pound}G1":GOTO{:3004}
 {:3024}
-	A9$="":S1=.:C1=.:S8=.:C8=.:D$="{$d3}OURCE":B%=DV%(1):F=B%:GOSUB{:3134}
+	A9$="":S1=.:C1=.:S8=.:C8=.:D$="SOURCE":B%=DV%(1):F=B%:GOSUB{:3134}
 	IF B%>6 AND B%<33 THEN F=B%
 	F$="0:":GOSUB{:3136}:A=VAL(AN$):IF A>.THEN F$=MID$(STR$(A),2)+":"
-	D$="{$d4}ARGET":B%=DV%(1):G=B%:GOSUB{:3134}:IF B%>6 AND B%<33 THEN G=B%
+	D$="TARGET":B%=DV%(1):G=B%:GOSUB{:3134}:IF B%>6 AND B%<33 THEN G=B%
 	G$="0:":GOSUB{:3136}:A=VAL(AN$):IF A>.THEN G$=MID$(STR$(A),2)+":"
-	D1%=G:D2%=VAL(G$):DR=.:GOSUB 61:LP=1:&"{f6}{$c2}LOCKS {$c6}REE: "+STR$(A):KK=A
+	D1%=G:D2%=VAL(G$):DR=.:GOSUB 61:LP=1:&"{f6}BLOCKS FREE: "+STR$(A):KK=A
 	IF A<3 THEN GOSUB 92:GOTO{:3004}
 	GOSUB{:3138}:&,15,2:IF AN$=""THEN AN$="*"
 	T$=AN$:IF TR%<1 THEN 200
 {:3040}
 	T=.
 {:3042}
-	&"{f6}{cyan}{$d2}EADING {$c4}IRECTORY...{f6:2} [{$d9}]ES [{$ce}]O [{$d3}]TART [{$c1}]BORT":TZ=2
-	&"{f6} [1] {$d3}KIP 143 {$c6}ILES
-	&"{f6} [8] {$d3}KIP {$c5}IGHT {$c6}ILES{f6} [{$d2}]EMAINING {$c6}ILES {$d3}AME {$c1}S {$cc}AST{f6:2}"
+	&"{f6}{cyan}READING DIRECTORY...{f6:2} [Y]ES [N]O [S]TART [A]BORT":TZ=2
+	&"{f6} [1] SKIP 143 FILES
+	&"{f6} [8] SKIP EIGHT FILES{f6} [R]EMAINING FILES SAME AS LAST{f6:2}"
 	OPEN 1,F,0,"$"+F$+T$:GET#1,A$,A$:&,8,1,1:LP=1:&:&"{f6}"
 {:3050}
 	&,8,1,1:S=ST:IF MID$(A$,7,1)="B"THEN B$=A$:&"{f6}{pound}$B{f6}":GOTO{:3090}
 	A=VAL(A$):C$=MID$(A$,8):A$=MID$(A$,26,1)
 	FOR I=2 TO 17:IF MID$(C$,I,1)=QT$THEN C$=LEFT$(C$,I-1)
 	NEXT:TT$=C$+","+A$:B$=A$:IF S THEN{:3090}
-	IF S8 THEN C8=C8+1:IF C8<>8 THEN A%=A:&"{pound}#4{pound}# {pound}%A {f5}{pound}$C{f5},{pound}$B{pound}{back arrow}25{$d3}KIP":GOTO{:3050}
-	IF S1 THEN C1=C1+1:IF C1<>143 THEN A%=A:&"{pound}#4{pound}# {pound}%A {f5}{pound}$C{f5},{pound}$B{pound}{back arrow}25{$d3}KIP":GOTO{:3050}
+	IF S8 THEN C8=C8+1:IF C8<>8 THEN A%=A:&"{pound}#4{pound}# {pound}%A {f5}{pound}$C{f5},{pound}$B{pound}{back arrow}25SKIP":GOTO{:3050}
+	IF S1 THEN C1=C1+1:IF C1<>143 THEN A%=A:&"{pound}#4{pound}# {pound}%A {f5}{pound}$C{f5},{pound}$B{pound}{back arrow}25SKIP":GOTO{:3050}
 	S1=.:C1=.:C8=.:S8=.:A%=A:&"{pound}#4{pound}# {pound}%A {f5}{pound}$C{f5},{pound}$B{pound}{back arrow}25"
-	IF TZ+A>KK THEN:&"{$d4}OO {$c2}IG!{f6}":GOTO{:3086}
-	IF B$="R"THEN:&"({$d2}EL {$c6}ILE){f6}":GOTO{:3086}
-	IF A9$="{$d2}"THEN X=X9:GOTO{:3072}
-	&"?: {pound}G1":X=-(AN$="{$d9}")-(AN$="{$ce}")*2-(AN$="{$d3}")*3-(AN$="{$c1}")*4-(AN$="8")*5:GOSUB{:3188}
+	IF TZ+A>KK THEN:&"TOO BIG!{f6}":GOTO{:3086}
+	IF B$="R"THEN:&"(REL FILE){f6}":GOTO{:3086}
+	IF A9$="R"THEN X=X9:GOTO{:3072}
+	&"?: {pound}G1":X=-(AN$="Y")-(AN$="N")*2-(AN$="S")*3-(AN$="A")*4-(AN$="8")*5:GOSUB{:3188}
 {:3072}
 	IF X=.THEN X=2
-	LP=1:&MID$("{$d9}ES  {$ce}O   {$d3}TART{$c1}BORT{$d3}KIP {$d3}KIP ",(X-1)*5+1,5)+"{f6}"
-	IF X=1 THEN T=T+1:TZ=TZ+A%:TT$(T)=TT$:IF T>143 THEN:&"{$cc}IMIT {$d2}EACHED!{f6}":X=3:GOTO{:3090}
+	LP=1:&MID$("YES  NO   STARTABORTSKIP SKIP ",(X-1)*5+1,5)+"{f6}"
+	IF X=1 THEN T=T+1:TZ=TZ+A%:TT$(T)=TT$:IF T>143 THEN:&"LIMIT REACHED!{f6}":X=3:GOTO{:3090}
 	IF X=3 THEN{:3090}
 	IF X=4 THEN T=.:GOTO{:3090}
-	IF KK-TZ<3 THEN:&"{$ce}O {$cd}ORE {$d2}OOM!{f6}":GOTO{:3090}
+	IF KK-TZ<3 THEN:&"NO MORE ROOM!{f6}":GOTO{:3090}
 	IF X=5 THEN S1=1:X9=.
 {:3086}
 	IF X=6 THEN S8=1:X9=.
-	IF S=.THEN{:3050}
+	IF S=. then {:3050}
 {:3090}
 	CLOSE 1:A9$="":IF T=.THEN GOSUB 92:GOTO{:3004}
 	&"{f6}":A=F:GOSUB{:3132}:ON-(A<>.)GOTO{:3116}:A=G:GOSUB{:3132}:ON-(A<>.)GOTO{:3116}
 {:3094}
 	GOSUB{:3202}
 {:3096}
-	&"{f6}[{$c3}]OPY  [{$c1}]BORT  [{$d2}]E-{$d3}ELECT{f6}[{$d3}]ELECT {$cd}ORE {$c6}ILES{f6}[{$c4}]ELETE {$d3}OME {$c6}ILES :"
-	&"{pound}G1{pound}V7":ON-(AN$="{$c3}")-(AN$="{$c1}")*2-(AN$="{$d2}")*3 GOTO{:3100},{:3184},{:3186}:GOTO{:3192}
+	&"{f6}[C]OPY  [A]BORT  [R]E-SELECT{f6}[S]ELECT MORE FILES{f6}[D]ELETE SOME FILES :"
+	&"{pound}G1{pound}V7":ON-(AN$="C")-(AN$="A")*2-(AN$="R")*3 GOTO{:3100},{:3184},{:3186}:GOTO{:3192}
 {:3100}
 	CLOSE 15:OPEN 15,F,15:OPEN 14,G,15:IM=5:GOSUB 443:REM LOAD SCREEN MASK
-	FOR I=1 TO T:C$=TT$(I):IF C$="[{$c4}ELETED]"THEN{:3112}
-	&"{f6}{$c3}OPYING:{f5}{pound}$C{f5}..."
+	FOR I=1 TO T:C$=TT$(I):IF C$="[DELETED]" then {:3112}
+	&"{f6}COPYING:{f5}{pound}$C{f5}..."
 	OPEN 3,F,3,F$+C$+",R":INPUT# 15,A$,B$:IF A$<>"00"THEN:&"{pound}{back arrow}32{pound}$B!":GOTO{:3112}
 {:3108}
 	OPEN 2,G,2,G$+C$+",W":INPUT# 14,A$,B$:IF A$<>"00"THEN:&"{pound}{back arrow}32{pound}$B!":GOTO{:3114}
 	SYS 49152:INPUT# 14,A$,B$:&"{pound}{back arrow}32{pound}$B!"
 {:3112}
-	CLOSE 2:CLOSE 3:NEXT:&"{f6:2}{$c4}ONE!":GOTO{:3004}
+	CLOSE 2:CLOSE 3:NEXT:&"{f6:2}DONE!":GOTO{:3004}
 {:3114}
-	ON-(A$<>"63")GOTO{:3112}:CLOSE 2:&"{f6}[{$d3}]KIP [{$d2}]EPLACE [{$c1}]BORT :{pound}G1":GOTO{:3180}
+	ON-(A$<>"63")GOTO{:3112}:CLOSE 2:&"{f6}[S]KIP [R]EPLACE [A]BORT :{pound}G1":GOTO{:3180}
 {:3116}
-	&"{f6}{$c5}{$d2:2}{$cf}{$d2} : {$c4}EVICE {$ce}OT {$d0}RESENT!{f6}":GOTO{:3004}
+	&"{f6}E{$d2:2}OR : DEVICE NOT PRESENT!{f6}":GOTO{:3004}
 {:3118}
 	CLOSE 1:CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:RETURN
 {:3120}
 	F=8:D$="":B%=8:GOSUB{:3134}:IF B%>6 AND B%<16 THEN F=B%
 	A=F:GOSUB{:3132}:IF A THEN{:3116}
-	&"{f6:2}{$c4}ISK {$c3}OMMAND: ":GOSUB{:3220}:C$=AN$:A$=LEFT$(C$,1):IF A$=""THEN{:3004}
-	IF A$="N"OR A$="S"THEN GOSUB 93:IF A=.THEN{:3004}
+	&"{f6:2}DISK COMMAND: ":GOSUB{:3220}:C$=AN$:A$=LEFT$(C$,1):IF A$="" then {:3004}
+	IF A$="N"OR A$="S"THEN GOSUB 93:IF A=. then {:3004}
 	CLOSE 15:OPEN 15,F,15:PRINT# 15,C$:GOSUB 5
-	CLOSE 15:&:&"{f6} ({$c8}IT {$c1} {$cb}EY) {pound}G1":GOTO{:3004}
+	CLOSE 15:&:&"{f6} (HIT A KEY) {pound}G1":GOTO{:3004}
 {:3132}
 	CLOSE 15:OPEN 15,A,15:POKE 781,15:SYS 65481:SYS 65484:CLOSE 15:A=ST:RETURN
 {:3134}
-	A=2:GOSUB{:3216}:&"{f6}{cyan}{pound}$D {$c4}EVICE {white}({pound}#2{pound}# {pound}%B): {pound}I1":IF AN$=""THEN AN$=STR$(B%)
+	A=2:GOSUB{:3216}:&"{f6}{cyan}{pound}$D DEVICE {white}({pound}#2{pound}# {pound}%B): {pound}I1":IF AN$=""THEN AN$=STR$(B%)
 	B%=VAL(AN$):&"{pound}%B,{pound}V7{f6}":A=38:GOTO{:3216}
 {:3136}
-	A=4:GOSUB{:3216}:&"{cyan}{pound}$D {$c4}RIVE  {white}( 0): {pound}I1":IF AN$=""THEN AN$=F$
+	A=4:GOSUB{:3216}:&"{cyan}{pound}$D DRIVE  {white}( 0): {pound}I1":IF AN$=""THEN AN$=F$
 	&"{pound}V7{f6}":A=38:GOTO{:3216}
 {:3138}
-	&"{f6}{cyan} {$d0}ATTERN{white}(*): {pound}I0":RETURN
+	&"{f6}{cyan} PATTERN{white}(*): {pound}I0":RETURN
 {:3140}
 	GOSUB 349:GOSUB 350:ON TR%+1 GOTO 300:F%=.:L=.:GOSUB 3:CLOSE 15:IF ST THEN{:3004}
-	&"{lt. blue}{f6}{$d0}ATTERN: ":GOSUB{:3220}:B$="*"
+	&"{lt. blue}{f6}PATTERN: ":GOSUB{:3220}:B$="*"
 	FOR I=1 TO LEN(AN$):IF MID$(AN$,I,1)="*"THEN B$=""
 	NEXT:AN$=AN$+B$
 	CLOSE 1:OPEN 1,DV%,0,"$"+DR$+AN$:GET#1,A$,A$
-	&"{f6}{yellow} [{$d9}]ES [{$ce}]O [{$d3}]TART [{$c1}]BORT{pound}Q0{f6}{pound}VJ"
+	&"{f6}{yellow} [Y]ES [N]O [S]TART [A]BORT{pound}Q0{f6}{pound}VJ"
 	&,8,1,1:LP=1:&A$+"{f6}"
 {:3154}
 	&,8,1,1:S=ST:IF MID$(A$,7,1)="B"THEN B$=A$:&"{f6}{pound}$B{f6}":GOTO{:3168}
 	B%=VAL(A$):F$=MID$(A$,8):T$=MID$(A$,26,1):G$=T$
 	FOR I=2 TO 17:IF MID$(F$,I,1)=QT$THEN F$=LEFT$(F$,I-1)
 	NEXT:&" {pound}#4{pound}# {pound}%B: {f5}{pound}$F,{pound}$G{f5} {pound}{back arrow}30?: {pound}G1":A$=AN$
-	X=-(A$="{$d9}")-2*(A$="{$d3}")-3*(A$="{$c1}"):LP=1:&MID$("{$ce}O   {$d9}ES  {$d3}TART{$c1}BORT",X*5+1,5)
+	X=-(A$="Y")-2*(A$="S")-3*(A$="A"):LP=1:&MID$("NO   YES  STARTABORT",X*5+1,5)
 	ON X+1 GOTO{:3170},{:3166},{:3168},{:3168}
 {:3166}
 	F%=F%+1:A%(F%)=B%:TT$(F%)=F$:A%(F%)=B%:L=L+B%:GOTO{:3170}
@@ -118,29 +118,29 @@
 {:3170}
 	ON-(S=.AND F%<100)GOTO{:3154}:CLOSE 1:ON-(F%=.)GOTO{:3004}
 	FOR I=1 TO F%:B$=TT$(I):B%=I:&"{lt. blue}{f6}{pound}#2{pound}# {pound}%B-{pound}$B":NEXT
-	&"{f6:2}{$c3}ORRECT?: ":GOSUB 96:ON A+1 GOTO{:3004}:FOR I=1 TO F%:B$=TT$(I):CLOSE 15
-	&"{f6}{$d3}CRATCHING {f5}{pound}$B{f5}....":CLOSE 15:OPEN 15,DV%,15,"S"+DR$+B$:GOSUB 5:&
+	&"{f6:2}CORRECT?: ":GOSUB 96:ON A+1 GOTO{:3004}:FOR I=1 TO F%:B$=TT$(I):CLOSE 15
+	&"{f6}SCRATCHING {f5}{pound}$B{f5}....":CLOSE 15:OPEN 15,DV%,15,"S"+DR$+B$:GOSUB 5:&
 	NEXT:&"{f6}":GOTO{:3022}
 {:3180}
-	ON-(AN$="{$d3}")-(AN$="{$c1}")*2 GOTO{:3112},{:3182}:GOTO{:3214}
+	ON-(AN$="S")-(AN$="A")*2 GOTO{:3112},{:3182}:GOTO{:3214}
 {:3182}
 	I=T:GOTO{:3112}
 {:3184}
-	&"{f6}{$c3}OPYING {$c1}BORTED.":GOTO{:3004}
+	&"{f6}COPYING ABORTED.":GOTO{:3004}
 {:3186}
 	GOSUB{:3118}:GOTO{:3040}
 {:3188}
-	A9$=AN$:IF AN$<>"{$d2}"THEN X9=X:RETURN
+	A9$=AN$:IF AN$<>"R"THEN X9=X:RETURN
 	X=X9:RETURN
 {:3192}
-	IF AN$="{$d3}"THEN{:3208}
-	IF AN$<>"{$c4}"THEN{:3100}
-	&"{f6}{$c4}ELETE {$d7}HICH {$ce}UMBER: {pound}I1"
+	IF AN$="S" then {:3208}
+	IF AN$<>"D" then {:3100}
+	&"{f6}DELETE WHICH NUMBER: {pound}I1"
 	ZQ=VAL(AN$):IF ZQ<1 OR ZQ>T THEN{:3096}
-	TT$(ZQ)="[{$c4}ELETED]":GOTO{:3094}
+	TT$(ZQ)="[DELETED]":GOTO{:3094}
 {:3202}
 	FOR I=1 TO T:&"{f6}"+STR$(I)+":"+TT$(I)
-	IF I/20=INT(I/20)THEN:&"{f6}{$d0}RESS A KEY: {pound}G1"
+	IF I/20=INT(I/20)THEN:&"{f6}PRESS A KEY: {pound}G1"
 	NEXT:RETURN
 {:3208}
 	GOSUB{:3138}:&,15,2:IF AN$=""THEN AN$="*"

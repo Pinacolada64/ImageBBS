@@ -1,0 +1,22 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	GOSUB {:3010}:GOSUB 1065:GOSUB {:3014}
+	FOR x=1 TO ur:GOSUB 1001:&,2,2:an$=a$:&,15,1
+	FOR i=1 TO 6:&,2,2:NEXT:a=VAL(LEFT$(a$,1))
+	IF a=c THEN:&"ID:{pound}!x ({pound}!a) {pound}v7{f6}"
+	a=rc:&".{left}":IF rc OR a THEN x=ur
+	NEXT:CLOSE 2:GOTO {:3016}
+{:3010}
+	&"{clear}{f6:2}Access Group Finder. This Program Will{f6}Look Through Your User Files"
+	&" And Find{f6}All Users With Any Specified Access{f6}Group.":RETURN
+{:3014}
+	&"{f6:2}Find Which Access Group?: {pound}g1{pound}v7{f6}":c=VAL(an$):IF c=0 THEN{:3020}
+	RETURN
+{:3016}
+	&"{f6}Run again? ":GOSUB 1907:ON a GOTO {:3000}
+	GOTO 1812
+{:3020}
+	&"{f6}These users are unvalidated or{f6}have not called back...{f6:2}":RETURN
+	REM "+.find acs" - find access group 180209 x-tec

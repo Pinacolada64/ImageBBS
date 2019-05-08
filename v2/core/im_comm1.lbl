@@ -1,0 +1,91 @@
+{number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
+	on im goto {:60002},{:60100},{:60200},{:60300}:return
+{:60002}
+	nr=1:&"{f6}{cyan}Last Call: {$04}"+ld$+"{f6:2}Add Or Subtract How Many Days? {f6:2}Last: {pound}i1"
+	if left$(an$,1)="@"then gosub {:60052}:goto {:60002}
+	a=int(val(an$)):if tr%<1 then return
+	on-(a=.)goto {:60034}:if a<-999 or a>999 then:&"{f6}Out Of Range!{f6}":goto {:60002}
+	b=val(left$(ld$,1))+a:c=val(mid$(ld$,2,2)):d=val(mid$(ld$,4,2))
+	e=val(mid$(ld$,6,2))+a:a$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
+{:60014}
+	if e<=asc(mid$(a$,d)) then {:60020}
+	e=e-asc(mid$(a$,d)):d=d+1:if d<13 then{:60014}
+	d=1:c=c+1:goto {:60014}
+{:60020}
+	if e>. then {:60026}
+	d=d-1:e=e+asc(mid$(a$,d-12*(d=.))):if d>. then {:60020}
+	d=12:c=c-1:goto {:60020}
+{:60026}
+	if b>7 then b=b-7:goto {:60026}
+{:60028}
+	if b<1 then b=b+7:goto {:60028}
+	a$=right$("0"+mid$(str$(c),2),2)+right$("0"+mid$(str$(d),2),2)
+	ld$=chr$(48+b)+a$+right$("0"+mid$(str$(e),2),2)+right$(ld$,4)
+{:60034}
+	&"{f6}Change Time?: ":gosub 1902:on a gosub {:60038}
+	&"{f6}Last Date: {$04}"+ld$:&"{f6:2}":return
+{:60038}
+	&"{f6}Enter Time In This Format:{f6:2}Example:  9:20 AM--920A{f6}"
+	&"{pound}{back arrow}0911:23 PM--1123P{f6:2}Last: {pound}i1"
+	a$=right$(an$,1):if an$=""then return
+	an$=left$(an$,len(an$)-1):if(a$<>"A"and a$<>"P")or val(right$(an$,2))>59 then{:60038}
+	if val(an$)>1259 or val(an$)<100 then{:60038}
+	t=-(a$="P")*8000
+	ld$=left$(ld$,7)+right$("0"+mid$(str$(val(an$)+t),2),4):return
+{:60052}
+	if len(an$)<>7 then return
+	a=val(mid$(an$,2,2))
+	b=val(mid$(an$,4,2)):if b<1 or b>12 then return
+	c=val(mid$(an$,6,2)):if c<1 or c>31 then return
+	c=c+a*365:if b>1 then for i=1 to b-1:c=c+asc(mid$("{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}",i,1)):next
+	if a>0 then l=int(a/4):if(int(a/4)=a/4)and b<3 then l=l-1
+	c=c+l:c=.5+7*(c/7-int(c/7)):ld$=chr$(49+c)+mid$(an$,2)+mid$(ld$,8):return
+{number:60100}
+{:60100}
+	a=11:gosub 1004:if a=.then return
+	d=val(left$(lt$,1))
+	dim dt$(14):dt$(1)="Sunday":dt$(2)="Monday":dt$(3)="Tuesday"
+	dt$(4)="Wednesday":dt$(5)="Thursday":dt$(6)="Friday":dt$(7)="Saturday"
+	dt$(8)="Sunday":dt$(9)="Monday":dt$(10)="Tuesday"
+	dt$(11)="Wednesday":dt$(12)="Thursday":dt$(13)="Friday":dt$(14)="Saturday"
+{:60112}
+	for i=.to 6:a%=i+1:&"{f6} [{pound}#1{pound}%a] ":&dt$(7-i+d):next:&"{f6} [Q]uit{f6:2}Which Log? "
+	gosub 1007:&:on-(tr%=.or a$="Q")goto {:60134}:if a$<>r$and(a$<"1"or a$>"7") then {:60130}
+	c=val(a$):if a$=r$then c=1
+{:60118}
+	b=d+1-c:if c>d then b=d+8-c
+	a$="r":b$="log"+mid$(str$(b),2):gosub 1027:on sgn(e%)goto {:60136}:sh=.:a$="{f6}"
+{:60122}
+	lp=1:&:on rc goto {:60130}:&,2,2:b$=mid$(a$,2,1):if b$="{$c0}"then b$=a$:a$="{pound}q0{pound}$b{yellow}"
+	if b$="U"then b$=a$:a$="{white}{pound}$b{yellow}"
+	on-(st=.)goto {:60122}:&:a$=dt$(b):&"{f6:2}{pound}q0End Of {pound}$a's Log{f6}":if c=7 then{:60132}
+	&"{f6:2}More? {pound}g1":a=-(an$="Y"or an$=r$):gosub 1904:on a+1 goto {:60132}:c=c+1:goto {:60118}
+{:60130}
+	&"{f6}Aborted.{f6}"
+{:60132}
+	on-(sh=47)goto {:60134}:&"{f6}Another Log? ":gosub 1902:on a goto {:60112}
+{:60134}
+	close 2:return
+{:60136}
+	&"{f6}No Log For ":&dt$(b):&"{f6}":goto {:60132}
+{number:60200}
+{:60200}
+	t%=60:&"{clear}":if tr%>t%or(pt%and tr%>p1%) then {:60216}
+{:60202}
+	a%=tr%:b$=str$(cr):&"{f6:2}{rvrs on} ** Credit Exchange ** {rvrs off}{f6:2} Current Rate Of Exchange:"
+	&"{f6} 5 Credit Pts = 1 Minute{f6:2}Minutes Left  : {pound}%a{f6}Credit Points :{pound}$b"
+	a%=t%-tr%:&"{f6:2}How Much Time Would You Like To Buy?{f6}(Up To {pound}%a More Minutes)"
+	&"{f6}(Enter {f5}Q{f5} To Quit){f6:2}Excg: {pound}i1":a=int(val(an$)):if a<1 then return
+	if a+tr%>t%then gosub {:60216}:goto {:60202}
+	if a*5>cr then:&"{f6:2}Not Enough Credits.":goto {:60202}
+	cr=cr-a*5:tr%=tr%+a:goto {:60202}
+{:60216}
+	if pt%then t%=p1%
+	&"{f6}Sorry, You Cannot Have More{f6}Than {pound}%t Minutes Total.{f6:2}":return
+{number:60300}
+{:60300}
+	return
+	rem im.comm1

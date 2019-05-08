@@ -5,7 +5,7 @@
 	input# 2,a$,b$,a%:if mid$(d5$,2,6)>=mid$(b$,2,6)then a%=0
 	if a%and(2^ac%)then rn=rn+1:nn$(rn)=a$
 	on-(st=.)goto {:4004}:close 2:if rn=0 then return
-	&"{f6}{lt. blue}{$d4}here {$c1}re {white}{$ce}ew {lt. blue}{$d6}ote {$d4}opics.{f6}{$d6}ote {$ce}ow{blue}?{white} ":gosub 1902:if a=0 then return
+	&"{f6}{lt. blue}There Are {white}New {lt. blue}Vote Topics.{f6}Vote Now{blue}?{white} ":gosub 1902:if a=0 then return
 	for b=1 to rn:gosub {:4036}:next:return
 {:4014}
 	dr=3:o$="v.t."+left$(nn$(b),12):return
@@ -14,15 +14,15 @@
 	gosub {:4032}:close 2
 {:4020}
 	x=0:gosub {:4016}:a$=o$+",s,r":gosub 1011
-	if e%then:&"{$ce}o {$d6}ote {$d2}easons {$cf}n {$c6}ile.{f6:2}":goto {:4030}
-	&"{f6}{$d2}ead {$d2}eason {$c6}ile? ":gosub 1902:if a=0 then close 2:return
+	if e%then:&"No Vote Reasons On File.{f6:2}":goto {:4030}
+	&"{f6}Read Reason File? ":gosub 1902:if a=0 then close 2:return
 {:4026}
-	rc=0:gosub 1914:x=x+1:&,2,2:a%=x:&"{f6:2}{$d2}eason #{pound}%a:{pound}$a{f6:2}":&,3,2
-	if(st=0)and(rc=0)then{:4026}
+	rc=0:gosub 1914:x=x+1:&,2,2:a%=x:&"{f6:2}Reason #{pound}%a:{pound}$a{f6:2}":&,3,2
+	if(st=0)and(rc=0) then {:4026}
 {:4030}
 	close 2:return
 {:4032}
-	a$=nn$(b):&"{f6}{lt. blue}{$d6}ote {$d4}opic: {white}{pound}$a{f6:2}":gosub 1914
+	a$=nn$(b):&"{f6}{lt. blue}Vote Topic: {white}{pound}$a{f6:2}":gosub 1914
 	gosub {:4014}:a$=o$+",s,r":gosub 1011:&,12,2:return
 {:4036}
 	gosub {:4032}:&"{f6}":x=0:f=0:z=0
@@ -32,22 +32,22 @@
 {:4042}
 	input# 2,a,i,a$:f%(a)=f%(a)+1:z=z+1:f=f-(i=id and a$=na$):on-(st=0)goto {:4042}
 {:4044}
-	close 2:&"{$d0}ress a key for topics ... {pound}g1{f6}":on f goto {:4054}:&"{f6}"
-	for i=1 to x:a$=tt$(i):a%=i:&"{pound}%a {pound}$a{f6}":next:&"{f6}{$c3}hoice -> {pound}g1":c=val(an$)
-	if c<1 or c>x then:&"{$c1}borted!{f6}":return
-	a$=tt$(c):&"{pound}$a{f6:2} {$c3}orrect? ":gosub 1902:if a=0 then return
+	close 2:&"Press a key for topics ... {pound}g1{f6}":on f goto {:4054}:&"{f6}"
+	for i=1 to x:a$=tt$(i):a%=i:&"{pound}%a {pound}$a{f6}":next:&"{f6}Choice -> {pound}g1":c=val(an$)
+	if c<1 or c>x then:&"Aborted!{f6}":return
+	a$=tt$(c):&"{pound}$a{f6:2} Correct? ":gosub 1902:if a=0 then return
 	f%(c)=f%(c)+1:z=z+1:dr=3:a$=o$+",s,a":gosub 1011:print# 2,c;r$id;r$na$:close 2
 {:4054}
-	if z=0 then:&"{f6}{$ce}o {$d6}otes so far!{f6:2}":goto {:4062}
+	if z=0 then:&"{f6}No Votes so far!{f6:2}":goto {:4062}
 	s$="s":if z=1 then s$=""
-	a%=z:&"{f6}{$d2}esults {$c6}rom {pound}%a {$d6}ote{pound}$s:{f6:2}"
+	a%=z:&"{f6}Results From {pound}%a Vote{pound}$s:{f6:2}"
 	for i=1 to x:a$=tt$(i):a%=100*f%(i)/z+.5:&"{pound}#3{pound}# {pound}%a% {pound}$a{f6}":next
 {:4062}
-	on f goto {:4076}:&"{f6}{$d7}ould you like to leave an {$c1}nonymous{f6}reason? ":gosub 1902
+	on f goto {:4076}:&"{f6}Would you like to leave an Anonymous{f6}reason? ":gosub 1902
 	if a=0 then{:4076}
-	tt$(0)=chr$(48+c)+tt$(c):gosub 1604:if kk=.then{:4076}
+	tt$(0)=chr$(48+c)+tt$(c):gosub 1604:if kk=. then {:4076}
 	a=b:gosub {:4016}:a$=o$+",s,w":gosub 1011:if e%then a$=o$+",s,a":gosub 1011
-	if e%then{:4074}
+	if e% then {:4074}
 	print# 2,mid$(tt$(0),2):for i=1 to kk-1:print# 2,tt$(i):next:print# 2,"{up arrow}"
 {:4074}
 	close 2

@@ -1,0 +1,80 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	a=4:gosub 1736:dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:uh=a%:goto {:3008}
+{:3002}
+	for x=1 to kk:a%=x:b$=nn$(x):d$=dt$(x):if x=2 then d$=co$(val(dt$(x)))
+	&"{white}{pound}%a> {lt. red}{pound}$b{pound}{back arrow}17: {lt. green}{pound}$d{f6}":next:return
+{:3006}
+	a%=ur:&"{f6:2}{yellow}Out Of {pound}%a Users, Where Should{f6}The List Begin? (1){f6:2}{lt. blue}":return
+{:3008}
+	p$="{lt. green}User List{lt. blue}":cm$=p$:gosub 1360:a=10:gosub 1004
+	if a=.then x=4:gosub 1980:close 2:goto 1811
+{:3012}
+	close 2
+	&"{f6:2}{lt. green} [F]ast (ID# And Handle){f6}{lt. red} [R]eg. (All Info){f6:2}{cyan}User List: {pound}g1{pound}v7{f6}"
+	on-(an$="F")goto {:3074}:if an$<>"R"or an$="Q"or tr%<1 then 1811
+	restore:for x=1 to 7:read nn$(x):dt$(x)="":next:qe=.
+	kk=3:a=8:gosub 1004:if a+zz then kk=7
+{:3022}
+	&"{clear}{f6:2}{white} Select The Attributes To Search For.{cyan}"
+	&"{f6}{yellow} Press {rvrs on}RETURN{rvrs off} When Finished,  Or If"
+	&"{f6} No Attributes Are Needed. (All Users){f6:2}":gosub {:3002}
+	&"{f6}{green} Attribute?: {yellow}{pound}g1{pound}v7{f6}":a=val(an$):if a<1 or a>kk then{:3036}
+	if a=2 then gosub {:3112}
+	&"{f6}":a%=a:b$=nn$(a):if dt$(a)<>""then c$=dt$(a):&"{white}{pound}%a-  {lt. red}{pound}$b: {lt. green}{pound}$c{f6}"
+	&"{pound}%a-  {pound}$b: {pound}i1":on tr%+1 goto 1811:dt$(a)=an$:qe=qe or(an$<>""):goto {:3022}
+{:3036}
+	gosub {:3006}:gosub 1006:c=int(val(left$(an$,4))):if c<1 or c>ur then c=1
+	&"{clear}{f6}{yellow}Searching For:{f6:2}":if qe=.then:&"{white}(No Specifics){f6:2}":goto {:3042}
+	gosub {:3002}:&"{f6}"
+{:3042}
+	&"{orange}(Hit Space Bar To Abort At Any Time){f6:2}":gosub 1065
+{:3044}
+	if c>ur or tr%<1 then{:3114}
+	x=c:gosub 1001:input# 2,tt$(1),a$,tt$(4),tt$(5),tt$(3),a$,tt$(6),a$,a$,tt$(2)
+	input# 2,a$,a$,a$,a$,a$,a$,a$,a$,a$,a$,a$,tt$(8):tt$(9)=tt$(4)+" "+tt$(5)
+	tt$(7)=mid$(tt$(3),7):tt$(3)=mid$(tt$(3),2,3)
+	q=1:for x=1 to kk:if dt$(x)<>""then if dt$(x)<>left$(tt$(x),len(dt$(x)))then q=.
+	next:if q=.or tt$(1)="{up arrow}"or tt$(1)="RES"then q=.:goto {:3072}
+	if kk<>1 then:&"{f6}"
+	q=.:a%=c:an$=tt$(1):&,15,1:c$=an$:&"{lt. red}{pound}vn{pound}%a{pound}{back arrow}08: {white}{rvrs on}{pound}$c{f6}":q=q+rc
+	on kk goto {:3072}:lp=1:&"{lt. red}Last On : {lt. green}{$04}"+tt$(8):q=q+rc
+	b$=co$(val(tt$(2))):&"{lt. red}Computer: {green}{pound}$b{f6}":q=q+rc
+	b$=tt$(3):a$="{lt. red}Area Code: {white}({yellow}{pound}$b{white}){lt. red}":if kk=3 then{:3070}
+	c$=tt$(7):an$=tt$(9):&,15,1:d$=an$:&"{lt. red}Phone # : {white}({lt. green}{pound}$b{white}){orange}/{lt. green}{pound}$c{f6}{lt. red}Name    : {green}{pound}$d{f6}"
+	c$=tt$(6):a$="{lt. red}Access  : {yellow}{pound}$c"
+{:3070}
+	lp=1:&:q=q+rc
+{:3072}
+	&"{white}.":on-(q+rc>.)goto {:3114}:c=c+1:goto {:3044}
+{:3074}
+	&"{f6}{purple}Quick User List.{f6}"
+	&"{f6}{yellow}Would You Like To List:{f6:2} {lt. green}[N]umerically Or{f6} [A]lphabetically?: {yellow}{pound}g1{pound}v7{f6}"
+	if an$<>"A"and an$<>"N" then {:3012}
+	kk=1:dt$(1)="":on-(an$="N")goto {:3096}:a%=uh:&"{f6:2}{white}{pound}%a {orange}Users.{f6}"
+	&"{f6}{yellow}Enter Beginning Char(s) Of The{f6}Handle You Want To Start At.{f6:2}"
+	gosub 1006:gosub 1065:&,16:if a%=.and b%=1 then b%=.
+	rc=.:sh=.:&"{f6:2}"
+{:3088}
+	&,16,6:x=a%:gosub 1001:input# 2,an$:&,15,1:b$=an$:c$=cc$:d$=mid$(str$(a%),2)
+	d$=left$(d$+"{white}----",6)
+	&"{yellow}{pound}$c{pound}$d{white}{rvrs on} {pound}$b {rvrs off}{f6}":if rc then{:3114}
+	on-(b%<uh)goto {:3088}:goto {:3114}
+{:3096}
+	gosub 1065:rc=.:sh=.:gosub {:3006}:gosub 1006:if tr%<1 then 1811
+	x=val(an$):if x<1 or x>ur then x=1
+	&"{f6:2}":for x=x to ur:gosub 1001:&,2,2:if a$="{up arrow}"then a$="{orange}(Deleted Account)":goto {:3106}
+	if a$="RES"then a$="{purple}(Reserved Account)":goto {:3106}
+	an$=a$:&,15,1:a$=an$
+{:3106}
+	d$=mid$(str$(x),2):d$=left$(d$+"{white}----",6)
+	&"{lt. red}{pound}vn{pound}$d{yellow}{pound}$a{f6}":if rc then x=ur
+	next:goto {:3114}
+{:3112}
+	for i=1 to 9:b%=i:an$=co$(i):&"{f6} {white}{pound}%b> {lt. blue}{pound}v7":next:&"{f6:2}":return
+{:3114}
+	&"{f6}{white}Listing Finished.{f6}":goto {:3012}
+	data"Handle","Computer Type","Area Code","First Name","Last Name"
+	data"Access Group","Phone Number"
+	rem "+.UL" copr.1988 new image

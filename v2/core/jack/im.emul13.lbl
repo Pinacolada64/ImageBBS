@@ -9,7 +9,7 @@
 {:1006}
 	GOTO 6
 	GOTO 7
-	&"{f6}{$c4}EVICE,{$c4}RIVE: {pound}I1":AN$="  "+AN$:RETURN
+	&"{f6}DEVICE,DRIVE: {pound}I1":AN$="  "+AN$:RETURN
 {:1009}
 	GOTO 2
 {:1010}
@@ -76,7 +76,7 @@
 	GOTO 60
 	A$="{black}":GOSUB{:1024}:A=-SGN(E%):RETURN
 	IM=5:GOTO{:2404}
-	GOSUB{:1470}:ON A GOTO{:1995}:&"{f6}{$d0}ATTERN: ":GOSUB{:1499}
+	GOSUB{:1470}:ON A GOTO{:1995}:&"{f6}PATTERN: ":GOSUB{:1499}
 	CLOSE 1:OPEN 1,DV%,.,"$"+DR$+AN$:&"{f6}":&,8,1:CLOSE 1:RETURN
 	GOTO 82
 	GOTO 83
@@ -105,9 +105,9 @@
 	F1=.:A$=Z$+STR$(NL):GOSUB{:1350}:A$=Z$:GOTO{:1301}
 	IM=7:GOTO{:2404}
 	IM=8:GOTO{:2404}
-	&,5:A=LP:LP=1:&"{f6}{$c9}MAGE {$c2:2}{$d3} 64 {$d6}{pound}!A.{pound}%A: {pound}$A{f6}":RETURN
+	&,5:A=LP:LP=1:&"{f6}IMAGE {$c2:2}S 64 V{pound}!A.{pound}%A: {pound}$A{f6}":RETURN
 	BN=.:R=INT(VAL(MID$(AN$,3))):IF R<1 THEN R=1
-	ON-(Z$="{$d5}{$c4}"OR Z$="{$d5}{$d8}")GOTO{:1320}:GOTO{:1323}
+	ON-(Z$="UD"OR Z$="UX")GOTO{:1320}:GOTO{:1323}
 	GOSUB{:1351}:GOTO{:1812}
 	A$="NEW USER":GOTO{:1350}
 	A$="CONFIG"
@@ -167,7 +167,7 @@
 	IM=2:GOTO{:2410}
 	IM=3:GOTO{:2410}
 	IM=5:GOTO{:2400}
-	&"{f6}{$c5}DIT ({$c9})NFO{f6}  OR ({$d0})ARAMETERS? {pound}G1{pound}V7{f6}":A=-(AN$="{$d0}")-2*(AN$="{$c9}")
+	&"{f6}EDIT (I)NFO{f6}  OR (P)ARAMETERS? {pound}G1{pound}V7{f6}":A=-(AN$="P")-2*(AN$="I")
 	IM=1:ON A GOTO{:2406},{:2428}:RETURN
 	IM=2:GOTO{:2406}
 	IM=2:GOTO{:2428}
@@ -177,16 +177,16 @@
 	IM=6:GOTO{:2404}
 	GOTO 85
 	IM=1:GOTO{:2422}
-	F4=.:IF RIGHT$(AN$,1)<>"!"THEN:&"{f6:2}{green}{$d4}IME TO {$c6}LY? ":GOSUB{:1907}:IF A=.THEN RETURN
+	F4=.:IF RIGHT$(AN$,1)<>"!"THEN:&"{f6:2}{green}TIME TO FLY? ":GOSUB{:1907}:IF A=.THEN RETURN
 	F4=1.3:RETURN
-	A=1:IF RIGHT$(AN$,1)<>"!"THEN:&"{f6:2}{red}{$cd}UST {green}{$d9}OU {$cc}EAVE{white}?: ":GOSUB{:1907}
+	A=1:IF RIGHT$(AN$,1)<>"!"THEN:&"{f6:2}{red}MUST {green}YOU LEAVE{white}?: ":GOSUB{:1907}
 	IF A=.THEN F1=-3*(X=2):ON X GOTO{:1630},3000,3000
 	CD%=.:IF MID$(Z$,2,1)<>"%"THEN LD$=LT$
 	IF RIGHT$(AN$,1)="!"THEN F1=2:GOTO{:1700}
-	F1=1:IF TR%<1 THEN B$="{$d4}IME":GOSUB{:1985}:F1=2
+	F1=1:IF TR%<1 THEN B$="TIME":GOSUB{:1985}:F1=2
 {:1700}
 	GOTO 302
-	REM IFA=PRTHEN1740
+	REM IFA=PR then 1740
 	PR=A:DR=5:GOSUB{:1009}
 	A$=DR$+"++"+STR$(A):&,7,DV%,2
 	D4$="++"+STR$(A):RETURN
@@ -196,11 +196,11 @@
 	GOTO 300
 	ON-(AC%<>AO%)GOSUB{:1634}:AN$=AN$+"":RS=1:A$=LEFT$(AN$,1):Z$=LEFT$(AN$,2)
 	&,52,20,3:EM=A%:&,52,5,3:ZZ=A%
-	RS=.:RETURN:REM**" {$c3}OMMAND {$d3}CAN {$ce}OT {$d9}ET {$c9}MPLEMETED - {$ca}{$cc}{$c6} "
+	RS=.:RETURN:REM**" COMMAND SCAN NOT YET IMPLEMETED - JLF "
 	POKE 970,MP%:&"{f6}":RETURN
 	GOTO 93
 	GOTO 94
-	A=-(A$="{$d9}")
+	A=-(A$="Y")
 	GOTO 97
 	&:&"{f6}{pound}Q0":RETURN
 	PR$="":&:GOTO{:1812}
@@ -215,7 +215,7 @@
 {:1914}
 	GOTO 12
 {:1915}
-	&"{f6:2} - {pound}$B{$cd}":A%=TR%:IF A%<100 THEN:&" - {pound}%A {$cd}IN. {$cc}EFT":RETURN
+	&"{f6:2} - {pound}$BM":A%=TR%:IF A%<100 THEN:&" - {pound}%A MIN. LEFT":RETURN
 	RETURN
 {:1920}
 	GOTO 92
@@ -223,10 +223,10 @@
 	X=2
 {:1980}
 	GOTO 390
-	B$="{$d4}IME"
+	B$="TIME"
 {:1985}
-	&"{f6}{$d3}ORRY, {pound}$B {$cc}IMIT {$c5}XCEEDED.{f6}":RETURN
-	&"{f6:2}{red}{$d5}NKNOWN {green}{$c3}OMMAND{white}. {green}{$c5}NTER {white}{f5}{red}?{white}{f5} {green}{$c6}OR {$c8}ELP!":RETURN
+	&"{f6}SORRY, {pound}$B LIMIT EXCEEDED.{f6}":RETURN
+	&"{f6:2}{red}UNKNOWN {green}COMMAND{white}. {green}ENTER {white}{f5}{red}?{white}{f5} {green}FOR HELP!":RETURN
 	NI=VAL(AN$):N1$=CC$+MID$(STR$(NI),2):B$="-"+N1$:N2$=""
 	IF LEFT$(AN$,1)="!"THEN NI=-1:N1$=MID$(AN$,2,3):B$=" @ "+N1$
 	AN$=MID$(AN$,5):&,15,6,94:IF AN$<>""AND NI=-1 THEN N2$=AN$:B$=B$+"/"+N2$
@@ -276,7 +276,7 @@
 {:2430}
 	A$="MENUS":GOTO{:2500}
 {:2500}
-	&"{f6:2}{$d3}YSTEM {$d3}UB-{$d2}OUTINE {$c6}ILE {$c5}RROR!{f6:2}":RETURN
+	&"{f6:2}SYSTEM SUB-ROUTINE FILE ERROR!{f6:2}":RETURN
 	GOSUB{:2610}:GOSUB 4000:NEW 4000:RETURN
 {:2610}
 	LM$=LEFT$(PR$,2)+"."+A$:DR=5:GOSUB{:1010}:A$=DR$+"+/"+LM$:LOAD A$,DV%:RETURN
@@ -284,12 +284,12 @@
 {:2630}
 	LM$=A$+"":DR=5:GOSUB{:1010}:A$=DR$+"+/"+LM$:LOAD A$,DV%:RETURN
 {:2900}
-	A=45:B=43:A$="{$d0}ROGRAM":GOSUB{:2910}
-	A=47:B=45:A$="{$d6}ARIABLES":GOSUB{:2910}
-	A=49:B=47:A$="{$c1}RRAYS":GOSUB{:2910}
-	A=51:B=49:A$="{$c6}REE {$d2}{$c1}{$cd}":GOSUB{:2910}
-	A=55:B=51:A$="{$d3}TRINGS":GOSUB{:2910}
-	POKE 53252,16:&"{f6}{$cc}OAD: {pound}I0{f6}":IF AN$=""THEN RETURN
+	A=45:B=43:A$="PROGRAM":GOSUB{:2910}
+	A=47:B=45:A$="VARIABLES":GOSUB{:2910}
+	A=49:B=47:A$="ARRAYS":GOSUB{:2910}
+	A=51:B=49:A$="FREE RAM":GOSUB{:2910}
+	A=55:B=51:A$="STRINGS":GOSUB{:2910}
+	POKE 53252,16:&"{f6}LOAD: {pound}I0{f6}":IF AN$=""THEN RETURN
 	DR=5:GOSUB{:1010}:A$=DR$+AN$:LOAD A$,DV%:GOTO{:2900}
 {:2910}
 	C=PEEK(A)-PEEK(B)+(PEEK(A+1)-PEEK(B+1))*256:&"{pound}$A:{pound}{back arrow}10{pound}!C{f6}":RETURN

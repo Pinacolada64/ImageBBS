@@ -1,21 +1,21 @@
 {number:4000}
 	rem scan for new
 	l$=mid$(ld$,2,6):b=val(mid$(ld$,8,4))/100:gosub {:4010}:l=b
-	&"{f6:2}{yellow}{$d3}can {$c6}or {$ce}ew {$d0}osts/{$d2}esponses?:{rvrs off} ":gosub 1902:on a gosub {:4016}
-	&"{f6:2}{yellow}{$d3}can {$c6}or {$ce}ew {$d5}ploads?:{rvrs off} ":gosub 1902:on a gosub {:4048}
+	&"{f6:2}{yellow}Scan For New Posts/Responses?:{rvrs off} ":gosub 1902:on a gosub {:4016}
+	&"{f6:2}{yellow}Scan For New Uploads?:{rvrs off} ":gosub 1902:on a gosub {:4048}
 	return
 {:4010}
 	b=b+68*(b>80):if int(b)=12 or int(b)=24 then b=b-12
 	a=-(b$>l$):if a=0 then a=-(b>l)
 	return
 {:4016}
-	dr=3:a$="e.{$d3}ub":gosub 1011:if e%then{:4046}
-	&"{f6} {$d3}ub{pound}{back arrow}25{$d0}osts/{$d2}esps{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4046}:for i=1 to n
+	dr=3:a$="e.Sub":gosub 1011:if e% then {:4046}
+	&"{f6} Sub{pound}{back arrow}25Posts/Resps{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4046}:for i=1 to n
 	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4044}
 	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
 	if right$(a$,1)="{up arrow}"then a$=left$(a$,len(a$)-1)
 	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4044}
-	close 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+str$(i):gosub 1011:if e%then{:4038}
+	close 2:p=0:np=0:nr=0:dr=4:a$="d.sub"+str$(i):gosub 1011:if e% then {:4038}
 	&,2,2:p=val(a$):for j=1 to p:x=j+1:gosub 1001:input# 2,a$,a$,a$
 	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:np=np+a:if a then{:4036}
 	b$=mid$(a$,13,6):b=val(mid$(a$,19,4))/100:gosub {:4010}:nr=nr+a
@@ -23,28 +23,28 @@
 	next
 {:4038}
 	close 2:a%=np:b%=nr:c%=p
-	&"{pound}#2{pound}# {pound}%a/{pound}#2{pound}# {pound}%b {$cf}f {pound}#2{pound}# {pound}%c{f6}":if rc then i=n:goto {:4044}
-	if i<n-1 then dr=3:a$="e.{$d3}ub":gosub 1011
+	&"{pound}#2{pound}# {pound}%a/{pound}#2{pound}# {pound}%b Of {pound}#2{pound}# {pound}%c{f6}":if rc then i=n:goto {:4044}
+	if i<n-1 then dr=3:a$="e.Sub":gosub 1011
 {:4044}
 	next:&"{pound}q0{pound}vj":close 2:return
 {:4046}
-	close 2:&"{f6:2}{$ce}o {$d3}ubs!{f6}":return
+	close 2:&"{f6:2}No Subs!{f6}":return
 {:4048}
-	dr=3:a$="e.{$d5}/{$c4}":gosub 1011:if e%then{:4074}
-	&"{f6} {$d5}/{$c4}{pound}{back arrow}30{$ce}ew {$c6}iles{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4074}:for i=1 to n
+	dr=3:a$="e.U/D":gosub 1011:if e% then {:4074}
+	&"{f6} U/D{pound}{back arrow}30New Files{f6}{pound}vj":&,2,2:n=val(a$):on-(n=0)goto {:4074}:for i=1 to n
 	x=i+1:gosub 1001:&,2,2:&,2,2:a=val(a$):&,2,2:if(a and 2^ac%)=0 then{:4072}
 	if left$(a$,1)="."and mid$(a$,3,1)="."then a$=mid$(a$,4)
 	a$=left$(a$,26):&" {pound}$a{pound}{back arrow}28":if rc then i=n:goto {:4072}
-	close 2:u=0:nu=0:dr=4:a$="d.u/d"+str$(i):gosub 1011:if e%then{:4066}
+	close 2:u=0:nu=0:dr=4:a$="d.u/d"+str$(i):gosub 1011:if e% then {:4066}
 	&,2,2:u=val(a$):if u=0 then{:4066}
 	for j=1 to u:&,2,2:&,2,2:&,2,2:b$=a$:&,2,2:&,2,2:a$=b$
 	b$=mid$(a$,2,6):b=val(mid$(a$,8,4))/100:gosub {:4010}:nu=nu+a:next
 {:4066}
 	close 2:a%=nu:b%=u
-	&"{pound}#2{pound}# {pound}%a {$cf}f {pound}#2{pound}# {pound}%b{f6}":if rc then i=n:goto {:4072}
-	if i<n-1 then dr=3:a$="e.{$d5}/{$c4}":gosub 1011
+	&"{pound}#2{pound}# {pound}%a Of {pound}#2{pound}# {pound}%b{f6}":if rc then i=n:goto {:4072}
+	if i<n-1 then dr=3:a$="e.U/D":gosub 1011
 {:4072}
 	next:&"{pound}q0{pound}vj":close 2:return
 {:4074}
-	close 2:&"{f6:2}{$ce}o {$d5}/{$c4}s!{f6}":return
+	close 2:&"{f6:2}No U/Ds!{f6}":return
 	copr. 1990 new image 12-26-90

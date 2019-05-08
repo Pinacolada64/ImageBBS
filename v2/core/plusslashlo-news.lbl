@@ -1,0 +1,22 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-news" - news module  11-26-94
+	cm$="News":GOSUB 1360:kk=.:b=.:t=.:dr=4:a$="d.n.Main,s,r":GOSUB 1011
+	ON SGN(e%)GOTO {:4026}:INPUT# 2,b:IF b<1 THEN{:4026}
+	t=.:FOR x=1 TO b:INPUT# 2,ed$(x),nn$(x),d%(x):d%(x)=d%(x)*-((d%(x)AND 2^ac%)<>.)
+	IF d%(x)THEN t=t+1:ed$(t)=ed$(x):nn$(t)=nn$(x):c%(t)=d%(x)
+	NEXT:CLOSE 2:IF t=.THEN{:4026}
+	FOR i=1 TO t:sh=.:c$="New News":f2=-(MID$(nn$(i),2)<MID$(d5$,2))*-(tc%>1)
+	IF f2 THEN c$="Reminder":IF LEFT$(ed$(i),1)<>"$"THEN{:4024}
+	b$=ed$(i):IF LEFT$(b$,1)="$"THEN b$=MID$(b$,2)
+	&"{f6} {lt. blue}{pound}$c:{white} {pound}$b{pound}{back arrow}39  {cyan}Date: ({gray3}{$04}"+nn$(i):&"{cyan}){f6}{blue}{pound}vj{pound}q0{f6:2}":kk=1:dr=1:b$=a$
+	a$="n."+LEFT$(ed$(i),14)+",s,r":GOSUB 1011:ON-(e%<>.)GOTO {:4022}:&,3-9*(f2=.),2
+{:4022}
+	CLOSE 2:GOSUB 1914:IF tr%<1 THEN i=t
+{:4024}
+	NEXT:RETURN
+{:4026}
+	CLOSE 2:IF kk=.THEN:&"{f6}No New News.{f6}"
+	RETURN
+	copr 1994 NEW image

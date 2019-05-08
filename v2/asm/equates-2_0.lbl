@@ -1,188 +1,10 @@
 ;
-; Image BBS 2.0 equates
+; Image BBS v2.0 equates
 ;
 	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
-	chrget	= $0073
-	chrgot	= $0079
-	status	= $0090	; Kernal I/O Status Word
-
-	ridbe	= $029b	; RS-232: Index to End of Receive Buffer
-	ridbs	= $029c	; RS-232: Index to Start of Receive Buffer
-;
-; serial # stuff
-;
-	bsnpre	= $02fd	; 765 BBS serial # prefix (a/b/g...)
-	bsnval	= $02fe	; 766 BBS serial # lo byte, 767=hi byte
-
-; Extended BASIC tokens:
-
-	poketok	= 151	; poke $addr,$val
-	peektok	= 194	; peek($addr)
-	systok	= 158	; sys $addr
-	loadtok	= 147
-	newtok	= 162	; "new <line_num>" erases <line_num>-
-
-; Image routines:
-
-	jmptbl	= $a000 ; table of IRQ routines
-	outastrp= $cd00
-	usetbl1	= $cd03
-	swapper	= $cd06
-	swapagn	= $cd09
-	trace	= $cd0c
-	chkspcl	= $cd0f
-	convchr	= $cd12
-
-	buffer	= $ce77 ; 52855
-	buf2	= $ce27 ; 52775
-
-; BASIC routines:
-
-	error	= $a437
-	linkprg	= $a533
-	gone1	= $a7e7
-	gone2	= $a7ea
-	linget	= $a96b
-	frmnum	= $ad8a
-	frmevl	= $ad9e ; added by pina
-	eval1	= $ae8d
-	parchk	= $aef1
-	comma	= $aefd
-	chkcom	= $aefd
-	synerr	= $af08
-
-	ptrget1	= $b0e7
-	ilqerr	= $b248
-	retbyt	= $b3a2
-	makerm1	= $b475
-	getbytc	= $b79b
-	getnum	= $b7eb
-	getadr	= $b7f7
-	retval	= $bc49
-
-; CIA #2 Time-of-Day clock stuff
-	ten	= $dc08	; tenths of second
-	scs	= $dc09 ; seconds
-	min	= $dc0a ; minutes
-	hrs	= $dc0b ; hours
-;	carrier = $dd01 ; This definition conflicts with $d009;
-			; "carrier" is referenced by irqhn.s
-			; 56577: CIA #2 Data Port B
-			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
-
-	colors	= $e8da	; flashing chat page color table
-
-; Kernal routines:
-	syscll	= $e130
-	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
-
-	setmsg	= $ff90
-	readst	= $ffb7
-	setlfs	= $ffba
-	setnam	= $ffbd
-	openf	= $ffc0
-	closef	= $ffc3
-	chkin	= $ffc6
-	chkout	= $ffc9
-	clrchn	= $ffcc
-	chrin	= $ffcf
-	chrout	= $ffd2
-	loadf	= $ffd5
-	savef	= $ffd8
-	getin	= $ffe4
-
-
-	death	= $1800 ; 1.3 is $0800
-	prgstart= $1801
-	bmpstart= $2001
-	mmpstart= $3001
-	lmpstart= $4001
-	prgend	= $5000
-	imstart	= $5001
-	protostart = $c000
-	protoend= $ca80
-;
-; module line #s/sizes:
-;
-	mainline= 1000
-	trapline= 2000
-	imodline= 2300
-	immdline= 3000
-	immdsize= $a00
-;
-; screen display stuff:
-;
-	tdisp	= $0400+960
-	tcolr	= $d800+960
-	sdisp	= $0400+920
-	scolr	= $d800+920
-	ldisp	= $0400+640
-	lcolr	= $d800+640
-	adisp	= $0400+880
-	acolr	= $d800+880
-
-; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
-
-	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
-	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
-
-	cassbuff= 828
-	idlemax	= 830
-	datebuf	= 831 ; 11 bytes
-	daytbl	= 842 ; 24 bytes (8*3)
-	tzoneh	= 866 ; bbs  time zone hour
-	tzonem	= 867 ; bbs  time zone minute
-	uzoneh	= 868 ; user time zone hour
-	uzonem	= 869 ; user time zone minute
-	wrapbuf	= 870 ; 80 bytes
-	wrapflg	= 950
-	modclmn	= 951 ; user's screen width
-	ptrclmn	= 952 ; printer column?
-	wrapind	= 953
-	wrapdmp	= 954
-	ptrclm	= 955
-	modclm	= 956
-	sndtim1	= 957
-	sndtim2	= 958
-	sndwav1	= 959
-	sndwav2	= 960
-	sndwav3	= 961
-	sndrept = 962
-	sndtim1a= 963
-	sndtim2a= 964
-	jiffy	= 965
-	blnkflag= 966	; screen blank flag
-	blnkcntr= 967	; screen blank timeout counter
-	ptrlin	= 968
-	ptrlinm	= 969
-	usrlin	= 970   ; mp%: user's screen height
-	usrlinm	= 971	; how many lines output to modem?
-	fredmode= 972
-	montbl	= 973	; 36 bytes (12*3)
-	emptym1	= 1009	; 1 byte
-	timeset	= 1010	; "time has been set" flag: 0=no, flash bottom screen line
-	flag1	= 1011
-	case1	= 1012
-	temp3	= 1015
-	mline	= 1016
-	comm	= 1017
-	flags	= 1018
-	cline	= 1019
-	lines	= 1022 ; $03f8: kk, # of lines in text editor buffer
-	modes	= 1023
-;
-; garbage collection stuff?
-;
-	gc	= $c000 ; swap    $c000 -> $e000
-	gchide	= $e000	; swapagn $e000 -> $c000
-	gclen	= 4	; swap    page count?
-;
-; Extended Command Set stuff:
-;
-	ecs	= $c000 ; swap    $c000 -> $e400
-	ecshide	= $e400 ; swapagn $e400 -> $c000
-	ecslen	= 10    ; swap    page count?
-			; that's rather a lot if so
+	chrget	= $0073	; two bytes for zero-page JSR
+	chrgot	= $0079 ; same
+	status	= $90	; Kernal I/O Status Word
 ;
 ; screen parameters
 ;
@@ -200,6 +22,79 @@
 ; I'm favoring "color," "Mapping the C64"'s label:
 	color	= 646	; $0286: Current Foreground Color for Text
 	undcol	= 647	; $0287
+
+	ridbe	= $029b	; 667, RS-232: Index to End of Receive Buffer
+	ridbs	= $029c	; 668, RS-232: Index to Start of Receive Buffer
+
+; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
+
+	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
+	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
+;
+; serial # stuff
+;
+	bsnpre	= $02fd	; 765 BBS serial # prefix (a/b/g...)
+	bsnval	= $02fe	; 766 BBS serial # lo byte, 767=hi byte
+
+	cassbuff= 828
+	idlemax	= 830
+	datebuf	= 831 ; 11 bytes
+	daytbl	= 842 ; 24 bytes (8*3)
+	tzoneh	= 866 ; bbs  time zone hour
+	tzonem	= 867 ; bbs  time zone minute
+	uzoneh	= 868 ; user time zone hour
+	uzonem	= 869 ; user time zone minute
+	wrapbuf	= 870 ; 80 bytes
+	wrapflg	= 950
+	modclmn	= 951 ; user's screen width
+	ptrclmn	= 952 ; printer column [?]
+	wrapind	= 953
+	wrapdmp	= 954
+	ptrclm	= 955
+	modclm	= 956
+	sndtim1	= 957
+	sndtim2	= 958
+	sndwav1	= 959
+	sndwav2	= 960
+	sndwav3	= 961
+	sndrept = 962
+	sndtim1a= 963
+	sndtim2a= 964
+	jiffy	= 965
+	blnkflag= 966	; screen blank flag
+	blnkcntr= 967	; screen blank counter
+	ptrlin	= 968
+	ptrlinm	= 969
+	usrlin	= 970   ; mp%: user's screen height [?]
+	usrlinm	= 971	; how many lines output to modem [?]
+	fredmode= 972
+	montbl	= 973	; month names, 36 bytes (12*3)
+	emptym1	= 1009	; 1 byte
+	timeset	= 1010	; "time has been set" flag: 0=no, flash bottom screen line
+	flag1	= 1011
+	case1	= 1012
+	temp3	= 1015
+	mline	= 1016
+	comm	= 1017
+	flags	= 1018
+	cline	= 1019
+	lines	= 1022 ; $03f8: kk, # of lines in text editor buffer
+	modes	= 1023
+
+;
+; screen display stuff:
+; screen RAM is  1024-2023  ($0400-$07e7)
+;  color RAM is 55296-56296 ($d800-$dbe7)
+;
+	ldisp	= $0400+640
+	lcolr	= $d800+640
+	adisp	= $0400+880
+	acolr	= $d800+880
+	sdisp	= $0400+920
+	scolr	= $d800+920
+	tdisp	= $0400+960
+	tcolr	= $d800+960
+
 ;
 ; Message Command Interpreter variables:
 ;
@@ -231,7 +126,7 @@
 	tmp4	= $07ff	; 2047
 
 ;
-; RS232 jump table
+; rs232 jump table
 ;
 	rs232	= $0800
 	rsinabl = rs232 + $03
@@ -252,7 +147,10 @@
 	arrayres= wedgemem+12
 	forcegc	= wedgemem+15
 
-	tempscn = $1000 ; $140 bytes
+;
+; temporary storage for screen mask?
+;
+	tempscn = $1000 ; 4096, $140 (320) bytes
 	tempscn0= tempscn+000
 	tempscn1= tempscn+040
 	tempscn2= tempscn+080
@@ -279,13 +177,13 @@
 	curdsp	= $12e4	; 4836
 	bar	= $12e5	; 4837
 	tsr2	= $12e6	; 4838
-	mright	= $12e7	; 4839: m> right margin
-	mleft	= $12e8	; 4840: m< left margin
+	mright	= $12e7	; 4839: £m> right margin
+	mleft	= $12e8	; 4840: £m< left margin
 	cphase	= $12e9	; 4841
 	key	= $12ea	; 4842
 	shft	= $12eb	; 4843
 
-	ptrlnfd	= $12f0	; 4848 printer linefeed - +/IM.misc has 17136 ($42f0)
+	ptrlnfd	= $12f0	; 4848: printer linefeed. 1.3's +/IM.misc is $42f0 (17136)
 	ha577	= $12f1	; 4849
 	mask	= $12f2	; 4850
 	scnmode	= $12f3	; 4851
@@ -301,7 +199,10 @@
 	tmp7	= $12fd	; 4861
 	freq	= $12fe	; 4862
 
-	chktbl	= $1300 ;$10 bytes (8*2 per screen)
+;
+; tables
+;
+	chktbl	= $1300 ;$10 bytes (8 lightbar positions*2 checks per page, 8 pages=128 bits)
 	bartbl	= $1310 ;$c0 bytes
 	arryptrs= $13d0 ;$10 bytes
 	daysofm	= $13e0 ;$0c bytes
@@ -314,7 +215,7 @@
 	tblcta2	= $1620 ;$20 bytes
 	tblcta3	= $1640 ;$20 bytes
 	alarmtb	= $1660 ;$80 bytes
-	date1	= $16e0 ;$20 bytes "Thu Sep 13, 2018 02:17 pm pstxxx"
+	date1	= $16e0 ;$20 bytes "Thu Sep 13, 2018 02:17 PM PSTxxx"
 	lobytes	= $1700 ;25 bytes
 	hibytes	= $1719 ;25 bytes
 	lobytec	= $1732 ;25 bytes
@@ -322,7 +223,66 @@
 	emptym4	= $1764 ;28 bytes
 	pmodetbl= $1780 ;$80 bytes
 
-; BBS flags (really VIC-II registers)
+; Image IRQ jump table (under ROM):
+	jmptbl	= $a000
+
+; BASIC routines:
+	error	= $a437
+	linkprg	= $a533
+	gone1	= $a7e7
+	gone2	= $a7ea
+	linget	= $a96b
+	frmnum	= $ad8a
+	frmevl	= $ad9e ; added by pina
+	eval1	= $ae8d
+	parchk	= $aef1
+	comma	= $aefd
+	chkcom	= $aefd
+	synerr	= $af08
+
+	ptrget1	= $b0e7
+	ilqerr	= $b248
+	retbyt	= $b3a2
+	makerm1	= $b475
+	getbytc	= $b79b
+	getnum	= $b7eb
+	getadr	= $b7f7
+	retval	= $bc49
+
+; transfer protocol area
+
+	protostart = $c000
+	protoend= $ca80
+
+;
+; garbage collection stuff
+;
+	gc	= $c000	; module load addr
+	gchide	= $e000	; swaps to
+	gclen	= 4	; # pages
+;
+; extended command set stuff:
+;
+	ecs	= $c000	; module load addr
+	ecshide	= $e400	; swaps to
+	ecslen	= 10	; # pages (seems like a lot)
+
+; Image routines:
+
+	outastrp= $cd00
+	usetbl1	= $cd03
+	swapper	= $cd06
+	swapagn	= $cd09
+	trace	= $cd0c
+	chkspcl	= $cd0f
+	convchr	= $cd12
+
+; buffers:
+
+	buf2	= $ce27
+	buffer	= $ce77
+
+; BBS flags (really, unused VIC-II registers)
 
 	local	= $d000 ; 53248: 1=no modem output with &
 	case	= $d001 ; 53249
@@ -332,11 +292,73 @@
 	flag	= $d005 ; 53253
 	chat	= $d006 ; 53254
 	inchat	= $d007 ; 53255
-	chatpage= $d008 ; 53256
-	carrier	= $d009 ; 53257
+	chatpage= $d008 ; 53256: 1=chat page on
+	access	= $d009 ; 53257: [from 1.2] 2.0 was labeled "carrier"
 	mxor	= $d00a ; 53258
 	mkolor	= $d00b ; 53259
 	mupcase	= $d00c ; 53260
 	irqcount= $d00d ; 53261
 	trans	= $d00e ; 53262
 	index	= $d00f ; 53263
+
+; CIA #2 Time-of-Day clock stuff
+	ten	= $dc08	; tenths of second
+	scs	= $dc09 ; seconds
+	min	= $dc0a ; minutes
+	hrs	= $dc0b ; hours
+;	carrier = $dd01 ; This definition conflicts with $d009;
+			; "carrier" is referenced by irqhn.s
+			; 56577: CIA #2 Data Port B
+			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
+
+	colors	= $e8da	; flashing chat page color table
+
+; Kernal routines:
+
+	syscll	= $e130
+	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
+
+	setmsg	= $ff90
+	readst	= $ffb7
+	setlfs	= $ffba
+	setnam	= $ffbd
+	openf	= $ffc0
+	closef	= $ffc3
+	chkin	= $ffc6
+	chkout	= $ffc9
+	clrchn	= $ffcc
+	chrin	= $ffcf
+	chrout	= $ffd2
+	loadf	= $ffd5
+	savef	= $ffd8
+	getin	= $ffe4
+
+;
+; Extended BASIC tokens:
+;
+
+	poketok	= 151	; poke $addr,$val
+	peektok	= 194	; peek($addr)
+	systok	= 158	; sys $addr
+	loadtok	= 147	; load"filename",<device>,<segment>
+	newtok	= 162	; "new <line_num>" erases <line_num>-
+
+;
+; module addresses:
+;
+	death	= $1800 ; 1.3 is $0800
+	prgstart= $1801
+	bmpstart= $2001
+	mmpstart= $3001
+	lmpstart= $4001
+	prgend	= $5000
+	imstart	= $5001
+;
+; module line #s/sizes:
+;
+	mainline= 1000
+	trapline= 2000
+	imodline= 2300
+	immdline= 3000
+	immdsize= $a00
+

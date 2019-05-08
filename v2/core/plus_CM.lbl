@@ -1,0 +1,144 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	ON-(ac%<1)GOTO 1811:m%=3:ma=1000:cd=1000:ve=1:a$=" {lt. green}Mall":GOSUB 1490:GOTO {:3030}
+{:3002}
+	a=7:GOSUB 1004:RETURN
+{:3004}
+	a=PEEK(829):RETURN
+{:3006}
+	a=tr%
+{:3008}
+	RETURN
+{:3010}
+	&"{f6:2}  Sorry, This Option Is Not Available"
+{:3012}
+	&"{f6:2}  {white}{rvrs on}Hit A Key {lt. green}{rvrs off}{pound}g1":RETURN
+{:3014}
+	&"{f6:2}  Too Much":GOSUB {:3012}:GOTO {:3050}
+{:3016}
+	c=tr%:b$=STR$(c)
+	&"{f6:2}  {lt. red}You Have{white}":&STR$(cr):&"{lt. red} Credits And{f6} {cyan}{pound}$b {lt. red}Minutes Left.":ON-(fl=1)GOTO {:3008}:GOTO {:3012}
+{:3020}
+	&"{f6}{lt. green}  Is {pound}v7 Correct? ":GOTO 1907
+{:3022}
+	&"{f6:2}{green}  Trade How Many {pound}$c? {yellow}{pound}i1":b=ABS(INT(VAL(an$))):RETURN
+{:3024}
+	&"{f6:2}  {lt. green}Do You Want To Trade? ":GOTO 1902
+{:3026}
+	&"{f6}{gray3}  You May Trade {pound}$c{f6}  For {pound}$d.":RETURN
+{:3028}
+	&"{f6:2}  The Maximum You Can Trade For Is{f6}":&STR$(ma):RETURN
+{:3030}
+	&"{clear}{white}{$b0}{$c0:37}{$ae}"
+	&"{f6}{white}{$dd} {lt. green}The {yellow}{rvrs on}NISSA{rvrs off}{lt. green} Credit Mall Is A Shopping {white}{$dd}{f6}{white}{$dd} {lt. green}Mall  For  You To Shop"
+	&"  For {purple}{rvrs on}Credits{rvrs off} {white}{$dd}{f6}{$dd} Or For {purple}{rvrs on}Time{rvrs off}{lt. green}.  You{right} May  Even Donate {white}{$dd}"
+	&"{f6}{$dd} {cyan}{rvrs on}Credits{rvrs off} {lt. green}To  A  Friend If You  Would {white}{$dd}"
+	&"{f6}{$dd} {lt. green}Like.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}{f6}"
+	&"{$dd} {lt. green}You May Exchange {purple}{rvrs on}Credits  For Time{rvrs off}{lt. green}, {white}{$dd}{f6}{$dd} {yellow}{rvrs on}Calls  For Credit  Or"
+	&" Time{rvrs off}{lt. green}, Or {lt. red}{rvrs on}Time{rvrs off} {white}{$dd}{f6}{$dd} {lt. red}{rvrs on}For Credits{rvrs off}{lt. green}.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}"
+	&"{f6}{$ad}{$c0:37}{$bd}"
+	&"{f6:2}  {lt. green}Enjoy The {white}NISSA{yellow} {rvrs on}Credit Mall!{pound}b2{f6}"
+{:3048}
+	GOSUB {:3012}:fl=1:GOTO {:3214}
+{:3050}
+	fl=.:&"{clear}{pound}{back arrow}10{yellow}{rvrs on}{pound}v5{f6}{pound}{back arrow}10CREDIT{$a0}MALL{f6}{pound}{back arrow}10{pound}k7{$b8:11}{pound}k0{f6}{pound}{back arrow}07by Port Commodore{f6}{pound}{back arrow}10{$02}{white}{rvrs on}801-423-2734{$02}{black}"
+	&"{f6:2}  {white}{rvrs on}V2.1 -- Shops:{pound}{back arrow}39{f6}{lt. red}  1{white}){yellow}{rvrs on} Trade Time For Credit{pound}{back arrow}39{f6}"
+	&"{lt. red}  2{white}){yellow}{rvrs on} Trade Credit For Time.{pound}{back arrow}39{f6}"
+	&"{lt. red}  3{white}){yellow}{rvrs on} Trade Calls For Credit{pound}{back arrow}39{f6}{lt. red}  4{white}){yellow}{rvrs on} Trade Calls For Time{pound}{back arrow}39{f6}"
+	&"{lt. red}  5{white}){yellow}{rvrs on} Give Credit To Another User{pound}{back arrow}39{f6}"
+	&"{lt. red}  6{white}){yellow}{rvrs on} Quit{pound}{back arrow}39{f6:2}  {lt. green}OPT: {lt. blue}{pound}g1{pound}v7{f6}":IF tr%<1 THEN 1811
+	a=VAL(an$):IF a<1 OR a>6 THEN 1811
+	ON a GOTO {:3066},{:3094},{:3120},{:3144},{:3168},1812
+{:3066}
+	&"{clear}{green}{rvrs on}Trade Time For Credit{pound}{back arrow}39{f6}"
+	b=.:GOSUB {:3006}:IF a>101 THEN b=1
+	GOSUB {:3002}:IF a THEN b=b+1
+	IF cr>ma THEN b=b+1:GOSUB {:3028}
+	IF b THEN GOSUB {:3010}:GOTO {:3050}
+	c$="{white}1{lt. blue} Minute":d$="{white}1{lt. blue} Credits.":GOSUB {:3026}
+	fl=1:GOSUB {:3016}:fl=.
+	GOSUB {:3024}:IF a=.THEN{:3050}
+	c$="Minutes":GOSUB {:3022}:IF tr%<1 THEN 1811
+	GOSUB {:3020}:IF a=.THEN{:3066}
+	GOSUB {:3006}:IF b>a THEN{:3014}
+	cr=cr+(1*b):c=tr%-b:IF c<.THEN c=.
+	tr%=c
+	GOSUB {:3016}:GOTO {:3050}
+{:3094}
+	&"{clear}{lt. blue}{rvrs on}Trade Credit For Time{pound}{back arrow}39{f6}"
+	b=.:GOSUB {:3002}:IF a THEN b=1
+	GOSUB {:3006}:IF a>101 THEN b=b+1
+	IF b THEN GOSUB {:3010}:GOTO {:3050}
+	c$="{purple}5{lt. green} Credits":d$="{purple}1{lt. green} Minute.":GOSUB {:3026}
+	&"{f6:2}  {white}({lt. blue}Maximum Of 60 Minutes{white})":fl=1:GOSUB {:3016}:fl=.
+	GOSUB {:3024}:IF a=.THEN{:3050}
+	c$="Credits":GOSUB {:3022}:IF tr%<1 THEN 1811
+	GOSUB {:3020}:IF a=.THEN{:3094}
+	GOSUB {:3006}:IF b>cr THEN{:3014}
+	IF((b/5)+a)>60 THEN{:3014}
+	cr=cr-b:tr%=tr%+(b/5)
+	GOSUB {:3016}:GOTO {:3050}
+{:3120}
+	&"{clear}{white}{rvrs on}Trade Calls For Credit{pound}{back arrow}39{f6}"
+	b=.:GOSUB {:3004}:b%=a:IF a=.THEN b=1
+	GOSUB {:3002}:IF a THEN b=b+1
+	IF cr>ma THEN b=b+1:GOSUB {:3028}
+	IF b THEN GOSUB {:3010}:GOTO {:3050}
+	b%=b%-ct%:c$=" One Of Your Calls":d$="{yellow}5{green} Credits.":GOSUB {:3026}
+	fl=1:GOSUB {:3016}:fl=.:&"{f6}  You Have {white}{pound}%b {lt. red}Calls Remaining."
+	GOSUB {:3024}:IF a=.THEN{:3050}
+	c$="Calls":GOSUB {:3022}:IF tr%<1 THEN 1811
+	GOSUB {:3020}:IF a=.THEN{:3144}
+	IF b>b%THEN{:3014}
+	cr=cr+(b*5):ct%=ct%+b:GOSUB {:3016}:GOTO {:3050}
+{:3144}
+	&"{clear}{lt. red}{rvrs on}Trade Calls For Time{pound}{back arrow}39{f6}"
+	b=.:GOSUB {:3004}:b%=a:IF a=.THEN b=1
+	GOSUB {:3006}:IF a>101 THEN b=b+1
+	IF b THEN GOSUB {:3010}:GOTO {:3050}
+	b%=b%-ct%:c$="One Of Your Calls":d$="{lt. red}10{white} Minutes.":GOSUB {:3026}
+	&"{f6:2}  {white}({lt. blue}Maximum Of 60 Minutes{white})":fl=1:GOSUB {:3016}:fl=.:&"{f6}  You Have {white}{pound}%b {lt. red}Calls Remaining."
+	GOSUB {:3024}:IF a=.THEN{:3050}
+	c$="Calls":GOSUB {:3022}:IF tr%<1 THEN 1811
+	GOSUB {:3020}:IF a=.THEN{:3144}
+	GOSUB {:3006}:IF b>b%THEN{:3014}
+	c=b*10:IF(c+a)>60 THEN{:3014}
+	tr%=tr%+c:ct%=ct%+b:GOSUB {:3016}:GOTO {:3050}
+{:3168}
+	&"{clear}{purple}{rvrs on}Give Credit To Another User{pound}{back arrow}39{f6}"
+	GOSUB {:3002}:IF a THEN GOSUB {:3010}:GOTO {:3050}
+	IF cr<1 THEN:&"{f6:2}{lt. green}{rvrs on}You Have No Credits To Give! {rvrs on}{yellow}BEGONE!":GOTO {:3048}
+	&"{f6}{lt. red}  You May Give Another User Up To{f6}{white} ":&STR$(cd):&"{lt. red} Credits."
+	fl=1:GOSUB {:3016}:fl=.
+	&"{f6:2}  Who Would You Like To Give Credit To?{f6}: {cyan}{pound}i1":ON-(an$="")GOTO {:3050}
+	IF tr%<1 THEN 1811
+	GOSUB 1046:IF i=.THEN:&"{f6}{pound}v7 Was Not Found.":GOSUB {:3012}:GOTO {:3168}
+	GOSUB {:3020}:IF a=.THEN{:3168}
+	GOSUB 1065:x=i:GOSUB 1001:FOR i=1 TO 23+ve:&,2,2:tt$(i)=a$:NEXT:y=i
+	&"{f6:2}{lt. red}  How Many Credits Would You{f6}  Like To Give To:{f6}{white}  {rvrs on}":&tt$(1):&"{rvrs off}? {yellow}{pound}i1"
+	ON tr%+1 GOTO 1811
+	b=ABS(INT(VAL(an$))):GOSUB {:3020}:IF a=.THEN{:3168}
+	IF b>cr OR b>cd OR b<1 THEN{:3014}
+	c=VAL(tt$(19)):c=c+b:tt$(19)=STR$(c):cr=cr-b
+	w$="":FOR i=1 TO 23+ve:w$=w$+tt$(i)+r$:NEXT:GOSUB 1001:PRINT# 2,w$:CLOSE 2
+	tt$=tt$(1):a$="w":GOSUB 1062:IF e%THEN a$="a":GOSUB 1062
+	PRINT# 2,na$r$id;r$d1$:PRINT# 2,"[Credit]"
+	PRINT# 2,"{f6:2}   {yellow}{rvrs on}You were given {white}"+STR$(b)+"{yellow} Credits"
+	PRINT# 2,"   In The {white}{rvrs on}Port Commodore{rvrs off}{lt. red}{f6}   CREDIT{$a0}MALL{white}!!":PRINT# 2,"{up arrow}":CLOSE 2
+	IF y=1 THEN GOSUB 1060:x=2:i=1:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31:GOSUB 1025
+	ON-(y<>1)GOSUB 1060:x=3:i=1:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	CLOSE 2:GOSUB {:3016}:GOTO {:3050}
+{:3214}
+	a=2:GOSUB 1004:f%=a:b%=dc:c%=uc:d%=bu:e%=bd:b$="Uploaded"
+	c$="Downloaded":&"{clear}{green} {rvrs on}Attention Shoppers: {pound}b2{pound}{back arrow}38{rvrs off}"
+	&"{f6} {lt. green}The New Store Policy:{f6:2} {purple}Your Credit Ratio Is {pound}%f Blocks":f%=f%*m%
+	&"{f6} For Every Block Uploaded.  You Have{f6} {white}{pound}$b {pound}%c Files ({pound}%d Blocks) And"
+	&"{f6} {yellow}{pound}$c {pound}%b Files ({pound}%e Blocks)."
+	&"{f6:2} {purple}To Use The Credit Mall Your NUMBER Of{f6} {pound}$c Files Plus The NUMBER Of"
+	&"{f6} Blocks {pound}$c May Not Exceed {pound}%m{f6} TIMES Your Ratio Times Your Files"
+	&"{f6} Plus Blocks {pound}$b. ({pound}%f X){f6:2} {lt. blue}Your Blocks Plus Files":d%=d%+c%:&" Is {pound}%d"
+	IF(dc+bd)>f%*(uc+bu)+100 THEN:&"{f6} {lt. red}You Are Not Eligible To Use The MALL{cyan}":GOTO 1812
+	&"{f6:2} {gray3}You May Enter The MALL":GOSUB {:3012}:GOTO {:3050}
+	copr. 1994 NEW image 9/14/94
+	rem "+.CM"

@@ -1,10 +1,10 @@
 {number:4000}
 {step:2}
 {crunch:on}
-{alpha:upper}
-	REM +/LO.AUTOMAINT - AUTOMAINT MAIN MODULE
+{alpha:alt}
+	rem "+/lo.automaint - AutoMaint main moodule"
 ' enable local mode (no modem output), poke 2042,0 turns off idle screen clock?
-	poke 53248,1:poke 2042,.:z$=left$(am$,1):&"“{clear}{$c9}mage v2.0 {$c1}uto-{$cd}aintenance{f6:2}"
+	poke 53248,1:poke 2042,.:z$=left$(am$,1):&"{clear}Image v2.0 Auto-Maintenance{f6:2}"
 	gosub {:4094}:REM UPDATE DAILY STATS
 ' closes file
 	gosub {:4078}:REM TOTALS AT END OF LOG
@@ -17,7 +17,9 @@
 ' todo: move extra modules, finished message from +.lo here
 	close 2:poke 53248,.:return
 {:4018}
-	&"{f6}{yellow}{$d2}eading {f5}e.data{f5}":gosub 1063:if e%then close 2:&"{f6}{rvrs on}{lt. red}{f5}e.data{f5} {$ce}ot {$c6}ound{f6}":return
+	&"{f6}{yellow}Reading {f5}e.data{f5}":gosub 1063
+' TODO: Log to e.log:
+	if e%then close 2:&"{f6}{rvrs on}{lt. red}{f5}e.data{f5} Not Found{f6}":return
 	x=1:gosub 1001:input# 2,ca:x=12:gosub 1001:&,2,2:ur=val(a$)-1
 	x=17:gosub 1001:input# 2,d3$:x=18:gosub 1001:input# 2,pp$
 	x=19:gosub 1001:input# 2,z$:x=20:gosub 1001:input# 2,p1%,p2%,p3%
@@ -26,27 +28,27 @@
 ' 1045: load "++ index", open cmd channel, return highest user # in uh% and a%
 	gosub 1060:for x=1 to 38:gosub 1001:input# 2,st(x):next:close 2:gosub 1045:return
 {:4032}
-	&"{f6}{green}{$c3}omputing {$c9}dle/{$d5}sed {$d4}ime":i=t1:a$=d1$:gosub 1520:t1=a:if a<i then a=a+1440
+	&"{f6}{green}Computing Idle/Used Time":i=t1:a$=d1$:gosub 1520:t1=a:if a<i then a=a+1440
 ' 1060: open e.stats
 	gosub 1060:i=a-i:st(11)=i:x=11:gosub 1026:x=22:gosub 1025:x=38:gosub 1025
 	close 2:return
 {:4040}
 ' open "e.logweek" - error? start new log.
 ' otherwise, restart log on Sunday
-	a$="e.logweek,s,r":dr=3:gosub 1011:on-(e%<>.)goto {:4072}:if left$(d1$,1)="1"then{:4064}
-	&"{f6}{gray2}{$c1}ppending to {$d7}eekly {$cc}og"
+	a$="e.logweek,s,r":dr=3:gosub 1011:on-(e%<>.)goto {:4072}:if left$(d1$,1)="1" then {:4064}
+	&"{f6}{gray2}Appending to Weekly Log"
 {:4042}
 	close 2:print# 15,"c"dr$"temp=e.logweek,e.log"
 	print# 15,"s"dr$"e.logweek":print# 15,"r"dr$"e.logweek=temp":return
 {:4046}
 	dr=3:gosub 1010:z$=left$(d1$,1)
-	&"{f6}{$d2}estarting log for "+mid$("{$d3}un{$cd}on{$d4}ue{$d7}ed{$d4}hu{$c6}ri{$d3}at",val(z$)*3-2,3)
+	&"{f6}Restarting log for "+mid$("SunMonTueWedThuFriSat",val(z$)*3-2,3)
 ' 1024: scratch a$
 	a$="e.log"+z$:gosub 1024
 ' 1068: append or write e.b$:
 	an$=d1$:&,15:d6$=an$:b$="log"+z$:gosub 1068
 ' 1096: print a$ to printer if enabled
-	a$="{orange} {$d3}{$d4}{$c1}{$d2}{$d4}--"+d6$+"{$cd}":print# 2,a$:a$=mid$(a$,2):gosub 1096
+	a$="{orange} START--"+d6$+"M":print# 2,a$:a$=mid$(a$,2):gosub 1096
 	a$="{yellow}"+left$(ak$,26):print# 2,a$:a$=mid$(a$,2):gosub 1096
 	a$=left$(ak$,24):print# 2,a$:gosub 1096
 ' 1081: return blocks free in a
@@ -55,37 +57,37 @@
 ' 1026: write st(x) to e.data:
 	gosub 1060:for x=12 to 22:st(x)=.:gosub 1026:next:close 2
 {:4064}
-	&"{f6:2}{$cc}og {$d2}estarted.{f6:2}":t$=am$:am$=d1$+"":return
+	&"{f6:2}Log Restarted.{f6:2}":t$=am$:am$=d1$+"":return
 {:4066}
 '	k$=mid$(d1$,4,2)+"/"+mid$(d1$,6,2)+"/"+mid$(d1$,2,2):a$="log"+k$:return
 	k$=mid$(d1$,4,2)+"/"+mid$(d1$,6,2)+"/"+mid$(d1$,2,2):return
 {:4068}
-	gosub {:4062}:&"{f6}{brown}{$c1}rchiving {$d7}eekly {$cc}og"
+	gosub {:4062}:&"{f6}{brown}Archiving Weekly Log"
 {:4070}
 	dr=3:gosub 1010:print# 15,"r"+dr$+a$+"=e.logweek":close 15
 {:4072}
-	&"{f6}{gray1}{$d3}tarting {$ce}ew {$d7}eekly {$cc}og":gosub {:4062}
+	&"{f6}{gray1}Starting New Weekly Log":gosub {:4062}
 ' 4066: k$=mm/dd/yy
 ' 1068: append or write e.b$:
-	gosub {:4066}:b$="logweek":gosub 1068:print# 2,"{$d7}eekly {$cc}og {$d2}estarted "+k$+r$
+	gosub {:4066}:b$="logweek":gosub 1068:print# 2,"Weekly Log Restarted "+k$+r$
 	close 2:goto {:4042}
 {:4078}
 ' 1068: write or append e.b$:
 	b$="log"+z$:gosub 1068:if e%then close 2:return
-	print# 2,r$"{orange} {$cc}og {$d4}otals:"r$
-	print# 2,r$"{yellow} {$d0}osts :"str$(st(15))r$" {$d2}esps :"str$(st(16))r$
-	print# 2," {lt. red}{$d5}plds :"str$(st(17))r$" {$c4}wnld :"str$(st(18))r$
-	print# 2," {green}{$ce}ew {$d5}r:"str$(st(19))r$" {$c3}alls :"str$(st(20))
+	print# 2,r$"{orange} Log Totals:"r$
+	print# 2,r$"{yellow} Posts :"str$(st(15))r$" Resps :"str$(st(16))r$
+	print# 2," {lt. red}Uplds :"str$(st(17))r$" Dwnld :"str$(st(18))r$
+	print# 2," {green}New Ur:"str$(st(19))r$" Calls :"str$(st(20))
 ' avoid ?divsion by zero  error
 	a=st(21):b=st(22):c=a+b:if c=.then a$=" 0":b$=" 0":goto {:4092}
 	a=int(a/c*100):b$=str$(100-a):a$=str$(a)
 {:4092}
-	print# 2,r$"{cyan}{rvrs on} {$d3}ystem used"a$"%, {$c9}dle"b$"% this log "r$:close 2:return
+	print# 2,r$"{cyan}{rvrs on} System used"a$"%, Idle"b$"% this log "r$:close 2:return
 {:4094}
-	&"{$d5}pdating {$c4}aily {$d3}tats"
+	&"Updating Daily Stats"
 	dr=3:a$="e.daily stats,l,p":gosub 1011:x=int(val(z$)):gosub 1001
 	a$="":for i=12 to 22:a$=a$+str$(st(i))+r$:next:print# 2,d1$r$a$;:close 2
 	return
 {crunch:off}
-	REM +/LO.AUTOMAINT - 1/16/2018
+	REM "+/lo.automaint" - 1/16/2018
 	copr. 1990 new image 12-26-90

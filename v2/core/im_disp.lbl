@@ -1,53 +1,92 @@
 {number:60000}
-{alpha:upper}
 {step:2}
+{alpha:alt}
 {crunch:on}
-	on im goto {:60004},{:60100},{:60200},{:60300},{:60310}
+{quoter:32=space}
+	&,18,1:on im goto {:60004},{:60100},{:60200},{:60300},{:60310}
 	return
 {:60004}
+' user online:
 	gosub 1375:gosub {:60200}:gosub 1374
 	an$=na$:&,15,1:&,69,5,17,an$,$8c:an$=rn$:&,15,1:&,69,5,19,an$,$8c
+' FIXME: ch$ doesn't seem to be used elsewhere, is DIMmed in im, can it be removed?
+' computer type, phone number/email address (TODO: truncate ph$ to 21 chars)
 	ch$=co$:an$=co$:&,9:an$=d5$:&,15:&,69,5,18,an$,$8c:&,69,5,20,ph$,$8c
 	&,69,32,17,dd$,$8c:&,69,31,18,str$(ct%)+"/"+mid$(str$(tc%),2),$8c
+' access level
 	&,69,22,22,mid$(hx$,ac%+1,1),$81
+' user's line length, screen height
 	&,69,31,19,str$(ll%)+"x"+mid$(str$(mp%),2),$8c
-	&,69,31,20,left$(str$(qb)+"         ",9),$8c ':&,69,31,20,str$(qb),$8c
-	&,69,31,21,left$(str$(uh)+"/"+mid$(str$(ur),2)+"         ",9),$8c:return
+' duplicate:
+'	&,69,31,20,left$(str$(qb)+"{space:9}",9),$8c
+'	&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),$8c:return
+	goto {:display_baud}
 {nice:100}
 {:60100}
-	&,69,0,17,"{$cc}ast",$8f:&,69,4,17,"                       ",$8c
-	&,69,0,18,"{$cf}ff ",$8f:&,69,4,18,"                       ",$8c
-	&,69,0,19,"{$cc}og ",$8f:&,69,4,19,"                       ",$8c
-	&,69,0,20,"{$d2}{$d0}{$d7} ",$8f:&,69,4,20,"                       ",$8c
-	&,69,0,21,"{$c1}rea",$8f:&,69,4,21,"                       ",$8c
-	&,69,27,17,"{$ce}et ",$8f:&,69,31,17,"         ",$8c
-	&,69,27,18,"{$d3}ys ",$8f:&,69,31,18,"         ",$8c
-	&,69,27,19,"{$c3}all",$8f:&,69,31,19,"         ",$8c
-	&,69,27,20,"{$c2}aud",$8f:&,69,31,20,"         ",$8c
-	&,69,27,21,"{$d5}ser",$8f:&,69,31,21,"         ",$8c
-	&,69,0,22,"{$c3}=00000 {$ce}=000           *{$c9}mage {$c2:2}{$d3} v2.0*",$81
-	&,69,0,23,"{$d2}           {$cd}=00000  {$cc}=00000           {$d4}",$81
-	&,69,1,23,"          ",3:&,69,29,23,"          ",3
-	return
+' idle screen (im=2):
+	&,69,0,17,"Last",$8f:&,69,27,17,"Net ",$8f':&,69,4,17,"{space:23}",$8c
+	&,69,0,18,"Off ",$8f:&,69,27,18,"Sys ",$8f':&,69,4,18,"                       ",$8c
+	&,69,0,19,"Log ",$8f:&,69,27,19,"Call",$8f':&,69,4,19,"                       ",$8c
+	&,69,0,20,"RPW ",$8f:&,69,27,20,"Baud",$8f':&,69,4,20,"                       ",$8c
+	&,69,0,21,"Area",$8f:&,69,27,21,"User",$8f':&,69,4,21,"                       ",$8c
+'	&,69,27,17,"Net ",$8f:&,69,31,17,"         ",$8c
+'	&,69,27,18,"Sys ",$8f:&,69,31,18,"         ",$8c
+'	&,69,27,19,"Call",$8f:&,69,31,19,"         ",$8c
+'	&,69,27,20,"Baud",$8f:&,69,31,20,"         ",$8c
+'	&,69,27,21,"User",$8f:&,69,31,21,"         ",$8c
+	for x=17 to 21
+	&,69,4,x,"{space:23}",$8c:&,69,31,x,"{space:9}",$8c:next
+
+' {:3490}
+	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
+	a$="U="+mid$(str$(z%),2)+" I="+mid$(str$(y%),2):gosub {:sub.bottom_mask}
+'	&,69,14,22,an$,$81:return
+'	&,69,0,22,"C=00000 N=000 U=00 I=00 *Image BBS v1.3*",$81
+'	&,69,0,23,"R           M=00000  L=00000           T",$81
+'	&,69,1,23,"          ",3:&,69,29,23,"          ",3
+' 3496-34 from +.lo:
+' display date, set reservation password string (None, or password)
+	an$=d3$:&,15,1:&,69,5,17,an$,$8c:an$="None":if l2 then an$=l2$
+' fix Reservation PassWord display (l2$):
+	&,69,5,18,d2$,$8c:&,69,5,19,d6$,$8c:&,69,5,20,left$(an$,21),$8c
+' &,52,41,3: Network Reserve
+' FIXME: similarly unused kk
+	&,52,41,3:&,69,31,17," Res O"+mid$("ffn",a%*2+1,2),$8c:kk=a%
+' &,52,40,3: System Reserved (Default PW)
+	&,52,40,3:&,69,31,18," Res O"+mid$("ffn",a%*2+1,2),$8c:kk=kk+2*a%
+' fix reserved display (l2):
+' print mid$("NoneOne All ",(l2+1)*4-3,4)
+' fixed: +.lo 3104: l2, l2$ reset after 1-call reservation
+	&,69,32,19,mid$("NoneOne All",(l2+1)*4-3,4),$8c
+{:display_baud}
+' extra spaces here to erase extra digits of larger qb values
+' (so transitioning from 300 -> 1200 -> 19200 has no extra digits left on-screen,
+' doesn't look like "19200 -> 30000 -> 12000")
+	&,69,31,20,left$(str$(qb)+"{space:9}",9),$8c
+	&,69,31,21,str$(uh)+"/"+mid$(str$(ur),2),$8c:return
 {nice:100}
 {:60200}
-	&,69,0,17,"{$d5}ser",$8f:&,69,27,17,"{$c9}{$c4} #",$8f
-	&,69,0,18,"{$cc}ast",$8f:&,69,27,18,"{$c3}all",$8f
-	&,69,0,19,"{$ce}ame",$8f:&,69,27,19,"{$d0}rms",$8f
-	&,69,0,20,"{$d0}h #",$8f:&,69,27,20,"{$c2}aud",$8f
-	&,69,0,21,"{$c1}rea",$8f:&,69,27,21,"{$d5}ser",$8f
+' user online
+	&,69,0,17,"User",$8f:&,69,27,17,"ID #",$8f
+	&,69,0,18,"Last",$8f:&,69,27,18,"Call",$8f
+	&,69,0,19,"Name",$8f:&,69,27,19,"Prms",$8f
+	&,69,0,20,"Ph #",$8f:&,69,27,20,"Baud",$8f
+	&,69,0,21,"Area",$8f:&,69,27,21,"User",$8f
 	for x=17 to 21
-	&,69,31,x,"         ",$8c:&,69,4,x,"                       ",$8c
-	next
+	&,69,4,x,"{space:23}",$8c:&,69,31,x,"{space:9}",$8c:next
 '	&,69,31,17,"         ",$8c:&,69,4,17,"                       ",$8c
 '	&,69,31,18,"         ",$8c:&,69,4,18,"                       ",$8c
 '	&,69,31,19,"         ",$8c:&,69,4,19,"                       ",$8c
 '	&,69,31,20,"         ",$8c:&,69,4,20,"                       ",$8c
 '	&,69,31,21,"         ",$8c:&,69,4,21,"                       ",$8c
 ' display PRIME status if enabled:
-	if pt% then for y=1 to 5:&,69,39,y+16,mid$("{$d0}{$d2}{$c9}{$cd}{$c5}",y,1),$81:next
-	&,69,0,22,"{$c3}=00000 {$ce}=000 {$c9}=000 {$c1}=0 *{$c9}mage {$c2:2}{$d3} {$d6}2.0*",$81
-	&,69,0,23,"{$d2}           {$cd}=00000  {$cc}=00000           {$d4}",$81
+	if pt% then for y=1 to 5:&,69,39,y+16,mid$("PRIME",y,1),$87:next
+	a$="I=000 A=0"
+{:sub.bottom_mask}
+'	&,69,0,22,"C=00000 N=000 I=000 A=0 *Image BBS v2.0*",$81
+	&,69,0,22,"C=00000 N=000 "+left$(a$+"{space:10}",10)+"*Image BBS v1.3*",$81
+	&,69,0,23,"R           M=00000  L=00000           T",$81
+' modem i/o windows, cyan
 	&,69,1,23,"          ",3:&,69,29,23,"          ",3
 	return
 {nice:100}
@@ -64,18 +103,21 @@
 	return
 {nice:50}
 {:60350}
+' TODO: replace {down:15} with &,61,.,14
 	a=peek(53248):poke 53248,1:&"{clear}{down:15}":poke 53248,a
-	&,69,0,14," {$d4}ransfer {$d4}ime: 00:00:00                ",1
-	&,69,0,15," {$c7}ood: 00000  {$c2}ad: 00000  {$c2}ytes: 000000 ",1
-	&,69,0,17,"            ",$8f:&,69,12,17,"                            ",$8c
-	&,69,0,18," {$c4}evice     ",$8f:&,69,12,18,"                            ",$8c
-	&,69,0,19," {$c4}rive      ",$8f:&,69,12,19,"                            ",$8c
-	&,69,0,20," {$d0}rotocol   ",$8f:&,69,12,20,"                            ",$8c
-	&,69,0,21,"            ",$8f:&,69,12,21,"                            ",$8c
-	x$="{$d3}end":if x>1 then x$="{$d2}eceiv":if x>2 then x$="{$c3}opy":if x>3 then x$="{$d3}cann"
+	&,69,0,14," Transfer Time: 00:00:00                ",1
+	&,69,0,15," Good: 00000  Bad: 00000  Bytes: 000000 ",1
+	&,69,0,17,"            ",$8f ':&,69,12,17,"                            ",$8c
+	&,69,0,18," Device     ",$8f ':&,69,12,18,"                            ",$8c
+	&,69,0,19," Drive      ",$8f ':&,69,12,19,"                            ",$8c
+	&,69,0,20," Protocol   ",$8f ':&,69,12,20,"                            ",$8c
+	&,69,0,21,"            ",$8f ':&,69,12,21,"                            ",$8c
+	for x=17 to 21:&,69,12,x,"{space:28}",$8c:next
+
+	x$="Send":if x>1 then x$="Receiv":if x>2 then x$="Copy":if x>3 then x$="Scann"
 	&,69,1,17,x$+"ing",$8f
 	&,69,13,17,"{f5}"+an$+"{f5}",$8c
 	&,69,13,20,d4$,$8c
 	return
-	rem PINACOLADA 12/31/2017
-	
+	rem pinacolada 2018-10-23, 2019-05-06
+	rem im.disp

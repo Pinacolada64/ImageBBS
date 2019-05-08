@@ -1,0 +1,77 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+' FIXME: This needs some help
+	rem
+	pr$=d4$:&,27:ON-(e%>0)GOTO {:4048}
+{:4004}
+	dr=3:z$="e.ss."+LEFT$(lx$,11)
+	a$=z$+",s,r":GOSUB 1011:GET#2,a$
+{:4008}
+	INPUT# 2,nn$:INPUT# 2,nx$:INPUT# 2,da$
+	an$=nn$:&"{clear}{pound}cm{pound}vz {pound}co{pound}r1 From: {pound}r0  {pound}cn{pound}v7"
+	an$=nx$:&"  {pound}co[ {pound}c1#{pound}v7{pound}co]":an$=da$:&"{f6} {pound}r1 Date: {pound}r0  {pound}co{$04}"+an$
+	&"{f6}{pound}cm{pound}vz{pound}n1{pound}c7":an$=""
+{:4016}
+	INPUT# 2,a$:IF a$<>"{up arrow}"AND rc=0 THEN:&a$:&"{f6}":GOTO {:4016}
+{:4018}
+	IF rc THEN INPUT# 2,a$:ON-(a$<>"{up arrow}")GOTO {:4018}
+{:4020}
+	&"{f6:2}"
+	&"{pound}c7{pound}r1 (N)-Next (Q)-Quit :{pound}r0{pound}g1":IF an$>=" "THEN:&an$
+	&"{f6}":IF tr%<1 THEN{:4088}
+	ON-(an$="Q")-(an$="N"OR an$="")*2 GOTO 3297,{:4040}:GOTO {:4040}
+{:4028}
+	CLOSE 2:CLOSE 1:&"{f6:2}{cyan}{pound}r1 End Of Comments... {f6}":&"{f6:2}  {cyan}[A]{gray3}-{pound}r1 Add Comment {f6}"
+	&"  {pound}c3[Q]{pound}co-{pound}r1 Quit        {pound}r0{f6:2}  {pound}c2>>{pound}cn{pound}r1 Command {pound}r0{pound}c2>> {pound}g1"
+	&an$:IF tr%<1 THEN{:4088}
+	ON-(an$="A")-(an$="Q")*2 GOTO {:4060},3297:GOTO {:4028}
+{:4036}
+	lr=0:GET#2,a$:lr=((st)AND 66):ON SGN(lr)+1 GOTO {:4008},{:4028}
+	GOTO {:4004}
+{:4040}
+	ON-((an$="N")OR(an$=r$))GOTO {:4036}:GOTO {:4020}
+{:4042}
+	an$=lx$:&"{f6:2}{pound}c7{pound}c1{pound}r1 Creating A File For {pound}r0{pound}c3 {pound}r1 {f5}{pound}v7{f5} {f6}"
+	a$="{white} Created Comment file: {lt. red}"+lx$:GOSUB 1490
+	GOTO {:4064}
+{:4048}
+	GOSUB {:4080}
+	an$=lx$
+	&"{f6:2}{pound}c3Would You Like To Start A{f6}Comment File For {pound}c7{pound}r1 {pound}v7 {pound}r0{pound}c3 ?{f6:2}"
+	&"{pound}c2 >>{pound}c1[{pound}cn{pound}r1 Y/N {pound}r0{pound}c1]{pound}c2> {pound}g1":IF tr%<1 THEN{:4088}
+	IF an$="N"THEN 3291
+	GOTO {:4042}
+{:4060}
+	dr=3:GOSUB 1079:IF a<50 THEN GOSUB 1978:GOSUB {:4084}:GOTO 3296
+	an$=lx$
+{:4064}
+	&"{pound}f1{pound}c1{pound}vj {pound}cn{pound}r1{pound}{back arrow}11*{pound}c2 COMMENT{$a0}EDITOR {pound}cn*{pound}{back arrow}39{pound}r0{f6}{pound}c1{pound}vj"
+	&"{f6} {pound}co{pound}r1 Loading Editor.... {f6:2}":GOSUB 1604:IF kk=.THEN z=.:a=f2%:GOTO 3297
+	&"{f6:2} {pound}co{pound}r1 Filing Comment....{f6}":a$="{purple} Posted Comment on: {lt. green}"+lx$+r$
+	a$=a$+" {cyan}"+sg$+" SIG "+"{green}U/D#"+MID$(STR$(bn),2)+":{lt. blue}"+MID$(bb$(bn),4):GOSUB 1490
+	a$="a":b$="ss."+LEFT$(lx$,11):GOSUB {:4078}
+	IF e%THEN a$="w":b$="ss."+LEFT$(lx$,11):CLOSE 2:GOSUB {:4078}
+	PRINT# 2,"!"r$;na$r$id;r$d1$
+	FOR x=1 TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:GOSUB {:4094}:a=f2%:GOTO 3297
+{:4078}
+	GOTO 1027
+{:4080}
+	dr=3:GOSUB 1079:IF a<50 THEN GOSUB 1978:f1%=1:GOTO {:4084}
+	f1%=.:&,28:d4$=pr$:RETURN
+{:4084}
+' TODO: do this for them :P
+	&"{f6:2}{pound}c1Please Notify Sysops That{f6}The Directory Was Too Full To"
+	&"{f6}{pound}c7Leave A Comment On Disk!{f6:2}{pound}w4":&,28:d4$=pr$:RETURN
+{:4088}
+	rm=k8:f1%=.:lr=.:zz=.:d4$=pr$:z$="":lx$="":nn$="":nx$="":da$="":FOR x=1 TO 9
+	tt$(x)=l$(x):ed$(x)=m$(x):m$(x)="":l$(x)=""
+	NEXT:x=k9:kk=k7:a=kk:c$="":GOSUB {:4094}:GOTO 3297
+{:4094}
+	g$="Comment":c%=0:FOR i=1 TO kk-1:c%=c%+LEN(tt$(i)):NEXT:IF c%<40 THEN RETURN
+	a=2:GOSUB 1004:c%=(INT(c%/10))*(a+m%):IF c%>50 THEN c%=50
+	cr=cr+c%:b$=STR$(cr)
+	&"{f6:2}{yellow}Your {white}{pound}$g{yellow} Earned {white}{pound}%c{yellow} Credits,{f6}You Now Have{white}{pound}$b{yellow} Total!{f6}{pound}w4":RETURN
+	REM modded by darkstar april 2018           atlantis    atl.ddns.net 6401
+	REM "+.MM.u/d/c":version 3 combining    by: iron axe of future systems '93
+	rem "U/D comments"

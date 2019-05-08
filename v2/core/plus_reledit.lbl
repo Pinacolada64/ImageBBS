@@ -1,0 +1,456 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	rem +.reledit
+	&,5:v=lp:re$="79007309123":z$="":op$="Open  ":cl$="Closed":GOSUB {:3024}:GOTO {:3138}
+{:3004}
+	a$="e."+sy$:dr=3:GOTO 1011
+{:3006}
+	f2=.:IF LEFT$(a$,1)="."AND MID$(a$,3,1)="."THEN f2=VAL(MID$(a$,2,1)):a$=MID$(a$,4)
+	IF RIGHT$(a$,1)="?"THEN f2=f2 OR 8:a$=LEFT$(a$,LEN(a$)-1)
+{:3010}
+	RETURN
+{:3012}
+	IF(f2 AND 8)=8 THEN a$=a$+"?":f2=f2 AND 7
+	IF f2 THEN a$="."+MID$(STR$(f2),2,1)+"."+a$
+	RETURN
+{:3018}
+	a$="e."+sy$+",l,<":dr=3:GOSUB 1011:x=1:GOSUB 1001:PRINT# 2,0;r$;re$:RETURN
+{:3020}
+	POKE 53252,q:RETURN
+{:3022}
+	a=INT(ABS(VAL(MID$(an$,a,4)))):RETURN
+{:3024}
+	a$="nm.config":dr=2:GOSUB 1011:IF e%THEN nn=.:GOTO {:3028}
+	x=1:GOSUB 1001:&,2,2:nn=VAL(a$):IF nn THEN GOSUB {:3320}
+{:3028}
+	sy$="Sig":GOSUB {:3004}:IF e%THEN sg=.:CLOSE 2:GOTO {:3038}
+	x=1:GOSUB 1001:&,2,2:sg=VAL(a$):CLOSE 2:GOTO {:3038}
+	q=a:GOSUB {:3022}:FOR i=q TO LEN(an$):IF MID$(an$,i,1)<>"{f1}"AND MID$(an$,i,1)<>"-"THEN{:3036}
+	q=a:a=i+1:GOSUB {:3022}:i=a:a=q:q=i:FOR i=1 TO 1:NEXT:GOTO {:3038}
+{:3036}
+	NEXT:q=.
+{:3038}
+	sb=0:sy$="Sub":GOSUB {:3004}:IF e%=0 THEN x=1:GOSUB 1001:&,2,2:sb=VAL(a$)
+	ud=0:sy$="U/D":GOSUB {:3004}:IF e%=0 THEN x=1:GOSUB 1001:&,2,2:ud=VAL(a$)
+	ux=0:sy$="U/X":GOSUB {:3004}:IF e%=0 THEN x=1:GOSUB 1001:&,2,2:ux=VAL(a$)
+	RETURN
+{:3046}
+	IF sg+sb+ud+ux+nn=.THEN:&"Nothing Configured.{f6:2}":RETURN
+	a$="":l=.:IF sg THEN a%=sg:&"{pound}#0{pound}%a SIGs":a$=", ":l=l+9
+	IF sb THEN a%=sb:&:a=10:GOSUB {:3060}:&"{pound}#0{pound}%a Subs":a$=", ":l=l+10
+	IF ud THEN a%=ud:&:a=10:GOSUB {:3060}:&"{pound}#0{pound}%a U/Ds":a$=", ":l=l+10
+	IF ux THEN a%=ux:&:a=10:GOSUB {:3060}:&"{pound}#0{pound}%a U/Xs":a$=", ":l=l+10
+	IF nn THEN a%=nn:&:a=8:GOSUB {:3060}:&"Network ":l=l+8:a=10:GOSUB {:3060}:&"(Node {pound}#0{pound}%a)":l=l+10
+	&" ":a=11:GOSUB {:3060}:&"Configured{f6:2}":RETURN
+{:3060}
+	ON-(l+a<ll%)GOTO {:3010}:&"{f6}":l=.:RETURN
+{:3062}
+	s=a:GOSUB {:3022}:q=a:FOR x=s TO LEN(an$):IF MID$(an$,x,1)<>"-"AND MID$(an$,x,1)<>"{f1}"THEN NEXT:q=.:RETURN
+	a=x+1:GOSUB {:3022}:s=q:q=a:a=s:FOR x=1 TO 1:NEXT:RETURN
+{:3066}
+	&"{f6}(RETURN) To Keep The Same.{f6:2}"
+	q=a:GOSUB {:3020}:b$=w$:pl=b:&,1,32:&"{f6}"
+	IF an$=""THEN an$=b$
+	IF b THEN a=VAL(an$)
+	p$="":RETURN
+{:3076}
+	f$="":b=(f2 AND 7):IF sy$="Sub"THEN{:3080}
+	l$=MID$("CredDO-CFreeDO-FPwCrPwDCPwFrPwDF",b*4+1,4):RETURN
+{:3080}
+	b=b-(b=.)-1:l$=MID$("Std AnonN-AnPswdPswdP-AnP-NA",b*4+1,4)
+	f$=" ":IF(f2 AND 8)=8 THEN f$="N"
+	RETURN
+{:3086}
+	p%=.:&"{f6}":FOR i=0 TO 9:a%=i:&"Group {pound}#0{pound}%a?:":GOSUB 1902:p%=p%+a*(2^i):NEXT:RETURN
+{:3088}
+	&"{clear}{pound}q0{f6}":sh=.:rc=.:y=.:GOSUB {:3004}:IF e%THEN GOSUB {:3018}:CLOSE 2:s=0:e=0:RETURN
+	x=1:GOSUB 1001:&,2,2:e=VAL(a$):IF e=0 THEN s=0:CLOSE 2:RETURN
+	IF s>e OR s<1 THEN s=1
+	IF q<s OR q>e THEN q=e
+	IF sy$="Sig"THEN:&" # Name{pound}{back arrow}39    Accs SIGOp{pound}{back arrow}15Sub    U/D    U/X  {f6}{pound}vz"
+	IF sy$<>"Sig"THEN:&" ## Title{pound}{back arrow}31Type O/C{pound}{back arrow}39     Dv:Drv SubOp"
+	IF sy$<>"Sig"THEN:&"{pound}{back arrow}18Password{pound}{back arrow}33Accs{f6}{pound}vz"
+	FOR a=s TO q:x=a+1:GOSUB 1001:FOR x=1 TO 7+3*(sy$="Sig"):&,2,2:tt$(x)=a$:NEXT
+	a%=a:b%=VAL(tt$(4)):d$=tt$(1):p%=VAL(tt$(2)):IF b%<1 THEN b%=0
+	j$=op$:IF sy$="Sig"AND(VAL(tt$(3))AND 1)=1 THEN j$=cl$
+	k$=op$:IF sy$="Sig"AND(VAL(tt$(3))AND 2)=2 THEN k$=cl$
+	l$=op$:IF sy$="Sig"AND(VAL(tt$(3))AND 4)=4 THEN l$=cl$
+	IF sy$<>"Sig"THEN b$="Opn":IF VAL(tt$(7))THEN b$="Cls"
+	c$=tt$(3):a$="":IF sy$="Sig"THEN c$=tt$(1)
+	IF sy$<>"Sig"THEN d$=tt$(1):d%=VAL(tt$(5)):g%=VAL(tt$(6)):a$=c$:GOSUB {:3006}:GOSUB {:3076}
+	IF a$="---"OR c$="---"THEN:&"{pound}#3{pound}# {pound}%a (EMPTY RECORD)":GOTO {:3132}
+	IF sy$<>"Sig"THEN{:3126}
+	&"{pound}#2{pound}# {pound}%a {pound}$c{pound}{back arrow}39    {pound}#4{pound}# {pound}%p {pound}vn{pound}#0{pound}%b {pound}{back arrow}15{pound}$j {pound}$k {pound}$l"
+	y=sh+rc:GOTO {:3132}
+{:3126}
+	GOSUB {:3076}
+	&"{pound}#3{pound}# {pound}%a {pound}$a{pound}{back arrow}31{pound}$l {pound}$b{pound}{back arrow}39     {pound}#2{pound}# {pound}%d:{pound}#0{pound}%g{pound}{back arrow}11{pound}vn":y=sh+rc
+	&"{pound}#0{pound}%b{pound}{back arrow}18{pound}$d{pound}{back arrow}33{pound}#4{pound}# {pound}%p {pound}$f":y=y+sh+rc
+{:3132}
+	&"{f6}{pound}vz":y=y+sh+rc
+	IF y THEN a=e
+	NEXT:CLOSE 2:RETURN
+{:3138}
+	&,5:a$=MID$(STR$(v),2):lp=.:&"{clear}{f6}{pound}{back arrow}09RELEDIT V{pound}$a (Rev. {pound}#0{pound}%a){f6:2}"
+	&"{pound}{back arrow}11(C)1990 New Image{f6:2}":GOSUB {:3046}
+	&"{f6}Edit: S - Sub{f6}{pound}{back arrow}06U - U/D{f6}{pound}{back arrow}06X - U/X{f6}{pound}{back arrow}06G - SIG{f6}":IF nn THEN:&"{pound}{back arrow}06N - NetSubs{f6}"
+	&"{f6}RELEDIT: {pound}g1"
+	a=-(an$="S")-4*(an$="U")-7*(an$="X")-10*(an$="G")-13*(an$="N"AND nn>.)
+	IF a=.THEN sg=.:&"Quit{f6}":sb=.:ud=.:ux=.:sg=.:nn=.:GOTO 1811
+	sy$=MID$("SubU/DU/XSigNetSubs",a,3-4*(a=13)):s=1:q=.:&sy$+"{f6}"
+	IF sy$="NetSubs"THEN{:3324}
+{:3154}
+	GOSUB {:3088}:q=8:GOSUB {:3020}:a%=e:&"{f6}Edit (":IF a%>1 THEN:&"1-{pound}#0{pound}%a, L to List"
+	IF a%=1 THEN:&"1, L to List"
+	a=30-30*(sy$="Sig")-870*(sy$<>"Sig"AND sg<>0):IF e<a THEN:&LEFT$(", ",-2*(e>.))+"A to Add"
+	&"): {pound}i1":IF an$=""OR tr%=.THEN{:3138}
+	a=1:GOSUB {:3022}:IF a>0 AND a<=e THEN{:3170}
+	a=2:GOSUB {:3062}:IF LEFT$(an$,1)="L"THEN s=a:GOTO {:3154}
+	z=0:IF LEFT$(an$,1)="A"THEN{:3422}
+	s=1:q=.:GOTO {:3154}
+{:3170}
+	IF sy$="Sig"THEN{:3238}
+	z=a:GOSUB {:3004}:x=a+1:GOSUB 1001:FOR x=1 TO 7:&,2,2:tt$(x)=a$:NEXT:CLOSE 2
+	a$=tt$(3):GOSUB {:3006}
+	c$=a$:IF c$="---"THEN{:3422}
+	p%=VAL(tt$(2)):d%=VAL(tt$(5)):g%=VAL(tt$(6)):d$=tt$(1):b%=VAL(tt$(4))
+	oc=VAL(tt$(7)):IF b%<1 THEN b%=.
+{:3182}
+	m$="(None)":IF b%THEN GOSUB 1065:x=b%:GOSUB 1001:&,2,2:m$=a$:IF a$="{up arrow}"THEN m$="(None)":b%=.
+{:3184}
+	GOSUB {:3076}:b$=op$:IF oc=1 THEN b$=cl$
+	a$=sy$:a%=z:&"{clear}{f6}    {pound}$a #{pound}#0{pound}%a:{f6:2}"
+	&" 1)  Title: {pound}$c{f6} 2) Access: {pound}#0{pound}%p{f6} 3)  SubOp: {pound}$m-{pound}vn{pound}%b{f6} 4) Device: {pound}%d{f6}"
+	&" 5)  Drive: {pound}%g{f6} 6) Status: {pound}$b{f6} 7)   Type: {pound}$l{f6} 8) Passwd: {pound}$d{f6} 9)  Scrns:{f6}"
+	IF(f2 AND 8)=8 THEN:&"{f6}{pound}{back arrow}09This Sub is Networked{f6}"
+	q=2:GOSUB {:3020}:&"{f6}  {pound}$a Edit: {pound}i1{f6}":a=1:GOSUB {:3022}:IF a<1 OR a>9 THEN{:3236}
+	ON a GOTO {:3200},{:3202},{:3206},{:3210},{:3214},{:3216},{:3218},{:3232},{:3234}
+	GOTO {:3184}
+{:3200}
+	p$="Title":w$=c$:a=27:b=0:GOSUB {:3066}:c$=an$:GOTO {:3184}
+{:3202}
+	p$="Access":w$=MID$(STR$(p%),2):a=4:b=1:GOSUB {:3066}:IF an$="{f2}"THEN GOSUB {:3086}:GOTO {:3184}
+	a=1:GOSUB {:3022}:ON-(a<1 OR a>1023)GOTO {:3184}:p%=a:GOTO {:3184}
+{:3206}
+	p$="SubOp":w$=MID$(STR$(b%),2):a=20:b=1:GOSUB {:3066}:a=1:GOSUB {:3022}
+	ON-(a<.OR a>ur)GOTO {:3184}:i=a:ON-(a=.)GOSUB 1046:b%=i:GOTO {:3182}
+{:3210}
+	p$="Device":w$=MID$(STR$(d%),2):a=2:b=1:GOSUB {:3066}:a=1:GOSUB {:3022}
+	ON-(a<8+(sy$="U/X")OR a>15)GOTO {:3184}:d%=a:GOTO {:3184}
+{:3214}
+	p$="Drive":w$=MID$(STR$(g%),2):a=3:b=1:GOSUB {:3066}:a=1:GOSUB {:3022}:g%=a:GOTO {:3184}
+{:3216}
+	oc=-(oc=.):GOTO {:3184}
+{:3218}
+	IF sy$="Sub"THEN{:3226}
+	f2=(f2 AND 8):&"{f6}Downloads Only?: ":GOSUB 1902:f2=f2+a
+	&"Free Downloads?: ":GOSUB 1902:f2=f2+a*2
+	&"      Password?: ":GOSUB 1902:f2=f2+a*4:GOTO {:3184}
+{:3226}
+	f2=(f2 AND 8):&"{f6}Non-Anonymous?: ":GOSUB 1902:f2=f2+a*3:IF a THEN{:3230}
+	&"All Anonymous?: ":GOSUB 1902:f2=f2+a+1
+{:3230}
+	&"     Password?: ":GOSUB 1902:f2=f2+4*a:GOTO {:3184}
+{:3232}
+	p$="Password":w$=d$:a=14:b=1:GOSUB {:3066}:d$=an$:GOTO {:3184}
+{:3234}
+	GOSUB {:3638}:GOTO {:3184}
+{:3236}
+	GOTO {:3444}
+{:3238}
+	z=a:GOSUB {:3004}:x=a+1:GOSUB 1001:FOR x=1 TO 4:&,2,2:tt$(x+10)=a$:NEXT
+{:3240}
+	c$=tt$(11):p%=VAL(tt$(12)):oc=VAL(tt$(13)):b%=VAL(tt$(14))
+{:3242}
+	IF b%<.THEN b%=.
+	m$="(None)":IF b%THEN GOSUB 1065:x=b%:GOSUB 1001:&,2,2:m$=a$:IF a$="{up arrow}"THEN m$="(None)":b%=.
+{:3246}
+	j$=op$:IF(oc AND 1)=1 THEN j$=cl$
+	k$=op$:IF(oc AND 2)=2 THEN k$=cl$
+	l$=op$:IF(oc AND 4)=4 THEN l$=cl$
+	a%=z:&"{clear}{f6}    SIG #{pound}#0{pound}%a:{f6:2}"
+	&" 1)  Title: {pound}$c{f6} 2) Access: {pound}#0{pound}%p{f6} 3)  SIGOp: {pound}$m-{pound}vn{pound}%b{f6}"
+	&" 4)   Subs: {pound}$j{f6} 5)   U/Ds: {pound}$k{f6} 6)   U/Xs: {pound}$l{f6} 7) SB Lst:{f6} 8) UD Lst:{f6}"
+	&" 9) UX Lst:{f6}10)  Scrns:{f6:2}"
+	q=2:GOSUB {:3020}:&"  SIG Edit: {pound}i1{f6}":a=1:GOSUB {:3022}:IF a<1 OR a>10 THEN{:3428}
+	ON a GOTO {:3264},{:3266},{:3270},{:3274},{:3276},{:3278},{:3282},{:3282},{:3282},{:3280}
+{:3264}
+	p$="Title":w$=c$:a=25:b=0:GOSUB {:3066}:c$=an$:GOTO {:3246}
+{:3266}
+	p$="Access":w$=MID$(STR$(p%),2):a=4:b=1:GOSUB {:3066}:IF an$="{f2}"THEN GOSUB {:3086}:GOTO {:3246}
+	a=1:GOSUB {:3022}:ON-(a<1 OR a>1023)GOTO {:3246}:p%=a:GOTO {:3246}
+{:3270}
+	p$="SIGOp":w$=MID$(STR$(b%),2):a=20:b=1:GOSUB {:3066}:a=1:GOSUB {:3022}
+	ON-(a<.OR a>ur)GOTO {:3242}:i=a:ON-(a=.)GOSUB 1046:b%=i:GOTO {:3242}
+{:3274}
+	oc=(oc AND 6)-((oc AND 1)=.):GOTO {:3246}
+{:3276}
+	oc=(oc AND 5)-2*((oc AND 2)=.):GOTO {:3246}
+{:3278}
+	oc=(oc AND 3)-4*((oc AND 4)=.):GOTO {:3246}
+{:3280}
+	GOSUB {:3638}:GOTO {:3246}
+{:3282}
+	a=-(a=7)-4*(a=8)-7*(a=9)
+	tt$(11)=c$:tt$(12)=STR$(p%):tt$(13)=STR$(oc):tt$(14)=STR$(b%)
+	sy$=MID$("SubU/DU/X",a,3):s=1:a$=sy$:&"{f6}Reading {pound}$a Config..."
+	z%=30:z$="SIG"
+	se=.:bn=.:gg$=".Sig"+STR$(z):a$="e"+gg$+",s,r":dr=3:GOSUB 1011:IF e%THEN{:3312}
+	&,2,2
+{:3294}
+	&,2,2:a=-(st=.):IF LEFT$(a$,3)=sy$THEN se=se+1:a%(se)=VAL(MID$(a$,4))
+	ON a GOTO {:3294}:CLOSE 2:bz=se
+{:3298}
+	ON se+1 GOTO {:3312}:GOSUB {:3004}:ON-(e%<>.)GOTO {:3316}:x=1:GOSUB 1001:&,2,2:a=VAL(a$):IF a=.THEN{:3316}
+	FOR i=1 TO se:ON-(a%(i)>a)GOTO {:3310}:x=a%(i)+1:GOSUB 1001:&,2,2:&,2,2:&,2,2
+	IF a$="---"THEN{:3310}
+	bn=bn+1:c%(bn)=a%(i):GOSUB {:3006}:GOSUB {:3076}:IF z$="NetSub"THEN f$="N"
+	ed$(bn)=l$+" "+f$+" "+a$
+	IF(f2 AND 8)=0 AND z$="NetSub"THEN ii=c%(bn):GOSUB {:3356}:GOSUB {:3004}
+{:3310}
+	NEXT
+{:3312}
+	IF bn>z%THEN bn=z%
+	s=1:q=.:GOTO {:3492}
+{:3316}
+	a$=sy$:&"{f6:2}{pound}$as Not Configured!{f6:2}"
+{:3318}
+	ON-(z$="NetSub")GOTO {:3416}:sy$="Sig":GOTO {:3240}
+{:3320}
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ netlist":&,7,dv%,2:GOSUB 1012:IF e%THEN nn=.
+	RETURN
+{:3324}
+	&"{clear}{f6}Reading NetSub Configuration{f6:2}Please Wait...":s=.:q=.:sy$="Sub":GOSUB {:3320}
+	dr=2:GOSUB 1010:FOR i=1 TO 60:a$=dr$+"nm.netsub"+STR$(i):&,16,2,dv%
+	GOSUB 1012:IF e%THEN r%=i-1:i=60:NEXT:GOTO {:3332}
+	&".":&,16:nn$(i)=a$:NEXT:r%=60
+{:3332}
+	&"{clear}{pound}q0{f6} # - NetSub ID{f6}{pound}vz":sh=.:rc=.:ON r%+1 GOTO {:3338}:IF s>r%OR s<1 THEN s=1
+	IF q<s OR q>r%THEN q=r%
+	FOR a=s TO q:e%=a:a$=nn$(a):&"{pound}#2{pound}# {pound}%e - {pound}$a{f6}":a=a-60*(rc+sh>.):NEXT
+{:3338}
+	q=8:GOSUB {:3020}:&"{pound}vz{f6}Edit (":IF r%>1 THEN:&"1-{pound}#0{pound}%r, L to List"
+	IF r%=1 THEN:&"1, L to List"
+	a$="":IF r%<60 THEN a$="A to Add":IF r%>0 THEN a$=", A to Add"
+	&"{pound}$a): {pound}i1":IF an$=""OR tr%=.THEN{:3138}
+	a=1:GOSUB {:3022}:IF a>0 AND a<=r%THEN{:3384}
+	a=2:GOSUB {:3062}:IF LEFT$(an$,1)="L"THEN s=a:GOTO {:3332}
+	IF LEFT$(an$,1)="A"AND r%<60 THEN{:3376}
+	s=.:q=.:GOTO {:3332}
+{:3354}
+	z$="NetSub":se=a%(0):bn=.:z%=60:GOTO {:3298}
+{:3356}
+	x=ii+1:GOSUB {:3362}:IF RIGHT$(tt$(3),1)="?"THEN{:3366}
+	IF RIGHT$(tt$(3),1)="{up arrow}"THEN tt$(3)=LEFT$(tt$(3),LEN(tt$(3))-1)
+	tt$(3)=tt$(3)+"?":x=ii+1:GOTO {:3364}
+{:3362}
+	GOSUB {:3004}:GOSUB 1001:FOR x=1 TO 7:&,2,2:tt$(x)=a$:NEXT:RETURN
+{:3364}
+	GOSUB 1001:a$=tt$(1):FOR x=2 TO 7:a$=a$+r$+tt$(x):NEXT:PRINT# 2,a$
+{:3366}
+	CLOSE 2:RETURN
+{:3368}
+	FOR i=1 TO 60:a%(i)=.:NEXT:FOR i=1 TO bn:a%(i)=c%(i):NEXT:a%(0)=bn:GOTO {:3388}
+{:3370}
+	x=c%(i)+1:GOSUB {:3362}:IF RIGHT$(tt$(3),1)<>"?"THEN{:3366}
+	tt$(3)=LEFT$(tt$(3),LEN(tt$(3))-1):x=c%(i)+1:GOTO {:3364}
+{:3374}
+	ON a%(0)+1 GOTO {:3010}:FOR i=1 TO a%(0):c%(i)=a%(i):GOSUB {:3370}:NEXT:RETURN
+{:3376}
+	FOR i=0 TO 60:dt$(i)="---":a%(i)=0:NEXT:gg$="nm.netsub"+STR$(r%+1):q%=16
+{:3378}
+	p$="NetSub ID":w$=dt$(0):a=20:b=1:GOSUB {:3066}
+	a=1:IF an$="---"THEN:&"Delete This NetSub{f6:2}Are you Sure? ":GOSUB 1902:an$=""
+	ON a+1 GOTO {:3388}:dt$(0)=an$:GOTO {:3388}
+{:3384}
+	dr=2:GOSUB 1010:gg$="nm.netsub"+STR$(a):a$=dr$+gg$:&,16,2,dv%
+	&,16:dt$(0)=a$:FOR i=1 TO LEN(an$)STEP 3:dt$(i/3+1)=MID$(an$,i,3):NEXT:q%=LEN(an$)/3
+{:3388}
+	a$=dt$(0):ON-(a$="")GOTO {:3416}:&"{clear}{f6} 1) NetSub ID: {pound}$a{f6}":FOR i=1 TO q%:a%=i+1:b$=dt$(i)
+	c$=CHR$(192+i):&"{pound}#2{pound}# {pound}%a)    Link {pound}$c: {pound}$b{f6}":NEXT:a%=i+1
+	&"{pound}#2{pound}# {pound}%a) Edit Subs:{f6:2}    Edit: {pound}i1":a=1:GOSUB {:3022}:bn=a
+	ON a GOTO {:3378}:ON-(a=q%+2)GOTO {:3354}:IF a>1 AND a<q%+2 THEN bn=a:GOTO {:3398}
+	GOTO {:3412}
+{:3398}
+	p$="Link "+CHR$(191+bn):w$=dt$(bn-1):a=3:b=1:GOSUB {:3066}:IF an$="{f2}"THEN{:3402}
+	dt$(bn-1)=an$:GOTO {:3388}
+{:3402}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:3398}
+	&,2,2:n=VAL(a$):IF n=.THEN CLOSE 2:GOTO {:3398}
+	sh=.:rc=.:&"{f6:2}Node  Node  Board{f6} No.   ID   Name{f6:2}":FOR i=1 TO n
+	a%=i:x=i+1:GOSUB 1001:&,2,2:b$=a$:&,2,2:&,2,2:&"{pound}#3{pound}# {pound}%a   {pound}$b  {pound}$a{f6}"
+	i=i-n*(sh+rc<>.):NEXT:&"{f6}":CLOSE 2:GOTO {:3398}
+{:3412}
+	ON-(dt$(0)="")GOTO {:3416}:an$="":FOR i=1 TO q%:IF LEN(dt$(i))=3 AND dt$(i)<>"---"THEN an$=an$+dt$(i)
+	NEXT:a$=dt$(0):&,16,1:dr=2:a$=gg$:GOSUB 1024:a$=dr$+gg$:&,16,3,dv%:GOTO {:3324}
+{:3416}
+	GOSUB {:3374}:dr=2:a$=gg$:GOSUB 1024:i=0
+{:3418}
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.P.track"MID$(gg$,10)STR$(i):GOSUB 1012:IF t%THEN i=i+1:GOTO {:3418}
+	ON-(VAL(MID$(gg$,10))<r%)GOTO {:3658}:GOTO {:3324}
+{:3422}
+	IF z=0 THEN z=e+1
+	c$="---":p%=.:oc=.:b%=.:d%=8:g%=.:f2=.:d$="PASS":IF sy$="Sig"THEN{:3242}
+	GOTO {:3182}
+{:3428}
+	IF p%=.THEN c$="---"
+	IF c$="---"THEN a$="e.Sig"+STR$(z):dr=3:GOSUB 1024:p%=.:oc=.:b%=-1
+	IF c$="---"THEN FOR x=0 TO 1:a$="s.Sig"+STR$(z)+STR$(x):dr=1:GOSUB 1024:NEXT
+	IF b%=.THEN b%=-1
+	GOSUB {:3004}:x=1:GOSUB 1001:&,2,2:e=VAL(a$):IF c$="---"AND z>e THEN{:3442}
+	x=z+1:GOSUB 1001:PRINT# 2,c$r$p%r$oc;r$b%
+	IF z>e THEN x=1:GOSUB 1001:PRINT# 2,z;r$;re$:e=z
+{:3442}
+	sg=e:CLOSE 2:CLOSE 15:s=z-1:q=z+2:GOTO {:3154}
+{:3444}
+	IF c$<>"---"AND p%>.THEN{:3448}
+	p%=.:oc=.:b%=.:d%=.:g%=.:f2=.:d$="PASS"
+{:3448}
+	IF b%<1 THEN b%=-1
+	GOSUB {:3004}:x=1:GOSUB 1001:&,2,2:a=VAL(a$):IF z>a AND c$="---"THEN{:3490}
+	IF z>a AND c$<>"---"THEN x=1:GOSUB 1001:PRINT# 2,z;r$;re$:a=z
+	a$=c$:GOSUB {:3012}:c$=a$:x=z+1:GOSUB 1001
+	PRINT# 2,d$r$p%r$c$r$b%r$d%r$g%r$MID$(STR$(oc),2,1)
+	IF sy$="Sub"THEN sb=a
+	IF sy$="U/D"THEN ud=a
+	IF sy$="U/X"THEN ux=a
+	CLOSE 2:IF sg=.OR p%>.THEN{:3490}
+	l$="Library":IF sy$="Sub"THEN l$="Board"
+	a$=sy$:&"{f6:2}Removing This {pound}$a {pound}$l From the SIG lists...{f6:2}Working On SIG #  "
+	an$=sy$+MID$(STR$(z),2,1)
+	FOR ii=1 TO sg:a%=ii:&"{pound}h2{pound}#2{pound}# {pound}%a":&,11,.
+	a$="e.Sig"+STR$(ii)+",s,r":dr=3:GOSUB 1011:IF e%THEN{:3488}
+	&,2,2:a=VAL(a$):kk=.:IF a=.THEN{:3482}
+	FOR x=1 TO a:&,2,2:IF a$<>an$THEN kk=kk+1:tt$(kk)=a$
+	NEXT
+{:3482}
+	CLOSE 2:a$="e.Sig"+STR$(ii):dr=3:GOSUB 1024
+	ON kk+1 GOTO {:3488}:a$="e.Sig"+STR$(ii)+",s,w":dr=3:GOSUB 1011:PRINT# 2,kk
+	FOR x=1 TO kk:PRINT# 2,tt$(x):NEXT:CLOSE 2
+{:3488}
+	CLOSE 2:NEXT:&"{f6:2}Done!{f6}"
+{:3490}
+	s=z-1:q=z+2:GOTO {:3154}
+{:3492}
+	GOSUB {:3546}
+	q=8:GOSUB {:3020}:a%=bn:a$=sy$:&"{pound}#0{pound}%a {pound}$as In This {pound}$z.{f6:2}Edit (? = Menu): {pound}i1"
+	a$=LEFT$(an$,1):a=2:GOSUB {:3062}:ON-(a$="{f2}")-2*(a$="A")-3*(a$="D")GOTO {:3656},{:3504},{:3532}
+	ON-(a$="S")-2*(a$="I")-3*(a$="M")GOTO {:3526},{:3556},{:3584}
+	IF a$="L"THEN GOSUB {:3528}:&"{f6}Press A Key {pound}g1":s=bn-9:q=.:GOTO {:3492}
+	GOTO {:3612}
+{:3504}
+	ON-(a<>.)GOTO {:3508}:ON-(bn=>z%)GOTO {:3530}:a$=sy$:&"{f6}Add Which{f6}(L = List {pound}$as): {pound}i1"
+	a=1:GOSUB {:3062}:IF LEFT$(an$,1)="L"THEN GOSUB {:3528}:a=0:GOTO {:3504}
+{:3508}
+	ON-(bn=>z%)GOTO {:3530}:IF a<1 THEN s=bn-9:q=0:GOTO {:3492}
+	GOSUB {:3004}:x=1:GOSUB 1001:&,2,2:b=VAL(a$):IF a>b THEN{:3522}
+	x=a+1:GOSUB 1001:&,2,2:&,2,2:&,2,2:IF a$="---"THEN:&"{f6}Empty Record!":GOTO {:3524}
+	IF RIGHT$(a$,1)="?"AND z$="NetSub"THEN:&"{f6}Already Networked!":GOTO {:3524}
+	bn=bn+1:GOSUB {:3006}:GOSUB {:3076}:IF z$="NetSub"THEN f$="N":IF RIGHT$(a$,1)="{up arrow}"THEN a$=LEFT$(a$,LEN(a$)-1)
+	ed$(bn)=l$+" "+f$+" "+a$:c%(bn)=a:&"{f6}{f5}{pound}$a{f5} Added!"
+	ii=a:ON-(z$="NetSub")GOSUB {:3356}:GOTO {:3524}
+{:3522}
+	&"{f6}Out of Range!":a=q+1
+{:3524}
+	a=a+1:ON-(q>=a AND bn<z%)GOTO {:3508}:&"{f6:2}Press a Key {pound}g1":s=bn-9:q=0:GOTO {:3492}
+{:3526}
+	a=2:GOSUB {:3062}:s=a:GOTO {:3492}
+{:3528}
+	a=2:GOSUB {:3062}:s=a:GOTO {:3088}
+{:3530}
+	a$=sy$:&"{f6}Sorry, Only {pound}%z {pound}$as Max{f6}Press A Key {pound}g1":s=bn-9:q=0:GOTO {:3492}
+{:3532}
+	ON-(a>.)GOTO {:3538}:a$=sy$:&"{f6}Delete Which{f6}(S = Scan List of {pound}$as): {pound}i1"
+	IF LEFT$(an$,1)="S"THEN a=2:GOSUB {:3062}:s=a:GOSUB {:3546}:a=.:GOTO {:3532}
+	a=1:GOSUB {:3062}
+{:3538}
+	q=-q*(q<=bn)-bn*(q>bn):q=-q*(q>=a)-a*(q<a):IF a<1 OR a>bn THEN q=.:GOTO {:3544}
+	q=q-a+1:FOR i=a TO bn-q:ON-(z$="NetSub")GOSUB {:3370}
+	c%(i)=c%(i+q):ed$(i)=ed$(i+q):NEXT:bn=bn-q
+{:3544}
+	a%=q:a$=sy$:&"{f6}{pound}#0{pound}%a {pound}$as Deleted!{f6:2}Press A Key {pound}g1":s=bn-9:q=.:GOTO {:3492}
+{:3546}
+	&"{clear}{f6}## TYPE NAME{f6}{pound}vz":sh=.:rc=.:IF s>bn OR s<1 THEN s=1
+	IF bn=.THEN{:3554}
+	IF q<s OR q>bn THEN q=bn
+	FOR i=s TO q:a%=i:&"{pound}#2{pound}# {pound}%a "+ed$(i)+"{f6}":i=i-bn*(sh+rc<>.):NEXT
+{:3554}
+	&"{pound}vz":RETURN
+{:3556}
+	ON-(a>.OR bn=.)GOTO {:3562}:a$=sy$:&"{f6}Insert Before Which{f6}(S = Scan List of {pound}$as): {pound}i1"
+	IF LEFT$(an$,1)="S"THEN a=2:GOSUB {:3062}:s=a:GOSUB {:3546}:a=.:GOTO {:3556}
+	a=1:GOSUB {:3022}
+{:3562}
+	a%=0:IF a>bn OR a<1 THEN{:3582}
+{:3564}
+	se=a:a$=sy$:&"{f6}Insert Which {pound}$a{f6}(L = List of {pound}$as): {pound}i1"
+	IF LEFT$(an$,1)="L"THEN a=2:GOSUB {:3062}:s=a:GOSUB {:3528}:a=se:GOTO {:3564}
+	a%=0:a=1:GOSUB {:3062}:q=-q*(q>=a)-a*(q<a):IF a<1 THEN{:3582}
+	GOSUB {:3004}:FOR ii=a TO q:x=ii+1:GOSUB 1001:&,2,2:&,2,2:&,2,2
+	IF a$="---"OR(RIGHT$(a$,1)="?"AND z$="NetSub")THEN NEXT:GOTO {:3582}
+	GOSUB {:3006}:GOSUB {:3076}:bn=bn+1:IF bn>z%THEN bn=z%:CLOSE 2:FOR ii=1 TO 1:NEXT:GOTO {:3582}
+	FOR x=bn-1 TO se STEP-1:c%(x+1)=c%(x):ed$(x+1)=ed$(x):NEXT
+	c%(se)=ii:IF z$="NetSub"THEN f$="N"
+	ed$(se)=l$+" "+f$+" "+a$:&"{f6}{f5}{pound}$a{f5} Inserted!":ON-(z$="NetSub")GOSUB {:3356}:se=se+1:a%=a%+1:NEXT
+{:3582}
+	a$=sy$:&"{f6}{pound}#0{pound}%a {pound}$as Inserted.{f6:2}Press A Key {pound}g1":s=bn-9:q=.:GOTO {:3492}
+{:3584}
+	a%=.:ON bn+1 GOTO {:3610}:IF a>.THEN{:3592}
+	a$=sy$:&"{f6}Move Which{f6}(S = Scan List of {pound}$as): {pound}i1"
+	IF LEFT$(an$,1)="S"THEN a=2:GOSUB {:3062}:s=a:GOSUB {:3546}:a=.:GOTO {:3584}
+	a=1:GOSUB {:3062}
+{:3592}
+	q=-q*(q>=a)-a*(q<a):IF a<1 THEN a%=.:GOTO {:3610}
+{:3594}
+	se=a:qq=q:a$=sy$:&"{f6}Move to After Which{f6}(S = Scan List of {pound}$as): {pound}i1"
+	IF LEFT$(an$,1)="S"THEN a=2:GOSUB {:3062}:s=a:GOSUB {:3546}:a=se:q=qq:GOTO {:3594}
+	a=1:GOSUB {:3022}:IF a<1 OR a>bn OR(a>=se-1 AND a<=qq)THEN a%=.:GOTO {:3610}
+	ii=qq-se+1:a%=.:&"{f6}Moving...":IF a>qq THEN{:3606}
+{:3602}
+	a$=ed$(qq):r=c%(qq):FOR x=qq TO a+1 STEP-1:c%(x)=c%(x-1):ed$(x)=ed$(x-1):NEXT
+	ed$(a+1)=a$:c%(a+1)=r:a%=a%+1:&".":ON-(a%<ii)GOTO {:3602}:GOTO {:3610}
+{:3606}
+	a$=ed$(se):r=c%(se):FOR x=se TO a:c%(x)=c%(x+1):ed$(x)=ed$(x+1):NEXT
+	ed$(a)=a$:c%(a)=r:a%=a%+1:&".":IF a%<ii THEN{:3606}
+{:3610}
+	a$=sy$:&"{f6:2}{pound}#0{pound}%a {pound}$as Moved{f6:2}Press A Key {pound}g1":s=bn-9:q=.:GOTO {:3492}
+{:3612}
+	ON-(z$="NetSub")GOTO {:3368}:a$=sy$:&"{f6:2}Saving {pound}$a List...":z$=""
+	tz=.:a$="t"+gg$:dr=3:GOSUB 1023:CLOSE 3:OPEN 3,dv%,3,dr$+"e"+gg$+",s,r"
+	GOSUB 1012:IF e%THEN CLOSE 3:a=.:GOTO {:3622}
+	&,2,3:a=-(st=.):PRINT# 2,VAL(a$)-bz+bn:GOTO {:3622}
+{:3620}
+	&,2,3:a=-(st=.):IF LEFT$(a$,3)<>sy$THEN PRINT# 2,a$:tz=1
+{:3622}
+	ON a GOTO {:3620}:CLOSE 2:a$="e"+gg$:dr=3:GOSUB 1024
+	IF tz THEN dr=3:GOSUB 1010:PRINT# 15,"r"+dr$+"e"+gg$+"="+dr$+"t"+gg$
+	CLOSE 15:ON bn+1 GOTO {:3632}:tz=1:a$="e"+gg$+",s,a":dr=3:GOSUB 1011
+	IF e%THEN CLOSE 2:a$="e"+gg$+",s,w":dr=3:GOSUB 1011:PRINT# 2,bn
+	FOR x=1 TO bn:PRINT# 2,sy$+MID$(STR$(c%(x)),2):NEXT:CLOSE 2
+{:3632}
+	IF tz=.THEN a$="e"+gg$:dr=3:GOSUB 1024
+	a$="t"+gg$:dr=3:GOSUB 1024
+	GOTO {:3318}
+{:3638}
+	&"[A]scii or [C]/G: {pound}g1":a=-(an$="A")-2*(an$="C")-1
+	IF a<0 OR a>1 THEN:&"Abort{f6}":RETURN
+	a$="Ascii{f6}":IF a THEN a$="C/G{f6}"
+	&:gg$="s."+sy$+STR$(z)+STR$(a):a$=gg$+",s,r"
+	&,11,0:kk=0:dr=1:GOSUB 1011:IF e%THEN kk=1:GOTO {:3650}
+{:3648}
+	&,2,2:kk=kk+1:tt$(kk)=a$:IF a$<>"{up arrow}"AND st=.THEN{:3648}
+{:3650}
+	CLOSE 2:GOSUB 1610:ON-(kk=.)GOTO {:3010}:&"{f6}Saving..."
+	a$=gg$:dr=1:GOSUB 1023:FOR x=1 TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}"
+	CLOSE 2:CLOSE 15:RETURN
+{:3656}
+	b$=sy$:dr=1:a$="s.m.reledit":GOSUB 1075:s=bn-9:q=.:GOTO {:3492}
+{:3658}
+	FOR i=VAL(MID$(gg$,10))TO r%-1:xx=0
+	PRINT# 15,"r"dr$"nm.netsub"STR$(i)"="dr$"nm.netsub"STR$(i+1)
+{:3662}
+	PRINT# 15,"r"dr$"nm.P.track"STR$(i)STR$(xx)"="dr$"nm.P.track"STR$(i+1)STR$(xx)
+	GOSUB 1012:IF e%=0 THEN xx=xx+1:GOTO {:3662}
+	NEXT:GOTO {:3324}
+	copr.1990 NEW image 12/06/90 11:55p

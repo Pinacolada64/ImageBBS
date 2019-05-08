@@ -1,7 +1,7 @@
 	GOSUB{:3024}:ON MM GOTO{:3100},{:3016},{:3015},{:3332},{:3028},{:3058}
 	&,28,1:CP=1:F%=10:LM$="":DIM S%(39,60),E%(60)
 	&,52,$27,3:ON A%GOTO{:3020}
-	ON-(PF<>0)GOTO{:3010}:PF=0:A$="{$c7}{$c6}.{$cd}AIN"+"":TP=0
+	ON-(PF<>0)GOTO{:3010}:PF=0:A$="GF.MAIN"+"":TP=0
 {:3008}
 	PF=PF+1:PF$(PF)=A$
 {:3010}
@@ -12,35 +12,35 @@
 {:3015}
 	RETURN
 {:3016}
-	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="({$cd}) "+P$
+	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="(M) "+P$
 	RETURN
 {:3020}
-	&"{f6}{$d3}ORRY, THAT AREA IS TEMPORARILY CLOSED.{f6}"
+	&"{f6}SORRY, THAT AREA IS TEMPORARILY CLOSED.{f6}"
 {:3022}
 	PF=0:F1=.:GOTO 300
 {:3024}
-	LC=7:H$="{$cc}IBRARY":J$="{$c6}ILE":K$="":L$="":M$=""
-	I$="{$d3}UBOP":R$=CHR$(13):SY$="{$c6}ILES"+"":RETURN
+	LC=7:H$="LIBRARY":J$="FILE":K$="":L$="":M$=""
+	I$="SUBOP":R$=CHR$(13):SY$="FILES"+"":RETURN
 {:3028}
 	A$="{gray3}???":B$="":ON A GOTO{:3030},{:3032},{:3034},{:3036},{:3038},{:3040},{:3042},{:3044},{:3046}:RETURN
 {:3030}
-	DR=4:A$="{yellow}{$c4}IR":B$="D.{$c7}{$c6}.":RETURN
+	DR=4:A$="{yellow}DIR":B$="D.GF.":RETURN
 {:3032}
-	DR=0:A$="{lt. blue}{$d0}RG":B$="I.":RETURN
+	DR=0:A$="{lt. blue}PRG":B$="I.":RETURN
 {:3034}
-	DR=0:A$="{lt. blue}{$cd}OD":B$="I.{$c7}{$c6}.":RETURN
+	DR=0:A$="{lt. blue}MOD":B$="I.GF.":RETURN
 {:3036}
-	DR=0:A$="{lt. green}{$d4}XT":RETURN
+	DR=0:A$="{lt. green}TXT":RETURN
 {:3038}
-	DR=0:A$="{lt. green}{$cd}OV":RETURN
+	DR=0:A$="{lt. green}MOV":RETURN
 {:3040}
-	DR=0:A$="{lt. green}{$d2}{$cc}{$c5}":RETURN
+	DR=0:A$="{lt. green}RLE":RETURN
 {:3042}
-	DR=4:A$="{yellow}{$d5}/{$d8}":B$="D.{$d5}{$d8}.":RETURN
+	DR=4:A$="{yellow}U/X":B$="D.UX.":RETURN
 {:3044}
-	DR=4:A$="{yellow}{$d5}/{$c4}":B$="D.{$d5}{$c4}.":RETURN
+	DR=4:A$="{yellow}U/D":B$="D.UD.":RETURN
 {:3046}
-	DR=0:A$="{yellow}{$d3}UB":B$="D.{$d3}{$c2}.":RETURN
+	DR=0:A$="{yellow}SUB":B$="D.SB.":RETURN
 {:3048}
 	DR=4:GOSUB 3:A$=DR$+"D."+PF$(PF):RETURN
 {:3050}
@@ -48,28 +48,28 @@
 {:3052}
 	GOSUB{:3048}:PRINT# 15,"S"A$:&,60,3,0,S%(0,0),80+80*S%(0,0),A$,DV%:GOTO 5
 {:3054}
-	LP=1:&"{f6}{$d3}ORRY, YOU DO NOT HAVE ENOUGH{$a0}CREDITS!":GOTO{:3014}
+	LP=1:&"{f6}SORRY, YOU DO NOT HAVE ENOUGH CREDITS!":GOTO{:3014}
 {:3056}
-	LP=1:&"{f6}{$d3}ORRY, YOU MUST BE IN COLOR/GRAPHICS MODE TO VIEW MOVIES.":GOTO{:3014}
+	LP=1:&"{f6}SORRY, YOU MUST BE IN COLOR/GRAPHICS MODE TO VIEW MOVIES.":GOTO{:3014}
 {:3058}
-	B=0:FOR I=0 TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
+	B=0:FOR I=0 TO 9:A%=I:&"GROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
 {:3060}
-	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="({$cd}) "+P$
+	&,60,1,20,S%(15,0),D2$:&,60,1,30,S%(25,0),P$:IF Q THEN P$="(M) "+P$
 	RETURN
 {:3064}
 	GOSUB{:3052}:GOTO{:3356}
 {:3100}
 	A=ABS(INT(VAL(LEFT$(AN$,4)))):IF A THEN BR=A:GOTO{:3200}
-	IF PF>1 AND(A$="<"OR A$="{$c2}")THEN PF=PF-1:GOTO{:3010}
-	IF PF>1 AND A$="{$cd}"THEN PF=1:GOTO{:3010}
-	ON-(A$="{$d1}")GOTO{:3022}:GOSUB{:3108}:GOTO{:3014}
+	IF PF>1 AND(A$="<"OR A$="B")THEN PF=PF-1:GOTO{:3010}
+	IF PF>1 AND A$="M"THEN PF=1:GOTO{:3010}
+	ON-(A$="Q")GOTO{:3022}:GOSUB{:3108}:GOTO{:3014}
 {:3108}
-	ON-(A$="{$cc}")-2*(A$="{$d3}")GOTO{:3316},{:3322}
-	IF Q THEN MM=-(A$="{$c1}")-2*(A$="{$c5}")-3*(A$="{$cb}")-4*(A$="{$da}"):IF MM THEN{:3120}
+	ON-(A$="L")-2*(A$="S")GOTO{:3316},{:3322}
+	IF Q THEN MM=-(A$="A")-2*(A$="E")-3*(A$="K")-4*(A$="Z"):IF MM THEN{:3120}
 	ON-(A$="")GOTO{:3316}
-	&"{f6:2}{$d5}NKNOWN {$c3}OMMAND. {$d4}YPE {f5}?{f5} FOR {$c8}ELP.{f6:2}":RETURN
+	&"{f6:2}UNKNOWN COMMAND. TYPE {f5}?{f5} FOR HELP.{f6:2}":RETURN
 {:3120}
-	A$="{$c7}{$c6}.MAINT":GOSUB 72:ON TZ GOSUB{:3064}:RETURN
+	A$="GF.MAINT":GOSUB 72:ON TZ GOSUB{:3064}:RETURN
 {:3200}
 	ON-(BR<1 OR BR>RN)GOTO{:3014}:X=E%(BR):IF NL=0 AND S%(2,BR)=5 THEN{:3056}
 	A=7:GOSUB 11:IF Q OR A OR S%(5,X)=0 THEN{:3210}
@@ -94,7 +94,7 @@
 {:3228}
 	GOSUB 13:GOTO{:3225}:TEXT FILE
 {:3230}
-	A$="{$c7}{$c6}."+A$:GOSUB 72:GOTO{:3014}
+	A$="GF."+A$:GOSUB 72:GOTO{:3014}
 {:3234}
 	TP=1:A$=MID$(B$,3):GOTO{:3008}
 {:3236}
@@ -106,13 +106,13 @@
 {:3300}
 	&"{clear} {blue}{pound}O{$a2}{pound}O{$a2}{f6} {rvrs on}{lt. green} {pound}$H: {pound}V8{pound}{back arrow}39{f6}"
 	ON-(S%(2,0)=0)GOTO{:3308}:AN$=SO$:&,15,1:ON-(S%(2,0)<>ID OR ID=0)GOTO{:3306}
-	&" {rvrs on} ({$d9}OU ARE THE {pound}$I HERE){pound}{back arrow}39{f6}":Q=1:GOTO{:3308}
+	&" {rvrs on} (YOU ARE THE {pound}$I HERE){pound}{back arrow}39{f6}":Q=1:GOTO{:3308}
 {:3306}
 	&" {rvrs on} {pound}$I: {pound}V7{pound}{back arrow}39{f6}"
 {:3308}
 	&" {rvrs on}{blue}{pound}O{$a2}{pound}O{$a2}{f6}{pound}Q0":RETURN
 {:3310}
-	&"{purple} {$b0}{pound}$Y{$ae}{f6} {$dd}{lt. green} {$d4}HIS {pound}$H IS {$c5}MPTY.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
+	&"{purple} {$b0}{pound}$Y{$ae}{f6} {$dd}{lt. green} THIS {pound}$H IS EMPTY.{pound}{back arrow}38{purple}{$dd}{f6} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
 {:3312}
 	A%=BR:X=E%(BR):A=S%(2,X):GOSUB{:3028}:&,60,1,28,S%(13,X),C$
 	&" {purple}{$dd}{white}{pound}#2{pound}# {pound}%A {pound}$A{lt. blue}: {cyan}{pound}$C{pound}{back arrow}38{purple}{$dd}{f6}":RETURN
@@ -128,12 +128,12 @@
 	NEXT:&"{purple} {$ad}{pound}$Y{$bd}{f6}{pound}Q0":RETURN
 {:3332}
 	GOSUB{:3312}:S=RC:ON-(Q=0)GOTO{:3338}:A%=S%(1,X):&,60,1,16,S%(27,X),A$
-	&"{purple} {$dd}{cyan}{$c6}ILE:{pound}$B{pound}$A{pound}{back arrow}29{$c1}CCS:{pound}#4{pound}%A{purple}{$dd}{f6}":S=S+RC
-	IF A<>1 THEN B%=S%(3,X):C%=S%(4,X):&"{purple} {$dd}{cyan}{$c4}EV:{pound}#2{pound}%B {$c4}RV:{pound}#3{pound}%C{pound}{back arrow}38{purple}{$dd}{f6}"
+	&"{purple} {$dd}{cyan}FILE:{pound}$B{pound}$A{pound}{back arrow}29ACCS:{pound}#4{pound}%A{purple}{$dd}{f6}":S=S+RC
+	IF A<>1 THEN B%=S%(3,X):C%=S%(4,X):&"{purple} {$dd}{cyan}DEV:{pound}#2{pound}%B DRV:{pound}#3{pound}%C{pound}{back arrow}38{purple}{$dd}{f6}"
 {:3338}
-	A%=S%(5,X):IF A%THEN:&"{purple} {$dd}{cyan}{$c3}REDITS:{pound}%A{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
+	A%=S%(5,X):IF A%THEN:&"{purple} {$dd}{cyan}CREDITS:{pound}%A{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
 	ON A GOTO{:3344}:A%=S%(6,X):&,60,5,0,S%(10,X),AN$
-	IF A%THEN:&,15:&"{purple} {$dd}{cyan}{$d5}SED {pound}%A {$d4}IMES{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}{$cc}AST:{pound}V7{$cd}{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
+	IF A%THEN:&,15:&"{purple} {$dd}{cyan}USED {pound}%A TIMES{pound}{back arrow}38{purple}{$dd}{f6} {$dd}{cyan}LAST:{pound}V7M{pound}{back arrow}38{purple}{$dd}{f6}":S=S+RC
 {:3344}
 	RETURN
 {:3346}
@@ -149,8 +149,8 @@
 	A%=0:IF S%(0,0)THEN:&,60,6,S%(0,0),0,S%(0,1),S%(1,1),80,1,2^AC%
 {:3362}
 	RN=A%:IF RN THEN:&,60,8,S%(0,0),80,1,S%(0,1),E%(1),1
-	X=S%(2,0):GOSUB{:3370}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN A$="{$ce}O {$cf}NE"
-	SO$=A$:IF Q THEN SY$=SY$+"-{$cd}AINT"
+	X=S%(2,0):GOSUB{:3370}:IF A$="{up arrow}"OR A$="RES"THEN A$="NO ONE"
+	SO$=A$:IF Q THEN SY$=SY$+"-MAINT"
 	RETURN
 {:3370}
 	A$="{up arrow}":IF X<>0 THEN DR=6:A$="U.CONFIG":GOSUB 4:GOSUB 1:&,2,2:CLOSE 2

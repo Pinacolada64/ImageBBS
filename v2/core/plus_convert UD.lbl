@@ -1,0 +1,27 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM ud%(31,61),a$(61):GOSUB {:3002}:&,28,1:GOTO 1811
+{:3002}
+	dr=3:a$="e.U/D":GOSUB 1011:IF e%THEN CLOSE 2:&:RETURN
+	&,2,2:bz=VAL(a$):CLOSE 2:IF bz=0 THEN:&"No U/Ds{f6}":RETURN
+	fi=1:FOR i=1 TO bz:dr=4:a$="d.u/d"+STR$(i)+",s,r":GOSUB 1011
+	&"{f6}UD{pound}!i: {pound}#2{pound}%e,{pound}$e{f6}":ON-(e%=0)GOSUB {:3010}:NEXT:RETURN
+{:3010}
+	&,2,2:rn=VAL(a$):ud%(0,0)=rn:ud%(1,1)=0:ON-(rn=0)GOTO {:3038}
+	FOR j=1 TO rn:&".":ud%(0,j)=0
+	&,2,2:fs=VAL(a$)*254:&,60,14,0,ud%(4,j),fs
+	&,2,2:ud%(13,j)=VAL(LEFT$(a$,4)):&,60,0,20,ud%(14,j),MID$(a$,5)
+	&,2,2:&,60,4,0,ud%(7,j),LEFT$(a$,11):&,60,4,0,ud%(10,j),MID$(a$,12,11)
+	a$=MID$(a$,23):b$=RIGHT$(a$,1):c$=LEFT$(a$,LEN(a$)-2)
+	&,60,0,16,ud%(24,j),c$
+	&,2,2:a$(j)=STR$(fs)+r$+c$+","+b$+r$+a$:ud%(1,j)=fi:fi=fi+1
+	&,2,2:ud%(2,j)=-(b$="p")+VAL(a$)*256
+	&,2,2:ud%(3,j)=VAL(a$):IF ud%(3,j)<1 THEN ud%(3,j)=0:ud%(0,j)=1
+	NEXT:CLOSE 2:&"{f6}"
+	&,60,3,0,ud%(0,0),60*(rn+1),dr$+"d.UD"+STR$(i),dv%:GOSUB 1012
+	dr=3:a$="e.UD.desc,l,"+CHR$(110):GOSUB 1011:PRINT# 2,fi
+	FOR j=1 TO rn:x=ud%(1,j)+1:GOSUB 1001:PRINT# 2,a$(j):NEXT:x=1:GOSUB 1001:CLOSE 2
+{:3038}
+	RETURN
+	rem "+.convert UD"

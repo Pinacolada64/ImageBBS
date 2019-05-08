@@ -1,0 +1,36 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	dr=4:GOSUB 1010:tt=.:q$="xpxtmr":&"{f6}Converting Files Sections...{f6:2}"
+	FOR tp=2 TO 6:ON-(tp<>3)GOSUB {:3004}:NEXT:&"Done!{f6:2}":GOTO 1811
+{:3004}
+	f=.:o$="Main":GOSUB {:3010}:j=1:IF f=.THEN RETURN
+{:3006}
+	o$=tt$(j):GOSUB {:3010}:j=j+1:ON-(j<=f)GOTO {:3006}
+{:3008}
+	RETURN
+{:3010}
+	a$="d."+MID$(q$,tp,1)+"."+o$:&"Reading from {f5}{pound}$a{f5}":GOSUB 1011
+	q=1:t=.:IF e%THEN CLOSE 2:&:&"{f6}":RETURN
+{:3014}
+	x=q:GOSUB 1001:&,2,2:IF a$="{up arrow}"THEN{:3026}
+	&".":t=t+1:nn$(t)=a$:&,2,2:dt$(t)=LEFT$(a$,11)+LEFT$(a$,11):a%(t)=tp
+	a$=MID$(a$,12):IF LEFT$(a$,2)="d."THEN a$=MID$(a$,5):GOSUB {:3042}:a%(t)=1
+	ed$(t)=a$:&,2,2:an$=a$:&,15,6,94:dv%(t+6)=VAL(an$):dr%(t+6)=VAL(a$)
+	&,2,2:ac%(t)=VAL(a$):&,2,2:c%(t)=VAL(a$):&,2,2:d%(t)=VAL(a$)
+	q=q+1:GOTO {:3014}
+{:3026}
+	CLOSE 2:a$="d.f."+o$:&"{f6}Writing to {f5}{pound}$a{f5}":GOSUB 1011
+	IF e%=.THEN:&,2,2:n=VAL(a$):GOTO {:3032}
+	CLOSE 2:a$="d.f."+o$+",l,"+CHR$(127):GOSUB 1011:n=.
+{:3032}
+	FOR i=1 TO t:x=i+1+n:GOSUB 1001:&"."
+	a$=MID$(STR$(ac%(i)),2)+r$+nn$(i)+r$+CHR$(48+a%(i))+ed$(i)+r$
+	a$=a$+MID$(STR$(dv%(i+6)),2)+r$+MID$(STR$(dr%(i+6)),2)+r$
+	a$=a$+MID$(STR$(c%(i)),2)+r$+dt$(i)+r$+MID$(STR$(d%(i)),2)
+	PRINT# 2,a$:NEXT:x=1:GOSUB 1001:PRINT# 2,t+n:GOSUB 1001:CLOSE 2:&"{f6:2}":RETURN
+{:3042}
+	IF f THEN FOR i=1 TO f:ON-(a$=tt$(i))GOTO {:3008}:NEXT
+	f=f+1:tt$(f)=a$:RETURN
+	rem "+.convert to f"
+	rem this converts 1.2's d.p, d.r, d.t, etc., rel files into d.f rel files

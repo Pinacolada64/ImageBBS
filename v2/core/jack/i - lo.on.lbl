@@ -1,12 +1,12 @@
-	REM" ** I.LO.ON ** 95{$c1}{$d0}{$d2}28  {$ca}{$cc}{$c6}              {$d0}OST-{$cc}OGIN {$d3}EQUENCE       "
+	REM" ** I.LO.ON ** 95APR28  JLF              POST-LOGIN SEQUENCE       "
 	REM I/LO.ON
 	GOTO{:4100}
 {:4004}
-	DR=5:B$="I/LO-"+A$:A$=B$:GOSUB 4:CLOSE 2:IF E%THEN:&"{f6}{white}[{$cd}ODULE {pound}$B {$c6}AILED]{f6}":RETURN
+	DR=5:B$="I/LO-"+A$:A$=B$:GOSUB 4:CLOSE 2:IF E%THEN:&"{f6}{white}[MODULE {pound}$B FAILED]{f6}":RETURN
 	NEW 4500:P2$="":LOAD DR$+B$,DV%:GOTO 4500
 {:4010}
-	AN$=D5$:&,15:LP=1:&"{f6:2}{lt. blue}{$c1}T THE END OF YOUR LAST CALL, ON {cyan}{pound}V7{$cd}{lt. blue}, YOU "
-	LP=1:&"DIDN'T PROPERLY LOGOFF.  {$c4}O YOU WANT YOUR MESSAGE SCAN DATE SET TO"
+	AN$=D5$:&,15:LP=1:&"{f6:2}{lt. blue}AT THE END OF YOUR LAST CALL, ON {cyan}{pound}V7M{lt. blue}, YOU "
+	LP=1:&"DIDN'T PROPERLY LOGOFF.  DO YOU WANT YOUR MESSAGE SCAN DATE SET TO"
 	LP=1:&" THAT TIME? ":GOSUB 96:IF A THEN LD$=D5$
 	RETURN
 {:4020}
@@ -18,61 +18,61 @@
 	A%=ID:&,16,4:A$=B$:PRINT# 15,"S"A$:&,16,2:RETURN
 {:4030}
 	DR=1:A$="S.LINES/SCREEN":MM=13:GOSUB 3000:POKE 53252,3:&"{f6:2}{pound}Q"+CHR$(48+DF%)
-	LP=1:&" {$c8}OW MANY LINES OF TEXT CAN YOUR SCREEN DISPLAY?{white}: {pound}I1"
+	LP=1:&" HOW MANY LINES OF TEXT CAN YOUR SCREEN DISPLAY?{white}: {pound}I1"
 	MP%=ABS(VAL(AN$))-25*(TR%<1):IF MP%<1 OR MP%>255 OR MP%=40 OR MP%=80 THEN MP%=.:GOTO{:4030}
 	RETURN
 {:4100}
 	F4=.:ON CD%GOSUB{:4010}:CD%=1:IF LL%<1 THEN LL%=40
 	A$="":FOR A=1 TO LL%-2:A$=A$+"{$c0}":NEXT:AK$=" "+A$+"{f6}"
 	GOSUB 90:AN$=FF$:&,15,1:A=1:B=7:IF MN%>719 THEN A=8:B=9:IF MN%>1079 THEN A=17:B=7
-	B$="{$c7}OOD "+MID$("{$cd}ORNING{$c1}FTERNOON{$c5}VENING",A,B)+", "+AN$
+	B$="GOOD "+MID$("MORNINGAFTERNOONEVENING",A,B)+", "+AN$
 	C$=RIGHT$("00"+MID$(STR$(INT((39-LEN(B$))/2)),2,2),2)
 	&"{clear}{f6}{blue}{pound}VJ {lt. blue}{rvrs on}{pound}{back arrow}"+C$+Q$+B$+"!{pound}{back arrow}39{f6}{blue}{pound}VJ"
 	GOSUB 33:X=1:GOSUB 1:&,2,2:CA=VAL(AN$):CLOSE 2:&,52,20,EM:POKE 970,.
 	&,52,34,VAL(MID$(UF$,2,1)):IF ZZ THEN A=VAL(MT$):QB=300*2^(A+(A=1)):GOTO{:4120}
 	&,52,21,3:ON A%+1 GOTO{:4120}:A=3:GOSUB 11:ON-(NA$<>D3$OR A<>.)GOTO{:4120}
-	&"{pound}$Q {lt. blue}{$d3}ORRY, NO BACK-TO-BACK CALLS ALLOWED.{f6}{pound}{back arrow}11{pound}$Q{$d4}RY {$c1}GAIN {$cc}ATER!{f6}{blue}{pound}VJ"
+	&"{pound}$Q {lt. blue}SORRY, NO BACK-TO-BACK CALLS ALLOWED.{f6}{pound}{back arrow}11{pound}$QTRY AGAIN LATER!{f6}{blue}{pound}VJ"
 	F4=1:AC%=16:RETURN
 {:4120}
 	A=17:GOSUB 11:IF LEFT$(D1$,7)<>LEFT$(D5$,7)THEN CT%=.
 	F2=.:CT%=CT%+1:TC%=TC%+1:ON-(CT%<A)-2*(A=.)GOTO{:4128},{:4130}
-	IF CT%>A THEN:&"{pound}$Q {lt. blue}{$d3}ORRY, CALL LIMIT EXCEEDED FOR TODAY.{f6}{blue}{pound}VJ":AC%=16:F4=1:RETURN
-	&"{pound}$Q  {lt. blue}{$ce}OTE: {$d4}HIS IS YOUR LAST CALL TODAY!{f6}{blue}{pound}VJ":GOTO{:4130}
+	IF CT%>A THEN:&"{pound}$Q {lt. blue}SORRY, CALL LIMIT EXCEEDED FOR TODAY.{f6}{blue}{pound}VJ":AC%=16:F4=1:RETURN
+	&"{pound}$Q  {lt. blue}NOTE: THIS IS YOUR LAST CALL TODAY!{f6}{blue}{pound}VJ":GOTO{:4130}
 {:4128}
-	A%=A-CT%:&"{pound}$Q  {lt. blue}{$d9}OU ARE ALLOWED {pound}%A MORE CALLS TODAY.{f6}{blue}{pound}VJ"
+	A%=A-CT%:&"{pound}$Q  {lt. blue}YOU ARE ALLOWED {pound}%A MORE CALLS TODAY.{f6}{blue}{pound}VJ"
 {:4130}
 	&,27,3:DIM L%(30,10):DR=3:GOSUB 3:&,60,2,.,L%(.,1),DR$+"E.LAST",DV%
 	L%(.,.)=.:&,60,4,.,L%(1,.),LT$:&,60,4,.,L%(4,.),D1$:L%(7,.)=LT%
-	AN$=NA$:&,15,1:&,60,.,20,L%(8,.),AN$:&,60,.,25,L%(18,.),"{$c3}ITY, {$d3}TATE"
+	AN$=NA$:&,15,1:&,60,.,20,L%(8,.),AN$:&,60,.,25,L%(18,.),"CITY, STATE"
 	A$="E.LAST":GOSUB 19:&,60,3,.,L%(.,.),620,DR$+"E.LAST",DV%
 	ON-(X%+K%+I%>.)GOTO{:4140}:A$="LAST":GOSUB{:4004}:GOTO{:4142}
 {:4140}
-	&" {rvrs on}{cyan}{pound}{back arrow}10{pound}$Q{$d8}PRESS {$cc}OGIN {$c1}CTIVE!{pound}{back arrow}39{f6}{blue}{pound}VJ"
+	&" {rvrs on}{cyan}{pound}{back arrow}10{pound}$QXPRESS LOGIN ACTIVE!{pound}{back arrow}39{f6}{blue}{pound}VJ"
 {:4142}
 	&,28,3:GOSUB 30:I=1:X=20:GOSUB 16:FOR X=1 TO 11:ST(X)=.:GOSUB 17:NEXT:CLOSE 2
 	ON SGN(ID)GOSUB{:4020}:DD$=CC$+MID$(STR$(ID),2)
-	&,52,16,3:B$="{$c3}/{$c7}":IF A%THEN B$="{$c1}{$d3}{$c3}{$c9:2}":&,52,18,3:IF A%THEN B$="{$c1}{$ce}{$d3}{$c9}"
-	A$=" {purple}{$c3}ALL  {white}:"+STR$(CA)+"   {gray1}({gray3}"+B$+" {$cd}ODE{gray1})"+R$+" {lt. blue}{$cc}OGON {white}: {$04}"+D1$+R$
-	A$=A$+" {lt. green}{$d5}SER  {white}: "+NA$+" {gray1}({gray3}"+DD$+"{gray1})":GOSUB 50
-	A$=" {lt. red}{$c2}{$d0}{$d3}   {white}:"+QB$+R$+" {yellow}{$d3}TATS {white}:"+STR$(CR)+" {gray3}{$c3}REDITS"
-	ON-(TC%>1)GOTO{:4160}:B$="{$ce}EW {$d5}SER":IF ID=.THEN B$="{$d6}ISITOR"
-	&"{clear}{red}{pound}VJ{pound}{back arrow}12{pound}$Q{lt. red}{$d7}ELCOME{f1} {pound}$B!{red}{f6}{pound}VJ"
+	&,52,16,3:B$="C/G":IF A%THEN B$="ASC{$c9:2}":&,52,18,3:IF A%THEN B$="ANSI"
+	A$=" {purple}CALL  {white}:"+STR$(CA)+"   {gray1}({gray3}"+B$+" MODE{gray1})"+R$+" {lt. blue}LOGON {white}: {$04}"+D1$+R$
+	A$=A$+" {lt. green}USER  {white}: "+NA$+" {gray1}({gray3}"+DD$+"{gray1})":GOSUB 50
+	A$=" {lt. red}BPS   {white}:"+QB$+R$+" {yellow}STATS {white}:"+STR$(CR)+" {gray3}CREDITS"
+	ON-(TC%>1)GOTO{:4160}:B$="NEW USER":IF ID=.THEN B$="VISITOR"
+	&"{clear}{red}{pound}VJ{pound}{back arrow}12{pound}$Q{lt. red}WELCOME{f1} {pound}$B!{red}{f6}{pound}VJ"
 	A$=A$+" {gray1}({gray3}"+B$+"{gray1})":D$=A$:IF ID THEN GOSUB 30:I=1:X=8:GOSUB 16:A$=D$
 {:4160}
 	GOSUB 50
 	IM=1:GOSUB 443:PT%=.:GOSUB 84:&,52,7,3:IF A%THEN PT%=1-PT%:IF P1%<1 THEN P1%=30
 	B%=VAL(MID$(FL$,18,2)):B%=B%-101*(B%=.):ON PT%+1 GOTO{:4172}
-	FOR Y=1 TO 5:&,69,26,Y+16,MID$("{$d0}{$d2}{$c9}{$cd}{$c5}",Y,1),135:NEXT
-	ON-(B%<P1%)GOTO{:4172}:B%=P1%:&"{f6}{green}{pound}VJ{yellow}   {$d0}LEASE {$ce}OTE: {$c9}T IS NOW {$d0}{$d2}{$c9}{$cd}{$c5} {$d4}{$c9}{$cd}{$c5}."
+	FOR Y=1 TO 5:&,69,26,Y+16,MID$("PRIME",Y,1),135:NEXT
+	ON-(B%<P1%)GOTO{:4172}:B%=P1%:&"{f6}{green}{pound}VJ{yellow}   PLEASE NOTE: IT IS NOW PRIME TIME."
 	&"      ALL CALLERS LIMITED TO {white}{pound}%B {yellow}MINUTES!{f6}{green}{pound}VJ":GOTO{:4174}
 {:4172}
-	IF B%<101 THEN:&"{f6}{green}{pound}VJ   {yellow}{$d4}IME ALLOWED FOR THIS CALL{white}: {pound}%B {yellow}{$cd}IN.{f6}{green}{pound}VJ"
+	IF B%<101 THEN:&"{f6}{green}{pound}VJ   {yellow}TIME ALLOWED FOR THIS CALL{white}: {pound}%B {yellow}MIN.{f6}{green}{pound}VJ"
 {:4174}
 	TR%=B%:CN=CN+1:IM=6:IF LEN(UF$)<11 THEN IM=4
 	GOSUB 447:ON-(MP%<1 OR MP%=40 OR MP%=80)GOSUB{:4030}
 	DR=2:A$=LEFT$("F."+NA$,16)+",S,R":GOSUB 4:IF E%=.THEN A$="FMAIL":GOSUB{:4004}
 	CLOSE 2:ON-((F4=1)OR(TR%<1)OR(I%+K%+X%>.))GOTO 999
-	B$=STR$(CA):G%=UH:F%=CN:AN$=D3$:&,15,1:IF NA$=D3$THEN AN$="{$d9}OU!"
+	B$=STR$(CA):G%=UH:F%=CN:AN$=D3$:&,15,1:IF NA$=D3$THEN AN$="YOU!"
 	DR=1:A$="S.WELCOME":MM=13:GOSUB 3000
 	&,27,3:DIM LM%(15,40):DR=3:GOSUB 3:&,60,2,.,LM%(.,.),DR$+"E.LOGINMODS",DV%
 	REM ON-(E%>.)GOTO4220
@@ -84,16 +84,16 @@
 {:4198}
 	&,60,1,16,LM%(8,RK),A$
 	IF M%THEN AD=AD+1:&,16,.,LM%(2,.),MO%(.,AD),MID$(STR$(AD),2),"",A$:GOTO{:4206}
-	&"{f6}{pound}Q"+CHR$(48+DF%)+"{$cc}AUNCH "+A$+"? ":GOSUB 94:ON A+1 GOTO{:4206}
+	&"{f6}{pound}Q"+CHR$(48+DF%)+"LAUNCH "+A$+"? ":GOSUB 94:ON A+1 GOTO{:4206}
 {:4204}
 	&,60,1,11,LM%(2,RK),A$:GOSUB{:4004}
 {:4206}
 	ON-(RK<LM%(.,.))GOTO{:4194}:ON M%GOTO{:4208}:GOTO{:4220}
 {:4208}
-	&"{clear}":AD=AD+1:&,16,.,LM%(2,.),MO%(.,AD),"{$d1}","","{$c5}XIT {$cd}ENU"
-	&"{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}{pound}{back arrow}15{$cc}OGIN {$cd}ENU{pound}{back arrow}37{blue}  {f6}"
+	&"{clear}":AD=AD+1:&,16,.,LM%(2,.),MO%(.,AD),"Q","","EXIT MENU"
+	&"{blue}{rvrs on}{pound}{back arrow}39{f6}{rvrs on} {cyan}{pound}{back arrow}15LOGIN MENU{pound}{back arrow}37{blue}  {f6}"
 	&,16,2,34,MO%(.,1),AD,17,2,AD/2+.5,2,6,.:LM=A%+1:&,70,.,N/2+8.5:GOTO{:4216}
-	&"{f6}{$cc}OGIN{$a0}{$cd}ENU{f6}"
+	&"{f6}LOGIN MENU{f6}"
 	&,16,2,42,MO%(.,1),AD,36,1,AD,2,6,.:LM=A%+1:&,70,.,N+8
 {:4216}
 	&"{pound}Q"+CHR$(48+DF):ON-(TR%<1 OR LM=AD)GOTO{:4220}:&,60,1,11,LM%(2,LM),A$

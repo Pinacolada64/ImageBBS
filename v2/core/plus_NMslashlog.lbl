@@ -1,0 +1,16 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+{:3000}
+	&"{f6:2}Which Log: {pound}i1":IF an$<>""THEN GOSUB {:3004}:GOTO {:3000}
+	GOTO 1812
+{:3004}
+	b$="nm.log "+an$:dr=2:a$=b$+",s,r":GOSUB 1011:IF e%THEN{:3012}
+	CLOSE 3:OPEN 3,dv%,3,dr$+b$+".t,s,w":GOSUB 1012:IF e%THEN{:3012}
+{:3008}
+	&,2,2:b$=MID$(a$,6,3)+" - "+MID$(a$,13,3):&,2,2:PRINT# 3,b$": "a$:&"."
+{:3010}
+	&,2,2:s=st:ON-(s=0 AND a$<>"{up arrow}")GOTO {:3010}:ON-(s=0)GOTO {:3008}:a$="{f6}"
+{:3012}
+	&:CLOSE 2:CLOSE 3:RETURN
+	REM "+.NM/log"

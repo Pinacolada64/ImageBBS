@@ -1,0 +1,25 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{clear}{f6:2}{rvrs on}{white} Unvalidated File Finder{f6}  (SIG Version){f6:2}"
+	dr=3:a$="e.U/D":GOSUB 1011:INPUT# 2,bz
+	y=.:FOR i=1 TO bz:x=i+1:GOSUB 1001:INPUT# 2,a$,a$,nn$(i):NEXT:CLOSE 2
+	a%=bz:&" {pound}%a UDs{f6}"
+	&"Start UD:{pound}i1":a=VAL(an$):IF an$=""THEN 1812
+	&"End   UD:{pound}i1":b=VAL(an$):IF an$=""THEN 1812
+	dr=1:GOSUB 1010:PRINT# 15,"s"dr$"s.unv":dr=4:GOSUB 1010
+	dr=1:GOSUB 1009:OPEN 3,dv%,3,dr$+"s.unv,s,w":dr=4:GOSUB 1009
+	FOR i=a TO b:g=.:OPEN 2,dv%,2,dr$+"d.u/d"+STR$(i)+",s,r":GOSUB 1012:IF e%THEN{:3030}
+	a%=i:a$=nn$(i):&"{f6}{pound}#2{pound}# {pound}%a {pound}$a":INPUT# 2,rn:IF rn=.THEN{:3030}
+	FOR j=1 TO rn:INPUT# 2,a$,a$,b$,a$,a$,a$:f=(VAL(a$)=.)
+	b$=MID$(b$,23)
+	IF f<>.AND g=.THEN g=1:PRINT# 3,nn$(i)
+	IF f THEN y=y+1:PRINT# 3,"  "CHR$(34)b$CHR$(34):&"."
+	NEXT
+{:3030}
+	CLOSE 2:NEXT:CLOSE 3:a%=y:&"{f6:2}{pound}%a Unvalidated Files.{f6}":IF y=.THEN 1811
+	&"Read List?":GOSUB 1902:IF a=0 THEN 1811
+	a$="s.unv":dr=1:GOSUB 1075
+	&"Press a key:{pound}g1":GOTO 1811
+	REM +.unv.sig
+

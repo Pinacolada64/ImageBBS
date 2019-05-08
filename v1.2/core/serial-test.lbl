@@ -1,0 +1,329 @@
+{alpha:invert}
+' v0.1 issues:
+' some serial #s return an ?illegal quantity error
+' when loading ml 1.2, screen lines turn yellow (!) and the emulator 
+' locks up. i've found this happens with jiffydos more than stock roms, anyone 
+' care to try on real hardware and see if the problem persists?
+
+' v0.2:
+' because it loads over the top of $a000... have to write an ml program that
+' banks out basic, does the load, patch and re-save
+
+' failing sn's:
+' 2014 - 
+'?i;sa;sb;sc;sd;se;sf;z
+' 7  119  222  120  221  [257]  34  136
+
+' 2015:
+'?i;sa;sb;sc;sd;se;sf;z
+' 7  119  223  120  222  [258]  33  136
+
+' s# 4321 crashes with ?illegal quantity error
+
+' gsteemso suggests AND 255
+
+{number:1}
+	rem "serial changer 3"
+	' updates: 2/Sep/2014 23:48
+	' 15-Aug-2013 15:28
+	' 21/Apr/2012 14:05
+	 ' 12/29/2007
+	rem a few fixes by pinacolada
+
+	nl$=chr$(.) ' null byte
+	poke 53280,.:poke 53281,.:dv=peek(186):if dv<8 then dv=8
+	open 15,dv,15
+' TODO: check serial # match between "ml 1.2", "++ net", "++ post"
+
+'	sn=1234:sn$="g1234":goto {:load_ml}
+
+	print"{yellow}{clear}{$08}{$0e}     {rvrs on} Image BBS 1.2 Serial Changer {rvrs off}{down}"
+	print"{lt. red} Work done by Fred Kreuger, The Alien,"
+	print" and Pinacolada.{down}"
+	print"{gray3} You must have a disk with {white}++ net{gray3} and"
+	print"{white} ml 1.2{gray3} and about 50 blocks free in"
+	print" drive #"mid$(str$(dv),2)". Are you ready {white}(Y/N){gray3}? {cyan}{rvrs on} {rvrs off}{left}";
+
+{:get_key}
+	poke 198,.:wait 198,1:get an$:an$=chr$(asc(an$)and 127)
+	if an$="y" then print an$:goto {:serial_prompt}
+	if an$<>"n" then {:get_key}
+	print an$:print"{down}{gray3} Please copy the above files over, then"
+	print" re-run this program.":goto {:1811}
+
+{:serial_prompt}
+	print:print "Valid serial numbers are 1-9999."
+	input "Which serial # do you want";sn$:sn=val(sn$):if sn<1 or sn>9999 then {:serial_prompt}
+
+{:6649}
+	open2,dv,2,"++ net,p,r":gosub {:check.io_status}:if e then print a$:goto {:1811}
+	print:print "{lt. blue}Checking {white}++ net{lt. blue}... ";
+	' skip load address
+	get#2,a$,a$
+	' skip jmp $c007
+	get#2,a$,a$,a$
+	' skip $ff, get s# prefix (A=1.0, B=1.1 ... F=1.2 G=1.2A ?)
+	get#2,a$,sp$
+	' get lo/hi s# bytes
+	get#2,a$:x=asc(a$+nl$)
+	if st then {:1811}
+	get#2,a$:y=asc(a$+nl$)
+	y=x+256*y ' 170+1*256=0426	 $7f $03=0895
+	print"{lt. blue}Serial #{white}"sp$right$("000"+mid$(str$(y),2),4)"{white}."
+	close 2
+
+
+
+' start address, end address, filename:
+	ad=49152:ea=ad+1962:f$="++ net"
+	
+	rem load "++ net":
+	print:print "{gray3} Loading {white}"f$"{gray3}..."
+	poke 147,.:sys 57812 f$,dv,1:poke 780,.:sys 65493:gosub {:check.io_status}:if e then print a$:goto {:1811}
+
+	poke ad+5,int(sn and 255)
+	poke ad+6,int(sn/256)
+' patch something else:
+	poke ad+55,255
+	poke ad+56,207
+
+	rem scratch existing file:
+	print "{gray3}Scratching {white}"f$"{gray3}..."
+	
+	print#15,"s0:"+f$:gosub {:check.io_status}:if e<>1 then print a$:goto {:1811}
+	
+	rem save routine:
+	print "{up} Re-sav";
+
+	ea=ea+1 ' increment ending address -- save routine saves sa...ea+1
+	sys 57812f$,dv,1:hb=int(ad/256):poke 193,ad-hb*256:poke 194,hb
+	hb=int(ea/256):poke 174,ea-hb*256:poke 175,hb:sys 62957
+	
+	gosub {:check.io_status}:if e then print:print a$:goto {:1811}
+	print tab(30)"{white}Done."
+
+	rem load "ml 1.2":
+' ad=starting address ($a000)
+'	ad=40960:ea=ad+12034:f$="ml 1.2"
+
+	rem adjust save filename:
+	for x=1 to 5:poke{sym:filename}+7+x,asc(mid$(chr$(asc(sp$) and 127)+sn$,x,1)):next
+
+' sa can overflow if sn>256*144 (sn#s are 1-9999)
+' i=high byte, sb=low byte (can't overflow)
+' sc can't overflow unless sa already has, and it can't
+' sd is low byte -1
+' se is low byte +35 (sb>220 will overflow)
+' sf is absolute value of low byte -1 (can't overflow)
+' z can't overflow
+
+	i=int(sn/256):sa=i+112:sb=sn-i*256:sc=sa+1:sf=abs(sn-(i*256+1)-255):z=abs(sc-256) ':sf=abs(sf)
+'	sd=sn-(i*256+1):se=sn-(i*256-35)
+	sd=sn-(i*256+1):se=sn-(i*256-35):se=se and 255
+
+' 26/Oct/2014 21:03
+' check for negative values so patch process doesn't crash midway through
+	if i<. or sa<. or sb<. or sc<. or sd<. or se<. or sf<. or z<. then print "The patching algorithm encountered an   error. Please try again with a differentserial number.":goto {:serial_prompt}
+
+	print"{clear}":t=5:gosub {:print_patches}	
+'									offset
+	poke{sym:patch_table}  ,sa '	$0a10
+	poke{sym:patch_table}+1,sb '	$0a11
+	poke{sym:patch_table}+2,sf '	$0a12
+	poke{sym:patch_table}+3,z  '	$0a13
+	poke{sym:patch_table}+4,sb '	$11d2
+	poke{sym:patch_table}+5,sa '	$11d3
+	poke{sym:patch_table}+6,sb '	$121e
+	poke{sym:patch_table}+7,sa '	$121f
+	poke{sym:patch_table}+8,sd '	$1e0c
+	poke{sym:patch_table}+9,sc '	$1e0d
+	poke{sym:patch_table}+10,sd '	$1eae
+	poke{sym:patch_table}+12,sc '	$1eaf
+	poke{sym:patch_table}+13,sb '	$200a
+	poke{sym:patch_table}+14,sa '	$200b
+	poke{sym:patch_table}+15,se '	$200c
+	poke{sym:patch_table}+16,sc '	$200d
+
+{:load_ml}
+	print:print "{gray3} Loading {white}ml 1.2{gray3}...";
+'	open 2,dv,0,"ml 1.2,p,r":gosub {:check.io_status}:if e then print a$:goto {:1811}
+' do the patch & save under new filename:
+	sys{sym:bank_out}
+
+	gosub {:check.io_status}:if e then print:print a$:goto {:1811}
+
+	t=20:gosub {:print_patches}
+	PRINT " Done!":goto {:1811}
+
+{:print_patches}
+	print"{home}{down:5}"
+	for x={sym:addr_table} to {sym:addr_table}+peek({sym:num_patches}) step 2
+	' get address:
+	a=peek(x)+256*peek(x+1):print tab(t) a":"peek(a)
+	next:return
+
+{number:1012}
+{:check.io_status}
+	input#15,e,e$,t$,s$:a$="Status: " +right$("0"+mid$(str$(e),2),2)+":"+e$+":"+right$("0"+mid$(str$(t),2),2) +":"+right$("0"+mid$(str$(s),2),2):return
+
+{:1811}
+{number:1811}
+	close 2:close 3:close 15:print "{$09}";:end
+
+' with no jiffydos: start 2:36...3:14 (clock time)
+
+{asm}
+; "ml 1.2" - $a000...$cf03
+	
+	linprt = $bdcd ; print uint16 <X >A
+
+	load = $ffd5
+	save = $ffd8
+	setnam = $ffbd
+	setlfs = $ffba
+	chrout = $ffd2
+	
+;	vartab = $2b ; 
+	txttab = $2d
+	startaddr = $c1 ; STAL -- I/O Start Address (for save routine)
+
+	endaddr = $fb	; ending address for load
+	blargh = $fd	; (addr_table),y gets stored here
+					; TODO: tired brain - please change this :P
+						
+bank_out:
+	lda #$36 ; %00100010 ; bank out $a000-$bfff
+	sta $01
+	
+; do the load
+	lda #$01	; logical file #
+	ldx $ba		; current device #
+	ldy #$01	; secondary address
+	jsr setlfs
+	
+	lda ml_length 
+	ldx #<ml_filename
+	ldy #>ml_filename
+	jsr setnam	; set "ml 1.2" filename
+
+	lda #$00
+	sta $b9  ; current secondary addr - uses load addr in .xy
+	lda #$00 ; 0=load
+	ldx #$00
+	ldy #$a0 ; load addr is $a000
+	jsr load	; load returns last addr loaded in .yx ($cf03 currently)
+	stx endaddr		; lo (03), (endaddr) used later for save routine
+	sty endaddr+1	; hi (cf)
+
+;{asm}
+;	lda #$00	; load, not verify
+;	ldx #$00
+;	ldy #$a0
+;	jsr load
+;	stx endaddr
+;	sty endaddr+1
+
+	; patch "ml 1.2"
+
+	ldy #$00	; counter for advancing to next address in addr_table
+	sty save_y	; zero intermediate copy used (plot kernal routine destroys it)
+	tya			; zero .a also
+	
+loop:
+	lda addr_table+1,y
+	sta patch_address+2
+	
+	lda addr_table,y
+	sta patch_address+1
+	
+	lda patch_table,y
+	sta patch_byte+1
+
+patch_byte:
+	lda #$ff
+
+patch_address:
+	sta $ffff
+
+	iny
+	iny ; skip over two bytes in patch_table
+	cpy num_patches
+	bmi loop
+
+save_ml:
+	lda filename_len	;length of file name for setlfs
+	ldy #>filename		;address of file name
+	ldx #<filename
+	jsr setnam
+	
+	lda #1	; logical file #
+	ldx $ba	; device
+	ldy #0	; secondary address
+	jsr setlfs
+
+	ldx #$00	; start address of save
+	stx startaddr		; ...(low byte)
+	ldy #$a0
+	sty startaddr+1		; ...(high byte)
+	
+	ldx endaddr		; load x with low byte of end of save
+	ldy endaddr+1	; load y with high byte
+
+	lda #$c1		; load accumulator with page 0 offset of start address
+					; (STAL in this case)
+	jsr save
+	
+bank_in:
+	lda #$37 ; bank in BASIC ROM @ $A000-$BFFF - %0010001(1)
+	sta $01
+
+	rts
+	
+addr_table:
+	word $ca10	; 'ca' gets overwritten after a run
+	word $ca11
+	word $ca12
+	word $ca13
+	word $d1d2
+	word $d1d3
+	word $d21e
+	word $d21f
+	word $de0c
+	word $de0d
+	word $deae
+	word $deaf
+	word $e00a
+	word $e00b
+	word $e00c
+	word $e00d
+
+num_patches:
+	byte 32 ; (num_patches-addr_table)/2
+
+patch_table:
+	area num_patches
+
+filename:
+	byte 77,76,32,49,46,50,32,40,88,88,88,88,88,41
+	; text "ml 1.2 (xxxxx)"
+
+filename_len:
+	byte 14
+
+ml_length:
+	byte $06
+ml_filename:
+	byte 77,76,32,49,46,50
+	; .text "ml 1.2"
+
+; debugging to make sure the memory locations are actually changed:
+; show contents of addr_table before and after patch operations
+
+; there is an ascii->hex routine in loadstar #46
+; dec -> ascii converter, issue #47
+
+
+plot_col:	byte $ff	; column to display debug info in
+save_y:		byte $ff	; save .y index during call to print_values
+save_x:		byte $ff	; same with .x
+{endasm}

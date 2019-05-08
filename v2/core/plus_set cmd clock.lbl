@@ -1,0 +1,120 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM  set hd clock by doug cotton      (c)1990 by creative micro designs, inc.
+	&,28:DIM wd$(6)
+	wd$(0)="sun.":wd$(1)="mon."
+	wd$(2)="tue.":wd$(3)="wed."
+	wd$(4)="thu.":wd$(5)="fri."
+	wd$(6)="sat."
+	tb$="{right:9}"
+{:3014}
+	&"{clear}{f6}{gray3}What is the device number of your{f6}CMD Hard-Drive{cyan}:{lt. green} {pound}i1":ON tr%+1 GOTO 1812
+	hd=VAL(an$):IF hd<8 OR hd>20 THEN 1812
+	CLOSE 15:OPEN 15,hd,15
+	PRINT# 15,"m-r"CHR$(160)CHR$(254)CHR$(6)
+	c$="":FOR i=1 TO 6:GET#15,b$:c$=c$+b$:NEXT
+	if c$="cmd hd" then {:3028}
+	&"{f6}{purple}That {lt. blue}is no{cyan}t a C{lt. green}MD Ha{yellow}rd-dr{lt. red}ive...{f6:2}{pound}w4":goto {:3014}
+{:3028}
+	PRINT# 15,"t-rd"
+	GET#15,wd$:wd=ASC(wd$+CHR$(0))
+	GET#15,yr$:yr=ASC(yr$+CHR$(0))
+	GET#15,mo$:mo=ASC(mo$+CHR$(0))
+	GET#15,da$:da=ASC(da$+CHR$(0))
+	GET#15,hr$:hr=ASC(hr$+CHR$(0))
+	GET#15,mn$:mn=ASC(mn$+CHR$(0))
+	GET#15,se$:se=ASC(se$+CHR$(0))
+	GET#15,ap$:ap=ASC(ap$+CHR$(0))
+	CLOSE 15
+	GOSUB {:3140}
+{:3050}
+	&,52,4,3:ON a%+1 GOTO {:3052}:&,18,0
+{:3052}
+	&"{f6}{upper}{clear}{down:2}             {gray3}{rvrs on} set hd clock {rvrs off}"
+	&"{f6}{down}  {cyan}U{$c0:34}I"
+	&"{f6}  {cyan}{$dd}                                  {cyan}{$dd}"
+	&"{f6}  {cyan}{$dd}        {purple}d{lt. blue}a{cyan}t{lt. green}e           {purple}c{lt. blue}l{cyan}o{lt. green}c{yellow}k      {cyan}{$dd}"
+	&"{f6}  {cyan}{$dd}  {gray3}U{$c0:13}I  U{$c0:11}I  {cyan}{$dd}"
+	&"{f6}  {cyan}{$dd}  {gray3}{$dd}             {$dd}  {$dd}           {$dd}  {cyan}{$dd}"
+	&"{f6}  {cyan}{$dd}  {gray3}J{$c0:13}K  J{$c0:11}K  {cyan}{$dd}"
+	&"{f6}  {cyan}{$dd}                                  {cyan}{$dd}"
+	&"{f6}  {cyan}J{$c0:34}K"
+	&"{f6}":&tb$:&"{down}{purple}use {lt. blue}<+> o{cyan}r <{lt. green}-> {yellow}to ad{lt. red}just"
+	&"{f6}":&tb$:&" {purple}an{lt. blue}d <r{cyan}etu{lt. green}rn> {yellow}to a{lt. red}ccept"
+	GOSUB {:3120}
+	f=1:v=wd:ll=0:ul=6:GOSUB {:3176}
+	f=2:v=mo:ll=1:ul=12:GOSUB {:3176}
+	f=3:v=da:ll=1:ul=31
+	IF mo=4 OR mo=6 OR mo=9 OR mo=11 THEN ul=30
+	IF mo=2 THEN ul=29
+	GOSUB {:3176}
+	f=4:v=yr:ll=0:ul=99:GOSUB {:3176}
+	f=5:v=hr:ll=1:ul=12:GOSUB {:3176}
+	f=6:v=mn:ll=0:ul=59:GOSUB {:3176}
+	f=7:v=se:ll=0:ul=59:GOSUB {:3176}
+	f=8:v=ap:ll=0:ul=1:GOSUB {:3176}
+	OPEN 15,hd,15
+	td$="t-wa"+wd$+" "+mo$+"/"+da$+"/"+yr$+" "+hr$+":"+mn$+":"+se$+" "+ap$
+	&"{f6}{home}{down:13}{yellow}          press <return> to set  "
+	&"{f6}":&tb$:&"{lt. green} or <space> to change. "
+{:3106}
+	&"{pound}g1":k$=an$:ON tr%+1 GOTO 1812:IF k$<>" "AND k$<>r$THEN GOTO {:3106}
+	IF k$=r$THEN PRINT# 15,td$:CLOSE 15:GOTO {:3112}
+	CLOSE 15:GOTO {:3050}
+{:3112}
+	&"{clear}{lower}{f6:2}{lt. green}Basic File{purple}: {lt. blue}Doug Cotton for{f6}Creative Micro Designs, Inc. (CMD){f6:2}"
+	&"{lt. green}Image File{purple}: {lt. blue}Rod Serling for{f6}Zone Electronics, (Z*TRONICS){f6:2}"
+	&,52,4,3:ON a%GOTO {:3118}:&,18,1
+{:3118}
+	&"{f6}{gray3}Great!! Another CMD Owner!!{f6:2}{$07:3}":CLOSE 15:OPEN 15,hd,15:&,28:GOTO 1812
+{:3120}
+	&"{f6}{home}{down:8}"
+	&"{white}{right:6}":IF f=1 THEN:&"{rvrs on}"
+	&wd$:&"{rvrs off} ":IF f=2 THEN:&"{rvrs on}"
+	&mo$:&"{rvrs off}/":IF f=3 THEN:&"{rvrs on}"
+	&da$:&"{rvrs off}/":IF f=4 THEN:&"{rvrs on}"
+	&yr$:&"{rvrs off}{right:4}":IF f=5 THEN:&"{rvrs on}"
+	&hr$:&"{rvrs off}:":IF f=6 THEN:&"{rvrs on}"
+	&mn$:&"{rvrs off}:":IF f=7 THEN:&"{rvrs on}"
+	&se$:&"{rvrs off} ":IF f=8 THEN:&"{rvrs on}"
+	&ap$:&"{rvrs off}{f6}":RETURN
+{:3140}
+	yr$=RIGHT$("0"+RIGHT$(STR$(yr),LEN(STR$(yr))-1),2)
+	wd$=wd$(wd)
+	mo$=RIGHT$("0"+RIGHT$(STR$(mo),LEN(STR$(mo))-1),2)
+	da$=RIGHT$("0"+RIGHT$(STR$(da),LEN(STR$(da))-1),2)
+	hr$=RIGHT$("0"+RIGHT$(STR$(hr),LEN(STR$(hr))-1),2)
+	mn$=RIGHT$("0"+RIGHT$(STR$(mn),LEN(STR$(mn))-1),2)
+	se$=RIGHT$("0"+RIGHT$(STR$(se),LEN(STR$(se))-1),2)
+	ap$="pm":IF ap=0 THEN ap$="am"
+	RETURN
+{:3158}
+	ON f GOTO {:3160},{:3162},{:3164},{:3166},{:3168},{:3170},{:3172},{:3174}:RETURN
+{:3160}
+	wd=v:RETURN
+{:3162}
+	mo=v:RETURN
+{:3164}
+	da=v:RETURN
+{:3166}
+	yr=v:RETURN
+{:3168}
+	hr=v:RETURN
+{:3170}
+	mn=v:RETURN
+{:3172}
+	se=v:RETURN
+{:3174}
+	ap=v:RETURN
+{:3176}
+	GOSUB {:3158}:GOSUB {:3140}:GOSUB {:3120}
+{:3178}
+	&"{pound}g1":k$=an$:ON tr%+1 GOTO 1812:IF k$<>"+"AND k$<>"-"AND k$<>r$ THEN {:3178}
+	IF k$="+"THEN v=v+1:IF v>ul THEN v=ll
+	IF k$="-"THEN v=v-1:IF v<ll THEN v=ul
+	IF k$=r$THEN RETURN
+	GOTO {:3176}
+	REM - "Z*TRONICS mods for Image"
+	rem +.set cmd clock
+

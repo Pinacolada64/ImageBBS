@@ -1,0 +1,72 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOTO {:3010}
+{:3002}
+	GOSUB 1001:FOR i=1 TO 4:INPUT# 2,tt$(i):NEXT:RETURN
+{:3004}
+	x=1:GOSUB 1001:PRINT# 2,a1:RETURN
+{:3006}
+	GOSUB 1001:PRINT# 2,tt$(1)r$tt$(2)r$tt$(3)r$tt$(4):RETURN
+{:3008}
+	FOR i=1 TO 4:a%=i:b$=tt$(i):&"{rvrs on}{white}{pound}%a{pound}q0{pound}$b{f6}":NEXT:RETURN
+{:3010}
+	sh=.:dr=3:a$="e.say":GOSUB 1011
+	x=1:GOSUB 1001:INPUT# 2,a1:&"{clear}{f6:2} * SAYADD *{f6}"
+{:3014}
+	&"{f6}{white} [L]ist{f6} [A]dd{f6} [R]eplace{f6} [D]elete{f6} [E]dit{f6} [Q]uit{f6}"
+	a%=a1:&"{f6}({pound}%a Current Sayings){pound}q0{f6:2}Sayadd: {pound}i1"
+	IF an$="Q"OR an$=""THEN{:3100}
+	IF an$="R"THEN{:3060}
+	ON-(an$="L")-(an$="A")*2-(an$="D")*3-(an$="E")*4 GOTO {:3028},{:3024},{:3070},{:3080}:GOTO {:3014}
+{:3024}
+	GOSUB {:3036}:IF tr%<1 THEN{:3100}
+	a1=a1+1:GOSUB {:3004}:x=a1+1:GOSUB {:3006}:GOTO {:3014}
+{:3028}
+	&"{f6:2}List Starting From Which Saying?{f6:2} : {pound}i1":x=INT(VAL(an$))+1
+	sh=.:IF x<2 OR x>a1+1 THEN{:3014}
+	FOR x=x TO a1+1:a%=x-1:&"{f6}Saying#{pound}%a{f6}":IF rc THEN x=a1+1
+	GOSUB {:3002}:GOSUB {:3008}:NEXT:GOTO {:3014}
+{:3036}
+	POKE 53252,1:&"{f6:2}Enter Left Border Character: {pound}i0"
+	kk$=an$:IF kk$=""THEN kk$=" "
+	&"{f6}Enter Right Border Character: {pound}i0":nn$=an$
+	nn$=an$:IF nn$=""THEN nn$=" "
+	POKE 53252,34:FOR i=1 TO 4:a%=i:&"{f6}Enter Line#{pound}%a{f6}: {pound}i0"
+	IF tr%<1 THEN i=4
+	IF an$=""THEN tt$(i)="":NEXT:GOTO {:3052}
+	tt$(i)=" "+an$+" ":NEXT
+{:3052}
+	IF tr%<1 THEN RETURN
+	FOR i=1 TO 4:a2=LEN(tt$(i)):a3=-(a2/2<>INT(a2/2)):a4=(38-a2-a3)/2
+	FOR j=1 TO a4:tt$(i)=kk$+tt$(i)+nn$:NEXT:IF a3 THEN tt$(i)=kk$+tt$(i)
+	NEXT:RETURN
+{:3060}
+	&"{f6:2}Replace Which Saying?: {pound}i1":x=VAL(an$):IF x<1 OR x>a1+1 THEN{:3014}
+	IF tr%<1 THEN{:3100}
+	x=x+1:GOSUB {:3002}:GOSUB {:3008}
+	&"{f6:2}Replace?: ":GOSUB 1902:IF a=.THEN{:3060}
+	GOSUB {:3036}:GOSUB {:3006}:GOTO {:3014}
+{:3070}
+	&"{f6:2}Delete Which Saying?: {pound}i1":x=INT(VAL(an$)):IF x<1 OR x>a1+1 THEN{:3014}
+	IF tr%<1 THEN{:3100}
+	x=x+1:GOSUB {:3002}:GOSUB {:3008}
+	&"{f6:2}Delete?: ":GOSUB 1902:IF a=.THEN{:3070}
+	b=x:x=a1+1:GOSUB {:3002}:x=b:GOSUB {:3006}:a1=a1-1:GOSUB {:3004}:GOTO {:3014}
+{:3080}
+	&"{f6:2}Edit Which Saying?: {pound}i1":x=INT(VAL(an$)):IF x<1 OR x>a1+1 THEN{:3014}
+	IF tr%<1 THEN{:3100}
+	x=x+1:GOSUB {:3002}
+{:3086}
+	GOSUB {:3008}:&"{f6:2}Line# To Edit? (RETURN If OK){f6}: {pound}i1":IF tr%<1 THEN{:3100}
+	IF an$=""THEN GOSUB {:3006}:GOTO {:3014}
+	a=VAL(an$):IF a<1 OR a>4 THEN{:3014}
+{:3092}
+	pl=.:POKE 53252,38:w$=tt$(a):p$="{f6}Enter New Line. (Use 38 Characters){f6:2}"
+	&,1,32:IF tr%<1 THEN{:3100}
+	IF LEN(an$)<>38 THEN{:3092}
+	tt$(a)=an$:GOTO {:3086}
+{:3100}
+	CLOSE 2:GOTO 1812
+	REM converted to 2.0 180801 x-tec
+	rem "+.say editor"

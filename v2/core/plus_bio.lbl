@@ -1,0 +1,32 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{f6}{cyan} {$c0:15}{f6} {rvrs on}{purple} User Bio v1.3 {f6}{cyan} {$c0:15}{f6}":a=8:GOSUB 1004:q=a
+	GOSUB {:3008}:ON e%+1 GOTO {:3010}:IF q=.THEN:&"{f6}Sorry, No Biographies Available Today.{f6}":GOTO {:3042}
+	&"{f6}Creating {f5}u.biographies{f5} Now...":dr=6:a$="u.biographies,l,"+CHR$(125):GOSUB 1011
+	x=ur:GOSUB 1001:PRINT# 2,"{up arrow}":CLOSE 2:&"!{f6}":GOTO {:3010}
+{:3008}
+	dr=6:a$="u.biographies":GOTO 1011
+{:3010}
+	i=.:x=.:a=.:POKE 53252,20:&"{f6}{cyan}Enter The Handle Or{f1} User{f6}ID# Of User To View{f6}: {white}{pound}i1"
+	ON-(tr%<1 OR an$=""OR an$=r$)GOTO {:3042}:a=ABS(VAL(an$)):IF a THEN{:3016}
+	GOSUB 1046:a=i:IF a THEN n$=an$:i=1:GOTO {:3018}
+{:3016}
+	IF a<1 OR a>ur THEN:&"{f6}{white}Invalid User Account!{f6}":GOTO {:3010}
+{:3018}
+	GOSUB 1065:x=a:GOSUB 1001:&,2,2:ON i GOTO {:3020}:n$=a$:IF a$="{up arrow}"OR a$="RES"THEN a=.:GOTO {:3016}
+{:3020}
+	INPUT# 2,a$,f$,l$:CLOSE 2:GOSUB {:3008}:x=a:GOSUB 1001:&,2,2
+	IF n$<>a$THEN an$=n$:&,15,1:lp=1:&"{f6}{cyan}There Is No Biography Available For {pound}v7.{f6}":GOTO {:3010}
+	INPUT# 2,b$,c$,d$:CLOSE 2
+	a%=a:an$=n$:&,15,1:&"{f6} {pound}vn{pound}#0{pound}%a - {cyan}{pound}v7":IF q THEN an$=f$+" "+l$:&,15,1:&"{f6}{cyan} Real Name: {white}{pound}v7"
+	an$=b$:&,15,1:&"{f6} {lt. blue}From:{lt. green} {pound}v7{f1} {pound}$c{f6} {purple}Biography:{cyan}{f6:2} {pound}$d{f6}":IF q=.OR a<>id THEN{:3010}
+	i=a:&"{f6}{yellow}Edit This Bio?:{white} ":GOSUB 1902:ON a+1 GOTO {:3010}
+	&"{f6}":tf=.:GOSUB {:3008}:x=a%:GOSUB 1001:INPUT# 2,aa$,b$,c$,d$:CLOSE 2
+	POKE 53252,20:pl=1:w$=b$:p$="City":&,1,32:IF an$<>w$OR an$<>""THEN b$=an$:tf=1
+	&"{f6}":POKE 53252,2:pl=1:w$=c$:p$="State":&,1,32:IF an$<>w$OR an$<>""THEN c$=an$:tf=.
+	&"{f6}":POKE 53252,79:pl=.:w$=d$:p$="Bio":&,1,32:IF an$<>w$OR an$<>""THEN d$=an$:tf=1
+	ON tf+1 GOTO {:3010}:GOSUB {:3008}:x=i:GOSUB 1001:tt$=aa$+r$+b$+r$+c$+r$+d$:PRINT# 2,tt$:CLOSE 2:GOTO {:3010}
+{:3042}
+	GOTO 1811
+	rem "+.bio" - copr. 1990 NEW image software

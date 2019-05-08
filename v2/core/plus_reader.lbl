@@ -1,0 +1,102 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM "+.reader" - image file readers - 12/18/2015
+	REM original by der deutscher - 03/01/1995
+	REM:ifid<>1thenx=4:gosub1980:goto1811
+{:3006}
+	&"{pound}f1File Reader Utilities{f6:2}"
+	&"[D]irectory Reader{f6}"
+	&"[P]rogram Reader{f6}"
+	&"[R]elative Reader{f6}"
+	&"[S]equential Reader{f6}"
+	&"[Q]uit{f6:2}"
+	&"Read: {pound}g1"
+	ON-(an$="D")-2*(an$="P")-3*(an$="R")-4*(an$="S")GOSUB {:3118},{:3028},{:3060},{:3132}
+	IF an$<>"Q"AND tr%>1 THEN{:3006}
+	POKE 53252,ll%:GOTO 1811
+	REM program reader
+{:3028}
+	&"{clear}{f6:2}{pound}{back arrow}11{rvrs on}{green}Program Reader{f6}{rvrs off}":a$="++ read":dr=5:GOSUB 1010:pr=-2:POKE 53252,16
+	a$=dr$+a$:&,7,dv%,2:GOSUB 1012:IF e%THEN:&"Error Loading {f5}++ read{f5}:":&:GOTO 1812
+{:3032}
+	GOSUB 1008:GOSUB 1470:GOSUB 1474:ON a GOTO {:3044}:d1%=dv%:d2%=VAL(dr$)
+	&"{f6}{gray2}Enter Filename:{lt. blue} ":GOSUB 1499:IF an$=""THEN RETURN
+{:3036}
+	a$=an$+",p,r"
+	GOSUB 1011:IF e%THEN:&:GOTO {:3032}
+	GOSUB {:3046}:GOSUB {:3054}:&,16,x,y:&"{f6:2}{pound}#0{pound}%a Blocks Read{f6:2}"
+	CLOSE 2:CLOSE 15:GOTO {:3032}
+{:3044}
+	&"{f6}Device Not Present{f6}":GOTO {:3036}
+{:3046}
+	&,52,16,3:IF a%=.THEN{:3052}
+	&,52,18,3:IF a%=.THEN x=.:RETURN
+	&,52,19,3:IF a%=.THEN x=.:RETURN
+{:3052}
+	&"{f6}Display control codes in expanded form{f6}(BASIC only)?: ":GOSUB 1902:x=a:RETURN
+{:3054}
+	a%=ll%:&"{f6}Screen width (RETURN={pound}#0{pound}%a): {pound}i1":y=VAL(an$):IF y<22 OR y>80 THEN y=ll%
+	RETURN
+	REM relative file reader
+{:3060}
+	&"{clear}{f6:2}{pound}{back arrow}09{green}-<>{rvrs on}{blue}  Relative File  {rvrs off}{green}<>-{f6}"
+	&"{pound}{back arrow}09{green}-<>{rvrs on}{blue} Reader & Editor {rvrs off}{green}<>-{f6}"
+	&"{pound}{back arrow}09{yellow}Written By: The Phantom{f6}"
+{:3066}
+	&"{f6}{f5}${f5} gets a directory."
+	POKE 53252,16:&"{f6:2}Filename: ":GOSUB 1499:f$=an$:IF f$=""THEN RETURN
+	GOSUB 1008:GOSUB 1470
+	GOSUB 1474:IF a THEN:&"Device Not Present":GOTO {:3066}
+	IF f$="$"THEN GOSUB {:3118}:GOTO {:3060}
+	a$=f$:GOSUB 1011:IF e%THEN:&:GOTO {:3066}
+{:3078}
+	rc=.:&"{f6}Record (A=All): {pound}i1{f6}":x=VAL(an$):ON-(an$="")-2*(an$="A")GOTO {:3066},{:3104}
+	IF x<1 THEN CLOSE 2:&"{f6}":GOTO {:3066}
+	r%=x:GOSUB 1001:GOSUB 1012:IF e%=50 THEN:&"{f6}{pound}$e{f6}":GOTO {:3078}
+	f%=0:&"{clear}{f6}{rvrs on}{lt. blue}    Record #{pound}%r{rvrs on}    {rvrs off}{f6}"
+{:3086}
+	f%=f%+1:&,2,2:tt$(f%)=a$
+	&"{lt. red}Field #{white}{pound}%f{cyan}{f6}"+tt$(f%)+"{f6}":IF st=.THEN{:3086}
+	&"{f6} Edit (Y/N)? ":GOSUB 1902:IF a=.THEN{:3078}
+	IF f%>1 THEN:&"{f6} Which Field? {pound}i1":e=VAL(an$):IF e<1 OR e>f%THEN{:3078}
+	&"{f6}Standard editing keys are available.{f6}RETURN by itself aborts.{f6}"
+	POKE 53252,254:pl=.:w$=tt$(e):p$="Field"+STR$(f%):&,1,32:IF an$<>""THEN tt$(e)=an$
+	GOSUB 1001:w$=tt$(e):IF f%>1 THEN FOR a=2 TO f%:w$=w$+r$+tt$(a):NEXT
+	PRINT# 2,w$:GOSUB 1012:IF e%THEN:&
+	GOTO {:3078}
+{:3104}
+	r%=0:f%=0:x=1:GOSUB 1001:GOSUB 1012:IF e%THEN:&:GOTO {:3066}
+{:3106}
+	r%=r%+1:&"{f6}{rvrs on}{lt. blue}    Record #{pound}%r{rvrs on}    {rvrs off}{f6:2}"
+{:3108}
+	f%=f%+1:&,2,2:tt$(f%)=a$
+	&"{lt. red}Field #{white}{pound}%f{cyan}{f6}"+tt$(f%)+"{f6}":IF rc THEN{:3066}
+	ON-(st=.)GOTO {:3108}:x=x+1:GOSUB 1001:GOSUB 1012:IF e%=50 THEN CLOSE 2:GOTO {:3066}
+	f%=0:GOTO {:3106}
+	REM directory reader
+{:3118}
+	&"{clear}{f6:2}{pound}{back arrow}11{rvrs on}{lt. red}Quik Directory{rvrs off}{f6:3}{yellow}"
+	GOSUB 1008:GOSUB 1470:ON a GOTO {:3128}
+	an$="":&"{f6}{rvrs on}{lt. green}Pattern ({f7}):{rvrs off}{white} ":GOSUB 1499:IF an$=""THEN an$="*"
+	CLOSE 1:&"{f6}":OPEN 1,dv%,0,"$"+dr$+an$:&,8,1:CLOSE 1
+{:3126}
+	&"{f6:2}{rvrs on}{lt. green}Another?{rvrs off}{white} ":GOSUB 1902:ON a GOTO {:3118}:RETURN
+{:3128}
+	&"{white}Device Not Present{pound}w2":GOTO {:3126}
+	REM seq file reader
+{:3132}
+	&"{clear}{f6:2}{pound}{back arrow}11{rvrs on}{lt. green}Seq File Reader{rvrs off}{f6:3}{yellow}":a=2
+	GOSUB 1008:ON a GOTO {:3144}:GOSUB 1470:GOSUB 1474
+	&"{f6:2}{lt. blue}{rvrs on}Filename?:{rvrs off}{white} ":GOSUB 1499:IF an$=""THEN CLOSE 2:RETURN
+	a$=an$+",s,r":GOSUB 1011:IF e%THEN:&:GOTO {:3142}
+{:3140}
+	&,2,2:s=st:lp=-(LEN(a$)<>80):&:IF rc+s=.THEN{:3140}
+{:3142}
+	&"{f6:2}{rvrs on}{lt. green}Another?{rvrs off}{white} ":GOSUB 1902:ON a GOTO {:3132}:RETURN
+{:3144}
+	GOSUB 1995:GOTO {:3132}
+	rem +.reader
+	REM image file readers - 12/18/2015
+	REM converted to 2.0 on 12/31/2017 by x-tec
+	REM:fix dv/dr 180829 x-tec ver 2.3

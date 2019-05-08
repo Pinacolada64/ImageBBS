@@ -1,15 +1,15 @@
-	&"{f6}{pound}Q0 ({$ce}) {$c6}ILENAME{f6} ({$d3}) {$c6}ILESIZE{f6} ({$c4}) {$d4}IMES {pound}$KED{f6:2} {$d3}ORT {$c2}Y?: {pound}G1"
-	X=-(AN$="{$ce}")-2*(AN$="{$d3}")-3*(AN$="{$c4}"):IF X=0 THEN{:4032}
-	A%=RN:&"{f6}{$d3}ORTING {pound}%A {$c6}ILES..."
+	&"{f6}{pound}Q0 (N) FILENAME{f6} (S) FILESIZE{f6} (D) TIMES {pound}$KED{f6:2} SORT BY?: {pound}G1"
+	X=-(AN$="N")-2*(AN$="S")-3*(AN$="D"):IF X=0 THEN{:4032}
+	A%=RN:&"{f6}SORTING {pound}%A FILES..."
 	FOR I=1 TO RN:&".":A%(I)=0:FOR J=1 TO I:IF A%(J)=0 THEN{:4010}
 	ON X GOSUB{:4100},{:4102},{:4104}:IF A THEN NEXT
 {:4010}
 	B%=A%(J):A%(J)=I:FOR J=J TO I:C%=A%(J+1):A%(J+1)=B%:B%=C%:NEXT:NEXT
-	&"{f6}":B$="{$c2}K":IF CO%>2 THEN B$="{$cb}B"
-	POKE 970,0:&"{f6}{white} ## {lt. red}{pound}$B'S   {green}{$c4}L'D  {lt. blue}{$ce}AME{f6}{orange}{pound}VJ"
+	&"{f6}":B$="BK":IF CO%>2 THEN B$="KB"
+	POKE 970,0:&"{f6}{white} ## {lt. red}{pound}$B'S   {green}DL'D  {lt. blue}NAME{f6}{orange}{pound}VJ"
 	FOR I=1 TO RN:A=A%(I)
 	B$=MID$(DT$(A),23):IF F%(A)>.THEN C$="{lt. blue}{f5}{pound}$B{f5}":GOTO{:4024}
-	C$="{yellow}({$d5}NVALIDATED)":A$=RIGHT$("0000"+MID$(STR$(ID),2),4)+NA$
+	C$="{yellow}(UNVALIDATED)":A$=RIGHT$("0000"+MID$(STR$(ID),2),4)+NA$
 	IF(Q OR A$=NN$(A))THEN C$="{white}*{lt. blue}{f5}{pound}$B{f5}"
 {:4024}
 	A%=A:B%=C%(A):C%=F%(A)-1:IF C%<0 THEN C%=0

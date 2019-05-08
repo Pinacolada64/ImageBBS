@@ -1,0 +1,60 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-vote" - voting booth logon module
+	dr=4:a$="d.votes,s,r":GOSUB 1011:rn=.:IF e%THEN CLOSE 2:RETURN
+{:4004}
+	INPUT# 2,a$,b$,a%:IF MID$(d5$,2,6)>=MID$(b$,2,6)THEN a%=0
+	IF a%AND(2^ac%)THEN rn=rn+1:nn$(rn)=a$
+	ON-(st=.)GOTO {:4004}:CLOSE 2:IF rn=0 THEN RETURN
+	&"{f6}{lt. blue}There Are {white}New {lt. blue}Vote Topics.{f6}Vote Now{blue}?{white} ":GOSUB 1902:IF a=0 THEN RETURN
+	FOR b=1 TO rn:GOSUB {:4036}:NEXT:RETURN
+{:4014}
+	dr=3:o$="v.t."+LEFT$(nn$(b),12):RETURN
+{:4016}
+	dr=3:o$="v.r."+LEFT$(nn$(b),12):RETURN
+	GOSUB {:4032}:CLOSE 2
+{:4020}
+	x=0:GOSUB {:4016}:a$=o$+",s,r":GOSUB 1011
+	IF e%THEN:&"No Vote Reasons On File.{f6:2}":GOTO {:4030}
+	&"{f6}Read Reason File? ":GOSUB 1902:IF a=0 THEN CLOSE 2:RETURN
+{:4026}
+	rc=0:GOSUB 1914:x=x+1:&,2,2:a%=x:&"{f6:2}Reason #{pound}%a:{pound}$a{f6:2}":&,3,2
+	IF(st=0)AND(rc=0)THEN{:4026}
+{:4030}
+	CLOSE 2:RETURN
+{:4032}
+	a$=nn$(b):&"{f6}{lt. blue}Vote Topic: {white}{pound}$a{f6:2}":GOSUB 1914
+	GOSUB {:4014}:a$=o$+",s,r":GOSUB 1011:&,12,2:RETURN
+{:4036}
+	GOSUB {:4032}:&"{f6}":x=0:f=0:z=0
+{:4038}
+	&,2,2:IF a$<>"{up arrow}"THEN x=x+1:tt$(x)=a$:f%(x)=0:GOTO {:4038}
+	ON-(st<>0)GOTO {:4044}
+{:4042}
+	INPUT# 2,a,i,a$:f%(a)=f%(a)+1:z=z+1:f=f-(i=id AND a$=na$):ON-(st=0)GOTO {:4042}
+{:4044}
+	CLOSE 2:&"Press a key for topics ... {pound}g1{f6}":ON f GOTO {:4054}:&"{f6}"
+	FOR i=1 TO x:a$=tt$(i):a%=i:&"{pound}%a {pound}$a{f6}":NEXT:&"{f6}Choice -> {pound}g1":c=VAL(an$)
+	IF c<1 OR c>x THEN:&"Aborted!{f6}":RETURN
+	a$=tt$(c):&"{pound}$a{f6:2} Correct? ":GOSUB 1902:IF a=0 THEN RETURN
+	f%(c)=f%(c)+1:z=z+1:dr=3:a$=o$+",s,a":GOSUB 1011:PRINT# 2,c;r$id;r$na$:CLOSE 2
+{:4054}
+	IF z=0 THEN:&"{f6}No Votes so far!{f6:2}":GOTO {:4062}
+	s$="s":IF z=1 THEN s$=""
+	a%=z:&"{f6}Results From {pound}%a Vote{pound}$s:{f6:2}"
+	FOR i=1 TO x:a$=tt$(i):a%=100*f%(i)/z+.5:&"{pound}#3{pound}# {pound}%a% {pound}$a{f6}":NEXT
+{:4062}
+	ON f GOTO {:4076}:&"{f6}Would you like to leave an Anonymous{f6}reason? ":GOSUB 1902
+	IF a=0 THEN{:4076}
+	tt$(0)=CHR$(48+c)+tt$(c):GOSUB 1604:IF kk=.THEN{:4076}
+	a=b:GOSUB {:4016}:a$=o$+",s,w":GOSUB 1011:IF e%THEN a$=o$+",s,a":GOSUB 1011
+	IF e%THEN{:4074}
+	PRINT# 2,MID$(tt$(0),2):FOR i=1 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}"
+{:4074}
+	CLOSE 2
+{:4076}
+	GOSUB {:4020}
+	RETURN
+	copr. 1990 NEW image 12-26-90
+

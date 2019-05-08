@@ -1,0 +1,78 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	on rk goto {:4002},{:4100}
+{:4002}
+	n=0
+	p$="Other Options":gosub {:4026}
+	a$="M":b$="Movie Speed":gosub {:4018}
+	a$="S":b$="Send Mail":gosub {:4018}
+	a$="Q":b$="Return to Menu":gosub {:4018}
+	if mm then:&"{right:9}{rvrs on}{yellow}{pound}{back arrow}32{rvrs off} {f6}"
+	if mm then:&"{right:10}{pound}{back arrow}33{f6}"
+	fd=2:return
+{:4018}
+	n=n+1:m%(3,n)=asc(a$+chr$(0)):m%(2,n)=-1:m%(1,n)=(n-1)*256+n+1
+	m%(0,n)=14*256+5+n
+	if mm then:&"{right:9}{rvrs on}{yellow} {f5}{pound}$a{f5} {white}{$a4}{yellow} {pound}$b{pound}{back arrow}32{rvrs off} {f6}":return
+	&"{pound}$a) {pound}$b{f6}":return
+{:4026}
+	if mm=0 then:&"{clear}{pound}$p{f6:2}":return
+	&"{home}{down:4}{right:9}{rvrs on}{yellow} {pound}$p{pound}{back arrow}32{f6}"
+	&"{right:9}{rvrs on}{yellow}     {$a4}{pound}{back arrow}32{rvrs off} {f6}"
+	return
+{:4100}
+	rs=1:tz=0:gosub 1007
+	on -(a$="M")-2*(a$="S")-3*(a$="Q")-4*(a$="x") goto {:4200},{:4300},{:4400},{:4500}
+	rs=0:return
+{:4200}
+	&"{f6:2}{yellow}Present Movie Speed Is{lt. green} {pound}%f{f6:2}"
+	&"{yellow}Enter New Speed {lt. green}(1-Faster to 20-Slower) :{lt. blue} {pound}i1":if tr%<1 then return
+	a=val(an$):if a<1 or a>20 then:&"{f6}{yellow}Unchanged{f6}":return
+	f%=a:&"{f6}{yellow}Speed Changed To:{lt. green} {pound}%f":return
+{number:4300}
+{:4300}
+	&"{clear}{f6:2}{lt. blue}{pound}v5 Notepad{f6}"
+{:4302}
+	fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
+	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:4312}
+{:4306}
+' TODO: use routine at 1046
+	p$="":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:4312}
+	on-(an$="")goto {:4346}:gosub 1046:x=i:if x then nn$=an$:goto {:4320}
+	&"{f6:2}{white}{f5}{lt. blue}{pound}v7{white}{f5} {lt. blue}Not Found.{f6}":goto {:4306}
+{:4312}
+	i=x:if x<1 or x>ur then{:4316}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES" then {:4318}
+{:4316}
+	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:4346}
+{:4318}
+	&"{f6}{lt. green}Handle: {rvrs on}"+nn$+"{f6}{yellow}Is That Correct?: ":gosub 1902:if a=. then {:4302}
+{:4320}
+	y=i:dr=2:gosub 1079:on-(a<20)goto {:4342}:gosub 1085:if a then gosub 1980:goto {:4346}
+	on fl goto {:4330}
+	poke 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:if an$=""then an$="NISSA Note"
+	&"{up}Subject: {pound}v7{f6}"
+	tt$(.)="["+an$+"]":gosub 1604:a=1:if kk=. then {:4346}
+{:4330}
+	c$="Note":&"{f6}Filing {pound}$c For "+nn$+"...{f6}"
+	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
+	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
+	if y=1 then gosub 1060:x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
+	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
+	x=25:on z gosub 1025:close 2:gosub 1081:goto {:4344}
+{:4342}
+	x=2:gosub 1980
+{:4344}
+	&"{f6:2}Send to another user? ":gosub 1902:if a then fl=1:goto {:4306}
+{:4346}
+	return
+{number:4400}
+{:4400}
+' quit
+	return
+{number:4500}
+{:4500}
+' FIXME: finish this
+	&"Sorry, that is not yet supported.{pound}w1":return
+	rem "+/GF-other" fixes 171116 x-tec

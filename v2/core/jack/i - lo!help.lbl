@@ -1,27 +1,27 @@
-	REM"+/LO.TELECHECK  - {$d2}ASK V2.0 -           {$c4}ATE {$d3}TAMP: 26 {$cf}CT 94  6:51PM
+	REM"+/LO.TELECHECK  - RASK V2.0 -           DATE STAMP: 26 OCT 94  6:51PM
 	REM I/LO!HELP
 	DR=1:A$="S.LOGON HELP":GOSUB 14
-	LP=1:&"{f6:2}{$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$cc}OG {$cf}N {$d7}ITH {$c1} {$d4}EMPORARY {$c1}CCOUNT? ":GOSUB 94
+	LP=1:&"{f6:2}WOULD YOU LIKE TO LOG ON WITH A TEMPORARY ACCOUNT? ":GOSUB 94
 	IF A=.THEN RETURN
-	&"{f6}{$cc}OGGING {$cf}N {$c6}OR {$c8}{$c5}{$cc}{$d0}...{f6}":T=5
+	&"{f6}LOGGING ON FOR HELP...{f6}":T=5
 {:4510}
-	A$="{$c6}IRST {$ce}AME":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:FF$=AN$:IF AN$=""THEN{:4510}
+	A$="FIRST NAME":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:FF$=AN$:IF AN$="" then {:4510}
 {:4512}
-	A$="{$cc}AST {$ce}AME":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:LL$=AN$:IF AN$=""THEN{:4512}
+	A$="LAST NAME":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:LL$=AN$:IF AN$="" then {:4512}
 {:4514}
-	A$="{$d0}HONE {$ce}UMBER":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:PH$=AN$:IF AN$=""THEN{:4514}
-	NA$="{$c8}{$c5}{$cc}{$d0}"+"":PW$="{$ce}{$cf}{$ce}{$c5}"+"":LD$=D1$:AC%=0:DT%=0:TC%=0:CO%=1:ID=0
+	A$="PHONE NUMBER":GOSUB{:4532}:ON-(T<1)GOTO{:4522}:PH$=AN$:IF AN$="" then {:4514}
+	NA$="HELP"+"":PW$="NONE"+"":LD$=D1$:AC%=0:DT%=0:TC%=0:CO%=1:ID=0
 	UL=1:LF=1:EM=.:DC=.:UC=.:BD=.:BU=.:CR=.:PS=.:RP=.:D5$=D1$:FL$=FL$(AC%)
 	CO$=CO$(CO%):RN$=FF$+" "+LL$:TR%=15:GOSUB{:4533}:GOSUB{:4524}:IF TR%>.THEN A=2:RETURN
 {:4522}
-	&"{f6:2}{$d3}ORRY, {$d5}NABLE {$d4}O {$cc}OG {$d9}OU {$c9}N...{f6:2}":A=1:RETURN
+	&"{f6:2}SORRY, UNABLE TO LOG YOU IN...{f6:2}":A=1:RETURN
 {:4524}
-	&"{f6:2}{$c5}NTER {$c1} {$c2}RIEF {$cd}ESSAGE {$d3}TATING {$d7}HY {$d9}OU{f6}{$ce}EED {$c8}ELP.{f6}{$ce}{$cf}{$d4}{$c5}: {$c1}BORTING {$d4}HIS "
-	&"{$d7}{$c9}{$cc:2} {$cc}OG {$d9}OU {$cf}FF.{f6:2}"
+	&"{f6:2}ENTER A BRIEF MESSAGE STATING WHY YOU{f6}NEED HELP.{f6}NOTE: ABORTING THIS "
+	&"WI{$cc:2} LOG YOU OFF.{f6:2}"
 	LE=10*(VAL(MID$(FL$,6,1))+1):IM=1:GOSUB 440:IF KK=.THEN TR%=.:RETURN
-	B$="TELECHECK":GOSUB 37:PRINT# 2,"{$c6}ORGOTTEN {$d0}ASSWORD"R$:GOTO 39
+	B$="TELECHECK":GOSUB 37:PRINT# 2,"FORGOTTEN PASSWORD"R$:GOTO 39
 {:4532}
-	POKE 53252,15:&"{f6}{$c5}NTER {$d9}OUR {pound}$A:{f6}: {pound}I1":T=T+(AN$=""):T=T*-(TR%>.):RETURN
+	POKE 53252,15:&"{f6}ENTER YOUR {pound}$A:{f6}: {pound}I1":T=T+(AN$=""):T=T*-(TR%>.):RETURN
 {:4533}
 	&,52,17,LF:&,52,20,EM:POKE 951,LL%:POKE 971,MP%:POKE 970,.:RETURN
-	REM"{$c3}OPYRIGHT ({$c3}) 1994, {$ce}.{$c9}.{$d3}."
+	REM"COPYRIGHT (C) 1994, N.I.S."

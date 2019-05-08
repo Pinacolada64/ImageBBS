@@ -1,0 +1,29 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{clear}{f6:2}{lt. blue}{pound}v5 QuickMail{f6:2}"
+{:3002}
+	a=9:GOSUB 1004:IF a=.THEN x=4:GOSUB 1980:RETURN
+	&"{lt. red}Enter User Handle Or ID#.{f6:2}":GOSUB 1006:x=ABS(VAL(an$)):IF x THEN{:3010}
+	GOSUB 1046:x=i:IF x THEN nn$=an$:GOTO {:3016}
+	&"{f6:2}{white}{f5}{lt. blue}{pound}v7{white}{f5} {lt. blue}Not Found.{f6}":RETURN
+{:3010}
+	IF x<1 OR x>ur THEN{:3014}
+	GOSUB 1065:GOSUB 1001:INPUT# 2,nn$:IF nn$<>"{up arrow}"AND nn$<>"RES"THEN{:3016}
+{:3014}
+	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:RETURN
+{:3016}
+	&"{f6}{lt. green}Handle: {rvrs on}"+nn$+"{f6}{yellow}Is That Correct?: ":GOSUB 1902:IF a=.THEN{:3002}
+	GOSUB 1079:ON-(a<20)GOTO {:3038}:GOSUB 1085:IF a THEN GOSUB 1980:RETURN
+	POKE 53252,30:&"{f6}":&"Subject: ":pl=.:&,1,5:IF an$=""THEN an$="QuickMail"
+	&"Subject: {pound}v7{f6}":c$="QuickMail"
+	tt$(.)="["+an$+"]":y=i:GOSUB 1604:a=1:IF kk=.THEN RETURN
+	&"{f6}Filing Mail For "+nn$+"...{f6}"
+	z=1:a$="w":tt$=nn$:GOSUB 1062:IF e%THEN a$="a":z=.:GOSUB 1062
+	PRINT# 2,na$r$id;r$d1$:FOR x=.TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
+	IF y=1 THEN GOSUB 1060:x=2:i=1:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31:GOSUB 1025
+	ON-(y<>1)GOSUB 1060:x=3:i=1:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:GOSUB 1081:RETURN
+{:3038}
+	x=2:GOSUB 1980:RETURN
+	rem "+.QM"

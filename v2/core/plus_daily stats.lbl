@@ -1,0 +1,34 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&,28,1:k=12:DIM ed$(k),dt$(k)
+	RESTORE:FOR i=1 TO k-1:READ ed$(i):NEXT:FOR j=0 TO 6:READ dt$(j):NEXT
+	GOSUB {:3020}:ON-(e%=0)GOSUB {:3036}:GOTO 1812
+	DATA"Feedback  ","Sysop Mail"
+	DATA"Users Mail","Posts     "
+	DATA"Responses ","Uploads   "
+	DATA"Downloads ","New Users "
+	DATA"Calls/Log ","Time Used "
+	DATA"Time Idle "
+	DATA"Sun","Mon","Tue","Wed","Thu","Fri","Sat"
+{:3020}
+	dr=3:a$="e.daily stats":GOSUB 1011:IF e%THEN:&:CLOSE 2:RETURN
+	FOR j=0 TO 6:x=j+1:GOSUB 1001:FOR i=0 TO 11:&,2,2:tt$(i+j*k)=a$:NEXT:NEXT
+	FOR j=0 TO 6:a$=tt$(j*k)
+	dt$(j)=dt$(j)+" "+MID$(a$,4,2)+"-"+MID$(a$,6,2)+"-"+MID$(a$,2,2):NEXT
+	CLOSE 2:RESTORE:&"{clear}{rvrs on}{white}            Sun Mon Tue Wed Thu Fri Sat{f6}"
+	FOR i=1 TO k-1:a$=ed$(i):&"{rvrs on}{white}{pound}$a:{rvrs off}":FOR j=0 TO 6:a%=VAL(tt$(i+j*k)):GOSUB {:3034}
+	&"{pound}#4{pound}# {pound}%a":NEXT:&"{f6}":NEXT:RETURN
+{:3034}
+	&MID$("{lt. blue}{cyan}",(j AND 1)+1,1):RETURN
+{:3036}
+	&"{f6}View Detailed Info? ":GOSUB 1902:IF a=0 THEN RETURN
+	FOR i=1 TO k-1:a$=ed$(i):&"{clear}{rvrs on}{white}{pound}$a      ### %%%{f6}"
+	b=0:FOR j=0 TO 6:a=VAL(tt$(i+j*k)):a%(j)=a:b=b+a:NEXT
+	FOR j=0 TO 6:a$=dt$(j):a%=a%(j):b%=0:IF b<>0 THEN b%=a%/b*100
+	&"{rvrs on}{white}{pound}$a:{rvrs off}":GOSUB {:3034}:&"{pound}#4{pound}# {pound}%a{pound}#4{pound}# {pound}%b%{f6}":NEXT:a%=b:b%=a%/7
+	&"{rvrs on}{white}Total  {rvrs off} {pound}#4{pound}# {pound}%a{f6}{rvrs on}{white}Average{rvrs off} {pound}#4{pound}# {pound}%b{f6:2}Press a key (A=Abort): {pound}g1"
+	IF an$="A"OR tr%<1 THEN i=k
+	NEXT:RETURN
+	REM +.daily stats
+

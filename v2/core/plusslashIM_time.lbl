@@ -1,0 +1,166 @@
+{number:3000}
+{step:2}
+{crunch:on}
+{alpha:alt}
+' edit system time (moved from +.IM)
+' edit clock set device
+' edit prime time options
+
+	on mm+1 goto {:text_menu}, {:graphic_menu}
+{:graphic_menu}
+	&"Stub{f6}"
+{:text_menu}
+' ----+----+----+----+----+----+----+----+
+' System Time: Tue Feb 07, 2019 12:12 PM
+	&"{f6}System Time: {$04}"+d1$+"{f6:2}"
+	&"[R]emote Time Editor{f6}"
+	&"[C]lock Set Device{f6}"
+	&"[P]rime Time Options{f6:2}"
+{:text_menu_prompt}
+	&"Option: {pound}i1":if tr%<1 then return
+	on -(an$="R")-2*(an$="C")-3*(an$="P") goto {:remote_time_editor}, {:clock_set_device}, {:prime_time_options}
+	on -(an$<>"") goto {:text_menu_prompt}:return
+
+{nice:100}
+{:remote_time_editor}
+	&"{f6:2}{purple}{pound}vj{cyan}   Remote Time Editor v2.0{f6}{purple}{pound}vj{cyan}" ':goto {:3268}
+'	a$=d1$:gosub 1520:t1=a:return
+{:3268}
+	&"{f6}{pound}{back arrow}10{cyan}Current Date/Time is{f6}{pound}{back arrow}07{pound}v0{f6:3}":d$=d1$:tz=.
+{:3270}
+	p$=" Day   ":w$=left$(d$,1):a=1:gosub {:3310}:if a<1 or a>7 then{:3270}
+	dw$=mid$(str$(val(an$)),2,1)
+{:3274}
+	p$=" Month ":w$=mid$(d$,4,2):a=2:gosub {:3310}:if a<1 or a>12 then{:3274}
+	gosub {:3316}:mo$=an$
+{:3278}
+	p$=" Date  ":w$=mid$(d$,6,2):a=2:gosub {:3310}:if a<1 or a>31 then{:3278}
+	gosub {:3316}:dt$=an$
+{:3282}
+	p$=" Year  ":w$=mid$(d$,2,2):a=2:gosub {:3310}:if a<1 or a>99 then{:3282}
+	gosub {:3316}:yr$=an$
+	c$="A":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="P"
+{:3288}
+	p$=" Hour  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
+	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
+{:3292}
+	p$=" Min.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
+	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
+{:3296}
+	p$=" A/P   ":a=1:gosub {:3310}:on-(an$<>"A"and an$<>"P")goto {:3296}:if an$<>v$then tz=1
+	if(an$="P"and b<>18)or(an$="A"and b=18)then b=b or 128:gosub {:3318}
+	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10Setting Date/Time to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} OK?   {lt. green}: "
+	gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
+	poke 56328,.:poke 1010,1
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
+{:3308}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:3310}
+	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:&"{f6}":if an$<>"" then 
+	a=val(an$):tz=(tz or-(a<>val(v$))):return
+{:3314}
+	an$=v$:a=val(an$):return
+{:3316}
+	an$=right$("0"+mid$(str$(val(an$)),2,2),2):return
+{:3318}
+	hr$=right$("0"+mid$(str$(-80*(an$="P")+val(hr$)),2,2),2):return
+{:3320}
+	a$=dw$+yr$+mo$+dt$+hr$+mn$:return
+{:3322}
+	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
+	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
+{:3326}
+	return
+{:3328}
+	&"{f6}No Changes Made - Aborted!{f6:2}":return
+
+{nice:100}
+{:clock_set_device}
+' ----+----+----+----+----+----+----+----+
+' BBS clock set method:
+
+' 1) CMD boot device
+' 2) LtK clock (may be deprecated later)
+' 3) System timestamp (updated at idle)
+' 4) External CMD device
+
+' Option 3 is the default.
+
+	& "1) CMD boot device{f6}"
+	& "2) LtK clock (may be deprecated later){f6}"
+	& "3) System timestamp (updated at idle){f6}"
+	& "4) External CMD device{f6}"
+        & "{f6}"
+	& "Option 3 is the default.{f6:2}"
+{:clock_set_option}
+	& "Option: {pound}i1":if tr%<1 then {:quit}
+	on -(an$="R")-2*(an$="C")-3*(an$="P") goto {:remote_time_editor}, {:clock_set_device}, {:prime_time_options}
+	on -(an$<>"") goto {:clock_set_option}:return
+	
+' y%=clock set method, y1%=external cmd device (if any)
+	x=33:gosub {:1001}:&,2,2:y%=val(a$):x=34:gosub {:1001}:&,2,2:y1%=val(a$)
+' y%: 1=cmd clock, 2=ltk clock, 3=last system timestamp, 4=external cmd device
+
+{nice:100}
+{:prime_time_options}
+' [from 1.2]
+' p1%: Minutes allowed during prime time, 1-90, 0=30
+' p2%: prime time start (does >80=pm?)
+' p3%: prime time end (if p3%<p2%, then prime time wraps around from p3% am->pm or p3% pm->am?)
+' from config 1.2:
+'	a=2:b%=p2%:a$="Start":gosub {:124}:a=3:b%=p3%:a$="End":gosub {:124}
+'	tt$(4)="Minutes Allowed:"+str$(p1%):tt$(5)="Keep Settings"
+
+	x=20:gosub {:1001}:input# 2,p1%,p2%,p3%
+' 1.3 seems to use p1% as "is prime time enabled?"
+' check lightbar right Tsr to see whether prime time is enabled:
+' not sure about the "pt%=1-pt%" (that would toggle it)
+{:pt_menu}
+'	&,52,7,3:if a% then pt%=1-pt%:if p1%<1 then p1%=30
+	&"{pound}#2":&,52,7,3:pt%=a%:if a% then if p1%<1 then p1%=30
+	       &"P)rime Time:      "+mid$("YesNo",pt%*3+1,3))
+	b$="A":if p2%>80 then a%=p2%-80:b$="P"
+	a%=p2%:&"S)tart time:      {pound}%a:00 {pound}$bM{f6}"
+	b$="A":if p3%>80 then a%=p3%-80:b$="P"
+	a%=p3%:&"E)nd time:        {pound}%a:00 {pound}$bM{f6}"
+	a%=p1%:&"M)inutes allowed: {pound}%a{f6}"
+' +/lo.on shows prime time status
+{:pt_option}
+	&"Option: {pound}i1":if tr%<1 then {:quit}
+	on -(an$="P")-2*(an$="S")-3*(an$="E")-4*(an$="M") goto {:pt_toggle}, {:pt_start}, {:pt_end}, {:pt_minutes}
+	on -(an$<>"") goto {:pt_option}:return
+
+{:pt_toggle}
+	&,52,7,2:goto {:pt_menu}
+
+{:pt_start}
+	&"1-12: {pound}i1":an=val(an$):if an<1 and an>12 then {:pt_start}
+	gosub {:sub.pt_ampm}:p2%=an:return
+	
+{:pt_end}
+	&"1-12: {pound}i1":an=val(an$):if an<1 and an>12 then {:pt_start}
+	gosub {:sub.pt_ampm}:p3%=an:return
+
+{:sub.pt_ampm}
+	&"[A]M or [P]M: {pound}i1":an=-80*(an$="P")+an:return
+
+{:pt_minutes}
+	&"1-90, 0=30":&"Minutes: {pound}i1":an=val(an$):if an=. then an=30
+	if an<1 then if an>90 then {:pt_minutes}
+	p1%=an:goto {:pt_menu}
+
+{:quit}
+' do some checks for prime time:
+' 1) if not prime time hours, disable prime time
+	b$="Prime Time"
+	if [...] then:&,52,7,1:pt=.:&"* Not {pound}$b, disabling {pound}$b{f6}   settings{f6}"
+' 2) check whether prime time hour is upon us - if so, ask to enable prime time
+	if val(mid$(d1$,8,2)) >= p2% then:&"Enable {pound}$b?: ":gosub 1907:if a then:&,52,7,.
+' 3) write prime time settings to e.data:
+	if tz then::&"* Writing {pound}$b options to disk{f6}":x=20:gosub 1001:print# 2,p1%,p2%,p3%
+	close 2:return
+
+' you can use the litebar alarm editor to automatically toggle Tsr if you want, too
+
+	rem "+/IM.time" - pinacolada 2018-02-07
+

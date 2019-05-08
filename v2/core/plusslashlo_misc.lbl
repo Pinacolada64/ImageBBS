@@ -1,0 +1,189 @@
+{alpha:alt} ' c64list 3.50
+{number:4000}
+{step:2}
+{quoter:32="space"}	' make runs of spaces easier to read
+{quoter:$dd="pipe"}	' so | translates properly on the Commodore
+	rem +/lo.misc - misc. idle commands
+	poke 53248,1:on a+1 gosub {:3264},{:4050},{:4068}:poke 53248,0:return
+{nice:100}
+
+{:3264}
+	&"{clear}{cyan}Enter current date/time.{f6}{white}Return {cyan}keeps current setting.{f6}"
+{:3268}
+' Current date/time: t=0 for numeric entry, l=1 for 1 digit response
+	&"{f6}{pound}{back arrow}10{cyan}Current date/time is{f6}{pound}{back arrow}07{pound}v0{f6:2}":d$=d1$:tz=.
+{:3270}
+	l=1:t=0:&"{pound}{back arrow}12[1=Sun...7=Sat]{f6}{up}"
+	p$="    Day":w$=left$(d$,1):gosub {:3310}:if a<1 or a>7  then:&"{up}":goto {:3270}
+'	dw$=mid$(str$(val(an$)),2,1)
+	dw$=an$:l=2
+{:3274}
+	p$="  Month":w$=mid$(d$,4,2):gosub {:3310}:if a<1 or a>12  then:&"{up}":goto {:3274}
+'	gosub {:sub.format_digit}:mo$=an$
+	mo$=an$
+{:3278}
+	p$="   Date":w$=mid$(d$,6,2):gosub {:3310}:if a<1 or a>31  then:&"{up}":goto {:3278}
+'	gosub {:sub.format_digit}:dt$=an$
+	dt$=an$
+{:3282}
+	p$="   Year":w$=mid$(d$,2,2):gosub {:3310}:if a<1 or a>99  then:&"{up}":goto {:3282}
+'	gosub {:sub.format_digit}:yr$=an$
+	yr$=an$
+{:3288}
+' a=hour; +80=PM, b and c are used in clock set routine
+' c$ is used later in AM/PM routine
+	c$="A":w$=mid$(d$,8,2):a=val(w$):if a>79 then a=a-80:c$="P"
+' present hour in proper range:
+	w$=right$("0"+mid$(str$(a),2,2),2)
+' TODO: add entering 24 hour time
+	p$="   Hour":gosub {:3310}:if a<1 or a>12 then:&"{up}":goto {:3288}
+'	gosub {:3308}:b=a:gosub {:sub.format_digit}:hr$=an$
+	gosub {:3308}:b=a:hr$=an$:gosub {:sub.format_hour}
+{:3292}
+	p$=" Minute":w$=right$(d$,2):gosub {:3310}:if a<. or a>59 then:&"{up}":goto {:3292}
+'	a=a-sgn(a):gosub {:3308}:c=a:gosub {:sub.format_digit}:mn$=an$
+	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$
+{:3296}
+' t=1 for string entry
+'	w$="A":a=val(mid$(d$,8,2)):if a>79 then a=a-80:w$="P"
+	t=1:w$=c$:p$="  AM/PM":gosub {:3310}:if an$<>"A" and an$<>"P" then:&"{up}":goto {:3296}
+
+	if (an$="P" and b<>18) or (an$="A" and b=18) then b=b or 128:gosub {:sub.format_hour}
+	if tz=. then:&"{f6}No changes made - aborted!{f6:2}":return
+	a$=dw$+yr$+mo$+dt$+hr$+mn$:&"{cyan}{pound}{back arrow}10Setting date/time to{f6}{pound}{back arrow}07{$04}"+a$
+' 1907: default to Yes:
+	&"{f6:2} {lt. blue}Select {lt. green}Yes{lt. blue} to set clock, or{f6} select {lt. green}No{lt. blue} to change: "
+	gosub 1907:on a+1 goto {:3264}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
+	poke 56328,.:poke 1010,1:gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
+{:3308}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:3310}
+	y$=w$:poke 53252,l
+' display old value with prompt:
+	&" {cyan}{pound}$p{white}: {pound}$y{f6} {cyan}{pound}$p{white}: {pound}i1":if an$="" then an$=y$
+' determine if response is different than default:
+' t=1: string, 0=numeric
+	if t   then an$=left$(an$,l):tz=(tz or -(an$<>w$))
+' right-justify one- (day) or two-digit (all others) response:
+	if t=. then a=val(an$):tz=(tz or -(a<>val(w$))):an$=right$("0"+mid$(str$(a),2,l),l)
+' replace old value on screen with new, erase prompt, reposition cursor
+	&"{up:2} {lt. blue}{pound}$p{gray3}: {pound}v7{pound}{back arrow}35{f6}{pound}{back arrow}35{f6}{up}":return ' 78 bytes
+' al's code:
+'	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:on-(an$="")goto {:3314}:&"{f6}"
+'	a=val(an$):tz=(tz or-(a<>val(v$))):return
+{:3314}
+' format input to a two-digit number with a leading zero:
+'	&"{f6}":an$=right$("0"+mid$(v$,2,2),2):a=val(an$):return
+' {:sub.format_digit}
+'	an$=right$("0"+mid$(str$(val(an$)),2,2),2):return
+{:sub.format_hour}
+	hr$=right$("0"+mid$(str$(-80*(an$="P")+val(hr$)),2,2),2):return
+{:3322}
+	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
+	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
+{:3326}
+	return
+
+{ifdef:jack}
+{:4004}
+' a=0:
+	&"{clear}{f6:2}  Enter Current Date/Time:{f6}"
+{:4006}
+	&"{pound}{back arrow}12[1=Sun...7=Sat]{f6}{up}"
+	b$="Day":w$=left$(d1$,1):gosub {:4046}:if a<1 or a>7 then {:4006}
+	gosub {:4044}:poke 52935,a:dw$=mid$(str$(a),2,1)
+{:4010}
+	b$="Month":w$=mid$(d1$,4,2):gosub {:4046}:if a<1 or a>12 then {:4010}
+	gosub {:4044}:poke 52936,a:gosub {:sub.format_digit}:mo$=an$
+{:4014}
+	b$="Date":w$=mid$(d1$,6,2):gosub {:4046}:if a<1 or a>31 then {:4014}
+	gosub {:4044}:poke 52937,a:gosub {:sub.format_digit}:dt$=an$
+{:4018}
+	b$="Year":w$=mid$(d1$,2,2):gosub {:4046}:if a<1 or a>99 then {:4018}
+	gosub {:4044}:poke 52938,a:gosub {:sub.format_digit}:yr$=an$
+{:4024}
+	c$="A":w$=mid$(d1$,8,2):a=val(w$):if a>79 then a=a-80:c$="P"
+	b$="Hour":gosub {:4046}:if a<1 or a>12 then {:4024}
+' b=&,62,b,c
+	b=a
+' add 80 for PM
+	hr$=right$("0"+mid$(str$(-80*(c$="P")+a),2,2),2)
+{:4028}
+	b$="Min.":w$=mid$(d1$,10,2):gosub {:4046}:if a<.or a>59 then {:4028}
+	c=a:gosub {:sub.format_digit}:mn$=an$
+{:4032}
+	b$="A/P":w$=c$:gosub {:4046}:if an$<>"A"and an$<>"P" then {:4032}
+	if an$="P"then b=b+80
+' display date/time:
+	a$=dw$+yr$+mo$+dt$+hr$+mn$
+	&"{cyan}{pound}{back arrow}10Setting Date/Time to{f6}{pound}{back arrow}05{$04}"+a$+"{f6}"
+' 1907: default to Yes:
+	&"{f6} {lt. blue}Select {lt. green}Yes{lt. blue} To Start Clock, or{f6} Select {lt. green}No{lt. blue} To Change: ":gosub 1907
+	if a=. then {:4004}
+	&,62,b,c:b=b+80*((b=92)-(b=12))+12*((b=93)or(b=13)):&,58,b,0:poke 1010,1
+' 1520: a=mn%
+	a$=d1$:gosub 1520:t1=a ':rem an$=d1$:&,15:d2$=an$+"M"
+	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
+{:4044}
+	a=16*int(a/10)+a-int(a/10)*10:return
+{:4046}
+	y$=w$:poke 53252,len(y$)
+' display old value
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}$y{f6}"
+	&" {cyan}{pound}$b{pound}{back arrow}08{white}: {pound}i1":if an$=""then an$=y$
+' replace old value on screen with new, erase prompt, reposition cursor
+	a=val(an$):&"{up:2} {lt. blue}{pound}$b{pound}{back arrow}08{gray3}: {pound}v7{pound}{back arrow}35{f6}{pound}{back arrow}35{f6}{up}":return
+
+{:sub.format_digit}
+	an$=right$("0"+mid$(str$(a),2),2):return
+{endif}
+
+{nice:100}
+' set system password
+' fixed: also improve display in +.lo 3500
+{:4050}
+	&"{clear}{f6}System Password{f6:2}[A]ll Calls, [O]ne Call or [N]one? {pound}g1"
+'	on -(an$="N")-2*(an$="O")-3*(an$="A") goto {:4056},{:4058},{:4060}:return
+{:4056}
+'	l2=.:&,52,40,0:&"None{f6}":an$="":goto {:4064}
+	if an$="N" then l2=.:&,52,40,0:&"None{f6}":an$="^":goto {:4064}
+{:4058}
+'	l2=1:&,52,40,1:&"One{f6}":goto {:4062}
+	if an$="O" then l2=1:&,52,40,1:&"One{f6}":goto {:4062}
+{:4060}
+'	l2=2:&,52,40,1:&"All{f6}"
+	if an$="A" then l2=2:&,52,40,1:&"All{f6}":goto {:4062}
+	return
+{:4062}
+	poke 53252,10:&"{f6}Enter Password: {pound}i1":if an$="" then {:4050}
+{:4064}
+' l2=[0|1|2], l2$="<password>" or "^" for none
+	l2$=an$:gosub 1063:x=37:gosub 1001:print# 2,l2","l2$:close 2:return
+{nice:100}
+{:4068}
+' read daily activity/idle log
+' [A]ctivity or [I]dle Log?: Activity
+	poke 53252,1:&"{clear}[A]ctivity or [I]dle Log?: {pound}g1"
+	a$="r":on -(an$="A")-2*(an$="I") goto {:activity}, {:idle}:&"Done{f6}":return
+{:activity}
+	&"Activity{f6}":gosub 1064:goto {:log_reader}
+{:idle}
+' read "e.idle x" from Etc drive
+	&"Idle{f6:2}":b$="idle "+left$(am$,1):gosub 1027:if e% then {:error}
+	&"  Time   {pipe} Since Entry  {pipe} Function{f6}{pound}vj"
+' display: time of log entry, minutes since last entry, function:
+' an$         b$   c$ d$
+' 51810048125,idle,11,modem reset
+'  Time   | Since Entry  | Function
+' --------------------------------------
+' 3:59 PM | 11 mins idle | modem reset
+{:idle.2}
+	input# 2,an$,b$,c$,d$:&,15:c%=val(c$)
+	&right$(an$,7)+"M {pipe}{pound}#3{pound}# {pound}%c mins {pound}$b {pipe} {pound}$d{f6}":on st+1 goto {:idle.2}:goto {:end}
+{:log_reader}
+	sh=.:if e%=. then:&,3,2
+{:error}
+	if e% then:&
+{:end}
+	close 2:&"{f6:2}{pound}q0Press Any Key: {pound}g1":goto {:4068}
+	rem +/lo.misc - 2018-10-04 - jlf & pinacolada

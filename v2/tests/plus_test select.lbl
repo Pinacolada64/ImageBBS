@@ -1,3 +1,11 @@
-	&,28,1:DIM S%(39,60)
-	DR=4:GOSUB 1010:&,60,2,0,S%(0,0),DR$+"D.{$c7}{$c6}.{$c7}AMES",DV%
-	IM=1:A$="SELECT":GOSUB 2500:GOTO 1812
+{alpha:alt}
+{number:3000}
+{step:2}
+	&,28,1:dim s%(39,60)
+	&"Loading files from a struct..."
+	dr=4:gosub 1010:&,60,2,0,s%(0,0),dr$+"d.GF.Games",dv%
+	&"Select files from a struct:"
+	im=2:a$="select":gosub 2500
+	&"Select files from a disk directory:"
+	im=1:a$="select":gosub 2500:goto 1812
+	rem "+.test select" - adapted by pinacolada 2018-09-24

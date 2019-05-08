@@ -1,70 +1,70 @@
 {number:4000}
 	rem +.lo.jerk
-	&"{f6}{gray3}{$d6}ote for {$ca}erk {$c1}ward? ":gosub 1907:on a+1 goto 1603
-	a=8:gosub 1004:q=a:gosub 2912:a$="n.${$ca}erk {$c1}ward":dr=1:gosub 1075
+	&"{f6}{gray3}Vote for Jerk Award? ":gosub 1907:on a+1 goto 1603
+	a=8:gosub 1004:q=a:gosub 2912:a$="n.$Jerk Award":dr=1:gosub 1075
 {:4004}
-	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} {$d0}ort {$c3}ommodore {rvrs off}{f6}{pound}{back arrow}13{green}{$d0}resents....{f6:2}{pound}{back arrow}10{white}{$d4}he {rvrs on}{purple}{$ca}{$c5}{$d2}{$cb}{green}{rvrs off} {$c1}ward!!{f6}"
-	a$="e.jerks":dr=3:gosub 1011:if e%then:&"{f6}{$ce}ot configured{pound}w2":goto {:4100}
-	x=17:gosub 1001:&,2,2:d=val(a$):x=1:gosub 1001:&,2,2:if a$="{up arrow}"then{:4050}
-	if a$="{$ff}"then{:4050}
-	n$=a$:&"{f6:3}{lt. blue}{$d4}he {white}{$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3}{lt. blue} {$c1}re: {f6}":c=.
+	&"{f6:2}{pound}{back arrow}12{lt. red}{rvrs on} Port Commodore {rvrs off}{f6}{pound}{back arrow}13{green}Presents....{f6:2}{pound}{back arrow}10{white}The {rvrs on}{purple}JERK{green}{rvrs off} Award!!{f6}"
+	a$="e.jerks":dr=3:gosub 1011:if e%then:&"{f6}Not configured{pound}w2":goto {:4100}
+	x=17:gosub 1001:&,2,2:d=val(a$):x=1:gosub 1001:&,2,2:if a$="{up arrow}" then {:4050}
+	if a$="{$ff}" then {:4050}
+	n$=a$:&"{f6:3}{lt. blue}The {white}NOMIN{$c5:2}S{lt. blue} Are: {f6}":c=.
 {:4014}
 	c%=val(n$):n$=mid$(n$,4)
-	b%=x:&"{f6}{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} {$d6}ote!":if c%<>1 then:&"{pound}h1s"
-	&"!":x=x+1:kk=x:gosub 1001:&,2,2:n$=a$:if mid$(n$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"then c=c+1
-	if n$<>"{up arrow}"then{:4014}
+	b%=x:&"{f6}{white}<{gray1}{pound}%b{white}>{green} {pound}$n{lt. red}{pound}{back arrow}26{pound}#3{pound}# {pound}%c{yellow} Vote!":if c%<>1 then:&"{pound}h1s"
+	&"!":x=x+1:kk=x:gosub 1001:&,2,2:n$=a$:if mid$(n$,4)="DELETED"then c=c+1
+	if n$<>"{up arrow}" then {:4014}
 {:4022}
-	&"{f6:2}{gray3}{$d6})ote, {$c1})dd {$c1} {$ce}ew {$ce}ominee {$cf}r {$d1})uit?{f6}15 {$ce}ame {$cd}aximum.{f6}> {pound}g1{lt. green}{pound}v7{f6}"
+	&"{f6:2}{gray3}V)ote, A)dd A New Nominee Or Q)uit?{f6}15 Name Maximum.{f6}> {pound}g1{lt. green}{pound}v7{f6}"
 	if tr%<1 then{:4100}
-	on-(an$="{$d6}")-(an$="{$c1}")*2-(an$="{$d1}")*3 goto {:4028},{:4054},{:4100}:goto {:4022}
+	on-(an$="V")-(an$="A")*2-(an$="Q")*3 goto {:4028},{:4054},{:4100}:goto {:4022}
 {:4028}
-	c=1:a$="e.jvoters,s,r":dr=3:gosub 1011:if e%then{:4100}
+	c=1:a$="e.jvoters,s,r":dr=3:gosub 1011:if e% then {:4100}
 {:4030}
 	on q goto {:4034}:for x=1 to d:&,2,2:if na$=a$then x=d:c=.
-	next:on-(c<>.)goto {:4034}:&"{f6:2}{$d3}orry, {$d9}ou've {$c1}lready {$d6}oted{pound}w2":goto {:4100}
+	next:on-(c<>.)goto {:4034}:&"{f6:2}Sorry, You've Already Voted{pound}w2":goto {:4100}
 {:4034}
-	&"{f6:2}{yellow}{$d6}ote {$c6}or {$d7}hich {$ce}umber?{cyan} {pound}i1":on-(an$=""or an$="{$d1}")goto {:4100}
+	&"{f6:2}{yellow}Vote For Which Number?{cyan} {pound}i1":on-(an$=""or an$="Q")goto {:4100}
 	on tr%+1 goto {:4100}:x=int(val(an$)):if x<1 or x>kk then{:4030}
-	a$="e.jerks":dr=3:gosub 1011:if e%then{:4100}
+	a$="e.jerks":dr=3:gosub 1011:if e% then {:4100}
 	gosub 1001:&,2,2:n$=a$:c%=val(n$):n$=mid$(n$,4)
 	c%=c%+1:n$=right$(str$(1000+c%),3)+n$
-	gosub 1001:print# 2,n$:close 2:a$="e.jvoters,s,a":dr=3:gosub 1011:if e%then{:4100}
+	gosub 1001:print# 2,n$:close 2:a$="e.jvoters,s,a":dr=3:gosub 1011:if e% then {:4100}
 	if q=.then print# 2,na$:d=d+1:a$="e.jerks":gosub 1011:x=17:gosub 1001:print# 2,d
-	&"{f6:2}{$d9}our {$d6}ote {$c8}as {$c2}een {$d2}ecorded, {$d4}hanks!{f6}{pound}w2":goto {:4100}
+	&"{f6:2}Your Vote Has Been Recorded, Thanks!{f6}{pound}w2":goto {:4100}
 {:4050}
-	&"{f6:2}{cyan}{$d4}here {$c1}re {$ce}{$cf} {$ce}ominees, {$d7}ould {$d9}ou {$cc}ike {$d4}o{f6}{$ce}ominate {$d3}omeone? "
-	gosub 1902:if a=.then{:4100}
+	&"{f6:2}{cyan}There Are NO Nominees, Would You Like To{f6}Nominate Someone? "
+	gosub 1902:if a=. then {:4100}
 {:4054}
-	if kk>15 and c=.then:&"{f6:2}{purple}{$ce}o {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2}{$d3} {$c2}eing {$c1}ccepted {$c1}t {$d4}his {$d4}ime!{f6}":goto {:4022}
-	&"{f6:2}{cyan}{$c1}nd {rvrs on}{white} {$d7}{$c8}{$cf} {rvrs off}{cyan} {$c9}s {$d9}our {$ce}ominee?{f6:2}> {pound}i1":a=len(an$):if tr%<1 then{:4100}
+	if kk>15 and c=.then:&"{f6:2}{purple}No NOMIN{$c5:2}S Being Accepted At This Time!{f6}":goto {:4022}
+	&"{f6:2}{cyan}And {rvrs on}{white} WHO {rvrs off}{cyan} Is Your Nominee?{f6:2}> {pound}i1":a=len(an$):if tr%<1 then{:4100}
 	if a<5 or a>20 then{:4062}
 	gosub 1046:if i then{:4064}
 {:4062}
-	&"{f6:2}{$d3}orry, {pound}v7 {$c4}oesn't {$c5}xist!{f6}":goto {:4068}
+	&"{f6:2}Sorry, {pound}v7 Doesn't Exist!{f6}":goto {:4068}
 {:4064}
-	if i=1 then:&"{f6:2}{$c9}t's {$ce}ot {$ce}{$c9}{$c3}{$c5} {$d4}o {$c6}ool {$d7}ith {$d4}he {$d3}ysop!{pound}w2{f6}":goto {:4100}
+	if i=1 then:&"{f6:2}It's Not NICE To Fool With The Sysop!{pound}w2{f6}":goto {:4100}
 	goto {:4070}
 {:4068}
-	&"{f6:2}{$d7}ould {$d9}ou {$cc}ike {$d4}o {$d4}ry {$c1}gain? ":gosub 1902:on a goto {:4054}:goto {:4100}
+	&"{f6:2}Would You Like To Try Again? ":gosub 1902:on a goto {:4054}:goto {:4100}
 {:4070}
-	nn$=an$:dr=3:a$="e.jerks":gosub 1011:if e%then{:4100}
+	nn$=an$:dr=3:a$="e.jerks":gosub 1011:if e% then {:4100}
 	x=.:tt$=""
 {:4074}
-	x=x+1:gosub 1001:&,2,2:tt$=a$:if mid$(tt$,4)="{$c4}{$c5}{$cc}{$c5}{$d4}{$c5}{$c4}"then{:4082}
-	if mid$(tt$,4)=nn$then:&"{f6:2}{white}{$d4}hat {$ce}{$cf}{$cd}{$c9}{$ce}{$c5:2} {$c1}lready {$c5}xists!{f6}{pound}w2{lt. green}":goto {:4100}
-	if tt$<>"{up arrow}"then{:4074}
+	x=x+1:gosub 1001:&,2,2:tt$=a$:if mid$(tt$,4)="DELETED" then {:4082}
+	if mid$(tt$,4)=nn$then:&"{f6:2}{white}That NOMIN{$c5:2} Already Exists!{f6}{pound}w2{lt. green}":goto {:4100}
+	if tt$<>"{up arrow}" then {:4074}
 	gosub 1001:print# 2,"000"nn$:x=x+1:gosub 1001:print# 2,"{up arrow}":goto {:4084}
 {:4082}
 	gosub 1001:print# 2,"000"nn$
 {:4084}
-	close 2:&"{f6:2}{orange}{$d9}our {$ce}ominee {$c8}as {$c2}een {$c1}dded!{f6}"
-	&"{$ce}ominee now being notifed via {$c5}mail"
+	close 2:&"{f6:2}{orange}Your Nominee Has Been Added!{f6}"
+	&"Nominee now being notifed via Email"
 	w=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":w=.:gosub 1062
-	print# 2,"{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}{f6}{$ce}{$cf}{$cd}{$c9}{$ce}{$c1}{$d4}{$c9}{$cf}{$ce}{$a0}{$c3}{$cf}{$cd:2}{$c9}{$d4:2}{$c5:2}"r$"({$d5}{$c9}{$c4}#0)"r$;d1$
-	print# 2,"[{$c3}{$cf}{$ce}{$c7}{$d2}{$c1}{$d4}{$d5}{$cc}{$c1}{$d4}{$c9}{$cf}{$ce}{$d3}]":print# 2,na$+" {$c8}as {$ce}ominated {$d9}{$cf}{$d5}"
-	print# 2,"for the {white}{rvrs on}{$ca}{$c5}{$d2}{$cb}{$a0}{$c1}{$d7}{$c1}{$d2}{$c4}":print# 2,"{f6}{lt. green}{$d9}our very well deserved nomination"
+	print# 2,"JERK AWARD{f6}NOMINATION CO{$cd:2}I{$d4:2}{$c5:2}"r$"(UID#0)"r$;d1$
+	print# 2,"[CONGRATULATIONS]":print# 2,na$+" Has Nominated YOU"
+	print# 2,"for the {white}{rvrs on}JERK AWARD":print# 2,"{f6}{lt. green}Your very well deserved nomination"
 	print# 2,"has been accepted!!":print# 2,"{up arrow}":close 2
-	&"{f6:2}{$d4}idings sent!{pound}w2":goto {:4004}
+	&"{f6:2}Tidings sent!{pound}w2":goto {:4004}
 {:4100}
 	d=.:x=.:c=.:close 2:return
 	copr. 1994 new image 9/18/94

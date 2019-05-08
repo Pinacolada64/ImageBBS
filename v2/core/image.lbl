@@ -8,13 +8,13 @@
 {:4}
 	close 2:gosub{:3}:open 2,dv%,2,dr$+a$
 {:5}
-	input# 15,e%,e$,t%,s%:a$="{f6}{$d3}tatus:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+	input# 15,e%,e$,t%,s%:a$="{f6}Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
 {:6}
 	an$=uu$:on-(an$<>"")gosub{:310}:on-(an$<>"")goto{:314}:pl=1:&,1:goto{:310}
 {:7}
 	&"{pound}g1":a$=an$:return
 {:8}
-	gosub{:7}:a=-(an$="{$d9}"):a$=mid$("{$d9}es{$ce}o",4-a*3,3):&"{pound}$a{f6}":return
+	gosub{:7}:a=-(an$="Y"):a$=mid$("YesNo",4-a*3,3):&"{pound}$a{f6}":return
 {:9}
 	&,69,4,21,left$(" "+cm$+"               ",16),$8c:return
 {:10}
@@ -92,36 +92,36 @@
 	&,52,30,3:on a%gosub{:330}
 	cm$=p$:gosub{:9}:s=.:sh=.:gosub{:12}
 	poke 970,0:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
-	mm=2:gosub 3000:&"{f6}{$d4}- {pound}$b{$cd}":if tr%<100 then a%=tr%:&" - {pound}%a {$cd}in. {$cc}eft"
-	if zz then a%=usr(0):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
+	mm=2:gosub 3000:&"{f6}T- {pound}$bM":if tr%<100 then a%=tr%:&" - {pound}%a Min. Left"
+	if zz then a%=usr(0):&"{f6} - Stack Free: {pound}%a"
 	&"{f6:2}":poke 53252,38:gosub{:6}
 	cm$=left$(p$,11)+":"+left$(an$,4):gosub{:9}:cm$=p$
-	on tr%+1 goto{:240}:if an$=""then{:250}
+	on tr%+1 goto{:240}:if an$="" then {:250}
 	gosub{:220}:if f4 then gosub{:304}:on-(f4=1.1)-2*(f4=1.2)-3*(f4=1.3)goto{:270},{:268},{:234}
 	on rs goto{:200}:mm=1:goto 3000
 {:220}
 	on-(ac%<>ao%)gosub{:320}:an$=an$+"":rs=1:a$=left$(an$,1):z$=left$(an$,2)
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
-	f4=.:gosub{:280}:if a%then{:260}
-	on-(a$="{$cf}"or(lc=1 and a$="{$d1}"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
+	f4=.:gosub{:280}:if a% then {:260}
+	on-(a$="O"or(lc=1 and a$="Q"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
 {:230}
-	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub{:8}:if a=0 then return
+	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}Logoff?: ":gosub{:8}:if a=0 then return
 	f4=1.3:return
 {:234}
 	cd%=0:if mid$(z$,2,1)<>"%"then ld$=lt$
 	if right$(an$,1)="!"then f1=2:goto{:302}
 	f1=1:goto{:302}
 {:240}
-	&"{f6}{$d3}orry, {$d4}ime {$cc}imit {$c5}xceeded.{f6}":mm=3:gosub 3000:f1=2:goto{:302}
-	f1=.:&"{f6} {$c1}borted!{f6}":goto{:200}
+	&"{f6}Sorry, Time Limit Exceeded.{f6}":mm=3:gosub 3000:f1=2:goto{:302}
+	f1=.:&"{f6} Aborted!{f6}":goto{:200}
 {:250}
 	dr=1:a$="s.menu"+str$(lc):goto{:13}
 {:260}
-	if ef%and 8 then:&"{f6}{$d3}orry, that function is temporarily disabled.{f6}":return
-	if ec%<0 and cr+ec%<0 then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":return
+	if ef%and 8 then:&"{f6}Sorry, that function is temporarily disabled.{f6}":return
+	if ec%<0 and cr+ec%<0 then:&"{red}Not Enough Credits!{f6}":return
 	cr=cr+ec%:if ep$=""or id=1 then{:264}
-	&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$<>ep$then:&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":return
+	&"{f6}{white}Password{blue}:{white}":&,6:if an$<>ep$then:&"{f6}{red}Incorrect Password.{f6}":return
 {:264}
 	f4=0:on ec+1 goto{:265},{:266},{:267},{:268}:return
 {:265}
@@ -181,16 +181,16 @@
 	&,15,6,133:d2%=val(an$):d1%=a:dr=0:dv%(0)=d1%:dv%(2)=d2%
 {:353}
 	gosub{:3}:close 15:a=-(st<>.):return
-	gosub{:350}:on a goto{:368}:poke 53252,58:&"{f6}{$c4}isk {$c3}ommand?: {pound}i0":&,15,2
+	gosub{:350}:on a goto{:368}:poke 53252,58:&"{f6}Disk Command?: {pound}i0":&,15,2
 	z$=an$:if z$=""or z$="@"then gosub{:3}:gosub{:5}:&:return
-	b$=left$(z$,1):if b$="n"or b$="s"then:&"{$c1}re you sure? ":gosub{:8}:if a=0 then return
+	b$=left$(z$,1):if b$="n"or b$="s"then:&"Are you sure? ":gosub{:8}:if a=0 then return
 	gosub{:3}:print# 15,z$:gosub{:5}:&:return
 {:368}
-	&"{$c4}evice not present!{f6}":return
+	&"Device not present!{f6}":return
 {:400}
 	return
 	poke 22,25:for i=2 to peek(152):close peek(603):next:poke 2031,0
 	x=peek(780):y=peek(781)+peek(782)*256
 	&,11:&,28,1:poke 53248,0:mm=2
-	a$=pr$:b$=p1$:c$=p2$:&"[{$c5}rr {pound}!x,{$cc}ine {pound}!y,{pound}$a,{pound}$b,{pound}$c]{f6}"
+	a$=pr$:b$=p1$:c$=p2$:&"[Err {pound}!x,Line {pound}!y,{pound}$a,{pound}$b,{pound}$c]{f6}"
 	dr$=mid$(str$(dr%(5)),2)+":":dv%=dv%(5):load dr$+"im",dv%,mm

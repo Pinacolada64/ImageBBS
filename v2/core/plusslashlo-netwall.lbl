@@ -1,0 +1,133 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/lo-netwall" 01-29-95
+	&"{f6}{lt. blue}View {lt. green}Netwall? ":GOSUB 1902:IF a=.THEN RETURN
+	&,5:v=lp:ON zz GOTO {:4058}
+{:4006}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN nn=0:GOTO {:4020}
+	INPUT# 2,nn,a%:q=SGN(a%AND 2^ac%):IF nn<1 THEN{:4034}
+	x=4:GOSUB 1001:&,2,2:kk$="In "+a$:&,2,2:kk$=kk$+"{f1} "+a$:CLOSE 2
+	dr=2:a$="nm.wall header,s,r":GOSUB 1011:h$="":IF e%THEN{:4016}
+{:4014}
+	&,2,2:IF LEN(a$)+LEN(h$)<254 THEN h$=h$+a$+r$:ON-(st=0)GOTO {:4014}
+{:4016}
+	dr=2:a$="nm.nodes":GOSUB 1011:ON SGN(e%)GOTO {:4034}:&,2,2:a=VAL(a$):IF nn>a THEN{:4034}
+	x=nn+1:GOSUB 1001:&,2,2:nn$=a$:&,2,2:&,2,2:bb$=a$:CLOSE 2
+{:4020}
+	GOSUB 2912:lp=1:&"{clear}{f6}{blue}{pound}vj{pound}$q{pound}{back arrow}09 {cyan}Network Graffiti V2.0{pound}{back arrow}39 {blue}{pound}vj{pound}q0{f6:2}":GOTO {:4036}
+{:4022}
+	POKE 2024,255:&,3,2:RETURN
+{:4024}
+	IF h$<>""THEN PRINT# 2,h$:PRINT# 2,"{lt. blue}By{white} "na$"{blue} @ {white}"nn$:GOTO {:4028}
+	PRINT# 2,"{lt. blue}By{white} "na$"{blue} @ {white}"nn$:IF nn THEN PRINT# 2,"{lt. blue}At {white}"bb$r$kk$
+{:4028}
+	PRINT# 2,"{pound}q0":FOR i=1 TO kk-1:PRINT# 2,tt$(i):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:RETURN
+{:4030}
+	dr=2:a$=o$+",s,w":GOSUB 1011:IF e%THEN a$=o$+",s,a":GOSUB 1011
+	RETURN
+{:4034}
+	CLOSE 2:RETURN
+{:4036}
+	dr=2:a$="nm.wall,s,r":GOSUB 1011:IF e%THEN:&"{f6}{pound}vjIt's Empty!{f6}":GOTO {:4044}
+	&"{lt. blue}Scanning For {lt. green}New Messages{yellow}...{pound}q0"
+{:4038}
+	sh=0:&,2,2:IF MID$(a$,2,6)<MID$(ld$,2,6)THEN:&"{yellow}.{pound}q0":GOSUB {:4022}:GOTO {:4042}
+	lp=1:&"{f6}{pound}vj{f6}{$04}"+a$:&,3,2:IF rc AND a$<>"{up arrow}"THEN GOSUB {:4022}
+{:4042}
+	GOSUB 1914:IF st=.AND sh=0 THEN{:4038}
+{:4044}
+	CLOSE 2:&"{f6}{pound}vj":IF q THEN:&"{f6:2} Add your comments? ":GOSUB 1902:ON a GOSUB {:4048}
+	GOTO {:4034}
+{:4048}
+	GOSUB {:4122}:IF kk<1 THEN RETURN
+	&"Filing..."
+	o$="nm.wall":GOSUB {:4030}:PRINT# 2,d1$:GOSUB {:4024}
+	IF nn THEN o$="nm.G.temp":GOSUB {:4030}:GOSUB {:4024}
+	&"{pound}h6ed NetGraffiti.{f6}":RETURN
+{:4058}
+	&"{f6:2} (E)dit (K)ill (V)iew (W)eed: {pound}g1{pound}v7{f6}":IF tr%<1 OR an$=CHR$(13)THEN RETURN
+	ON-(an$="V")-2*(an$="E")-3*(an$="K")-4*(an$="W")GOSUB {:4006},{:4092},{:4062},{:4066}:GOTO {:4058}
+{:4062}
+	&"{f6}Are You Sure? ":GOSUB 1902:IF a THEN dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.wall"
+	RETURN
+{:4066}
+	&"How Many Days Back? {pound}i1":a=VAL(an$):a$=d1$:IF a<1 OR a>99 THEN RETURN
+	a=VAL(MID$(a$,6,2))-a:b=VAL(MID$(a$,4,2)):c=VAL(MID$(a$,2,2))
+	IF a<1 THEN a=a+ASC(MID$("{blue:2}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}",b,1)):b=b-1:IF b<1 THEN b=12:c=c-1
+	tt$=RIGHT$(STR$(100+c),2)+RIGHT$(STR$(100+b),2)+RIGHT$(STR$(100+a),2)
+	a$=tt$:&"Weed writings older than {pound}$a? ":GOSUB 1902:IF a=0 THEN RETURN
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.temp"
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.wall,s,r":CLOSE 3:OPEN 3,dv%,3,dr$+"nm.temp,s,w"
+{:4080}
+	&,2,2:s=st:&"{$04}"+a$:IF MID$(a$,2,6)<tt$THEN:&" Kill{f6}":GOTO {:4086}
+	&" Keep{f6}"
+{:4084}
+	PRINT# 3,a$:&,2,2:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4084}:PRINT# 3,"{up arrow}":GOTO {:4088}
+{:4086}
+	&,2,2:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4086}
+{:4088}
+	ON-(s=0)GOTO {:4080}:CLOSE 2:CLOSE 3
+	PRINT# 15,"s"dr$"nm.wall":PRINT# 15,"r"dr$"nm.wall="dr$"nm.temp":RETURN
+{:4092}
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.temp"
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.wall,s,r":CLOSE 3:OPEN 3,dv%,3,dr$+"nm.temp,s,w"
+	a%=0:b%=0:s=0
+{:4098}
+	&"{clear}":ON-(s<>0)GOTO {:4116}:n=0:a%=a%+1
+{:4100}
+	&,2,2:s=st:n=n+1:tt$(n)=a$:IF a$<>"{up arrow}"AND s=0 THEN{:4100}
+	lp=1:&"{pound}vj{f6}{$04}"+tt$(1):FOR i=2 TO n-1:lp=1:&tt$(i):NEXT:&"{f6}{pound}vj"
+{:4104}
+	&"{f6:2}#{pound}%a ({pound}%b Kept) Delete Keep Abort -->"
+{:4106}
+	&"{pound}g1":IF tr%<1 THEN an$="A"
+	IF an$="K"THEN:&"Keep{f6:2}":FOR i=1 TO n:PRINT# 3,tt$(i):NEXT:b%=b%+1:GOTO {:4098}
+	IF an$="A"THEN:&"Abort{f6:2}":CLOSE 2:CLOSE 3:PRINT# 15,"s"dr$"nm.temp":GOTO {:4120}
+	IF an$<>"D"THEN{:4106}
+	&"Delete{f6:2} Are you sure? ":GOSUB 1902:ON a GOTO {:4098}:GOTO {:4104}
+{:4116}
+	CLOSE 2:CLOSE 3
+	PRINT# 15,"s"dr$"nm.wall":PRINT# 15,"r"dr$"nm.wall="dr$"nm.temp"
+{:4120}
+	RETURN
+{:4122}
+	kk=1:GOSUB {:4140}:dr=1:a$="s.editor":GOSUB 1076:b%=.:GOSUB {:4166}:a=0
+{:4124}
+	&,54,a:a=PEEK(781):an$=CHR$(PEEK(780)OR 128):REM ifv<>1.3then966
+{:4126}
+	kk=PEEK(1016):ON a GOTO {:4128},{:4134},{:4132}:&"{f6:2}":b%=kk-1:kk=.:RETURN
+{:4128}
+	POKE 2031,0:b%=kk-1:&"{f6}{pound}%b Lines Used.{f6}":IF kk=1 THEN a=0:GOTO {:4126}
+	b%=kk:RETURN
+{:4132}
+	POKE 2031,0:GOSUB {:4138}:GOTO {:4124}
+{:4134}
+	b%=kk-1:a=2:GOTO {:4124}
+	b%=kk-1:GOSUB {:4140}:GOSUB {:4166}:POKE 2031,1:a=1:GOTO {:4124}
+{:4138}
+	dr=1:a$="s.menu 3":GOTO 1075
+{:4140}
+	REM ifv<>1.3then963
+	POKE 53249,0:POKE 1016,kk:POKE 1018,4:POKE 1019,kk:POKE 1023,87
+	pl=.:POKE 1022,11:POKE 53252,ll%-2
+	RETURN
+	POKE 53249,0:POKE 1016,kk:POKE 1018,4:POKE 1019,kk:POKE 1023,87
+	pl=.:POKE 1022,11:POKE 53252,ll%-2
+	RETURN
+{:4154}
+	kk=PEEK(1016):ON a GOTO {:4156},{:4162},{:4160}:&"{f6:2}":b%=kk-1:kk=.:RETURN
+{:4156}
+	POKE 2031,0:b%=kk-1:&"{f6}{pound}%b Lines Used.{f6}":IF kk=1 THEN a=0:GOTO {:4154}
+	b%=kk:RETURN
+{:4160}
+	POKE 2031,0:GOSUB {:4138}:GOTO {:4124}
+{:4162}
+	b%=kk-1:a=2:GOTO {:4124}
+	b%=kk-1:GOSUB {:4168}:GOSUB {:4166}:POKE 2031,1:a=1:GOTO {:4124}
+{:4166}
+	a%=PEEK(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}Total Lines:{f6}Available  : {pound}%a"
+{:4168}
+	&"{f6}In Memory  : {pound}%b{f6}Remaining  : {pound}%c":IF zz THEN:&"{f6}Free Memory: {pound}%z"
+	&"{f6:2}":RETURN
+	copr. 1990 NEW image 01-29-95

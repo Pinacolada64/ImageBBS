@@ -1,0 +1,20 @@
+{number:60000}
+{alpha:alt}
+{step:2}
+	on im goto {:60022},{:60024}
+	return
+{:60004}
+	a=peek(53248):poke 53248,1:&,18,0
+	x$="Send":if x>1 then x$="Receiv":if x>2 then x$="Copy":if x>3 then x$="Scann"
+	&"{clear} {cyan}{$a2:37}{f6}"
+	&" {rvrs on} {pound}$xing{pound}{back arrow}11: {f5}{pound}v7{f5}{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} Device   : {pound}%a{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} Drive    : {pound}%b{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {rvrs on}{cyan} Protocol : {pound}vl{pound}{back arrow}38{rvrs off}{yellow}{$a1}{f6}"
+	&" {yellow}{$bc}{rvrs on}{$a2:36}{rvrs off}{$be}{f6}{lt. blue}"
+	&" Good: 00000  Bad: 00000  Bytes: 000000{f6}":poke 53248,a:return
+{:60022}
+	a%=dv%(bn+6):b%=dr%(bn+6):goto {:60004}
+{:60024}
+	a%=d1%:b%=d2%:goto {:60004}
+	rem im.screens

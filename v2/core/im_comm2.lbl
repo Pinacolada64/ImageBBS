@@ -1,0 +1,25 @@
+{number:60000}
+{step:2}
+{alpha:alt}
+{crunch:on}
+	on im goto {:60002}:return
+{:60002}
+	&,18,0:gosub 1914:if peek(1063)<>250 then print# 131,"ate1v1m1"
+{:60004}
+	&,52,16,3:a$="C/G":if a%then a$="ASC{$c9:2}"
+	a%=qb:&"{f6:2}{white}Image Mini-Term, {white}{pound}%a {lt. blue}BPS, {white}{pound}$a {lt. blue}Mode{f6}"
+	&"{white}B{lt. blue}aud{blue}, {white}T{lt. blue}erm{blue}, {white}M{lt. blue}ode{blue}, {white}Q{lt. blue}uit{blue}: {white}"
+{:60010}
+	&"{pound}g1":if tr%<1 or an$="Q"then:&"Quit{f6:2}":a$="e0v0":goto {:60026}
+	if an$="T"then:&"Term{f6:2}(Press {f5}C= CTRL{f5} to Exit){f6:2}":&,10:goto {:60004}
+	if an$="M"then:&"Mode{f6}":&,52,16,2:goto {:60004}
+	if an$="B"then:&"Baud{f6}":gosub {:60020}:goto {:60004}
+	goto {:60010}
+{:60020}
+	lp=1:&"1-300 2-600 3-1200 4-2400 5-4800 6-9600 7-19200 8-38400: "
+	&"{pound}g1":a=val(an$)-1:if a<0 or a>7 then return
+	qb=300*2^a:&,41,a:a=qb:&"{pound}v7-{pound}!a{f6}"
+{:60026}
+	if peek(1063)<>250 then print# 131,"at"
+	return
+	rem im.comm2

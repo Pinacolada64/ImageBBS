@@ -13,18 +13,18 @@
 	A=ABS(INT(VAL(AN$))):RETURN
 {:3014}
 	RETURN
-	&"{f6} ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$cb}EEP {$d3}AME){f6:2}":RETURN
+	&"{f6} (RETURN TO KEEP SAME){f6:2}":RETURN
 	&"{pound}$JNAME?: {pound}I0":RETURN
 {:3020}
-	&"{clear}{f6}{pound}Q0{$c5}ND {$cf}F {$d4}RANSFER.{f6}":IM=1:GOTO 443
+	&"{clear}{f6}{pound}Q0END OF TRANSFER.{f6}":IM=1:GOTO 443
 {:3022}
-	&"{f6}{$d3}ORRY, {$ce}O {$d3}UCH {$c6}ILE.{f6}":RETURN
+	&"{f6}SORRY, NO SUCH FILE.{f6}":RETURN
 {:3024}
-	&"{f6}{orange}{$d3}ORRY, {$ce}OT {$c5}NOUGH {$c3}REDITS!{f6}":RETURN
+	&"{f6}{orange}SORRY, NOT ENOUGH CREDITS!{f6}":RETURN
 {:3026}
-	&"{f6}{$c7}O {$d4}O {pound}V7 {pound}$JS {$cd}ODE!{f6}":RETURN
+	&"{f6}GO TO {pound}V7 {pound}$JS MODE!{f6}":RETURN
 {:3028}
-	&"{f6} {$c1}BORTED!{f6}":IM=1:GOTO 443
+	&"{f6} ABORTED!{f6}":IM=1:GOTO 443
 {:3030}
 	B=ABS(VAL(A$)):B=INT(-10*B*(B<1)):RETURN
 {:3032}
@@ -35,40 +35,40 @@
 	CLOSE 15:OPEN 15,A,15:CLOSE 15:A=ST:RETURN
 	ON-(A%=1)GOTO{:3014}:&"S":RETURN
 {:3042}
-	&"{f6}{$d3}ORRY, {pound}$KS {$cf}NLY{f6}":RETURN
+	&"{f6}SORRY, {pound}$KS ONLY{f6}":RETURN
 {:3044}
-	LC=9:YY%=0:H$="{$cc}IBRARY":J$="{$c6}ILE":K$="{$c4}OWNLOAD":L$="{$d5}PLOAD":M$="{$cd}ULTI-"
-	I$=" {$d3}UBOP ":R$=CHR$(13):RETURN
+	LC=9:YY%=0:H$="LIBRARY":J$="FILE":K$="DOWNLOAD":L$="UPLOAD":M$="MULTI-"
+	I$=" SUBOP ":R$=CHR$(13):RETURN
 	B$=F$+","+T$:RETURN
 {:3050}
 	X=-((PEEK(2033)AND 127=1)AND((PEEK(2036)AND 4)=.)):RETURN
 {:3052}
 	Y%=A%:FOR I=1 TO A%:A$=" "+C$+": {f5}"+TT$(I)+"{f5}":PRINT# 2,A$:A%=Y%:NEXT
 	CLOSE 2:RETURN
-	&"{f6:2}{$c3}ORRECT?: ":GOTO 8
-	&"{f6:2} [{$d9}]ES [{$ce}]O [{$c5}]VERY [{$d3}]TART [{$c1}]BORT{f6:2}":RETURN
+	&"{f6:2}CORRECT?: ":GOTO 8
+	&"{f6:2} [Y]ES [N]O [E]VERY [S]TART [A]BORT{f6:2}":RETURN
 {:3062}
 	A$="A":GOTO 34
 	&"{clear}{down:14}":RETURN
 {:3070}
 	B=-(RC<>0)*INT(RC/254+.999):RETURN
-	B=.:FOR I=.TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
+	B=.:FOR I=.TO 9:A%=I:&"GROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
 {:3074}
-	FL=1:X=1000/QB/85/60:A=B%*254*X:V$="{f6}{$d3}ORRY, {$ce}OT {$c5}NOUGH "
-	D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":B%=B%*254/1024
-	A%=A:C%=(A-A%)*60:&"{pound}%B {pound}$D {$d4}OTAL, {$d4}RANSFER {$d4}IME: {pound}#2{pound}%A:{pound}%C{f6}"
-	IF A%>TR%AND TR%<100 THEN:&"{pound}$V{$d4}IME!{f6}":RETURN
-	A=7:GOSUB 11:IF A+(F2 AND 2)=.AND B%>L THEN:&"{pound}$V{$c3}REDITS!{f6}":RETURN
+	FL=1:X=1000/QB/85/60:A=B%*254*X:V$="{f6}SORRY, NOT ENOUGH "
+	D$="BLOCKS":IF CO%>2 THEN D$="KBYTES":B%=B%*254/1024
+	A%=A:C%=(A-A%)*60:&"{pound}%B {pound}$D TOTAL, TRANSFER TIME: {pound}#2{pound}%A:{pound}%C{f6}"
+	IF A%>TR%AND TR%<100 THEN:&"{pound}$VTIME!{f6}":RETURN
+	A=7:GOSUB 11:IF A+(F2 AND 2)=.AND B%>L THEN:&"{pound}$VCREDITS!{f6}":RETURN
 	IF DC%<DA%OR DA%=.THEN FL=.:RETURN
-	&"{f6}{$d3}ORRY, {$d9}OU {$c8}AVE {pound}$KED {$d9}OUR {$cc}IMIT.{f6}":RETURN
+	&"{f6}SORRY, YOU HAVE {pound}$KED YOUR LIMIT.{f6}":RETURN
 {:3088}
-	LP=1:&"{$d3}ORRY, NOT ENOUGH DIRECTORY SPACE HERE.{f6}":RETURN
+	LP=1:&"SORRY, NOT ENOUGH DIRECTORY SPACE HERE.{f6}":RETURN
 {:3090}
-	LP=1:&"{$d3}ORRY, NOT ENOUGH DISK SPACE HERE.{f6}":RETURN
+	LP=1:&"SORRY, NOT ENOUGH DISK SPACE HERE.{f6}":RETURN
 {:3092}
-	LP=1:&"{f6}{$d3}ORRY, {$c2}ATCH {pound}$KS {$d5}SING {pound}VL {$c1}RE {$ce}OT {$c3}URRENTLY {$d3}UPPORTED.":RETURN
+	LP=1:&"{f6}SORRY, BATCH {pound}$KS USING {pound}VL ARE NOT CURRENTLY SUPPORTED.":RETURN
 {:3100}
-	SY$="{$d5}/{$d8}"+"":SG$="":BA$="":OC$="":BZ=0:AN$=MID$(AN$,3)
+	SY$="U/X"+"":SG$="":BA$="":OC$="":BZ=0:AN$=MID$(AN$,3)
 	Q=0:A=8:GOSUB 11:IF A THEN Q=1
 {:3104}
 	GOSUB{:3002}:MM=1:GOSUB{:3990}:ON LM GOTO{:3116}
@@ -82,43 +82,43 @@
 {:3116}
 	LM$="":S$="":SG=.:OS=.:SB$="":GOTO 300
 {:3150}
-	AN$=STR$(CR):SB$="{$d5}"+"{$d8}":OS=SG:A=7:GOSUB 11:IF A THEN AN$=" {$d5}NLIMITED"
-	GOSUB{:3004}:GOSUB 61:D$="{$c2}LOCKS":IF CO%>2 THEN A=INT(A*254/1024):D$="{$cb}BYTES"
+	AN$=STR$(CR):SB$="U"+"X":OS=SG:A=7:GOSUB 11:IF A THEN AN$=" UNLIMITED"
+	GOSUB{:3004}:GOSUB 61:D$="BLOCKS":IF CO%>2 THEN A=INT(A*254/1024):D$="KBYTES"
 	IF ID>0 AND ID=SO%(BN)OR ID=SO%THEN Q=1
-	&"{f6} - {$d0}ROTOCOL   : {pound}VL{f6} - {$c3}REDIT {$d0}TS :{pound}V7{f6} - {pound}$D {$c6}REE: {pound}!A{f6}"
+	&"{f6} - PROTOCOL   : {pound}VL{f6} - CREDIT PTS :{pound}V7{f6} - {pound}$D FREE: {pound}!A{f6}"
 	IF PM$<>ML$THEN IM=2:GOSUB 442
-	A$=BB$(BN):GOSUB{:3006}:P$="{$d5}/{$c4} {$c5}X#"+MID$(STR$(BN),2)+": "+A$:CM$=P$
-	IF SG THEN P$=SG$+" {$d3}{$c9}{$c7}{f6:2}"+P$
+	A$=BB$(BN):GOSUB{:3006}:P$="U/D EX#"+MID$(STR$(BN),2)+": "+A$:CM$=P$
+	IF SG THEN P$=SG$+" SIG{f6:2}"+P$
 	RETURN
 {:3200}
-	G$=RIGHT$(AN$,1):IF TR%<1 OR A$="{$d1}"THEN{:3116}
+	G$=RIGHT$(AN$,1):IF TR%<1 OR A$="Q" then {:3116}
 	GOSUB{:3220}:ON 1-JM GOTO{:3208}
-	&"{f6}{$c1}UTO-{$cc}OGOFF IN 10 SECONDS{f6:2}{$d0}RESS {$d3}{$d0}{$c1}{$c3}{$c5} TO ABORT.{f6}":X=10
+	&"{f6}AUTO-LOGOFF IN 10 SECONDS{f6:2}PRESS SPACE TO ABORT.{f6}":X=10
 {:3206}
 	&"{pound}!X ":&,22,10:&,23:IF PEEK(780)<>32 THEN ON X GOTO{:3114}:X=X-1:GOTO{:3206}
 {:3208}
 	GOTO{:3112}
 {:3220}
 	GOSUB{:3012}:IF A THEN R=A:GOTO{:3900}
-	MM=-(Z$="{$c1}{$d3}")-2*(Z$="{$cd}{$d3}")-3*(Z$="{$c1}{$c3}")-4*(Z$="{$c9}{$c4}")-5*(Z$="{$d6}{$d3}"):IF MM THEN{:3994}
-	IF Z$="{$d3}{$c7}"THEN R=VAL(MID$(AN$,3)):MM=2:GOTO{:3990}
+	MM=-(Z$="AS")-2*(Z$="MS")-3*(Z$="AC")-4*(Z$="ID")-5*(Z$="VS"):IF MM THEN{:3994}
+	IF Z$="SG"THEN R=VAL(MID$(AN$,3)):MM=2:GOTO{:3990}
 	D=(Z$="<<")-(Z$=">>"):IF D<>0 AND SG<>0 THEN R=SG+D:MM=2:GOTO{:3990}
 	D=(A$="<"OR A$="{f4}")-(A$=">"OR A$=";"):IF D THEN{:3920}
-	ON-(A$="{$ce}")-2*(A$="{$cc}")-3*(A$="{$cd}")-4*(A$="{$d6}")GOTO{:3866},{:3850},{:3800},{:3820}
-	ON-(A$="$"OR A$="{$d3}")-2*(A$="{$d2}")-3*(A$="{$c4}")-4*(A$="{$d5}")GOTO{:3880},{:3830},{:3300},{:3500}
-	IF Q THEN ON-(A$="{$da}")GOTO{:3992}
-	&"{$d5}NKNOWN COMMAND. {$d4}YPE {f5}?{f5} FOR HELP.{f6}":RETURN
+	ON-(A$="N")-2*(A$="L")-3*(A$="M")-4*(A$="V")GOTO{:3866},{:3850},{:3800},{:3820}
+	ON-(A$="$"OR A$="S")-2*(A$="R")-3*(A$="D")-4*(A$="U")GOTO{:3880},{:3830},{:3300},{:3500}
+	IF Q THEN ON-(A$="Z")GOTO{:3992}
+	&"UNKNOWN COMMAND. TYPE {f5}?{f5} FOR HELP.{f6}":RETURN
 {:3300}
 	IF PM$="COPIER"THEN RETURN
-	L=CR:V=.:ON-(Z$="{$c4}{$cd}")GOTO{:3330}
+	L=CR:V=.:ON-(Z$="DM")GOTO{:3330}
 	GOSUB{:3700}:IF D%THEN RETURN
-	IF E%THEN{:3022}
+	IF E% then {:3022}
 	GOSUB{:3074}:IF FL THEN RETURN
 	&"{f6:2}{pound}$K {f5}{pound}$F{f5}?: ":GOSUB 8:IF A=0 THEN RETURN
-	GOSUB{:3720}:AN$="{$d2}ECEIVE":GOSUB{:3026}
+	GOSUB{:3720}:AN$="RECEIVE":GOSUB{:3026}
 	POKE 2043,1-(T$="S"):GOSUB{:3004}:AN$=F$:A$=F$+","+T$+",R":GOSUB 4
 	X=1:AN$=F$+","+T$:GOSUB{:3996}:&,16,0:CLOSE 2:GOSUB{:3070}:GOSUB{:3036}
-	IF B=0 THEN PRINT# 2," {$d4}RANSFER {$c1}BORTED!":CLOSE 2:GOTO{:3028}
+	IF B=0 THEN PRINT# 2," TRANSFER ABORTED!":CLOSE 2:GOTO{:3028}
 	PRINT# 2," "K$": {f5}"F$","T$"{f5}":CLOSE 2
 	GOSUB{:3020}:GOSUB{:3050}:IF X THEN RETURN
 	GOSUB 30:I=1:X=7:GOSUB 16:X=18:GOSUB 16:X=36:GOSUB 16:CLOSE 2
@@ -126,21 +126,21 @@
 	RETURN
 {:3330}
 	ON NB GOTO{:3092}:GOSUB{:3400}:IF KK=0 THEN RETURN
-	GOSUB{:3720}:&"{f6:2}{$d9}OU {$ce}OW {$c8}AVE 20 {$d3}ECONDS {$d4}O":AN$=M$+"{$d2}ECEIVE":GOSUB{:3026}
+	GOSUB{:3720}:&"{f6:2}YOU NOW HAVE 20 SECONDS TO":AN$=M$+"RECEIVE":GOSUB{:3026}
 	CLOSE 2:CLOSE 3:GOSUB{:3004}:GOSUB 3:&,22,200
 	&"{clear}":GOSUB{:3352}:&,22,20:IF BB%THEN GOSUB{:3028}:JM=0:GOTO{:3340}
 	GOSUB{:3020}
 {:3340}
 	GOSUB 30:I=F:X=7:GOSUB 16:X=18:GOSUB 16:X=36:GOSUB 16:CLOSE 2
 	GOSUB{:3036}:PRINT# 2,"  "M$K$:FOR I=1 TO F:PRINT# 2," "K$": {f5}"TT$(I)"{f5}":NEXT
-	IF BB%THEN PRINT# 2," {$d4}RANSFER {$c1}BORTED!"
+	IF BB%THEN PRINT# 2," TRANSFER ABORTED!"
 	CLOSE 2:A=7:GOSUB 11:B=A:A=1:IF B=1 OR(F2 AND 2)=2 THEN A=1
 	DC%=DC%+F:DC=DC+F:FOR I=1 TO F:B=A%(I):BD=BD+B:CR=CR-B*A:NEXT
 	RETURN
 {:3352}
 	F=1:BB%=0
 {:3354}
-	AN$=TT$(F):&,15,2:A$=AN$+",R":GOSUB{:3004}:GOSUB 4:IF E%THEN{:3362}
+	AN$=TT$(F):&,15,2:A$=AN$+",R":GOSUB{:3004}:GOSUB 4:IF E% then {:3362}
 	&,16,2:&,22,10:X=1:GOSUB{:3996}:&,16:GOSUB{:3050}:ON X GOTO{:3366}:GOSUB{:3070}
 	IF B=0 THEN{:3366}
 {:3360}
@@ -160,8 +160,8 @@
 {:3404}
 	GOSUB{:3438}
 {:3406}
-	&"{f6}{pound}Q0{$d3})CAN {$c3})LEAR {$c4})LOAD {$cb})ILL {$c1})DD {$d1})UIT: {pound}G1{pound}V7{f6}":A$=AN$
-	X=-(A$="{$d3}")-2*(A$="{$d1}")-3*(A$="{$c3}")-4*(A$="{$c4}")-5*(A$="{$c1}")
+	&"{f6}{pound}Q0S)CAN C)LEAR D)LOAD K)ILL A)DD Q)UIT: {pound}G1{pound}V7{f6}":A$=AN$
+	X=-(A$="S")-2*(A$="Q")-3*(A$="C")-4*(A$="D")-5*(A$="A")
 	IF TR%>0 THEN ON X GOTO{:3404},{:3412},{:3416},{:3414},{:3402}:GOTO{:3406}
 {:3412}
 	KK=0
@@ -173,34 +173,34 @@
 	GOSUB{:3466}:X=KK
 {:3420}
 	GOSUB{:3474}:IF AN$=""THEN RETURN
-	&"{white}: ":IF Y$<>"{$c5}"THEN:&"{pound}G1":Y$=AN$
-	IF Y$="{$c5}"THEN:&"{$c5}VERY{f6}":GOTO{:3434}
-	IF Y$="{$d9}"THEN:&"{$d9}ES{f6}":GOTO{:3434}
-	IF Y$="{$d3}"THEN:&"{$d3}TART{f6}":RETURN
-	IF Y$="{$c1}"THEN:&"{$c1}BORT{f6}":KK=X:RETURN
-	&"{$ce}O{f6}":GOTO{:3420}
+	&"{white}: ":IF Y$<>"E"THEN:&"{pound}G1":Y$=AN$
+	IF Y$="E"THEN:&"EVERY{f6}":GOTO{:3434}
+	IF Y$="Y"THEN:&"YES{f6}":GOTO{:3434}
+	IF Y$="S"THEN:&"START{f6}":RETURN
+	IF Y$="A"THEN:&"ABORT{f6}":KK=X:RETURN
+	&"NO{f6}":GOTO{:3420}
 {:3434}
 	GOSUB{:3452}:&"{f6}":ON FL GOTO{:3420}:KK=KK+1:TT$(KK)=MID$(STR$(B%),2)+":"+F$
 	GOTO{:3420}
 {:3438}
-	&"{f6}":IF KK=0 THEN:&"{$ce}O FILES SELECTED.{f6}":RETURN
+	&"{f6}":IF KK=0 THEN:&"NO FILES SELECTED.{f6}":RETURN
 	D$="":IF CO%>2 THEN D$="K"
 	T=0:FOR I=1 TO KK:AN$=TT$(I):&,15,6,58:A%=VAL(A$):T=T+A%
-	D$="{$c2}LKS":IF CO%>2 THEN D$="{$cb}":A%=INT(A*254/1024)
+	D$="BLKS":IF CO%>2 THEN D$="K":A%=INT(A*254/1024)
 	&"{white}{pound}!I){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%A {pound}$D{pound}{back arrow}15{cyan}{f5}{pound}V7{f5}{f6}":NEXT
-	D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":T=INT(T*254/1024)
-	&"{f6}{yellow}{pound}!T {$d4}OTAL {pound}$D{f6}{pound}Q0":RETURN
+	D$="BLOCKS":IF CO%>2 THEN D$="KBYTES":T=INT(T*254/1024)
+	&"{f6}{yellow}{pound}!T TOTAL {pound}$D{f6}{pound}Q0":RETURN
 {:3452}
-	FL=1:A=B%*254/QB*10/.95:A%=A:C%=(A-A%)*60:V$="{f6}{$d3}ORRY, YOU "
-	D%=B%:D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":D%=B%*254/1024
-	&"{pound}%D {pound}$D {$d4}OTAL, {$d4}RANSFER {$d4}IME: {pound}#2{pound}%A:{pound}%C{f6}":A=7:GOSUB 11
-	IF A%>TR%AND TR%<100 THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$d4}IME!":RETURN
-	IF A=0 AND B%>L THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH {$c3}REDITS!":RETURN
+	FL=1:A=B%*254/QB*10/.95:A%=A:C%=(A-A%)*60:V$="{f6}SORRY, YOU "
+	D%=B%:D$="BLOCKS":IF CO%>2 THEN D$="KBYTES":D%=B%*254/1024
+	&"{pound}%D {pound}$D TOTAL, TRANSFER TIME: {pound}#2{pound}%A:{pound}%C{f6}":A=7:GOSUB 11
+	IF A%>TR%AND TR%<100 THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH TIME!":RETURN
+	IF A=0 AND B%>L THEN LP=1:&"{pound}$VDON'T HAVE ENOUGH CREDITS!":RETURN
 	IF DC%>=DA%AND DA%<>0 THEN LP=1:&"{pound}$V HAVE DOWNLOADED YOUR LIMIT!":RETURN
 	FL=0:RETURN
 {:3466}
 	DR=7:GOSUB 3:CLOSE 15:IF ST THEN RETURN
-	POKE 53252,16:&"{f6}{$d0}ATTERN: {pound}I0":&,15,2:&,15,6,42:AN$=A$+"*"+AN$
+	POKE 53252,16:&"{f6}PATTERN: {pound}I0":&,15,2:&,15,6,42:AN$=A$+"*"+AN$
 	&"{f6}":CLOSE 1:OPEN 1,DV%,0,"$"+DR$+AN$
 	GET#1,A$,A$:&,8,1,1:&"{pound}$A{f6:2}":Y$="":RETURN
 {:3474}
@@ -209,13 +209,13 @@
 	&,15,6,34:F$=A$+","+T$:&"{yellow}{pound}%A{white}{pound}$D{pound}{back arrow}07{cyan}{f5}{pound}$F{f5}{pound}{back arrow}30":RETURN
 {:3500}
 	ON-(((F2 AND 1)=1)AND(Q=.))GOTO{:3042}:IF PM$="COPIER"THEN RETURN
-	&"{f6} - {pound}$L{$a0}{$d4}O {pound}V8:{f6}"
+	&"{f6} - {pound}$L TO {pound}V8:{f6}"
 	GOSUB 61:IF A<50 THEN{:3090}
 	GOSUB 60:IF A<0 THEN{:3088}
-	RS=TR%:ON-(Z$="{$d5}{$cd}")GOTO{:3600}
+	RS=TR%:ON-(Z$="UM")GOTO{:3600}
 	FL=0:GOSUB{:3700}:IF D%THEN RETURN
 	IF E%=.THEN:&"{pound}$B":RETURN
-	GOSUB{:3720}:AN$="{$d3}END":GOSUB{:3026}:GOSUB{:3004}
+	GOSUB{:3720}:AN$="SEND":GOSUB{:3026}:GOSUB{:3004}
 	A$=F$+","+T$+",W":TT$=F$+","+T$:GOSUB 4
 	AN$=TT$:X=2:GOSUB{:3996}:&,16,1:GOSUB{:3070}:D=B:GOSUB{:3664}:GOSUB{:3020}
 	IF E%OR B=0 THEN{:3522}
@@ -224,7 +224,7 @@
 {:3522}
 	GOSUB{:3028}:B$=F$:GOSUB{:3032}:GOSUB 5:&:RETURN
 {:3600}
-	ON NB GOTO{:3092}:GOSUB{:3720}:A%=100:AN$=M$+"{$d3}END":GOSUB{:3026}:GOSUB{:3004}:GOSUB 3
+	ON NB GOTO{:3092}:GOSUB{:3720}:A%=100:AN$=M$+"SEND":GOSUB{:3026}:GOSUB{:3004}:GOSUB 3
 	&"{clear}":GOSUB{:3650}:GOSUB{:3070}:IF B=.THEN GOSUB{:3028}:JM=.:B%=.
 	GOSUB{:3664}:GOSUB{:3020}:A%=F:D=.:IF B%=.THEN B$=MID$(TT$(A%+1),3):GOSUB{:3032}
 	IF A%=.THEN GOSUB{:3028}:GOTO{:3620}
@@ -255,38 +255,38 @@
 	D%=.:POKE 53252,16:&"{f6}{pound}$JNAME: {pound}I0":F$=AN$
 	IF F$=""OR F$="$"OR LEFT$(F$,1)="@"OR MID$(F$,2,1)=":"THEN D%=1:RETURN
 	IF FL THEN FL=.:T$="S":F$=F$+","+T$:GOTO{:3710}
-	&"{pound}$JTYPE: {pound}G1":T$=MID$("SP",1-(AN$="{$d0}"),1)
-	&MID$("{$d3}EQ{$d0}RG",1-3*(T$="P"),3):&"{f6}"
+	&"{pound}$JTYPE: {pound}G1":T$=MID$("SP",1-(AN$="P"),1)
+	&MID$("SEQPRG",1-3*(T$="P"),3):&"{f6}"
 {:3710}
 	GOSUB{:3004}:A$=F$+","+T$+",R":GOSUB 4:CLOSE 2:B%=.:IF E%OR FL THEN RETURN
 	CLOSE 1:OPEN 1,DV%,0,"$"+DR$+F$:GET#1,A$,A$:&,8,1,1:&,8,1,1
 	CLOSE 1:B%=VAL(A$):RETURN
 {:3720}
 	JM=A%:&,52,23,3:IF A%=.THEN A%=JM:JM=.:RETURN
-	A%=JM:&"{f6}{lt. blue}{$c1}UTO-{$cc}OGOFF WHEN {$c3}OMPLETED?: ":GOSUB 8:JM=A:RETURN
+	A%=JM:&"{f6}{lt. blue}AUTO-LOGOFF WHEN COMPLETED?: ":GOSUB 8:JM=A:RETURN
 {:3800}
-	GOSUB{:3826}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3818}
-	&"{f6}{$d3}END {$cd}AIL {$d4}O {pound}V7?: ":GOSUB 8:IF A=0 THEN RETURN
+	GOSUB{:3826}:IF A$="{up arrow}"OR A$="RES" then {:3818}
+	&"{f6}SEND MAIL TO {pound}V7?: ":GOSUB 8:IF A=0 THEN RETURN
 	IM=1:GOSUB 440:IF KK=0 THEN RETURN
-	A$="{$c6}EEDBACK:":&"{f6}{$c6}ILING{pound}$I{pound}$A":C$=A$+P$
+	A$="FEEDBACK:":&"{f6}FILING{pound}$I{pound}$A":C$=A$+P$
 	Z=1:A$="W":GOSUB 32:IF E%THEN Z=0:A$="A":GOSUB 32
 	PRINT# 2,NA$R$ID;R$D1$R$C$:&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
 	GOSUB 30:I=1:X=3:GOSUB 16:X=14:GOSUB 16:X=32:GOSUB 16:X=25:ON Z GOSUB 16
 	IF Y=1 THEN FOR X=2 TO 24 STEP 11:GOSUB 16:NEXT:X=31:GOSUB 16
 	CLOSE 2:RETURN
 {:3818}
-	&"{$d4}HERE IS NO{pound}$IHERE.{f6}":RETURN
+	&"THERE IS NO{pound}$IHERE.{f6}":RETURN
 {:3820}
-	B$="{$d0}RESENTLY {$ce}O":GOSUB{:3826}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3824}
-	AN$=A$:&,15,1:B$=" {$d5}SER #"+STR$(SO%(BN))+", "+AN$+" {$c9}S {$d4}HE"
+	B$="PRESENTLY NO":GOSUB{:3826}:IF A$="{up arrow}"OR A$="RES" then {:3824}
+	AN$=A$:&,15,1:B$=" USER #"+STR$(SO%(BN))+", "+AN$+" IS THE"
 {:3824}
-	LP=1:&"{f6}{pound}$B{pound}$I{$c8}ERE.":RETURN
+	LP=1:&"{f6}{pound}$B{pound}$IHERE.":RETURN
 {:3826}
 	X=SO%(BN):A$="{up arrow}":IF X THEN GOSUB 35:GOSUB 1:&,2,2:CLOSE 2
 	TT$=A$:AN$=A$:&,15,1:RETURN
 {:3830}
 	FL=0:GOSUB{:3700}:IF D%THEN RETURN
-	IF E%THEN{:3022}
+	IF E% then {:3022}
 	Y%=0:A=7:GOSUB 11:IF A+Q+(F2 AND 2)=.THEN ON-(CR<B%)GOTO{:3024}:Y%=YY%
 	ON-(T$="S")-2*(T$="P")GOTO{:3844},{:3838}:RETURN
 {:3838}
@@ -296,12 +296,12 @@
 {:3844}
 	A$=F$:GOSUB{:3004}:GOSUB 13:CR=CR+(S>0)*Y%*B%:RETURN
 {:3850}
-	GOSUB{:3852}:&"{cyan}  {rvrs on} {$d4}O {$c3}HANGE, {$c5}NTER {$ce}EW {pound}$H {$ce}UMBER. {f6}":RETURN
+	GOSUB{:3852}:&"{cyan}  {rvrs on} TO CHANGE, ENTER NEW {pound}$H NUMBER. {f6}":RETURN
 {:3852}
 	GOSUB{:3010}:R%=A AND 1:IF A<1 OR A>BZ THEN A=1:R%=1
-	&"{f6}{purple}{$c1}VAILABLE {$cc}IBRARIES:{f6:2}{orange}{pound}VJ"
+	&"{f6}{purple}AVAILABLE LIBRARIES:{f6:2}{orange}{pound}VJ"
 	FOR X=A TO BZ:A$=BB$(X):A%=X:GOSUB{:3030}:C$=" ":IF ID>0 AND SO%(X)=ID THEN C$=">"
-	B$=MID$("{lt. blue}{$c3}RED{green}{$c4}{$cf}-{$c3}{purple}{$c6}REE{yellow}{$c4}{$cf}-{$c6}{purple}{$d0}W{$c3}R{lt. red}{$d0}W{$c4}{$c3}{lt. green}{$d0}W{$c6}R{blue}{$d0}W{$c4}{$c6}",B*5+1,5)
+	B$=MID$("{lt. blue}CRED{green}DO-C{purple}FREE{yellow}DO-F{purple}PWCR{lt. red}PWDC{lt. green}PWFR{blue}PWDF",B*5+1,5)
 	A$=BB$(X):GOSUB{:3006}:&" {white}{rvrs on}{pound}#2{pound}# {pound}%A{lt. red}{pound}$C{pound}$B {pound}$A{pound}{back arrow}38 {rvrs off}":IF RC THEN X=BZ
 	IF X<>BZ THEN:&MID$(" {f6}",2+((X AND 1)=R%),1)
 	NEXT:&"{f6}{orange}{pound}VJ":RETURN
@@ -314,20 +314,20 @@
 	GET#1,A$,A$:&,8,1,1:&A$+"{f6}":RC=.:SH=0
 {:3886}
 	&,8,1,1:S=ST:B%=VAL(A$)*254/1024:G$=MID$(A$,26,3)
-	IF MID$(A$,7,1)="B"THEN:&"{f6:2}  {pound}%B{$cb} {$c6}REE{f6}":GOTO{:3892}
+	IF MID$(A$,7,1)="B"THEN:&"{f6:2}  {pound}%BK FREE{f6}":GOTO{:3892}
 	AN$=MID$(A$,8):&,15,6,34:&"{f6}{pound}#4{pound}# {pound}%BK {f5}{pound}V7{f5}{pound}{back arrow}30{pound}$G":IF S+RC+SH=0 THEN{:3886}
 {:3892}
 	&"{f6:2}":CLOSE 1:RETURN
 {:3894}
-	POKE 53252,16:&"{f6}{$d0}ATTERN: {pound}I0":&,15,2:&,15,6,42:AN$=AN$+"*"+A$
+	POKE 53252,16:&"{f6}PATTERN: {pound}I0":&,15,2:&,15,6,42:AN$=AN$+"*"+A$
 	CLOSE 1:OPEN 1,DV%,0,"$"+DR$+AN$:RETURN
 {:3900}
-	IF R=0 THEN AN$="":GOSUB{:3852}:P$="{f6}{lt. blue}{$d7}HICH {$d5}/{$d8}?":GOSUB 6:GOSUB{:3002}
+	IF R=0 THEN AN$="":GOSUB{:3852}:P$="{f6}{lt. blue}WHICH U/X?":GOSUB 6:GOSUB{:3002}
 	A=0:IF R<1 OR R>BZ THEN GOSUB{:3924}:GOTO{:3914}
 	F2=0:A$=BB$(R):IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN F2=VAL(MID$(A$,2,1))
 	IF(F2 AND 4)=4 THEN GOSUB{:3926}:IF A THEN RETURN
 	ON-(MID$(OC$,R,1)="0")GOTO{:3916}:&"{f6}":A$=BB$(R):GOSUB{:3006}:LP=1:&
-	&"{$d3}ORRY, THAT AREA IS PRESENTLY CLOSED.{f6}"
+	&"SORRY, THAT AREA IS PRESENTLY CLOSED.{f6}"
 	IF ID>.AND ID=SO%(R)OR ID=SO%OR Q THEN{:3916}
 {:3914}
 	A=1:RETURN
@@ -339,21 +339,21 @@
 {:3922}
 	R=R+D:IF R>=1 AND R<=BZ THEN GOSUB{:3900}:ON A GOTO{:3922}:RETURN
 {:3924}
-	&"{f6} {$d5}NKNOWN BOARD NUMBER.{f6}":RETURN
+	&"{f6} UNKNOWN BOARD NUMBER.{f6}":RETURN
 {:3926}
 	IF MID$(BA$,R,1)="1"THEN A=0:RETURN
 	A$=BB$(R):GOSUB{:3006}:B$=A$
-	A$="E.{$d5}/{$d8}":DR=3:GOSUB 4:X=E%(R)+1:GOSUB 1:&,2,2:C$=A$
+	A$="E.U/X":DR=3:GOSUB 4:X=E%(R)+1:GOSUB 1:&,2,2:C$=A$
 {:3932}
-	&"{f6}{white}{$d3}UB {pound}$H #{pound}#0{pound}%A: {yellow}{pound}$B{f6:2}  {$d0}ASSWORD?{f6:2}  {$d0}{$d7}: ":PL=1:&,6:&"{f6:2}"
-	IF AN$=C$THEN A=0:&" {$c3}ORRECT!{f6}":BA$=LEFT$(BA$,R-1)+"0"+MID$(BA$,R+1):RETURN
-	&" {$d3}ORRY, THAT IS NOT CORRECT.{f6:2}  {$d4}RY {$c1}GAIN?: ":GOSUB 8:GOTO{:3932}
+	&"{f6}{white}SUB {pound}$H #{pound}#0{pound}%A: {yellow}{pound}$B{f6:2}  PASSWORD?{f6:2}  PW: ":PL=1:&,6:&"{f6:2}"
+	IF AN$=C$THEN A=0:&" CORRECT!{f6}":BA$=LEFT$(BA$,R-1)+"0"+MID$(BA$,R+1):RETURN
+	&" SORRY, THAT IS NOT CORRECT.{f6:2}  TRY AGAIN?: ":GOSUB 8:GOTO{:3932}
 	A=1:RETURN
 {:3940}
-	A%=BN:&"{f6}{$c5}XCHANGE {pound}$H #{pound}%A: ":A$=BB$(BN):GOSUB{:3006}:LP=1:&:D2$=A$
-	IF EM=0 THEN DR=1:GOSUB 3:A$="S.{$d5}/{$d8}"+STR$(E%(BN)):GOSUB 14
+	A%=BN:&"{f6}EXCHANGE {pound}$H #{pound}%A: ":A$=BB$(BN):GOSUB{:3006}:LP=1:&:D2$=A$
+	IF EM=0 THEN DR=1:GOSUB 3:A$="S.U/X"+STR$(E%(BN)):GOSUB 14
 	Q=.:A=12:GOSUB 11:B=A:A=8:GOSUB 11:IF A+B THEN Q=1
-	IF ID>.AND ID=SO%(BN)OR ID=SO%THEN Q=1:&"{f6} - {$d9}OU {$c8}AVE{pound}$I{$c1}CCESS {$c8}ERE.{f6}"
+	IF ID>.AND ID=SO%(BN)OR ID=SO%THEN Q=1:&"{f6} - YOU HAVE{pound}$IACCESS HERE.{f6}"
 {:3948}
 	GOSUB{:3004}:GOTO 62
 {:3990}
