@@ -3,8 +3,14 @@
 __history
 # exclude project files:
 *.epp
+
 # exclude disk images:
-*.[dD](64|71|81)
+*.d64
+*.D64
+*.d71
+*.D71
+*.d81
+*.D81
 
 # exclude C64 binaries:
 *.prg

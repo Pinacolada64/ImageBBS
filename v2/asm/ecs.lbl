@@ -209,7 +209,8 @@ ecslong2:
 	beq ecslong4
 ;nope
 ecslong3:
-	clc:rts
+	clc
+	rts
 ;yup
 ecslong4:
 	ldy #24

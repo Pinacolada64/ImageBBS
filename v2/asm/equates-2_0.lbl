@@ -1,133 +1,40 @@
 ;
-; image 2.0 equates
+; Image BBS v2.0 equates
 ;
 	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
 	chrget	= $0073	; two bytes for zero-page JSR
 	chrgot	= $0079 ; same
 	status	= $90	; Kernal I/O Status Word
-	ridbe	= $029b	; RS-232: Index to End of Receive Buffer
-	ridbs	= $029c	; RS-232: Index to Start of Receive Buffer
-
-; CIA #2 Time-of-Day clock stuff
-	ten	= $dc08	; tenths of a second
-	scs	= $dc09 ; seconds
-	min	= $dc0a ; minutes
-	hrs	= $dc0b ; hours
-;	carrier = $dd01 ; FIXME: This definition conflicts with $d009;
-			; "carrier" is referenced by irqhn.s
-			; 56577: CIA #2 Data Port B
-			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
-	colors	= $e8da	; flashing chat page color table
-
-; Kernal routines:
-
-	setmsg	= $ff90
-	readst	= $ffb7
-	setlfs	= $ffba
-	setnam	= $ffbd
-	openf	= $ffc0
-	closef	= $ffc3
-	chkin	= $ffc6
-	chkout	= $ffc9
-	clrchn	= $ffcc
-	chrin	= $ffcf
-	chrout	= $ffd2
-	loadf	= $ffd5
-	savef	= $ffd8
-	getin	= $ffe4
-
-; Extended BASIC tokens:
-
-	poketok	= 151	; poke $addr,$val
-	peektok	= 194	; peek($addr)
-	systok	= 158	; sys $addr
-	loadtok	= 147	; load"filename",<device>,<segment>
-	newtok	= 162	; "new <line_num>" erases <line_num>-
-
-; BASIC routines:
-
-	error	= $a437
-	linkprg	= $a533
-	gone1	= $a7e7
-	gone2	= $a7ea
-	linget	= $a96b
-	frmnum	= $ad8a
-	frmevl	= $ad9e ; added by pina
-	eval1	= $ae8d
-	parchk	= $aef1
-	comma	= $aefd
-	chkcom	= $aefd
-	synerr	= $af08
-
-	ptrget1	= $b0e7
-	ilqerr	= $b248
-	retbyt	= $b3a2
-	makerm1	= $b475
-	getbytc	= $b79b
-	getnum	= $b7eb
-	getadr	= $b7f7
-	retval	= $bc49
-
-	syscll	= $e130
-	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
-
-; Image routines:
-; "use_build" is un-defined in build.lbl so the labels defined here which most other modules use
-; don't result in "redefined label" errors in build.lbl which has them defined already.
-; FastAssembler apparently didn't output an error upon label redefinition.
-	jmptbl	= $a000
-	outastrp= $cd00
-{ifndef:use_build}
-	usetbl1	= $cd03
-	swapper	= $cd06
-	swapagn	= $cd09
-{endif}
-	trace	= $cd0c
-{ifndef:use_build}
-	chkspcl	= $cd0f
-	convchr	= $cd12
-	buf2	= $ce27
-	buffer	= $ce77
-{endif}
 ;
-; serial # stuff
+; screen parameters
 ;
-	bsnpre	= $02fd	; 765 serial # prefix (a/b/g...)
-	bsnval	= $02fe	; 766 serial # lo byte, 767=hi byte
+	rvs	= 199	; $c7 Flag: Print Reverse Characters? 0=No
+	crsrflg	= 204	; $cc
+	undchr	= 206	; $ce
+	crsrmode= 207	; $cf Flag: Was Last Cursor Blink on or off?
+	curptr	= 209	; $d1
+	scnpos	= 211	; $d3, current screen column (0-39)
+	scnclm	= scnpos; screen column
+	sline	= 214	; $d6, current screen row (0-24)
+	colptr	= 243	; $f3
 
-	death	= $1800
-	prgstart= $1801
-	bmpstart= $2001
-	mmpstart= $3001
-	lmpstart= $4001
-	prgend	= $5000
-	imstart	= $5001
-	protostart = $c000
-	protoend= $ca80
-;
-; module line #s/sizes:
-;
-	mainline= 1000
-	trapline= 2000
-	imodline= 2300
-	immdline= 3000
-	immdsize= $a00
-;
-; screen display stuff:
-;
-	ldisp	= $0400+640
-	lcolr	= $d800+640
-	adisp	= $0400+880
-	acolr	= $d800+880
-	sdisp	= $0400+920
-	scolr	= $d800+920
-	tdisp	= $0400+960
-	tcolr	= $d800+960
+; original docs had this labeled "mcolor," same as $07ec (MCI color).
+; I'm favoring "color," "Mapping the C64"'s label:
+	color	= 646	; $0286: Current Foreground Color for Text
+	undcol	= 647	; $0287
+
+	ridbe	= $029b	; 667, RS-232: Index to End of Receive Buffer
+	ridbs	= $029c	; 668, RS-232: Index to Start of Receive Buffer
 
 ; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
 
 	fkeybuf	= 679 ; $02a7-$02c6 (679-710), $1f (31) bytes
 	emptym0	= 711 ; $02c7-$02ff (711-767), $39 (57) bytes
+;
+; serial # stuff
+;
+	bsnpre	= $02fd	; 765 BBS serial # prefix (a/b/g...)
+	bsnval	= $02fe	; 766 BBS serial # lo byte, 767=hi byte
 
 	cassbuff= 828
 	idlemax	= 830
@@ -173,35 +80,21 @@
 	cline	= 1019
 	lines	= 1022 ; $03f8: kk, # of lines in text editor buffer
 	modes	= 1023
-;
-; garbage collection stuff
-;
-	gc	= $c000	; module load addr
-	gchide	= $e000	; swaps to
-	gclen	= 4	; # pages
-;
-; extended command set stuff:
-;
-	ecs	= $c000	; module load addr
-	ecshide	= $e400	; swaps to
-	ecslen	= 10	; # pages (seems like a lot)
-;
-; screen parameters
-;
-	rvs	= 199	; $c7 Flag: Print Reverse Characters? 0=No
-	crsrflg	= 204	; $cc
-	undchr	= 206	; $ce
-	crsrmode= 207	; $cf Flag: Was Last Cursor Blink on or off?
-	curptr	= 209	; $d1
-	scnpos	= 211	; $d3, current screen column (0-39)
-	scnclm	= scnpos; screen column
-	sline	= 214	; $d6, current screen row (0-24)
-	colptr	= 243	; $f3
 
-; original docs had this labeled "mcolor," same as $07ec (MCI color).
-; I'm favoring "color," "Mapping the C64"'s label:
-	color	= 646	; $0286: Current Foreground Color for Text
-	undcol	= 647	; $0287
+;
+; screen display stuff:
+; screen RAM is  1024-2023  ($0400-$07e7)
+;  color RAM is 55296-56296 ($d800-$dbe7)
+;
+	ldisp	= $0400+640
+	lcolr	= $d800+640
+	adisp	= $0400+880
+	acolr	= $d800+880
+	sdisp	= $0400+920
+	scolr	= $d800+920
+	tdisp	= $0400+960
+	tcolr	= $d800+960
+
 ;
 ; Message Command Interpreter variables:
 ;
@@ -232,26 +125,32 @@
 	tmp3	= $07fe	; 2046
 	tmp4	= $07ff	; 2047
 
-; BBS flags (really VIC-II registers)
+;
+; rs232 jump table
+;
+	rs232	= $0800
+	rsinabl = rs232 + $03
+	rsdisab = rs232 + $06
+	rsget	= rs232 + $09
+	rsout	= rs232 + $0c
+	rsbaud	= rs232 + $0f
+	rschar	= rs232 + $12
 
-	local	= $d000 ; 53248: 1=no modem output with &
-	case	= $d001 ; 53249
-	editor	= $d002 ; 53250
-	tsr	= $d003 ; 53251: needed by inline.s, I think
-	llen	= $d004 ; 53252: input line length
-	flag	= $d005 ; 53253
-	chat	= $d006 ; 53254
-	inchat	= $d007 ; 53255
-	chatpage= $d008 ; 53256: 1=chat page on
-	access	= $d009 ; 53257: [from 1.2] 2.0 was labeled "carrier"
-	mxor	= $d00a ; 53258
-	mkolor	= $d00b ; 53259
-	mupcase	= $d00c ; 53260
-	irqcount= $d00d ; 53261
-	trans	= $d00e ; 53262
-	index	= $d00f ; 53263
+	ribuf	= $0b00	; rs232 input buffer
+	robuf	= $0b80	; rs232 output buffer
 
-	tempscn = $1000 ; $140 bytes
+	wedgemem= $0c00
+	trapoff	= wedgemem+0
+	trapon	= wedgemem+3
+	loadprg	= wedgemem+6
+	arraysav= wedgemem+9
+	arrayres= wedgemem+12
+	forcegc	= wedgemem+15
+
+;
+; temporary storage for screen mask?
+;
+	tempscn = $1000 ; 4096, $140 (320) bytes
 	tempscn0= tempscn+000
 	tempscn1= tempscn+040
 	tempscn2= tempscn+080
@@ -299,18 +198,11 @@
 	tmp6	= $12fc	; 4860
 	tmp7	= $12fd	; 4861
 	freq	= $12fe	; 4862
-;
-; rs232 jump table
-;
-	rs232	= $0800
-	rsinabl = rs232 + $03
-	rsdisab = rs232 + $06
-	rsget	= rs232 + $09
-	rsout	= rs232 + $0c
-	rsbaud	= rs232 + $0f
-	rschar	= rs232 + $12
 
-	chktbl	= $1300 ;$10 bytes (8*2 per screen)
+;
+; tables
+;
+	chktbl	= $1300 ;$10 bytes (8 lightbar positions*2 checks per page, 8 pages=128 bits)
 	bartbl	= $1310 ;$c0 bytes
 	arryptrs= $13d0 ;$10 bytes
 	daysofm	= $13e0 ;$0c bytes
@@ -323,7 +215,7 @@
 	tblcta2	= $1620 ;$20 bytes
 	tblcta3	= $1640 ;$20 bytes
 	alarmtb	= $1660 ;$80 bytes
-	date1	= $16e0 ;$20 bytes "Thu Sep 13, 2018 02:17 pm pstxxx"
+	date1	= $16e0 ;$20 bytes "Thu Sep 13, 2018 02:17 PM PSTxxx"
 	lobytes	= $1700 ;25 bytes
 	hibytes	= $1719 ;25 bytes
 	lobytec	= $1732 ;25 bytes
@@ -331,13 +223,141 @@
 	emptym4	= $1764 ;28 bytes
 	pmodetbl= $1780 ;$80 bytes
 
-	ribuf	= $0b00	; rs232 input buffer
-	robuf	= $0b80	; rs232 output buffer
+; Image IRQ jump table (under ROM):
+	jmptbl	= $a000
 
-	wedgemem= $0c00
-	trapoff	= wedgemem+0
-	trapon	= wedgemem+3
-	loadprg	= wedgemem+6
-	arraysav= wedgemem+9
-	arrayres= wedgemem+12
-	forcegc	= wedgemem+15
+; BASIC routines:
+	error	= $a437
+	linkprg	= $a533
+	gone1	= $a7e7
+	gone2	= $a7ea
+	linget	= $a96b
+	frmnum	= $ad8a
+	frmevl	= $ad9e ; added by pina
+	eval1	= $ae8d
+	parchk	= $aef1
+	comma	= $aefd
+	chkcom	= $aefd
+	synerr	= $af08
+
+	ptrget1	= $b0e7
+	ilqerr	= $b248
+	retbyt	= $b3a2
+	makerm1	= $b475
+	getbytc	= $b79b
+	getnum	= $b7eb
+	getadr	= $b7f7
+	retval	= $bc49
+
+; transfer protocol area
+
+	protostart = $c000
+	protoend= $ca80
+
+;
+; garbage collection stuff
+;
+	gc	= $c000	; module load addr
+	gchide	= $e000	; swaps to
+	gclen	= 4	; # pages
+;
+; extended command set stuff:
+;
+	ecs	= $c000	; module load addr
+	ecshide	= $e400	; swaps to
+	ecslen	= 10	; # pages (seems like a lot)
+
+; Image routines:
+
+	outastrp= $cd00
+	usetbl1	= $cd03
+	swapper	= $cd06
+	swapagn	= $cd09
+	trace	= $cd0c
+	chkspcl	= $cd0f
+	convchr	= $cd12
+
+; buffers:
+
+	buf2	= $ce27
+	buffer	= $ce77
+
+; BBS flags (really, unused VIC-II registers)
+
+	local	= $d000 ; 53248: 1=no modem output with &
+	case	= $d001 ; 53249
+	editor	= $d002 ; 53250
+	tsr	= $d003 ; 53251: needed by inline.s, I think
+	llen	= $d004 ; 53252: input line length
+	flag	= $d005 ; 53253
+	chat	= $d006 ; 53254
+	inchat	= $d007 ; 53255
+	chatpage= $d008 ; 53256: 1=chat page on
+	access	= $d009 ; 53257: [from 1.2] 2.0 was labeled "carrier"
+	mxor	= $d00a ; 53258
+	mkolor	= $d00b ; 53259
+	mupcase	= $d00c ; 53260
+	irqcount= $d00d ; 53261
+	trans	= $d00e ; 53262
+	index	= $d00f ; 53263
+
+; CIA #2 Time-of-Day clock stuff
+	ten	= $dc08	; tenths of second
+	scs	= $dc09 ; seconds
+	min	= $dc0a ; minutes
+	hrs	= $dc0b ; hours
+;	carrier = $dd01 ; This definition conflicts with $d009;
+			; "carrier" is referenced by irqhn.s
+			; 56577: CIA #2 Data Port B
+			; Bit 4: RS-232 carrier detect (DCD)/ Pin H of User Port
+
+	colors	= $e8da	; flashing chat page color table
+
+; Kernal routines:
+
+	syscll	= $e130
+	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
+
+	setmsg	= $ff90
+	readst	= $ffb7
+	setlfs	= $ffba
+	setnam	= $ffbd
+	openf	= $ffc0
+	closef	= $ffc3
+	chkin	= $ffc6
+	chkout	= $ffc9
+	clrchn	= $ffcc
+	chrin	= $ffcf
+	chrout	= $ffd2
+	loadf	= $ffd5
+	savef	= $ffd8
+	getin	= $ffe4
+
+;
+; Extended BASIC tokens:
+;
+
+	poketok	= 151	; poke $addr,$val
+	peektok	= 194	; peek($addr)
+	systok	= 158	; sys $addr
+	loadtok	= 147	; load"filename",<device>,<segment>
+	newtok	= 162	; "new <line_num>" erases <line_num>-
+
+;
+; module addresses:
+;
+	death	= $1800 ; 1.3 is $0800
+	prgstart= $1801
+	bmpstart= $2001
+	mmpstart= $3001
+	lmpstart= $4001
+	prgend	= $5000
+	imstart	= $5001
+;
+; module line #s/sizes:
+;
+	mainline= 1000
+	trapline= 2000
+	imodline= 2300
+	immdline= 3000
+	immdsize= $a00

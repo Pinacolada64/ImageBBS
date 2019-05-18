@@ -1,9 +1,13 @@
 #!/bin/bash
 # C64List .lbl linter -- fix some issues with .prg -> .lbl conversion
 
+# 2019/02/22: C64List 3.50 handles uppercase characters in listings now;
+# removed e.g. "A" -> "{A}" abstraction, is now just "A" in output file
+
 # https://unix.stackexchange.com/questions/95939/how-exactly-do-i-create-a-sed-script-and-use-it-to-edit-a-file
 
-# output_file="$1"
+output_file="$1"
+cat $output_file | \
 
 # echo <<EOFstring
 # string='PRINT"{\$c1}{\$c2}{\$c3}{\$c4}" \
