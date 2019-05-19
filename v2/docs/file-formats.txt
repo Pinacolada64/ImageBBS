@@ -16,15 +16,15 @@ Password
 
 
 (P)arameters	s.m.params
-1 - Computer type	(b$)
-2 - Graphics mode	(z$)
-3 - characters/line	(a%)
-4 - lines/screen	(b%)
-5 - linefeeds		(y$)
-6 - Expert mode		(x$)
-7 - Protocol?		(d$)
-8 - More prompt		(w$)
-9 - Graphic Menu?
+1 - Computer Type	(b$)
+2 - Graphics Mode	(z$)
+3 - Characters/line	(a%)
+4 - Lines/screen	(b%)
+5 - Linefeeds		(y$)
+6 - Expert Mode		(x$)
+7 - U/D Protocol	(d$)
+8 - "More?" prompt	(w$)
+9 - Cursor Menu mode
 
 v$ is something...
 t$ is something...
@@ -41,21 +41,22 @@ s.protos:
 protocol help file
 
 s.m.protos:
-unknown order, but example in line 60110:
+unknown format, but example in im.params, line 60110:
 copier00 Copier
 
 s.editor
 s.logon help
 s.menu [1...9]
-s.lines/screen
+s.lines/screen	read from +/lo.on for a new user after +.new
+		TODO: move this into +.new?
 
-s.detect	read from lo/firstimage
+s.detect	read from i.lo/firstimage [2.0]
 
-s.welcome
-	b$	str$(ca)
-	g%	uh (# of users?)
-	f%	cn (caller #)
-	an$	last caller handle
+s.welcome	read from +/lo.on:
+	b$   str$(ca)	Total number of calls since BBS began
+	g%   uh		Number of active user accounts
+	f%   cn 	Total number of calls since last reboot
+	an$  d3$	Handle of last user on the system
 
 s.chat [123]
 
@@ -68,7 +69,7 @@ Ex:	PSThhmmPacific Standard Time
 
 e.macros: record #1 is # of macros, author name is displayed too
 
-e.idle cmds	*** MISSING ***
+e.idle cmds	[NEW] created with "+.edit idlecmds"
 
 i/lo-fmail	forced mail
 
@@ -81,35 +82,54 @@ e.lightdefs	Lightbar default checkmarks on bootup
 			1: On  at bootup
 			-: Not user-selectable
 
-e.last		last 7 callers (struct format)
+e.last		[2.0] last 7 callers (struct format)
 		20 Name		[Pinacolada          ]
 		28 City/State	[City, State                 ]
 
 user data file (u.config):
-1	handle		Pinacolada
-2	password	******
-3	first name	Ryan
-4	last name	Sherwood
-5	phone number	(253) 945-8256
-6	last call	14112071201
-7	a$		90
-8	ct%		1
-9	tc%		1
-10	co%		1
-11	ll%		6184
-12	ul		1
-13	uf$		01000PDT0000
-14	em		0
-15	dc		0
-16	uc		0
-17	bd		0
-18	bu		0
-19	cr		0
-20	ps		0
-21	rp		0
-22	d5$		508122586181
-23	fl$		19111911111111190000
+gosub 1070 writes this (calls im.misc)
+1	handle		na$	Pinacolada
+2	password	pw$	******
+3	first name	ff$	Ryan
+4	last name	ll$	Sherwood
+5	phone number	ph$	(253) 945-8256
+6	last call	ld$	14112071201
+7	1 char: access level, 1 char: af% [network related?]
+			ac%,af%	90
+8	calls today	ct%	1
+9	total calls	tc%	1
+10	computer type	co%	1
+11	line length + 256 * screen height
+			ll%,mp%	6184
+12	default proto	ul	1
+13	user flags	uf$	01000PDT0000
+14	expert mode	em	0
+15	files DLed	dc	0
+16	files ULed	uc	0
+17	blocks DLed	bd	0
+18	blocks ULed	bu	0
+19	credits		cr	0
+20	posts		ps	0
+21	responses	rp	0
+22	11 chars: logon time, 1 char: carrier drop (bool)
+			lt$,cd%	508122586181
+23	access flags	fl$	19111911111111190000 [20]
+	(see "variables")
 
-high bit set of ll%=more prompt on? screen height
+Current +.ED:
+ DE#1    (Type "N" For Next Page)
+
+ 1>-Handle      : PINACOLADA
+ 2>-Password    : NILREM
+ 3>-First Name  : RYAN
+ 4>-Last Name   : SHERWOOD
+ 5>-Phone Number: [253] 355-0297
+ 6>-Last Date   : 19012090101
+ 7>-Access Group: 9
+ 8>-Calls Today : 0
+ 9>-Total Calls : 0
+22>-Last Call   : 19012090101
+23>-Flags       : 1411191111111119000090
+000 [25? that seems too long]
 
 variable dump shows em=194112 (!)

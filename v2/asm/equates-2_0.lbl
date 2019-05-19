@@ -251,8 +251,8 @@
 
 ; transfer protocol area
 
-	protostart = $c000
-	protoend= $ca80
+	protostart	= $c000
+	protoend	= $ca80	; 2680 bytes
 
 ;
 ; garbage collection stuff
@@ -279,8 +279,8 @@
 
 ; buffers:
 
-	buf2	= $ce27
-	buffer	= $ce77
+	buf2	= $ce27	; 80 bytes
+	buffer	= $ce77	; 80 bytes
 
 ; BBS flags (really, unused VIC-II registers)
 

@@ -3,6 +3,7 @@
 {step:2}
 	on im goto {:60002},{:60006},{:60008},{:60010},{:60016},{:60018},{:60026},{:60032}
 {:60002}
+' TODO: display amount of credits first, add check for <0 credits
 	&"{f6:2}#Credits?: {pound}i1":cr=cr+int(val(left$(an$,6)))
 	b$=str$(cr):&"{f6}Now:{pound}$b Credits{f6}":return
 {:60006}

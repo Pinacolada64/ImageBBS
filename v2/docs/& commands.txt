@@ -51,10 +51,10 @@ $ee00	&,11,x	clear array
 $fc03	&,12	newuser (nonabortable file read?)
 	&,13	inchr
 	&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
-		dumparray (x=array # [,y=# of elements]: im#39)
-		im: 1074
+		dumparray (x=array # [,y=# of elements])
+		[1.3] im: 1074		[2.0] im: 39
 
-	&,15[,0]	an$=":&an$ displays verbose date
+	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
 	&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 		Changes all uppercase to mixed case
 	&,15,2	converts encoded f-key characters into readable characters
@@ -103,11 +103,11 @@ $f80c	&,25,x,y	sound
 	&,41	setbaud
 
 	&,42	ecs - search for ecs command
-		[jack] im 1860: f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
+		[2.0] im 1860: f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
 	&,42,1	kills ECS defs in memory?
-		[jack] im 1804:	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+		[2.0] im 1804:	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
 
-$e400	&,42,4	[jack] im 3106: loads "e.ecs.main"
+$e400	&,42,4	[2.0] im 3106: loads "e.ecs.main"
 
 	&,43	chatchk
 	&,44	trace
