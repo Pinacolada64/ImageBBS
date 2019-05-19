@@ -79,6 +79,7 @@
 	DATA1,4,6,"Max Idle Time:  "
 	DATA1,4,7,"Calls/Day:      "
 	DATA1,4,8,"Time/Call:      "
+' time/call is a two-digit value, so don't show this:
 	DATA0,0,0,"time/call"
 	DATA1,4,9,"DL's/Call:      "
 {:3100}

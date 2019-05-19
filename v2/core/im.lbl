@@ -86,7 +86,7 @@
 	im=10:goto {:2400}
 ' 1047: ME - Exchange ID with another user (sysop only, immediate mode only)
 	im=13:goto {:2400}
-' 1048
+' 1048 - FIXME: copy of 1668, remove?
 	pr$="":im$="":lm$="":return
 ' 1049: ST - User statistics
 	im=1:goto {:2412}
@@ -111,11 +111,13 @@
 	a$="a":gosub {:1027}:if e%then a$="w":gosub {:1027}
 ' 1069: write user account data:
 	print# 2,na$r$id;r$d1$r$ac%r$ph$r$rn$r$co$r$ad$:return
+' 1070: write user account to u.config:
 	im=1:goto {:2400}
 	im=2:gosub {:2400}
 {:1072}
 {number:1072}
 	&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,.:return
+' 1073: load "user online" screen mask
 	im=1:goto {:2426}
 {:1074}
 {number:1074}
@@ -230,7 +232,7 @@
 	gosub {:1338}:&,15:&"IM Revision: "+left$(an$,26)+"M{f6}":return
 {:1338}
 ' used at BBS bootup to set clock to something sane
-	an$="31810238855":return
+	an$="41905098214":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -248,13 +250,13 @@
 	a$="s."+a$:dr=1:goto {:1075}
 {:1351}
 {number:1351}
+' read access-aware "e.menu "+x file (im.menus)
 	im=1:goto {:2430}
 ' 1352: ?? - local mode commands menu
 	im=2:goto {:2404}
-' 1353: read text editor menu
+' 1353: read SEQ text editor menu
 '	dr=1:a$="s.menu 3":goto {:1075}
 	a$="menu 3":goto {:1350}
-
 ' 1354: RD - read a SEQ file
 	im=4:goto {:2404}
 {:1360}
@@ -358,10 +360,8 @@
 	im=1:goto {:2408}
 {number:1644} ' LG - BBS activity log
 	im=2:goto {:2408}
-{number:1646}
-' EX - exchange credits for time
+{number:1646} ' EX - exchange credits for time
 ' load im.comm1
-' TODO: +.lo: at login, if caller is on last call for today, but has credits, can buy another call
 	im=3:goto {:2408}
 {number:1648}
 	im=4:goto {:2408}
@@ -377,6 +377,8 @@
 {number:1660} ' EP - Edit Parameters
 	&"{f6}Edit (I)nfo or (P)arameters? {pound}g1{pound}v7{f6}":a=-(an$="P")-2*(an$="I")
 {number:1661}
+' also called from +.new
+' a=1: edit terminal params, a=2: edit account info
 	im=1:on a goto {:2406},{:2428}:return
 {number:1662} ' AT - change graphics translation
 	im=2:goto {:2406}
@@ -386,14 +388,14 @@
 	im=4:goto {:2406}
 {number:1667}
 	im=5:goto {:2406}
-{number:1668} ' RL - clears strings?
+{number:1668} ' RL - clears strings - force a ReLoad of a module under testing?
 	im$="":pr$="":lm$="":return
 {number:1670} ' RP - read program
 	im=6:goto {:2404}
 {number:1678} ' F - feedback
 	b=.:o$="Feedback":&"{f6}Leave {pound}$o?: ":gosub {:1902}:if a=. then return
 {number:1680}
-' check etcetera drive blocks free; <35?
+' check etcetera drive blocks free; >35?
 	dr=3:gosub {:1079}:if a<35 then {:1978}
 {number:1681}
 	im=1:goto {:2422}
@@ -458,7 +460,9 @@
 {:1804}
 {number:1804}
 	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
-' TODO: Message about inactive command
+' TODO: Message about inactive command, ef% is used in "image", but not here
+' 	if ef% and 8 then:&"{f6}Sorry, that function is temporarily disabled.{f6}":return
+
 {:1805}
 {number:1805}
 ' password-protected by ep$, and/or costs ec% credits to run command:
@@ -539,6 +543,7 @@
 {number:1871}
 	a=val(mid$(uf$,b,1)):gosub {:1870}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1)
 	return
+' TODO: subroutine getting item from uf$
 {number:1880} ' XP - eXPert mode
 	a=em:b$="Expert":gosub {:1870}:em=a:&,52,20,2:return
 ' 1881: PM - Prompt Mode
@@ -569,6 +574,8 @@
 ' on e%+1 goto 3000:goto 1906 '16 bytes
 {:1901}
 {number:1901}
+' TODO: this would make the GOSUB target consistent, and you could set the default beforehand:
+'	&"{f6}Are You Sure?: ":on a+1 gosub 1902,1907:return
 	&"{f6}Are You Sure?: "
 {:1902}
 {number:1902}
@@ -695,6 +702,7 @@
 {:2414}
 {number:2414}
 	a$="bar":goto {:2500}
+' TODO: remove this and im.screens, nothing references it
 {number:2418}
 	a$="screens":goto {:2500}
 {:2422}
@@ -830,7 +838,7 @@
 ' to init SwiftLink, use &,16,1
 	gosub {:sub.init_rs232_interface}
 {else}
-	&"Loading RS232 Driver...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,.
+	&"Loading User Port RS232 Driver...":a$=dr$+"ml.rs232":&,7,dv%,2:&,16,.
 {endif}
 
 {:3088}
@@ -963,11 +971,12 @@
 ' Hardware:
 ' TODO: Using Lt.Kernal device?
 ' TODO: Configure modem/telnet bridge options (nimodem.dat)
+' TODO: Dallas Semiconductor DS12C887 RTC chip at $d500
 
 ' Sysop config:
 ' TODO: Graphic Menu mode available, enabled? lightbar options
 ' TODO: Ask which style of menus: text or graphic menu
-' TODO: Email vs. phone # mod of X-Tec's is something to consider, too 
+' TODO: Email vs. phone # mod of X-Tec's is something to consider, too
 ' TODO: Configure BBS time zone
 ' TODO: Configure Prime Time
 ' TODO: Add user #1 to QuickList (instant mode login)
@@ -987,11 +996,12 @@
 	if an$="" then an$=b$
 	tt$(5)=an$:&"{f6}":w$="DITTO":b$=w$:p$="Sysop Password":&,1,32
 	if an$="" then an$=b$
-
+' fields 1-6
 	tt$(2)=an$:tt$=tt$(1)+r$+tt$(2)+r$+tt$(3)+r$+tt$(4)+r$+tt$(5)+r$+d1$+r$
 
 ' TODO: research what this extra stuff is
 ' original:
+' 7=?, 8=calls today, 9=total calls,
 	tt$=tt$+"9"+r$:for i=1 to 14:tt$=tt$+"0"+r$:next:tt$=tt$+d1$+r$
 ' new:
 	tt$=tt$+"9"+r$+"0"+r$+"0"+r$+"1"+r$+"5928"+r$
@@ -1132,6 +1142,7 @@
 	&"your BBS. Message bases, U/D and U/X{f6}libraries can be configured by using{f6}"
 	&"the {f5}RE{f5} command from the main prompt.{f6:2}{pound}{back arrow}18New Image Software{f6}":lp=1:return
 
+{:3354}
 ' get time from creative micro designs device's real-time clock:
 	close 15:open 15,dv%,15:print# 15,"t-ra":&,2,15:close 15
 

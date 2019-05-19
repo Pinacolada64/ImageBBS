@@ -59,6 +59,7 @@
 	uf$=left$(uf$,5)+an$
 {:60078}
 	an$=mid$(uf$,6):gosub {:60082}:poke 868,x:poke 869,y
+' $16fa-$16fd
 	for i=.to 2:poke 5882+i,asc(mid$(an$+"   ",i+1,1)):next:poke 5885,.:return
 {:60082}
 	x=val(mid$(an$,4,2)):y=val(mid$(an$,6,2)):a$=left$(an$+"   ",3):return

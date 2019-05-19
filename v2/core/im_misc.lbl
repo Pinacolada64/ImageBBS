@@ -7,7 +7,7 @@
 ' im=3
 	return
 {:60006}
-' im=1
+' im=1: write user account to u.config:
 	&,40:on-(id=.)goto {:60024}:gosub 1065:uf$=mid$(str$(lf),2,1)+mid$(uf$,2)
 	a$=na$+r$+pw$+r$+ff$+r$+ll$+r$+ph$+r$+ld$+r$
 	a$=a$+mid$(hx$,ac%+1,1)+mid$(str$(af%),2)+r$+mid$(str$(ct%),2)+r$
@@ -20,7 +20,7 @@
 {:60024}
 	return
 {:60026}
-' im=2
+' im=2: read user account from u.config:
 	gosub 1065:x=id:gosub 1001:input# 2,na$,pw$,ff$,ll$,ph$,ld$,a$
 	dd$=cc$+mid$(str$(id),2):rn$=ff$+" "+ll$
 	if left$(a$,1)=" "then a$=mid$(a$,2)

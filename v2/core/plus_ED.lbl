@@ -1,5 +1,6 @@
 {number:3000}
-	r=int(val(mid$(an$,3,3)))
+' get "EDx" param from command line:
+	r=int(val(mid$(an$,3,3))):gosub 2100
 	restore:for i=1 to 23:read ed$(i):next:for i=1 to 20:read dt$(i):next
 	gosub 1061:for i=0 to 9:x=i+1:gosub 1001:&,2,2:&,2,2:bb$(i)=a$:next:close 2
 	if r then an$="":x=r:goto {:3114}
@@ -57,9 +58,10 @@
 	a$="r":gosub 1062:close 2:if e%=.then gosub 1060:i=-1:x=25:gosub 1025:close 2
 	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024:goto {:3108}
 {:3192}
-	&"{f6}Password?: {pound}i1":if an$=""then an$="PA{$d3:2}"
+	&"{f6}Password?: {pound}i1":if an$=""then an$="PASS"
 	for i=3 to 24:tt$(i)="0":next:tt$(2)=an$:goto {:3126}
 {:3196}
+' flag editor
 	&"{clear}":poke 53252,38:for i=1 to 20:b$=mid$(q$,i,1)
 	if i=2 then b$=b$+" to 1":goto {:3212}
 	if i=16 or i=17 or i=20 then{:3212}
@@ -100,22 +102,43 @@
 {:3254}
 	a%=id:&,16,8:if a%then:&,16,5:goto {:3254}
 	a$=dr$+"u.weedinfo":print# 15,"s"a$:&,16,2:return
-	data"Handle","Password"
-	data"First Name","Last Name"
-	data"Phone Number","Last Date"
-	data"Access Group","Calls Today"
-	data"Total Calls","Computer"
-	data"Line Length","Upper/Lower"
-	data"Linefeeds","Expert Mode"
-	data"Downloads","Uploads"
-	data"Blks Dnld","Blks Upld"
-	data"Credit Pts","Posts"
-	data"Responses","Last Call"
-	data"Flags"
-	data"Non-Weed Status","Credit Ratio","Local Maint"
-	data"Post/Respond","U/D Access","Max.Editor Lines"
-	data"Unlimited D/Ls","Remote Maint","EMail"
-	data"User List","B.A.R./Log View","Submaint"
-	data"Files Maint","MCI Access","UDs At Primetime"
-	data"Max Idle Time","Calls/Day","Time/Call"
-	data"Time/Call","Downloads/Call"
+	
+	data 38
+' 1, 2
+	data "Handle","Password"
+' 3, 4
+	data "First Name","Last Name"
+' 5, 6
+	data "Phone Number","Last Date"
+' 7, 8
+	data "Access Group","Calls Today"
+' 9, 10
+	data "Total Calls","Computer"
+' 11, 12
+	data "Line Length","Upper/Lower"
+' 13, 14
+	data "Linefeeds","Expert Mode"
+' 15, 16
+	data "Downloads","Uploads"
+' 17, 18
+	data "Blks Dnld","Blks Upld"
+' 19, 20
+	data "Credit Pts","Posts"
+' 21, 22
+	data "Responses","Last Call"
+' 23
+	data "Flags"
+' 1, 2, 3
+	data "Non-Weed Status","Credit Ratio","Local Maint"
+' 4, 5, 6
+	data "Post/Respond","U/D Access","Max.Editor Lines"
+' 7, 8, 9
+	data "Unlimited D/Ls","Remote Maint","EMail"
+' 10, 11, 12
+	data "User List","B.A.R./Log View","Submaint"
+' 13, 14, 15
+	data "Files Maint","MCI Access","UDs At Primetime"
+' 16, 17, 18 (1st byte)
+	data "Max Idle Time","Calls/Day","Time/Call"
+' 18 (2nd byte), 19
+	data "Time/Call","Downloads/Call"
