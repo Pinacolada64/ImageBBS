@@ -108,7 +108,7 @@
 	mci	= $07ef	; 2031: 0=don't interpret MCI
 	mdigits	= $07f0	; 2032: Number of digits for £#
 
-	carrst	= $07f1	; 2033: modem carrier status
+	carrst	= $07f1	; 2033: modem carrier status (check mark/no check mark, displayed on screen)
 	tsp1	= $07f2	; 2034: transmit speed lo-byte
 	tsp2	= $07f3	; 2035: transmit speed hi-byte
 	chks	= $07f4	; 2036: Checkmark flag for Lightbar (left side)
@@ -270,7 +270,7 @@
 ; Image routines:
 
 	outastrp= $cd00
-	usetbl1	= $cd03
+	usetbl1	= $cd03	; irq addresses table at $a000
 	swapper	= $cd06
 	swapagn	= $cd09
 	trace	= $cd0c
@@ -281,6 +281,7 @@
 
 	buf2	= $ce27	; 80 bytes
 	buffer	= $ce77	; 80 bytes
+;	longdate= $ceca ; ""
 
 ; BBS flags (really, unused VIC-II registers)
 
@@ -293,8 +294,8 @@
 	chat	= $d006 ; 53254
 	inchat	= $d007 ; 53255
 	chatpage= $d008 ; 53256: 1=chat page on
-	access	= $d009 ; 53257: [from 1.2] 2.0 was labeled "carrier"
-	mxor	= $d00a ; 53258
+	access	= $d009 ; 53257: shadow of ac%
+	mxor	= $d00a ; 53258: carrier XOR value
 	mkolor	= $d00b ; 53259
 	mupcase	= $d00c ; 53260
 	irqcount= $d00d ; 53261
