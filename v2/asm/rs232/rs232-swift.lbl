@@ -24,8 +24,9 @@ rodbe	= $029e ; RS-232: Index to End of Transmit Buffer
 
 ; SwiftLink/Turbo232
 io1	= $de00 ; Base Address of SwiftLink/Turbo232
-io2	= $df00 ; alternate address, not used here
+;io2	= $df00 ; alternate address, not used here
 port	= io1
+slData    = port   ; SL/T232 data register
 slStatus  = port+1 ; SL/T232 status register
 slCommand = port+2 ; SL/T232 command register
 slControl = port+3 ; SL/T232 control register
@@ -42,19 +43,38 @@ norest	= $fe72 ; set up rs232 timing?
 ; unused:
 ; nmiexit = $febc
 
-comint0	= {%:00001010} ; nmi off
-comint1	= {%:00001001} ; rxd on
-comint2	= {%:00000101} ; txd/rxd
-comdtr0	= {%:00001000} ; dtr off
-comrts0	= {%:00000001} ; rts off
+; $DE01 - SwiftLink status register:
 
-statdcd	= {%:01000000} ; carrier
-statrxd	= {%:00001000} ; receive
-stattxd	= {%:00010000} ; transmit
-statint	= {%:10000000} ; nmi
+statint	= {%:10000000}	; bit 7: acia interrupt active
+statdcd	= {%:01000000}	; bit 6: carrier detect
+			; bit 5: dsr ready
+stattxd	= {%:00010000}	; bit 4: transmit register empty
+statrxd	= {%:00001000}	; bit 3: receive register full
+			; bit 2: overrun error
+			; bit 1: framing error
+			; bit 0: parity error
 
-imagecd0= {%:00000000} ; none
-imagecd1= {%:00010000} ; carrier
+imagecd0 = {%:00000000}	; bit 4: carrier low
+imagecd1 = {%:00010000}	; bit 4: carrier high
+
+; $DE02 - SwiftLink command register:
+
+			; bits 7-5: parity
+			; bit 4: echo (should be 0)
+			; bit 3|2
+			;     1|0 disable txd interrupts
+			;     0|1  enable rxd interrupts
+			; bit 1: rxd interrupts
+			; bit 0: acia interrupts
+;          %:76543210
+comint0	= {%:00001010}	; acia nmi off
+comint1	= {%:00001001}	; rxd on
+comint2	= {%:00000101}	; txd/rxd
+comdtr0	= {%:00001000}	; dtr off
+comrts0	= {%:00000001}	; rts off
+
+; $DE03 - SwiftLink control register:
+			; bit 4: clock source
 
 first:
 xx00:
@@ -83,7 +103,7 @@ bauds:
 	byte {%:00011111} ;38400
 
 shcomm:
-; saves SwiftLink command register
+; saves SwiftLink rxd/txd status
 	byte comint1
 
 vectbl:
@@ -139,7 +159,7 @@ setup1:
 setup2:
 	lda vectbl,x	; get JMP from table
 	pha		; push on stack?
-	lda (20),y	; lda $0300
+	lda (20),y	; lda $0300,y
 	sta vectbl,x	; re-save it?
 	pla		; pop off stack
 	sta (20),y
@@ -151,22 +171,22 @@ setup2:
 setup3:
 	lda #0
 	sta slStatus
-	lda #comint1
-	sta shcomm	; save command?
+	lda #comint1	; rxd on
+	sta shcomm	; save rxd
 	jsr inable
 	jsr setcarr
-	lda #2
+	lda #2		; start at 1200
 	jmp setbaud
 
 setcarr:
-; set carrier high
+; toggle dcd
 	ldy #imagecd1
 	lda slStatus
-	and #statdcd
-	beq setcarr1
-	ldy #imagecd0
+	and #statdcd	; carrier already high?
+	beq setcarr1	; yes
+	ldy #imagecd0	; set low
 setcarr1:
-	sty carrier
+	sty $d009	; store DCD status
 	rts
 ;
 ; ** nmi routine
@@ -204,7 +224,7 @@ rsint:
 	lda slStatus
 	and #statrxd
 	beq rsint2
-	lda port
+	lda slData
 	ldy ridbe
 	sta ribuf,y
 	iny
@@ -218,21 +238,21 @@ rsint1:
 	and #127
 	cmp #120
 	bcc rsint2
-	lda #comrts0
+	lda #comrts0	; drop rts
 	sta slCommand
 ;
-; ** check transmit
+; ** check if ok to transmit
 ;
 rsint2:
 	lda slStatus
-	and #stattxd
-	beq rsint4
+	and #stattxd	; ok to transmit?
+	beq rsint4	; no
 	lda shcomm
 	cmp #comint1
 	beq rsint4
 	ldy rodbs
 	lda robuf,y
-	sta port
+	sta slData
 	iny
 	bpl rsint3
 	ldy #0
@@ -307,8 +327,8 @@ nchkin:
 	bne nosuch
 	jsr devnum
 	ldx xtmp
-	lda $ba
-	cmp #2
+	lda $ba		; current device
+	cmp #2		; rs232?
 	bne nchkin1
 	sta $99
 	clc
@@ -325,8 +345,8 @@ nchkout:
 	bne nosuch
 	jsr devnum
 	ldx xtmp
-	lda $ba
-	cmp #2
+	lda $ba		; current device
+	cmp #2		; rs232?
 	bne nchkout1
 	sta $9a
 	clc
@@ -381,14 +401,14 @@ notget:
 	jmp inable
 
 setbaud:
-; enter with baud rate in .a
+; enter with baud rate # from 'bauds' table in .a
 	cmp #254
 	bcc setbaud3
 	beq setbaud1
-	lda shcomm
+	lda shcomm	; get rxd/txd status
 	jmp setbaud2
 setbaud1:
-	lda #comdtr0
+	lda #comdtr0	; dtr off
 setbaud2:
 	sta slCommand
 	rts

@@ -11,6 +11,8 @@ Since many modules share the same load address, they are "linked"
 in, and sections are relocated to their proper load address
 using the "swapper" routine.
 
+"ml 2.0" requires these files:
+
 FastAssembler			c64list 3.50 or
 source file:	Builds:		casm assembles? Object file:
 =============== =============== =============== ============
@@ -26,12 +28,12 @@ swap3.s		ml.swap3			swap3.prg
 
 Source file:	Builds:		Requires
 =============== =============== ================
-rs232/user.s	ml.rs232/user
-rs232/swift.s	ml.rs232/swift
-
 		- ORG $C000 -
 rs232.s		ml.rs232	ml.rs232/user
 (2 blocks)	(6 blocks)	ml.rs232/swift
+
+rs232/user.s	ml.rs232/user
+rs232/swift.s	ml.rs232/swift
 
 		- ORG $4300 -
 t1.rs232.s	ml.rs232
@@ -67,10 +69,25 @@ intro.s		intro.lbl
 ===== END ======
 
 Other files:
+
+Even though this builds, nothing later references "ml.extra"
+that I can see.
+
+FastAssembler			c64list 3.50 or
+source file:	Builds:		casm assembles? Object file:
+=============== =============== =============== ============
+extra.s		ml.extra
+   Reqires:
+editor.s	ml.editor	casm	Yes	editor.prg
+gc.s		ml.gc		casm	Yes	garbage-collect.prg
+ecs.s		ml.ecs		casm	Yes	ecs.prg
+swap[1-4].s	ml.swap[1-4]
+
+inline.s	ml.inline
 ml patcher.s	ml patcher
 ecsed.s		ml.ecsed
-ecs.s		ml.ecs
 remote.s	ml.remote
+loadeditor.s	++ loadeditor
 
 Errors:
 inline.s:	Not build requirement? Seems pretty major

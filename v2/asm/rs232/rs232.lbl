@@ -41,3 +41,11 @@ rshigh:
 rs232a: embed "rs232-user.prg"
 	{info:INFO: Embedding "rs232-swift.prg"}
 rs232b: embed "rs232-swift.prg"
+
+; FIXME: since load addresses ($00 $08) are part of the binaries,
+; the program is JMPing there and hitting a BRK instruction
+
+; in monitor (to skip load address):
+; bload "ml.rs232" 0a bffe
+; or
+; l "ml.rs232" 0a c000

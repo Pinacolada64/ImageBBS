@@ -1,6 +1,7 @@
 {number:4000}
 {alpha:alt}
 {step:2}
+' TODO: menu option to redefine Hayes s2 register, command mode escape char
 	rem "+/IM.modem" - modem/rs232 config
 	gosub {:4006}:&,2,2:mt$=a$:close 2:goto {:4014}
 {:4004}

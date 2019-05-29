@@ -25,7 +25,7 @@ C64_FILENAME =	ML.RS232
 all: rs232.prg rs232-swift.prg rs232-user.prg
 	@echo $^
 
-rs232: rs232.lbl # rs232-user.prg rs232-swift.prg
+rs232: rs232.lbl rs232-user.prg rs232-swift.prg
 # assemble rs232.prg file (which embeds rs232-user.prg and rs232-swift.prg).
 	$(WINE) $(CASM) $< -prg:$@ $(C64LISTFLAGS)
 # import rs232.prg into ($DISKIMAGE) as "ml.rs232"
