@@ -1,0 +1,288 @@
+Variables used by Image BBS 1.3:
+
+Variable descriptions have variable letters capitalized when possible for a mnemonic aid.
+
+Items marked [?] are of uncertain purpose or description. Updates welcome.
+
+Items marked [!] are DIMensioned, but it doesn't seem to be used after that, at least in BASIC.
+
+Items marked (bool) are Boolean values: 0=off/false, 1=on/true.
+
+	BBS:	Maintained by the BBS; should not be reassigned
+	User:	Holds user information/flags
+	Both:	Maintained by the BBS; can be reassigned
+
+Strings:
+a$	BBS	temporary string
+ag$	BBS	Access Group data
+ak$	BBS	Separator line + CR
+am$	BBS	date/time of last log reset
+an$	BBS	ANswer returned from MCI input routine
+
+b$
+bn$	BBS	BBS Name
+
+c$
+c1$	Both	"entering chat" message
+c2$	Both	"exiting chat" message
+c3$	BBS	"Returning to the Editor" message
+cc$	BBS	BBS identifier (e.g., "WN")
+ch$
+cm$	BBS	Current Module
+co$	BBS	COmputer name
+
+d$
+d1$	BBS	11 digit current date/time
+d2$
+d3$	BBS	last caller handle
+d4$	BBS	name of protocol loaded
+d5$
+d6$	BBS	log start date
+
+e$	BBS	usually DOS Error message
+ef$	BBS	Extended Command Set: flags [?]
+ep$	BBS	Extended Command Set: Password
+
+ff$	User	First name
+f1$-f8$	BBS	Function key definitions
+fl$	BBS	user FLags
+
+g$
+
+h$
+hx$	BBS	HeXadecimal digits 0-F
+
+i$
+im$	BBS	current "im.*" module
+
+j$
+jn$	User	JoiN string
+
+k$
+
+l$
+l1$		[!] can't find a use
+l2$	BBS	system reservation password: reservation frequency
+l3$		[!] can't find a use
+ld$	BBS	Last Date (last call), same format as d1$
+ll$	User	Last name
+lm$		Last Module [?]
+lt$	User	Logon Time (message/file scan date), copy of d1$ at login
+	im.misc
+
+m$
+ml$	BBS	Machine Language module (++ *) loaded
+mp$	BBS	More Prompt text
+mt$	BBS	Modem flags: Type (1 char), followed by init flags
+
+n$
+na$	User	user's handle
+nl$	BBS	NuLl byte [chr$(0)]
+nm$	BBS	NetMail run date [?]
+
+o$
+
+p$	Both	Prompt text for &,1
+ph$	User	PHone number [or email address]
+po$	BBS	main PrOmpt text
+pp$		set to "PASS" at system setup, then input#2 in
+		    automaint, not acted on [!]
+pr$	BBS	current PRogram (+.file)
+pw$	User	user's PassWord
+
+q$
+qt$	BBS	Quote mark [chr$(34)]
+
+r$	BBS	Return [chr$(13)]
+rn$	BBS	Real Name (ff$ + ll$)
+
+s$
+sy$	BBS	current subsystem (Sub, U/D, U/X...)
+
+tz$	BBS	BBS time zone abbreviation/hour offset
+
+Floating point:
+
+a	BBS	Scratch variable; usually a routine's return value
+am
+
+bd	User	Blocks Downloaded
+bu	User	Blocks Uploaded
+
+ca
+cc
+cn
+cr	User	CRedits
+ct
+
+dc	User	Download Count, files downloaded
+dr	BBS	System drive
+
+ec	BBS	Extended Command Set: extended command type [?]
+el	BBS	Error Line # an error occured on; used by error-trap routine at 2000
+em	User	Expert Mode (bool)
+
+id	BBS	current user's account ID
+im	BBS	which function in an im.* module is executing
+is
+
+kk	BBS	# of lines of text typed upon exiting text editor
+
+l1	BBS	next available user account #
+l2
+l3
+lc	BBS	which subsystem user is in
+le	User	Lines available in text Editor
+lf	User	LineFeeds status (bool)
+lk
+lp	BBS	lp=1: word-wrap text output to the screen and modem
+
+mc	BBS	Macro Count (messages at main prompt)
+mf
+mw		[!] can't find a use
+
+nc	BBS	credits for new user
+
+pf	BBS	directory level in PF section [?]
+pl	BBS	&,1 control: 1=UPPERCASE, 0=Mixed Case
+pm	User	Prompt Mode (bool)
+pr	BBS	PRotocol # ("++ <pr>") loaded
+ps	User	PoSts written
+
+qb	BBS	current baud rate
+qe
+
+rc		like 'sh', abort char
+rp	User	bulletin ResPonses
+rq
+
+sg	BBS	in Special interest Group (bool)
+sh	BBS	Slash Hit (/), abort char
+
+uc	BBS	Upload Count, files uploaded
+uh	BBS	User account, Highest record
+ul	User	terminal handles Uppercase/Lowercase flag (bool)
+ur	BBS	highest UseR account -1
+
+x	Both	REL record to read; variety of uses
+
+y	Both	scratch variable
+
+Integer:
+
+a%	Both	Scratch variable; usually a routine's return value
+ac%	BBS	ACcess level
+af%	User	network-related [?]
+ao%	BBS	Access Old: Compare to ac%, difference means user's access level changed since logging on
+
+b%
+
+c%
+cd%	User	Carrier Drop before logoff (bool)
+co%	User	COmputer type
+ct%	User	Calls Today
+
+d%
+d1%	Both	temp device #
+d2%	Both	temp drive #
+d3%	Both	temp Image drive #
+da%	User	Downloads Allowed per call
+db%	User	Downloaded Blocks
+dc%	User	file Download Count this call
+df%	BBS	DeFault prompt color
+dv%	BBS	DeVice number
+
+e%	BBS	Usually DOS error number
+ec%	BBS	Extended Command Set: Credits to run command
+
+f%
+
+g%
+
+h%
+
+i%	BBS	Immediate mode login status (bool)
+
+j%
+
+k%	BBS	Console login (bool)
+kp%	BBS	Keypress value [?]
+
+l%
+lk%	BBS	Lt.Kernal HD device #
+ll%	User	Line Length
+
+m%
+mn%	BBS	current minute in day (1-1440)
+mp%	User	More Prompt: screen height
+
+n%
+
+o%
+
+p%
+p1%	BBS	Prime time: time allowed per call
+p2%	BBS	Prime time: start hour
+p3%	BBS	Prime time: end hour
+
+q%
+
+r%
+
+s%
+sa%
+
+t%
+tc%	BBS	Total Calls
+tr%	Both	Time Remaining for user
+
+u%
+
+v%
+
+w%
+
+x%
+
+y%
+
+z%
+
+fl$	Both	User Flags
+	 1:	Non-Weed status
+	 2:	credit ratio
+	 3:	local maintenance access
+	 4:	post/respond access
+	 5:	U/D access
+	 6: le	max Lines in Editor (*10)
+	 7:	unlimited downloads
+	 8:	remote maintenance access
+	 9:	email access
+	10:	user list access
+	11:	B.A.R./log access
+	12:	SubOp maintenance access
+	13:	files maintenance access
+	14:	unlimited editor lines
+		(+.WF, im.editor)
+	15:	U/Ds during prime time
+	16: 820 max idle time (minutes)
+	17:	calls per day (0=unlimited)
+	18-19:	time per call
+	20: da% Downloads Allowed
+
+	gosub 1004 gets fl$ flag a
+	+/IM.access is informative
+	
+uf$	User	User Flags, up to 17 positions [where?]:
+	 1: lf	Line Feeds
+	 2:	Message pause mode
+	 3:	Graphic Menu mode
+	 4:	Undefined
+?	 5:	mp%=int(ll%/256):ll%=ll%-256*mp% mp%=user screen height, ll%=user screen width
+	 6-8:	3 letter time zone abbreviation
+
+	gosub 1871 flips uf$ flag b (0/1 only)
+
+Arrays:
+hs$(10)	previous commands for recall with ^[0-9]
+dr%()	Image drive #s

@@ -4,170 +4,185 @@ most explained in jmptb.s / calls.s
 Last updated 25/Dec/2008 16:43
 5/Jun/2015 14:08
 
-&[,0]	out a$
-&,1	inline
-&,2,x	disk file input (x=channel #) -> a$
-&,3,x	read file from disk, x=logical file #
-&,4	get byte from modem
-&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
-	im 1335: "Image BBS 64 V1.3.1: 12/29/91  1:18p"
-&,6	password input -> an$
+(calls.s)
 
-&,7,<device>[,segment] - load file
-	dskio.s has segment info:
-		 0: 0		Undefined?
-		 1: 0		"        "
-		 2: protosta	"++ menu 2"
-		 3: 0		Undefined?
-		 4: 0		"        "
-		 5: imstart
-		 6: imstart
-		 7: pmodetbl	e.printmodes
-		 8: bartbl	e.lightbar
-		 9: alarmtb	e.alarms
-		10: tblatc	(ascii -> c=?)
-		11: tblcta	(c= -> ascii?)
-		12: netalrm
-		13: wedgemem
+Addr	Call	Purpose
+========================
+	&[,0]	out a$
+$f400	&,1	inline
+	&,2,x	disk file input (x=channel #) -> a$
+$fc00	&,3,x	read file from disk, x=logical file #
+	&,4	get byte from modem
+	&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
+		im 1335: "Image BBS 64 V1.3.1: 12/29/91  1:18p"
+$f406	&,6	password input -> an$
 
-&,8,x,y	disk directory
-	open2,10,2,"0:$"
-	&,8,2,y (x=lfn 2,y=flag: 0=entire directory, 1=single line [assuming similar to Image 1.2])
-	puts result in a$
+	&,7,<device>[,segment] - load file
+		dskio.s has segment info:
+			0: 0		Undefined?
+			1: 0		"        "
+			2: protosta	"++ menu 2"
+			3: 0		Undefined?
+			4: 0		"        "
+			5: imstart
+			6: imstart
+			7: pmodetbl	e.printmodes
+			8: bartbl	e.lightbar
+			9: alarmtb	e.alarms
+			10: tblatc	(ascii -> c=?)
+			11: tblcta	(c= -> ascii?)
+			12: netalrm
+			13: wedgemem
 
-&,9,x
-&,9[,0]	print an$ to status window
-&,9,1	print a$  to status window
-&,9,2   print b$  to status window
-&,9,4	looks like d1$
-	(x seems to follow the variable table definitions of Image 1.2)
+	&,8,x,y	disk directory
+		open2,10,2,"0:$"
+		&,8,2,y (x=lfn 2,y=flag: 0=entire directory, 1=single line [assuming similar to Image 1.2])
+		puts result in a$
 
-&,10	terminal program (CTRL + C= gets out)
-&,11,x	clear array
-&,12	newuser (nonabortable file read?)
-&,13	inchr
-&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
-	dumparray (x=array # [,y=# of elements]: im#39)
-	im: 1074
+$f806	&,9,x
+	&,9[,0]	print an$ to status window
+	&,9,1	print a$  to status window
+	&,9,2   print b$  to status window
+	&,9,4	looks like d1$
+		(x seems to follow the variable table definitions of Image 1.2)
 
-&,15[,0]	an$=":&an$ displays verbose date
-&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
-	Changes all uppercase to mixed case
-&,15,2	converts encoded f-key characters into readable characters
-	+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
-&,15,3	[The Chief mentions this in a post, unsure of purpose]
-&,15,4	[The Chief mentions this in a post, unsure of purpose]
+$f800	&,10	terminal program (CTRL + C= gets out)
+$ee00	&,11,x	clear array
+$fc03	&,12	newuser (nonabortable file read?)
+	&,13	inchr
+	&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
+		dumparray (x=array # [,y=# of elements])
+		[1.3] im: 1074		[2.0] im: 39
 
-&,15,6,x	Split an$ into an$ and a$ if it finds chr$(x)
-		-> an$ [chr$(x)] a$
-	im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
-	im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
-		[133=f1, Image ","]
+	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
+	&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
+		Changes all uppercase to mixed case
+	&,15,2	converts encoded f-key characters into readable characters
+		+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
+	&,15,3	[The Chief mentions this in a post, unsure of purpose]
+	&,15,4	[The Chief mentions this in a post, unsure of purpose]
 
-&,16	sys49152
-&,17	sys49155
-&,18,x	setmode (screen mask) x=0: off, 1=on
-&,19	get version
-&,20	get version
-&,21	get version
-&,22,x	tenwait [x=tenths of a second]
-&,23	xgetin
-&,24	xchrout1
+	&,15,6,x	Split an$ into a$ and an$ if it finds chr$(x)
+	&,15,6,asc("x")	-> a$ [chr$(x)] an$
+		im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
+		im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
+			[133=f1, Image ","]
 
-&,25,x,y	sound
-	[y=# of times to repeat]
-&,25,0  beep
-&,25,1	ding
-&,25,2	higher pitched ding
-&,25,3	gong sound from ccgms!
+$c000	&,16	sys49152
+$c003	&,17	sys49155
+	&,18,x	setmode (screen mask) x=0: off, 1=on
+	&,19	get version
+	&,20	get version
+	&,21	get version
+	&,22,x	tenwait [x=tenths of a second]
+	&,23	xgetin
+	&,24	xchrout1
 
-&,26	callmod
-&,27,x	save variable pointers		(x=level, see "Image 2.0
-&,28,x	restore variable pointers	Facts vs. Fiction")
-&,29	usevar
-&,30	putvar
-&,31	zero
-&,32	minusone
-&,33	getarr
-&,34	putarr
-&,35	getln
-&,36	putln
-&,37	trapon
-&,38	trapoff
-&,39	prtln
-&,40	forcegc
-&,41	setbaud
+$f80c	&,25,x,y	sound
+		[y=# of times to repeat]
+	&,25,0  beep
+	&,25,1	ding
+	&,25,2	higher pitched ding
+	&,25,3	gong sound from ccgms!
 
-&,42	ecs
-	im 1860 f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
-&,42,1	kills ECS defs in memory?
-	im 1804	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
+	&,26	callmod
+	&,27,x	save variable pointers		(x=level, see "Image 2.0
+	&,28,x	restore variable pointers	Facts vs. Fiction")
+	&,29	usevar
+	&,30	putvar
+	&,31	zero
+	&,32	minusone
+	&,33	getarr
+	&,34	putarr
+	&,35	getln
+	&,36	putln
+	&,37	trapon
+	&,38	trapoff
+	&,39	prtln
+	&,40	forcegc
+	&,41	setbaud
 
-&,42,4	seen in line 3106 of IM, loads "e.ecs.main"
+	&,42	ecs - search for ecs command
+		[2.0] im 1860: f4=.:a%=zz:b%=2^ac%:&,42:if a% then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto 1800
+	&,42,1	kills ECS defs in memory?
+		[2.0] im 1804:	a%=asc(ef$+nl$)+256*asc(mid$(ef$,2,1)+nl$):&,42,1
 
-&,43	chatchk
-&,44	trace
-&,45	prtvar	[MCI on?]
-&,46	prtvar0 [MCI off?]
-&,47	carchk
-&,48	getkbd
-&,49	getmod
-&,50	outscn
-&,51	outmod
-&,52,x,y	(&,52,$hex,y allowed)
-	chkflags
-		x=0: clear	x=2: toggle		x=4: move litebar to y
-		x=1: set	x=3: read -> a%
-&,53	logoff
-		im: 1003 &,53,a
-&,54,x	useeditr
-&,55	output
-&,56	chatmode
-&,57	relread
-	Reads until EOF! Nice.
+$e400	&,42,4	[2.0] im 3106: loads "e.ecs.main"
 
-&,58,x,y
-	setalarm
-&,59	farerr
-&,59,1,a	i.CP
+	&,43	chatchk
+	&,44	trace
+	&,45	prtvar	[MCI on?]
+	&,46	prtvar0 [MCI off?]
+	&,47	carchk
+	&,48	getkbd
+	&,49	getmod
+	&,50	outscn
+	&,51	outmod
+	&,52,x,y	(&,52,$hex,y allowed)
+		chkflags
+			x=0: clear y	x=2: toggle y		x=4: move litebar to y
+			x=1: set y	x=3: read status of y, return in a%
+	&,53	logoff
+			im: 1003 &,53,a
+$f409	&,54,x	useeditr
+	&,54,0	don't preserve text in tt$() array
+	&,54,1	re-enter main
+	&,54,2	re-enter, not command
+	&,55	output
+$f803	&,56	chatmode
+$fc06	&,57	relread
+		Reads until EOF! Nice.
+
+	&,58,x,y
+		setalarm
+	&,59	farerr
+	&,59,1,a	+.CP, pretty sure "set line length," seems to crash BBS.
+			Use poke 53252,a for now.
 
 &,60	struct
 
-	PutStruc: put string into structure
-	Usage	&,60,0,<# bytes>,<starting element of array>,<string>
+struct%(0,0) holds # of records in a struct
+
+	PutString: put string into structure
+	Usage	&,60,0,bytes,struct%(field,record),string$
 	Example:&,60,0,11,lm%(2,x),a$
 		&,60,0,16,lm%(8,x),b$
 	
-	GetStruc: get string from structure
-	Usage:	&,60,1,<#_of_bytes>,array(a,b),string$
+	GetString: get string from structure
+	Usage:	&,60,1,bytes,struct%(field,record),string$
 	Example:&,60,1,50,jm%(5,fd%(i)),a$ - im.menus
 	
-	LoadStruc: load structure from disk
-	Usage:	&,60,2,0,array(a,b),"<filename>",<device>
+	LoadStruct: load structure from disk
+	Usage:	&,60,2,0,array(a,b),"filename$",device
+		third parameter always seems to be 0
+		maybe array(a,b) is # of records, or struct to load 
 	Example:&,60,2,.,lm%(.,.),dr$+"e.loginmods",dv%:gosub5
 	
-	SaveStruc: save structure
-	Usage:	&,60,3,0,array(a,b),<bytes>,"<filename>",<device>
+	SaveStruct: save structure
+	Usage:	&,60,3,0,struct%(.,.),bytes,filename$,device
+		does 0 param always have to be 0?
+		maybe struct%(.,.) stands for the array name
 	Example:&,60,3,.,lm%(.,.),1271,a$,dv%
 		&,60,3,.,fb%(.,.),960,a$,dv%
 	
 	PutDate: put date string into structure (BCD)
-	Usage:	&,60,4,0,array(a,b),<string$>
-
-		array(a,b)	starting element
+	Usage:	&,60,4,0,struct%(f,r),string$
+		does "0" param always have to be 0?
+		struct%(f,r)	field,record to put date into
 		string$		the date string
 
 	GetDate: get date string from structure (BCD)
-	Usage:	&,60,5,array(a,b),<string>
 
-		array(a,b)	starting element
+	Usage:	&,60,5,struct%(f,r),string$
+
+		struct%(f,r)	field,record to get date from
 		string$		the date string
 	
-	DoScan	Scan structures (yikes)
-	Usage	&,60,6,<number>,<command>,a(a,b),b(a,b),l,bits,test
-
-	<number>	# of structures to scan
-	<command>
+	DoScan	Scan records (yikes)
+	Usage	&,60,6,number,command,a(a,b),b(a,b),l,bits,test
+		returns a%, and 
+	number		# of records to scan
+	command
 			0	2 byte AND, <>0
 			1	2 byte AND, ==0
 			2	2 byte CMP, <
@@ -176,81 +191,131 @@ Last updated 25/Dec/2008 16:43
 			5	date   CMP, >=
 	a(a,b)		starting flags element
 	b(a,b)		starting object element
-	<l>		unknown, perhaps field width?
-	<bits>		the bits to set if true
-	<test>		the object to test for
+	l		unknown, perhaps field width?
+	bits		the bits to set if true
+	test		the object to test for
 
 	i.UD:	3950 &,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
 	+.GF:	3166 &,60,6,s%(0,0),0,s%(0,1),s%(1,1),80,1,2^ac%
 
 	sort:
-	+/lo-tt maint: &,60,7,0,a$(p+1,i),n-p
+	+/lo/tt maint: &,60,7,0,a$(p+1,i),n-p
 	
-	scannums	purpose unknown		returns a%
-	Usage:	&,60,8,num,siz,acs,a(a,b),a%(a),start
+	scannums	Returns an integer array result%(a)
+			
+	Usage:		&,60,8,recs,size,access,search%(f,r),result%(s),start
+	Returns:	a%, count of records which match <acs>
 
-	num	cols in struct?
-	siz	field width?
-	acs	access level
-	a(a,b)	row,col array?
-	a%(a)	?
+	recs		number of records in struct
+	size		size of the record in struct
+	access		access level to add results to result%(a)
+	search%(f,r)	struct to search (field,record)
+	result%(s)	integer array, starting at s?
+	start		element to start scanning from?
+
+' scan struct:
+' &,60,8,recs,size,access,search%(f,r),result%(e),start
+' recs:		50
+'	# of records in struct
+' size:		60
+'	size of the record in the struct (seems too large: was only DIMensioned for 30)
+' access:	2^ac%+zz%*32768
+'	access level to filter results by
+' search%(field,record):	jm%(1,.)
+'	search%()	the integer array to search
+	field		the field within the record to search
+	record		the record to search
+' element:	?
+
+	search%(f,r)	struct to search (<field>,<record>)
+	result%(e)	integer array to put results in, perhaps "e" is a dummy value
 	start	element to start scanning from?
 
-Example:
+' scan struct:
+' &,60,8,recs,size,access,search%(field,record),result%(element),start
+' recs:		50
+'	# of records in struct
+' size:		60
+'	size of the record in the struct (seems too large: was only DIMensioned for 30)
+' access:	2^ac%+zz%*32768
+'	access level to filter results by
+' search%(field,record):	jm%(1,.)
+'	search%()	the integer array to search
+	field		the field within the record to search
+	record		the record to search
+' element:	?
+
+Examples:
+im.menus:
 	dim fd%(50),jm%(29,49)
+' ScanStruct returns a% (# of matches)
+' this code returns fd%(): single dimension array of matching records
+' (I think "1" in fd%(1) is a dummy value, although it may be significant)
 	&,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
+' &,60,1: get 50-byte string from struct jm%( , ), field [aka "offset"] 6 (zero-based)
+' of record fd%(i). assign string to a$:
+	&"{f6}":for i=1 to a%:&,60,1,50,jm%(5,fd%(i)),a$:lp=1:&:i=i+a%*rc:next:return
 
 im.feedback:
 	a%=0:if fb%(0,0)>0 then:&,60,8,fb%(0,0),60,1,fb%(11,1),ff%(1),1
 im.menus:
 	60014 &,60,8,50,60,2^ac%+zz*32768,jm%(1,.),fd%(1),.:if a%=. then return
-+.GF:		
++.GF:
 	3168: rn=a%:if rn then:&,60,8,s%(0,0),80,1,s%(0,1),e%(1),1
 +.lo:
 	3304: &,52,4,3:&,60,8,fb%(.,.),60,2^(a%+3),fb%(11,1),ff%(1),1
 
-	scansum
+	scansum		Unknown what this is for
 	Usage:	&,60,9,num,siz,a(a,b)
 	
 	cpystruc	Copy field in struct to another field?
-	Usage:	&,60,10,size,a1(a,b),a2(a,b)
+	Usage:	&,60,10,bytes,a1(a,b),a2(a,b)
 
 +/IM.logon:
-	4326 if x<>fb%(.,.)then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
+	inserting a record at fb%(0,a):
+	4326 if x<>fb%(.,.) then for a=x to fb%(.,.)-1:&,60,10,60,fb%(.,a+1),fb%(.,a):next
 
 +/GF-add:
-	3324 if x<>cm%(0,0)then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
+	again, inserting a record
+	3324 if x<>cm%(0,0) then for a=x to cm%(0,0)-1:&,60,10,100,cm%(0,a+1),cm%(0,a):next
 	
-	scanstr
+	scanstr		Unknown what this is for
 	Usage:	&,60,11,num,siz,op,str,a1(a,b),a2(b),start
-
+	No examples yet.
 	
 	gamescan
 	Usage:	&,60,13,count,size,a$,a%(a,b),b$
+	No examples yet.
 
+	&,61,col,row
+		poscrsr
+		[jack] im 4006: &,38:&,61,.,8:print"&,37:goto 1812:":end
+	[Maybe this affects the console cursor position]
 
-&,61,col,row
-	poscrsr
-im: 4006 &,38:&,61,.,8:print"&,37:goto 1812:":end
+	&,62,b,c
+		settim: b=hour (+81=PM), c=min im: ~3184
+$f403	&,63	inline1
+$f809	&,64	convstr
+$fc09	&,65	convert
+	&,66	calcgoto [intrigued by this one] a%=line #
+$fc0c	&,67	copyrite
+$ee03	&,68	struct
+	[What's the difference between &,60 and &,68?]
 
-&,62,b,c
-	settim: b=hour, c=min? im: ~3184
-&,63	inline1
-&,64	convstr
-&,65	convert
-&,66	calcgoto
-&,67	copyrite
-&,68	struct
-&,69	dispstr
+	&,69	dispstr
 
 	&,69,<column>,<row>,<text>,<color>
 	Example: &,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
-		sub.display is a good example of this
+		im.display is a good example of this
 		<column>/<row> begins at 0
-		<color> is 1-16, $8x is reverse color x
+		<color> is 1-15, $8x is reverse color x
+[Question: will this plot stuff to the hidden screen mask
+even if screen mask is off? I'm pretty sure it does.]
 
-&,70	cursposn
-	&,70,.,n/2+8.5:&"{white}"
+&,70	cursposn	<column>,<row>?
+	+.IM &,70,.,n/2+8.5:&"{white}"
+[what is the difference between &,61 and &,70?]
+[Maybe &,70 affects the user's terminal cursor position]
 
 &,71	cursmenu
 

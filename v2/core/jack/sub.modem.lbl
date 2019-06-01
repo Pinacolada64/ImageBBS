@@ -1,3 +1,6 @@
+{number:60000}
+{step:2}
+' TODO: add option to redefine s2 (command mode escape char)
 	ON(IM)GOTO{:60005},{:60055},{:60075},{:60100},{:60135},{:60190},{:60180},{:60325},{:60395},{:60070}:GOTO{:60110}
 {:60005}
 	IF VAL(MT$)=0 THEN RETURN
