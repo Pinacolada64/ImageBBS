@@ -55,12 +55,12 @@
 ' ----+----+----+----+----+----+----+----+
 ' Sorry, this ED only works with Image BBS
 ' v1.3 and above.
-	&,5:if lp<1.3 then:&"Sorry, this ED only works with Image BBS v1.3 and above.":return
+	&,5:if lp<1.3 then:&"Sorry, this ED only works with Image BBS v1.3 and above.":goto 1811
 	&,27:gosub {:100}:&,28:goto 1811
 
 {nice:5}
 {:sub.change_prompt}
-	&" # to change (1-{pound}!i): {pound}i1"
+	&"{f6} # to change (1-{pound}!i): {pound}i1{f6}"
 
 {nice:5}
 {:sub.normalize_a}
@@ -191,7 +191,7 @@
 	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
 
 {ifdef:show_build_date}
-	&"{lt. red}Built {$04}61905310637{f6}"
+	&"{lt. red}Built {$04}61906012040{f6}"
 {endif}
 
 	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
@@ -220,8 +220,6 @@
 	if p then {:page1}
 
 ' ----+----+----+----+----+----+----+----+
-' 
-
 '  DE#1          (Type "N" for next page)
 ' 
 '  1) Handle     : PINACOLADA
@@ -269,45 +267,49 @@
 ' page 1: 10-21
 	for i=10 to 21:a%=i:b$=ed$(i):c$=tt$(i)
 ' computer type:
-	if i=10 then c$=co$(val(tt$(i)))
+	if i=10 then c$=co$(val(c$))
 ' FIXME: im.misc reads ll% from u.config:
 ' screen width (ll%) + 256 * screen height (mp%):
 ' mp%=int(ll%/256):ll%=ll%-256*mp%
 ' here, c% is just a temp value
 ' w%=width, h%=height: 6440=40x25
-	if i=11 then c%=val(tt$(i)):h%=c%/256:w%=c%-256*h%:c$="{pound}%wx{pound}%h" ' e.g., 80x25
+' NOTE: compensates for 0x0
+	if i=11 then c%=val(c$):h%=c%/256:w%=c%-256*h%:c$=mid$(str$(w%),2)+"x"+mid$(str$(h%),2) ' e.g., 80x25
 
 ' FIXME: transfer protocol: - maybe get list of protocols from s.m.proto?
-	if i=12 then c$=mid$("Punter        Xmodem        Copier        Relaxed Punter",val(tt$(i))*14-13,14)
-' 13: user flags (linefeeds, time zone)
+	if i<>12 then {:expert_mode}
+	c$="None          Punter        Xmodem        Copier        Relaxed Punter"
+' compensate for unset protocol (0)
+	c$=mid$(c$,(val(c$)+1)*14-13,14)
+{:expert_mode}
+' 13: skip user flags
+	if i=13 then i=14
 ' 14: Expert Mode
-	if i=14 then c$=mid$("OffOn",(val(tt$(i))+1)*3-2,3)
+' FIXME: my expert mode is set to 0
+' TODO: subroutine Yes/No displays
+' 	if i=14 then c$=mid$("No Yes",(val(c$))*3+1,3)
 ' 1 dim tt$(13):tt$(13)="0":i=13
 ' 2 if i=13 or i=14 then c$=mid$("No Yes",(val(tt$(i))+1)*3-2,3)
 ' 3 print c$
 
-{:end_loop}
-	&:next
+{:page1_end}
+	&:&"{f6}":next
 
 {:input}
-' original code:
-' 214={:sub.change_prompt}, 2={:sub.normalize_a}
-' 120 next:&"{f6}":gosub 214:&"{f6}":gosub 2:if tr%<1 then 1811
-' 122 if an$="N" {$ce} then p=1-p:goto 112
-
-	&"{f6}":i=23:gosub {:sub.change_prompt}
-	if an$="N" then p=1-p:goto {:header}
+	i=23:gosub {:sub.change_prompt}:if an$="N" then p=1-p:goto {:header}
 	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
 
 ' changing password with/without permission:
 ' if not sysop, display "Sorry, restricted function." from e.text:
-	if a=2 then on -(id=1) gosub {:sub.existing_pw}:if id<>1 then x=3:gosub 1980:&"{pound}w2":goto {:header}
+' current line prompts twice:
+'	if a=2 then on -(id=1) gosub {:sub.existing_pw}:if id<>1 then x=3:gosub 1980:&"{pound}w2":gosub 1065:goto {:header}
+	if a=2 then if id<>1 then x=3:gosub 1980:&"{pound}w2":gosub 1065:goto {:header}
 
 ' edit Last date:
 	if a=6 then an$=tt$(a):gosub {:sub.time_date_edit}:goto {:header}
 
 ' show user flags sub-menu
-	if a=13 then gosub {:sub.show_user_flags}
+	if a=13 then gosub {:sub.show_user_flags}:goto {:header}
 ' computer type
 	if a<>22 then {:computer_type}
 ' 1) edit logon time
@@ -332,9 +334,6 @@
 ' 12 - transfer protocol
 	if a=12 then gosub {:sub.xfer_proto}:goto {:header}
 
-' 13 - User flags:
-	if a=13 then gosub {:sub.show_user_flags}:goto {:header}
-
 ' show access flags:
 	if a=23 then gosub {:sub.show_access_flags}:goto {:header}
 
@@ -355,7 +354,7 @@
 	goto {:102}
 {:142}
 ' 10 - computer type:
-	&"{f6}":for t=1 to 9:&"{f6}{pound}!t) "+co$(t):next
+	for t=1 to 9:&"{f6}{pound}!t) "+co$(t):next
 	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
 	on -(a<1 or a>9) goto {:142}:tt$(10)=str$(a):tz=.:return
 
@@ -368,8 +367,45 @@
 	on -(a<1 or a>4) goto {:sub.xfer_proto}:tt$(12)=str$(a):tz=.:return
 
 {nice:10}
-{:sub.edit_user_flags}
-	gosub {:sub.todo}:return
+{:sub.show_user_flags}
+' ----+----+----+----+
+' 1) Message Pause Mode: Off
+
+' FIXME: the problem child:
+' b$=item explanation, c$=value, tt$()=config setting
+
+' 1 dim tt$(43):tt$(43)="01000PST0400"
+' 2 for i=1 to 6:c$=tt$(43)
+' 3 if i<6 then c$=mid$("OffOn",val(mid$(c$,i,1))*3+1,3)
+' 4 if i=6 then c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")"
+' 5 print i;c$:next
+'  1 Off
+'  2 On
+'  3 Off
+'  4 Off
+'  5 Off
+'  6 04:00 (PST)
+
+'  1) Linefeeds            : Off
+'  2) Message Pause Mode   : Off
+'  3) Graphic Menu Mode    : Off
+'  4) Undefined            : Off
+'  5) Undefined            : Off
+'  6) Time Zone/Offsets    : : ()
+' 
+'  # to change (1-6):
+
+	for i=1 to 6:b$=ed$(43+i):c$=tt$(43)
+' FIXME 3342
+	if i<6 then c$=mid$("OffOn",val(mid$(c$,i,1))*3+1,3)
+	if i=6 then c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")" ' "04:00 (PST)"
+	&" {pound}!i) {pound}$b{pound}{back arrow}25: {pound}$c{f6}":next
+
+{nice:10}
+{:edit_user_flags}
+	i=6:gosub {:sub.change_prompt}
+	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
+	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:return
 
 {:148}
 ' deleted (^) or REServed users:
@@ -417,7 +453,7 @@
 
 {:sub.show_access_flags}
 '  1) Non-Weed Status  : Yes
-'  2) Credit Ratio     : 9/1
+'  2) Credit Ratio     : 1/1
 '  3) Local Maint      : Yes
 '  4) Post/Respond     : Yes
 '  5) U/D Access       : Yes
@@ -432,27 +468,29 @@
 ' 14) Unltd Editor Lns : Yes
 ' 15) UDs at Prime Time: Yes
 ' 16) Max Idle Time    : 9 Minutes
-' 17) Calls Per Day    : No
-' 18) Time Per Call    : 00
-' 20) Downloads/Call   : No
-'  # to change (1-20): 19
+' 17) Calls Per Day    : Unlimited
+' 18) Time Per Call    : Unlimited
+' 20) Downloads/Call   : Unlimited
+' 
+'  # to change (1-20):
+
 	&"{clear}":for i=1 to 20:b$=mid$(tt$(23),i,1):a%=i:c$=ed$(i+23)
+' default is bool (put first for speed, 'then...if' faster than 'and'):
+	if i<16 then if i<>2 then if i<>6 then b$=mid$("YesNo",(1-val(b$))*3+1,3)
 ' credit ratio:
 	if i=2 then b$=b$+"/1":goto {:186}
-' max editor lines:
+' max editor lines, multiple of 10:
 	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:186}
 ' max idle time:
 	if i=16 then b$=b$+" Minutes":goto {:186}
 ' calls per day (2 bytes)
-	if i=18 then b$=mid$(tt$(23),i,2):i=19:goto {:186}
-' otherwise, default is bool:
-	b$=mid$("YesNo",(1-val(b$))*3+1,3)
-
+	if i=18 then b$=mid$(tt$(23),i,2):i=19
+' 17, 18, 20: 0 should say "Unlimited"
+	if i>16 then if val(b$)=. then b$="Unlimited"
 {:186}
 	&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}21: {pound}$b{f6}":next
 	i=20:gosub {:sub.change_prompt}:on -(tr%<1) goto 1811:if a<1 or a>i then return
 ' 2, 6, 16-18, 20 are non-bool
-' 17, 18, 20: 0 should say "Unlimited",
 ' TODO: da% usage was modified by X-Tec, how?
 ' 17/18: Calls Per Day/Time Per Call: 0 (Unlimited)-9
 	if a=2 then b$=mid$(tt$(23))
@@ -461,23 +499,26 @@
 ' 2/16: credit ratio/max idle time: 1-9
 
 ' can't edit #19
-	if a=19 then:&"Cannot edit 2nd byte of "+ed$(42)+"{pound}w3":goto {:sub.show_access_flags}
+	if a=19 then lp=1:&"Cannot edit 2nd byte of "+ed$(42)+". Editing 1st instead.{f6}":a=18
 
 {:edit_access_flags}
 ' TODO: input time per call
 ' toggle bool flag:
 	l=1:if a<16 then if a<>2 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),2):goto {:update_access_flag}
 ' 2/16: credit ratio/max idle time
-	if a=2 or a=16 then b$=
-	&"{f6}":p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1) goto 1811:if an$="" then gosub {:sub.no_change}:return
+	if a=2 or a=16 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),1)
+	&"{f6}":p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1) goto 1811:if an$="" or an$=b$ then gosub {:sub.no_change}:return
+' TODO: display "(0=Unlimited)" if appropriate
 '	b$=left$(an$,1):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
 ' l=length of flag (1/2)
-	if a=18 then l=2
-	b$=left$(an$,l)
-'	:if a<>6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
+	l=1:if a=18 then l=2
+	b$=left$("0"+an$,l)
+' TODO: error checking
+' editor lines/10:
+'	if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
 {:update_access_flag}
 ' {:196}
-	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+1):goto {:sub.show_access_flags}
+	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+l):goto {:sub.show_access_flags}
 
 {undef:dupe_flag_stuff} ' I think this is vestigal code
 {ifdef:dupe_flag_stuff}
@@ -535,12 +576,8 @@
 	on -(an$<>"{f8}"and an$<>"RES") gosub 1038:id=kk:return
 
 {nice:10}
-{:sub.show_user_flags}
-	gosub {:sub.todo}:return
-
-{nice:10}
 ' edit user's time zone, temporarily DIMension bb$() to hold TZ data
-{:sub.edit_tz}
+{:sub.tz_edit}
 	an$=mid$(tt$(44),6):&,27,1:dim bb$(50)
 {:60018}
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e% then:&:goto {:tz_done}
@@ -548,7 +585,7 @@
 	&,2,2:if a$<>"{up arrow}" then n=n+1:tt$(n)=a$:if st=. then {:60020}
 	close 2:&"{f6}Select User's Time Zone:{f6:2}"
 {:tz_list}
-	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
+	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}#2{pound}%a) ({pound}$b) {pound}$c{f6}":next
 	poke 53252,2:&"{f6}Which One (L=List)? {pound}i1":if an$="L" then {:tz_list}
 	a=val(an$):if an$=""or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
 	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
@@ -620,7 +657,7 @@
 '	 3:	Graphic Menu mode
 '	 4:	Undefined
 '	 5:	Undefined
-'	 6-:	3 letter time zone abbreviation, hour/minute offset
+'	 6-:	3 letter time zone abbreviation, hour/minute offset: "01000PST0400"
 
-	rem "+.ED" 1.3 - 2019-05-16 pinacolada
+	rem "+.ED" 1.3 - 2019-06-01 pinacolada
 	rem copr. 1988-2019 new image

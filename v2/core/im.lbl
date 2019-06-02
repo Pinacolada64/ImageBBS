@@ -969,21 +969,8 @@
 	a$=" LOG START: "+d6$:print# 2,a$:gosub {:1096}
 	a$=" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}"+"{f6}":print# 2,a$:gosub {:1096}:gosub {:1063}:x=44:gosub {:1001}:print# 2,d6$
 	close 2:gosub {:1060}:for x=12 to 22:st(x)=.:gosub {:1026}:next:st(20)=.:goto {:1026}
-{:3220}
-' configure new BBS:
-' d1$=pearl harbor day
-	&"{clear}{f6}{white} Part I: Sysop Information{f6:2}" ':d1$="14112071201"
-	poke 53252,20:w$="IMAGE {$c2:2}S":b$=w$:pl=1:p$="Sysop Handle":&,1,32
-	if an$=""then an$=b$
-	tt$(1)=an$:&"{f6}":w$="RUSH":b$=w$:p$="Sysop First Name":&,1,32
-	if an$=""then an$=b$
-	tt$(3)=an$:&"{f6}":w$="LIMBAUGH":b$=w$:p$="Sysop Last Name":&,1,32
-	if an$=""then an$=b$
-	tt$(4)=an$:&"{f6}":w$="[801] 423-2209":b$=w$:p$="Sysop Phone":&,1,32
-	if an$=""then an$=b$
-	tt$(5)=an$:&"{f6}":w$="DI{$d4:2}O":b$=w$:p$="Sysop Password":&,1,32
-	if an$=""then an$=b$
 
+' configure new BBS:
 {:3222}
 ' TODO: configure new BBS:
 ' Current process has some deficiencies:
@@ -1014,7 +1001,8 @@
 	if an$="" then an$=b$
 	tt$(3)=an$:&"{f6}":w$="DOE":b$=w$:p$="Sysop Last Name":&,1,32
 	if an$="" then an$=b$
-' TODO: X-Tec's email address mod, use "noreply@example.com"
+' TODO: if using X-Tec's email address mod, use "noreply@example.com"
+' https://tools.ietf.org/html/rfc2606
 	tt$(4)=an$:&"{f6}":w$="[801] 423-2209":b$=w$:p$="Sysop Phone":&,1,32
 	if an$="" then an$=b$
 	tt$(5)=an$:&"{f6}":w$="DITTO":b$=w$:p$="Sysop Password":&,1,32
