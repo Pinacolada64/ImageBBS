@@ -191,7 +191,7 @@
 	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
 
 {ifdef:show_build_date}
-	&"{lt. red}Built {$04}61906012040{f6}"
+	&"{lt. red}Built {$04}11906028746{f6}"
 {endif}
 
 	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
@@ -199,7 +199,7 @@
 	if rr then:&"{f6}{lt. red}User count modified, reboot required"
 
 	&"{f6:2}{cyan}Enter handle or ID# of user to edit.{f6:2}"
-	p$="User Edit":gosub 1006:if an$="" then return
+	an$="":p$="User Edit":gosub 1006:if an$="" then return
 ' look up user:
 {:got_param}
 	gosub {:sub.normalize_a}:x=a:if x<=ur and x>. then {:110}
@@ -228,7 +228,7 @@
 '  4) Last Name  : SHERWOOD
 '  5) Phone #    : [253] 355-0297
 '  6) Last Date  : May 19, 2019  4:17 PM
-'  7) Accs Group : 9 (Sysop)   af%:0
+'  7) Accs Group : 9 (Sysop)        NM: 0
 '  8) Calls Today: 0
 '  9) Total Calls: 0
 ' 13) User Flags : 01000PST0400
@@ -240,14 +240,25 @@
 ' page 0: 1-9, 13, 22-23
 	for i=1 to 9:a%=i:b$=ed$(i):c$=tt$(i)
 ' hide password from non-sysop:
-	if i=2 and id<>1 then c$="Not available"
+	if i=2 then if id<>1 then c$="Not available"
 ' verbose last message read date:
 	if i=6 then gosub {:sub.verbose_date}
-' access group (name=q$), af% [?]:
+' access group (name=q$), af%, send NetMail access level:
 ' can't use MCI in a string?
-'	if i=7 then c$=c$+" ({pound}$q){pound}{back arrow}25af% [?]: {pound}%q"
-' FIXME
-	if i=7 then c$=left$(c$,1)+" ("+q$+")   af%:"+right$(c$,1)
+'	if i=7 then c$=c$+" ({pound}$q){pound}{back arrow}25NM : {pound}%q"
+' can be max 18 spaces between ac% and nm
+' ----+----+----+----+----+----+----+----+
+'  7) Accs Group : 9 (Sysop)        NM: 0
+	if i<>7 then {:end_loop0}
+' 1 c$="91":q$="Sysop"
+' 2 z$=left$(left$(c$,1)+" ("+q$+")
+'           ",19)
+' 3 z$=z$+"NM: "+right$(c$,1):c$=z$
+' 4 print" 7) Accs Grp : "c$
+	z$=left$(left$(c$,1)+" ("+q$+"){space:13}",17)
+' lp=0: prevent word-wrap
+	z$=z$+"NM: "+right$(c$,1):c$=z$:lp=0
+{:end_loop0}
 	&:&"{f6}":next
 ' user flags:
 	i=13:a%=i:b$=ed$(i):c$=tt$(i):&:&"{f6}"
@@ -255,7 +266,7 @@
 ' last call + carrier drop:
 ' if carrier drop flag not present (c%=.), don't show it
 	i=22:a%=i:b$=left$(ed$(i),11):gosub {:sub.verbose_date}:&:&"{f6}":c%=-(len(ed$(i))<12):if c% then {:access_flags}
-	cd%=val(mid$(ed$(i),12,1)) and 1:&"{space:5}Carrier Drop: "+mid$("No Yes",cd%*3-2,3)+"{f6}"
+	cd%=val(mid$(ed$(i),12,1)) and 1:&"{space:5}Carrier Drop: "+mid$("No Yes",cd%*3+1,3)+"{f6}"
 ' TODO: maybe gosub 1904 instead to print "Yes/No"? uses a$ though
 {:access_flags}
 ' access flags
@@ -285,11 +296,11 @@
 ' 13: skip user flags
 	if i=13 then i=14
 ' 14: Expert Mode
-' FIXME: my expert mode is set to 0
+' FIXME: mine is set to 0, which crashes this. why?
 ' TODO: subroutine Yes/No displays
-' 	if i=14 then c$=mid$("No Yes",(val(c$))*3+1,3)
+'	if i=14 then z$=mid$("No Yes",val(c$)*3+1,3):c$=z$
 ' 1 dim tt$(13):tt$(13)="0":i=13
-' 2 if i=13 or i=14 then c$=mid$("No Yes",(val(tt$(i))+1)*3-2,3)
+' 2 if i=13 or i=14 then c$=mid$("No Yes",val(tt$(i))*3+1,3)
 ' 3 print c$
 
 {:page1_end}
@@ -320,7 +331,7 @@
 
 ' 2) carrier drop flag may not exist yet, as with conversion from 1.2
 	an$=left$(tt$(a),11):gosub {:sub.time_date_edit}:if c%=. then {:header}
-	&"Carrier drop flag: "+mid$("YesNo",cd%*3-2,3)
+	&"Carrier drop flag: "+mid$("No Yes",cd%*3+1,3)
 	&", toggle?: ":gosub 1902:if a then cd%=1-cd%
 	tt$(op)=tt$(op)+chr$(48+cd%):goto {:header}
 
@@ -354,23 +365,22 @@
 	goto {:102}
 {:142}
 ' 10 - computer type:
-	for t=1 to 9:&"{f6}{pound}!t) "+co$(t):next
+	for t=1 to 9:&" {pound}!t) "+co$(t)+"{f6}":next
 	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	on -(a<1 or a>9) goto {:142}:tt$(10)=str$(a):tz=.:return
+	if a>. and a<10 then tt$(10)=str$(a):tz=.
+	return
 
 {nice:10}
 {:sub.xfer_proto}
 ' FIXME: get protos from s.m.protos: gosub 1666
 ' 12 - transfer protocol:
-	&"{f6}1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
+	&"1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
 	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	on -(a<1 or a>4) goto {:sub.xfer_proto}:tt$(12)=str$(a):tz=.:return
+	if a>. or a<5 then tt$(12)=str$(a):tz=.
+	return
 
 {nice:10}
 {:sub.show_user_flags}
-' ----+----+----+----+
-' 1) Message Pause Mode: Off
-
 ' FIXME: the problem child:
 ' b$=item explanation, c$=value, tt$()=config setting
 
@@ -386,8 +396,9 @@
 '  5 Off
 '  6 04:00 (PST)
 
+' ----+----+----+----+----+----+
 '  1) Linefeeds            : Off
-'  2) Message Pause Mode   : Off
+'  2) Message Pause Mode   : On
 '  3) Graphic Menu Mode    : Off
 '  4) Undefined            : Off
 '  5) Undefined            : Off
@@ -395,17 +406,20 @@
 ' 
 '  # to change (1-6):
 
-	for i=1 to 6:b$=ed$(43+i):c$=tt$(43)
-' FIXME 3342
-	if i<6 then c$=mid$("OffOn",val(mid$(c$,i,1))*3+1,3)
-	if i=6 then c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")" ' "04:00 (PST)"
+	for i=1 to 6:b$=ed$(43+i):c$=mid$(tt$(13),i,1)
+' additional state of Message Pause Mode
+	if i=2 then if val(c$)=2 then c$="Messages Only":goto {:next_user_flag}
+	if i<6 then c$=mid$("OffOn",val(c$)*3+1,3)
+' e.g., "04:00 (PST)"
+	if i=6 then c$=tt$(13):c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")"
+{:next_user_flag}
 	&" {pound}!i) {pound}$b{pound}{back arrow}25: {pound}$c{f6}":next
 
 {nice:10}
 {:edit_user_flags}
 	i=6:gosub {:sub.change_prompt}
 	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
-	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:return
+	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:goto {:sub.show_user_flags}
 
 {:148}
 ' deleted (^) or REServed users:
@@ -507,12 +521,12 @@
 	l=1:if a<16 then if a<>2 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),2):goto {:update_access_flag}
 ' 2/16: credit ratio/max idle time
 	if a=2 or a=16 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),1)
-	&"{f6}":p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1) goto 1811:if an$="" or an$=b$ then gosub {:sub.no_change}:return
+	&"{f6}":p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="" or an$=b$) goto 1811, {:sub.no_change}
 ' TODO: display "(0=Unlimited)" if appropriate
 '	b$=left$(an$,1):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
 ' l=length of flag (1/2)
 	l=1:if a=18 then l=2
-	b$=left$("0"+an$,l)
+	b$=right$("0"+an$,l)
 ' TODO: error checking
 ' editor lines/10:
 '	if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
@@ -576,25 +590,32 @@
 	on -(an$<>"{f8}"and an$<>"RES") gosub 1038:id=kk:return
 
 {nice:10}
-' edit user's time zone, temporarily DIMension bb$() to hold TZ data
+' edit user's time zone
+' un-REM if im doesn't temporarily DIMension bb$() to hold TZ data
 {:sub.tz_edit}
-	an$=mid$(tt$(44),6):&,27,1:dim bb$(50)
+' save time zone to display later:
+'	an$=mid$(tt$(44),6)
+	an$=mid$(tt$(13),6,3):rem &,27,1:dim bb$(50)
 {:60018}
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e% then:&:goto {:tz_done}
 {:60020}
-	&,2,2:if a$<>"{up arrow}" then n=n+1:tt$(n)=a$:if st=. then {:60020}
+	&,2,2:if a$<>"{up arrow}" then n=n+1:bb$(n)=a$:if st=. then {:60020}
 	close 2:&"{f6}Select User's Time Zone:{f6:2}"
 {:tz_list}
-	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}#2{pound}%a) ({pound}$b) {pound}$c{f6}":next
-	poke 53252,2:&"{f6}Which One (L=List)? {pound}i1":if an$="L" then {:tz_list}
+	for i=1 to n:b$=left$(bb$(i),3):c$=mid$(bb$(i),8):a%=i:&"{pound}#2{pound}%a) ({pound}$b) {pound}$c{f6}":next
+	poke 53252,2:&"{f6}Which One ([{pound}v7], L=List)? {pound}i1":if an$="L" then {:tz_list}
 	a=val(an$):if an$=""or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
-	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
+' TODO: this is different than im.misc - check on data format
+'	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
+	tt$(13)=left$(tt$(13),5)+left$(bb$(a),7):tz=.
 {:tz_done}
 ' clear bb$(), re-open u.config
-	close 2:&,28,1:goto 1065
+'	close 2:&,28,1:goto 1065
+	close 2:goto 1065
 
 {nice:10}
 	data 49
+' ed$(), item descriptions
 ' data items 1-24
 	rem page 1
 ' 1, 2
@@ -644,7 +665,7 @@
 
 	rem user flags
 ' data items 44-49
-' uf$ [6], tt$(44-49)
+' uf$ [6], ed$(44-49)
 	data "Linefeeds"
 	data "Message Pause Mode"
 	data "Graphic Menu Mode"
