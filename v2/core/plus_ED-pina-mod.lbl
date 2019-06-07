@@ -402,16 +402,14 @@
 '  3) Graphic Menu Mode    : Off
 '  4) Undefined            : Off
 '  5) Undefined            : Off
-'  6) Time Zone/Offsets    : : ()
-' 
-'  # to change (1-6):
+'  6) Time Zone (Offset)   : PST (04:00)
 
 	for i=1 to 6:b$=ed$(43+i):c$=mid$(tt$(13),i,1)
 ' additional state of Message Pause Mode
 	if i=2 then if val(c$)=2 then c$="Messages Only":goto {:next_user_flag}
 	if i<6 then c$=mid$("OffOn",val(c$)*3+1,3)
-' e.g., "04:00 (PST)"
-	if i=6 then c$=tt$(13):c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")"
+' e.g., "PST (04:00)"
+	if i=6 then c$=tt$(13):c$=mid$(c$,6,3)+" ("+mid$(c$,9,2)+":"+mid$(c$,11,2)+")"
 {:next_user_flag}
 	&" {pound}!i) {pound}$b{pound}{back arrow}25: {pound}$c{f6}":next
 
@@ -595,16 +593,51 @@
 {:sub.tz_edit}
 ' save time zone to display later:
 '	an$=mid$(tt$(44),6)
-	an$=mid$(tt$(13),6,3):rem &,27,1:dim bb$(50)
+	z$=mid$(tt$(13),6,3):rem &,27,1:dim bb$(50)
 {:60018}
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e% then:&:goto {:tz_done}
 {:60020}
-	&,2,2:if a$<>"{up arrow}" then n=n+1:bb$(n)=a$:if st=. then {:60020}
-	close 2:&"{f6}Select User's Time Zone:{f6:2}"
+' convert abbreviation into prompt option:
+	&,2,2:if a$<>"{up arrow}" then n=n+1:bb$(n)=a$:if left$(a$,3)=z$ then z$=mid$(str$(n),2)
+	if st=. then {:60020}
+	close 2:poke 971,.:&"Select User's Time Zone:{f6:2}"
 {:tz_list}
-	for i=1 to n:b$=left$(bb$(i),3):c$=mid$(bb$(i),8):a%=i:&"{pound}#2{pound}%a) ({pound}$b) {pound}$c{f6}":next
-	poke 53252,2:&"{f6}Which One ([{pound}v7], L=List)? {pound}i1":if an$="L" then {:tz_list}
-	a=val(an$):if an$=""or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
+	for i=1 to n:b$=left$(bb$(i),3):c$=mid$(bb$(i),8):a%=i:&"{pound}#2{pound}# {pound}%a) ({pound}$b) {pound}$c{f6}":next
+' ----+----+----+----+----+----+----+----+
+' 01) (SST) Midway Island
+' 02) (HST) Hawaiian Standard Time
+' 03) (AST) Alaskan Standard Time
+' 04) (PST) (US) Pacific Standard Time
+' 05) (MST) (US) Mountain Standard Time
+' 06) (CST) (US) Central Standard Time
+' 07) (EST) (US) Eastern Standard Time
+' 08) (BER) Bermuda
+' 09) (G-3) GMT -3 Hours
+' 10) (NST) Newfoundland
+' 11) (G-2) GMT -2 Hours
+' 12) (G-1) GMT -1 Hour
+' 13) (GMT) Greenwich Mean Time
+' 14) (G+1) GMT +1 Hour
+' 15) (G+2) GMT +2 Hours
+' 16) (G+3) GMT +3 Hours
+' 17) (G+4) GMT +4 Hours
+' 18) (G+5) GMT +5 Hours
+' 19) (G+6) GMT +6 Hours
+' 20) (G+7) GMT +7 Hours
+' 21) (WAT) Western Australia Time
+' 22) (KST) Korean Standard Time
+' 23) (G+9) GMT +9 Hours
+' 24) (CAT) Central Australia Time
+' 25) (EAT) Eastern Australia Time
+' 26) (G11) GMT +11 Hours
+' 27) (G12) GMT +12 Hours
+
+' 1-n, L)ist Again
+' Time Zone: 6
+' Time Zone: 
+	poke 53252,2:&"{f6} 1-{pound}!n, L)ist Again{f6}"
+	p$=" Time Zone":w$=z$:&,1,32:if an$="L" then {:tz_list}
+	a=val(an$):if an$="" or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
 ' TODO: this is different than im.misc - check on data format
 '	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
 	tt$(13)=left$(tt$(13),5)+left$(bb$(a),7):tz=.
@@ -671,7 +704,7 @@
 	data "Graphic Menu Mode"
 	data "Undefined"
 	data "Undefined"
-	data "Time Zone/Offsets"
+	data "Time Zone (Offset)"
 
 '	 1: lf	LineFeeds
 '	 2:	Message pause mode
