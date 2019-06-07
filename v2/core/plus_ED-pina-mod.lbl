@@ -156,6 +156,7 @@
 
 {nice:4}
 {:sub.get_access_group_name}
+' TODO: get all info (which array?)
 	& "Getting access group name..."
 ' get access group name from "e.access" for displaying in page 0, or after editing to re-display
 	a$="e.access":gosub 1011:if e% then:&:&"{f6}":q$="???"
@@ -206,6 +207,8 @@
 
 	&"{f6:2}{cyan}Enter handle or ID# of user to edit.{f6:2}"
 	an$="":p$="User Edit":gosub 1006:if an$="" then return
+' TODO: create new user with "NEW"
+
 ' look up user:
 {:got_param}
 	gosub {:sub.normalize_a}:x=a:if x<=ur and x>. then {:110}
@@ -260,8 +263,10 @@
 ' 2 z$=left$(left$(c$,1)+" ("+q$+")
 '           ",19)
 ' 3 z$=z$+"NM: "+right$(c$,1):c$=z$
-' 4 print" 7) Accs Grp : "c$
-	z$=left$(left$(c$,1)+" ("+q$+"){space:13}",17)
+' 4 print" 7) Accs Group : "c$
+' ----+----+----+----+----+----+----+----+
+'  7) Accs Group : 9 (123456789abc) NM: x
+	z$=left$(left$(c$,1)+" ("+left$(q$,12)+"){space:13}",17)
 ' lp=0: prevent word-wrap
 	z$=z$+"NM: "+right$(c$,1):c$=z$:lp=0
 {:end_loop0}
@@ -275,14 +280,14 @@
 	cd%=val(mid$(ed$(i),12,1)) and 1:&"{space:5}Carrier Drop: "+mid$("No Yes",cd%*3+1,3)+"{f6}"
 ' TODO: maybe gosub 1904 instead to print "Yes/No"? uses a$ though
 {:access_flags}
-' access flags
 	i=23:a%=i:b$=ed$(i):c$=tt$(i):&:&"{f6}"
 {:end_page0}
 	goto {:input}
 
 {:page1}
-' page 1: 10-21
-	for i=10 to 21:a%=i:b$=ed$(i):c$=tt$(i)
+' page 1: 10-12, 14-21
+	for i=10 to 21:if i=13 then i=14
+	a%=i:b$=ed$(i):c$=tt$(i)
 ' computer type:
 	if i=10 then c$=co$(val(c$))
 ' FIXME: im.misc reads ll% from u.config:
@@ -297,14 +302,12 @@
 	if i<>12 then {:expert_mode}
 	c$="None          Punter        Xmodem        Copier        Relaxed Punter"
 ' compensate for unset protocol (0)
-	c$=mid$(c$,(val(c$)+1)*14-13,14)
+	c$=mid$(c$,(val(c$)+1)*14-13,14):goto {:page1_end}
 {:expert_mode}
-' 13: skip user flags
-	if i=13 then i=14
-' 14: Expert Mode
+' 14: expert mode
 ' FIXME: mine is set to 0, which crashes this. why?
 ' TODO: subroutine Yes/No displays
-'	if i=14 then z$=mid$("No Yes",val(c$)*3+1,3):c$=z$
+	c$=mid$("No Yes",val(c$)*3+1,3)
 ' 1 dim tt$(13):tt$(13)="0":i=13
 ' 2 if i=13 or i=14 then c$=mid$("No Yes",val(tt$(i))*3+1,3)
 ' 3 print c$
@@ -314,21 +317,67 @@
 
 {:input}
 	i=23:gosub {:sub.change_prompt}:if an$="N" then p=1-p:goto {:header}
-	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
+	on -(tr%<1) goto 1811:if a>. and a<24 then {:dispatch}
+' save
+	on tz goto {:102}:&"{f6}Save changes? ":gosub 1902:if a=. then {:102}
+	&"{clear}{f6}Writing to user data files..."
+'	if tt$(1)<>"{up arrow}" and tt$(1)<>"RES" and tt$(1)<>tt$ then gosub {:206}
+	if tt$(1)="{up arrow}" or tt$(1)="RES" and tt$(1)=tt$ then {:keep_writing}
+	&"Renaming "+tt$+"'s mail files..."
+{:206}
+' handle change: rename forced mail and regular mail files:
+' TODO: ps.* (Personal Signatures)
+	dr=2:gosub 1010:a$="f.":for i=1 to 2
+	print# 15,"r"dr$a$left$(tt$(1),13)"="a$left$(tt$,13):a$="m.":next
+' check error channel, delete old handle an$ from alphabetical user index:
+	gosub 1012:an$=tt$:kk=id:id=x:gosub 1034:an$=tt$(1)
+' insert new handle into alphabetical user index:
+	on -(an$<>"{f8}" and an$<>"RES") gosub 1038:id=kk
+':gosub {:sub.write_stats}:goto {:102}
+{:keep_writing}
+	gosub {:sub.write_stats}:if tt$(1)="RES" and tt$<>"{up arrow}" and tt$<>"RES" then {:166}
+	goto {:102}
 
-' changing password with/without permission:
-' if not sysop, display "Sorry, restricted function." from e.text:
-' current line prompts twice:
-'	if a=2 then on -(id=1) gosub {:sub.existing_pw}:if id<>1 then x=3:gosub 1980:&"{pound}w2":gosub 1065:goto {:header}
-	if a=2 then if id<>1 then x=3:gosub 1980:&"{pound}w2":gosub 1065:goto {:header}
+{:dispatch}
+	on -(a=6) -2*(a=7) -3*(a=10) -4*(a=11) -5*(a=12) -6*(a=14) -7*(a=22) goto {:last_date}, {:access_group}, {:computer_type}, {:screen_size}, {:default_proto}, {:toggle_expert_mode}, {:last_call}
+' subroutines:
+	if a=13 or a=23 then on -(a=13) -2*(a=23) gosub {:sub.show_user_flags}, {:sub.show_access_flags}:goto {:header}
+	goto {:general_edit}
 
-' edit Last date:
-	if a=6 then an$=tt$(a):gosub {:sub.time_date_edit}:goto {:header}
+{:last_date}
+' 6
+	an$=tt$(a):gosub {:sub.time_date_edit}:goto {:header}
 
-' show user flags sub-menu
-	if a=13 then gosub {:sub.show_user_flags}:goto {:header}
-' computer type
-	if a<>22 then {:computer_type}
+{:access_group}
+' 7 - access level change is handled in {:general_edit}
+	lp=1:&"TODO: display access groups, edit NetMail access{f6}"
+	goto {:general_edit}
+
+{:computer_type}
+' 10
+	for t=1 to 9:&" {pound}!t) "+co$(t)+"{f6}":next
+	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}
+	if a>. or a<10 then tt$(10)=str$(a):tz=.
+	goto {:header}
+
+{:screen_size}
+' 11
+' TODO: encode screen height/width like this: ll%+mp%*256
+	gosub {:sub.todo}:goto {:header}
+
+{:default_proto}
+' 12
+' FIXME: get protos from s.m.protos: gosub 1666?
+	&"1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
+	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if a>. and a<5 then tt$(12)=str$(a):tz=.
+	goto {:header}
+
+{:toggle_expert_mode}
+' 14
+	tt$(a)=mid$(str$(1-val(tt$(a))),2):goto {:header}
+
+{:last_call}
+' 22
 ' 1) edit logon time
 ' sub.time_date_edit saves a in op, destroys a
 ' sub.time_date_edit truncates tt$(a)
@@ -341,48 +390,59 @@
 	&", toggle?: ":gosub 1902:if a then cd%=1-cd%
 	tt$(op)=tt$(op)+chr$(48+cd%):goto {:header}
 
-{:computer_type}
-	if a=10 then gosub {:142}:goto {:header}
-
-' TODO: encode screen height/width like this: ll%+mp%*256
-	if a=11 then gosub {:sub.todo}:goto {:default_proto}
-
-{:default_proto}
-' 12 - transfer protocol
-	if a=12 then gosub {:sub.xfer_proto}:goto {:header}
-
-' show access flags:
-	if a=23 then gosub {:sub.show_access_flags}:goto {:header}
-
+{:general_edit}
 ' &,1,32
 ' p$=prompt/w$=wrapped text. input shows original value, new prompt
 ' Password: ----------
 ' Password: []
 
 ' general purpose edit:
+	if a=1 then lp=1:&"{f5}{f8}{f5} to delete, {f5}RES{f5} to create a REServed account{f6}"
 	p$=ed$(a):w$=tt$(a):&,1,32:if an$="" or an$=tt$(a) then gosub {:sub.no_change}:goto {:header}
-' handle or access group edited:
-	tt$(a)=an$:tz=.:on-(a=1)-(a=7)*2 goto {:148},{:154}:goto {:header}
-{:132}
-	on tz goto {:102}:&"{f6}Save changes? ":gosub 1902:if a=. then {:102}
-	&"{clear}{f6}Writing to user data files..."
-	if tt$(1)<>"{up arrow}" and tt$(1)<>"RES" and tt$(1)<>tt$ then gosub {:206} ':gosub {:sub.write_stats}:goto {:102}
-	gosub {:sub.write_stats}:if tt$(1)="RES" and tt$<>"{up arrow}" and tt$<>"RES" then {:166}
-	goto {:102}
-{:142}
-' 10 - computer type:
-	for t=1 to 9:&" {pound}!t) "+co$(t)+"{f6}":next
-	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	if a>. and a<10 then tt$(10)=str$(a):tz=.
-	return
+	tt$(a)=an$:tz=.:if a<>1 then {:header}
 
-{nice:10}
-{:sub.xfer_proto}
-' FIXME: get protos from s.m.protos: gosub 1666
-' 12 - transfer protocol:
-	&"1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
-	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	if a>. or a<5 then tt$(12)=str$(a):tz=.
+{nice:4}
+{:change_handle}
+' 1
+' deleted (^) or REServed users:
+	on -(an$="{f8}")-(an$="RES")*2 goto {:delete_user},{:res_pw}:g=x:gosub 1046:x=g
+' FIXME: always reports used by DE23 - 1046 above destroys i and a%
+' FIX: "if i<>un" fixes unnecessary "Handle already used" message if handle is changed back to original after editing
+	if i then if i<>un then:&"{f6:2}Handle already used by {pound}vn{pound}!i{pound}w2":tt$(1)=tt$
+	goto {:header}
+
+{nice:4}
+{:delete_user}
+' 1901 calls "Are You Sure?: [No]" routine:
+	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}":gosub 1901:if a=. then {:102}
+	an$=tt$:gosub 1034
+	tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next:gosub {:sub.write_stats}
+' 1063: open e.data, adjust next available user account (L1):
+	on -(x>l1) goto {:166}:&"(Updating next available user account)"
+	l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
+{:166}
+' if user email exists, decrease current total # of emails in BAR stats:
+	a$="r":gosub 1062:close 2:if e%=. then gosub 1060:i=-1:x=25:gosub 1025:close 2
+' scratch forced mail, regular mail:
+	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024:goto {:102}
+
+{:res_pw}
+' this is for creating a REServed user's pw:
+' inform of default password:
+'	&"{f6}Password: {pound}i1":if an$=""then an$="PASS"
+' example from PRG: W$=NA$:P$="Handle":&,1,32:IF AN$<>"" THEN NA$=AN$
+
+' this routine could be used by main password editor:
+' FIXME: add tt$(23) default flags
+' FIXME: add access level flags
+	w$="PASS":gosub {:sub.change_pw}:for i=3 to 24:tt$(i)="0":next
+	tt$(6)=d1$:tt$(7)="00":tt$(22)=d1$:tt$(13)="010000"+tz$:goto {:header}
+{:sub.existing_pw}
+' this edits the current password:
+	w$=tt$(2)
+{:sub.change_pw}
+' if input <> Return or original text, then modify it, set tz=0
+	p$="Password":&,1,32:if an$<>"" or an$<>w$ then tt$(2)=an$:tz=.
 	return
 
 {nice:4}
@@ -397,7 +457,7 @@
 
 {nice:4}
 {:sub.show_user_flags}
-' FIXME: the problem child:
+' 13
 ' b$=item explanation, c$=value, tt$()=config setting
 
 ' 1 dim tt$(43):tt$(43)="01000PST0400"
@@ -432,50 +492,11 @@
 {nice:4}
 {:edit_user_flags}
 	i=6:gosub {:sub.change_prompt}
-	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
+	on -(tr%<1)-2*(a<1 or a>i) goto 1811,1603
 	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:goto {:sub.show_user_flags}
 
 {nice:4}
 ' 23
-{:148}
-' deleted (^) or REServed users:
-	on -(an$="{f8}")-(an$="RES")*2 goto {:160},{:res_pw}:g=x:gosub 1046:x=g
-' FIXME: always reports used by DE23 - 1046 above destroys i and a%
-	if i then:&"{f6:2}Handle already used by {pound}vn{pound}!i{pound}w2":tt$(1)=tt$
-	goto {:header}
-{:154}
-' TODO: update access group flags from e.access instead
-'	tt$(23)=fl$(val(tt$(7))):goto {:header}
-	&"TODO: update access group flags from {f5}e.access{f5}":goto {:header}
-
-' 1901 calls "Are You Sure?: [No]" routine:
-	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}":gosub 1901:if a=. then {:102}
-	an$=tt$:gosub 1034
-	tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next:gosub {:sub.write_stats}
-' 1063: open e.data, adjust next available user account (L1):
-	on -(x>l1) goto {:166}:&"(Updating next available user account)"
-	l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
-{:166}
-' if user email exists, decrease current total # of emails in BAR stats:
-	a$="r":gosub 1062:close 2:if e%=. then gosub 1060:i=-1:x=25:gosub 1025:close 2
-' scratch forced mail, regular mail:
-	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024:goto {:102}
-{:res_pw}
-' this is for creating a REServed user's pw:
-' inform of default password:
-'	&"{f6}Password: {pound}i1":if an$=""then an$="PASS"
-' example from PRG: W$=NA$:P$="Handle":&,1,32:IF AN$<>"" THEN NA$=AN$
-
-' this routine could be used by main password editor:
-	w$="PASS":gosub {:sub.change_pw}:for i=3 to 24:tt$(i)="0":next:goto {:header}
-{:sub.existing_pw}
-' this edits the current password:
-	w$=tt$(2)
-{:sub.change_pw}
-' if input <> Return or original text, then modify it, set tz=0
-	p$="Password":&,1,32:if an$<>"" or an$<>w$ then tt$(2)=an$:tz=.
-	return
-
 {:sub.show_access_flags}
 '  1) Non-Weed Status  : Yes
 '  2) Credit Ratio     : 1/1
@@ -499,49 +520,88 @@
 ' 
 '  # to change (1-20):
 
-	&"{clear}":for i=1 to 20:b$=mid$(tt$(23),i,1):a%=i:c$=ed$(i+23)
-' default is bool (put first for speed, 'then...if' faster than 'and'):
-	if i<16 then if i<>2 then if i<>6 then b$=mid$("YesNo",(1-val(b$))*3+1,3)
+	&"{clear}":for i=1 to 20:b$=mid$(tt$(23),i,1):b=val(b$):a%=i:c$=ed$(i+23)
+' default is bool (put first for speed, 'then...if's faster than 'and'):
+	if i<16 then if i<>2 then if i<>6 then b$=mid$("No Yes",b*3+1,3):goto {:186}
 ' credit ratio:
 	if i=2 then b$=b$+"/1":goto {:186}
-' max editor lines, multiple of 10:
-	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:186}
+' max editor lines (0=10, 1=20, 2=30...) are multiples of 10
+	if i=6 then b=(b+1)*10:goto {:to_string}
+'	b$=mid$(str$((val(b$)+1)*10),2):goto {:to_string}
+
 ' max idle time:
 	if i=16 then b$=b$+" Minutes":goto {:186}
-' calls per day (2 bytes)
-	if i=18 then b$=mid$(tt$(23),i,2):i=19
+' calls per day (2 bytes: 00-99, 00=unlimited)
+	if i=18 then b=val(mid$(tt$(23),i,2)):i=19
 ' 17, 18, 20: 0 should say "Unlimited"
-	if i>16 then if val(b$)=. then b$="Unlimited"
+	if i>16 then if b=. then b$="Unlimited":goto {:186}
+' downloads/day: multiple of 10 (0=unlimited, 1=10, 2=20...)
+	if i=20 then b=b*10
+{:to_string}
+' convert back to string:
+	b$=mid$(str$(b),2)
 {:186}
 	&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}21: {pound}$b{f6}":next
 	i=20:gosub {:sub.change_prompt}:on -(tr%<1) goto 1811:if a<1 or a>i then return
-' 2, 6, 16-18, 20 are non-bool
-' TODO: da% usage was modified by X-Tec, how?
-' 17/18: Calls Per Day/Time Per Call: 0 (Unlimited)-9
-	if a=2 then b$=mid$(tt$(23))
-' 6: max editor lines=multiple of 10:
-	if a=6 then b$=mid$(str$((val(mid$(tt$(23),a,1))+1)*10),2):goto {:edit_access_flags}
-' 2/16: credit ratio/max idle time: 1-9
-
-' can't edit #19
-	if a=19 then lp=1:&"Cannot edit 2nd byte of "+ed$(42)+". Editing 1st instead.{f6}":a=18
 
 {:edit_access_flags}
-' TODO: input time per call
-' toggle bool flag:
-	l=1:if a<16 then if a<>2 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),2):goto {:update_access_flag}
-' 2/16: credit ratio/max idle time
-	if a=2 or a=16 then b$=mid$(str$(1-val(mid$(tt$(23),a,1))),1)
-	&"{f6}":p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="" or an$=b$) goto 1811, {:sub.no_change}
-' TODO: display "(0=Unlimited)" if appropriate
-'	b$=left$(an$,1):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
-' l=length of flag (1/2)
+' l=length of flag string to replace (1 or 2 chars)
 	l=1:if a=18 then l=2
-	b$=right$("0"+an$,l)
+' re-get flag value
+	b$=mid$(tt$(23),a,l):b=val(b$)
+
+' toggle bool flag:
+	if a<16 then if a<>2 then if a<>6 then b=1-b:goto {:update_access_flag.int}
+
+' 2, 6, 16, 17, 18-19, 20 are non-bool
+'  2: credit ratio	(1-9)
+'  6: Max editor lines	(0-9)*10: 0=10, 1=20... 9=100
+' 16: Max idle time	(1-9)
+' 17: Calls Per Day	(0-9)	[ 0=Unlimited, 1-9 ]
+' 18-19: Time Per Call	(00-99) [00=unlimited, 1-99]
+' 20: da% (Downloads Allowed) behavior was modified by X-Tec,
+'	now da%*10 instead of 1-9. 0=Unlimited, 1=10, 2=20... 9=90
+
+' m=min value (0/1)
+	m=.:if a=2 or a=16 then m=1
+' h=max value
+	h=9:if a=18 then h=99
+' u=0: 0 means 0, u=1: 0=Unlimited (just for display info in prompt)
+	u=.:if a=17 or a=18 or a=20 then u=1
+'  6: max editor lines=multiple of 10:
+	if a=6 then:&"0=10, 1=20 ... 8=90, 9=100{f6}"
+' can't edit #19
+	if a=19 then lp=1:&"Can't edit 2nd byte of "+ed$(41)+", editing 1st instead.{f6}":a=18:goto {:edit_access_flags}
+' 20: 0=Unlimited, 1=10, 2=20... 9=90
+	if a=20 then b=b*10
+' 2/16: credit ratio/max idle time: 1-9
+	if a=2 or a=16 then m=1:h=9
+{:access_flags_range}
+' display "(0=Unlimited)" if appropriate
+	&"({pound}!m-{pound}!h":if u then if m=. then:&", 0=Unlimited"
+	&"){f6}"
+{:access_flags_prompt}
+	p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="" or an$=w$) goto 1811, {:sub.no_change}
+	b=val(an$):if b<m or b>h then:&"Out of range.{f6}":goto {:access_flags_range}
+' necessary? probably not
+'	if len(an$)<>l then:&"Wrong length.":goto {:sub.show_access_flags}
+
+' is handling "0=Unlimited" necessary? m=. should take care of it
+'	b$=left$(an$,l):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
+
 ' TODO: error checking
 ' editor lines/10:
 '	if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
-{:update_access_flag}
+
+	b$=right$("0"+an$,l):goto {:update_access_flag.string}
+
+{:update_access_flag.int}
+' used when updating boolean flags
+' l=1 or 2, length of flag
+'	l=1:if a=18 then l=2
+	b$=right$("0"+mid$(str$(b),2),l)
+
+{:update_access_flag.string}
 ' {:196}
 	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+l):goto {:sub.show_access_flags}
 
@@ -590,15 +650,6 @@
 	p$=dt$(a):b$=mid$(q$,a,1):w$=b$:pl=1:&,1,32:if an$<>"" then b$=an$
 	return
 {endif}
-
-{:206}
-' handle change: rename forced mail and regular mail files:
-	dr=2:gosub 1010:a$="f.":for i=1 to 2
-	print# 15,"r"dr$a$left$(tt$(1),13)"="a$left$(tt$,13):a$="m.":next
-' check error channel, delete old handle an$ from alphabetical user index:
-	gosub 1012:an$=tt$:kk=id:id=x:gosub 1034:an$=tt$(1)
-' insert new handle into alphabetical user index:
-	on -(an$<>"{f8}"and an$<>"RES") gosub 1038:id=kk:return
 
 {nice:10}
 ' edit user's time zone
@@ -726,5 +777,5 @@
 '	 5:	Undefined
 '	 6-:	3 letter time zone abbreviation, hour/minute offset: "01000PST0400"
 
-	rem "+.ED" 1.3 - 2019-06-01 pinacolada
+	rem "+.ED" 1.3 - 2019-06-06 pinacolada
 	rem copr. 1988-2019 new image
