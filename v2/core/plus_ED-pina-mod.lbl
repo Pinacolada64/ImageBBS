@@ -58,20 +58,20 @@
 	&,5:if lp<1.3 then:&"Sorry, this ED only works with Image BBS v1.3 and above.":goto 1811
 	&,27:gosub {:100}:&,28:goto 1811
 
-{nice:5}
+{nice:4}
 {:sub.change_prompt}
 	&"{f6} # to change (1-{pound}!i): {pound}i1{f6}"
 
-{nice:5}
+{nice:4}
 {:sub.normalize_a}
 	a=abs(int(val(an$))):return
 
-{nice:5}
+{nice:4}
 {:sub.verbose_date}
 ' have to do left$() now because of added carrier drop flag
 	an$=left$(tt$(i),11):&,15:c$=an$+"M":return ' c$="{$04}"+tt$(i) <-- does not work!
 
-{nice:5}
+{nice:4}
 {:sub.time_date_edit}
 ' copy time/date (an$) into c$ (&,15 destroys an$):
 ' copy menu option (a) into op (a is used in this subroutine)
@@ -154,7 +154,7 @@
 	tt$(op)=c$:&"{f6}Last {pound}$b date:{f6}{$04}"+c$+"{f6:2}":return
 	rem time/date editor copr.1990 new image 01/02/90
 
-{nice:10}
+{nice:4}
 {:sub.get_access_group_name}
 	& "Getting access group name..."
 ' get access group name from "e.access" for displaying in page 0, or after editing to re-display
@@ -163,13 +163,19 @@
 ' reopen u.config:
 	&"{f6}":close 2:goto 1065
 
-{nice:10}
+{nice:4}
 {:sub.no_change}
 	&"(No change.){f6}":return
 
-{nice:10}
+{nice:4}
 {:sub.todo}
 	&"TODO: finish the thing!{f6}":return
+
+{nice:4}
+{:sub.write_stats}
+' write stats:
+	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:x=un:gosub 1001
+	print# 2,a$;:close 2:return
 
 {nice:100}
 {:100}	
@@ -191,7 +197,7 @@
 	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
 
 {ifdef:show_build_date}
-	&"{lt. red}Built {$04}11906028746{f6}"
+	&"{lt. red}Built {$04}51906068400{f6}"
 {endif}
 
 	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
@@ -379,7 +385,17 @@
 	if a>. or a<5 then tt$(12)=str$(a):tz=.
 	return
 
-{nice:10}
+{nice:4}
+{:change_access}
+' 7
+' TODO: update access group flags from e.access instead
+'	tt$(23)=fl$(val(tt$(7))):goto {:header}
+	&"TODO: update access group flags from {f5}e.access{f5}{f6}"
+	&"TODO: edit NetMail access group{f6}"
+	goto {:header}
+
+
+{nice:4}
 {:sub.show_user_flags}
 ' FIXME: the problem child:
 ' b$=item explanation, c$=value, tt$()=config setting
@@ -413,12 +429,14 @@
 {:next_user_flag}
 	&" {pound}!i) {pound}$b{pound}{back arrow}25: {pound}$c{f6}":next
 
-{nice:10}
+{nice:4}
 {:edit_user_flags}
 	i=6:gosub {:sub.change_prompt}
 	on -(tr%<1)-2*(a<1 or a>i) goto 1811,{:132}
 	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:goto {:sub.show_user_flags}
 
+{nice:4}
+' 23
 {:148}
 ' deleted (^) or REServed users:
 	on -(an$="{f8}")-(an$="RES")*2 goto {:160},{:res_pw}:g=x:gosub 1046:x=g
@@ -430,11 +448,6 @@
 '	tt$(23)=fl$(val(tt$(7))):goto {:header}
 	&"TODO: update access group flags from {f5}e.access{f5}":goto {:header}
 
-{:sub.write_stats}
-' write stats:
-	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:x=un:gosub 1001
-	print# 2,a$;:close 2:return
-{:160}
 ' 1901 calls "Are You Sure?: [No]" routine:
 	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}":gosub 1901:if a=. then {:102}
 	an$=tt$:gosub 1034
