@@ -54,14 +54,15 @@ $fc03	&,12	newuser (nonabortable file read?)
 		dumparray (x=array # [,y=# of elements])
 		[1.3] im: 1074		[2.0] im: 39
 
+string-io.lbl:
 	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
 	&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 		Changes all uppercase to mixed case
 	&,15,2	converts encoded f-key characters into readable characters
 		+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
-	&,15,3	[The Chief mentions this in a post, unsure of purpose]
-	&,15,4	[The Chief mentions this in a post, unsure of purpose]
-
+	&,15,3	Points to &,15,2
+	&,15,4	Points to &,15,2
+	&,15,5	newdate: some sort of hour (?) conversion. an$="wyymmddhhmm":&,15,5:&
 	&,15,6,x	Split an$ into a$ and an$ if it finds chr$(x)
 	&,15,6,asc("x")	-> a$ [chr$(x)] an$
 		im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
@@ -75,7 +76,7 @@ $c003	&,17	sys49155
 	&,20	get version
 	&,21	get version
 	&,22,x	tenwait [x=tenths of a second]
-	&,23	xgetin
+	&,23	xgetin: returns char in peek(780)
 	&,24	xchrout1
 
 $f80c	&,25,x,y	sound

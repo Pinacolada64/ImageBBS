@@ -2,281 +2,393 @@
 {step:2}
 {alpha:alt}
 {crunch:on}
-	rem "+.cp new" 5/17/19 12:33 pm
+	rem "+.cp new" 6/17/19 12:33 pm
 	&"{clear}{f6}{cyan} *IMAGE Copy-All 2.0 BETA*{f6:2} Special Thanks To Jim Butterfield!"
 	&"{f6} Mods by {blue}Wa{lt. blue}nd{cyan}er{white}er{f6}{green} Fixes {white}18 Feb. 2018 {green}By {white}X-Tec{f6}"
+' array to hold file block sizes: -b%() = file unselected
+	&,27,1:dim b%(144)
 ' load "++ copier" instead of 1.2's "++ 2"
 ' (functionally the same, "++ copier" has its buffer at $0400 so displays at top)
-	a$="copier":gosub 1750:&,5:v=lp
-{:3004}
-	GOSUB {:3118}:&"{f6:2} {white}[C]{cyan}opy Files{f6} {white}[D]{cyan}irectory"
+' edited im 1752 to read
+' an$=ml$:&,15,1:d4$=an$:return
+' instead of a$=ml$...
+	pr=2:a$="copier":gosub 1750:&,5:v=lp:&"Devices Online: ":n=.
+' n: number of drives online, d%(): device numbers (im dimensions 61)
+	for d=6 to 33:a=d:gosub {:sub.check_device}:if e=. then n=n+1:d(n)=d:&"{pound}!d "
+	next:if n=. then:&"None?":goto 1811
+{:main_menu}
+' 3118: close all open disk files
+	gosub {:3118}:&"{f6:2} {white}[C]{cyan}opy Files{f6} {white}[D]{cyan}irectory"
 	&"{f6} {white}[M]{cyan}ulti-Scratch{f6} {white}[S]{cyan}end Disk Command{f6} {white}[Q]{cyan}uit{f6:2}"
-	p$="Copy":GOSUB 1006:ON-(an$="C")-(an$="D")*2-(an$="S")*3 GOTO {:3024},{:3012},{:3120}
-	ON-(an$="M")-(an$="Q"OR an$="")*2 GOTO {:3140},{:quit}:GOTO {:3004}
-{:3012}
-	f=8:d$="":b%=8:GOSUB {:3134}:IF b%>6 AND b%<33 THEN f=b%
-	f$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
-	a=f:GOSUB {:3132}:IF a THEN{:3116}
-	GOSUB {:3138}:IF an$=""THEN an$="*"
-	&"{f6}":OPEN 2,f,0,"$"+f$+an$:&,8,2:CLOSE 2
+	p$="Copy":gosub 1006:ON -(an$="C") -2*(an$="D") -3*(an$="S") goto {:copy}, {:directory}, {:dos_command}
+	ON -(an$="M") -2*(an$="Q" OR an$="") goto {:multi_scratch}, {:quit}:goto {:main_menu}
+
+{:directory}
+	f=d%(1):d$="":b%=f:gosub {:sub.get_device}:if e then {:dnp}
+	if b%>6 and b%<33 then f=b%
+	gosub {:sub.get_drive}:f$=a$
+	gosub {:sub.pattern}:&"{f6}":open 2,f,.,"$"+f$+an$:t=.:b=.
+{:dir_loop}
+'	&,8,1,1:&:s=st:if mid$(a$,7,1)="b" then close 2:goto {:main_menu}
+	&,8,1,1:&:s=st:if s then {:dir_loop_end}
+	t=t+1:b=b+val(a$)
+	
 {:3022}
-	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off}{pound}g1":GOTO {:3004}
-{:3024}
-' copy
-	a9$="":s1=.:c1=.:s8=.:c8=.:d$="Source":b%=8:f=8:GOSUB {:3134}:IF b%>6 AND b%<33 THEN f=b%
-	f$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN f$=MID$(STR$(a),2)+":"
-	d$="Target":b%=8-(f=8):g=b%:GOSUB {:3134}:IF b%>6 AND b%<33 THEN g=b%
-	g$="0:":GOSUB {:3136}:a=VAL(an$):IF a>.THEN g$=MID$(STR$(a),2)+":"
-	d1%=g:d2%=VAL(g$):dr=.:GOSUB 1079:lp=1:&"{f6}Blocks Free: {pound}!a":kk=a
-	IF a<3 THEN GOSUB 1920:GOTO {:3004}
-	GOSUB {:3138}:IF an$=""THEN an$="*"
-	t$=an$:IF tr%<1 THEN 1811
+	gosub {:sub.blocks_and_files}:gosub {:sub.press_a_key}:goto {:main_menu}
+
+{:copy}
+' op=1 is relevant in queue menu (displays "Copy")
+' set source device (f)
+	op=1:d$="Source":b%=d%(1):f=b%:gosub {:sub.get_device}:IF b%>6 AND b%<33 then f=b%
+	d=f:gosub {:sub.check_device}:if e then {:dnp}
+	f=
+	d=.:gosub {:sub.get_drive}:if a>. then f$=mid$(str$(a),2)+":"
+' set dest drive (g) to 1 higher if there is a 2nd drive online
+	d$="Target":b%=d%(2-(n>1)):g=b%:gosub {:sub.get_device}:IF b%>6 AND b%<33 then g=b%
+	g$="0:":gosub {:sub.get_drive}:IF a>. then g$=a$
+	d1%=g:d2%=VAL(g$):dr=.:gosub 1079:lp=1:&"{f6}Blocks Free: {pound}!a":kk=a
+	if a<3 then gosub {:sub.target_full}:gosub 1920:goto {:main_menu}
+
+' (re-)select files
+' TODO: subroutine this to use same code for copy/scratch
+{:reselect}
+' Pattern (*):
+	gosub {:sub.pattern}:if tr%<1 then 1811
 {:3040}
-	t=.
+' clear block total, queue, skip options
+	b=.:t=.:a9$="":s1=.:c1=.:s8=.:c8=.
 {:3042}
-	&"{f6}{cyan}Reading Directory...{f6:2} [Y]es [N]o [S]tart [A]bort":tz=2
-	&"{f6} [1] Skip 143 Files
-	&"{f6} [8] Skip  8  Files{f6} [R]emaining Files Same As Last{f6:2}"
-	OPEN 1,f,0,"$"+f$+t$:GET#1,a$,a$:&,8,1,1:lp=1:&"{pound}$a{f6}"
+'Reading Directory...
+' ----+----+----+----+----+----+----+----+
+' [Y]es   [N]o   [S]tart   [A]bort
+' [1] Skip 143 Files   [8] Skip 8 Files
+' [R]emaining Files Same As Last
+	&"{f6}{cyan}Reading Directory...{f6:2} [Y]es   [N]o   [S]tart   [A]bort":tz=2
+	&"{f6} [1] Skip 143 Files   [8] Skip 8 Files{f6} [R]emaining Files Same As Last{f6:2}"
+' show header
+	open 1,f,0,"$"+f$+an$:get#1,a$,a$:&,8,1,1:lp=1:&
 {:3050}
 {:get_dir_entry}
-' Pattern(*):
-'
-'Reading Directory...
-'
-' [Y]es [N]o [S]tart [A]bort
-' [1] Skip 143 Files
-' [8] Skip  8  Files
-' [R]emaining Files Same As Last
-'
 '      "zterm 64        "    2a
-'
 '3050 Raw dir entry:
 '   45 "zterm v1.0f"      prg: Skip 143 (counts down)
 '   45 "zterm v1.0f"      prg: Too Big
 '   45 "zterm v1.0f"      prg: REL File
 '   45 "zterm v1.0f"      prg: Max 144
  
-' Sys  Acs ZLocZ Tsr  Cht  New  Prt  U/D
-'User Pinacolada            ID # DE1
-'Last May 15, 2019 10:54 P  Call 0/0
-'Name Ryan Sherwood         Prms 40x25
-'Ph # [253] 355-0297        Baud 2400
-'Area cp new                User 1/1
-'C=00000 N=001 I=000 A=9   Commodore 64
-'R           M=14397  L=03076           T
-'ZThu May 16, 2019 11:15:04 AM     --:55
-
-'	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:3090}
-	&"3050 Raw dir entry:{f6}"
-	&,8,1,1:d$=a$:&"{pound}$d{f6}":s=st:IF MID$(d$,7,1)="b" THEN b$=d$:GOTO {:start}
-'	&,8,1,1:s=st:IF MID$(a$,7,1)="b" THEN:&:&"{f6}":b$=a$:GOTO {:3090}
-' TODO: speed up with &,15,6, only after [y]es selected
+'	&,8,1,1:s=st:IF MID$(a$,7,1)="b"then b$=a$:&"{f6}{pound}$b{f6}":goto {:3090}
+'	&,8,1,1:d$=a$:&"3050 Raw dir entry:{f6}{pound}$d{f6}":s=st:IF MID$(d$,7,1)="b" then b$=d$:goto {:start}
+	&,8,1,1:&:s=st:if mid$(a$,7,1)="b" then {:start}
+'	&,8,1,1:s=st:IF MID$(a$,7,1)="b" then:&:&"{f6}":b$=a$:goto {:3090}
+' speed up with &,15,6, only after [y]es selected
 '	a=VAL(a$):c$=MID$(a$,8):a$=MID$(a$,26,1)
-'	FOR i=2 TO 17:IF MID$(c$,i,1)=qt$THEN c$=LEFT$(c$,i-1)
-'	NEXT:tt$=c$+","+a$:b$=a$:IF s THEN{:3090}
-' TODO: print string just once, then display option/get input
+'	FOR i=2 TO 17:IF MID$(c$,i,1)=qt$then c$=LEFT$(c$,i-1)
+'	next:tt$=c$+","+a$:b$=a$:IF s then{:3090}
+' print string just once, then display option/get input
 {:show_dir_entry}
-	&"{pound}$d: "
-'	IF s8 THEN c8=c8+1:IF c8<>8 THEN:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO {:3050}
-	IF s8 THEN c8=c8+1:IF c8<>8 THEN:&"Skip"+str$(8-s8):GOTO {:3050}
+' d$=dir entry, b=block size, t$=filetype
+	d$=a$:t$=mid$(d$,26,1):&": "
+'	IF s8 then c8=c8+1:IF c8<>8 then:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":goto {:3050}
+	IF s8 then c8=c8+1:IF c8<>8 then:&"Skip"+str$(8-c8)+"{f6}":goto {:3050}
 
-'	IF s1 THEN c1=c1+1:IF c1<>143 THEN:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":GOTO {:3050}
-	IF s1 THEN c1=c1+1:IF c1<>143 THEN:&"Skip"+str$(143-c1):GOTO {:3050}
+'	IF s1 then c1=c1+1:IF c1<>143 then:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25Skip":goto {:3050}
+	IF s1 then c1=c1+1:IF c1<>143 then:&"Skip"+str$(143-c1)+"{f6}":goto {:3050}
 
 '	s1=.:c1=.:c8=.:s8=.:&"{f6}{pound}#4{pound}# {pound}%a {f5}{pound}$c{f5},{pound}$b{pound}{back arrow}25"
-	s1=.:c1=.:c8=.:s8=.
-	IF tz+a%>kk THEN:&"Too Big{f6}":GOTO {:3086}
+'	s1=.:c1=.:c8=.:s8=.
+	IF tz+a%>kk then:&"Too Big{f6}":goto {:3086}
 ' TODO: add this
-	IF b$="r" THEN:&"REL File{f6}":GOTO {:3086}
-' remaining as last
-	IF a9$="R" THEN x=x9:GOTO {:3072}
-	&"{pound}g1"
-	x=-(an$="Y")-(an$="N")*2-(an$="S")*3-(an$="A")*4-(an$="8")*5-(an$="1")*6
-	GOSUB {:3188}
+	IF t$="r" then:&"REL File{f6}":goto {:3086}
+' remaining same as last
+	IF a9$="R" then {:3070}
+	&"{pound}g1":x=-(an$="Y")-2*(an$="N")-3*(an$="S")-4*(an$="A")-5*(an$="8")-6*(an$="1")
+' not a valid option, default to "No"
+	if x=. then x=2:an$="N"
+' a9$: current option
+' x9 : save option for Remaining same as last:
+	a9$=an$:IF an$<>"R" then x9=x:goto {:3072}
+{:3070}
+' Remaining same as last:
+	x=x9
 {:3072}
-	IF x=.THEN x=2
-	lp=1:&MID$("     Yes  No   StartAbortSkip Skip ",x*5+1,5):on x goto {:yes},{:no},{:start},{:abort},{:skip8},{:skip143}
+	lp=1:&mid$("Yes  No   StartAbortSkip Skip ",x*5-4,5):if x<5 then:&"{f6}"
+	on x goto {:yes}, {:no}, {:start}, {:abort},{:skip8}, {:skip143}
 {:yes}
-	a%=VAL(d$):an$=MID$(d$,8):t$=MID$(d$,26,1)
-' a$ is the filename minus surrounding ""
-' NOTE: This works.
-	&,15,6,34:c$=a$:tt$=c$+","+t$:b$=t$
-' TODO: raise this to 255 for tt$(255)
-	t=t+1:tz=tz+a%:tt$(t)=tt$:IF t<143 then {:get_dir_entry}
-	&"Max 144{f6}":GOTO {:start}
+' t=total files in queue, tz=total block count
+' a%: blocks
+' an$=filename, a$=filename minus surrounding ""
+' NOTE: &,15,6,34 works.
+	t=t+1:b=b+val(a$):an$=mid$(d$,8,16):&,15,6,34:if op=1 then a$=a$+","+t$
+' for copy operation (op=1), filetype is appended
+	tt$(t)=a$:if t<143 then {:get_dir_entry}
+	&"Max 144{f6}":goto {:start}
 
-' start:
-'	IF x=3 THEN{:3090}
 {:abort}
-' confirm first
-	gosub 1901:if a then t=.:goto {:start}
+' confirm first: if yes, clear tt$() too
+	&"Abort: ":gosub 1901:if a then t=.:&,11,.:goto {:start}
 	&"{f6}":goto {:show_dir_entry}
 {:skip8}
-	IF kk-tz<3 THEN:&"No More Room!{f6}":GOTO {:start}
+	IF kk-tz<3 then gosub {:sub.target_full}:goto {:start}
 	&"8":s8=1:x9=.:goto {:no}
 {:skip143}
 	&"143":s1=1:x9=.
 {:3086}
 {:no}
-	IF s=. THEN {:3050}
+	IF s=. then {:3050}
 {:3090}
 {:start}
-	CLOSE 1:a9$="":IF t=.THEN GOSUB 1920:GOTO {:3004}
-'	&"{f6}":a=f:GOSUB {:3132}:ON-(a<>.)GOTO {:3116}:a=g:GOSUB {:3132}:ON-(a<>.)GOTO {:3116}
-' check for source/target drive online:
-	&"{f6}":a=f:GOSUB {:3132}:ON a GOTO {:3116}:a=g:GOSUB {:3132}:if a then {:3116}
+	close 1:a9$="":if t=. then:&"No Files Selected" :gosub 1920:goto {:main_menu}
+'	&"{f6}":a=f:gosub {:sub.check_device}:ON-(a<>.)goto {:dnp}:a=g:gosub {:sub.check_device}:ON-(a<>.)goto {:dnp}
+' check for source (f)/target (g) drive online:
+	&"{f6}":a=f:gosub {:sub.check_device}:ON a goto {:dnp}:a=g:gosub {:sub.check_device}:if a then {:dnp}
 {:3094}
 ' display queue
-	GOSUB {:3202}
+	gosub {:sub.show_queue}:gosub {:sub.blocks_and_files}
 {:3096}
-' selection done:
-' TODO: [P]attern: <pattern> (change pattern)
-	&"{f6}[C]opy  [A]bort":if t then:&"  [R]e-Select"
-	&"{f6}[S]elect More Files{f6}[D]elete From Queue: "
+' queue menu:
+' TODO: [P]attern: <pattern> (change pattern)?
+' ----+----+----+----+----+----+----+----+
+' [A]bort               [L]ist Queue
+' [C]opy / [S]cratch    [R]e-Select Files
+' [D]elete From Queue   [P]attern Change
+' [E]rase Queue         [T]oggle File(s)
+' Option: _
+
+	&"{f6}[A]bort{pound}{back arrow}20[L]ist Queue{f6}"
+	a$="[C]opy":if op=2 then a$="[S]cratch"
+	&"{pound}$a Files":if t then:&"{pound}{back arrow}20[E]rase Queue{f6}"
+	&"[D]elete From Queue{pound}{back arrow}20[P]attern Change"
 {:queue_options}
-	&"{pound}i1":ON -(an$="C")-(an$="A")*2-(an$="R" and t>.)*3 GOTO {:3100},{:3184},{:3186}:GOTO {:3192}
+	&"{f6}Option: {pound}i1{f6}"
+	on -(an$="A") -2*(an$="C" and op=2) -3*(an$="R" and t>.) goto {:queue_abort}, {:3100}, {:3186}
+	
+	on -(an$="R") -2*(an$="D") -3*(an$="L") goto {:reselect}, {:queue_delete}, {:3094}
+	on -(an$="T") goto {:queue_toggle}:goto {:queue_options}
+' on -(an$="C" and op=1) -2*(an$="S" and op=2) goto ...
+{:queue_abort}
+' confirm
+	gosub 1902:on a+1 goto {:queue_options}:&"{f6}Copying Aborted.":&,11,.:goto {:main_menu}
+
+{:queue_delete}
+	&"Delete From Queue (1-{pound}!t): {pound}i1"
+	i=val(an$):if i<1 or i>t then {:3096}
+' add confirmation, subtract blocks from total, set file blocks=0 (to skip during copy/scratch)
+	&"Delete {f5}"+tt$(i)+"{f5}: ":gosub 1901:if a then b%=b%-b%(i):b%(i)=.:t=t-1
+	goto {:3094}
+{:3186}
+' Erase Queue: confirm first
+	lp=1:&"{f6}This will clear the existing queue. ":gosub 1901:if a then gosub {:3118}:goto {:3040}
+' no
+	goto {:main_menu}
+
+{:queue_toggle}
+' toggle queue item:
+	a$="Copy":if op=2 then a$="Scratch"
+	&"Toggle {pound}$a Status (1-{pound}!t): {pound}i1"
+	i=val(an$):if i<1 or i>t then {:3096}
+	x=b%(i):b%(i)=-b%(i):t=t+sgn():goto {:queue_options}
+
 {:3100}
-	CLOSE 15:OPEN 15,f,15:OPEN 14,g,15:x=3
-	FOR i=1 TO t:an$=tt$(i):IF an$="[Deleted]" then {:3112}
-' FIXME: display copy info:
 ' x=3: copy operation, im=5: copy progress
-' an$="<filename>,<type>"
-	x=3:im=5:gosub 2426:&"{f6}Copying:{f5}{pound}v7{f5}..."
-	OPEN 3,f,3,f$+an$+",r":INPUT# 15,a$,b$:IF a$<>"00"THEN:&"{pound}{back arrow}32{pound}$b!":GOTO {:3112}
+' t=total files in queue, ok=files successfully copied
+' after copy: b%(i)=0 if successfully copied, ok=ok+1
+' if ok<>t then re-list items in queue
+	ok=.:close 14:close 15:open 15,f,15:open 14,g,15:x=3:im=5:gosub 2426
+	for i=1 to t:if tt$(i)="[Deleted]" then {:3112}
+' display copy info: an$="<filename>,<type>"
+{:3104}
+' 60000: quickly redisplay "copying" mask (don't reload via 2426)
+' TODO: point out modified 2426 which prevents reloading im.disp
+' position "Copying ..." *above* "Blocks: 00000" count
+	im=5:gosub 2426:l=14:if peek(17139) then l=mp%-1
+' FIXME: &,70 leaves a reversed block on "Blocks"
+'	&,70,.,l:&"Copying: {f5}{pound}v7{f5}..."
+' display progress
+	&,61,.,l:&"[{pound}!i/{pound}!t] Copying: {f5}{pound}v7{f5}..."
+	close 3:open 3,f,3,f$+an$+",r":input# 15,a,b$:if a then:&"{pound}{back arrow}32{pound}$b!":goto {:3112}
 {:3108}
-	OPEN 2,g,2,g$+an$+",w":INPUT# 14,a$,b$:IF a$<>"00"THEN:&"{f6}{pound}$b!":GOTO {:3114}
-	&,16:INPUT# 14,a$,b$:&"{pound}{back arrow}32{pound}$b!"
+	close 2:open 2,g,2,g$+an$+",w":input# 14,a,b$:if a=. then b%(i)=.:ok=ok+1:goto {:3110}
+	&"{f6}{pound}$b!":if a<>63 then {:3112}
+
+{:file_exists}
+' ----+----+----+----+----+----+----+----+
+' [S]kip [R]eplace ([N]ew Name) [A]bort: 
+	close 2:gosub {:sub.clear_2_lines}:&"[S]kip [R]eplace ([N]ew Name) [A]bort: {pound}i1":if an$="" then an$="N"
+	on -(an$="S") -2*(an$="R") -3*(an$="N") -4*(an$="A") goto {:3112}, {:replace}, {:new_name}, {:abort_copy}
+{:new_name}
+' clear prompt line
+' re-split filename,type on "," into f$=filename t$=type
+	gosub {:sub.clear_2_lines}:an$=tt$(i):&,15,6,44:f$=a$:t$=an$:w$=f$
+' prompt for new filename
+	a=16:gosub {:sub.input_length}:pl=.:p$="New Filename":&,1,32:if an$="" then an$=w$
+	&"TODO: check for unique filename in queue{f6}"
+' unique
+	tt$(i)=an$+","+t$:goto {:3104}
+
+{:replace}
+	gosub 1901:on a+1 goto {:file_exists}:print# 14,"s"g$:goto {:3108}
+	
+{:abort_copy}
+	gosub 1901:on a+1 goto {:file_exists}:i=t:goto {:3112}
+
+{:3110}
+	&,16:input# 14,a$,b$:&"{pound}{back arrow}32{pound}$b!"
 {:3112}
-	CLOSE 2:CLOSE 3:NEXT:&"{f6:2}Done!":GOTO {:3004}
-{:3114}
-	ON-(a$<>"63")GOTO {:3112}:CLOSE 2:&"{f6}[S]kip [R]eplace [A]bort: {pound}i1"
-	ON-(an$="S")-(an$="R")*2-(an$="A")*3 GOTO {:3220},{:3222},{:3224}:GOTO {:3180}
-{:3116}
-	&"{f6}ERROR : Device Not Present!{f6}":GOTO {:3004}
+	close 2:close 3:next:if ok=t then:&"{f6:2}All {pound}!t Files Copied Successfully.":goto {:main_menu}
+' skipped files, disk error:
+	a=ok:&"{pound}!a Files Left:":gosub {:sub.show_queue}
+	&"Finish this.":goto {:main_menu}
+
+{:dnp}
+	&"{f6}Error: Device {pound}!a Not Present!{f6}":goto {:main_menu}
+
 {:3118}
-' 1073: load "user online" screen mask
-'	CLOSE 1:CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:GOSUB 1073:RETURN
-	CLOSE 1:CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:RETURN
-{:3120}
-	f=8:d$="":b%=8:GOSUB{:3134}:IF b%>6 AND b%<16 THEN f=b%
-	a=f:GOSUB{:3132}:IF a THEN{:3116}
-	&"{f6:2}Disk Command: ":GOSUB 1499:c$=an$:a$=LEFT$(c$,1):IF a$="" then {:3004}
-	IF a$="n"OR a$="s"THEN GOSUB 1901:IF a=. then {:3004}
-	CLOSE 15:OPEN 15,f,15:PRINT# 15,c$:GOSUB 1012
-	CLOSE 15:&:&"{f6} (Hit A Key) {pound}g1":GOTO {:3004}
-{:3132}
+	close 1:close 2:close 3:close 14:close 15:return
+
+{:sub.split_file}
+' TODO: split an$ into filename, on ""
+
+{:dos_command}
+	f=d%(1):d$="":b%=f:gosub {:sub.get_device}:if b%>6 and b%<31 then f=b%
+	a=f:gosub {:sub.check_device}:if e then {:dnp}
+	&"{f6:2}(@=DOS status){f6}Disk Command: ":gosub 1499:if an$="@" or an$="" then {:get_dos_status}
+' prompt on lowercase new/scratch:
+	a$=chr$(asc(an$) and 127):IF a$="n" or a$="s" then gosub 1901:IF a=. then {:main_menu}
+	close 15:open 15,f,15:print# 15,an$
+{:get_dos_status}
+	gosub 1012:close 15:&:gosub {:sub.press_a_key}:goto {:main_menu}
+
+{:sub.check_device}
 ' check for device 'a' present
-	CLOSE 15:OPEN 15,a,15:POKE 781,15:SYS 65481:SYS 65484:CLOSE 15:a=st:RETURN
-{:3134}
-	a=2:GOSUB {:3216}:&"{f6}{cyan}{pound}$d Device {white}({pound}%b): {pound}i1":b%=VAL(an$):a=38:GOTO {:3216}
-{:3136}
-	a=4:GOSUB {:3216}:&"{cyan}{pound}$d Drive  {white}(0): {pound}i1":a=38:GOTO {:3216}
-{:3138}
-	&"{f6}{cyan} Pattern{white}(*): {pound}i0":goto 1500
-{:3140}
-' multi-scratch
-	GOSUB 1008:GOSUB 1470:ON tr%+1 GOTO 1811:f%=.:l=.:GOSUB 1010:CLOSE 15:IF st THEN{:3004}
-'	&"{lt. blue}{f6}Pattern: ":GOSUB 1499:b$="*"
-	gosub {:3138}
-	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
-	NEXT:an$=an$+b$
-' TODO: file count and blocks total like in NovaTerm dir listings
-	CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$:GET#1,a$,a$
-	&"{f6}{yellow} [Y]es [N]o [S]tart [A]bort{pound}q0{f6}{pound}vj"
+' returns e=0: device present
+	close 15:open 15,a,15:poke 781,15:sys 65481:sys 65484:&,22,5:close 15:e=st:return
+
+{:sub.get_device}
+' Source Device (10): 
+' b%=default device
+	l=2:gosub {:sub.input_length}:an$=str$(b%):&"{f6}{pound}#2{cyan}{pound}$d Device {white}({pound}%b): {pound}i1" ':if an$="" then an$=str$(b%)
+	b%=val(an$):a=b%:gosub {:sub.check_device}:on e goto {:sub.get_device}:return
+
+{:sub.get_drive}
+' Target Device  (0):
+	l=4:gosub {:sub.input_length}:&"{cyan}{pound}$d Drive  {white} (0): {pound}i1"
+	if an$="" then a=b%
+	a$=mid$(str$(a),2)+":":goto {:sub.check_device}
+
+{:sub.pattern}
+'Pattern (*): _
+	&"{f6}{cyan} Pattern{white} (*): {pound}i0":if an$="" then an$="*"
+	goto 1500
+
+{:multi_scratch}
+' op=2: scratch displayed in queue options menu
+	op=2:gosub {:sub.get_device}:if e then {:main_menu}
+	gosub {:sub.get_drive}:if e then {:main_menu}
+	gosub {:sub.pattern}:for i=1 to len(an$):if mid$(an$,i,1)="*"then b$=""
+	next:an$=an$+b$
+' TODO: file count and blocks total like in NovaTerm dir listings:
+'    xx blocks, yy files.
+	close 1:open 1,dv,0,"$"+dr$+an$:get#1,a$,a$
+	&"{f6}{yellow} [Y]es   ([N]o)   [S]tart    [A]bort{pound}q0{f6}{pound}vj"
 ' FIXME: &:&"{f6}" breaks header output?
-	&,8,1,1:lp=1:&:&"{f6}"
+	&,8,1,1:lp=1:&:rem &"{pound}$a"
 {:3154}
-' "blocks free": end of directory
-	&,8,1,1:s=st:IF MID$(a$,7,1)="b"THEN b$=a$:&"{f6}{pound}$b{f6}":GOTO {:3168}
-' b%=blocks, an$=filename, t$=filetype
-	&"3156 Raw dir entry:{f6}{pound}$a{f6}"
+' d$=save dir entry, "(b)locks free": end of directory
+	&,8,1,1:&:d$=a$:s=st:if MID$(a$,7,1)="b" then {:3168}
+'	&"{f6}{pound}#5{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5}{pound}{back arrow}30?: {pound}g1":a$=an$
+	&"{pound}g1":a$=an$:if tr%<1 then 1811
+'	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$
+'	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$then f$=LEFT$(f$,i-1)
+'	next:&"{f6}{pound}#5{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
+
+	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):lp=1:&MID$("No   Yes  StartAbort",x*5+1,5)+"{f6}"
+	ON x+1 goto {:3170},{:3166},{:3168},{:3168}
+{:3166}
+' TODO: replace with &,15,6,34, returns a$ and an$, split at chr$(34); not concerned with an$ (filetype) in a scratch operation
+'	&"3156 Raw dir entry:{f6}{pound}$a{f6}"
 '                          2 2 2
 '                          5 6 8
 ' 1---+-7|8-+----+----+----+|---
 ' blocks |"filename........"|typ
-	b%=VAL(a$):an$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$
-' TODO: replace with &,15,6,34, returns a$ and an$, split at chr$(34); not concerned with an$
-	&,15,6,34:f$=a$
-	&"{f6}{pound}#5{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5}{pound}{back arrow}30?: {pound}g1":a$=an$
-'	b%=VAL(a$):f$=MID$(a$,8):t$=MID$(a$,26,1):g$=t$
-'	FOR i=2 TO 17:IF MID$(f$,i,1)=qt$THEN f$=LEFT$(f$,i-1)
-'	NEXT:&"{f6}{pound}#5{pound}# {pound}%b: {f5}{pound}$f,{pound}$g{f5} {pound}{back arrow}30?: {pound}g1":a$=an$
-
-	x=-(a$="Y")-2*(a$="S")-3*(a$="A"):lp=1:&MID$("No   Yes  StartAbort",x*5+1,5)
-	ON x+1 GOTO {:3170},{:3166},{:3168},{:3168}
-{:3166}
-' changed f% to t here so "list queue" {:3202} could be reused
-'	f%=f%+1:a%(f%)=b%:tt$(f%)=f$:a%(f%)=b%:l=l+b%:GOTO {:3170}
-	t=t+1:a%(t)=b%:tt$(t)=f$:a%(t)=b%:l=l+b%:GOTO {:3170}
+' b%=blocks, an$=filename, t$=filetype
+	b%=b%+val(d$):an$=mid$(d$,8,16):&,15,6,34
+	t=t+1:tt$(t)=d$:b%(goto {:3170}
 {:3168}
 ' FIXME: discrete goto targets for start or abort scratch
-' TODO: ask for abort confirmation
+' ask for abort confirmation
+	gosub {:sub.blocks_and_files}
 	s=1:on -(x<>3) goto {:3170}:gosub 1901:if a then t=.
 ' FIXME: safe to go back to main menu?
-	if a=. then GOSUB 1920:goto {:3004}
+	if a=. then gosub 1920:goto {:main_menu}
 {:3170}
-	ON-(s=.AND t<100)GOTO {:3154}:CLOSE 1:if t=. then {:3004}
+	ON -(s=. AND t<100) goto {:3154}:CLOSE 1:if t=. then {:main_menu}
 ' display queue
-'	FOR i=1 TO f%:b$=tt$(i):b%=i:&"{lt. blue}{f6}{pound}#2{pound}# {pound}%b-{pound}$b":NEXT
-	gosub {:3202}
+	gosub {:sub.show_queue}
 
 ' TODO: add/remove/abort option
-'	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO {:3004}:FOR i=1 TO t:b$=tt$(i):CLOSE 15
-'	&"{f6}Scratching {f5}{pound}$b{f5}....":CLOSE 15:OPEN 15,dv%,15,"s"+dr$+b$:GOSUB 1012:&
-	&"{f6:2}Correct?: ":GOSUB 1902:ON a+1 GOTO {:3004}:OPEN 15,dv%,15:FOR i=1 TO t:b$=tt$(i)
-	&"{f6}Scratching {f5}{pound}$b{f5}...":print# 15,"s"+dr$+b$:GOSUB 1012:&"{f6}{pound}$a"
-' TODO: if status not ok, don't delete from queue, redisplay remaining
-	NEXT:&"{f6}":GOTO {:3022}
-{:3180}
-	ON-(an$="S")-(an$="A")*2 GOTO {:3112},{:3182}:GOTO {:3214}
-{:3182}
-	i=t:GOTO {:3112}
-{:3184}
-	&"{f6}Copying Aborted.":GOTO {:3004}
-{:3186}
-' re-select files (clear queue): confirm first
-	lp=1:&"{f6}Re-Select files: This will clear the existing queue.":gosub 1901:if a then GOSUB {:3118}:GOTO {:3040}
-' no
-	goto {:3004}
-{:3188}
-	a9$=an$:IF an$<>"R"THEN x9=x:RETURN
-	x=x9:RETURN
-{:3192}
-	IF an$="S" then {:3208}
-	IF an$<>"D" then {:3100}
-	&"{f6}Delete From Queue (1-{pound}!t): {pound}i1"
-	zq=VAL(an$):IF zq<1 OR zq>t THEN{:3096}
-' add confirmation
-	&"Delete {f5}"+tt$(zq)+"{f5}: ":gosub 1901:if a then tt$(zq)="[Deleted]"
-	GOTO {:3094}
-{:3202}
-' display queue
-	FOR i=1 TO t:i%=i:&"{f6}{pound}#3{pound}%i: "+tt$(i)
-'	FOR i=1 TO t:&"{f6}"+STR$(i)+":"+tt$(i)
-	IF i/20=INT(i/20)THEN:&"{f6}Press a key: {pound}g1"
-	NEXT:RETURN
-{:3208}
-	GOSUB {:3138}:IF an$=""THEN an$="*"
-	t$=an$:IF tr%<1 THEN 1811
-	GOTO {:3042}
-{:3214}
-	PRINT# 14,"s"g$c$:GOTO {:3108}
-{:3216}
+'	&"{f6:2}Correct?: ":gosub 1902:ON a+1 goto {:main_menu}:FOR i=1 TO t:b$=tt$(i):CLOSE 15
+'	&"{f6}Scratching {f5}{pound}$b{f5}...":CLOSE 15:OPEN 15,dv%,15,"s"+dr$+b$:gosub 1012:&
+	&"{f6:2}Correct?: ":gosub 1902:ON a+1 goto {:main_menu}:OPEN 15,dv%,15:FOR i=1 TO t:b$=tt$(i)
+' &"{pound}$a" outputs "Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s
+	&"{f6}Scratching {f5}{pound}$b{f5}...":print# 15,"s"+dr$+b$:gosub 1012:&:&"{f6}"
+' TODO: if status not "files scratched" (if e%<>1), don't delete from queue, redisplay remaining
+' clear tt$()
+	next:&"{f6}":&,11,.:goto {:3022}
+
+{:sub.show_queue}
+' display queue:
+
+' toggling item is useful if you don't want to delete it,
+' after copy/scratch is done, will still be in queue
+
+'     (*=File Selected For Scratch)
+' ----+----+----+----+----+----+----+----+
+'   nnn) bbbbb "ffffffffffffffff" typ <=
+' ints: -32767...32768
+' n=queue number, b=blocks, f=filename
+
+' TODO: actually:
+' it would be simpler if I grabbed a$ from dir listing
+' and saved that, then parsed it rather than storing
+' too little info and having to recreate it
+
+' b%() array would still be good for selection status
+' (use -b%() for "not selected")
+	poke 970,.:if em=. then:&"      *=File Selected For "+mid$("Copy   Scratch",op*7-6,7)+"{f6}"
+	for i=1 to t:i%=i:b%=abs(b%(i)):an$=tt$(i):if op=1 then t$=right$(an$,1):an$=left$(an$,len(an$)-2)
+' seq prg usr rel del ... scratch can handle rel fine, copy... not yet
+' op=1: copy (split an$ on ,), op=2: scratch, no filetype
+	&"  {pound}#3{pound}%i) {pound}#5{pound}%b {f5}{pound}v7{f5} "
+	if op=1 then i%=-(t$="s") -2*(t$="p") -3*(t$="p") -2*(t$="p") -2*(t$="p"):&mid$("seq prg usr rel del",i%*3-2,3)
+	if b%>. then:&" <="
+	&"{f6}"
+'	for i=1 to t:&"{f6}"+str$(i)+":"+tt$(i)
+	if mp%=. then if i/20=int(i/20) then:&"{f6}Press a key: {pound}g1"
+	next:return
+
+{:sub.blocks_and_files}
+	&"{f6}{pound}!b blocks, {pound}!t files.{f6}":return
+
+{:sub.input_length}
 ' locks up
-	rem:ifv>1.2then:&,59,1,a:return
-	POKE 53252,a:RETURN
-{:3220}
-	&"Skip":GOTO {:3180}
-{:3222}
-	&"Replace":GOTO {:3180}
-{:3224}
-	&"Abort":GOTO {:3180}
+	rem:ifv>1.2then:&,59,1,l:return
+	poke 53252,l:return
+
+{:sub.clear_2_lines}
+	&"{up:2}{pound}o {pound}o {f6}{pound}o {pound}o {f6}{up:2}":return
+
+{:sub.target_full}
+	&"Target Full{f6}":return
+
+{:sub.press_a_key}
+	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off}{pound}g1":return
+
 {:quit}
-' 1073: load "user online" screen mask
-'	gosub 1073:goto 1811
-	goto 1811
+' quickly display "user online" screen mask (don't reload via 2426)
+' clear tt$(), b%(), exit to main prompt
+	gosub 1079:&,11,.:&,28,1:goto 1811
+
 {crunch:off}
 	rem "+.CP" fixes 180218 7:13am x-tec
-	rem fixes 2019-05-17 10:38 am - pinacolada
-	copr.1995 NEW image 01/05/95
+	rem fixes 2019-06-17 10:38 am - pinacolada
+	copr.1995 new image 01/05/95

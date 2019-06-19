@@ -198,7 +198,7 @@
 	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
 
 {ifdef:show_build_date}
-	&"{lt. red}Built {$04}51906068400{f6}"
+	&"{lt. red}Built {$04}21906108530{f6}"
 {endif}
 
 	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
@@ -679,7 +679,8 @@
 ' convert abbreviation into prompt option:
 	&,2,2:if a$<>"{up arrow}" then n=n+1:bb$(n)=a$:if left$(a$,3)=z$ then z$=mid$(str$(n),2)
 	if st=. then {:60020}
-	close 2:poke 971,.:&"Select User's Time Zone:{f6:2}"
+' reset line count output
+	close 2:poke 970,.:&"Select User's Time Zone:{f6:2}"
 {:tz_list}
 	for i=1 to n:b$=left$(bb$(i),3):c$=mid$(bb$(i),8):a%=i:&"{pound}#2{pound}# {pound}%a) ({pound}$b) {pound}$c{f6}":next
 ' ----+----+----+----+----+----+----+----+
