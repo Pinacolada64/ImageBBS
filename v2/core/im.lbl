@@ -233,7 +233,7 @@
 	gosub {:1338}:&,15:&"IM Revision: "+left$(an$,26)+"M{f6}":return
 {:1338}
 ' used at BBS bootup to set clock to something sane
-	an$="41905098214":return
+	an$="21906258326":return
 {number:1340}
 ' SB, UD, UX
 	bn=.:r=int(val(mid$(an$,3))):if r<1 then r=1
@@ -401,6 +401,7 @@
 	dr=3:gosub {:1079}:if a<35 then {:1978}
 {number:1681}
 	im=1:goto {:2422}
+
 ' Pinacolada: subroutined this, moved from 1702 -> 1686
 {number:1686}
 {:sub.logoff_option}
@@ -431,12 +432,13 @@
 {:1700}
 {number:1700}
 	a$="lo":goto {:1016}
-{number:1702}
-{:sub.logoff_option}
-' 1907 Yes/No defaults to Yes
-	if right$(an$,1)<>"!"then &"{f6:2}Logoff?: ":gosub {:1907}
-{number:1704}
-	return
+
+' {number:1702}
+' {:sub.logoff_option}
+' ' 1907 Yes/No defaults to Yes
+' 	if right$(an$,1)<>"!"then &"{f6:2}Logoff?: ":gosub {:1907}
+' {number:1704}
+' 	return
 
 {number:1736}
 {:1736}
@@ -453,7 +455,8 @@
 {:1750}
 	if a$<>ml$ then ml$=a$:dr=5:gosub {:1009}:a$=dr$+"++ "+a$:&,7,dv%,2
 {number:1752}
-	an$=a$:&,15,1:d4$=an$:return
+' no reference
+	an$=ml$:&,15,1:d4$=an$:return
 {:1800}
 {number:1800}
 	f4=.:gosub {:1805}:on ec goto {:1801},{:1802},{:1803},{:1804}:x=5:goto {:1980}
@@ -505,8 +508,9 @@
 {number:1820}
 ' FIXME: 2100: why DIMension Image 1.2 arrays each time?
 '	if zz and an$="R" then gosub {:2100}:goto {:1900}
+	if zz then if an$="R" then {:1890}
 ' 1890: X-Tec's "Device,Drive" mod:
-	if zz and an$="R" then gosub {:2100}:goto {:1890}
+'	if zz and an$="R" then gosub {:2100}:goto {:1890}
 ' "TEST": loads "image", renumbered/RAM-light version of "im",
 ' runs Image 2.0's "i.*" modules
 	if an$="TEST" then {:1200}
@@ -572,8 +576,10 @@
 {number:1890}
 {:1890}
 ' R - Run a plus-file, X-Tec's mod asks for device/drive:
-' 1470 splits an$ into an$ and a$
-	poke 53252,14:&"{f6:2}Run: +.{pound}i0":b$=an$:on -(b$="")goto {:1812}:gosub {:1008}:gosub {:1470}
+' 1008: prompt for device/drive
+' 1470: gets drive #
+'	poke 53252,14:&"{f6:2}Run: +.{pound}i0":b$=an$:on -(b$="") goto {:1812}:gosub {:1008}:gosub {:1470}
+	poke 53252,14:&"{f6:2}Run: +.{pound}i0":b$=an$:if b$="" then {:1812}
 {:1900}
 {number:1900}
 ' update Area window, set cm$ for error logging
@@ -712,8 +718,8 @@
 {number:2414}
 	a$="bar":goto {:2500}
 ' TODO: remove this and im.screens, nothing references it
-{number:2418}
-	a$="screens":goto {:2500}
+'{number:2418}
+'	a$="screens":goto {:2500}
 {:2422}
 {number:2422}
 	a$="feedback":goto {:2500}
@@ -737,12 +743,14 @@
 	return
 {:2510}
 {number:2510}
+' FIXME 6/17/2019: experimental conditional load, can cause error in 2502
+'	if a$<>im$ then dr=5:gosub {:1009}:im$=a$:a$=dr$+"im."+im$:load a$,dv%
 	dr=5:gosub {:1009}:im$=a$:a$=dr$+"im."+im$:load a$,dv%
 {number:2512}
 	return
 {number:2600}
 ' load "+/XX.yyy..." (XX=module name [pr$], yyy...=sub-module name [a$])
-	gosub {:2610}:gosub {:4000}:new 4000:return
+	gosub {:2610}:gosub 4000:new 4000:return
 {:2610}
 {number:2610}
 	lm$=left$(pr$,2)+"."+a$:dr=5:gosub {:1010}:a$=dr$+"+/"+lm$:load a$,dv%:return
@@ -928,7 +936,7 @@
 ' 3160
 ' y%: 1=cmd clock, 2=ltk clock, 3=last system timestamp, 4=external cmd device
 ' gosub {:3170} - set clock
-	&"Setting Clock...":on y% gosub {:3354},{:3364},{:3368},{:3372}:gosub {:3174}
+	&"Setting Clock...":on y% gosub {:3354},{:3364},{:3368},{:3372}:gosub {:3174}:poke 1010,1:&"{f6}"
 ' im=5...: load im.info, set BBS time zone
 	poke 970,.:poke 971,23:mp$=" ...More? (Y/n) "+"":im=5:gosub {:2428}:gosub {:3202}
 	gosub {:1060}:for x=1 to 38:gosub {:1001}:&,2,2:st(x)=val(a$):next:close 2
@@ -1144,9 +1152,9 @@
 
 '                    - New Image Software
 
-	&"{f6:2}Be sure to enter {f5}IM{f5} once online to{f6}complete the setup/configuration of{f6}"
-	&"your {$c2:2}S. Message bases, U/D and U/X{f6}libraries can be configured by using{f6}"
-	&"the {f5}RE{f5} command from the main prompt.{f6:2}{pound}{back arrow}18New Image Software{f6}":lp=1:return
+'	&"{f6:2}Be sure to enter {f5}IM{f5} once online to{f6}complete the setup/configuration of{f6}"
+'	&"your {$c2:2}S. Message bases, U/D and U/X{f6}libraries can be configured by using{f6}"
+'	&"the {f5}RE{f5} command from the main prompt.{f6:2}{pound}{back arrow}18New Image Software{f6}":lp=1:return
 
 ' Al's version:
 ' Be sure to enter "IM" once online to complete the setup of your new BBS.
@@ -1156,9 +1164,9 @@
 '	lp=1:&"Message bases and U/D libraries are configured with the "
 '	lp=1:&"{f5}+.reledit{f5} utility ({f5}RE{f5} command).{f6:2}- New Image Software{f6:2}":return
 
-	&"{f6:2}Be sure to enter {f5}IM{f5} once online to{f6}complete the setup/configuration of{f6}"
-	&"your BBS. Message bases, U/D and U/X{f6}libraries can be configured by using{f6}"
-	&"the {f5}RE{f5} command from the main prompt.{f6:2}{pound}{back arrow}18New Image Software{f6}":lp=1:return
+	lp=1:&"{f6:2}Be sure to enter {f5}IM{f5} once online to complete the setup of your "
+	lp=1:&"BBS. Message base, U/D and U/X libraries can be configured with "
+	lp=1:&"the {f5}RE{f5} command from the main prompt.{f6:2}{pound}{back arrow}18New Image Software{f6}":return
 
 {:3354}
 ' get time from creative micro designs device's real-time clock:
