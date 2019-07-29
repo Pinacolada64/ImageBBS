@@ -1,0 +1,25 @@
+{number:3000}
+	goto {:23}
+{:3}
+	p=1
+{:5}
+	&"{pound}g1":if an$=r$ or tr%<1 then {:21}
+	an=asc(an$)
+	if (nl=1 and an<>20) or (nl<>1 and an<>127) then {:13}
+	if len(in$) then in$=left$(in$,len(in$)-1):p=p-1:goto {:19}
+{:13}
+	if p=1 then an=an or 128:p=2:goto {:17}
+	p=p+1:an=an and 127
+{:17}
+	in$=in$+chr$(an)
+{:19}
+	&chr$(an);:goto {:5}
+{:21}
+	&"{f6}":return:&"Done: "+in$+len(in$):return
+{:23}
+	lp=1:&"Custom input: Capitalize first letter, lowercase everything else. DELete works.{f6:2}"
+	&"Enter first name: ":gosub {:3}:f$=in$
+	&"Enter  last name: ":gosub {:3}:l$=in$
+	&"Real name: {pound}$f {pound}$l{f6}"
+	goto 1811
+	rem pinacolada 7/28/2019

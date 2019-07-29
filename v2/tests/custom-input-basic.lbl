@@ -1,0 +1,31 @@
+{alpha:alt}
+{number:1}
+{step:2}
+' user input, force 1st char to be uppercase, otherwise lowercase
+' allow backspace
+{:1}
+	goto {:100}
+{:10}
+	in$="":poke 204,.:p=1:nl=1
+{:20}
+	get an$:if an$="" then {:20}
+{:22}
+	an=asc(an$):if an=13 then {:60}
+{:24}
+	if (nl=1 and an<>20) or (nl<>1 and an<>127) then {:30}
+{:26}
+	if len(in$) then in$=left$(in$,len(in$)-1):p=p-1:goto {:55}
+{:30}
+	if p=1 then an=an or 128:p=2:goto {:50}
+{:40}
+	p=p+1:an=an and 127
+{:50}
+	in$=in$+chr$(an)
+{:55}
+	print chr$(an);:goto {:20}
+{:60}
+	poke 204,1:return:print" "an$"done: "in$;len(in$)
+{:100}
+	print "User's first name: ";:gosub {:10}:ff$=in$:print ff$" entered."
+	print "User's  last name: ";:gosub {:10}:ll$=in$:print ll$" entered."
+	print "Real name: "ff$" "ll$
