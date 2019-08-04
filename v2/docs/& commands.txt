@@ -62,7 +62,7 @@ string-io.lbl:
 		+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
 	&,15,3	Points to &,15,2
 	&,15,4	Points to &,15,2
-	&,15,5	newdate: some sort of hour (?) conversion. an$="wyymmddhhmm":&,15,5:&
+	&,15,5	newdate: some sort of hour (?) conversion. an$="wyymmddhhmm":&,15,5:&"{$04}"+an$
 	&,15,6,x	Split an$ into a$ and an$ if it finds chr$(x)
 	&,15,6,asc("x")	-> a$ [chr$(x)] an$
 		im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]

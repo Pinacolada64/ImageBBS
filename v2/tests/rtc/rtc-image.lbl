@@ -188,11 +188,8 @@ newd0:
 	rem convert d (dec) to b (bcd)
 	b=int(d/10)*16+(d-10*int(d/10))
 {ifdef:debug}
-
-	c=c+1:&"{pound}!c) in: dec={pound}!d, out: bcd=
-{pound}!b[F6]"
+	c=c+1:&"{pound}!c) in: dec={pound}!d, out: bcd={pound}!b{f6}"
 {endif}
-
 	return
 
 ' {:sub.add_hour}

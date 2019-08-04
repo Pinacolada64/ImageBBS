@@ -50,3 +50,7 @@ Handle: BUCKO
  In Line:2512 Of im
 
 Image 2.0: Turn MN mode on, then go into GF files, then Z for maint
+
+lp
+I've seen it sprinkled around, but it's now in the master variable 
+list. 1.3/2.0's text output is more sophisticated; obviously 1.2 didn't do this.

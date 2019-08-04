@@ -69,7 +69,8 @@
 {nice:4}
 {:sub.verbose_date}
 ' have to do left$() now because of added carrier drop flag
-	an$=left$(tt$(i),11):&,15:c$=an$+"M":return ' c$="{$04}"+tt$(i) <-- does not work!
+	an$=left$(tt$(i),11):&,15:c$=an$+"M":return
+'	c$="{$04}"+tt$(i) <-- does not work!
 
 {nice:4}
 {:sub.time_date_edit}
@@ -156,7 +157,7 @@
 
 {nice:4}
 {:sub.get_access_group_name}
-' TODO: get all info (which array?)
+' TODO: get all names (use which array?)
 	& "Getting access group name..."
 ' get access group name from "e.access" for displaying in page 0, or after editing to re-display
 	a$="e.access":gosub 1011:if e% then:&:&"{f6}":q$="???"
@@ -217,8 +218,7 @@
 ' un: User id Number we're editing
 	un=x:gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
 ' handle copied into tt$ to check if changed
-	tt$(i)=a$:next:tt$=tt$(1):close 2
-	gosub {:sub.get_access_group_name}
+	tt$(i)=a$:next:tt$=tt$(1):gosub {:sub.get_access_group_name}
 ' tz=1: no changes made yet, p=0: page 0
 	tz=1:p=.
 
@@ -791,7 +791,7 @@
 '	 3:	Graphic Menu mode
 '	 4:	Undefined
 '	 5:	Undefined
-'	 6-:	3 letter time zone abbreviation, hour/minute offset: "01000PST0400"
+'	 6-12:	3 letter time zone abbreviation, hour/minute offset: "01000PST0400"
 
 	rem "+.ED" 1.3 - 2019-06-06 pinacolada
 	rem copr. 1988-2019 new image

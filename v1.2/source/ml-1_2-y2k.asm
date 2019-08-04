@@ -150,6 +150,7 @@ mprtr	 = $07ed
 mreverse = $07ee
 mci	 = $07ef
 mdigits	 = $07f0
+
 carrst	 = $07f1 ; 2033
 tsp1	 = $07f2
 tsp2	 = $07f3
@@ -392,16 +393,14 @@ var_dcdd = $dcdd
 cia2prta = $dd00
 carrier	 = $dd01
 cia2ddrb = $dd03
+
 swiftlnk = $de00
-var_df02 = $df02 ; swiftlink command register?
-var_dfde = $dfde
-var_dfdf = $dfdf
 
 var_e404 = $e404
 var_e405 = $e405
 var_e406 = $e406
 
-var_e716 = $e716 ; Output to the Screen regardless of current output device
+out_scrn = $e716 ; Output to the Screen regardless of current output device
 
 var_e9d2 = $e9d2
 var_e9f0 = $e9f0
@@ -441,10 +440,11 @@ plot	 = $fff0
 ; printables
 return	 = #$0d
 pound	 = #$5c
+clear	 = #$93 ; 147
 
 	; first address in table is modified by $ae78
 	; called by $cc77 (main irq switch routine), $cc6c
-	;						; addr:offset incl. load address
+	;		; addr:offset (incl. load address)
 irqtable:
 	.word irq_b567	; $00	a000:0002
 	.word irq_be23  ; $01
@@ -464,11 +464,11 @@ irqtable:
 	.word irq_a128	; $0f
 	.word $c000	; $10
 	.word $c003	; $11	a018:001a
-	.word irq_b099	; $12
+	.word irq_b099	; $12	print to screen?
 	.word irq_b450	; $13
 	.word irq_b426	; $14	a024:0026
-	.word $b3fa ; FIXME: numbering is off			 a02a:002c
-	.word $a6f2 ; index $17 - wait for .x seconds		 a02c:002e
+	.word irq_b3fa 	; $15	a02a:002c
+	.word $a6f2	; $16 - wait for .x seconds		 a02c:002e
 	.word $a827 ; index $18					a02e:0030
 	.word $a704 ; $19					    a030:0032
 	.word $be84 ; $1a					    a032:0034
@@ -936,7 +936,7 @@ sub_a361
 ; exit with variable name in .ax
 
 		 ; from $a273, $a3d0, $bb78, $b7ed, $bb70
-		 ; $0F bytes - printable c= colors
+		 ; $0F bytes - printable c= colors, black excluded
 prntcolr:
 	.byte 159,  5, 28,159,156, 30, 31,158	; a370:0372
 	.byte 129,149,150,151,152,153,154,155	; a378:037a
@@ -1013,7 +1013,7 @@ skipa3e9:
 	rts		; a3e9:03eb   60
 
 jmp_a3ea:
-	lda #$93	; a3ea:03ec   a9 93
+	lda #clear	; a3ea:03ec   a9 93
 	sta z_fe	; a3ec:03ee   85 fe
 	jmp sub_a712	; a3ee:03f0   4c 12 a7
 
@@ -1374,7 +1374,7 @@ jmp_a653:
 ; called many times from jmptable
 	dec syno	; a653:0655   c6 96
 	dec syno	; a655:0657   c6 96
-	lda #$5c	; a657:0659   a9 5c
+	lda #pound	; a657:0659   a9 5c
 gotoa659:
 	cmp #$04	; a659:065b   c9 04
 	bne sub_a68b	; a65b:065d   d0 2e
@@ -1586,12 +1586,12 @@ sub_a7d7:
 	tya		; a7db:07dd   98
 	pha		; a7dc:07de   48
 	lda dfltno	; a7dd:07df   a5 9a
-	cmp #$02	; a7df:07e1   c9 02
+	cmp #$02	; a7df:07e1   c9 02	; rs232
 	beq gotoa7f0	; a7e1:07e3   f0 0d
 	ldx #$01	; a7e3:07e5   a2 01
 	jsr irq_b099	; a7e5:07e7   20 99 b0
 	lda ptr1	; a7e8:07ea   a5 9e
-	jsr $e716	; a7ea:07ec   20 16 e7
+	jsr out_scrn	; a7ea:07ec   20 16 e7
 	jmp gotoa80c	; a7ed:07ef   4c 0c a8
 
 ; output to modem:
@@ -1644,7 +1644,7 @@ a835:0837   29 08		and #$08
 a837:0839   d0 03		bne skipa83c
 a839:083b   4c 27 a8		jmp loopa827
 
-a83c:083e   a9 5c    skipa83c lda #$5c	; pound sign?
+a83c:083e   a9 5c    skipa83c lda #pound	; pound sign?
 a83e:0840   60       skipa83e rts
 
 a83f:0841   20 71 a8 sub_a83f jsr sub_a871
@@ -2719,6 +2719,7 @@ b090:1092   4c 23 b3		jmp gotob323
 b093:1095   ae f3 42 skipb093 ldx scnmode
 b096:1098   4c 9e b0		jmp gotob09e
 
+; output to screen
 b099:109b   ec f3 42 irq_b099 cpx scnmode
 b09c:109e   d0 cb		bne skipb069
 b09e:10a0   e0 00    gotob09e cpx #$00
@@ -3140,15 +3141,17 @@ b3eb:13ed			.text " Fn3 "
 b3f0:13f2			.text " Fn2 "
 b3f5:13f7			.text " Fn1 "
 
-b3fa:13fc   8e d1 b4		stx lbl_b4d1
-b3fd:13ff   8c d2 b4		sty lbl_b4d2
-b400:1402   a9 02    lbl_1402 lda #$02
-b402:1404   20 78 b4		jsr sub_b478
-b405:1407   a9 93		lda #$93
-b407:1409   85 fe		sta z_fe
-b409:140b   20 a6 b7		jsr sub_b7a6
-b40c:140e   ee 50 b2		inc mod_b24f+1
-b40f:1411   60		rts
+irq_b3fa:
+	stx lbl_b4d1	; b3fa:13fc   8e d1 b4
+	sty lbl_b4d2    ; b3fd:13ff   8c d2 b4
+lbl_b400:
+	lda #$02        ; b400:1402   a9 02
+	jsr sub_b478    ; b402:1404   20 78 b4
+	lda #clear        ; b405:1407   a9 93
+	sta z_fe        ; b407:1409   85 fe
+	jsr sub_b7a6    ; b409:140b   20 a6 b7
+	inc mod_b24f+1  ; b40c:140e   ee 50 b2
+	rts             ; b40f:1411   60
 
 b410:1412   a2 27    sub_b410 ldx #$27
 b412:1414   a9 06		lda #$06
@@ -3719,7 +3722,7 @@ b800:1802   ec c7 b9		cpx lbl_b9c7
 b803:1805   d0 03		bne skipb808
 b805:1807   20 d5 b8		jsr sub_b8d5
 b808:180a   a5 fe    skipb808	lda z_fe
-b80a:180c   20 16 e7		jsr $e716
+b80a:180c   20 16 e7		jsr out_scrn
 b80d:180f   a6 d3		ldx pntr
 b80f:1811   e0 28		cpx #$28
 b811:1813   90 08		bcc gotob81b
@@ -3788,7 +3791,7 @@ b897:1899   a9 00		lda #$00
 b899:189b   85 d3		sta pntr
 b89b:189d   a6 d6    sub_b89b ldx tblx
 b89d:189f   20 f0 e9 sub_b89d jsr var_e9f0
-b8a0:18a2   4c 24 ea		jmp var_ea24
+b8a0:18a2   4c 24 ea		jmp $ea24
 
 b8a3:18a5   a6 d3		ldx pntr
 b8a5:18a7   e0 27		cpx #$27
@@ -3799,7 +3802,7 @@ b8ae:18b0   d0 05		bne skipb8b5
 b8b0:18b2   48		pha
 b8b1:18b3   20 d5 b8		jsr sub_b8d5
 b8b4:18b6   68		pla
-b8b5:18b7   4c 16 e7 skipb8b5 jmp $e716
+b8b5:18b7   4c 16 e7 skipb8b5 jmp out_scrn
 
 b8b8:18ba   a6 d3		ldx pntr
 b8ba:18bc   d0 f9		bne skipb8b5
@@ -3809,7 +3812,7 @@ b8bf:18c1   ec c6 b9		cpx lbl_b9c6
 b8c2:18c4   b0 f1		bcs skipb8b5
 b8c4:18c6   60		rts
 
-b8c5:18c7   4c 16 e7		jmp $e716
+b8c5:18c7   4c 16 e7		jmp out_scrn
 
 b8c8:18ca   ad f5 07		lda chk_right
 b8cb:18cd   29 10		and #$10
@@ -3893,7 +3896,7 @@ b972:1974   10 da		bpl loopb94e
 b974:1976   60       skipb974 rts
 
 b975:1977   20 f0 e9 sub_b975 jsr var_e9f0
-b978:197a   20 24 ea		jsr var_ea24
+b978:197a   20 24 ea		jsr $ea24
 b97b:197d   a0 27		ldy #$27
 b97d:197f   ad 86 02 loopb97d lda color
 b980:1982   91 f3		sta (user),y
@@ -4017,7 +4020,7 @@ ba79:1a7b   60		rts
 
 ba7a:1a7c   tbl-ba7f lbl_ba7a .byte $00
 
-ba7b:1a7d	       lbl_ba7b .byte $09,$0d,$01,$07,$05
+ba7b:1a7d	       lbl_ba7b .byte $09,$0d,$01,$07,$05	; "image"
 
 ba80:1a82   29 0f    sub_ba80 and #$0f
 ba82:1a84   09 30		ora #$30
@@ -4602,7 +4605,7 @@ c135:2137   a9 c8		lda #$c8
 c137:2139   8d 16 d0		sta vicregx
 c13a:213c   a9 c7		lda #%11000111
 c13c:213e   8d 00 dd		sta cia2prta
-c13f:2141   a9 93		lda #$93
+c13f:2141   a9 93		lda #clear
 c141:2143   20 d2 ff		jsr chrout
 c144:2146   a9 00		lda #$00
 c146:2148   8d 21 d0		sta bckgrnd0
@@ -4716,9 +4719,9 @@ c222:2224   ad 27 03		lda ibsout+1
 c225:2227   c9 cd		cmp #$cd
 c227:2229   f0 16		beq skipc23f
 c229:222b   ad 26 03 skipc229 lda ibsout
-c22c:222e   8d 4d cd		sta $cd4d
+c22c:222e   8d 4d cd		sta $cd4c+1
 c22f:2231   ad 27 03		lda ibsout+1
-c232:2234   8d 4e cd		sta $cd4e
+c232:2234   8d 4e cd		sta $cd4c+2
 c235:2237   a9 2f		lda #$2f
 c237:2239   8d 26 03		sta ibsout
 c23a:223c   a9 cd		lda #$cd
@@ -5339,7 +5342,7 @@ cd49:2d4b   68		pla
 cd4a:2d4c   60		rts
 
 cd4b:2d4d   68       skipcd4b pla
-cd4c:2d4e   4c ff ff savar_cinv jmp $ffff
+cd4c:2d4e   4c ff ff savar_cinv jmp $ffff	; save bsout vector
 
 cd4f:2d51   a5 01    gotocd4f lda $01
 cd51:2d53   48		pha
@@ -5513,7 +5516,7 @@ ced1:2ed3   tbl-cee6 tablced1 .byte $31,$28,$31,$30,$31,$30,$31,$31,$30,$00
 
 cedb:2edd   tbl-cee3 lbl_cedb .text "00000101",$00
 
-cee4:2ee6	       lbl_cee4 .byte $00
+cee4:2ee6	       lbl_cee4 .byte $00	; saves $01
 
 cee5:2ee7	       lbl_cee5 .byte $00
 

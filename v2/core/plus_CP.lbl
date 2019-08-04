@@ -3,8 +3,12 @@
 {alpha:alt}
 {crunch:on}
 	rem "+.cp new" 6/17/19 12:33 pm
-	&"{clear}{f6}{cyan} *IMAGE Copy-All 2.0 BETA*{f6:2} Special Thanks To Jim Butterfield!"
-	&"{f6} Mods by {blue}Wa{lt. blue}nd{cyan}er{white}er{f6}{green} Fixes {white}18 Feb. 2018 {green}By {white}X-Tec{f6}"
+	&"{clear}{f6}{cyan} *IMAGE Copy-All 2.1 BETA*{f6:2} Special Thanks To Jim Butterfield!"
+	&"{f6} Mods by {blue}Wa{lt. blue}nd{cyan}er{white}er{f6}{green} Fixes: 2018-02-18 {white}X-Tec"
+	&"{pound}{back arrow}06{lt. green}2019-06 Pinacolada{f6}"
+' ----+----+----+----+----+----+----+----+
+' Fixes: 2018-02-18 X-Tec
+'        2019-06-19 Pinacolada
 ' array to hold file block sizes: -b%() = file unselected
 	&,27,1:dim b%(144)
 ' load "++ copier" instead of 1.2's "++ 2"
@@ -12,16 +16,16 @@
 ' edited im 1752 to read
 ' an$=ml$:&,15,1:d4$=an$:return
 ' instead of a$=ml$...
-	pr=2:a$="copier":gosub 1750:&,5:v=lp:&"Devices Online: ":n=.
+	pr=2:a$="copier":gosub 1750:&,5:v=lp:&"{cyan}Devices Online: {white}":n=.
 ' n: number of drives online, d%(): device numbers (im dimensions 61)
 	for d=6 to 33:a=d:gosub {:sub.check_device}:if e=. then n=n+1:d(n)=d:&"{pound}!d "
-	next:if n=. then:&"None?":goto 1811
+	next:if n=. then:&"None?":goto {:quit}
 {:main_menu}
 ' 3118: close all open disk files
 	gosub {:3118}:&"{f6:2} {white}[C]{cyan}opy Files{f6} {white}[D]{cyan}irectory"
 	&"{f6} {white}[M]{cyan}ulti-Scratch{f6} {white}[S]{cyan}end Disk Command{f6} {white}[Q]{cyan}uit{f6:2}"
-	p$="Copy":gosub 1006:ON -(an$="C") -2*(an$="D") -3*(an$="S") goto {:copy}, {:directory}, {:dos_command}
-	ON -(an$="M") -2*(an$="Q" OR an$="") goto {:multi_scratch}, {:quit}:goto {:main_menu}
+	p$="Copy":gosub 1006:an=-(an$="C") -2*(an$="D") -3*(an$="S") -4*-(an$="M") -5*(an$="Q" OR an$="")
+	on an goto {:copy}, {:directory}, {:dos_command}, {:multi_scratch}, {:quit}:goto {:main_menu}
 
 {:directory}
 	f=d%(1):d$="":b%=f:gosub {:sub.get_device}:if e then {:dnp}
@@ -55,18 +59,20 @@
 ' Pattern (*):
 	gosub {:sub.pattern}:if tr%<1 then 1811
 {:3040}
-' clear block total, queue, skip options
-	b=.:t=.:a9$="":s1=.:c1=.:s8=.:c8=.
-{:3042}
+' clear block total, queue, previous choice, skip options
+' set block total=2, word wrap=1
+	b=.:t=.:a9$="":s1=.:c1=.:s8=.:c8=.:tz=2:lp=1
 'Reading Directory...
 ' ----+----+----+----+----+----+----+----+
 ' [Y]es   [N]o   [S]tart   [A]bort
-' [1] Skip 143 Files   [8] Skip 8 Files
+' Skip [1]43 Files    Skip [8] Files
+' [R]epeat Last For All Left (/ Aborts)
 ' [R]emaining Files Same As Last
-	&"{f6}{cyan}Reading Directory...{f6:2} [Y]es   [N]o   [S]tart   [A]bort":tz=2
-	&"{f6} [1] Skip 143 Files   [8] Skip 8 Files{f6} [R]emaining Files Same As Last{f6:2}"
+	&"{f6}{cyan}Reading Directory...{f6:2} {white}[Y]{cyan}es   {white}[N]{cyan}o   {white}[S]{cyan}tart   {white}[A]{cyan}bort{f6}"
+	&" Skip {white}[1]{cyan}43 Files   Skip {white}[8]{cyan} Files{f6}"
+	&" {white}[R]{cyan}epeat Last For Remaining ({white}/{cyan} Aborts){f6:2}"
 ' show header
-	open 1,f,0,"$"+f$+an$:get#1,a$,a$:&,8,1,1:lp=1:&
+	open 1,f,0,"$"+f$+an$:get#1,a$,a$:&,8,1,1:&
 {:3050}
 {:get_dir_entry}
 '      "zterm 64        "    2a
@@ -186,7 +192,8 @@
 	a$="Copy":if op=2 then a$="Scratch"
 	&"Toggle {pound}$a Status (1-{pound}!t): {pound}i1"
 	i=val(an$):if i<1 or i>t then {:3096}
-	x=b%(i):b%(i)=-b%(i):t=t+sgn():goto {:queue_options}
+' -x = file not selected, adjust queue total
+	x=-b%(i):b%(i)=x:b=b+x:t=t+sgn(x):goto {:queue_options}
 
 {:3100}
 ' x=3: copy operation, im=5: copy progress
@@ -381,14 +388,16 @@
 	&"Target Full{f6}":return
 
 {:sub.press_a_key}
-	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off}{pound}g1":return
+' ----+----+----+----+----+----+----+----+
+'              Press A Key: _
+	&"{f6}{pound}{back arrow}12{rvrs on} Press A Key: {rvrs off} {pound}g1":return
 
 {:quit}
-' quickly display "user online" screen mask (don't reload via 2426)
+' quickly display "user online" screen mask (don't reload via modified 2426)
 ' clear tt$(), b%(), exit to main prompt
 	gosub 1079:&,11,.:&,28,1:goto 1811
 
 {crunch:off}
 	rem "+.CP" fixes 180218 7:13am x-tec
 	rem fixes 2019-06-17 10:38 am - pinacolada
-	copr.1995 new image 01/05/95
+	rem copr.1995 new image 01/05/95
