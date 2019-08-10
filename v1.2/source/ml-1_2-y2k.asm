@@ -468,42 +468,42 @@ irqtable:
 	.word irq_b450	; $13
 	.word irq_b426	; $14	a024:0026
 	.word irq_b3fa 	; $15	a02a:002c
-	.word $a6f2	; $16 - wait for .x seconds		 a02c:002e
-	.word $a827 ; index $18					a02e:0030
-	.word $a704 ; $19					    a030:0032
-	.word $be84 ; $1a					    a032:0034
-	.word $a95c ; $1b					    a034:0036
-	.word $be72 ; $1c					    a036:0038
-	.word $be77 ; $1d					    a038:003a
-	.word $b591 ; $1e					    a03a:003c
-	.word $b5a5 ; $1f - inside garbage collection	a03c:003e
-	.word $b5b9 ; $20					    a03e:0040
-	.word $b5c4 ; $21					    a040:0042
-	.word $b4d7 ; $22					    a042:0044
-	.word $b4ff ; $23					    a044:0046
-	.word $b4df ; $24 - called from ml.editor		a046:0048
-	.word $b507 ; $25					    a048:004a
-	.word $b75f ; $26					    a04a:004c
-	.word $b758 ; $27					    a04c:004e
-	.word $b4f9 ; $28					    a04e:0050
-	.word $b76a ; $29					    a050:0052
-	.word $b4d3 ; $2a					    a052:0054
-	.word $caed ; $2b					    a054:0056
-	.word $aa08 ; $2c					    a056:0058
-	.word $b66c ; $2d - garbage collection		a058:005a
-	.word $b57a ; $2e					    a05a:005c
-	.word $b580 ; $2f					a05c:005e
-	.word $a9c4 ; $30					    a05e:0060
-	.word $a949 ; $31					    a060:0062
-	.word $ba23 ; $32					    a062:0064
-	.word $b7a6 ; $33					    a064:0066
-	.word $ba8d ; $34					    a066:0068
-	.word $b323 ; $35					    a068:006a
-	.word $b462 ; $36					    a06a:006c
-	.word $be32 ; $37					    a06c:006e
-	.word $a712 ; $38					    a06e:0070
-	.word $be54 ; $39					    a070:0072
-	.word $be5e ; $3a					a072:0074
+	.word irq_a6f2	; $16 - wait for .x seconds		 a02c:002e
+	.word irq_a827	; $17					a02e:0030
+	.word irq_a704 ; $18					    a030:0032
+	.word $be84 ; $19					    a032:0034
+	.word $a95c ; $1a					    a034:0036
+	.word $be72 ; $1b					    a036:0038
+	.word $be77 ; $1c					    a038:003a
+	.word $b591 ; $1d					    a03a:003c
+	.word $b5a5 ; $1e - inside garbage collection	a03c:003e
+	.word $b5b9 ; $1f					    a03e:0040
+	.word $b5c4 ; $20					    a040:0042
+	.word $b4d7 ; $21					    a042:0044
+	.word $b4ff ; $22					    a044:0046
+	.word $b4df ; $23 - called from ml.editor		a046:0048
+	.word $b507 ; $24					    a048:004a
+	.word $b75f ; $25					    a04a:004c
+	.word $b758 ; $26					    a04c:004e
+	.word $b4f9 ; $27					    a04e:0050
+	.word $b76a ; $28					    a050:0052
+	.word $b4d3 ; $29					    a052:0054
+	.word $caed ; $2a					    a054:0056
+	.word $aa08 ; $2b					    a056:0058
+	.word $b66c ; $2c - garbage collection		a058:005a
+	.word $b57a ; $2d					    a05a:005c
+	.word $b580 ; $2e					a05c:005e
+	.word $a9c4 ; $2f					    a05e:0060
+	.word $a949 ; $30					    a060:0062
+	.word $ba23 ; $31					    a062:0064
+	.word $b7a6 ; $32					    a064:0066
+	.word $ba8d ; $33					    a066:0068
+	.word $b323 ; $34					    a068:006a
+	.word $b462 ; $35					    a06a:006c
+	.word $be32 ; $36					    a06c:006e
+	.word $a712 ; $37					    a06e:0070
+	.word $be54 ; $38					    a070:0072
+	.word $be5e ; $39					a072:0074
 
 	;
 	; called from $b4fc, $b577, $b57d
@@ -2211,19 +2211,20 @@ skipac6d:
 	sta keyd,x	; ac75:0c77   9d 77 02
 	inx		; ac78:0c7a   e8
 skipac79
-	pla			; ac79:0c7b   68
+	pla		; ac79:0c7b   68
 	pha		; ac7a:0c7c   48
 	and #$04	; ac7b:0c7d   29 04
 	bne skipac85	; ac7d:0c7f   d0 06
 	lda #$9d	; ac7f:0c81   a9 9d
 	sta keyd,x	; ac81:0c83   9d 77 02
-	inx			; ac84:0c86   e8
+	inx		; ac84:0c86   e8
 skipac85:
 	pla		; ac85:0c87   68
 	pha		; ac86:0c88   48
-	and #$08		; ac87:0c89   29 08
+	and #$08	; ac87:0c89   29 08
 	bne skipac91	; ac89:0c8b   d0 06
 	lda #$1d	; ac8b:0c8d   a9 1d
+=== EDITING BREAK ===
 ac8d:0c8f   9d 77 02		sta keyd,x
 ac90:0c92   e8		inx
 ac91:0c93   68       skipac91 pla
@@ -3184,7 +3185,7 @@ irq_b426:
 
 irq_b450:
 	stx lbl_b4d1	; b450:1452   8e d1 b4
-	sty lbl_b4d2		; b453:1455   8c d2 b4
+	sty lbl_b4d2	; b453:1455   8c d2 b4
 	lda #$01	; b456:1458   a9 01
 	jsr sub_b475	; b458:145a   20 75 b4
 	jsr sub_b410	; b45b:145d   20 10 b4
@@ -4389,7 +4390,7 @@ sub_be84:
 	lsr a		; be8e:1e90   4a
 	lsr a		; be8f:1e91   4a
 	lsr a		; be90:1e92   4a
-	lsr a			; be91:1e93   4a
+	lsr a		; be91:1e93   4a
 	ora #$c0	; be92:1e94   09 c0
 	sta var_02fc,x	; be94:1e96   9d fc 02
 	lda mod_be07,x	; be97:1e99   bd 07 be
@@ -4400,8 +4401,8 @@ sub_be84:
 	sbc #$00	; bea3:1ea5   e9 00
 	and #$0f	; bea5:1ea7   29 0f
 	sta bsnpre,x	; bea7:1ea9   9d fd 02
-	rts			; beaa:1eac   60
-
+	rts		; beaa:1eac   60
+=== EDITING BREAK ===
 beab:1ead   tbl-beac lbl_beab .byte $d0
 
 beac:1eae	       lbl_beac .byte $78

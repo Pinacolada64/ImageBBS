@@ -1,0 +1,97 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&,28,1:DIM x1%(17,60),x3%(60,2):GOSUB {:4026}:&,28,1:GOTO {:4008}
+{:4002}
+	GOTO 1010
+{:4004}
+	GOTO 1012
+{:4006}
+	GOTO 1902
+{:4008}
+	RETURN
+{:4010}
+	dr=3:GOSUB {:4002}:&,60,2,0,x1%(0,0),dr$+"e.Siglist",dv%:GOTO {:4004}
+{:4012}
+	dr=3:GOSUB {:4002}:&,60,2,0,x3%(0,0),dr$+"e.Siglist"+STR$(x),dv%:GOTO {:4004}
+{:4014}
+	a$="e.Siglist":GOSUB {:4018}:&,60,3,0,x1%(0,0),2196,dr$+a$,dv%:GOTO {:4004}
+{:4016}
+	a$="e.Siglist"+STR$(x):GOSUB {:4018}:&,60,3,0,x3%(0,0),366,dr$+a$,dv%:GOTO {:4004}
+{:4018}
+	dr=3:GOSUB {:4002}:PRINT# 15,"s"dr$a$:RETURN
+{:4020}
+	a%=i:&,60,1,30,x1%(3,i),a$:b%=x1%(1,i):c%=x1%(2,i):a=x1%(0,i)
+	b$=CHR$(48+SGN(a AND 1))+CHR$(48+SGN(a AND 2))+CHR$(48+SGN(a AND 4))
+	&"{pound}#2{pound}# {pound}%a) {pound}$a{f6}    {pound}#5{pound}# Ac:{pound}%b Op:{pound}%c Fl:{pound}$b{f6}":RETURN
+{:4026}
+	tz=0:GOSUB {:4010}:IF e%THEN x1%(0,0)=0
+{:4028}
+	a%=x1%(0,0):&"{clear}SigEdit 2.0: {pound}%a Sigs Defined.{f6:2}"
+	IF a%THEN FOR i=1 TO a%:GOSUB {:4020}:NEXT
+	&"{f6}Edit Which (A=Add): {pound}i1":x=ABS(INT(VAL(an$)))
+	IF an$="A"THEN GOSUB {:4042}:GOTO {:4028}
+	IF x>0 AND x<=x1%(0,0)THEN GOSUB {:4046}:GOTO {:4028}
+	&"Save changes? ":GOSUB {:4006}:ON a GOSUB {:4014}
+	RETURN
+{:4042}
+	x=x1%(0,0)+1:x1%(0,0)=x:&,60,0,30,x1%(3,x),"---"
+	x1%(0,x)=7:x1%(1,x)=1023:x1%(2,x)=1
+{:4046}
+	x3%(0,0)=0:x3%(0,1)=0:x3%(0,2)=0:GOSUB {:4012}
+{:4048}
+	&"{clear}Sig #{pound}!x{f6:2}":&,60,1,30,x1%(3,x),a$:b%=x1%(1,x):c%=x1%(2,x):a=x1%(0,x)
+	&"1. Name: {pound}$a{f6}"
+	&"2. Accs: {pound}%b{f6}"
+	&"3. Oper: {pound}%c{f6}"
+	&"4. Subs: ";MID$("YesNo ",4-3*SGN(a AND 1),3):a%=x3%(0,0):&" ({pound}%a){f6}"
+	&"5. U/Ds: ";MID$("YesNo ",4-3*SGN(a AND 2),3):a%=x3%(0,1):&" ({pound}%a){f6}"
+	&"6. U/Xs: ";MID$("YesNo ",4-3*SGN(a AND 4),3):a%=x3%(0,2):&" ({pound}%a){f6}"
+	&"{f6}Change which?: {pound}g1{pound}v7{f6}":a=VAL(an$)
+	IF a THEN ON a GOSUB {:4074},{:4078},{:4084},{:4068},{:4070},{:4072}:GOTO {:4048}
+	RETURN
+{:4068}
+	xx=0:GOTO {:4090}
+{:4070}
+	xx=1:GOTO {:4090}
+{:4072}
+	xx=2:GOTO {:4090}
+{:4074}
+	&,60,1,30,x1%(3,x),w$:POKE 53252,30:p$="Name":pl=0:&,1,32:IF an$=""THEN RETURN
+	&,60,0,30,x1%(3,x),an$:tz=1:RETURN
+{:4078}
+	w$=MID$(STR$(x1%(1,x)),2):POKE 53252,5:p$="Accs":pl=1:&,1,32
+	IF an$=""THEN RETURN
+	x1%(1,x)=VAL(an$):tz=1:RETURN
+{:4084}
+	w$=MID$(STR$(x1%(2,x)),2):POKE 53252,5:p$="Oper":pl=1:&,1,32
+	IF an$=""THEN RETURN
+	x1%(2,x)=VAL(an$):tz=1:RETURN
+{:4090}
+	s$=MID$("SubU/DU/X",xx*3+1,3):&"Have {pound}$ss? ":GOSUB {:4006}
+	b=2^xx:IF a=0 THEN x1%(0,x)=x1%(0,x)AND NOT b:tz=1:RETURN
+	x1%(0,x)=x1%(0,x)OR b
+{:4096}
+	a%=x3%(0,xx):&"{clear}Sig {pound}!x: {pound}%a {pound}$ss{f6:2}"
+	IF a%THEN FOR i=1 TO a%:b%=x3%(i,xx):&"{pound}#4{pound}# {pound}%b":NEXT:&"{f6:2}"
+	&"Add Delete Insert: {pound}g1":a=-(an$="A")-2*(an$="D")-3*(an$="I")
+	IF a THEN ON a GOSUB {:4106},{:4112},{:4120}:GOTO {:4096}
+	GOTO {:4016}
+{:4106}
+	IF x3%(0,xx)=60 THEN RETURN
+	&"Add #{pound}i1":a=VAL(an$):IF a<1 OR a>999 THEN RETURN
+	i=x3%(0,xx)+1:x3%(i,xx)=a:x3%(0,xx)=i:RETURN
+{:4112}
+	IF x3%(0,xx)=0 THEN RETURN
+	&"Delete #{pound}i1":a=VAL(an$):IF a<1 OR a>999 THEN RETURN
+	j=0:FOR i=1 TO x3%(0,xx):IF x3%(i,xx)<>a THEN j=j+1:x3%(j,xx)=x3%(i,xx)
+	NEXT:x3%(0,xx)=j:RETURN
+{:4120}
+	j=x3%(0,xx):IF j=0 THEN RETURN
+	&"Insert #: {pound}i1":a=VAL(an$):IF a<1 OR a>999 THEN RETURN
+	&"Insert where? {pound}i1":b=VAL(an$):IF b<1 OR b>j THEN RETURN
+	j=j+1:x3%(0,xx)=j
+	FOR i=j TO b STEP-1:x3%(i,xx)=x3%(i-1,xx):NEXT
+	x3%(b,xx)=a:RETURN
+	REM "+/SM.sigedit" sysop menu 180702 x-tec
+

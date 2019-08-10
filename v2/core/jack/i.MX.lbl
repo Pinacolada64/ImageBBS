@@ -1,16 +1,16 @@
 {:3000}
-	POKE 53252,62:DR=3:A$="E.MACS":GOSUB 4:IF E%=.THEN{:3006}
-	&"{f6}{cyan}{$d0}LEASE {$d7}AIT, {$d3}ETTING FILES...{f6}":DR=3:A$="E.MACS,L,"+CHR$(64):GOSUB 4
+	POKE 53252,62:DR=3:A$="E.MACS":GOSUB 4:IF E%=. then {:3006}
+	&"{f6}{cyan}PLEASE WAIT, SETTING FILES...{f6}":DR=3:A$="E.MACS,L,"+CHR$(64):GOSUB 4
 	X=UR*4:GOSUB 1:PRINT# 2,"{up arrow}":CLOSE 2:GOTO{:3000}
 {:3006}
 	X=ID*4-4:FOR A=.TO 3:X=X+1:GOSUB 1:&,2,2:ON-(A$="{up arrow}")GOSUB{:3008}:TT$(A+1)=A$:NEXT:GOSUB{:3010}
 {:3008}
-	A$="{$d5}SE '{$cd}{$d8}' {$c3}OMMAND {$d4}O {$c3}ONFIGURE":RETURN
+	A$="USE 'MX' COMMAND TO CONFIGURE":RETURN
 {:3010}
-	&"{f6} {rvrs on}{cyan} {$d3}YSTEM {$cd}ACRO {$c5}DITOR {f6:3}"
+	&"{f6} {rvrs on}{cyan} SYSTEM MACRO EDITOR {f6:3}"
 	FOR A=1 TO 4:A%=A:AN$=TT$(A):&"{white}{pound}%A> {lt. blue}{pound}V7{f6}":NEXT
-	&"{f6}{lt. blue}{$c5}DIT {$d7}HICH:{white} {pound}I1":ON-(TR%<1)GOTO{:3022}:A=VAL(AN$):IF A<1 OR A>4 THEN{:3020}
-	W$=TT$(A):A%=A:&"{lt. blue}{$d2}ETURN {$c1}LONE = {$cf}LD{f6:3}":P$="{lt. blue}{$c5}DIT {pound}#0{pound}%A{white}":&,1,32:IF AN$=""THEN{:3010}
+	&"{f6}{lt. blue}EDIT WHICH:{white} {pound}I1":ON-(TR%<1)GOTO{:3022}:A=VAL(AN$):IF A<1 OR A>4 THEN{:3020}
+	W$=TT$(A):A%=A:&"{lt. blue}RETURN ALONE = OLD{f6:3}":P$="{lt. blue}EDIT {pound}#0{pound}%A{white}":&,1,32:IF AN$="" then {:3010}
 	ON-(TR%<1)GOTO{:3022}:TT$(A)=AN$:GOTO{:3010}
 {:3020}
 	X=ID*4-4:FOR A=.TO 3:X=X+1:GOSUB 1:PRINT# 2,TT$(A+1):NEXT

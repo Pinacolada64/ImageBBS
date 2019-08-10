@@ -1,0 +1,441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>Image BBS Programmer's Reference Guide</title>
+  <meta content="Ryan Sherwood" name="author">
+</head>
+
+<body style="background-color: WHITE;" link="#00007f">
+<center>
+<p align="center"> 
+<table style="width: 724px; height: 64px; background-color: rgb(255, 204, 153);" border="0" cellpadding="2" cellspacing="0">
+ <tbody>
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| Chapter I | <a href="imageprg-chap2.html">Chapter II</a>
+| <a href="imageprg-chap3-1.html">Chapter III</a> |
+      <a href="imageprg-chap4.html">Chapter IV</a> |
+Chapter V</p>
+      </center>
+      </td>
+ </tr>
+ 
+  </tbody>
+</table>
+</p>
+
+</center>
+ 
+<center> 
+<p align="center"> 
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+ <tbody>
+    <tr>
+ <td valign="top" width="100%"> 
+      <h1> Chapter I: General Information<a name="geninfo"></a></h1>
+ 
+      <p> There are
+several things which are often used and would fit the description of
+general information. The items covered in this chapter are used in
+almost every module you can find.</p>
+ 
+      <h3> The Function
+Keys<a name="fkeys"></a></h3>
+ 
+      <p> IMAGE
+BBS uses function keys to represent specific ASCII characters which:</p>
+
+      <ul>
+ <li> 
+          <p> allows typing special characters in
+quote mode rather than using CHR$() codes, and</p>
+ </li>
+        <li>
+          <p> avoids the pitfall of truncating lines, or the necessity of
+using custom I/O routines to read SEQuential data files.</p>
+ </li>
+      </ul>
+
+      <center> 
+      <p align="center"> 
+      <table border="2" cellpadding="2" cellspacing="2">
+ <tbody>
+          <tr>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F1: Comma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; (,)</tt></pre>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F5: Quotation mark&nbsp;&nbsp;&nbsp; (")</tt></pre>
+            </td>
+          </tr>
+
+          <tr>
+ <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F2: Question mark (?)</tt></pre>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F6: RETURN [CHR$(13)]</tt></pre>
+            </td>
+          </tr>
+          <tr>
+
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F3: Colon (:)</tt></pre>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F7: Asterisk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (*)</tt></pre>
+            </td>
+          </tr>
+
+          <tr>
+ <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F4: Equal sign (=)</tt></pre>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <pre><tt>F8: Up-arrow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (^)</tt></pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+
+      </center>
+ 
+      <h3> The
+Drive Designators:<a name="drives"></a></h3>
+ 
+      <p>
+IMAGE BBS uses six drive [designators to] identify the system drive in
+which to find a specific file. The active drive is set by setting the
+variable DR to a value of 1 through 6 as I will describe below:</p>
+
+      <p> 1: System drive. This drive should contain all of your <tt>s.*</tt>
+files. When writing your own modules, all files which are usually read
+but NOT changed often (like intro screens) should carry the <tt>s.</tt>
+prefix and be stored on this device.</p>
+ 
+      <p> 2: E-mail
+drive. This drive contains all mail (<tt>m.*</tt>), forced
+mail (<tt>fm.*</tt>), and network (<tt>nm.*</tt>)
+files.</p>
+ 
+      <p> 3: Etcetera drive. This is one of the most
+active drives on your system. It contains all files which change often,
+and should be used to store data which needs to change frequently.
+[Note: these files have an e.* prefix.]</p>
+ 
+      <p> 4:
+Directory drive. This drive holds all the sub-directories (d.* files)
+used&nbsp;by the system.</p>
+ 
+      <p> 5: Plus-file drive.
+This drive holds all IMAGE BBS program modules.</p>
+ 
+      <p> 6:
+User drive. This drive is used to store the user records and
+alphabetical user list.</p>
+ 
+      <h3> Time and Date Format<a name="timedate"></a></h3>
+ 
+      <p> IMAGE BBS
+uses an 11-digit string to represent the current time and date. This
+information is stored in <span style="font-family: monospace;">D1$</span>.</p>
+      <pre>1&nbsp; 90 11 03 80 45&nbsp;&nbsp;&nbsp; IMAGE BBS will translate this into the string<br>^&nbsp; ^&nbsp; ^&nbsp; ^&nbsp; ^&nbsp; ^&nbsp;&nbsp;&nbsp;&nbsp; "Sun, Nov&nbsp; 3 1990&nbsp; 12:45 PM"<br>|&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |<br>|&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; +---- Minutes&nbsp; 00-59&nbsp;<br>|&nbsp; |&nbsp; |&nbsp; |&nbsp; |<br>|&nbsp; |&nbsp; |&nbsp; |&nbsp; +------- Hour&nbsp;&nbsp;&nbsp;&nbsp; 00-11: AM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>|&nbsp; |&nbsp; |&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 80-91: PM (subtract 80 to get correct hour)<br>|&nbsp; |&nbsp; |&nbsp; |<br>|&nbsp; |&nbsp; |&nbsp; +---------- Date&nbsp;&nbsp;&nbsp;&nbsp; 01-31<br>|&nbsp; |&nbsp; |<br>|&nbsp; |&nbsp; +------------- Month&nbsp;&nbsp;&nbsp; 01-12<br>|&nbsp; |<br>|&nbsp; +---------------- Year&nbsp;&nbsp;&nbsp;&nbsp; 00-99&nbsp;&nbsp;&nbsp;&nbsp; (plus hard-coded century base)<br>|<br>+------------------- Day&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1-7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1=Sunday, 7=Saturday)</pre>
+      <p>
+[Note:&nbsp;Spaces and diagram added for clarity. Also, one thing
+the manual doesn't mention is putting <tt>CHR$(4)</tt>,
+CTRL-D, in an <tt>&amp;</tt> statement followed by a
+properly formatted 11-digit string will display a readable time/date
+stamp. To wit,</p>
+ 
+      <p> <tt>&amp;"[CTRL-D]19011038045"</tt></p>
+
+      <p> will echo the same string as at the top of this explanation.]</p>
+
+      <h3> Carrier Loss<a name="carrierloss"></a></h3>
+
+      <p> All prompts for user input must be protected against a lost
+carrier! This is simple, and easily forgotten. If the carrier is lost,
+the system will automatically drop the user's time to zero. Time
+remaining is stored in the integer variable <tt>TR%</tt>.
+The simplest way to protect your system is to&nbsp;check the value of
+      <tt>TR%</tt>: if it is less than one either <tt>GOTO</tt>
+line <tt>1811</tt>, or <tt>RETURN</tt> if it
+is a subroutine.</p>
+ 
+      <h3> Access Levels<a name="accesslevels"></a></h3>
+ 
+      <p> IMAGE
+BBS uses the following table to determine which access groups (0-9) have
+access to seperate areas of the system.</p>
+ 
+      <center>
+      <p align="center"> 
+      <table style="width: 20%;" border="2" cellpadding="2" cellspacing="2">
+ <tbody>
+          <tr>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <center>
+            <pre><b>Group</b></pre>
+            </center>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <center>
+            <pre><b>Value</b></pre>
+            </center>
+            </td>
+            <td style="background-color: BLACK; width: 2px;" rowspan="6"></td>
+
+            <td bgcolor="SILVER" valign="top" width="22%">
+            <center>
+            <pre><b>Group</b></pre>
+            </center>
+            </td>
+            <td bgcolor="SILVER" valign="top" width="50%">
+            <center>
+            <pre><b>Value</b></pre>
+            </center>
+            </td>
+          </tr>
+          <tr>
+
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>0</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>1</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="22%">
+            <center>
+            <pre>5</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>32</pre>
+            </center>
+            </td>
+          </tr>
+
+          <tr>
+ <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>1</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>2</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="22%">
+            <center>
+            <pre>6</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>64</pre>
+            </center>
+            </td>
+          </tr>
+          <tr>
+
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>2</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>4</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="22%">
+            <center>
+            <pre>7</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>128</pre>
+            </center>
+            </td>
+          </tr>
+
+          <tr>
+ <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>3</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>8</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="22%">
+            <center>
+            <pre>8</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>256</pre>
+            </center>
+            </td>
+          </tr>
+          <tr>
+
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>4</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>16</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="22%">
+            <center>
+            <pre>9</pre>
+            </center>
+            </td>
+            <td bgcolor="LIGHTGREY" valign="top" width="50%">
+            <center>
+            <pre>512</pre>
+            </center>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      </p>
+ </center>
+ 
+      <p align="left"> To figure out which access levels would have
+access to certain areas, you must add the values of the access groups
+you wish included together. For example, if you wanted all groups
+allowed access to the function, you would need an access code of 1023.
+If you just wanted levels 8 and 9, the access code would be 768
+(256+512). [Note: Most prompts that ask for access levels will let you
+type a question mark and RETURN, and the system
+will figure out the correct numerical value for you.]</p>
+ 
+      <h3>
+Plus Files<a name="plusfiles"></a></h3>
+ 
+      <p>
+A plus file is a BASIC module which is loaded into memory when needed
+by the BBS. The maximum size that any one plus file is 56 CBM blocks.
+There are two distinct types of plus files: the standard plus file, and
+the mini plus file.</p>
+ 
+      <p> The standard plus file can
+range from lines 1 to 999.</p>
+ 
+      <ul>
+ <li> 
+          <p>
+Under no circumstances should you allow your program to fall through
+past line 999.</p>
+ </li>
+        <li> 
+          <p> The last
+line of the program should be a REMark.</p>
+ </li>
+        <li>
+          <p> Depending on the type of module, it should return control to
+the main system via a GOTO 1811 or a RETURN.</p>
+ </li>
+      </ul>
+
+      <p> The mini plus file is a smaller module which may be loaded
+between the plus file and the main BASIC program. Care should be taken
+when using these types of modules. I will cover more on these modules
+further on in this chapter.</p>
+ 
+      <h3> ML Modules (++ files)<a name="plusplusfiles"></a></h3>
+ 
+      <p> An ML
+module is normally used for such items as transfer protocols and
+copiers. However, they can be used for any function that you wish. All
+ML modules must reside in the <tt>$C000</tt> to <tt>$CA00</tt>
+range of memory.</p>
+ 
+      <h3> Mini Plus Files<a name="miniplusfiles"></a></h3>
+ 
+      <p> A mini
+plus file is a module or series of modules which link to a plus file
+module in much the same way a plus file links to the main module. When
+using mini modules, the size of the plus file is limited to 40 CBM
+blocks instead of 56. Also, the mini module may range from one line
+higher than the main module (the first line must be a REMark) to line
+999.</p>
+ 
+      <p> A standard module using mini plus files will
+look like this:</p>
+ 
+      <center> 
+      <p align="center">
+      <table border="0" cellpadding="2" cellspacing="0">
+
+        <tbody>
+          <tr>
+ <td style="vertical-align: top; background-color: LIGHTGREY;">
+            <pre> 1 - 798 Main BASIC module<br> 799 REMark </pre>
+            <center>
+            <hr align="center" size="2" width="100%"> </center>
+            <pre> 800 REMark (first line of mini plus module)<br> 801 - 998 BASIC mini module<br> 999 REMark </pre>
+            <center>
+            <hr align="center" size="2" width="100%"> </center>
+            <pre> 1000 - IM module</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+      </center>
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+</p>
+ </center>
+ 
+<center>
+<p align="center"> 
+<table style="background-color: rgb(255, 204, 153);" border="0" cellpadding="2" cellspacing="0" width="75%">
+ <tbody>
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| Chapter I | <a href="imageprg-chap2.html">Chapter II</a>
+| <a href="imageprg-chap3-1.html">Chapter III</a> |
+      <a href="imageprg-chap4.html">Chapter IV</a> |
+Chapter V</p>
+      </center>
+      </td>
+ </tr>
+ 
+  </tbody>
+</table>
+</p>
+
+</center>
+ 
+</body>
+</html>

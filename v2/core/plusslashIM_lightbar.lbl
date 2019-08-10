@@ -1,0 +1,151 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	on lm goto {:4100},{:4200},{:4300}
+	return
+{:4004}
+	if b<0 then a$="--:--":return
+	a%=b/60:b%=b-a%*60:a$="A":if a%>11 then a$="P":a%=a%-12
+	a%=a%-12*(a%=0):a$=right$(str$(a%),2)+":"+right$(str$(100+b%),2)+a$:return
+{number:4100}
+{:4100}
+	gosub {:4128}:p%=1
+{:4102}
+	p%=p%+zz%*(p%>zz%)-zz%*(p%<1)
+	&"{clear}{lt. blue}Page{white} {pound}%p{f6}":gosub {:4140}
+	&"{f6:2}{white}L{lt. blue}oad{blue}/{white}S{lt. blue}ave{blue}/{white}N{lt. blue}ext{blue}/{white}P{lt. blue}rev{blue}/{white}#{blue}/{white}Q{lt. blue}uit{blue}:{white} {pound}i1"
+	if an$="N"or an$="P"then p%=p%+(an$="P")-(an$="N"):goto {:4102}
+	if an$="L"then gosub {:4128}:goto {:4102}
+	if an$="S"then gosub {:4134}:goto {:4102}
+	if val(an$)then gosub {:4120}:goto {:4102}
+	if tz then:&"Save Changes? ":gosub 1902:if a then gosub {:4134}
+	&,11:return
+{:4120}
+	a=val(an$):if a<1 or a>16 then return
+	a$=mid$(c$(p%),a,1):if a$="-"then return
+	a$=chr$(48-(a$="0")):c$(p%)=left$(c$(p%),a-1)+a$+mid$(c$(p%),a+1)
+	tz=1:return
+{:4128}
+	tz=0:&"Loading Checkmark Defaults{f6}":gosub {:4146}
+	dr=3:a$="e.lightdefs,s,r":gosub 1011:if e%then close 2:return
+	for x=1 to zz%:&,2,2:gosub {:4164}:c$(x)=a$:x=x-(st<>0)*zz%:next:close 2:return
+{:4134}
+	dr=3:gosub 1010:print# 15,"s"dr$"e.lightdefs"
+	dr=3:a$="e.lightdefs,s,w":gosub 1011
+	for x=1 to zz%:print# 2,c$(x):next:close 2:tz=0:return
+{:4140}
+	for i=1 to 16:a$=mid$(c$(p%),i,1):if a$<>"-"then a$=mid$(" {$ba}",val(a$)+1,1)
+	a%=i:b%=(p%-1)*16+i-1:b$=b$(b%):&"{white}{pound}#2{pound}# {pound}%a {pound}$a {pound}$b{f6}"
+	next:return
+{:4146}
+	c$(1)="00-0---0--00-000"
+	c$(2)="-----00000000-00"
+	c$(3)="00-000000000-000"
+	c$(4)="0000000000000000"
+	c$(5)="0000000000000000"
+	c$(6)="0000000000000000"
+	c$(7)="0000000000000000"
+	c$(8)="0000000000000000"
+	return
+{:4164}
+	for i=1 to len(a$):xx$=mid$(a$,i,1):yy$=mid$(c$(x),i,1)
+	if yy$="0"and xx$="-"then xx$="0"
+	if yy$="-"then xx$="-"
+	a$=left$(a$,i-1)+xx$+mid$(a$,i+1):next:return
+{number:4200}
+{:4200}
+	gosub {:4212}:on-(e%=0)goto {:4218}:for i=8 to 15:am%(0,i)=256:next
+	for i=0 to 7:am%(0,i)=112+i*2:am%(3,i)=113+i*2:next:gosub {:4214}:goto {:4218}
+{:4204}
+	tz=0:dr=3:gosub 1010:a$=dr$+"e.alarms":return
+{:4206}
+	&"{clear}Alarm Time/Checkmark Editor 1.3{f6}{pound}$k":return
+	a%=b/60:b%=b-a%*60:a$="A":if a%>11 then a$="P":a%=a%-12
+	a%=a%-12*(a%=0):a$=right$(str$(a%),2)+":"+right$(str$(100+b%),2)+a$:return
+{:4212}
+	gosub {:4204}:&,60,2,0,am%(0,0),a$,dv%:goto 1012
+{:4214}
+	gosub {:4204}:print# 15,"s"a$:&,60,3,0,am%(0,0),128,a$,dv%:goto 1012
+{:4216}
+	gosub {:4204}:&,7,dv%,9:return
+{:4218}
+	for i=0 to 15:gosub {:4282}:next:k$=" {$c0:38}{f6}"
+{:4220}
+	gosub {:4206}:&" ##  OnTime OffTime Check Active?{f6:2}"
+	for i=0 to 15:a%=i+1:a$=c$(i):&" {pound}#2{pound}# {pound}%a) {pound}$a{f6}":next
+	&"{pound}$kEdit Which (RETURN to Quit)? {pound}i1":if an$="" then {:4276}
+	a=val(an$):on-(a<1 or a>16)goto {:4220}:a=a-1
+{:4228}
+	gosub {:4206}:a%=a+1:&"Alarm #{pound}%a:{f6:2}"
+	b=am%(1,a):gosub {:4004}:&" 1) On Time:  {pound}$a{f6}"
+	b=am%(2,a):gosub {:4004}:&" 2) Off Time: {pound}$a{f6}":a%=am%(0,a)
+	if a%=256 then:&" 3) Disabled{f6}"
+	if a%>256 then:&" 3) Enabled{f6}"
+	if a%<256 then:&" 3) Enabled By Checkmark {pound}%a{f6}"
+	a%=am%(3,a):&" 4) Checkmark {pound}%a is Triggered{f6}"
+	&"{pound}$kChange Which (RETURN to Abort)? {pound}i1":if an$=""then i=a:gosub {:4282}:goto {:4220}
+	&"{f6}":x=val(an$):on x gosub {:4246},{:4250},{:4258},{:4270}:goto {:4228}
+{:4246}
+	p$="Turn On Time":goto {:4250}
+	p$="Turn Off Time"
+{:4250}
+	b=am%(x,a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$=""then return
+	b=val(left$(an$,2)):if b=12 then b=0
+	b=b*60+val(mid$(an$,4,2))-(right$(an$,1)="P")*720:if b=am%(x,a)then return
+	am%(x,a)=b:tz=1:return
+{:4258}
+	&"Forced [E]nabled, Forced [D]isabled,or{f6}[C]heckmark? {pound}g1":b=am%(0,a)
+	if an$="E"then b=257
+	if an$="D"then b=256
+	if an$="C"then:&"Which One? {pound}i1":b=val(an$)
+	if am%(0,a)=b then return
+	am%(0,a)=b:tz=1:return
+{:4270}
+	&"Which Check do you want triggered? {pound}i1":if an$=""then return
+	b=val(an$):if am%(3,a)=b then return
+	am%(3,a)=b:tz=1:return
+{:4276}
+	a=0:if tz then:&"Changes Made! Save? ":gosub 1902
+	if a then gosub {:4214}:&"Activate Saved Table? ":gosub 1902:on a gosub {:4216}
+	return
+{:4282}
+	a=am%(0,i):b=am%(1,i):gosub {:4004}:b$=a$:b=am%(2,i):gosub {:4004}:c$=a$:a%=am%(3,i)
+	a$=b$+" "+c$+"  "+left$(b$(am%(3,i)and 127),5)+"  "
+	if a=256 then a$=a$+"No":goto {:4292}
+	if a>256 then a$=a$+"Yes":goto {:4292}
+	a$=a$+"if "+left$(b$(a and 127),5)
+{:4292}
+	c$(i)=a$:return
+	rem
+{number:4300}
+{:4300}
+	&"Loading NetMail Alarm Table..."
+	for i=0 to 23:a%(i)=i*60:next:gosub {:4308}:tz=-(e%<>0)
+	for i=0 to 23:b=a%(i):gosub {:4004}:c$(i)=a$:next:goto {:4314}
+{:4306}
+	gosub {:4310}:print# 15,"s"a$:&,60,3,0,a%(0),48,a$,dv%:goto 1012
+{:4308}
+	gosub {:4310}:&,60,2,0,a%(0),a$,dv%:goto 1012
+{:4310}
+	dr=2:gosub 1010:a$=dr$+"nm.times":return
+{:4312}
+	gosub {:4310}:&,7,dv%,12:goto 1012
+{:4314}
+	&"{clear}{f6}NetMail Trigger Times:{f6:2}"
+	for i=0 to 11:a%=i+1:a$=c$(i):b%=i+13:b$=c$(i+12)
+	&"{pound}#2{pound}# {pound}%a) {pound}$a{pound}{back arrow}20{pound}%b) {pound}$b{f6}"
+	next:&"{f6}Change Which? {pound}i1":a=val(an$):if a<1 or a>24 then{:4336}
+	p$="NetMail Alarm #"+str$(a)
+	a=a-1:b=a%(a):gosub {:4004}:w$=a$:poke 53252,6:&,1,32:if an$="" then {:4314}
+	if an$="-"or an$="{f8}"then b=-1:goto {:4332}
+	b=val(left$(an$,2)):if b=12 then b=0
+	b=b*60+val(mid$(an$,4,2))-(right$(an$,1)="P")*720
+{:4332}
+	if b=a%(a) then {:4314}
+	a%(a)=b:gosub {:4004}:c$(a)=a$:tz=1:goto {:4314}
+{:4336}
+	if tz=0 then return
+	&"{f6}Save Changes? ":gosub 1902:if a then gosub {:4306}
+	&"{f6}Activate Saved Table? ":gosub 1902:if a then gosub {:4312}
+	return
+	rem "+/IM.lightbar"

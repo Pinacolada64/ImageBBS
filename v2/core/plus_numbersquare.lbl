@@ -1,0 +1,108 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	GOTO {:3010}:rem +.numbersquare
+{:3002}
+	b$="num squ":a$="r":GOSUB 1027:IF e%THEN a$="w":GOSUB 1027:GOTO {:3006}
+	FOR i=1 TO 3:&,2,2:tt$(i)=a$:NEXT:CLOSE 2:RETURN
+{:3006}
+	tt$(1)=MID$(i1$,2):t=20:s=.:tt$(2)=STR$(t):tt$(3)=STR$(s)
+	PRINT# 2,tt$(1):PRINT# 2,t:PRINT# 2,s:CLOSE 2:RETURN
+{:3010}
+	DIM m(4,4),b(4,4):z=.
+	&"{clear}{rvrs on}{green}The Number Squares{f6}{lt. green}By: {rvrs on}{gray3}Port Commodore{f6}{yellow}    {rvrs on}(801-423-2734){yellow}"
+	&"{f6:2}Welcome To The Numbered Squares."
+	&"{f6}The Object Of The Game Is To Get All"
+	&"{f6}Of The Numbers In Sequence.  The Only"
+	&"{f6}Legal Move Consists Of Moving A Number"
+	&"{f6}Into The Blank Space.  Manipulate All"
+	&"{f6}Numbers In This Manner.  Should You {f6}Become Hopelessly Bogged Down"
+	&" You Can {f6}Press {f5}Q{f5} To Take The Easy Way Out..."
+{:3028}
+	GOSUB {:3002}:&"{f6:2}Current Champ:{pound}{back arrow}20Min:Sec{f6:2}{gray3}{rvrs on}":IF tt$(1)=na$THEN tt$(1)="YOU"
+	an$=tt$(1):&,15,1:&an$:&"{pound}{back arrow}20":IF VAL(tt$(2))<10 THEN:&"0"
+	&MID$(tt$(2),2):&":"
+	IF VAL(tt$(3))=.THEN tt$(3)="00":&tt$(3):GOTO {:3040}
+	IF VAL(tt$(3))<10 THEN:&"0":&MID$(tt$(3),2):GOTO {:3040}
+	&MID$(tt$(3),2)
+{:3040}
+	&"{f6:2}Good Luck!"
+	FOR i=1 TO 4:FOR j=1 TO 4:b(i,j)=(i-1)*4+j:NEXT:NEXT:i1=4:j1=4
+	&"{f6:2}Scrambling Board...(Wait) ":FOR q=1 TO 100
+{:3046}
+	m=INT(1+RND(1)*4):ON m GOTO {:3048},{:3052},{:3056},{:3060}
+{:3048}
+	IF i1=1 GOTO {:3046}
+	b(i1,j1)=b(i1-1,j1):b(i1-1,j1)=16:i1=i1-1:GOTO {:3064}
+{:3052}
+	IF i1=4 GOTO {:3046}
+	b(i1,j1)=b(i1+1,j1):b(i1+1,j1)=16:i1=i1+1:GOTO {:3064}
+{:3056}
+	IF j1=1 GOTO {:3046}
+	b(i1,j1)=b(i1,j1-1):b(i1,j1-1)=16:j1=j1-1:GOTO {:3064}
+{:3060}
+	IF j1=4 GOTO {:3046}
+	b(i1,j1)=b(i1,j1+1):b(i1,j1+1)=16:j1=j1+1
+{:3064}
+	NEXT:ti$="000000":&"{clear}"
+{:3066}
+	m9=.:&"{home}{white}{$c0:21}{f6}":n=1
+{:3068}
+	FOR j=1 TO 4:&"{white}{$dd}{gray3}":IF b(n,j)=16 THEN:&"    ":GOTO {:3074}
+	IF b(n,j)<10 THEN:&" "
+	b%=b(n,j):&" {pound}%b "
+{:3074}
+	NEXT
+	&"{$dd}{f6}{white}{$c0:21}{f6}":n=n+1:IF n<5 THEN{:3068}
+{:3078}
+	ON z GOTO {:3116},{:3118}
+{:3080}
+	&"{home}{down:12}{lt. red}Move Which Piece? {pound}i1":IF an$="Q"THEN z=2:GOTO {:3078}
+	ON tr%+1 GOTO 1811:m=VAL(an$):IF m=16 THEN{:3106}
+	&"{pound}ho{pound}h7":i1=.:j1=.:FOR i=1 TO 4:FOR j=1 TO 4
+	IF b(i,j)=m THEN i1=i:j1=j
+	NEXT:NEXT
+	IF i1=.THEN:&"{home}{down:10}{yellow}Can't Find That Number{pound}b2{pound}w2{pound}ho{pound}h7":GOTO {:3080}
+	i2=.:j2=.:FOR i=i1-1 TO i1+1:IF i>4 THEN{:3098}
+	IF i<1 THEN{:3098}
+	IF b(i,j1)=16 THEN i2=i:j2=j1:i=i1+1:GOTO {:3108}
+{:3098}
+	NEXT:FOR j=j1-1 TO j1+1:IF j>4 THEN{:3104}
+	IF j<1 THEN{:3104}
+	IF b(i1,j)=16 THEN i2=i1:j2=j:GOTO {:3108}
+{:3104}
+	NEXT:m9=m9+1
+{:3106}
+	&"{home}{down:10}{yellow}Not A Valid Move     {pound}b2{pound}w3{pound}ho{pound}h7":GOTO {:3080}
+{:3108}
+	b(i2,j2)=m:b(i1,j1)=16:c=.:i=1
+{:3110}
+	FOR j=1 TO 4:IF b(i,j)<c THEN{:3066}
+	c=b(i,j):NEXT:i=i+1:IF i<5 THEN{:3110}
+	z=1:GOTO {:3066}
+{:3116}
+	&"{f6:3}{white}{rvrs on}   You Got It!   {rvrs off}{pound}b2"
+{:3118}
+	&"{f6:2}{lt. green}It Took You ":b$=ti$:&MID$(b$,3,2):&":":&MID$(b$,5,2):IF z=2 THEN{:3136}
+	a=VAL(MID$(b$,3,2)):b=VAL(MID$(b$,5,2)):GOSUB {:3002}
+	c=VAL(tt$(2)):d=VAL(tt$(3)):IF a<c THEN{:3132}
+	IF a=c THEN IF b<d THEN{:3132}
+	IF a=>c THEN{:3130}
+	IF b<d THEN{:3132}
+{:3130}
+	&"{f6:2}Too Long To Unseat The Current Champ!!":GOTO {:3136}
+{:3132}
+	&"{f6:2}Congratulations!! You Are The New Champ!":cr=cr+100
+	dr=3:a$="e.num squ":GOSUB 1023:PRINT# 2,na$:PRINT# 2,a:PRINT# 2,b:CLOSE 2
+{:3136}
+	z=.:&"{f6:2}{gray3}Play Again? ":GOSUB 1907
+	IF a=.THEN:&"{f6:2}{gray3}{rvrs on}Thanks For Playing{f6}A {white}{rvrs on}Port Commodore{rvrs off} {gray3}Product.{pound}q0":GOTO 1811
+	&"{clear}":GOTO {:3028}
+	REM
+	REM
+	REM by:
+	REM    port commodore
+	REM    (801-423-2734)
+	REM    a nissa file
+	REM
+	REM numbersquares (c) fandf 11/9/89

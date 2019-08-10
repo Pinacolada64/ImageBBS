@@ -1,0 +1,34 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	&"{clear}{f6:2}Bar Edit Written By Breaker {f6:2}{pound}{back arrow}13{yellow}{rvrs on}DeathStar BBS{rvrs off}{f6}{white}{pound}{back arrow}12Ph:301-736-2036"
+	&"{f6:2}{lt. blue}Please Feel Free To Call My Board If{f6}You Have Problems Or Questions"
+	&" About{f6}This Program. (PC Pursuitable)!"
+	cm$="Bar Edit":GOSUB 1360
+	&"{white}{f6:2}Select Number From Menu Below and Then{f6}Enter Value Desired To"
+	&" Be Written To{f6}BAR{$a0}Stats!{f6:2}{cyan}(Hit A Key): {pound}g1"
+{:4012}
+	&"{f6:2}{red}{pound}{back arrow}13Last{f6}{pound}{back arrow}13Call  Log   Curr Syst{f6}"
+	&"{white}Feedback  :{yellow}{pound}{back arrow}141{pound}{back arrow}1912{pound}{back arrow}2623{pound}{back arrow}3130{f6}"
+	&"{white}Sysop Mail:{yellow}{pound}{back arrow}142{pound}{back arrow}1913{pound}{back arrow}2624{pound}{back arrow}3131{f6}"
+	&"{white}User Mail :{yellow}{pound}{back arrow}143{pound}{back arrow}1914{pound}{back arrow}2625{pound}{back arrow}3132{f6}"
+	&"{white}Posts     :{yellow}{pound}{back arrow}144{pound}{back arrow}1915{pound}{back arrow}2626{pound}{back arrow}3133{f6}"
+	&"{white}Responses :{yellow}{pound}{back arrow}145{pound}{back arrow}1916{pound}{back arrow}2627{pound}{back arrow}3134{f6}"
+	&"{white}Uploads   :{yellow}{pound}{back arrow}146{pound}{back arrow}1917{pound}{back arrow}2628{pound}{back arrow}3135{f6}"
+	&"{white}Downloads :{yellow}{pound}{back arrow}147{pound}{back arrow}1918{pound}{back arrow}26--{pound}{back arrow}3136{f6}"
+	&"{white}New Users :{yellow}{pound}{back arrow}148{pound}{back arrow}1919{pound}{back arrow}2629{pound}{back arrow}31--{f6}"
+	&"{white}Calls/Log :{yellow}{pound}{back arrow}149{pound}{back arrow}1920{pound}{back arrow}26--{pound}{back arrow}31--{f6}"
+	&"{white}Time Used :{yellow}{pound}{back arrow}1410{pound}{back arrow}1921{pound}{back arrow}26--{pound}{back arrow}3137{f6}"
+	&"{white}Time Idle :{yellow}{pound}{back arrow}1411{pound}{back arrow}1922{pound}{back arrow}26--{pound}{back arrow}3138{f6}"
+{:4036}
+	&"{f6}{red}Enter Desired Number To Change,{f6}{lt. blue}RETURN to End: {pound}i1"
+	b=VAL(an$):ON-(an$="")GOTO {:4048}:ON-(b<1 OR b>38)GOTO {:4036}
+	GOSUB 1060:x=b:GOSUB 1001:&,2,2:st(x)=VAL(a$)
+	b$=STR$(st(b)):&"{f6}{cyan}Current Value ={pound}$b"
+	&"{f6:2}{yellow}Please Enter New Value Desired!{f6:2} : {pound}i1":c=VAL(an$):ON-(an$="")GOTO {:4012}
+	x=b:st(x)=c:GOSUB 1026:GOTO {:4012}
+{:4048}
+	CLOSE 2:RETURN
+	REM:edit bar stats by breaker-deathstar bbs. call 301-736-2036
+	REM:converted to 2.0 170101 x-tec
+	REM "+/SM.baredit" sysop menu 180210 x-tec

@@ -1,0 +1,53 @@
+{number:60000}
+{crunch:on}
+{alpha:alt}
+{step:2}
+	on im goto {:60002}:return
+{:60002}
+	gosub 1634:&"{clear}{f6}{cyan}{rvrs on} Current Status: {f6}"
+	an$=na$:&,15,1: &"{f6}{white}{rvrs on} Name       :{rvrs off}{yellow} {pound}v7"
+	&"{pound}{back arrow}39 {white}{rvrs on} Phone#     :{rvrs off}{lt. green} {pound}v4"
+	an$=rn$:&,15,1:&"{f6}{white}{rvrs on} Real Name  :{rvrs off}{yellow} {pound}v7"
+	&"{pound}{back arrow}39 {white}{rvrs on} Last Call  :{rvrs off}{lt. green} {pound}v1"
+	b$=dd$:if id=.then b$="None."
+	&"{f6}{white}{rvrs on} Login ID   :{rvrs off}{yellow} {pound}$b"
+	&"{pound}{back arrow}39 {white}{rvrs on} Access     :{rvrs off}{lt. green} {pound}vm"
+	a%=le:&"{f6}{white}{rvrs on} Editor Lns :{rvrs off}{yellow} {pound}%a"
+	a%=ct%:&"{pound}{back arrow}39 {white}{rvrs on} Calls Today:{rvrs off}{lt. green} {pound}%a"
+	a%=tc%:&"{f6}{white}{rvrs on} Total Calls:{rvrs off}{yellow} {pound}%a"
+	a$=str$(ca):&"{pound}{back arrow}39 {white}{rvrs on} Caller#    :{rvrs off}{lt. green}{pound}$a":gosub {:60076}:if a=. then {:60074}
+	a%=da%:&"{f6}{white}{rvrs on} DL's Allowed:{rvrs off}{yellow} {pound}%a {lt. red}(0)=Unlimited"
+	a%=dc:&"{pound}{back arrow}39 {white}{rvrs on} Total DL's  :{rvrs off}{lt. green} {pound}%a"
+	a%=uc:&"{f6}{white}{rvrs on} Total UL's  :{rvrs off}{yellow} {pound}%a"
+	an$=str$(bd):&"{pound}{back arrow}39 {white}{rvrs on} Ttl Blks DL :{rvrs off}{lt. green}{pound}v7"
+	an$=str$(bu):&"{f6}{white}{rvrs on} Ttl Blks UL :{rvrs off}{yellow}{pound}v7"
+	an$=str$(cr):&"{pound}{back arrow}39 {white}{rvrs on} Credit Pts  :{rvrs off}{lt. green}{pound}v7"
+	a=2:gosub 1004:a%=a:&"{f6}{white}{rvrs on} Credit Ratio:{rvrs off}{yellow} {pound}%a To 1"
+	a%=ps:&"{pound}{back arrow}39 {white}{rvrs on} Total Posts :{rvrs off}{lt. green} {pound}%a"
+	a%=rp:&"{f6}{white}{rvrs on} Total Resp. :{rvrs off}{yellow} {pound}%a{f6}":gosub {:60076}:if a=. then {:60074}
+	&"{f6}{lt. red}{rvrs on}You Have:{f6}":f=0
+	a=1:a$="Non-Weed Status":gosub {:sub.color}
+	a=3:a$="Full Maintenance":gosub {:sub.color}
+	a=4:a$="Post/Respond Capability":gosub {:sub.color}
+	a=5:a$="Normal U/D Access":gosub {:sub.color}
+	a=7:a$="Unlimited Credits":gosub {:sub.color}
+	a=8:a$="Remote Maintenance Access":gosub {:sub.color}
+	a=9:a$="E-Mail Access":gosub {:sub.color}
+	a=10:a$="User List Access":gosub {:sub.color}
+	a=11:a$="B.A.R. And Log Access":gosub {:sub.color}
+	a=12:a$="Sub Maintenance Access":gosub {:sub.color}
+	a=13:a$="File Maintenance Access":gosub {:sub.color}
+	a=14:a$="MCI Access":gosub {:sub.color}
+	a=15:a$="Prime Time Download Capability":gosub {:sub.color}
+	if f=0 then:&"{f6}{white}Minimal Access"
+{:60074}
+	&"{f6}":return
+{:60076}
+	&"{f6:2}{white} More?: ":gosub 1902:&"{clear}{cyan}":return
+' added by pina: normalize alternating colors
+' if not all flags are set, you could get 2 lines in the same color, and that simply won't do
+' "f and 1" returns 1 if an odd number, 0 if even, then displays the appropriate color
+{:sub.color}
+	gosub 1004:if a then f=f+1:&"{f6}"+mid$("{lt. green}{yellow}",(f and 1)+1,1)+a$
+	return
+	rem im.stats pinacolada

@@ -1,0 +1,57 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+' TODO: add documentation about steps to recreate u.index: Load, Clear, Make, Save
+	rem +.alpha/ind - 3/24/89
+	pr=-1:a=4:gosub 1736:poke 53252,20
+{:3002}
+	&"{clear}{f6:2}1.Clear{f6}2.Load{f6}3.Search{f6}4.Insert{f6}5.Delete{f6}6.Save{f6}7.List{f6}8.Make{f6}9.Kill{f6}"
+	&"{f6}0.Quit{f6:2} =>{pound}g1{pound}v7{f6}":a=val(an$):if a then on a gosub {:3012},{:3014},{:3018},{:3024},{:3034},{:3016},{:3044},{:3058},{:3068}:goto {:3002}
+	pr$="":pr=-1:close 2:goto 1812
+{:3008}
+	dr=6:a$="u.config":goto 1011
+{:3012}
+	&"Cleared...{f6}":&,16,3:return
+{:3014}
+	&"Loading...":dr=6:gosub 1010:a$=dr$+"u.index":&,16,1:&"{pound}%a Users.{pound}w1{f6}":return
+{:3016}
+	&"Saving...":dr=6:gosub 1010:a$=dr$+"u.index":print# 15,"s"a$:&,16,2:return
+{:3018}
+	gosub {:3008}
+{:3020}
+	&"HANDLE:{pound}i1":if an$=""then close 2:return
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":goto {:3020}
+{:3024}
+	gosub {:3008}
+{:3026}
+	&"Insert:ID={pound}i1":a=val(an$):if a=.then close 2:return
+	x=a:gosub 1001:&,2,2:an$=a$:lp=1:&
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%then:&"Already There!{f6}":goto {:3026}
+	&"Adding at {pound}%b.{f6}":a%=a:&,16,4:goto {:3026}
+{:3034}
+	gosub {:3008}
+{:3036}
+	&"Delete:ID={pound}i1":a=val(an$):if a=.then close 2:return
+	x=a:gosub 1001:&,2,2:an$=a$:lp=1:&
+	&,16:&"{f6}a%={pound}%a,b%={pound}%b{f6}":if a%=.then:&"Not There!{f6}":goto {:3036}
+	&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3036}
+{:3044}
+	gosub {:3008}
+	open 3,dv%,3,dr$+"u.index,p,r":get#3,a$,a$:z$=chr$(0)
+	get#3,a$,b$:n%=asc(b$+z$)+asc(a$+z$)*256:&"{f6}{pound}%n Users.{f6}":if n%=. then {:3056}
+	for i=1 to n%:get#3,a$,b$:a%=asc(b$+z$)+asc(a$+z$)*256
+	x=a%:gosub 1001:input# 2,a$:&"{pound}%a - {pound}$a{f6}"
+	i=i+rc*n%:next
+{:3056}
+	close 3:&"Press A Key {pound}g1{f6}":close 2:return
+{:3058}
+	gosub {:3008}:for i=1 to ur:x=i:gosub 1001:input# 2,a$
+	if a$="{up arrow}"or a$="RES" then {:3066}
+	a%=i:an$=a$:&"{pound}#3{pound}# {pound}%a. {pound}$a{pound}{back arrow}30":&,16:if a%then:&"Dupe={pound}%a{f6}":goto {:3066}
+	a%=i:&,16,4:&"At {pound}%b{f6}"
+{:3066}
+	next:close 2:return
+{:3068}
+	&"Kill  :Pos={pound}i1":a=val(an$):if a=.then close 2:return
+	b%=a:&"Deleting #{pound}%b.{f6}":a%=a:&,16,5:goto {:3068}
+	rem copr.1989 new image

@@ -1,0 +1,89 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.subop"
+	ON lm GOTO {:4100},{:4200},{:4300},{:4400},{:4500}
+{:4004}
+	z=1:a$="w":GOSUB 1062:IF e%THEN z=.:a$="a":GOSUB 1062
+	PRINT# 2,na$r$id;r$d1$r$c$
+	FOR x=1 TO kk-1:PRINT# 2,tt$(x):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:GOSUB 1081
+	GOSUB 1060:i=1:x=3:GOSUB 1025:x=14:GOSUB 1025:x=32:GOSUB 1025
+	IF y=1 THEN FOR x=2 TO 24 STEP 11:GOSUB 1025:NEXT:x=31:GOSUB 1025
+	x=25:ON z GOSUB 1025:CLOSE 2:GOTO 1079
+{:4016}
+	a=ABS(INT(VAL(LEFT$(MID$(an$,2),4)))):RETURN
+{:4018}
+	IF sg=0 OR so%=0 THEN a$="":RETURN
+	GOSUB 1065:x=so%:GOSUB 1001:&,2,2:CLOSE 2:RETURN
+{:4100}
+	IF so%(bn)>1 THEN:&"{f6}Sorry, This "+sy$+" Board Has A SubOp.{f6}":RETURN
+	&"{f6}Please leave a few words explaining why{f6}you think you should be the SubOp"
+	&" of{f6}this "+sy$+" Board{f6:2}"
+	c$="[SubOp Application]"+r$+r$+"RE: "+bb$(bn)+r$+r$:GOTO {:4208}
+{:4200}
+	IF sg=0 OR so%=0 THEN RETURN
+	GOSUB {:4018}:x=so%:IF a$="{up arrow}"OR a$="RES"THEN:&"{f6:2}Account Deleted!{f6}":RETURN
+{:4204}
+	tt$=a$:an$=tt$:&,15,1:&"{f6:2}Send Mail To {pound}v7?: ":GOSUB 1902:IF a=0 THEN RETURN
+	&"{f6:2}SigOp Feedback:{f6}":c$="[SigOp Fbck: "+bb$(bn)+"]"
+{:4208}
+	ON-(sg=.)GOTO {:4212}:GOSUB 1065:x=so%:GOSUB 1001:&,2,2:ON-(a$="{up arrow}"OR a$="RES")GOTO {:4210}:tt$=a$:CLOSE 2:GOTO {:4212}
+{:4210}
+	CLOSE 2:&"{f6:2}Account Deleted!{f6}":GOTO {:4220}
+{:4212}
+	GOSUB 1604:IF kk=0 THEN RETURN
+	an$=tt$:&,15,1:o$="Feedback To "+an$+"...."
+	IF so%=1 THEN GOSUB {:4508}:GOSUB 1684:GOTO {:4220}
+	&"{f6:2}Filing {pound}$o":GOSUB {:4004}:&"{f6:2}":IF lm<>1 THEN RETURN
+{:4220}
+	IF so%=1 THEN RETURN
+	o$="Feedback to "+MID$(i1$,2):GOSUB {:4508}:GOTO 1684
+{:4300}
+	IF q<1 THEN RETURN
+	p$="":&"{f6:2}Enter Handle Or ID#. Of User{f6:2}":GOSUB 1006:x=ABS(VAL(an$)):IF x THEN{:4308}
+	GOSUB 1046:x=i:IF x THEN nn$=an$:GOTO {:4314}
+	&"{f6:2}{f5}{pound}v7{f5} Not Found.{f6}":RETURN
+{:4308}
+	IF x<1 OR x>ur OR x=id THEN{:4312}
+	GOSUB 1065:GOSUB 1001:INPUT# 2,nn$:IF nn$<>"{up arrow}"AND nn$<>"RES"THEN{:4314}
+{:4312}
+	&"{f6:2}Invalid Account!{f6}":RETURN
+{:4314}
+	&"{f6}Handle: ":&nn$:&"{f6:2}Is That Correct?: ":GOSUB 1902:IF a=0 THEN RETURN
+	&"{f6}Add How Many Credits (500 Max)?: {pound}i1":ON tr%+1 GOTO {:4204}:GOSUB {:4016}
+	IF a<1 OR a>500 THEN RETURN
+	GOSUB 1065:GOSUB 1001:FOR kk=1 TO 24:&,2,2:tt$(kk)=a$:NEXT
+	tt$(19)=STR$(VAL(tt$(19))+a):GOSUB 1001
+	a$=tt$(1):FOR kk=2 TO 24:a$=a$+r$+tt$(kk):NEXT:PRINT# 2,a$:CLOSE 2
+	a=.:&,11:x=.:RETURN
+{:4400}
+	a%=ABS(INT(VAL(MID$(an$,3)))):IF a%<1 OR a%>ur THEN RETURN
+	GOSUB 1065:x=a%:GOSUB 1001:&,2,2:IF a$="{up arrow}"OR a$="RES"THEN CLOSE 2:RETURN
+	&"{f6:2}{lt. green}Handle   : {pound}$a (UID#{pound}%a)"
+	&,2,2:&,2,2:b$=a$:&,2,2:b$=b$+" "+a$:&,2,2:c$=a$
+	a=8:GOSUB 1004:IF a THEN:&"{f6}Real Name: {pound}$b"
+	a$="{f6}Phone #  : {pound}$c":a=8:GOSUB 1004:IF a=.THEN c$=MID$(c$,2,3):a$="{f6}Area Code: {pound}$c"
+	&:FOR kk=6 TO 10:&,2,2:NEXT:b$=co$(VAL(a$)):&"{f6}Computer : {pound}$b"
+	FOR kk=11 TO 15:&,2,2:NEXT:a%=VAL(a$):&,2,2:b%=VAL(a$)
+	&,2,2:c%=VAL(a$):&,2,2:d%=VAL(a$):&,2,2:b$=a$
+	&,2,2:f%=VAL(a$):&,2,2:g%=VAL(a$):&,2,2:c$=a$:&,2,2:d$=a$:CLOSE 2
+	&"{f6}Last Call: {$04}"+c$
+	a=8:GOSUB 1004:ON-(a=1 OR so%=id)GOTO {:4424}:IF q<1 OR LEFT$(sy$,1)<>"U"THEN:&"{f6}":GOTO {:4428}
+{:4424}
+	a$="{f6}Credits  :{pound}$b":IF MID$(d$,7)="1"THEN a$="{f6}Credits  : Unlimited ({pound}$b)"
+	&:&"{f6:2} {pound}%b Uploads{f1} {pound}%a Downloads{f6} {pound}%d Blks UL'ed{f1} {pound}%c Blks DL'ed"
+{:4428}
+	a=8:GOSUB 1004:ON-(a=1 OR so%=id)GOTO {:4430}:IF q<1 OR sy$<>"Sub"THEN{:4432}
+{:4430}
+	&"{f6} {pound}%f Posts{f1} {pound}%g Responses"
+{:4432}
+	&"{f6:2}":RETURN
+{:4500}
+	IF sg=0 THEN RETURN
+	GOSUB 1065:x=so%:GOSUB 1001:&,2,2:IF a$="{up arrow}"OR a$="RES"THEN{:4506}
+	an$=a$:&,15,1:b%=x:lp=1:&"{f6:2}User ID#{pound}%b{f1} {pound}v7 Is Your SIG Host"
+{:4506}
+	CLOSE 2:RETURN
+{:4508}
+	FOR x=kk-1 TO 1 STEP-1:tt$(x+1)=tt$(x):NEXT:kk=kk+1:tt$(1)=c$:RETURN
+	copr.1990 NEW image 01/19/90

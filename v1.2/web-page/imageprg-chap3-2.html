@@ -1,0 +1,596 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- $MVD$:app("MicroVision WebExpress","770") --><!-- $MVD$:template("C:\Documents and Settings\Ryan\My Documents\Websites\r_sherwood\mvtemp\bbsmanual.wbt","423f7206","0") --><!-- $MVD$:color("18","80ff","Orange","1") --><!-- $MVD$:color("19","ffd6ce","Lavender","1") --><!-- $MVD$:color("20","adcfeb","Light Tan","0") -->
+  
+  
+  
+  
+  
+  
+  <title>Untitled</title><meta name="GENERATOR" content="MicroVision Development / WebExpress"></head>
+ <body>
+  <!-- $MVD$:pgfblock("page3.html","423f7206") -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       <center>
+        <p align="center">
+         <a href="../index.html">Ryan's Web Page</a> | <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | Chapter II | <a href="imageprg-chap3-1.html">Chapter
+          III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p></center></td>
+     </tr>
+    </tbody></table></p>
+   </center>
+  <!-- $MVD$:pgfblock() -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td valign="top" width="100%">
+       <h1>
+        Chapter III: Machine Language Subroutines</h1>
+       <p>
+        <table border="0" cellpadding="2" cellspacing="0" width="100%">
+         <tbody><tr>
+          <td bgcolor="#ebcfad" valign="top" width="100%">
+           <center>
+            <p align="center">
+             <a href="imageprg-chap3-1.html#jumptab">Jump Table Routines</a> | <a href="imageprg-chap3-2.html">Memory
+              Locations</a> | <a href="imageprg-chap3-3.html#usingmodules">Using Modules</a> 
+             | <a href="#usingmlmodules">Using ML Modules</a> | <a href="#rs232">RS232
+              Routines</a> | <a href="#theswapper">The Swapper</a> | <a href="#thelightbar">The
+              Lightbar</a> | <a href="#theeditor">The Editor</a></p></center></td>
+         </tr>
+        </tbody></table></p>
+       <h2>
+        Memory Locations<a name="memlocs"></a></h2>
+       <p>
+        Here is a list of memory locations used by IMAGE ML:</p>
+       <center>
+        <p align="center">
+         <table border="0" cellpadding="2" cellspacing="0">
+          <tbody><tr>
+           <td bgcolor="DARKGRAY" valign="top" width="33%">
+            <p>
+             <b>Location</b></p></td>
+           <td bgcolor="DARKGRAY" valign="top" width="33%">
+            <p>
+             <b>Name</b></p></td>
+           <td bgcolor="DARKGRAY" valign="top" width="33%">
+            <p>
+             <b>Use</b></p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>97</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>var</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+Store value of variable for usevar,
+putvar,&nbsp;zero,&nbsp;minusone,&nbsp;getarr,&nbsp;putarr,&nbsp;getin,&nbsp;putin,
+etc.</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>830</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>idlemax</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Maximum idle time allowed</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2024</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mjump</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Number of lines to skip for &pound;J, &pound;E, &pound;D</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2025</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mresult</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Result of &pound;T, &pound;T</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2026</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mspeed</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Print speed for &pound;S</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2027</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mprint</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Print mode for &pound;P</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2028</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mcolor</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Current color for &pound;C</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2029</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mprtr</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Printer flag for &pound;L</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2030</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mreverse</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Reverse mode flag for &pound;R</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2031</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mci</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             MCI on/off flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2032</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mdigits</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Number of digits for &pound;%</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2033</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>carrst</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Carrier flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2034</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tsp1</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Transmit speed lo byte</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2035</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tsp2</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Transmit speed hi byte</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2036</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>chks</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Checkmark flag for Lightbar (left side)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2037</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>chks</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Checkmark flag for Lightbar (right side)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2038</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>readmode</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Stores the unabortable file read flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2039</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>filenum</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Stores the file number for read0/dskin</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2041</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>abtchr</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Alternate abort character (works like &lt;space&gt;)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2042</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>clock</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Turns on BIG clock</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>2043</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>filetyp</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Filetype for Punter transfer protocol</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>16384</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tempbott</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Temporary storage for bottom of screen (for full screen)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>16464</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tempbotc</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Temporary storage for bottom of screen color memory (full screen)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>16544</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>pmodetbl</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Print mode definition table (for &pound;P<i>x</i> command)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>16640</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tempscn</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Temporary storage for top of screen (full screen)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>16880</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tempcol</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Temporary storage for top of screen color memory (full screen)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>17124</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>curdsp</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Current display number (for top of screen)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>17138</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mask</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Password mask character</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>17139</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>scnmode</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Screen mode (full or split)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+           <td bgcolor="SILVER" valign="top" width="33%"></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53248</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>local</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Flag for forced local mode (if enabled, nothing is output to modem)</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53249</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>case</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Uppercase lock flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53250</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>editor</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Flags for the &amp;,1 routine</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53251</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>tsr</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Time remaining</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53252</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>llen</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Line length for &amp;,1</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53254</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>chat</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Flag for returning from &amp; for an abort</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53256</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>chatpage</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Turns on the flashing page</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53257</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>access</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Shadow for ac%</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53258</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mxor</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Carrier XOR value</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53259</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mkolor</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Kolorific mode flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53260</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>mupcase</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Uppercase mode flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53261</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>irqcount</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             IRQ slowdown flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53262</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>trans</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             ASCII translation flag</p></td>
+          </tr>
+          <tr>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>53263</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             <tt>index</tt></p></td>
+           <td bgcolor="SILVER" valign="top" width="33%">
+            <p>
+             Length of line returned by inline</p></td>
+          </tr>
+         </tbody></table></p></center></td>
+     </tr>
+     <tr>
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       <center>
+        <p align="center">
+         <a href="imageprg-chap3-1.html#jumptab">Jump Table Routines</a> | <a href="imageprg-chap3-2.html">Memory
+          Locations</a> | <a href="imageprg-chap3-3.html#usingmodules">Using Modules</a> 
+         | <a href="#usingmlmodules">Using ML Modules</a> | <a href="#rs232">RS232
+          Routines</a> | <a href="#theswapper">The Swapper</a> | <a href="#thelightbar">The
+          Lightbar</a> | <a href="#theeditor">The Editor</a></p></center></td>
+     </tr>
+    </tbody></table></p>
+   </center>
+  <!-- $MVD$:pgfblock("page3.html","423f7206") -->
+  <center>
+   <p align="center">
+    <table border="0" cellpadding="2" cellspacing="0" width="75%">
+     <tbody><tr>
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+       <center>
+        <p align="center">
+         <a href="../index.html">Ryan's Web Page</a> | <a href="imageprg-index.html">Index/Preface</a> 
+         | <a href="imageprg-chap1.html">Chapter I</a> | Chapter II | <a href="imageprg-chap3-1.html">Chapter
+          III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p></center></td>
+     </tr>
+    </tbody></table>
+ </p></center></body></html>

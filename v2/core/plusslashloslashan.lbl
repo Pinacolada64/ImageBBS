@@ -1,0 +1,25 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+/lo/an" - write auto-new user welcome
+	&"{f6}{yellow}AutoNew {green}- Version 1.0{f6:2}{gray3}Reading new users."
+	x=.:dr=3:a$="e.new temp,s,r":GOSUB 1011:b=.:IF e%THEN CLOSE 2:x=1:GOTO {:4012}
+{:4006}
+	&,2,2:b=b+1:tt$(b)=a$:s=st:&"."
+	IF s=.THEN{:4006}
+	&"{f6}{lt. green}Scratching Old File...{f6}":CLOSE 2:dr=3:a$="e.new temp":GOSUB 1024
+{:4012}
+	&"{f6}{green}Writing News File...{f6}":dr=1:a$="n.$Welcome!":GOSUB 1023:ON x GOTO {:4026}
+	PRINT# 2,"{lt. red}{pound}vj{white}{pound}$q {rvrs on}{pound}{back arrow}06Please Welcome Our New Users:{rvrs off}{pound}{back arrow}39{f6}{lt. red}{pound}vj{f6}"
+	FOR i=1 TO b STEP 3:an$=tt$(i):&,15,1:tt$(i)=an$:PRINT# 2,"{pound}$q {yellow}{rvrs on}";tt$(i)
+	an$=tt$(i+1):&,15,1:tt$(i+1)=an$:PRINT# 2,"{pound}$q     {gray3}From:{white} ";tt$(i+1);
+	PRINT# 2,", ";tt$(i+2):NEXT:PRINT# 2,"{f6:2}{lt. green}{pound}$qYou are invited to send them a";
+	PRINT# 2," message  of welcome!"
+{:4024}
+	PRINT# 2,"{f6:2}{pound}$q{gray3}(Tap One) {pound}g1{pound}hj":CLOSE 2:RETURN
+{:4026}
+	PRINT# 2,"{lt. green}{pound}vj{white}{pound}$q {rvrs on}{pound}{back arrow}06There Have Been No New Users In {rvrs off}{pound}{back arrow}39{f6}";
+	PRINT# 2,"{pound}$q {rvrs on}{pound}{back arrow}06The Past 24 Hours.              {rvrs off}"
+	PRINT# 2,"{lt. green}{pound}vj":x=.:GOTO {:4024}
+	copr. 1994 NEW image 9/11/94
+

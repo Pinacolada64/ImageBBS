@@ -1,0 +1,2725 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-us">
+<head>
+  <title>IMAGE BBS Programmer's Reference Guide</title>
+
+
+
+  <meta name="GENERATOR" content="MicroVision Development / WebExpress">
+
+</head>
+
+
+<body style="background-color: WHITE; direction: ltr;" link="#00007f">
+
+<br>
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | Chapter
+III | <a href="imageprg-chap4.html">Chapter IV</a>
+| <a href="imageprg-chap5.html">Chapter V</a></p>
+
+Jump Table
+| Memory Map | Using Modules | Using ML Modules | RS232 Routines |
+Swapper | The Lightbar | The System Editor </center>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <h2> Chapter III: Machine Language Subroutines<br>
+
+      </h2>
+
+      <h3>&nbsp;Jump Table Routines (&amp; Commands) -
+v1.2<a name="jumptab"></a></h3>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" bgcolor="WHITE" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b>Routine</b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top">
+      <p> <b>Description:</b></p>
+
+      </td>
+
+    </tr>
+
+    <tr valign="top">
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>0 - outastr</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Output routine. Handles MCI.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Examples:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;</tt></p>
+
+      <p> <tt>&amp;"text"</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Display A$.</p>
+
+      <p> Display <tt>text</tt>.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr valign="top">
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>1 - inline</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Input routine. Handles word wrap, MCI access, line
+length, and graphics. Before calling, use <tt>POKE 53252</tt>,<i>&lt;line
+length&gt;</i> to set the line length. W$ is the text that is
+wrapped, and AN$ holds the inputted text.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,1,x,y</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> x=</p>
+
+      <center>
+      <p align="center">
+      <table border="0" cellpadding="2" cellspacing="0">
+
+        <tbody>
+
+          <tr>
+
+            <td style="text-align: center;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <b>Bit | value</b></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> <b>Use</b></p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 0 | 1</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Graphics allowed</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 1 | 2</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> "." on column 1 exits</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 2</tt><tt>
+| </tt><tt>4</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Disable P$ prompt</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 3</tt><tt>
+| </tt><tt>8</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Allow MCI</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 4</tt><tt>
+| </tt><tt>16</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Text wrap on</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 5</tt><tt>
+| </tt><tt>32</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Edit mode on</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 6</tt><tt>
+| </tt><tt>64</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Ignore time expired</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td style="text-align: left;" bgcolor="#cccccc" valign="top" width="24%">
+            <p> <tt>&nbsp; &nbsp; 7</tt><tt>
+| </tt><tt>128</tt></p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Delete on column 1 exits</p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+      </p>
+
+      </center>
+
+      <p> y= [This part was left blank in the original document.]</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Examples:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <dl>
+        <dt> <tt>POKE 53252,10:P$="Name?":&amp;,1</tt></dt>
+      </dl>
+
+      <dl>
+        <dd> Prompts user for name, and allows up to ten characters
+to be entered.</dd>
+      </dl>
+
+      <dl>
+        <dt> <tt>POKE
+53252,20:W$=NA$:P$="Handle":&amp;,1,32:IF AN$&lt;&gt;""
+THEN NA$=AN$</tt></dt>
+      </dl>
+
+      <dl>
+        <dd> Prints prompt, then old handle, and then the prompt
+again, and allows the user to enter a new handle.</dd>
+      </dl>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>2 - dskin</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> File input routine, which will input a maximum of 80
+characters into the variable A$. Also allows bytes to be read directly
+from a file into a variable.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,2,</tt><i>file#</i><tt>,0</tt></p>
+
+      <p> <tt>&amp;,2,</tt><i>file#</i>,<i>N</i></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Normal input, stop at CHR$(13)</p>
+
+      <p> Input up to N bytes into A$, ignoring CHR$(13)</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>3 - read0</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> File read routine, also allows an optional speed
+variable for Movie Files. Using a speed of 0 uses the normal file read,
+whereas using any other value uses the Movie File read, with an
+appropriate slowdown based on the speed value.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,3,<i>file#</i></p>
+
+      <p> &amp;,3,<i>file#</i>,<i>speed</i></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Normal file read</p>
+
+      <p> View Movie File</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>4 - getmdm</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Get a character from the modem. This returns the
+character that was received in location 780. This routine does no ASCII
+translation, and no high bit stripping. It gets the character directly
+from the RS232 routines.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <p> <tt>&amp;,4:A=PEEK(780)</tt></p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>5 - getversn</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Get the version number information that is embedded
+into the ML. This puts the revision number into A% and the revision
+date into A$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,5</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>6 - password</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Password input. Sets text length to 14 characters, and
+inputs a password. Mask character is printed rather than the real
+character that is typed. Password is returned in AN$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,6</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>7 - prg</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Loads modules into memory. The filename and drive
+number are in A$, and the device number is passed directly in the
+command.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <p> <tt>DR=5:GOSUB 1010:A$=DR$+"+.<i>&lt;filename&gt;</i>":&amp;,7,DV%</tt></p>
+
+      <p> Loads a +.file from the +.file disk</p>
+
+      <p> <tt>DR=5:GOSUB
+1010:A$=DR$+"+.nm.file":&amp;,7,DV%,1</tt></p>
+
+      <p> Loads a mini-module from the +.file disk. See the
+section on "Using Modules" for more information.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>8 - dskdir</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This will read the directory from a file that was
+opened as a directory channel.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <p> <tt>DR=1:GOSUB 1010:OPEN 2,DV%,0,"$"+DR$+"*":</tt><br>
+
+      <tt>&amp;,8,2:CLOSE 2</tt></p>
+
+      <p> This reads the directory from the system disk.</p>
+
+      <p> <tt>DR=2:GOSUB 1010:OPEN 2,DV%,0,"$"+DR$+"m.*":</tt><br>
+
+      <tt>GET #2,A$,A$:&amp;,8,2,1:&amp;,8,2,1:CLOSE 2</tt></p>
+
+      <p> This reads the first entry for the first E-mail file
+into A$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>9 - btmvar</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This displays the contents of a variable at the bottom
+of the screen. The variable displayed can be either A$ or AN$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,9</p>
+
+      <p> &amp;,9,1</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Display AN$</p>
+
+      <p> Display A$</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>10 - term</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the terminal mode that is used in Image Term.
+To exit term mode, press the C= and CTRL keys together.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,10</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>11 - clrarr</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is used to clear the contents of an array. Any of
+the arrays can be cleared, except <tt>BF()</tt>.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,11</p>
+
+      <p> &amp;,11,1</p>
+
+      <p> &amp;,11,2</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Clear <tt>TT$()</tt>.</p>
+
+      <p> (This was left blank in the original document.)</p>
+
+      <p> (This was left blank in the original document.)</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>12 - newusr</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the same as the normal file read, except the
+file read is non-abortable, and the speed option is not supported.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,12,file#</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>13 - inchr</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the "get character" routine. Like the MCI Get
+(&pound;G), it waits for a character from either the keyboard or
+the modem, and returns it in AN$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,13</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>14 - bell1</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Sounds a bell</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,14</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>15 - convan</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Converts AN$ from an 11-byte date to text. The
+resulting text string is placed back into AN$.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,15</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>16 - sys49152</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This does a SYS 49152 to call a protocol.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,16</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>17 - sys49155</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This does a SYS 49155 to call a protocol.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,17</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>18 - setmode</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Set the screen mode (1=split, 0=full)</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,18,0</p>
+
+      <p> &amp;,18,1</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Set full screen mode</p>
+
+      <p> Set split screen mode</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>19 - disp1</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Display top of screen for user online. This loads the
+appropriate scn.* files.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,19,device#,drive#</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>20 - disp2</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Display top of screen for system idle. This loads the
+appropriate scn.* files.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,20,device#,drive#</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>21 - disp3</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Display bottom of screen.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,21,device#,drive#</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>22 - tenwait</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Time delay. This will wait for any interval between .1
+second to 25.5 seconds, in 1/10 second steps.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,22,tenths</p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>23 - xgetin</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the get character routine that should be used
+when writing ML routines that need to get a character from the user.
+The character is returned in location $FE.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>24 - xchrout</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is an output character routine that should be used
+when writing ML routines that need to output a character to the user.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>25 - sound</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Makes various sounds.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,25</tt></p>
+
+      <p> <tt>&amp;,25,1</tt></p>
+
+      <p> <tt>&amp;,25,2</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Beep</p>
+
+      <p> Siren</p>
+
+      <p> Bell</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>26 - getmdm</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Same as <tt>&amp;,4</tt>.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b>27 - arraysav</b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Save variable pointers. This saves the pointers that
+tell where BASIC variables start and end, so they can be later restored
+to erase unnecessary variables.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%"></td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,27</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>28 - arrayres</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Restore array pointers.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%"></td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,28</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>29 - usevar</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Get contents of a variable. This is the routine to call
+to read the value of a variable from machine language. The X register
+holds the variable # to access (see <a href="#vartab">variable
+table</a>). The contents of the variable is read into the buffer
+at $61.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>30 - putvar</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Put value into a variable. This stores the contents of
+the buffer at $61 into a variable. The routine is meant only to be
+called from ML routines. The X register holds the variable # (see <a href="#vartab">variable table</a>).</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>31 - zero</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Set value to floating point 0. This stores the floating
+point equivalent of 0 into the buffer at $61.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>32 - minusone</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Set value to floating point -1. This stores the
+floating point equivalent of -1 into the buffer at $61.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>33 - getarr</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Get descriptor for TT$(X). This get the descriptor
+(length and pointer) of an element of the TT$ array. The element # is
+in the X register. The descriptor is stored in the buffer at $61.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>34 - putarr</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Put descriptor for TT$(X). This stores the buffer at
+$61 as an element of the TT$ array. The element # is passed in the X
+register.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>35 - getln</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Get string for TT$(X) into buffer. This gets the
+descriptor for an element of TT$() into the buffer at $61 and gets the
+corresponding string into the general text buffer at $CE77.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>36 - putln</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Put string in buffer to TT$(X). Used in protocols.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>37 - trapon</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Turn error trap on</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> Usage:</p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,37</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>38 - trapoff</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Turn error trap off</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> Usage:</p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> <tt>&amp;,38</tt></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%"></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>39 - prtln</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Print TT$(X). Used in protocols.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>40 - forcegc</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This routine will force a fast garbage collect. This
+can be useful when you need to find out exactly how much memory is
+available.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b>41 - setbaud</b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This sets the baud rate that IMAGE will use. Note that
+you should not change the baud rate while someone is connected, since
+this only changes the rate at which IMAGE sends/receives, and the modem
+will not follow.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td valign="top" width="9%">
+      <p> &amp;,41,<i>x</i></p>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <center>
+      <p align="center">
+      <table border="0" cellpadding="2" cellspacing="0">
+
+        <tbody>
+
+          <tr>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> x=0</p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> 300 BPS</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> x=1</p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> Not used</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> x=2</p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> 1200 BPS</p>
+
+            </td>
+
+          </tr>
+
+          <tr>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> x=3</p>
+
+            </td>
+
+            <td bgcolor="#cccccc" valign="top" width="50%">
+            <p> 2400 BPS</p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+      </p>
+
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>42 - reserved</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Internal usage</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>43 - reserved</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Internal usage</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <tt><b>44 - chatchk</b></tt></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Checks for the presence of the <tt>Cht</tt>
+check mark.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>45 - prtvar</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Will print a variable.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>46 - prtvar0</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Will print a variable with MCI forced off.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>47 - carchk</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Will check for presence of a carrier.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>48 - getkbd</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Gets a character from the keyboard.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>49 - getmod</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Gets a character from the modem, using ASCII
+translation.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>50 - outscn</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Outputs a character to the IMAGE window.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>51 - outmod</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Outputs a character to the modem with ASCII translation.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>52 - chkflags</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the BASIC interface to the Lightbar.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <p> Described in the section "<a href="imageprg-chap3-2.html#thelightbar">The Lightbar.</a>"</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>53 - disp4</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> Loads the display for the IMAGE Terminal menu.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> </p>
+
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" valign="top" width="17%">
+      <center>
+      <p align="center"> <b><tt>54 - editor</tt></b></p>
+
+      </center>
+
+      </td>
+
+      <td colspan="2" valign="top" width="47%">
+      <p> This is the BASIC interface to the Editor.</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td valign="top" width="17%">
+      <p align="right"> <i>Usage:</i></p>
+
+      </td>
+
+      <td colspan="3" valign="top" width="9%">
+      <p> Described in the section "<a href="imageprg-chap3-3.html#theeditor">The Editor.</a>"</p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <p> The flags that can be used for the input routine are in
+the form of bits. Each value turns one option on or off:</p>
+
+      <center>
+      <pre><table border="0" cellpadding="2" cellspacing="0">
+<tbody><tr>
+<td bgcolor="#cccccc" valign="top"></td>
+<td bgcolor="#cccccc" valign="top"></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>1</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Allow graphics characters</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>2</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Disable "." on column 1</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>4</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Disable P$ (prompt)</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>8</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Disable &pound; key</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>16</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Word wrap on</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>32</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Edit mode on</p></td>
+</tr>
+<tr>
+<td bgcolor="#cccccc" valign="top">
+<p align="right">
+<tt>64</tt></p></td>
+<td bgcolor="#cccccc" valign="top">
+<p>
+Ignore timeout</p></td>
+</tr>
+</tbody></table></pre>
+
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <hr align="center" size="2" width="100%">
+      </center>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="4" valign="top" width="17%">
+      <center>
+      <p align="center"> <b>Variable Table:</b><a name="vartab"></a></p>
+
+      </center>
+
+      <p style="text-align: center;"> <tt>0
+AN$&nbsp;&nbsp;&nbsp; 5 D2$&nbsp;&nbsp; 10
+TT$&nbsp;&nbsp; 15 LP$&nbsp;&nbsp; 20
+NL&nbsp;&nbsp;&nbsp; 25 EF&nbsp;&nbsp;&nbsp; 30
+A%&nbsp;&nbsp;&nbsp; 35 C2$</tt><br>
+
+      <tt>1 A$&nbsp;&nbsp;&nbsp;&nbsp; 6
+D3$&nbsp;&nbsp; 11 NA$&nbsp;&nbsp; 16
+PL&nbsp;&nbsp;&nbsp; 21 UL&nbsp;&nbsp;&nbsp; 26
+LF&nbsp;&nbsp;&nbsp; 31 B%&nbsp;&nbsp;&nbsp; 36
+CO$</tt><br>
+
+      <tt>2 B$&nbsp;&nbsp;&nbsp;&nbsp; 7
+D4$&nbsp;&nbsp; 12 RN$&nbsp;&nbsp; 17
+RC&nbsp;&nbsp;&nbsp; 22 QE&nbsp;&nbsp;&nbsp; 27
+W$&nbsp;&nbsp;&nbsp; 32 DV%&nbsp;&nbsp; 37 CH$</tt><br>
+
+      <tt>3 TR$&nbsp;&nbsp;&nbsp; 8
+D5$&nbsp;&nbsp; 13 PH$&nbsp;&nbsp; 18
+SH&nbsp;&nbsp;&nbsp; 23 RQ&nbsp;&nbsp;&nbsp; 28
+P$&nbsp;&nbsp;&nbsp; 33 DR$&nbsp;&nbsp; 38 KP%</tt><br>
+
+      <tt>4 D1$&nbsp;&nbsp;&nbsp; 9
+LD$&nbsp;&nbsp; 14 AK$&nbsp;&nbsp; 19
+MW&nbsp;&nbsp;&nbsp; 24 AC%&nbsp;&nbsp; 29
+TR%&nbsp;&nbsp; 34 C1$ &nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp;</tt></p>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr>
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> [ <a href="../index.html">Ryan's
+Web Page</a> | <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | Chapter
+III | Chapter IV | Chapter V </p>
+
+      </center>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+<script language="JavaScript">!-- Javascripts resource by Hypergurl!! http://www.hypergurl.com -->
+<!-- hide script begin
+var m = "Page updated " + document.lastModified;
+var p = m.length-8;
+document.writeln("<center>");
+document.write(m.substring(p, 0));
+document.writeln("</center>");
+// End -->
+</script>
+</body>
+</html>

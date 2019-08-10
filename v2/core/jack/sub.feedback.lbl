@@ -1,36 +1,36 @@
 	&,27,2:DIM FB%(29,15),FF%(15)
-	&"{f6}{$c6}EEDBACK:{f6}":DR=3:GOSUB 3:A$=DR$+"E.SYSOPLIST":TT=.
+	&"{f6}FEEDBACK:{f6}":DR=3:GOSUB 3:A$=DR$+"E.SYSOPLIST":TT=.
 	&,60,2,.,FB%(.,.),A$,DV%:GOSUB 5:ON-(E%<>.)GOTO{:60026}
 	A%=.:IF FB%(.,.)>.THEN:&,60,8,FB%(.,.),60,1,FB%(11,1),FF%(1),1
-	IF A%=.THEN{:60026}
+	IF A%=. then {:60026}
 	IF A%=1 THEN A=1:GOTO{:60024}
 	FOR X=1 TO A%:A=FF%(X):&,60,1,20,FB%(1,A),AN$:&,15,1:&,60,1,36,FB%(12,A),D$
 	X%=X:LP=1:IF LL%>40 THEN:&"{f6}{gray3}{pound}#2{pound}# {pound}%X{blue}. {white}{pound}V7 {blue}- {yellow}{pound}$D":GOTO{:60018}
 	&"{f6}{gray3}{pound}#2{pound}# {pound}%X{blue}. {white}{pound}V7 {f6}   {yellow}{pound}$D"
 {:60018}
-	NEXT:&"{f6:2} {pound}Q0{$c6}EEDBACK TO {$d7}HOM: {lt. green}{pound}I1"
-	A=VAL(AN$):IF AN$="{$c1}"THEN TT$="{$c1}{$cc:2}":GOTO{:60026}
+	NEXT:&"{f6:2} {pound}Q0FEEDBACK TO WHOM: {lt. green}{pound}I1"
+	A=VAL(AN$):IF AN$="A"THEN TT$="A{$cc:2}":GOTO{:60026}
 	IF A<1 OR A>A%THEN TT=-1:GOTO{:60026}
 {:60024}
 	A=FF%(A):&,60,1,20,FB%(1,A),TT$:TT=FB%(.,A):IF FB%(11,A)AND 2 THEN TT=.
 {:60026}
 	ON-(TT=-1)GOTO{:60056}:IM=1:GOSUB 440:ON-(KK=.)GOTO{:60056}
-	&"{f6:2}{$c6}ILING {$c6}EEDBACK...{f6:2}":IF TT=.THEN{:60044}
-	Y=TT:TT$(.)="[{$c6}EEDBACK]":NN$=TT$
+	&"{f6:2}FILING FEEDBACK...{f6:2}":IF TT=. then {:60044}
+	Y=TT:TT$(.)="[FEEDBACK]":NN$=TT$
 	Z=1:A$="W":TT$=NN$:GOSUB 32:IF E%THEN A$="A":Z=.:GOSUB 32
-	PRINT# 2,NA$R$ID;R$D1$R$"[{$c6}EEDBACK]":&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
+	PRINT# 2,NA$R$ID;R$D1$R$"[FEEDBACK]":&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
 	GOSUB 61:GOSUB 30
 	IF Y=1 THEN X=2:I=1:GOSUB 16:X=13:GOSUB 16:X=24:GOSUB 16:X=31:GOSUB 16
 	X=3:I=1:GOSUB 16:X=14:GOSUB 16:X=32:GOSUB 16:X=25:ON Z GOSUB 16
 	GOTO{:60054}
 {:60044}
 	B$="FBACK":GOSUB 37
-	PRINT# 2,"{$c6}EEDBACK TO "TT$R$
+	PRINT# 2,"FEEDBACK TO "TT$R$
 	&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
 	GOSUB 61:GOSUB 30:I=1
 	X=1:GOSUB 16:X=12:GOSUB 16:X=23:GOSUB 16:X=30:GOSUB 16
 {:60054}
 	CLOSE 2:&,28,2:&,11:RETURN
 {:60056}
-	&"{f6}{$c1}BORTED!":GOTO{:60054}
+	&"{f6}ABORTED!":GOTO{:60054}
 	COPR. 1994 NEW IMAGE 9/15/94

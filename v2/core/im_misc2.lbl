@@ -1,6 +1,6 @@
 {number:60000}
 {step:2}
-{alpha:upper}
+{alpha:alt}
 {crunch:on}
 ' + re-added Top Ten list code
 ' - removed code in PS graphical menu causing a loop
@@ -16,29 +16,29 @@
 {:60002}
 	lg=1:fl=.:a=9:gosub 1004:if a=.then x=4:goto 1980
 	x=abs(val(mid$(an$,3))):if x then:&"{f6:2}":goto {:60012}
-	&"{f6}{pound}v5 {$ce}ote{$d0}ad.{f6:2}"
+	&"{f6}{pound}v5 NotePad.{f6:2}"
 {:60006}
-	p$="{$c8}andle":&"{f6:2}{lt. red}{$c5}nter {$d5}ser {$c8}andle {$cf}r {$c9}{$c4}#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60012}
+	p$="Handle":&"{f6:2}{lt. red}Enter User Handle Or ID#.{f6:2}":gosub 1006:x=abs(val(an$)):if x then{:60012}
 	on tr%+1 goto {:60048}:on-(an$="")goto {:60048}:gosub 1046:x=i:if x then nn$=an$:goto {:60020}
-	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}{$ce}ot {$c6}ound.{f6}":goto {:60006}
+	&"{f6:2}{white}{f5}{gray3}{pound}v7{white}{f5} {gray3}Not Found.{f6}":goto {:60006}
 {:60012}
 	i=x:if x<1 or x>ur then{:60016}
-	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"{$d2}{$c5}{$d3}"then{:60018}
+	gosub 1065:gosub 1001:input# 2,nn$:if nn$<>"{up arrow}"and nn$<>"RES" then {:60018}
 {:60016}
-	&"{f6}{yellow}{$c9}nvalid {$c1}ccount {$ce}umber.{f6}":x=.:goto {:60048}
+	&"{f6}{yellow}Invalid Account Number.{f6}":x=.:goto {:60048}
 {:60018}
-	&"{f6}{lt. green}{$c8}andle: {rvrs on}":&nn$:&"{f6}{yellow}{$c9}s {$d4}hat {$c3}orrect?: ":gosub 1907:if a=.then{:60002}
+	&"{f6}{lt. green}Handle: {rvrs on}":&nn$:&"{f6}{yellow}Is That Correct?: ":gosub 1907:if a=. then {:60002}
 {:60020}
 	y=i:dr=2:gosub 1079:if a<20 then x=2:gosub 1980:goto {:60046}
 ' check for directory space:
 	gosub 1085:if a then gosub 1980:goto {:60048}
 ' fl=1: send to another user
 	on fl goto {:60030}
-	poke 53252,30:&"{f6}{$d3}ubject: ":pl=.:&,1,5:if an$="" then an$="{$ce}ote":&"{up}{pound}{back arrow}12{pound}v7{f6}"
+	poke 53252,30:&"{f6}Subject: ":pl=.:&,1,5:if an$="" then an$="Note":&"{up}{pound}{back arrow}12{pound}v7{f6}"
 	tt$(.)="["+an$+"]":gosub 1604:a=1:if tr%<1 or kk=. then {:60048}
 {:60030}
-	&"{f6}{$c6}iling {$cd}ail {$c6}or "+nn$+"..."
-	if lg then fd$="{$cc}ocal {$d1}uick{$cd}ail":gosub {:60050}
+	&"{f6}Filing Mail For "+nn$+"..."
+	if lg then fd$="Local QuickMail":gosub {:60050}
 	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
 '	print# 2,na$r$id;r$d1$:for x=.to kk-1:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2
 	print# 2,na$r$id;r$d1$r$tt$(0):gosub 1074
@@ -46,22 +46,22 @@
 	on-(y<>1)gosub 1060:x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025
 	x=25:on z gosub 1025:close 2:gosub 1081:goto {:60046}
 {:60046}
-	&"{f6:2}{$d3}end to another user? ":gosub 1902:if a then fl=1:goto {:60006}
+	&"{f6:2}Send to another user? ":gosub 1902:if a then fl=1:goto {:60006}
 {:60048}
 	return
 {:60050}
-	a$="a":b$="em log":gosub 1027:if e%then a$="w":gosub 1027:print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}{cyan}{pound}{back arrow}14{$c5}-{$cd}ail {$cc}og{f6}{blue}{pound}o{$c0}{pound}o{$c0}"
+	a$="a":b$="em log":gosub 1027:if e%then a$="w":gosub 1027:print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}{cyan}{pound}{back arrow}14E-Mail Log{f6}{blue}{pound}o{$c0}{pound}o{$c0}"
 	hr$=d1$:&,15
-	print# 2,"{cyan}{$d4}ype:{white} "+fd$
-	print# 2,"{cyan}{$c6}rom:{white} "+na$
-	print# 2,"{cyan}{$d4}o  :{white} "+nn$
-	print# 2,"{cyan}{$cf}n  :{white} {$04}"+hr$
+	print# 2,"{cyan}Type:{white} "+fd$
+	print# 2,"{cyan}From:{white} "+na$
+	print# 2,"{cyan}To  :{white} "+nn$
+	print# 2,"{cyan}On  :{white} {$04}"+hr$
 	print# 2,"{blue}{pound}o{$c0}{pound}o{$c0}{f6}"
 	close 2:return
 {nice:100}
 {:60054}	' Top Ten list
-	&"{clear}{pound}v5's {$d4}op {$d4}en {$d5}sers!{f6:2}"
-	dr=3:a$="e.top ten,s,r":gosub 1011:if e% then:&"{f6:2}{$ce}o list (key) {pound}g1":goto{:60062}
+	&"{clear}{pound}v5's Top Ten Users!{f6:2}"
+	dr=3:a$="e.top ten,s,r":gosub 1011:if e% then:&"{f6:2}No list (key) {pound}g1":goto{:60062}
 {:60058}
 	&,3,2:s=st:if s=. then{:60058}
 {:60062}
@@ -69,7 +69,7 @@
 
 {nice:100}
 {:60066}
-	cm$="{$d0}ersonal {$d3}ignatures":gosub 1360:dr=1:a$="s.ps":gosub 1075:s$="{$d3}ignature"
+	cm$="Personal Signatures":gosub 1360:dr=1:a$="s.ps":gosub 1075:s$="Signature"
 {:60076}
 ' &,52,34 "More Prompt On" - ts saves status, if on, temporarily toggles off (restored later)
 ' maybe should save/clear/restore &,52,35 ("More Prompt Available?") instead
@@ -91,8 +91,8 @@
 {:60094}
 	goto {:60082}
 {:60096}
-	&"{white}. {yellow}{rvrs on}{$cc}ist {$cf}ne {pound}$s{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}{$cc}ist {$c1}{$cc:2} {pound}$ss{pound}{back arrow}37{gray3} {f6}"
-	&"{white}. {yellow}{rvrs on}{$c3}reate/{$c5}dit {pound}$s{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}{$d1}uit{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38"
+	&"{white}. {yellow}{rvrs on}List One {pound}$s{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}List A{$cc:2} {pound}$ss{pound}{back arrow}37{gray3} {f6}"
+	&"{white}. {yellow}{rvrs on}Create/Edit {pound}$s{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}Quit{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38"
 	gosub {:sub.msg_10_signatures}:return
 {:60102}
 ' exit PS editor
@@ -102,21 +102,21 @@
 	if nl then:&"{pound}n4"
 	return
 {:60106}
-	&"{white}1) {yellow}{$cc}ist {$cf}ne {pound}$s{f6}"
-	&"{white}2) {yellow}{$cc}ist {$c1}{$cc:2} {pound}$ss{f6}"
-	&"{white}3) {yellow}{$c3}reate/{$c5}dit {pound}$s{f6}"
-	&"{white}4) {yellow}{$d1}uit"
-	gosub {:sub.msg_10_signatures}:&"{white}  {$d9}our {$d3}election -=> {pound}i1":a=val(an$)
+	&"{white}1) {yellow}List One {pound}$s{f6}"
+	&"{white}2) {yellow}List A{$cc:2} {pound}$ss{f6}"
+	&"{white}3) {yellow}Create/Edit {pound}$s{f6}"
+	&"{white}4) {yellow}Quit"
+	gosub {:sub.msg_10_signatures}:&"{white}  Your Selection -=> {pound}i1":a=val(an$)
 	if a<1 or a>4 then{:60106}
 {:60114}
 	on a goto {:60116},{:60124},{:60138},{:60102}
 {:60116}
 ' view one signature:
-	&"{clear}{f6:2}{green}{$d6}iew {$d7}hich {$cf}ne? {f6:2}{lt. green}{$c5}nter (0-9) -=> {white}{pound}i1":if tr%<1 then{:60102}
+	&"{clear}{f6:2}{green}View Which One? {f6:2}{lt. green}Enter (0-9) -=> {white}{pound}i1":if tr%<1 then{:60102}
 	b=val(an$):if b<0 and b>9 then {:60116}
 ' 1075/6 uses a$=filename, saves b$ in c$
 	gosub {:sub.set_filename}:gosub 1076:if e% then close 2:gosub {:sub.msg_not_configured}
-	&"{f6:2}{green}{$d6}iew {$c1}nother {$cf}ne? ":gosub 1907:on tr%+1 goto {:60102}:on a+1 goto {:60080}:goto {:60116}
+	&"{f6:2}{green}View Another One? ":gosub 1907:on tr%+1 goto {:60102}:on a+1 goto {:60080}:goto {:60116}
 {:60124}
 	&"{clear}{f6:3}":b=.
 {:60126}
@@ -128,19 +128,19 @@
 {:60134}
 	b=b+1:if b<10 then {:60126}
 {:60136}
-	&"{f6:2}{lt. green}{$d6}iew {$d4}hem {$c1}gain? ":gosub 1902:on a+1 goto {:60080}:goto {:60124}
+	&"{f6:2}{lt. green}View Them Again? ":gosub 1902:on a+1 goto {:60080}:goto {:60124}
 {:60138}
 ' edit signature:
-	nn$="{f6}{gray3}{$d4}he {$d0}ersonal {$cd}ulti-{pound}$s {$cd}aker{f6:2}"
+	nn$="{f6}{gray3}The Personal Multi-{pound}$s Maker{f6:2}"
 {:60140}
-	&"{clear}{f6:3}{lt. green}{$c5}nter {$ce}umber {$d4}o {$c3}hange{gray2} -=> {white}{pound}i1":if tr%<1 then{:60102}
+	&"{clear}{f6:3}{lt. green}Enter Number To Change{gray2} -=> {white}{pound}i1":if tr%<1 then{:60102}
 	b=int(val(an$)):if b<0 and b>9 then {:60140}
 ' check for/open existing file (a$="ps.<#><handle>"):
 	gosub {:sub.set_filename}:gosub 1011
 ' no existing file, start w/empty buffer:
 	if e% then close 2:gosub 1604:goto {:save}
 ' load existing file:
-	kk=1:&"{f6}{$cc}oading..."
+	kk=1:&"{f6}Loading..."
 {:load}
 ' tt$() array 1-based
 ' from im.editor (3 small tweaks: added ^ check, printing ".", lfn#2 instead of lfn#6)
@@ -152,24 +152,24 @@
 ' kk=2:printstr$(kk)" "left$("lines",4-(kk<>1))" used." (now handled by im.editor)
 	if kk=. then gosub 1920:goto {:60080}
 ' scratch existing filename:
-	&"{f6}{white}{$c6}iling {pound}$s #{pound}!b...":gosub {:sub.set_filename}:gosub 1023
+	&"{f6}{white}Filing {pound}$s #{pound}!b...":gosub {:sub.set_filename}:gosub 1023
 ' write tt$() array elements 1 - (kk-1) to open lfn#2:
-	gosub 1074:&"{lt. green}{$d3}aved!{f6:2}"
-'	for x=1 to kk-1:print# 2,tt$(x):next:print# 2:close 2:gosub 1081:&"{f6:2}{lt. green}{$d3}aved!{f6:2}"
+	gosub 1074:&"{lt. green}Saved!{f6:2}"
+'	for x=1 to kk-1:print# 2,tt$(x):next:print# 2:close 2:gosub 1081:&"{f6:2}{lt. green}Saved!{f6:2}"
 	gosub {:sub.press_any_key}:goto {:60080}
 {nice:100}
 {step:10}
 {:sub.press_any_key}
-	&"{yellow}{$d0}ress {$c1} {$cb}ey {pound}g1{f6:2}":return
+	&"{yellow}Press A Key {pound}g1{f6:2}":return
 {:sub.msg_10_signatures}
-	&"{f6:2}  {lt. green}{$c3}reate {$d5}p {$d4}o 10 {pound}$ss.{white}{f6}":return
+	&"{f6:2}  {lt. green}Create Up To 10 {pound}$ss.{white}{f6}":return
 {:sub.msg_not_configured}
-	&"{lt. green}{pound}$s #{pound}!b {$ce}ot {$c3}onfigured!{f6:2}":return
+	&"{lt. green}{pound}$s #{pound}!b Not Configured!{f6:2}":return
 {:sub.set_filename}
 ' b=signature # prefix: ps.<#><handle>
 	dr=3:a$=left$("ps."+mid$(str$(b),2,1)+na$,16):return
 {:sub.msg_enter_signature}
-	&"{f6}{green}{$c7}et {$d2}eady {$d4}o {$c5}nter {$d9}our {pound}$s:{f6}":return
+	&"{f6}{green}Get Ready To Enter Your {pound}$s:{f6}":return
 {nice:10}
 	REM FIXES BY PINACOLADA - 12/18/2017
 	REM IM.MISC2

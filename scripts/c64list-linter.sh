@@ -24,7 +24,7 @@ cat $output_file | \
 # convert C64List 3.05's "{alpha:upper}" to 3.50's "{alpha:alt}"
 # this results in infinitely more readable quoted strings
 
-sed '
+sed -i '
 s/{alpha:upper}/{alpha:alt}/g
 s/{\$a0}/ /g # shift-space -> space
 

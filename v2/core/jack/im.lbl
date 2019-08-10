@@ -8,7 +8,7 @@
 {:4}
 	close 2:gosub{:3}:open 2,dv%,2,dr$+a$
 {:5}
-	input# 15,e%,e$,t%,s%:a$="{f6}{$d3}tatus:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+	input# 15,e%,e$,t%,s%:a$="{f6}Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
 {:6}
 	an$=uu$:on-(an$<>"")gosub{:310}:on-(an$<>"")goto{:314}:pl=1:&,1:goto{:310}
 {:7}
@@ -82,7 +82,7 @@
 {:61}
 	if dr<7 then if bf(dr)>-1 then gosub{:2}:a=bf(dr):bf=a:return
 {:62}
-	gosub{:3}:rem on-(dv%<>lk%)goto64:a$=dr$:ifdr$="10:"thena$="a"
+	gosub{:3}:rem on-(dv%<>lk%)goto64:a$=dr$:ifdr$="10:" then a$="a"
 	rem a=2:print#15,"lg"left$(a$,1):input#15,e%,a$,a$,a$,a$,a$:goto65
 	a=1:close 2:open 2,dv%,0,"$"+dr$+"{black}":get#2,a$,a$:&,8,2,1:&,8,2,1:close 2
 	a=val(a$)*a:bf=a:for a=1 to 6:if dv%(a)=dv%and dr%(a)=val(dr$)then bf(a)=bf
@@ -106,23 +106,23 @@
 {:78}
 	a$="sub."+a$:p2$=a$+"":new 60000
 {:79}
-	cm$="{$cc}:"+a$:gosub{:9}:gosub{:3}:load dr$+a$,dv%:return
+	cm$="L:"+a$:gosub{:9}:gosub{:3}:load dr$+a$,dv%:return
 {:80}
 	a$=z$:z$=mid$(p1$,3):gosub{:72}:a$=z$:dr=5:on-(lc<>1)goto{:77}:return
 	for i=1 to 4:&,11,i:next
 	&,11,.:return
 	a=int(mn%/60):pt%=-(a>=p2%and a<p3%)*sgn(p1%):return
-	&"{$d7}ould you like to leave feedback? ":gosub{:96}:on a+1 goto{:999}:dr=3:gosub{:61}
+	&"Would you like to leave feedback? ":gosub{:96}:on a+1 goto{:999}:dr=3:gosub{:61}
 	x=2:on-(bf<35)goto{:390}:mm=1:goto{:444}
 	q$="":on-(ll%<42)goto{:999}:for r=1 to int((ll%-42)/2):q$=q$+" ":next:return
-	&"{f6}{lt. blue}>{cyan}>{white}{$c3}anceled!{f6}":return
-	&"{f6}{$c1}re {$d9}ou {$d3}ure?: "
-	&"{cyan}[{lt. blue}{$ce}o{cyan}]":gosub{:7}:&"{pound}h4":a=-(a$="{$d9}"):goto{:97}
-	&"{f6}{$c1}re {$d9}ou {$d3}ure?: "
+	&"{f6}{lt. blue}>{cyan}>{white}Canceled!{f6}":return
+	&"{f6}Are You Sure?: "
+	&"{cyan}[{lt. blue}No{cyan}]":gosub{:7}:&"{pound}h4":a=-(a$="Y"):goto{:97}
+	&"{f6}Are You Sure?: "
 {:96}
-	&"{cyan}[{lt. blue}{$d9}es{cyan}]":gosub{:7}:&"{pound}h5":a=(a$="{$ce}")+1
+	&"{cyan}[{lt. blue}Yes{cyan}]":gosub{:7}:&"{pound}h5":a=(a$="N")+1
 {:97}
-	&"{pound}q"+chr$(df%+48)+mid$("{$d9}es{$ce}o",4-a*3,3)+"{f6}":return
+	&"{pound}q"+chr$(df%+48)+mid$("YesNo",4-a*3,3)+"{f6}":return
 {:200}
 	on tr%+1 goto{:240}:&,52,17,lf:&,52,20,em:poke 951,ll%:poke 971,mp%:poke 970,0
 ' 30: are main prompt macros enabled?
@@ -130,8 +130,8 @@
 	s=.:sh=.:gosub{:12}
 ' 30: are main prompt macros enabled? (fixme: seems superflous here)
 	poke 970,0:&,52,30,3:an$=d1$:&,15:b$=right$(an$,7)
-	mm=2:gosub{:3000}:gosub{:9}:&"{f6} - {pound}$b{$cd}":if tr%<100 then a%=tr%:&" - {pound}%a {$cd}in. {$cc}eft"
-	if zz then a%=usr(0):&"{f6} - {$d3}tack {$c6}ree: {pound}%a"
+	mm=2:gosub{:3000}:gosub{:9}:&"{f6} - {pound}$bM":if tr%<100 then a%=tr%:&" - {pound}%a Min. Left"
+	if zz then a%=usr(0):&"{f6} - Stack Free: {pound}%a"
 	&"{f6:2}":poke 53252,38:gosub{:6}
 	cm$=left$(p$,11)+":"+left$(an$,4):gosub{:9}:cm$=p$
 	on tr%+1 goto{:240}:if an$=""then gosub{:250}:goto{:200}
@@ -143,23 +143,23 @@
 	&,52,20,3:em=a%:&,52,5,3:zz=a%
 	x=1:rq=.:rs=1
 	f4=.:a%=zz:b%=2^ac%:&,42,1:if a%then ef$=b$:ep$=a$:ec=a%:ec%=b%:goto{:260}
-	on-(a$="{$cf}"or(lc=1 and a$="{$d1}"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
+	on-(a$="O"or(lc=1 and a$="Q"))-2*(a$="{f2}")goto{:230},{:250}:rs=0:return
 {:230}
-	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}{$cc}ogoff?: ":gosub{:96}:if a=0 then return
+	f4=0:if right$(an$,1)<>"!"then:&"{f6:2}Logoff?: ":gosub{:96}:if a=0 then return
 	f4=1.3:return
 {:234}
 	f1=1-(right$(an$,1)="!"):cd%=.:on-(mid$(z$,2,1)="%")goto{:302}
-	&"{f6}{$d5}pdate {$cd}essage/{$c6}ile {$d3}can {$c4}ate?: ":gosub{:96}:on a+1 goto{:302}:ld$=lt$:goto{:302}
+	&"{f6}Update Message/File Scan Date?: ":gosub{:96}:on a+1 goto{:302}:ld$=lt$:goto{:302}
 {:240}
-	&"{f6}{$d3}orry, {$d4}ime {$cc}imit {$c5}xceeded.{f6}":mm=3:gosub{:3000}:f1=2:goto{:302}
-	f1=.:&"{f6} {$c1}borted!{f6}":goto{:200}
+	&"{f6}Sorry, Time Limit Exceeded.{f6}":mm=3:gosub{:3000}:f1=2:goto{:302}
+	f1=.:&"{f6} Aborted!{f6}":goto{:200}
 {:250}
 	im=1:goto{:436}
 {:260}
 	rem
-	if ec%>0 and cr-ec%<0 then:&"{red}{$ce}ot {$c5}nough {$c3}redits!{f6}":return
+	if ec%>0 and cr-ec%<0 then:&"{red}Not Enough Credits!{f6}":return
 	cr=cr-ec%:if ep$=""or id=1 then{:264}
-	&"{f6}{white}{$d0}assword{blue}:{white}":&,6:if an$<>ep$then:&"{f6}{red}{$c9}ncorrect {$d0}assword.{f6}":return
+	&"{f6}{white}Password{blue}:{white}":&,6:if an$<>ep$then:&"{f6}{red}Incorrect Password.{f6}":return
 {:264}
 	f4=0:on ec goto{:265},{:266},{:267},{:268}:return
 {:265}
@@ -187,7 +187,7 @@
 	dim bb$(31),dt$(61),ed$(61),nn$(61)
 	dim a%(61),c%(61),d%(61),e%(31),f%(61),ac%(31),so%(31):return
 {:309}
-	cm$="{$cc}: 1.3 {$c5}mulator":gosub{:9}:dr=5:gosub{:3}:load dr$+"im.emul13",dv%:goto{:304}
+	cm$="L: 1.3 Emulator":gosub{:9}:dr=5:gosub{:3}:load dr$+"im.emul13",dv%:goto{:304}
 {:310}
 	on-(an$="{f8}{f2}")goto{:315}
 	if left$(an$,1)="{f8}"then an$=hs$(10-val(mid$(an$,2,1))):goto{:314}
@@ -210,27 +210,27 @@
 	close 2:return
 	dr=3:gosub{:3}:cm$="ecs.l."+a$:gosub{:9}:&,60,2,0,ec%(0,0),dr$+"e.ecs.l."+a$,dv%
 	gosub{:3}:cm$="ecs.s."+a$:gosub{:9}:&,60,2,0,es%(0,0),dr$+"e.ecs.s."+a$,dv%:return
-	&"{f6}{$c4}evice, {$c4}rive: {pound}i1":an$="  "+an$:return
+	&"{f6}Device, Drive: {pound}i1":an$="  "+an$:return
 	a=int(val(mid$(an$,3,2))):if a>0 then if a<7 then dr=a:goto{:353}
 	if a<7 or a>15 then a=8
 	&,15,6,133:d2%=val(an$):d1%=a:dr=0:dv%(.)=d1%:dv%(.)=d2%
 {:353}
 	gosub{:3}:close 15:a=-(st<>.):return
-	&"{f6}[360] {$c4}{$cf}{$d3} command stub{f6}":return
+	&"{f6}[360] DOS command stub{f6}":return
 {:370}
-	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{green}{pound}$b {$cd}ode{lt. green}: {white}{$cf}{pound}v7{f6}":return
+	a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{green}{pound}$b Mode{lt. green}: {white}O{pound}v7{f6}":return
 {:371}
 	a=val(mid$(uf$,b,1)):gosub{:370}:uf$=left$(uf$,b-1)+chr$(a+48)+mid$(uf$,b+1):return
 ' toggle expert mode:
-	a=em:b$="{$c5}xpert":gosub{:370}:em=a:&,52,20,em:return
+	a=em:b$="Expert":gosub{:370}:em=a:&,52,20,em:return
 ' toggle More prompt:
-	b=2:b$="{f5}{$cd}ore?{f5} {$d0}rompt":gosub{:371}:&,52,34,a:return
+	b=2:b$="{f5}More?{f5} Prompt":gosub{:371}:&,52,34,a:return
 ' toggle graphic menu mode:
-	b=3:b$="{$c7}raphic {$cd}enu":gosub{:371}:&,52,44,a:return
+	b=3:b$="Graphic Menu":gosub{:371}:&,52,44,a:return
 ' toggle local mode:
-	a=zz:b$="{$cc}ocal":gosub{:370}:zz=a:&,52,5,a:return
+	a=zz:b$="Local":gosub{:370}:zz=a:&,52,5,a:return
 ' toggle main prompt macros (sayings) status:
-	b$="{$d3}ayings":&,52,30,3:a=a%:gosub{:370}:&,52,30,a:return
+	b$="Sayings":&,52,30,3:a=a%:gosub{:370}:&,52,30,a:return
 {:390}
 	dr=3:a$="e.text":gosub{:4}:gosub{:1}:&,2,2:close 2:&"{f6}{pound}$a{f6}":return
 	rem**subroutine modules**
@@ -263,7 +263,7 @@
 {:447}
 	a$="info":goto{:74}
 	rem**jump table**
-	&"{f6}{$c5}dit ({$c9})nfo or ({$d0})arameters? {pound}g1{pound}v7{f6}":a=-(an$="{$c9}")-2*(an$="{$d0}")
+	&"{f6}Edit (I)nfo or (P)arameters? {pound}g1{pound}v7{f6}":a=-(an$="I")-2*(an$="P")
 	im=1:on a goto{:447},{:430}:return
 	im=2:goto{:447}
 {:504}
@@ -285,8 +285,8 @@
 	im=1:goto{:437}
 	im=2:goto{:437}
 	im=1:goto{:440}:rem wf
-	gosub{:309}:a$=an$:goto{:70}:rem "i.{$d2}{$c5}
-	a$=an$:goto{:70}:rem"i.{$c7}{$c6}
+	gosub{:309}:a$=an$:goto{:70}:rem "i.RE
+	a$=an$:goto{:70}:rem"i.GF
 {:555}
 	gosub{:309}:a$="misc2":goto{:74}:rem sub.misc2
 	im=1:gosub{:555}:im=3:goto 60000:rem qm
@@ -295,7 +295,7 @@
 {:999}
 	return
 	poke 22,25:for i=2 to peek(152):close peek(603):next:poke 2031,.
-	x=peek(780):y=peek(781)+peek(782)*256:&"{f6}[{$c5}rror#{pound}!x, {$cc}ine#{pound}!y]{f6}":el=y
+	x=peek(780):y=peek(781)+peek(782)*256:&"{f6}[Error#{pound}!x, Line#{pound}!y]{f6}":el=y
 	&,11:&,28,1:poke 53248,.
 	dr$=mid$(str$(dr%(5)),2)+":":dv%=dv%(5):load dr$+"im",dv%,2
 {:3000}
@@ -328,8 +328,8 @@
 	dim x$,x%
 	dim y$,y%
 	dim z$,z%,zz
-	ac%=16:x=rnd(-ti):hx$="0123456789{$c1}{$c2}{$c3}{$c4}{$c5}{$c6}"+""
-	c3$="{f6}{$d2}eturning {$d4}o {$d4}he {$c5}ditor"+"{f6:2}"
+	ac%=16:x=rnd(-ti):hx$="0123456789ABCDEF"+""
+	c3$="{f6}Returning To The Editor"+"{f6:2}"
 	ak$=" {$c0:38}"+"{f6}":rem lk%=0
 	r$=chr$(13):nl$=chr$(.):qt$=chr$(34)
 	open 4,4,7:poke 836,1:poke 650,128
@@ -338,40 +338,40 @@
 	dim ec%(19,24),es%(3,49),ei%(50)
 	restore:for i=1 to 9:read a$:co$(i)=a$+"":next
 	dv%=peek(828):z%=dv%:dr$="0"+":":bd$=dr$:sr=2:pr=-1:f3=1:sys 49155:&,53
-	a$="{$ce}{$d4}{$d3}{$c3}":if peek(678)then a$="{$d0}{$c1}{$cc}"
-	gosub{:3400}:z3$=a$+" {$d3}ystem {$c4}etected.":gosub{:3404}
+	a$="NTSC":if peek(678)then a$="PAL"
+	gosub{:3400}:z3$=a$+" System Detected.":gosub{:3404}
 	close 15:open 15,dv%,15:&,18,.:poke 53248,1:am$="1"+"9012098600"
 	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,1
 {:3084}
-	dv%=z%:z3$="{$d2}eading {$c4}rive {$c3}onfiguration...":gosub{:3404}:close 2:close 15:open 15,dv%,15
+	dv%=z%:z3$="Reading Drive Configuration...":gosub{:3404}:close 2:close 15:open 15,dv%,15
 	fl=.:open 2,dv%,2,bd$+"bd.data,s,r":gosub{:5}:if e%then close 2:gosub{:3192}:z2$="":&"{home} ":&,28,1:goto{:3084}
-	input# 2,dv%(3),dr%(3),po$:close 2:restore:if po$=""then po$="{$cd}ain: "
+	input# 2,dv%(3),dr%(3),po$:close 2:restore:if po$=""then po$="Main: "
 {:3090}
-	read a$:if a$<>"*"then{:3090}
-	rem ifdv%=lk%thenprint#15,"l800"
+	read a$:if a$<>"*" then {:3090}
+	rem ifdv%=lk% then print#15,"l800"
 	gosub{:33}:for i=1 to 6:x=i+51:gosub{:1}:&,2,2:dv%(i)=val(a$)
 	&,2,2:dr%(i)=val(a$):next:close 2
 {:3096}
-	z3$="{$d2}eading {$d3}ystem {$c9}nfo...":gosub{:3404}
+	z3$="Reading System Info...":gosub{:3404}
 	gosub{:35}:if e%then close 2:gosub{:3192}:goto{:3096}
 	x=1:gosub{:1}:&,2,2:bs$=a$:close 2
-	gosub{:504}:uh=a%:z2$=left$(z2$,22)+"  ("+mid$(str$(a%),2)+" {$d5}sers)":b$=z2$
+	gosub{:504}:uh=a%:z2$=left$(z2$,22)+"  ("+mid$(str$(a%),2)+" Users)":b$=z2$
 	&"{home}{f6:4}{gray3}{rvrs on}{right:3}{pound}$b{f6}"
-	dr=3:gosub{:3}:z3$="{$cc}oading {$d0}reset {$c4}efinitions...":gosub{:3414}:gosub{:3404}
-	&"{lt. blue}{f6}{$c5}{$c3}{$d3} {$c4}efs: ":a$=dr$+"e.ecs.main":&,42,4:gosub{:5}:gosub{:3220}
-	&"{lt. blue}{$d0}rint {$cd}ode {$c4}efs: ":a$=dr$+"e.printmodes":&,7,dv%,7:gosub{:5}:gosub{:3220}
-	&"{lt. blue}{$cc}ightbar {$c4}efs: ":a$=dr$+"e.lightbar":&,7,dv%,8:gosub{:5}:gosub{:3220}
-	z3$="{$d3}etting {$c1}larm {$d4}ables...":gosub{:3404}
-	&"{f6:4}{lt. blue}{$c1}larm {$d4}able: ":a$=dr$+"e.alarms":&,7,dv%,9:gosub{:5}:gosub{:3220}
+	dr=3:gosub{:3}:z3$="Loading Preset Definitions...":gosub{:3414}:gosub{:3404}
+	&"{lt. blue}{f6}ECS Defs: ":a$=dr$+"e.ecs.main":&,42,4:gosub{:5}:gosub{:3220}
+	&"{lt. blue}Print Mode Defs: ":a$=dr$+"e.printmodes":&,7,dv%,7:gosub{:5}:gosub{:3220}
+	&"{lt. blue}Lightbar Defs: ":a$=dr$+"e.lightbar":&,7,dv%,8:gosub{:5}:gosub{:3220}
+	z3$="Setting Alarm Tables...":gosub{:3404}
+	&"{f6:4}{lt. blue}Alarm Table: ":a$=dr$+"e.alarms":&,7,dv%,9:gosub{:5}:gosub{:3220}
 	dr=2:gosub{:3}
-	&"{lt. blue}{$ce}etwork {$c1}larm {$d4}able: ":a$=dr$+"nm.times":&,7,dv%,12:gosub{:5}:gosub{:3220}
+	&"{lt. blue}Network Alarm Table: ":a$=dr$+"nm.times":&,7,dv%,12:gosub{:5}:gosub{:3220}
 	dr=3:a$="e.fkeys,s,r":gosub{:4}:if e%then close 2:goto{:3128}
-	z3$="{$c5}nabling {$c6}unction {$cb}eys...":gosub{:3404}:
+	z3$="Enabling Function Keys...":gosub{:3404}:
 	for i=1 to 8:&,2,2:if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+chr$(13)
 	tt$(i)=a$:next:close 2:f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
 	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8)
 {:3128}
-	z3$="{$d3}etting {$d5}p {$d6}ariables... (e.data)":gosub{:3404}
+	z3$="Setting Up Variables... (e.data)":gosub{:3404}
 	gosub{:33}:if e%then close 2:gosub{:3192}:goto{:3128}
 	x=1:gosub{:1}:&,2,2:ca=val(a$):x=12:gosub{:1}:&,2,2:ur=val(a$)-1
 	x=17:gosub{:1}:&,2,2:d3$=a$:x=18:gosub{:1}:&,2,2:pp$=a$
@@ -381,7 +381,7 @@
 	df%=3:x=40:gosub{:1}:&,2,2:a=val(a$):if a>.and a<16 then df%=a
 	x=41:gosub{:1}:&,2,2:a=val(a$):if a$<>""then close 4:open 4,4,a
 	x=42:gosub{:1}:&,2,2:a=val(a$):if a then poke 17136,a
-	x=35:gosub{:1}:&,2,2:an$=a$:&,15:d6$=an$+"{$cd}":x=45:gosub{:1}:&,2,2:tz$=a$
+	x=35:gosub{:1}:&,2,2:an$=a$:&,15:d6$=an$+"M":x=45:gosub{:1}:&,2,2:tz$=a$
 	x=47:gosub{:1}:&,2,2:bn$=a$
 	x=48:gosub{:1}:&,2,2:c1$="{clear}{f6}{$07}"+a$+"{f6:2}":x=49:gosub{:1}:&,2,2:c2$="{f6:2}"+a$+"{f6:2}"
 	x=51:gosub{:1}:&,2,2:cc$=a$
@@ -389,11 +389,11 @@
 	if y%>5 then gosub{:3348}:gosub{:3170}:goto{:3158}
 	on y%gosub{:3370},{:282},{:3358},{:3366},{:3360}:gosub{:3170}
 {:3158}
-	poke 970,.:poke 971,23:mp$="...{$cd}ore? ({$d9}/n) "+"":im=5:gosub{:447}:gosub{:3200}
+	poke 970,.:poke 971,23:mp$="...More? (Y/n) "+"":im=5:gosub{:447}:gosub{:3200}
 	gosub{:30}:for x=1 to 38:gosub{:1}:&,2,2:st(x)=val(a$):next:close 2
 	an$=am$:lt$=am$:tk$=left$(am$,1):gosub{:3210}
 	close 2:gosub{:3186}:&,37:poke 53258,(peek(56577)and 16)
-	a$=z$:t1=mn%:an$=z$:&,15:d2$=an$+"{$cd}":for i=54272 to i+24:poke i,.:next
+	a$=z$:t1=mn%:an$=z$:&,15:d2$=an$+"M":for i=54272 to i+24:poke i,.:next
 	f1=3:&,27,1:goto{:302}
 {:3170}
 	a=val(mid$(z$,1,1)):gosub{:3184}:poke 52935,a
@@ -407,19 +407,19 @@
 	a=16*int(a/10)+a-int(a/10)*10:return
 {:3186}
 	for q=.to 6:bf(q)=-1:next
-	z3$="{$d2}eading {$c2}locks {$c6}ree...":gosub{:3404}:for q=1 to 6:dr=q:gosub{:61}
-	read b$:&"{f6}{rvrs off}{lt. blue} {pound}$b {$c4}isk{pound}{back arrow}30:{cyan}":&str$(a):next:q=.:return
+	z3$="Reading Blocks Free...":gosub{:3404}:for q=1 to 6:dr=q:gosub{:61}
+	read b$:&"{f6}{rvrs off}{lt. blue} {pound}$b Disk{pound}{back arrow}30:{cyan}":&str$(a):next:q=.:return
 {:3192}
-	&,27,1:z1$="{$c9}nsert {$c1}ll {$d3}ystem {$c4}isks {$c9}n {$c3}orrect ":z2$="      {$c4}rives, {$c1}nd {$d0}ress {$d2}{$c5}{$d4}{$d5}{$d2}{$ce}     ":
-	&"{home}{f6:7}{green}{$cf}{$d2}: {lt. green}{$d0}ress {yellow}({white}1{yellow}) {lt. green}to {$c3}onfigure a {$ce}ew {$c2:2}{$d3}{f6}          {yellow}({white}2{yellow}) {lt. green}to {$c3}onvert from {$c9}mage 1.2{f6}":gosub{:3408}
+	&,27,1:z1$="Insert All System Disks In Correct ":z2$="      Drives, And Press RETURN     ":
+	&"{home}{f6:7}{green}OR: {lt. green}Press {yellow}({white}1{yellow}) {lt. green}to Configure a New {$c2:2}S{f6}          {yellow}({white}2{yellow}) {lt. green}to Convert from Image 1.2{f6}":gosub{:3408}
 	&"{f6:2}":on-(an$="1"or an$="2")goto{:3196}:return
 {:3196}
-	if an$="1"then z3$="{$c3}onfigure {$ce}ew {$c9}mage 2.0 {$d3}ystem...":
-	if an$="2"then z3$="{$c3}onvert from {$c9}mage 1.2":
+	if an$="1"then z3$="Configure New Image 2.0 System...":
+	if an$="2"then z3$="Convert from Image 1.2":
 	gosub{:3404}:&"{f6}{pound}{back arrow}36   {f6}{pound}{back arrow}36   {f6}"
 	lm=val(an$):a$="su.config":dr=.:dv%(.)=peek(186):dr%(.)=.:goto{:73}
 {:3200}
-	z3$="{$d3}etting {$c4}efault {$c3}heckmarks...":gosub{:3404}
+	z3$="Setting Default Checkmarks...":gosub{:3404}
 	dr=3:a$="e.lightdefs,s,r":gosub{:4}:if e%then close 2:goto{:3208}
 	for x=.to 7:&,2,2:if len(a$)<>16 then{:3208}
 	for i=1 to 16:b$=mid$(a$,i,1):&,52,(x)*16+i-1,val(b$):next
@@ -428,13 +428,13 @@
 {:3210}
 	dr=3:a$="e.log"+left$(lt$,1):gosub{:4}:if e%=.then return
 	dr=3:a$="e.log"+left$(lt$,1):gosub{:18}:close 2:an$=d1$:&,15:d6$=an$
-	a$=" {$cc}{$cf}{$c7} {$d3}{$d4}{$c1}{$d2}{$d4}: "+d6$+chr$(13)+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}{f6}":gosub{:51}
+	a$=" LOG START: "+d6$+chr$(13)+" {pound}q0{yellow}{pound}o{$c0}{pound}o{$c0}{f6}":gosub{:51}
 	gosub{:33}:x=44:gosub{:1}:print# 2,d6$:close 2
 	gosub{:30}:for x=12 to 22:st(x)=.:gosub{:17}:next:return
 {:3220}
-	&"{pound}{back arrow}21{cyan}{$c4}one.{f6}":return
+	&"{pound}{back arrow}21{cyan}Done.{f6}":return
 {:3348}
-	z3$="{$d3}etting {$c3}lock by {$c3}{$cd}{$c4}{$a0}{$c4}evice...":gosub{:3404}:close 15:open 15,y%,15:print# 15,"t-ra":&,2,15
+	z3$="Setting Clock by CMD Device...":gosub{:3404}:close 15:open 15,y%,15:print# 15,"t-ra":&,2,15
 	z$=left$(a$,2):a=-(z$="su")-2*(z$="mo")-3*(z$="tu")-4*(z$="we")-5*(z$="th")
 	a=a-6*(z$="fr")-7*(z$="sa"):z$=mid$(str$(a),2,1)+mid$(a$,12,2)+mid$(a$,6,2)
 	a=-80*(mid$(a$,24,1)="p")+val(mid$(a$,15,2))
@@ -442,17 +442,17 @@
 {:3358}
 	gosub{:3364}:sys 49155:goto{:3362}
 {:3360}
-	z3$="{$d3}etting {$c3}lock {$c6}rom {$c1}{$cd} {$d4}imestamp...":gosub{:3404}
+	z3$="Setting Clock From AM Timestamp...":gosub{:3404}
 	gosub{:33}:x=35:gosub{:1}:&,2,2:d1$=a$:close 2:poke 1010,1:return
 {:3362}
 	z$="":for a=49159 to 49169:z$=z$+chr$(peek(a)):next:poke 1010,1:return
 {:3364}
-	z3$="{$d3}etting {$c3}lock by {$cc}t.{$cb}ernal...":gosub{:3404}:dr=5:gosub{:4}:a$=dr$+"swr.ml":&,7,dv%,2:return
+	z3$="Setting Clock by Lt.Kernal...":gosub{:3404}:dr=5:gosub{:4}:a$=dr$+"swr.ml":&,7,dv%,2:return
 {:3366}
 	gosub{:3364}:sys 49152:sys 49155:goto{:3362}
 	rem set time manually
 {:3370}
-	z3$="{$d3}etting {$c3}lock {$cd}anually...":gosub{:3404}
+	z3$="Setting Clock Manually...":gosub{:3404}
 	&"{f6}[3371]{f6}":z$="50703228100":poke 1010,1:return
 {:3400}
 	z1$="":z2$="":&"{home}{f6:2} {gray2}{$b0}{$c0:36}{$ae}{f6}"
@@ -471,65 +471,65 @@
 	goto{:3410}
 {:3414}
 	&"{home}{f6:6}":for i=1 to 17:&"{pound}{back arrow}38 {f6}":next i:&"{home}{f6:6}":return
-	data"{$c3}ommodore 64","{$c3}ommodore 128","{$c1}miga","{$c1}pple/{$c3}omp."
-	data"{$c9}{$c2}{$cd}/{$c3}omp.","{$cd}acintosh","{$c1}tari/{$d3}{$d4}","{$d4}andy {$d3}eries","{$cf}ther {$d4}ype"
-	data"*","{$d3}ystem","{$c5}-{$cd}ail","{$c5}tcetera","{$c4}irectory","{$d0}lus-{$c6}ile","{$d5}ser"
+	data"Commodore 64","Commodore 128","Amiga","Apple/Comp."
+	data"IBM/Comp.","Macintosh","Atari/ST","Tandy Series","Other Type"
+	data"*","System","E-Mail","Etcetera","Directory","Plus-File","User"
 	copr. 1994 new image 9/21/94
 {:4000}
 	&,38:cm$=cm$+"":p$=p$+"":pr$=pr$+"":p1$=p1$+"":p2$=p2$+""
-	on-(x<128)goto{:4006}:a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	on-(x<128)goto{:4006}:a$="FATAL E{$d2:2}OR!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 	&,38:&,61,.,8:print"&,37:goto300:":end
 {:4006}
 	restore
 {:4008}
-	read a$:if a$<>"errors"then{:4008}
-	&,40:d$="{$c7}{$d5}{$d2}{$d5}":if x>.and x<30 then for k=1 to x:read d$:next
-	a%=x:&"{f6}{lt. red} {$d3}{$d9}{$d3}{$d4}{$c5}{$cd} {$c5}{$d2:2}{$cf}{$d2} #{pound}%a {white}({pound}$d {$c5}{$d2:2}{$cf}{$d2}){f6}":r$=chr$(13)
+	read a$:if a$<>"errors" then {:4008}
+	&,40:d$="GURU":if x>.and x<30 then for k=1 to x:read d$:next
+	a%=x:&"{f6}{lt. red} SYSTEM E{$d2:2}OR #{pound}%a {white}({pound}$d E{$d2:2}OR){f6}":r$=chr$(13)
 	a$="im":if el=>3000 then a$="+."+pr$:if el=>4000 then a$=p1$:if el=>60000 then a$=p2$
-	a=el:&"{lt. blue} {$c9}n {$cc}ine:{gray3}{pound}!a {lt. blue}{$cf}f {gray3}{pound}$a{f6}"
-	&"{f6}{lt. red}{$d2}ecording {$c5}rror, {$d0}lease {$d7}ait...":d$=str$(x)+" ("+d$+" {$c5}{$d2:2}{$cf}{$d2})"
-	dr=3:a$="e.errlog,s,a":gosub{:4}:if e%=.then{:4024}
+	a=el:&"{lt. blue} In Line:{gray3}{pound}!a {lt. blue}Of {gray3}{pound}$a{f6}"
+	&"{f6}{lt. red}Recording Error, Please Wait...":d$=str$(x)+" ("+d$+" E{$d2:2}OR)"
+	dr=3:a$="e.errlog,s,a":gosub{:4}:if e%=. then {:4024}
 	a$="e.errlog,s,w":gosub{:4}
 {:4024}
 	print# 2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)r$
-	print# 2,"{$c5}rror :"d$r$"{$cc}ine  :"el;r$"{$c1}rea  : "cm$r$"{$d0}rompt: "p$
-	print# 2,"{$d0}rogram: "pr$:print# 2,"{$cd}odule: "p1$:print# 2,"{$c9}{$cd} {$cd}odule: "p2$
-	print# 2,"{$cd}{$cc} {$c6}ile: ++ "ml$" ("d4$")"
+	print# 2,"Error :"d$r$"Line  :"el;r$"Area  : "cm$r$"Prompt: "p$
+	print# 2,"Program: "pr$:print# 2,"Module: "p1$:print# 2,"IM Module: "p2$
+	print# 2,"ML File: ++ "ml$" ("d4$")"
 	for i=1 to 10:a$=chr$(58-i):if hs$(i)<>""then print# 2," {f8}"a$": "hs$(i)
 	next:print# 2,"{up arrow}":close 2
-	a$="{$d5}ser  : "+na$+r$+"{$c5}rror :"+d$+r$+"{$cc}ine  :"+str$(b)+r$+"{$d4}ime  : {$04}"+d1$+r$
-	a$=a$+"{$d0}file : "+pr$+r$+"{$c1}rea  : "+cm$+r$+".":rem gosub51
+	a$="User  : "+na$+r$+"Error :"+d$+r$+"Line  :"+str$(b)+r$+"Time  : {$04}"+d1$+r$
+	a$=a$+"Pfile : "+pr$+r$+"Area  : "+cm$+r$+".":rem gosub51
 	close 2:&,37:for x=1 to 4:&,11,x:next:sy$="":sb$="":sg=.
 	p2$="":is=.:p1$="":pr$="":ml$="":pr=-1:pf=.
 ' 4: is "console mode" enabled? (true local login)
-	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=.then{:4050}
+	if ac%<>16 then:&,52,4,3:on a%goto{:4050}:if(peek(2033)and 1)=. then {:4050}
 	f1=2:goto{:302}
-	a$="{$c6}{$c1}{$d4}{$c1}{$cc} {$c5}{$d2:2}{$cf}{$d2}!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
+	a$="FATAL E{$d2:2}OR!!":gosub{:51}:sys 64789:print"{clear}{$08}{white}{$0e}{down:2}"a$:end
 {:4050}
 ' 4: is "console mode" enabled? (true local login)
 	&,52,4,3:if(a%=1)or i%or id=1 then{:4068}
 	gosub{:4092}:kk=.:a$="s.errmail,s,r":dr=1:gosub{:4}:if e%then close 2:goto{:4068}
 {:4054}
-	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=.then{:4054}
+	kk=kk+1:&,2,2:s=(64 and st):tt$(kk)=a$:if s=. then {:4054}
 	close 2:tt$=na$:a$="a":gosub{:32}:if e%then a$="w":gosub{:32}
-	a$="[{$d3}ystem {$c5}rror ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
+	a$="[System Error ("+d$+")]":a=.:print# 2,i1$r$1;r$d1$r$a$r$
 	for x=1 to kk:print# 2,tt$(x):next:print# 2,"{up arrow}":close 2:close 15
 	gosub{:30}:i=1:x=14:gosub{:16}:x=25:gosub{:16}:x=32:gosub{:16}:close 2
-	&"{pound}h9{pound}h9{pound}h7ed!{f6:2}{white}{$07}{$d9}ou {$c8}ave {$ce}ew {$c5}-{$cd}ail {$d7}aiting:{f6:2}{green}{$d2}ead {$ce}ow? ":gosub{:96}
-	if a then a$="{$c5}"+"{$cd}":goto{:70}
+	&"{pound}h9{pound}h9{pound}h7ed!{f6:2}{white}{$07}You Have New E-Mail Waiting:{f6:2}{green}Read Now? ":gosub{:96}
+	if a then a$="E"+"M":goto{:70}
 {:4068}
 	pr$="":goto{:300}
 	data"errors"
-	data "{$d4}{$cf:2} {$cd}{$c1}{$ce}{$d9} {$c6}{$c9}{$cc}{$c5}{$d3}","{$c6}{$c9}{$cc}{$c5} {$cf}{$d0}{$c5}{$ce}","{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$cf}{$d0}{$c5}{$ce}"
-	data "{$c6}{$c9}{$cc}{$c5} {$ce}{$cf}{$d4} {$c6}{$cf}{$d5}{$ce}{$c4}","{$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$cf}{$d4} {$d0}{$d2}{$c5}{$d3}{$c5}{$ce}{$d4}","{$ce}{$cf}{$d4} {$c9}{$ce}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}"
-	data "{$ce}{$cf}{$d4} {$cf}{$d5}{$d4}{$d0}{$d5}{$d4} {$c6}{$c9}{$cc}{$c5}","{$cd}{$c9}{$d3:2}{$c9}{$ce}{$c7} {$c6}{$c9}{$cc}{$c5} {$ce}{$c1}{$cd}{$c5}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c5}{$d6}{$c9}{$c3}{$c5} {$ce}{$d5}{$cd}{$c2}{$c5}{$d2}"
-	data "{$ce}{$c5}{$d8}{$d4} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c6}{$cf}{$d2}","{$d3}{$d9}{$ce}{$d4}{$c1}{$d8}","{$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d7}{$c9}{$d4}{$c8}{$cf}{$d5}{$d4} {$c7}{$cf}{$d3}{$d5}{$c2}"
-	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$c4}{$c1}{$d4}{$c1}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$d1}{$d5}{$c1}{$ce}{$d4}{$c9}{$d4}{$d9}","{$cf}{$d6}{$c5}{$d2}{$c6}{$cc}{$cf}{$d7}"
-	data "{$cf}{$d5}{$d4} {$cf}{$c6} {$cd}{$c5}{$cd}{$cf}{$d2}{$d9}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$d3}{$d4}{$c1}{$d4}{$c5}{$cd}{$c5}{$ce}{$d4}","{$c2}{$c1}{$c4} {$d3}{$d5}{$c2}{$d3}{$c3}{$d2}{$c9}{$d0}{$d4}"
-	data "{$d2}{$c5}{$c4}{$c9}{$cd}'{$c4} {$c1}{$d2:2}{$c1}{$d9}","{$c4}{$c9}{$d6}{$c9}{$d3}{$c9}{$cf}{$ce} {$c2}{$d9} {$da}{$c5}{$d2}{$cf}","{$c9}{$cc:2}{$c5}{$c7}{$c1}{$cc} {$c4}{$c9}{$d2}{$c5}{$c3}{$d4}"
-	data "{$d4}{$d9}{$d0}{$c5} {$cd}{$c9}{$d3}{$cd}{$c1}{$d4}{$c3}{$c8}","{$d3}{$d4}{$d2}{$c9}{$ce}{$c7} {$d4}{$cf:2} {$cc}{$cf}{$ce}{$c7}","{$c6}{$c9}{$cc}{$c5} {$c4}{$c1}{$d4}{$c1}"
-	data "{$c6}{$cf}{$d2}{$cd}{$d5}{$cc}{$c1} {$d4}{$cf:2} {$c3}{$cf}{$cd}{$d0}{$cc}{$c5}{$d8}","{$c3}{$c1}{$ce}'{$d4} {$c3}{$cf}{$ce}{$d4}{$c9}{$ce}{$d5}{$c5}","{$d5}{$ce}{$c4}{$c5}{$c6}'{$c4} {$c6}{$d5}{$ce}{$c3}{$d4}{$c9}{$cf}{$ce}"
-	data "{$d6}{$c5}{$d2}{$c9}{$c6}{$d9}","{$cc}{$cf}{$c1}{$c4}","{$c2}{$d2}{$c5}{$c1}{$cb} "
+	data "T{$cf:2} MANY FILES","FILE OPEN","FILE NOT OPEN"
+	data "FILE NOT FOUND","DEVICE NOT PRESENT","NOT INPUT FILE"
+	data "NOT OUTPUT FILE","MI{$d3:2}ING FILE NAME","I{$cc:2}EGAL DEVICE NUMBER"
+	data "NEXT WITHOUT FOR","SYNTAX","RETURN WITHOUT GOSUB"
+	data "OUT OF DATA","I{$cc:2}EGAL QUANTITY","OVERFLOW"
+	data "OUT OF MEMORY","UNDEF'D STATEMENT","BAD SUBSCRIPT"
+	data "REDIM'D A{$d2:2}AY","DIVISION BY ZERO","I{$cc:2}EGAL DIRECT"
+	data "TYPE MISMATCH","STRING T{$cf:2} LONG","FILE DATA"
+	data "FORMULA T{$cf:2} COMPLEX","CAN'T CONTINUE","UNDEF'D FUNCTION"
+	data "VERIFY","LOAD","BREAK "
 {:4092}
 	gosub{:35}:x=1:gosub{:1}:&,2,2:i1$=a$:close 2:return
 	copr. 1996 new image 5/6/96 - jlf

@@ -9,36 +9,36 @@
 	IF Y=1 THEN FOR X=2 TO 24 STEP 11:GOSUB 16:NEXT:X=31:GOSUB 16
 	CLOSE 2:RETURN
 {:4016}
-	IF SO%(BN)>1 THEN:&"{f6}{$d3}ORRY, {$d4}HIS "+SY$+" {$c2}OARD {$c8}AS {$c1} {$d3}UB{$cf}P.{f6}":RETURN
-	&"{f6}{$d0}LEASE LEAVE A FEW WORDS EXPLAINING WHY{f6}YOU THINK YOU SHOULD BE THE {$d3}UB{$cf}P"
-	&" OF{f6}THIS "+SY$+" {$c2}OARD{f6:2}"
-	C$="[{$d3}UB{$cf}P {$c1}PPLICATION]"+R$+R$+"{$d2}{$c5}: "+BB$(BN)+R$+R$:GOTO{:4032}
+	IF SO%(BN)>1 THEN:&"{f6}SORRY, THIS "+SY$+" BOARD HAS A SUBOP.{f6}":RETURN
+	&"{f6}PLEASE LEAVE A FEW WORDS EXPLAINING WHY{f6}YOU THINK YOU SHOULD BE THE SUBOP"
+	&" OF{f6}THIS "+SY$+" BOARD{f6:2}"
+	C$="[SUBOP APPLICATION]"+R$+R$+"RE: "+BB$(BN)+R$+R$:GOTO{:4032}
 {:4024}
 	ON-(SG=.)GOTO{:4002}:X=SO%:GOSUB{:4112}:TT$=A$
-	IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN:&"{f6:2}{$c1}CCOUNT DELETED!{f6}":RETURN
-	AN$=TT$:&,15,1:&"{f6:2}{$d3}END {$cd}AIL {$d4}O {pound}V7?: ":GOSUB 8:IF A=0 THEN RETURN
-	&"{f6:2}{$d3}IG{$cf}P {$c6}EEDBACK:{f6}":C$="[{$d3}IG{$cf}P {$c6}BCK: "+BB$(BN)+"]"
+	IF A$="{up arrow}"OR A$="RES"THEN:&"{f6:2}ACCOUNT DELETED!{f6}":RETURN
+	AN$=TT$:&,15,1:&"{f6:2}SEND MAIL TO {pound}V7?: ":GOSUB 8:IF A=0 THEN RETURN
+	&"{f6:2}SIGOP FEEDBACK:{f6}":C$="[SIGOP FBCK: "+BB$(BN)+"]"
 {:4032}
 	ON-(SG=.)GOTO{:4036}:X=SO%:GOSUB{:4112}:TT$=A$
-	IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN:&"{f6:2}{$c1}CCOUNT {$c4}ELETED!{f6}":GOTO{:4040}
+	IF A$="{up arrow}"OR A$="RES"THEN:&"{f6:2}ACCOUNT DELETED!{f6}":GOTO{:4040}
 {:4036}
-	IM=1:GOSUB 440:ON KK+1 GOTO{:4002}:AN$=TT$:&,15,1:O$="{$c6}EEDBACK {$d4}O "+AN$+"...."
-	&"{f6:2}{$c6}ILING {pound}$O":GOSUB{:4004}:&"{f6:2}":IF LM<>1 THEN RETURN
+	IM=1:GOSUB 440:ON KK+1 GOTO{:4002}:AN$=TT$:&,15,1:O$="FEEDBACK TO "+AN$+"...."
+	&"{f6:2}FILING {pound}$O":GOSUB{:4004}:&"{f6:2}":IF LM<>1 THEN RETURN
 {:4040}
-	C$="{$c6}EEDBACK TO "+MID$(I1$,2):GOSUB{:4110}:GOSUB{:4114}:RETURN
+	C$="FEEDBACK TO "+MID$(I1$,2):GOSUB{:4110}:GOSUB{:4114}:RETURN
 {:4042}
 	IF Q<1 THEN RETURN
-	P$="":&"{f6:2}{$c5}NTER {$c8}ANDLE {$cf}R {$c9}{$c4}# {$cf}F {$d5}SER{f6:2}":GOSUB 6:X=ABS(VAL(AN$)):IF X THEN{:4050}
+	P$="":&"{f6:2}ENTER HANDLE OR ID# OF USER{f6:2}":GOSUB 6:X=ABS(VAL(AN$)):IF X THEN{:4050}
 	IM=1:GOSUB 441:X=I:IF X THEN NN$=AN$:GOTO{:4056}
-	&"{f6:2}{f5}{pound}V7{f5} {$ce}OT {$c6}OUND.{f6}":RETURN
+	&"{f6:2}{f5}{pound}V7{f5} NOT FOUND.{f6}":RETURN
 {:4050}
 	IF X<1 OR X>UR OR X=ID THEN{:4054}
-	GOSUB 35:GOSUB 1:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"{$d2}{$c5}{$d3}"THEN{:4056}
+	GOSUB 35:GOSUB 1:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"RES" then {:4056}
 {:4054}
-	&"{f6:2}{$c9}NVALID {$c1}CCOUNT!{f6}":RETURN
+	&"{f6:2}INVALID ACCOUNT!{f6}":RETURN
 {:4056}
-	&"{f6}{$c8}ANDLE: ":&NN$:&"{f6:2}{$c9}S {$d4}HAT {$c3}ORRECT?: ":GOSUB 8:IF A=.THEN RETURN
-	&"{f6}{$c1}DD {$c8}OW {$cd}ANY {$c3}REDITS (500 {$cd}AX)?: {pound}I1":IF TR%<1 THEN RETURN
+	&"{f6}HANDLE: ":&NN$:&"{f6:2}IS THAT CORRECT?: ":GOSUB 8:IF A=.THEN RETURN
+	&"{f6}ADD HOW MANY CREDITS (500 MAX)?: {pound}I1":IF TR%<1 THEN RETURN
 	A=ABS(INT(VAL(LEFT$(MID$(AN$,2),4)))):IF A<1 OR A>500 THEN RETURN
 	GOSUB 35:GOSUB 1:FOR KK=1 TO 24:&,2,2:TT$(KK)=A$:NEXT
 	TT$(19)=STR$(VAL(TT$(19))+A):GOSUB 1
@@ -46,35 +46,35 @@
 	A=.:&,11:X=.:RETURN
 {:4070}
 	A%=ABS(INT(VAL(MID$(AN$,3)))):IF A%<1 OR A%>UR THEN RETURN
-	GOSUB 35:X=A%:GOSUB 1:&,2,2:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN CLOSE 2:RETURN
-	&"{f6:2}{lt. green}{$c8}ANDLE   : {pound}$A ({$d5}{$c9}{$c4}#{pound}%A)"
+	GOSUB 35:X=A%:GOSUB 1:&,2,2:IF A$="{up arrow}"OR A$="RES"THEN CLOSE 2:RETURN
+	&"{f6:2}{lt. green}HANDLE   : {pound}$A (UID#{pound}%A)"
 	&,2,2:&,2,2:B$=A$:&,2,2:B$=B$+" "+A$:&,2,2:C$=A$
-	A=8:GOSUB 11:IF A THEN:&"{f6}{$d2}EAL {$ce}AME: {pound}$B"
-	A$="{f6}{$d0}HONE #  : {pound}$C":A=8:GOSUB 11
-	IF A=0 THEN C$=MID$(C$,2,3):A$="{f6}{$c1}REA {$c3}ODE: {pound}$C"
-	&:FOR KK=6 TO 10:&,2,2:NEXT:B$=CO$(VAL(A$)):&"{f6}{$c3}OMPUTER : {pound}$B"
+	A=8:GOSUB 11:IF A THEN:&"{f6}REAL NAME: {pound}$B"
+	A$="{f6}PHONE #  : {pound}$C":A=8:GOSUB 11
+	IF A=0 THEN C$=MID$(C$,2,3):A$="{f6}AREA CODE: {pound}$C"
+	&:FOR KK=6 TO 10:&,2,2:NEXT:B$=CO$(VAL(A$)):&"{f6}COMPUTER : {pound}$B"
 	FOR KK=11 TO 15:&,2,2:NEXT:A%=VAL(A$):&,2,2:B%=VAL(A$)
 	&,2,2:C%=VAL(A$):&,2,2:D%=VAL(A$):&,2,2:B$=A$
 	&,2,2:F%=VAL(A$):&,2,2:G%=VAL(A$):&,2,2:C$=A$:&,2,2:D$=A$:CLOSE 2
-	&"{f6}{$cc}AST {$c3}ALL: {$04}"+C$
-	A=8:GOSUB 11:IF A=0 AND SO%<>ID THEN IF Q<1 OR LEFT$(SY$,1)<>"{$d5}"THEN:&"{f6}":GOTO{:4100}
-	A$="{f6}{$c3}REDITS  :{pound}$B":IF MID$(D$,7)="1"THEN A$="{f6}{$c3}REDITS  : {$d5}NLIMITED ({pound}$B)"
-	&:&"{f6:2} {pound}%B {$d5}PLOADS{f1} {pound}%A {$c4}OWNLOADS{f6} {pound}%D {$c2}LKS {$d5}{$cc}'ED{f1} {pound}%C {$c2}LKS {$c4}{$cc}'ED"
+	&"{f6}LAST CALL: {$04}"+C$
+	A=8:GOSUB 11:IF A=0 AND SO%<>ID THEN IF Q<1 OR LEFT$(SY$,1)<>"U"THEN:&"{f6}":GOTO{:4100}
+	A$="{f6}CREDITS  :{pound}$B":IF MID$(D$,7)="1"THEN A$="{f6}CREDITS  : UNLIMITED ({pound}$B)"
+	&:&"{f6:2} {pound}%B UPLOADS{f1} {pound}%A DOWNLOADS{f6} {pound}%D BLKS UL'ED{f1} {pound}%C BLKS DL'ED"
 {:4100}
-	A=8:GOSUB 11:ON-(A=1 OR SO%=ID)GOTO{:4102}:IF Q<1 OR SY$<>"{$d3}UB"THEN{:4104}
+	A=8:GOSUB 11:ON-(A=1 OR SO%=ID)GOTO{:4102}:IF Q<1 OR SY$<>"SUB" then {:4104}
 {:4102}
-	&"{f6} {pound}%F {$d0}OSTS{f1} {pound}%G {$d2}ESPONSES"
+	&"{f6} {pound}%F POSTS{f1} {pound}%G RESPONSES"
 {:4104}
 	&"{f6:2}":RETURN
 {:4106}
-	ON-(SG=.)GOTO{:4002}:X=SO%:GOSUB{:4112}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN CLOSE 2:RETURN
-	AN$=A$:&,15,1:B%=X:LP=1:&"{f6:2}{$d5}SER {$c9}{$c4}#{pound}%B{f1} {pound}V7 {$c9}S {$d9}OUR {$d3}{$c9}{$c7} {$c8}OST":RETURN
+	ON-(SG=.)GOTO{:4002}:X=SO%:GOSUB{:4112}:IF A$="{up arrow}"OR A$="RES"THEN CLOSE 2:RETURN
+	AN$=A$:&,15,1:B%=X:LP=1:&"{f6:2}USER ID#{pound}%B{f1} {pound}V7 IS YOUR SIG HOST":RETURN
 {:4110}
 	FOR X=KK-1 TO 1 STEP-1:TT$(X+1)=TT$(X):NEXT:KK=KK+1:TT$(1)=C$:RETURN
 {:4112}
 	GOSUB 35:GOSUB 1:&,2,2:CLOSE 2:RETURN
 {:4114}
-	&"{f6:2}{$c6}ILING {pound}$O...{f6:2}"
+	&"{f6:2}FILING {pound}$O...{f6:2}"
 	B$="E.FBACK":A$=B$+",S,A":GOSUB 4:IF E%THEN A$=B$+",S,W":GOSUB 4
 	PRINT# 2,NA$R$ID;R$D1$R$AC%;R$PH$R$RN$R$CO$(CO%)
 	FOR X=1 TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2,"{up arrow}":CLOSE 2:&,11

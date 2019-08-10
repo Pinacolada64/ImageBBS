@@ -1,0 +1,95 @@
+{number:60000}
+{alpha:alt}
+{step:2}
+	on im goto {:60004},{:60056},{:60002},{:60094},{:60096}
+{:60002}
+	return
+{:60004}
+	b$=co$(co%):gosub 1072
+	gosub {:60068}:&,52,17,3:a=a%:gosub {:60046}:y$=an$:a%=em:gosub {:60046}:x$=an$
+	gosub {:60120}:gosub {:60104}:d$=a$
+	a%=val(mid$(uf$,3,1)):gosub {:60046}:v$=an$:a%=ll%:b%=mp%:t$=mid$(uf$,6,3)
+	a$="m.params":gosub 1350:poke 53252,2:&"{white}  > {pound}i1":a=val(an$)
+	if a then gosub {:60018}:goto {:60004}
+{:60018}
+	on a goto {:60028},{:60060},{:60034},{:60042},{:60024},{:60026},{:60082},{:60114},1883
+	c$="{left:4}"
+	&,69,31,19,str$(ll%)+"x"+mid$(str$(mp%),2),$8c:return
+{:60024}
+	&,52,17,2:&,52,17,3:lf=a%:uf$=mid$(str$(a%),2,1)+mid$(uf$,2):return
+{:60026}
+	poke 1023,2:&,52,20,3:em=a%:return
+{:60028}
+	&"{f6:2}":for x=1 to 9:b$=co$(x):a%=x:&"{pound}%a>-{pound}$b{f6}":next
+	&"{f6}Computer Type?: {pound}g1{pound}v7{f6}":if tr%<1 then return
+	on-(val(an$)<1)goto {:60028}:co%=val(an$):goto 1375
+{:60034}
+	lp=1:&"{f6}How Many Characters/Line?{f6:2}: {pound}i1"
+	x=int(val(an$)):if tr%<1 then return
+	if x<22 or x>80 then:&"{f6}Must Be Between 22 And 80.{f6}":goto {:60034}
+	ll%=x:a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}":return
+{:60042}
+	poke 53252,3:lp=1:&"{f6}How Many Lines/Screen?{f6:2}: {pound}i1"
+	mp%=abs(val(an$)):on-(mp%<1 or mp%>255)goto {:60050}:poke 971,mp%:return
+{:60046}
+	an$="Off":if a%then an$="On"
+	return
+{:60050}
+	lp=1:&"{f6}Must Be Between 1 and 255":goto {:60042}
+	&,52,34,2:&,52,34,3:uf$=left$(uf$,1)+mid$(str$(a%),2,1)+mid$(uf$,3)
+	return
+{:60056}
+	c$=mid$(an$,3,1):a=abs(val(c$)):if a then{:60062}
+	if c$="+"or c$="-"then a=a-(c$="+")+(c$="-"):goto {:60062}
+{:60060}
+	a$="m.modes":gosub 1350:&"{white} > {pound}g1":a=val(an$)
+{:60062}
+	a=(a-2*(a>1))and 7
+	&,52,16,sgn(a and 4):&,52,18,sgn(a and 2):&,52,19,a and 1:nl=-(a=7 or a<4):if a=7 then nl=2
+	gosub {:60068}:&:return
+{:60068}
+	&,52,16,3:a=a%*4:&,52,18,3:a=a+a%*2:&,52,19,3:a=a+a%
+	lp=1:if a>3 then on a-3 goto {:60074},{:60076},{:60078},{:60080}
+	z$="CBM C/G":return
+{:60074}
+	z$="ASCII":return
+{:60076}
+	z$="ASCII & IBM Graphics":return
+{:60078}
+	z$="ASCII & ANSI Color":return
+{:60080}
+	z$="ANSI C/G":return
+{:60082}
+	gosub {:60106}:on x+1 goto 1603:a=val(mid$(an$,3,3)):if a>. then {:60088}
+{:60084}
+	&"{f6}Available Protocols:{f6:2}":for i=1 to x:a%=i:a$=mid$(tt$(i),10)
+	lp=1:&"{pound}%a) {pound}$a{pound}{back arrow}39 ":next:&"{f6:2}--> {pound}g1":a=val(an$)
+{:60088}
+	if a>.and a<=x then lp=1:&mid$(tt$(a),10):if a<x or b%=.then ul=a-1
+	if an$="{f2}"then a$="protos":gosub 1350:goto {:60084}
+	a=-a*(a>.):return
+{:60094}
+	&,52,4,3:on a%goto 1603:gosub {:60082}:goto {:60098}
+{:60096}
+	gosub {:60106}:a=ul+1:if a%then a=x
+{:60098}
+	on a+1 goto 1603:if b%=1 and a=x then a=2:goto 1738
+	a$=tt$(a):f=val(mid$(a$,7,1)):nb=val(mid$(a$,8,1)):d4$=mid$(a$,10):pr=-1
+	dr=5:gosub 1010:a$=dr$+"++ "+left$(a$,6):&,7,dv%,2:&,16,4,f:return
+{:60104}
+	gosub {:60106}:a$=mid$(tt$(ul+1),10):&,11:return
+{:60106}
+	&,11:b%=.:dr=1:a$="s.m.protos,s,r":gosub 1011:x=.:if e%then:&:return
+{:60108}
+	&,2,2:if a$<>"{up arrow}"and x<253 then x=x+1:tt$(x)=a$:if st=. then {:60108}
+	&,52,4,3:if zz=1 or a%=1 then x=x+1:tt$(x)="copier00 Copier":b%=1
+	close 2:return
+{:60114}
+	&"{clear}{f6}More Prompt Options:{f6:2}{white} 1 {lt. blue}Off{f6}{white} 2 {lt. blue}On{f6}{white} 3 {lt. blue}Messages Only{f6:2}{white}  > {pound}g1"
+	a=val(an$):if a>.and a<4 then uf$=left$(uf$,1)+chr$(a+47)+mid$(uf$,3)
+	gosub {:60120}:&"{pound}$w{f6}":return
+{:60120}
+	a=val(mid$(uf$,2,1)):w$="Off":if a then w$="On":if a>1 then w$="Messages Only"
+	return
+	copr. 1994 new image 9/8/94
+	rem im.params

@@ -1,0 +1,72 @@
+{number:60000}
+{alpha:alt}
+{step:2}
+	on im goto {:60002}:return
+{:60002}
+	&"{clear}Node List/Net Map"
+	dr=1:a$="s.netmenu":gosub 1076
+	if zz then dr=1:a$="s.netmenuzz":gosub 1076
+{:60008}
+	n=.:b%=.:&"{f6:2}1. List All Nodes{f6}2. List Active Nodes{f6}3. Information On Node"
+	&"{f6}4. Netmap{f6}5. NetLink Map"
+	if zz then:&"{f6}6. Read Transfer Log{f6}7. Read Sysop Log"
+	&"{f6}Q. Quit{f6:2}Opt: {pound}g1{pound}v7{f6}":if an$="Q"then an$="":return
+	if an$=""then return
+	on tr%+1 goto 1603:a=val(an$):on zz+1 goto {:60020},{:60022}
+{:60020}
+	if a<1 or a>5 then{:60008}
+{:60022}
+	if a<1 or a>7 then{:60008}
+	on a goto {:60042},{:60026},{:60052},{:60048},{:60094},{:60070},{:60082}
+{:60026}
+	dr=2:a$="nm.nodes":gosub 1011:input# 2,n
+	&"{f6:2}There Are {pound}!n Nodes{f6}List A)ll Or Start At Number? {pound}i1{f6:2}"
+	on tr%+1 goto 1603:on-(an$="A")goto {:60040}:a=val(an$):if a<1 or a>n then{:60008}
+	for i=a to n
+{:60034}
+	x=i+1:gosub 1001:input# 2,a$,b$,b$,c$,b
+	if(b and 1)=.then:&"{pound}#2{pound}!i:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:next:close 2:goto {:60008}
+{:60040}
+	for i=1 to n:goto {:60034}
+{:60042}
+	&"{f6} All NetWork Nodes:{f6:2}":dr=2:a$="nm.nodes":gosub 1011:input# 2,n
+	for i=1 to n:x=i+1:gosub 1001:input# 2,a$,b$,b$:&"{pound}#2{pound}!i:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	i=i+rc*n:next:close 2:goto {:60008}
+{:60048}
+	if ll%>40 then a$="nm.map 80":dr=2:gosub 1075:on-(e%<>.)goto {:60050}:close 2:goto {:60008}
+{:60050}
+	dr=2:a$="nm.map":gosub 1075:close 2:goto {:60008}
+{:60052}
+	dr=2:a$="nm.nodes":gosub 1011:input# 2,n
+	&"{f6:2}There Are {pound}!n Nodes{f6}Information On Which? {pound}i1{f6:2}":on tr%+1 goto 1603
+{:60056}
+	a=abs(val(an$)):if a<1 or a>n then{:60068}
+	x=a+1:gosub 1001:input# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	f$="Active":if(o%and 1)then f$="Inactive"
+	&"{f6}#{pound}#2{pound}!a ({pound}$a) {f5}{pound}$c{f5}{pound}{back arrow}25<{pound}$f>{f6} Sysop:{pound}$d{f6} Phone:{pound}$b{f6}"
+	&" Connected To #{pound}%a":if b%then:&",#{pound}%b":if c%then:&",#{pound}%c":if d%then:&",#{pound}%d"
+	&"{f6:2}Another? (Number Or RETURN) {pound}i1":on tr%+1 goto 1603:on-(an$="")goto {:60008}:goto {:60056}
+{:60068}
+	close 2:&"Unknown Node #!{f6}":goto {:60008}
+{:60070}
+	&"{f6} Read This Month's NetLog{f6}":dr=2:l$="nm.log "+mid$(d1$,4,2):a$=l$+",s,r"
+	gosub 1011:a%=.:sh=.:if e%then close 2:goto {:60008}
+{:60074}
+	a%=a%+1:input# 2,a$,b$:&"{f6}#{pound}%a: {pound}$a{f6}    {$04}"+right$(b$,11)
+	if len(b$)>11 then:&"{f6} To {$04}"+left$(b$,11)
+	&"{f6}Files Transferred:":&,3,2:if st=.and sh=. then {:60074}
+	close 2:&"{f6}Delete?":gosub 1907:on a+1 goto {:60008}:a$=l$:gosub 1024:close 2:goto {:60008}
+{:60082}
+	&"{f6}Read Net Sysop Log{f6}":dr=2:l$="nm.sylog":a$=l$+",s,r":gosub 1011:a%=.:sh=.
+	if e%then close 2:goto {:60008}
+{:60086}
+	a%=a%+1:&,2,2:f$=a$:&,2,2:b$=a$:&,2,2:c$=a$:a$=f$:s=st
+	&"{f6}#{pound}%a: Sent By {f5}{pound}$a{f5}{f6} On {$04}"+b$:&"{f6} File:{pound}$c{f6}":if s+sh=. then {:60086}
+	close 2:&"{f6}Delete?":gosub 1907:if a=. then {:60008}
+	a$=l$:gosub 1024:close 2:goto {:60008}
+{:60094}
+	a$="nm.map link":gosub 1075:if e%then:&"{f6:2}No Link Map Found."
+	&"{f6}{gray3}[{rvrs on}Any Key{rvrs off}] {pound}g1{pound}hj":goto {:60008}
+	copr. 1994 new image 9/27/94
+	rem im.nodes

@@ -1,87 +1,87 @@
 	REM " I/SU.CONFIG "
 	ON LM GOSUB{:4002},{:4200}:RETURN
 {:4002}
-	Z3$="{$d0}ART {$c9}: {$d3}YSOP {$c9}NFORMATION":GOSUB 3404:D1$="14112071201":
+	Z3$="PART I: SYSOP INFORMATION":GOSUB 3404:D1$="14112071201":
 {:4004}
-	&"{f6}{white}":POKE 53252,20:W$="{$c9}{$cd}{$c1}{$c7}{$c5} {$d3}{$d9}{$d3}{$cf}{$d0}":B$=W$:PL=1:P$="{$d3}YSOP {$c8}ANDLE":&,1,32
+	&"{f6}{white}":POKE 53252,20:W$="IMAGE SYSOP":B$=W$:PL=1:P$="SYSOP HANDLE":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:2}{lt. blue}{$d3}YSOP {$c8}ANDLE{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
-	TT$(1)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="{$cd}{$c9}{$c3}{$cb}{$c5}{$d9}":B$=W$:P$="{$d3}YSOP {$c6}IRST {$ce}AME":&,1,32
+	&"{up:2}{lt. blue}SYSOP HANDLE{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
+	TT$(1)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="MICKEY":B$=W$:P$="SYSOP FIRST NAME":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$d3}YSOP {$c6}IRST {$ce}AME{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
-	TT$(3)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="{$cd}{$cf}{$d5}{$d3}{$c5}":B$=W$:P$="{$d3}YSOP {$cc}AST {$ce}AME":&,1,32
+	&"{up:3}{lt. blue}SYSOP FIRST NAME{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
+	TT$(3)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="MOUSE":B$=W$:P$="SYSOP LAST NAME":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$d3}YSOP {$cc}AST {$ce}AME{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
-	TT$(4)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="[801] 423-2209":B$=W$:P$="{$d3}YSOP {$d0}HONE":&,1,32
+	&"{up:3}{lt. blue}SYSOP LAST NAME{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
+	TT$(4)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="[801] 423-2209":B$=W$:P$="SYSOP PHONE":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$d3}YSOP {$d0}HONE{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
-	TT$(5)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="{$d0}{$c1}{$d3:2}":B$=W$:P$="{$d3}YSOP {$d0}ASSWORD":&,1,32
+	&"{up:3}{lt. blue}SYSOP PHONE{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {white}"
+	TT$(5)=AN$:&"{f6}{pound}{back arrow}38 {f6}{up}":W$="PA{$d3:2}":B$=W$:P$="SYSOP PASSWORD":&,1,32
 	IF AN$=""THEN AN$=B$
-	TT$(2)=AN$:&"{up:3}{lt. blue}{$d3}YSOP {$d0}ASSWORD{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {yellow}{f6}{$c9}S THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:GOTO{:4004}
+	TT$(2)=AN$:&"{up:3}{lt. blue}SYSOP PASSWORD{blue}:{pound}{back arrow}19{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}30 {yellow}{f6}IS THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:GOTO{:4004}
 	TT$=TT$(1)+R$+TT$(2)+R$+TT$(3)+R$+TT$(4)+R$+TT$(5)+R$+D1$+R$
 	TT$=TT$+"9"+R$+"0"+R$+"0"+R$+"1"+R$+MID$(STR$(40+24*256),2)+R$+"1"+R$:FOR I=1 TO 9:TT$=TT$+"0"+R$:NEXT:TT$=TT$+D1$+R$
 	TT$=TT$+"1411191111111119000090000"
-	GOSUB 3414:Z3$="{$d0}ART {$c9:2}: {$c3}LOCK {$d3}ETTING":GOSUB 3404:RESTORE:GOSUB{:4270}
-	Z3$="{$d0}ART {$c9:3}: {$c4}EVICE/{$c4}RIVE {$d3}ETTINGS":GOSUB 3414:GOSUB 3404:&"{f6}{white}"
+	GOSUB 3414:Z3$="PART {$c9:2}: CLOCK SETTING":GOSUB 3404:RESTORE:GOSUB{:4270}
+	Z3$="PART {$c9:3}: DEVICE/DRIVE SETTINGS":GOSUB 3414:GOSUB 3404:&"{f6}{white}"
 {:4032}
-	A=.:READ A$:IF A$<>"*"THEN{:4032}
+	A=.:READ A$:IF A$<>"*" then {:4032}
 	FOR I=1 TO 6:POKE 53252,3:PL=1:READ B$
-	W$="8":P$=B$+" {$c4}EVICE":&,1,32:A=VAL(AN$):IF A<7 OR A>16 THEN A=8
-	DV%(I)=A:W$="0":P$=B$+" {$c4}RIVE":&,1,32:A=VAL(AN$):IF A<.OR A>254 THEN A=.
-	DR%(I)=A:C$=MID$(STR$(DV%(I)),2)+","+MID$(STR$(DR%(I)),2):&"{up}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{lt. blue}  {pound}$B {$c4}ISK{blue}:{cyan}{pound}{back arrow}20{pound}$C{f6:2}{white}":NEXT
-	&"{yellow}{$c9}S THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:&"{f6}":RESTORE:GOTO{:4032}
-	Z3$="{$d0}ART {$c9}{$d6}: {$c2:2}{$d3} {$c9}NFORMATION":GOSUB 3414:GOSUB 3404:POKE 53252,30:PL=.
+	W$="8":P$=B$+" DEVICE":&,1,32:A=VAL(AN$):IF A<7 OR A>16 THEN A=8
+	DV%(I)=A:W$="0":P$=B$+" DRIVE":&,1,32:A=VAL(AN$):IF A<.OR A>254 THEN A=.
+	DR%(I)=A:C$=MID$(STR$(DV%(I)),2)+","+MID$(STR$(DR%(I)),2):&"{up}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{pound}{back arrow}38 {f6}{up:2}{lt. blue}  {pound}$B DISK{blue}:{cyan}{pound}{back arrow}20{pound}$C{f6:2}{white}":NEXT
+	&"{yellow}IS THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:&"{f6}":RESTORE:GOTO{:4032}
+	Z3$="PART IV: {$c2:2}S INFORMATION":GOSUB 3414:GOSUB 3404:POKE 53252,30:PL=.
 {:4044}
-	W$="{$c9}{$cd}{$c1}{$c7}{$c5} {$c2:2}{$d3} {$d6}2.0":B$=W$:P$="{$c2:2}{$d3} {$ce}AME":&"{f6}{white}":&,1,32
+	W$="IMAGE {$c2:2}S V2.0":B$=W$:P$="{$c2:2}S NAME":&"{f6}{white}":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:2}{lt. blue}{$c2:2}{$d3} {$ce}AME{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
-	BN$=AN$:W$="{$c9}{$cd}{$c1}{$c7}{$c5} {$cd}{$c1}{$c9}{$ce}":B$=W$:P$="{$cd}AIN {$d0}ROMPT":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
+	&"{up:2}{lt. blue}{$c2:2}S NAME{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
+	BN$=AN$:W$="IMAGE MAIN":B$=W$:P$="MAIN PROMPT":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$cd}AIN {$d0}ROMPT{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
-	PO$=AN$:W$="* {$c5}NTERING {$c3}HAT {$cd}ODE *":B$=W$:P$="{$c3}HAT {$c5}NTRY":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
+	&"{up:3}{lt. blue}MAIN PROMPT{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
+	PO$=AN$:W$="* ENTERING CHAT MODE *":B$=W$:P$="CHAT ENTRY":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$c3}HAT {$c5}NTRY{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
-	C1$=AN$:W$="* {$c5}XITING {$c3}HAT {$cd}ODE *":B$=W$:P$="{$c3}HAT {$c5}XIT":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
+	&"{up:3}{lt. blue}CHAT ENTRY{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
+	C1$=AN$:W$="* EXITING CHAT MODE *":B$=W$:P$="CHAT EXIT":&"{f6}{pound}{back arrow}38 {f6}{up}":&,1,32
 	IF AN$=""THEN AN$=B$
-	&"{up:3}{lt. blue}{$c3}HAT {$c5}XIT{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
-	C2$=AN$:W$="100":B$=W$:P$="{$ce}EW {$d5}SER {$c3}REDITS":&"{f6}{back arrow}38 {f6}{up}":&,1,32:IF AN$=""THEN AN$=B$
-	NC=VAL(AN$):&"{up:3}{lt. blue}{$ce}{$c5}{$d7} {$c3}REDITS{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}{yellow}{f6}{$c9}S THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:GOTO{:4044}
-	GOSUB 3414:Z3$="{$c3}REATING {$c9}MAGE 2.0 {$d3}YSTEM {$c6}ILES...":GOSUB 3404:&"{f6}{lt. blue}{$c3}REATING {blue}{f5}{cyan}BD.DATA{blue}{f5}{lt. blue}...."
+	&"{up:3}{lt. blue}CHAT EXIT{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}"
+	C2$=AN$:W$="100":B$=W$:P$="NEW USER CREDITS":&"{f6}{back arrow}38 {f6}{up}":&,1,32:IF AN$=""THEN AN$=B$
+	NC=VAL(AN$):&"{up:3}{lt. blue}NEW CREDITS{blue}:{pound}{back arrow}12{cyan}{pound}V7{pound}{back arrow}38 {f6}{pound}{back arrow}38 {white}{yellow}{f6}IS THE ABOVE INFORMATION CORRECT? ":GOSUB 96:IF A=.THEN GOSUB 3414:GOTO{:4044}
+	GOSUB 3414:Z3$="CREATING IMAGE 2.0 SYSTEM FILES...":GOSUB 3404:&"{f6}{lt. blue}CREATING {blue}{f5}{cyan}BD.DATA{blue}{f5}{lt. blue}...."
 	A$=BD$+"BD.DATA,S,W":OPEN 2,DV%,2,A$:PRINT# 2,DV%(3);R$;DR%(3):PRINT# 2,PO$
-	PRINT# 2,"2.0 {$c9}MAGE {$d6}2.0 {$c3}OPYRIGHT 1996 {$ce}EW {$c9}MAGE {$d3}OFTWARE":CLOSE 2:CLOSE 15
-	&"{white}{$c4}ONE!{f6}{lt. blue}{$c3}REATING {blue}{f5}{cyan}U.CONFIG{blue}{f5}{lt. blue}...."
+	PRINT# 2,"2.0 IMAGE V2.0 COPYRIGHT 1996 NEW IMAGE SOFTWARE":CLOSE 2:CLOSE 15
+	&"{white}DONE!{f6}{lt. blue}CREATING {blue}{f5}{cyan}U.CONFIG{blue}{f5}{lt. blue}...."
 	DR=6:A$="U.CONFIG,L,"+CHR$(254):GOSUB 4
-	X=1:GOSUB 1:PRINT# 2,TT$:X=2:GOSUB 1:PRINT# 2,"{up arrow}":UR=1:CLOSE 2:&"{white}{$c4}ONE!{f6}"
-	&"{lt. blue}{$c3}REATING {blue}{f5}{cyan}U.INDEX{blue}{f5}{lt. blue}....":DR=6:GOSUB 3:A$=DR$+"U.INDEX":PRINT# 15,"S"A$:
-	A%(0)=1:A%(1)=1:&,60,3,0,A%(0),4,A$,DV%:CLOSE 15:&"{white}{$c4}ONE!{f6}"
-	CLOSE 2:&"{lt. blue}{$c3}REATING {blue}{f5}{cyan}E.STATS{blue}{f5}{lt. blue}...."
+	X=1:GOSUB 1:PRINT# 2,TT$:X=2:GOSUB 1:PRINT# 2,"{up arrow}":UR=1:CLOSE 2:&"{white}DONE!{f6}"
+	&"{lt. blue}CREATING {blue}{f5}{cyan}U.INDEX{blue}{f5}{lt. blue}....":DR=6:GOSUB 3:A$=DR$+"U.INDEX":PRINT# 15,"S"A$:
+	A%(0)=1:A%(1)=1:&,60,3,0,A%(0),4,A$,DV%:CLOSE 15:&"{white}DONE!{f6}"
+	CLOSE 2:&"{lt. blue}CREATING {blue}{f5}{cyan}E.STATS{blue}{f5}{lt. blue}...."
 	DR=3:A$="E.STATS,L,"+CHR$(10):GOSUB 4
-	FOR X=1 TO 40:GOSUB 1:PRINT# 2,"0":NEXT:CLOSE 2:&"{white}{$c4}ONE!{f6}"
-	&"{lt. blue}{$c3}REATING {blue}{f5}{cyan}E.DATA{blue}{f5}{lt. blue}...."
+	FOR X=1 TO 40:GOSUB 1:PRINT# 2,"0":NEXT:CLOSE 2:&"{white}DONE!{f6}"
+	&"{lt. blue}CREATING {blue}{f5}{cyan}E.DATA{blue}{f5}{lt. blue}...."
 	DR=3:A$="E.DATA,L,"+CHR$(31):GOSUB 4:X=1:GOSUB 1:PRINT# 2,"0"
 	FOR X=2 TO 11:GOSUB 1:PRINT# 2,"{up arrow}":NEXT:X=12:GOSUB 1:PRINT# 2,"2"
-	FOR X=13 TO 16:GOSUB 1:PRINT# 2,"{up arrow}":NEXT:X=17:GOSUB 1:PRINT# 2,"{$ce}{$cf}{$c2}{$cf}{$c4}{$d9}"
-	X=18:GOSUB 1:PRINT# 2,"{$d0}{$c1}{$d3:2}":X=19:GOSUB 1:PRINT# 2,D1$
+	FOR X=13 TO 16:GOSUB 1:PRINT# 2,"{up arrow}":NEXT:X=17:GOSUB 1:PRINT# 2,"NOBODY"
+	X=18:GOSUB 1:PRINT# 2,"PA{$d3:2}":X=19:GOSUB 1:PRINT# 2,D1$
 	X=20:GOSUB 1:PRINT# 2," 0 , 0 , 0":FOR X=21 TO 30:GOSUB 1:PRINT# 2,"{up arrow}":NEXT
 	X=31:GOSUB 1:PRINT# 2,"2"
 	FOR X=32 TO 34:GOSUB 1:PRINT# 2,"{up arrow}":NEXT:X=35:GOSUB 1:PRINT# 2,D1$
 	X=36:GOSUB 1:PRINT# 2,"0":X=37:GOSUB 1:PRINT# 2,MID$(STR$(Y%),2,2)
 	X=38:GOSUB 1:PRINT# 2,"0":FOR X=39 TO 42:GOSUB 1:PRINT# 2,"{up arrow}":NEXT
-	X=43:GOSUB 1:PRINT# 2,"{$d8}":FOR X=44 TO 46:GOSUB 1:PRINT# 2,"{up arrow}":NEXT
+	X=43:GOSUB 1:PRINT# 2,"X":FOR X=44 TO 46:GOSUB 1:PRINT# 2,"{up arrow}":NEXT
 	X=47:GOSUB 1:PRINT# 2,BN$:X=48:GOSUB 1:PRINT# 2,C1$
 	X=49:GOSUB 1:PRINT# 2,C2$:B$="0":X=50:GOSUB 1:&,2,2
 	IF ASC(A$+NL$)<>32 THEN B$=A$
 	GOSUB 1:PRINT# 2,B$:X=51:GOSUB 1:PRINT# 2,CC$
 	FOR I=1 TO 6:X=51+I:GOSUB 1:PRINT# 2,DV%(I);R$;DR%(I):NEXT
-	X=58:GOSUB 1:PRINT# 2,NC:CLOSE 2:&"{white}{$c4}ONE!{f6}"
-	&"{lt. blue}{$c3}REATING {blue}{f5}{cyan}E.ACCESS{blue}{f5}{lt. blue}....":DR=3:A$="E.ACCESS,L,"+CHR$(127):GOSUB 4
+	X=58:GOSUB 1:PRINT# 2,NC:CLOSE 2:&"{white}DONE!{f6}"
+	&"{lt. blue}CREATING {blue}{f5}{cyan}E.ACCESS{blue}{f5}{lt. blue}....":DR=3:A$="E.ACCESS,L,"+CHR$(127):GOSUB 4
 	FOR I=.TO 8:X=I+1:GOSUB 1
-	PRINT# 2,"{$c7}ROUP"+STR$(I)+R$+"01001100000000021151":NEXT
-	PRINT# 2,"{$c7}ROUP"+STR$(I+1)+R$+"19111911111111190000"
-	CLOSE 2:&"{white}{$c4}ONE!{f6}":Z3$="{$d3}TARTING {$c4}AILY {$cc}OG...":GOSUB 3404:GOSUB 3210:
-	GOSUB 3414:&"{f6:2}{$c2}E SURE TO ENTER {f5}{$c9}{$cd}{f5} ONCE ONLINE TO{f6}COMPLETE THE SETUP/CONFIGURATION OF{f6}"
-	&"YOUR BBS. {$cd}ESSAGE BASES, {$d5}/{$c4} AND {$d5}/{$d8}{f6}LIBRARIES CAN BE CONFIGURED BY USING{f6}"
-	&"THE {f5}{$d2}{$c5}{f5} COMMAND FROM THE MAIN PROMPT.{f6:2}(C)1996 {$ce}EW {$c9}MAGE {$d3}OFTWARE.{f6}":LP=1:RETURN
+	PRINT# 2,"GROUP"+STR$(I)+R$+"01001100000000021151":NEXT
+	PRINT# 2,"GROUP"+STR$(I+1)+R$+"19111911111111190000"
+	CLOSE 2:&"{white}DONE!{f6}":Z3$="STARTING DAILY LOG...":GOSUB 3404:GOSUB 3210:
+	GOSUB 3414:&"{f6:2}BE SURE TO ENTER {f5}IM{f5} ONCE ONLINE TO{f6}COMPLETE THE SETUP/CONFIGURATION OF{f6}"
+	&"YOUR BBS. MESSAGE BASES, U/D AND U/X{f6}LIBRARIES CAN BE CONFIGURED BY USING{f6}"
+	&"THE {f5}RE{f5} COMMAND FROM THE MAIN PROMPT.{f6:2}(C)1996 NEW IMAGE SOFTWARE.{f6}":LP=1:RETURN
 	PRINT# 15,"T-RA":&,2,15
 	Z$=LEFT$(A$,2):A=-(Z$="SU")-2*(Z$="MO")-3*(Z$="TU")-4*(Z$="WE")-5*(Z$="TH")
 	A=A-6*(Z$="FR")-7*(Z$="SA"):Z$=MID$(STR$(A),2,1)+MID$(A$,12,2)+MID$(A$,6,2)
@@ -96,15 +96,15 @@
 	GOSUB{:4146}:SYS 49152:SYS 49155:GOTO{:4144}
 {:4200}
 	CLOSE 15:OPEN 15,DV%,15,"R"+BD$+"D.DATA=BD.DATA"
-	FL=.:Z3$="{$d2}EADING OLD CONFIGURATION...":GOSUB 3404:CLOSE 2:OPEN 2,DV%,2,BD$+"D.DATA,S,R":GOSUB 5
-	IF E%THEN CLOSE 2:&"{f6:2}{blue}{f5}{cyan}D.DATA{blue}{f5}{lt. blue} NOT FOUND!!{f6:2}{$c8}IT {$c1}NY {$cb}EY TO {$c3}ONFIGURE {$ce}EW {$d3}YSTEM:{pound}G1":RETURN
+	FL=.:Z3$="READING OLD CONFIGURATION...":GOSUB 3404:CLOSE 2:OPEN 2,DV%,2,BD$+"D.DATA,S,R":GOSUB 5
+	IF E%THEN CLOSE 2:&"{f6:2}{blue}{f5}{cyan}D.DATA{blue}{f5}{lt. blue} NOT FOUND!!{f6:2}HIT ANY KEY TO CONFIGURE NEW SYSTEM:{pound}G1":RETURN
 	FOR I=1 TO 6:INPUT# 2,DV%(I),DR%(I):NEXT
 	&,2,2:CC$=A$:&,2,2:NC=VAL(A$):&,2,2:&,2,2:&,2,2:BN$=A$:&,2,2:PO$=A$:CLOSE 2
-	&"{f6}":GOSUB{:4270}:GOSUB 3414:Z3$="{$c3}ONVERTING OLD INFORMATION...":GOSUB 3404:FOR QQ=1 TO 4:GOSUB{:4212}:NEXT:RETURN
+	&"{f6}":GOSUB{:4270}:GOSUB 3414:Z3$="CONVERTING OLD INFORMATION...":GOSUB 3404:FOR QQ=1 TO 4:GOSUB{:4212}:NEXT:RETURN
 {:4212}
 	ON QQ GOTO{:4214},{:4238},{:4250},{:4258}
 {:4214}
-	Z3$="{$c3}ONVERTING {$c1}CCESS {$c4}ATA...":GOSUB 3404:GOSUB 33
+	Z3$="CONVERTING ACCESS DATA...":GOSUB 3404:GOSUB 33
 	FOR X=2 TO 11:GOSUB 1:&,2,2:TT$(X)=A$:NEXT
 	FOR X=21 TO 30:GOSUB 1:&,2,2:TT$(X)=A$:NEXT
 	FOR I=.TO 9:A$=TT$(I+2):TT$(I+2)=MID$(A$,5)
@@ -115,35 +115,35 @@
 	IF D>100 THEN D=.
 	TT$(I+21)=TT$(I+21)+CHR$(48+C)+CHR$(48+B)+RIGHT$(STR$(100+A),2)+CHR$(48+D)
 	NEXT:CLOSE 2
-	FOR I=.TO 9:FL$(I)=TT$(I+21):NEXT:&"{f6}{white}{$c3}ONVERTING OF ACCESS INFO {yellow}{$d3}{$d5}{$c3:2}{$c5}{$d3:2}{$c6}{$d5}{$cc}{white}!":RETURN
+	FOR I=.TO 9:FL$(I)=TT$(I+21):NEXT:&"{f6}{white}CONVERTING OF ACCESS INFO {yellow}SU{$c3:2}E{$d3:2}FUL{white}!":RETURN
 {:4238}
-	Z3$="{$d5}PDATING 'E.DATA' FILE...":GOSUB 3404:GOSUB 33
+	Z3$="UPDATING 'E.DATA' FILE...":GOSUB 3404:GOSUB 33
 	X=35:GOSUB 1:PRINT# 2,D1$:X=36:GOSUB 1:PRINT# 2,.:X=37:GOSUB 1:PRINT# 2,STR$(MID$(Y%,2,2))
 	PRINT# 2,.:PRINT# 2,.:PRINT# 2,"3"
 	PRINT# 2,"7"
 	FOR I=1 TO 6:X=51+I:GOSUB 1:PRINT# 2,DV%(I);R$;DR%(I):NEXT:CLOSE 2
-	&"{f6:2}{white}{$d5}PDATING OF 'E.DATA' {yellow}{$d3}{$d5}{$c3:2}{$c5}{$d3:2}{$c6}{$d5}{$cc}{white}!":RETURN
+	&"{f6:2}{white}UPDATING OF 'E.DATA' {yellow}SU{$c3:2}E{$d3:2}FUL{white}!":RETURN
 {:4250}
-	Z3$="{$c3}REATING 'E.ACCESS' FILE...":GOSUB 3404
+	Z3$="CREATING 'E.ACCESS' FILE...":GOSUB 3404
 	CLOSE 2:DR=3:A$="E.ACCESS,L,"+CHR$(127):GOSUB 4
 	PRINT# 2,TT$(X+20):NEXT:CLOSE 2
-	&"{f6:3}{white}{$c3}REATING OF 'E.ACCESS' {yellow}{$d3}{$d5}{$c3:2}{$c5}{$d3:2}{$c6}{$d5}{$cc}{white}!":RETURN
+	&"{f6:3}{white}CREATING OF 'E.ACCESS' {yellow}SU{$c3:2}E{$d3:2}FUL{white}!":RETURN
 {:4258}
-	Z3$="{$d7}RITING NEW 'BD.DATA' FILE...":GOSUB 3404
+	Z3$="WRITING NEW 'BD.DATA' FILE...":GOSUB 3404
 	OPEN 2,DV%,2,BD$+"BD.DATA,S,W":GOSUB 5:IF E%THEN CLOSE 2:GOSUB 3192:GOTO 3080
-	IF PO$=""THEN PO$="{$cd}AIN: "
+	IF PO$=""THEN PO$="MAIN: "
 	PRINT# 2,DV%(3);R$;DR%(3);R$;PO$;R$
-	PRINT# 2,"2.0 {$c9}MAGE {$d6}2.0 {$c3}OPYRIGHT 1996 {$ce}EW {$c9}MAGE {$d3}OFTWARE":CLOSE 2:CLOSE 15
-	&"{f6:4}{white}...{lt. red}{rvrs on} {$c3}ONVERSION {$c3}OMPLETE! {rvrs off}{white}...":RETURN
+	PRINT# 2,"2.0 IMAGE V2.0 COPYRIGHT 1996 NEW IMAGE SOFTWARE":CLOSE 2:CLOSE 15
+	&"{f6:4}{white}...{lt. red}{rvrs on} CONVERSION COMPLETE! {rvrs off}{white}...":RETURN
 {:4270}
-	&"{f6}{lt. blue}{$d3}ET THE {$c9}MAGE 2.0 {$d3}YSTEM {$c3}LOCK:{f6:2}{blue}({lt. blue}1{blue}) {cyan}{$cd}ANUALLY{f6}{blue}({lt. blue}2{blue}) {cyan}{$c3}{$cd}{$c4}{$a0}{$c4}EVICE W/{$d2}{$d4}{$c3} {$cf}PTION{f6}"
-	&"{blue}({lt. blue}3{blue}){cyan} {$cc}T. {$cb}ERNAL {$d0}ORT 1{f6}{blue}({lt. blue}4{blue}){cyan} {$cc}T. {$cb}ERNAL {$d0}ORT 2{f6:2}{lt. blue}]> {white}{pound}I1{f6:2}":Y%=VAL(AN$)-1:IF Y%<.OR Y%>3 THEN Y%=.
+	&"{f6}{lt. blue}SET THE IMAGE 2.0 SYSTEM CLOCK:{f6:2}{blue}({lt. blue}1{blue}) {cyan}MANUALLY{f6}{blue}({lt. blue}2{blue}) {cyan}CMD DEVICE W/RTC OPTION{f6}"
+	&"{blue}({lt. blue}3{blue}){cyan} LT. KERNAL PORT 1{f6}{blue}({lt. blue}4{blue}){cyan} LT. KERNAL PORT 2{f6:2}{lt. blue}]> {white}{pound}I1{f6:2}":Y%=VAL(AN$)-1:IF Y%<.OR Y%>3 THEN Y%=.
 	IF VAL(AN$)=2 THEN{:4274}
 	DV%(8)=0:RETURN
 {:4274}
-	&"{lt. blue}{$d7}HICH {$c4}EVICE HAS THE {$c3}{$cd}{$c4}{f6}{$d2}{$d4}{$c3} {$cf}PTION {$c9}NSTALLED?{f6:2}":P$="{cyan}{$c3}{$cd}{$c4} {$c4}EVICE{white}":&,1,32:A=VAL(AN$):IF A<8 OR A>16 THEN A=8
+	&"{lt. blue}WHICH DEVICE HAS THE CMD{f6}RTC OPTION INSTALLED?{f6:2}":P$="{cyan}CMD DEVICE{white}":&,1,32:A=VAL(AN$):IF A<8 OR A>16 THEN A=8
 	Y%=A:RETURN
-	DATA"{$c3}OMMODORE 64","{$c3}OMMODORE 128","{$c1}MIGA","{$c1}PPLE/{$c3}OMP."
-	DATA"{$c9}{$c2}{$cd}/{$c3}OMP.","{$cd}ACINTOSH","{$c1}TARI/{$d3}{$d4}","{$d4}ANDY {$d3}ERIES","{$cf}THER {$d4}YPE"
-	DATA"*","{$d3}YSTEM","{$c5}-{$cd}AIL","{$c5}TCETERA","{$c4}IRECTORY","{$d0}LUS-{$c6}ILE","{$d5}SER"
+	DATA"COMMODORE 64","COMMODORE 128","AMIGA","APPLE/COMP."
+	DATA"IBM/COMP.","MACINTOSH","ATARI/ST","TANDY SERIES","OTHER TYPE"
+	DATA"*","SYSTEM","E-MAIL","ETCETERA","DIRECTORY","PLUS-FILE","USER"
 	COPR. 1996 NEW IMAGE 5/5/96 - RWP

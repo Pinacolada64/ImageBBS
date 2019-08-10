@@ -1,11 +1,11 @@
-	REM" 'I.LO.INSTANT'  10{$c1}PR95  {$ca}{$cc}{$c6}           {$c9}NSTANT {$cc}OGIN {$cd}ODULE         "
+	REM" 'I.LO.INSTANT'  10APR95  JLF           INSTANT LOGIN MODULE         "
 	REM I/LO.INSTANT
 	&,27,2:DIM FB%(29,15),FF%(15):DR=3:GOSUB 3:REM FB WAS DB
-	&,60,2,.,FB%(.,.),DR$+"E.SYSOPLIST",DV%:GOSUB 5:IF E%THEN{:4028}
-	&,52,4,3:&,60,8,FB%(.,.),60,2^(A%+3),FB%(11,1),FF%(1),1:IF A%=.THEN{:4028}
+	&,60,2,.,FB%(.,.),DR$+"E.SYSOPLIST",DV%:GOSUB 5:IF E% then {:4028}
+	&,52,4,3:&,60,8,FB%(.,.),60,2^(A%+3),FB%(11,1),FF%(1),1:IF A%=. then {:4028}
 	FOR I=1 TO A%:X=FF%(I):&,60,1,20,FB%(1,X),AN$:&,15,1:B%=FB%(.,X)
-	&" {white}{pound}!I. {green}{pound}V7 {cyan}{pound}{back arrow}28({$c9}{$c4}# {pound}#0{pound}%B){f6}":NEXT:POKE 53252,4
-	&"{f6}{gray3} {$cc}OGON {$d7}HICH {$c1}CCOUNT?{white}: {pound}I1":A=VAL(AN$):ON-(A<1 OR A>A%OR TR%<1)GOTO{:4024}
+	&" {white}{pound}!I. {green}{pound}V7 {cyan}{pound}{back arrow}28(ID# {pound}#0{pound}%B){f6}":NEXT:POKE 53252,4
+	&"{f6}{gray3} LOGON WHICH ACCOUNT?{white}: {pound}I1":A=VAL(AN$):ON-(A<1 OR A>A%OR TR%<1)GOTO{:4024}
 	A=FF%(A):ID=FB%(.,A):I%=1:&,28,2:&"4014{f6}":GOSUB{:4060}
 	GOTO{:4030}:ON I%AND ZZ GOTO{:4040}:GOTO{:4030}
 	&,28,2
@@ -18,15 +18,15 @@
 {:4028}
 	&,28,2:ID=1:I%=1:GOTO{:4030}
 {:4030}
-	&"{f6}{gray3} {$d0}LEASE {$c5}NTER {$d9}OUR {$d0}ASSWORD{white}:{f6:2}{pound}B1: ":POKE 53252,14:&,6:IF TR%<1 THEN{:4026}
+	&"{f6}{gray3} PLEASE ENTER YOUR PASSWORD{white}:{f6:2}{pound}B1: ":POKE 53252,14:&,6:IF TR%<1 THEN{:4026}
 	Z$=AN$:&"4032{f6}":GOSUB{:4060}:ON-(Z$="")GOTO{:4050}
 {:4040}
-	&"4040: {$cc}OOK UP ACCOUNT{f6}":IM=2:GOSUB 445:IF NA$="{up arrow}"OR NA$="{$d2}{$c5}{$d3}"THEN{:4052}
-	GOSUB{:4060}:ON-(PW$<>Z$)GOTO{:4050}:&"{f6}{lt. red}{$cc}OGIN {$c3}OMPLETE!{f6}":IF ZZ=.THEN K%=I%:I%=.
+	&"4040: LOOK UP ACCOUNT{f6}":IM=2:GOSUB 445:IF NA$="{up arrow}"OR NA$="RES" then {:4052}
+	GOSUB{:4060}:ON-(PW$<>Z$)GOTO{:4050}:&"{f6}{lt. red}LOGIN COMPLETE!{f6}":IF ZZ=.THEN K%=I%:I%=.
 	MM=10:GOTO 3000
 {:4050}
-	&"{f6}{lt. red}{$cc}OGIN IS NOT VALID.{f6}":GOTO{:4022}
+	&"{f6}{lt. red}LOGIN IS NOT VALID.{f6}":GOTO{:4022}
 {:4052}
-	LP=1:&"{f6}{lt. red}{$d4}HAT ACCOUNT HAS BEEN DELETED OR IS NOT ACTIVE.{f6}":GOTO{:4022}
+	LP=1:&"{f6}{lt. red}THAT ACCOUNT HAS BEEN DELETED OR IS NOT ACTIVE.{f6}":GOTO{:4022}
 {:4060}
 	&"{f6}4060: Z$={pound}$Z, AN$={pound}V7, I%={pound}%I, ZZ="+STR$(ZZ)+"{f6}":RETURN

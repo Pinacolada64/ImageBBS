@@ -1,0 +1,44 @@
+{number:60000}
+{alpha:alt}
+{step:2}
+	&,27,2:dim fb%(29,15),ff%(15)
+	gosub 2912:&"{f6}{blue}{pound}vj{pound}$q          {cyan}Feedback SubSection{f6}{blue}{pound}vj{f6}"
+	dr=3:gosub 1010:a$=dr$+"e.sysoplist":tt=0
+	&,60,2,0,fb%(0,0),a$,dv%:gosub 1012:on-(e%<>0)goto {:60026}
+	a%=0:if fb%(0,0)>0 then:&,60,8,fb%(0,0),60,1,fb%(11,1),ff%(1),1
+	if a%=0 then{:60026}
+	if a%=1 then a=1:goto {:60024}
+	for x=1 to a%:a=ff%(x):&,60,1,20,fb%(1,a),an$:&,15,1:&,60,1,36,fb%(12,a),d$
+	x%=x:lp=1:if ll%>40 then:&"{lt. blue}{pound}#2{pound}# {pound}%x{blue}. {white}{pound}v7 {blue}{pound}{back arrow}39    {yellow}{pound}$d":goto {:60018}
+	&"{f6}{lt. blue}{pound}#2{pound}# {pound}%x{blue}. {white}{pound}v7 {f6}   {yellow}{pound}$d"
+{:60018}
+	next:gosub 2912:&"{f6}{blue}{pound}vj{f6:2}{pound}q0{pound}$q           Feedback to Whom: {white}{pound}i1"
+	a=val(an$):if an$="A"then tt$="A{$cc:2}":goto {:60026}
+	if a<1 or a>a%then tt=-1:goto {:60026}
+{:60024}
+	a=ff%(a):&,60,1,20,fb%(1,a),tt$:tt=fb%(0,a):if fb%(11,a)and 2 then tt=0
+{:60026}
+	on-(tt=-1)goto {:60056}:gosub {:60060}:gosub 1604:on-(kk=0)goto {:60056}
+	&"{f6:2}Filing Feedback...{f6:2}":if tt=0 then{:60044}
+	y=tt:tt$(0)="[Feedback]":nn$=tt$
+	z=1:a$="w":tt$=nn$:gosub 1062:if e%then a$="a":z=.:gosub 1062
+	print# 2,na$r$id;r$d1$r$"[Feedback]":&,14,2,kk-1:print# 2,"{up arrow}":close 2
+	gosub 1081:gosub 1060
+	if y=1 then x=2:i=1:gosub 1025:x=13:gosub 1025:x=24:gosub 1025:x=31:gosub 1025
+	x=3:i=1:gosub 1025:x=14:gosub 1025:x=32:gosub 1025:x=25:on z gosub 1025
+	goto {:60054}
+{:60044}
+	b$="fback":a$="a":gosub 1027:if e%then a$="w":gosub 1027
+	print# 2,na$r$id;r$d1$r$ac%r$ph$r$rn$r$co$r$ad$r$"Feedback to "tt$r$
+	&,14,2,kk-1:print# 2,"{up arrow}":close 2
+	gosub 1081:gosub 1060:i=1
+	x=1:gosub 1025:x=12:gosub 1025:x=23:gosub 1025:x=30:gosub 1025
+{:60054}
+	close 2:&,28,2:&,11:return
+{:60056}
+	&"{f6}Aborted!":goto {:60054}
+{:60060}
+	poke 53252,25:p$="{f6} {cyan}Subject{white}":gosub 1005:if an$=""then an$="Feedback"
+	ad$=an$:return
+	copr. new image 11/26/94
+	rem im.feedback

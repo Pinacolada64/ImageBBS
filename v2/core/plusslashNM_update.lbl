@@ -1,0 +1,98 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.update" 06-29-90
+	g$="nm.U.":&"{f6}Scanning For Updates..."
+	dr=2:a$="nm.list,s,r":GOSUB 1011:kk=0:IF e%THEN CLOSE 2:GOTO {:4010}
+{:4006}
+	&,2,2:kk=kk+1:ed$(kk)=a$:ON-(st=0 AND kk<61)GOTO {:4006}:CLOSE 2
+	FOR u=1 TO kk:o$=MID$(ed$(u),11):ON-(LEFT$(o$,5)=g$)GOSUB {:4012}:NEXT
+{:4010}
+	&"{f6}Done{f6}":RETURN
+{:4012}
+	b$=MID$(o$,6)
+	IF b$="nodes"THEN{:4050}
+	IF b$="map"THEN{:4040}
+	IF b$="map 80"THEN{:4045}
+	IF b$="message"THEN{:4024}
+	IF b$="news"THEN{:4100}
+	RETURN
+{:4024}
+	n=0:dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN{:4034}
+	&"{f6} Delivering Sysop Message..."
+	f$="m."+LEFT$(sy$,13):CLOSE 3:OPEN 3,dv%,3,dr$+f$+",s,w":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,dr$+f$+",s,a"
+{:4032}
+	&,2,2:s=st:PRINT# 3,a$:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4032}:n=n+1:ON-(s=0)GOTO {:4032}
+{:4034}
+	CLOSE 2:CLOSE 3:IF n=0 THEN RETURN
+	GOSUB 1060:i=n:x=2:GOSUB 1025:x=13:GOSUB 1025:x=24:GOSUB 1025:x=31:GOSUB 1025
+	CLOSE 2:RETURN
+{:4040}
+	&"{f6} Updating {f5}nm.map{f5}...":dr=2:GOSUB 1010
+	PRINT# 15,"s"dr$"nm.map.bak"
+	PRINT# 15,"r"dr$"nm.map.bak="dr$"nm.map"
+	PRINT# 15,"c"dr$"nm.map="dr$o$
+	RETURN
+{:4045}
+	&"{f6} Updating {f5}nm.map 80{f5}...":dr=2:GOSUB 1010
+	PRINT# 15,"s"dr$"nm.map 80.bak"
+	PRINT# 15,"r"dr$"nm.map 80.bak="dr$"nm.map 80"
+	PRINT# 15,"c"dr$"nm.map 80="dr$o$
+	RETURN
+{:4050}
+	ON nn GOTO {:4064}:&"{f6} Updating {f5}nm.nodes{f5}..."
+	dr=2:GOSUB 1010:CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,r"
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes":INPUT# 2,z
+{:4056}
+	INPUT# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
+	x=a+1:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	IF a>z THEN z=a:x=1:GOSUB 1001:PRINT# 2,z
+	ON-(s=0)GOTO {:4056}:x=1:GOSUB 1001:CLOSE 2:CLOSE 3
+{:4064}
+	&"{f6} Updating {f5}nm.nodelist{f5}...":dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.nodelist"
+	dr=2:a$="nm.nodes":GOSUB 1011
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.nodelist,p,w":PRINT# 3,CHR$(0)CHR$(194);
+	INPUT# 2,n:PRINT# 3,CHR$(n);:IF n=0 THEN{:4076}
+	FOR i=1 TO n:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,b$,b$,a,b,c,d
+	PRINT# 3,LEFT$(a$+"---",3)CHR$(0)CHR$(a)CHR$(b)CHR$(c)CHR$(d);:NEXT
+{:4076}
+	CLOSE 3:x=nn+1:GOSUB 1001:&,2,2:nn$=a$:dt$(0)=a$
+	&,2,2:&,2,2:&,2,2:&,2,2:FOR i=1 TO 4:&,2,2:a%(i)=VAL(a$):NEXT
+	FOR i=1 TO 4:x=a%(i)+1:dt$(i)="":IF x>1 THEN GOSUB 1001:&,2,2:dt$(i)=a$
+	NEXT:CLOSE 2:dr=2:a$="nm.connect":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	FOR x=1 TO 4:GOSUB 1001:b$=""
+{:4086}
+	&,2,2:b$=b$+a$+r$:ON-(st=0)GOTO {:4086}:nn$(x)=b$:NEXT
+	b$="{up arrow}"+r$+"{f2}"+r$+"-------"+r$+r$+"-------"+r$+"0"+r$+"0"+r$+d1$+r$+d1$+r$
+	FOR i=1 TO 4:FOR j=1 TO 4
+	IF LEFT$(nn$(j),3)=dt$(i)AND i<>j THEN a$=nn$(i):nn$(i)=nn$(j):nn$(j)=a$
+	NEXT:NEXT:FOR x=1 TO 4:IF dt$(x)=""THEN nn$(x)="{up arrow}"+b$
+	IF dt$(x)<>LEFT$(nn$(x),3)THEN nn$(x)=dt$(x)+b$
+	GOSUB 1001:PRINT# 2,nn$(x);:NEXT:GOSUB 1001:CLOSE 2:RETURN
+{:4100}
+	&"{f6} Adding NetNews..."
+	dr=4:a$="d.n.Main,s,r":GOSUB 1011:n=0:ON-(e%<>0)GOTO {:4106}:&,2,2:n=VAL(a$)
+	IF n THEN FOR i=1 TO n:b$="":FOR j=1 TO 3:&,2,2:b$=b$+a$+r$:NEXT:tt$(i)=b$:NEXT
+{:4106}
+	CLOSE 2
+	dr=2:a$=o$+",s,r":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:4134}
+{:4110}
+	f=1:&,2,2:a$=a$+r$:ON-(n=0)GOTO {:4116}:a=LEN(a$)
+	FOR i=1 TO n:IF LEFT$(tt$(i),a)=a$THEN tt$(i)=a$+d1$+STR$(af%)+r$:f=0:i=n
+	NEXT
+{:4116}
+	IF f THEN n=n+1:tt$(n)=a$+d1$+r$+STR$(af%)+r$
+{:4118}
+	&,2,2:s=st:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4118}:ON-(s=0)GOTO {:4110}:CLOSE 2
+	dr=1:GOSUB 1010:dr=2:GOSUB 1009:CLOSE 3:OPEN 3,dv%,3,dr$+o$+",s,r":dr=1
+	GOSUB 1009:&,2,3:f$=LEFT$("n."+a$,16)+",s,w":CLOSE 2:OPEN 2,dv%,2,dr$+f$+",s,w"
+	GOSUB 1012:ON-(e%=0)GOTO {:4128}:CLOSE 2:PRINT# 15,"s"dr$f$
+	OPEN 2,dv%,2,dr$+f$+",s,w":GOSUB 1012
+{:4128}
+	&,2,3:s=st:PRINT# 2,a$:ON-(a$<>"{up arrow}"AND s=0)GOTO {:4128}:CLOSE 2:ON-(s=0)GOTO 048
+	CLOSE 3:dr=4:GOSUB 1010:PRINT# 15,"s"dr$"d.n.Main"
+	a$="d.n.Main,s,w":GOSUB 1011:PRINT# 2,n:FOR i=1 TO n:PRINT# 2,tt$(i);:NEXT:CLOSE 2
+{:4134}
+	RETURN
+

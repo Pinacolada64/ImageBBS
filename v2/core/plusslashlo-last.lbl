@@ -1,0 +1,25 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+/lo-last" - last five callers 4/25/2019
+	CLOSE 2:a$="e.last,s,r":dr=3:GOSUB 1011:FOR i=0 TO 5:&,2,2:tt$(i)=a$:NEXT:CLOSE 2
+	a=ll%/2-16:l$="":IF a>0 THEN l$=LEFT$("                        ",a)
+	&"{f6}{pound}$l{lt. blue}{pound}o{$a4:14}{f6}{pound}$l{rvrs on}      Last   Five  Callers      {f6}"
+	&"{pound}$l{pound}o{$a3:14}{f6}"
+	GOSUB {:4014}:FOR i=1 TO 5:a$=LEFT$(tt$(i),11):b$=MID$(tt$(i),12):a%=i
+	&"{pound}$l{white}{pound}%a. {yellow}{pound}$b{f6}{pound}$l{white}On {lt. blue}{$04}"+a$+"{f6}":NEXT
+{:4014}
+	ON nl GOTO {:4016},{:4022}:RETURN
+{:4016}
+	a$="{lt. blue} {$b9}{purple} {$b9}{yellow} {$b9}":&"{pound}$l{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{f6}"
+	a$="{lt. blue}{$b4}{yellow}{$b4}{purple}{$b4}":&"{pound}$l{rvrs on}{purple} {pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{f6}"
+	a$="{yellow} {$b7}{lt. blue} {$b7}{purple} {$b7}":&"{pound}$l{purple}{$b7}{pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{f6}":RETURN
+{:4022}
+	a$="{lt. blue}{$a2:2}{purple}{$a2:2}{yellow}{$a2:2}"
+	b$="{lt. blue}{$a1}{$b6}{purple}{$a1}{$b6}{yellow}{$a1}{$b6}"
+	c$="{lt. blue}{$b8:2}{purple}{$b8:2}{yellow}{$b8:2}"
+'	REM printa$a$a$:printb$b$b$:printc$c$c$:end
+	&"{pound}$l {pound}$a{pound}$a{pound}$a{pound}$a{pound}$a{f6}"
+	&"{pound}$l {pound}$b{pound}$b{pound}$b{pound}$b{pound}$b{f6}"
+	&"{pound}$l {pound}$c{pound}$c{pound}$c{pound}$c{pound}$c{f6}"
+	RETURN

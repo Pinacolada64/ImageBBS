@@ -1,0 +1,956 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-us">
+<head>
+
+<!-- $MVD$:app("MicroVision WebExpress","770") --><!-- $MVD$:template("","0","0") --><!-- $MVD$:color("18","80ff","Orange","1") --><!-- $MVD$:color("19","ffd6ce","Lavender","1") --><!-- $MVD$:color("20","adcfeb","Light Tan","0") -->
+  <title>Image BBS Programming Reference Guide</title>
+
+
+  <meta name="GENERATOR" content="MicroVision Development / WebExpress">
+
+</head>
+
+
+<body style="direction: ltr;">
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr valign="top">
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | <a href="imageprg-chap3-1.html">Chapter III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p>
+
+      </center>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr valign="top">
+
+      <td style="width: 100%; text-align: left; vertical-align: top;">
+      <h1> Chapter V:&nbsp;Variable Usage</h1>
+
+Within Image, there are certain variables which can be considered
+"reserved." This does not mean that you cannot use them, per se, but
+that they can only be used in conjunction with specific purposes. Some
+variables may be used any time, but have a specific purpose. Some
+variables can be used with certain subsystems, but not with others.
+Some variables may be used anywhere, but change continually. This is
+explained in detail in the following paragraphs.<br>
+
+      <br>
+
+An example of a variable used for a specific purpose is <span style="font-family: monospace;">NA$</span>. This
+variable is used to print the handle of the user online. Storing
+something for a module in this variable would cause an undesirable
+effect. Basically, these types of variables are used to control system
+statistics and are best left alone, only to be used to output
+information. These variables are sometimes used as interfaces between
+the BASIC and ML, an example being <span style="font-family: monospace;">PL</span>. Setting <span style="font-family: monospace;">PL</span> to 0 will
+cause all
+user input to be in the form of upper and lower case characters. When
+you set this in BASIC, it causes the ML input routines to recognize the
+upper/lower case characters.<br>
+
+      <br>
+
+The main variables that can be used sometimes are arrays. Depending on
+which subsystem you are in, the arrays may or may not be in use. If
+they are not in use, it is safe to use them. The only exceptions to
+this is <span style="font-family: monospace;">ST(X)</span>,
+      <span style="font-family: monospace;">DV%(X)</span>
+and <span style="font-family: monospace;">TT$(X)</span>.
+      <span style="font-family: monospace;">ST(X)</span>
+holds the BAR stats, changing
+the values of this array should be reserved for updating the BAR stats.
+      <span style="font-family: monospace;">DV%(X)</span>
+is the system device designator. Altering this will change the
+device accessed by the system. <span style="font-family: monospace;">TT$(X)</span>
+cannot be used in a module that
+calls the editor. All text stored in the editor is put into <span style="font-family: monospace;">TT$(X)</span>.<br>
+
+      <br>
+
+Some variables are intended to continually change. These include
+variables that will print text to the screen and modem, as well as
+variables that form links between the BASIC and ML portions of the
+program. Examples are <span style="font-family: monospace;">A$</span>
+and <span style="font-family: monospace;">AN$</span>.
+When used in conjunction with <span style="font-family: monospace;">&amp;</span>
+or <span style="font-family: monospace;">&amp;,0</span>,
+the value of <span style="font-family: monospace;">A$</span>
+will be printed to the screen and modem.
+All response entered at a prompt will be stored in <span style="font-family: monospace;">AN$</span>. These
+variables
+have a set purpose, but are intended to change.<br>
+
+      <h3>Temporary Storage Variables<a name="temporarystorage"></a></h3>
+
+Virtually any single character alphabetical string (A-Z) can be used as
+a temporary storage variable with the exception of:<br>
+
+      <ul>
+
+        <li><span style="font-family: monospace;">X$</span>
+which holds the system drive/LU identifiers,</li>
+
+        <li><span style="font-family: monospace;">U$</span>
+which holds the commands stacked at a prompt, and</li>
+
+        <li><span style="font-family: monospace;">P$</span>
+which is an ML-reserved variable, and contains the text of the last
+active prompt.</li>
+
+      </ul>
+
+One of the other advantages to using the single character strings is
+the capability of outputting the current definition of the variable
+using the &pound;v<var>x</var> MCI command. Also note
+that any
+definition of <span style="font-family: monospace;">A$</span>
+should be temporary and avoided for all purposes
+except for output to the screen and modem.<br>
+
+      <br>
+
+      <h3>Reserved String Variables<a name="reservedstrings"></a></h3>
+
+The current reserved string variable listing for Image v1.2 is as
+follows:<br>
+
+      <br>
+
+      <table style="width: 50%; text-align: left;" align="center" border="0" cellpadding="2" cellspacing="2">
+
+        <tbody>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">A$</td>
+
+            <td>Reserved
+for output to screen and modem.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">AG$</td>
+
+            <td>Access
+group name of user currently online. (Also &pound;vm)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">AK$</td>
+
+            <td align="left">Prints
+line across screen (" " + "-" * LL% -2 + R$). (Also &pound;vj)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">AN$</td>
+
+            <td align="left">Last
+user input. (Also &pound;v7)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">BN$</td>
+
+            <td align="left">Current
+name of your BBS. (Also &pound;v5)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">C1$</td>
+
+            <td align="left">Chat
+mode entry message.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">C2$</td>
+
+            <td align="left">Chat
+mode exit message.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">C3$</td>
+
+            <td align="left">"Returning
+To The Editor" message.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">CC$</td>
+
+            <td align="left">2
+character system identifier (Also &pound;vn)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">CM$</td>
+
+            <td align="left">Current
+location in AREA window.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D1$</td>
+
+            <td align="left">Current
+time and date information in 11 digit format. (Also &pound;v0)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D2$</td>
+
+            <td align="top">Time
+and date of last logoff, also Library name at entry. (Also
+&pound;v8)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D3$</td>
+
+            <td align="undefined" valign="top">Handle
+of last user on the system. (Also &pound;v9)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D4$</td>
+
+            <td align="left" valign="top">Current
+ML protocol in memory. (Also &pound;vl)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D5$</td>
+
+            <td align="left" valign="top">True
+last call date of user online in 11 digit format. (Also &pound;vk)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D6$</td>
+
+            <td align="left" valign="top">Logoff
+time of last user.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">DD$</td>
+
+            <td align="left" valign="top">System
+identifier + user ID number.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">DR$</td>
+
+            <td align="left" valign="top">Currently
+active drive/LU number + ":".</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">FF$</td>
+
+            <td align="left" valign="top">Real
+first name of user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">FL$</td>
+
+            <td align="left" valign="top">15
+character string which determines the user's online flags.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">I1$</td>
+
+            <td align="left" valign="top">Access
+level + handle of the sysop.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">I2$</td>
+
+            <td align="left" valign="top">Expert
+flag + phone number + first name + " " + last name of sysop</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">I3$</td>
+
+            <td align="left" valign="left">Access
+group name of sysop</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;" valign="top">LD$</td>
+
+            <td align="left" valign="top">Last
+call date of user online in 11 digit format. Used for new message reads.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">LL$</td>
+
+            <td align="left" valign="left">Real
+last name of user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">LT$</td>
+
+            <td align="left" valign="left">Logon
+time of user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">NA$</td>
+
+            <td align="left" valign="left">Handle
+of current user online. (Also &pound;v2)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">NL$</td>
+
+            <td align="left" valign="left">Null
+character [CHR$(0)].</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">NM$</td>
+
+            <td align="left" valign="left">Last
+network sort in 11 digit format.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">P$</td>
+
+            <td align="left" valign="left">Current
+prompt text.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PH$</td>
+
+            <td align="left" valign="left">Phone
+number of current user online. (Also &pound;v4)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PO$</td>
+
+            <td align="left" valign="left">Text
+for system main level prompt.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PP$</td>
+
+            <td align="left" valign="left">System
+password (change with PC command).</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PR$</td>
+
+            <td align="left" valign="left">Name
+of current plus file in memory.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PW$</td>
+
+            <td align="left" valign="left">Password
+of current online user.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">QT$</td>
+
+            <td align="left" valign="left">Quotation
+mark [CHR$(34)].</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">R$</td>
+
+            <td align="left" valign="left">Return
+[CHR$(13)].</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">RN$</td>
+
+            <td align="left" valign="left">Real
+name of user online (FF$ + " " + LL$, also &pound;v3)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">SY$</td>
+
+            <td align="left" valign="left">Current
+subsystem active.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">TI$</td>
+
+            <td align="left" valign="left">C=
+TOD clock.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">U$</td>
+
+            <td align="left" valign="left">Reserved
+for command stack.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">X$</td>
+
+            <td align="left" valign="left">System
+drive/LU designators.</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+      <br>
+
+      <h3><span style="font-weight: bold;">Reserved Integer
+Variables</span><a name="integervariables"></a><span style="font-weight: bold;"></span></h3>
+      <span style="font-weight: bold;">
+      </span>The current reserved integer variables for Image
+v1.2 are as follows:<br>
+
+      <br>
+
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+
+        <tbody>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">AC%</td>
+
+            <td>Access
+level (0-9) of user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">AO%</td>
+
+            <td>Access
+level of user at login.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">CO%</td>
+
+            <td>Computer
+type of user online (1-9)</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">CT%</td>
+
+            <td>Number
+of calls today by the user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D1%</td>
+
+            <td>Currently
+active device number.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D2%</td>
+
+            <td>Currently
+active drive/LU number.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">D3%</td>
+
+            <td>Currently
+active drive/LU number.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">DA%</td>
+
+            <td>Number
+of downloads allowed per call (0=unlimited).</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">DC%</td>
+
+            <td>Number
+of downloads this call by user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">DV%</td>
+
+            <td>Active
+device number.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">I%</td>
+
+            <td>Instant
+mode flag.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">KP%</td>
+
+            <td>Last
+key pressed.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">LL%</td>
+
+            <td>Line
+length (38-80) of user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">P1%</td>
+
+            <td>Time
+allowed during prime time.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">P2%</td>
+
+            <td>Time
+that prime time begins.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">P3%</td>
+
+            <td>Time
+that prime time ends.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">PT%</td>
+
+            <td>Prime
+time flag (1=active).</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">TC%</td>
+
+            <td>Total
+calls to the system by the user online.</td>
+
+          </tr>
+
+          <tr valign="top">
+
+            <td style="font-family: monospace;">TR%</td>
+
+            <td>Time
+remaining on system (in minutes).</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+      <h3>Reserved Floating Point Variables<a name="floatingpoint"></a></h3>
+The current reserved floating point variables for Image v1.2 are as follows:<br>
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="font-family: monospace;">BD</td>
+            <td>Total number of CBM blocks downloaded by user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">BU</td>
+            <td>Total number of CBM blocks uploaded by user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">CA</td>
+            <td>Total number of calls since system start.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">CN</td>
+            <td>Total number of calls since last reboot.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">CR</td>
+            <td>Total credit points of user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">DC</td>
+            <td>Total number of files downloaded by user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">DR</td>
+            <td>Currently active system device (1-6).</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">EL</td>
+            <td>Reserved for future expansion.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">EM</td>
+            <td>Expert mode flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">F1</td>
+            <td>System flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">F2</td>
+            <td>System flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">F3</td>
+            <td>System flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">F4</td>
+            <td>System flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">ID</td>
+            <td>ID number of user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">I1</td>
+            <td>Next available user account.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">I2</td>
+            <td>Flag for reserved system.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">I3</td>
+            <td>Flag for reserved system.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">LC</td>
+            <td>Flag for active subsystem menu.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">LE</td>
+            <td>Editor lines allowed for user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">LF</td>
+            <td>Linefeed flag (default protocol for TurboRel subs).</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">LP</td>
+            <td>Output control flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">MF</td>
+            <td>Reserved for ML use.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">NL</td>
+            <td>C/G mode flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">NM</td>
+            <td>Network flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">PL</td>
+            <td>Input control flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">PM</td>
+            <td>Prompt mode flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">PR</td>
+            <td>Active ML protocol in memory.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">PS</td>
+            <td>Total posts by user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">QB</td>
+            <td>Modem speed (BPS rate).</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">QE</td>
+            <td>Reserved for ML use.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">RC</td>
+            <td>Abort flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">RQ</td>
+            <td>Reserved for ML use.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">SH</td>
+            <td>Checks for spacebar hit.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">SR</td>
+            <td>Reserved for ML use.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">ST</td>
+            <td>I/O status.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">UC</td>
+            <td>Total files uploaded by user online.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">UH</td>
+            <td>Number of active user accounts.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">UL</td>
+            <td>Upper/lowercase flag.</td>
+          </tr>
+          <tr>
+            <td style="font-family: monospace;">UR</td>
+            <td>Highest user ID +1.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <h3>Arrays<a name="arrays"></a></h3>
+The following arrays are dimensioned by the BBS. Most can be used for your own programs, except where noted.<br>
+      <br>
+      <table style="width: 50%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">AC%(31)</td>
+            <td style="text-align: left;" valign="middle">Can be used for any plus file outside of UD/UX/SB.</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">BF(X,Y)</td>
+            <td style="text-align: left;" valign="middle">Blocks free on system drives. <span style="font-style: italic;">Should never be used.</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">CO$(9)</td>
+            <td style="text-align: left;" valign="middle">Text for computer types supported. <span style="font-style: italic;">Should never be used.</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">DV%(X)</td>
+            <td style="text-align: left;" valign="middle">Device numbers for system drives. <span style="font-style: italic;">Should never be used.</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">FL$(9)</td>
+            <td style="text-align: left;" valign="middle">Default flags for access groups 0-9. <span style="font-style: italic;">Should never be used.</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">SO%(31)</td>
+            <td style="text-align: left;" valign="middle">Can be used for any plus file outside of UD, UX, SB.</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">ST(60)</td>
+            <td style="text-align: left;" valign="middle">Status.  <span style="font-style: italic;">Should never be used.</span></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; font-family: monospace;" valign="middle">TT$(254)</td>
+            <td style="text-align: left;" valign="middle">Can be used anywhere that does not use the editor.</td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+<center>
+<p align="center">
+<table border="0" cellpadding="2" cellspacing="0" width="75%">
+
+  <tbody>
+
+    <tr valign="top">
+
+      <td bgcolor="#ebcfad" valign="top" width="100%">
+      <center>
+      <p align="center"> <a href="imageprg-index.html">Index/Preface</a>
+| <a href="imageprg-chap1.html">Chapter I</a> | <a href="imageprg-chap2.html">Chapter II</a> | <a href="imageprg-chap3.html">Chapter III</a> | <a href="imageprg-chap4.html">Chapter IV</a> | Chapter V</p>
+
+      </center>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+</p>
+
+</center>
+
+</body>
+</html>

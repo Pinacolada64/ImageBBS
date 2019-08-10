@@ -279,10 +279,10 @@ trans	= $d00e	; 53262
 index	= $d00f	; 53263: Length of line returned from &,1 and £Ix MCI command
 
 ; Time of Day Clock (TOD) registers
-ten		= $dc08
-scs		= $dc09
-min		= $dc0a
-hrs		= $dc0b
+ten	= $dc08
+scs	= $dc09
+min	= $dc0a
+hrs	= $dc0b
 
 carrier = $dd01
 

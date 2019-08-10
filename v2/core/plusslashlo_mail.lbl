@@ -1,0 +1,37 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+' FIXME: not ready for commit
+' a%=new messages, b%=total messages
+	a=9:gosub 1004:on -(a=.) goto {:4026}:b%=.:a%=.:mm=.:&"{f6}Checking for Mail..."
+	a$="r":tt$=na$:gosub 1062:if e% then:&"{f6}Sorry, No Mail Today.{f6}":goto {:4026}
+' logged in through immediate mode (i%) or console (k%)
+	if i% or k% then {:local_mail}
+{:4006}
+	&".":if rc then gosub 1920:goto {:local_mail}
+	b%=b%+1:input# 2,a$,a$,a$:if mid$(a$,2)>mid$(ld$,2)then a%=a%+1
+{:4010}
+	&,2,2:s=st:on tr%+1 goto {:4026}:on -(a$<>"{up arrow}") goto {:4010}:on -(s=.) goto {:4006}:close 2
+	&"{f6}":a$="s.mail":dr=1:gosub 1076:b$="":if b%>1 then b$="s"
+	c$="It Is":if a%>1 then c$="Are"
+' possible output:
+' a% b% Message:
+' 1  0  You Have 1 Piece of Mail
+' 1  1  You Have 1 Piece of Mail, It Is New
+' 2  1  You Have 2 Pieces of Mail, 1 Is New
+' a%=b% You Have 5 Pieces of Mail, All Are New
+
+	mm=1:&"{f6}{green}You Have {white}{pound}%b{green} Piece{pound}$b Of Mail"
+' FIXME: "You Have 2 Pieces of Mail, It Is New"
+	if a% then:&"{f1} {pound}$c New":goto {:4024}
+	if b%>1 then if a%=1 then:&"{f1}{white}{pound}%a {green}Is New":goto {:4024}
+	if b%>1 then if a%=b%then:&"{f1} {green}All {pound}$c New":goto {:4024}
+	&"{f1}{white} {pound}%a {green}{pound}$c New":goto {:4024}
+{:local_mail}
+	close 2:&"{f6:2}{gray3}You have Mail"
+{:4024}
+	&"!{f6:2}Read Now?: ":goto 1907
+{:4026}
+	close 2:a=.:return
+	rem 2019-04-10 pinacolada: fix grammar, new messages
+	rem +/lo.mail - copr. 1994 new image 11/27/94

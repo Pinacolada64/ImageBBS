@@ -69,11 +69,12 @@ im.misc
 	im=7	60074	something to do with u.index
 	im=8	60078	rewrite "u.index"
 	im=9	60082	PR - load a different protocol
-	im=10	60088	?
+	im=10	60088	Search "u.index" for user ID# %a
 	im=11	60086	Load "++ index", open cmd channel, do something with
-			"u.index", a% -> uh
+			"u.index", return 'uh'
 	im=12	60004	return
-	im=13	60092	RE - switch users
+	im=13	60092	RE - switch user IDs (immediate logon only)
+	im=14	60104	Prompt for handle to write mail to
 
 im.nodes
 	im=1	60002	Node List/Net Map
@@ -96,6 +97,8 @@ im.screens	Display transfer progress screen
 	im=2	60024	Display other device/drive
 
 im.select
+	im=1	60100	get file list from directory
+	im=2	60200	get file list from struct (I guess, it has struct commands)
 
 im.stats
 	im=1	60002	ST - user stats, access flags, etc.
@@ -107,4 +110,3 @@ im.trans
 	im=4	60400	?
 	im=5	60500	return
 	im=6	60500	return
-

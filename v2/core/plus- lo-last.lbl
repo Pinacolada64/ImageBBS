@@ -2,10 +2,10 @@
 	rem last five callers
 	close 2:a$="e.last,s,r":dr=3:gosub 1011:for i=0 to 5:&,2,2:tt$(i)=a$:next:close 2
 	a=ll%/2-16:l$="":if a>0 then l$=left$("                        ",a)
-	&"{f6}{pound}$l{lt. blue}{pound}o{$a4:14}{f6}{pound}$l{rvrs on}      {$cc}ast   {$c6}ive  {$c3}allers      {f6}"
+	&"{f6}{pound}$l{lt. blue}{pound}o{$a4:14}{f6}{pound}$l{rvrs on}      Last   Five  Callers      {f6}"
 	&"{pound}$l{pound}o{$a3:14}{f6}"
 	gosub {:4014}:for i=1 to 5:a$=left$(tt$(i),11):b$=mid$(tt$(i),12):a%=i
-	&"{pound}$l{white}{pound}%a. {yellow}{pound}$b{f6}{pound}$l{white}{$cf}n {lt. blue}{$04}"+a$+"{f6}":next
+	&"{pound}$l{white}{pound}%a. {yellow}{pound}$b{f6}{pound}$l{white}On {lt. blue}{$04}"+a$+"{f6}":next
 {:4014}
 	on nl goto {:4016},{:4022}:return
 {:4016}

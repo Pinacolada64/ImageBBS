@@ -1,0 +1,94 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "+.MM.ud-misc"
+	ON lm GOTO {:4004},{:4016},{:4024},{:4036},{:4054},{:4104},{:4046}
+{:4004}
+	IF z$="VA"THEN fl=1:GOTO 3276
+	GOSUB 3010:&"{f6}":ON-(a>.AND a<=rn)GOTO {:4016}:IF z$="VN"THEN{:4016}
+{:4008}
+	b$="{lt. red}No":IF so%(bn)<1 THEN{:4014}
+	GOSUB 1065:x=so%(bn):GOSUB 1001:&,2,2:CLOSE 2:IF a$="{up arrow}"OR a$="RES"THEN{:4014}
+	an$=a$:&,15,1:b$=" UID#"+STR$(so%(bn))+", "+an$+" Is The"
+{:4014}
+	lp=1:&"{yellow}{pound}$b{pound}$iHere.":GOTO 3214
+{:4016}
+	&"{f6}":tz=1:ON-(q=.AND fl>.)GOTO 3016:ON-(q=.)GOTO 3214:&"{f6}{yellow}  [Y]es  [N]o  [%]Percentage [A]bort{f6}{pound}q0{pound}vj":kk=a:IF kk=.THEN kk=1
+{:4018}
+	ON-(kk>rn)GOTO {:4032}:IF f%(kk)>.THEN kk=kk+1:GOTO {:4018}
+	GOSUB 3060:vl=1:a=kk:b=bl:GOSUB 3174:bl=b:&"{lt. green}Validate?{lt. blue}: ":GOSUB 1007:IF an$="A"THEN:&"Abort!{f6}":kk=rn+1:rc=1:sh=1:GOTO {:4018}
+	ON-(an$="%")GOTO {:4124}:GOSUB 1903:IF a=.THEN kk=kk+1:GOTO {:4018}
+{:4024}
+	ON f%(kk)+1 GOTO {:4030}:GOSUB {:4122}:ON-(x=id)GOTO {:4118}:GOSUB 1065:GOSUB 1001:FOR i=1 TO 23:&,2,2:tt$(i)=a$
+	NEXT:tt$(19)=STR$(VAL(tt$(19))+c%(kk)*VAL(MID$(tt$(23),2,1)))
+	GOSUB 1001:a$=tt$(1):FOR i=2 TO 23:a$=a$+r$+tt$(i):NEXT:PRINT# 2,a$:CLOSE 2
+{:4030}
+	f%(kk)=1:GOSUB 3060:GOSUB 3450:tz=.:ON-(bl=1)GOTO 3150:GOTO {:4018}
+{:4032}
+	ON tz AND fl GOTO {:4034}:ON tz GOTO 3214:GOSUB 3150:ON fl GOTO 3016:GOTO 3214
+{:4034}
+	ON-(vl=1)GOTO 3016:&"{yellow} - No Unvalidated {pound}$js{f6}":RETURN
+{:4036}
+	kk=a:GOSUB {:4122}:ON-(x=.)GOTO {:4044}:GOSUB 1065:GOSUB 1001:&,2,2:an$=a$:CLOSE 2
+	ON-(an$="{up arrow}"OR an$="RES")GOTO {:4044}:bl=kk:tt$=an$:&,15,1:b$=an$:&"{f6}{lt. blue}Send Mail to {pound}$b?: ":GOSUB 1902
+	ON a+1 GOTO {:4044}:GOSUB 3060:c$=b$:dr=2:GOSUB 1079:IF a<35 THEN GOSUB 1978:GOTO {:4044}
+	bl=kk:GOSUB 1604:ON kk+1 GOTO {:4044}:b$=tt$:&"{f6}{lt. blue}Filing Mail For {pound}$b...":GOSUB 3076
+{:4044}
+	a=bl:bl=1:&"{f6}":RETURN
+{:4046}
+	ON q+1 GOTO 3016:kk=a:ON cu+1 GOTO {:4052}:GOSUB {:4122}:ON-(x=id)GOTO {:4120}:GOSUB 1065:GOSUB 1001:FOR i=1 TO 23:&,2,2:tt$(i)=a$
+	NEXT:tt$(19)=STR$(VAL(tt$(19))-c%(kk)*VAL(MID$(tt$(23),2,1)))
+	GOSUB 1001:a$=tt$(1):FOR i=2 TO 23:a$=a$+r$+tt$(i):NEXT:PRINT# 2,a$:CLOSE 2
+{:4052}
+	f%(kk)=-cu:GOSUB 3060:GOSUB 3150:a=kk:RETURN
+{:4054}
+	GOSUB 3010:IF a THEN{:4068}
+	x=so%(bn):y=x:ON-(x<1)GOTO {:4008}:GOSUB 1065:GOSUB 1001:INPUT# 2,b$:tt$=b$:CLOSE 2
+	ON-(b$="{up arrow}"OR b$="RES")GOTO {:4008}
+	an$=b$:&,15,1:&"{f6}{white}Send Mail To {pound}v7?: ":GOSUB 1902:IF a=.THEN 3214
+	dr=2:GOSUB 1079:IF a<35 THEN GOSUB 1978:GOTO 3214
+	GOSUB 1604:ON-(kk=.)GOTO 3214
+	a$="Feedback:":&"{f6}Filing{pound}$i{pound}$a":c$=a$+p$:GOSUB 3076:GOTO 3214
+{:4068}
+	kk=a:e=bn:IF a<1 OR a>rn OR q=.THEN 3214
+{:4070}
+	fl=.:&"{f6}Target UD?: {pound}i1":ON tr%+1 GOTO 3264:a$=LEFT$(an$,1)
+	ON-(a$="")GOTO 3214:fl=1:GOSUB 3036:ON fl GOTO {:4070}
+	GOSUB 3012:f=a:ON-(a<1 OR a>bz)GOTO 3214:GOSUB 3060:GOSUB 3062:&"{f6}Move: {f5}{pound}$b{f5}"
+	n$=b$:c$=bb$(e):b$=bb$(f):&"{f6}From: {pound}$c{f6}To  : {pound}$b":GOSUB 3070
+	ON-(a=.)GOTO 3214:tt$(1)=STR$(c%(kk)):tt$(2)=nn$(kk)
+	GOSUB 3060:tt$(3)=d1$+d1$+b$:tt$(4)=ed$(kk):tt$(5)=STR$(d%(kk))
+	tt$(6)=STR$(f%(kk)):&"{f6}Moving...":bn=f:GOSUB 3104
+	IF rn>58 THEN GOSUB 3032:bn=e:GOSUB 3104:GOTO 3214
+	rn=rn+1:c%(rn)=VAL(tt$(1)):nn$(rn)=tt$(2):dt$(rn)=tt$(3):ed$(rn)=tt$(4)
+	d%(rn)=VAL(tt$(5)):f%(rn)=VAL(tt$(6)):&"{f6}":GOSUB 3150:bn=e:GOSUB 3104:GOSUB 3086:GOSUB 3150
+	dr=bn+6:GOSUB 1009:h=dv%:q$=dr$:dr=f+6:GOSUB 1009:p=dv%:tt$=dr$
+	CLOSE 15:IF h=p AND q$=tt$THEN{:4102}
+	b$=n$:IF h=p THEN OPEN 15,h,15:PRINT# 15,"c"tt$b$"="q$b$:CLOSE 15:GOTO {:4098}
+	b$=MID$(tt$(3),23):GOSUB 3064:o$=b$:c=h:d=p:c$=q$:d$=tt$:GOSUB 3428:b$=o$:GOSUB 3062
+{:4098}
+	a%=h:&"{f6:2}Scratch {f5}{pound}$b{f5} From {pound}%a:{pound}$q? ":GOSUB 1902
+	IF a THEN dr=.:d1%=h:d2%=VAL(q$):a$=b$:GOSUB 1024:CLOSE 15:GOSUB 1081
+{:4102}
+	dr=.:d1%=p:d2%=VAL(tt$):GOSUB 1081:&"{f6:2}Done!{f6}":GOTO 3214
+{:4104}
+	a$=bb$(a%):GOSUB 3006:b$=a$:c$="PASS":IF VAL(MID$(ba$,a%,1))THEN an$=c$:RETURN
+	a$="e.U/D":dr=3:GOSUB 1011:x=e%(a%)+1:GOSUB 1001:&,2,2:c$=a$
+{:4108}
+	&"{f6}{green}U/D {pound}$h #{pound}#0{pound}%a: {lt. red}{pound}$b{f6:2}  Password?{f6:2}  PW: ":pl=1:&,6
+	ON-(an$<>c$)GOTO {:4114}:&"{f6}  YOU{$a0}GOT{$a0}IT!{pound}b5{f6}"
+	ba$=LEFT$(ba$,a%-1)+"1"+MID$(ba$,a%+1):a=.:RETURN
+{:4114}
+	&"{f6:2}{$a0} Not This Time...Sorry!!!{f6:2}  Try Again?: "
+	GOSUB 1902:ON a GOTO {:4108}:r=bn:RETURN
+{:4118}
+	cr=cr+c%(kk)*VAL(MID$(fl$,2,1)):GOTO {:4030}
+{:4120}
+	cr=cr-c%(kk)*VAL(MID$(fl$,2,1)):GOTO {:4052}
+{:4122}
+	x=VAL(LEFT$(nn$(kk),4)):RETURN
+{:4124}
+	IF f%(kk)=.THEN{:4024}
+	&"{f6:2}Enter %: {pound}i1":GOSUB 3012:IF a=.THEN a=1:GOTO {:4024}
+	a=a/100:GOTO {:4024}
+	copr.1990 NEW image 10/28/90

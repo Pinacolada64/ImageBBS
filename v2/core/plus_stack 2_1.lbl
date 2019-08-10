@@ -1,0 +1,16 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	&"{clear}{f6:2}STACK Investigator 2.1:{f6:2}":POKE$c000,$ba:POKE$c001,$60:pr=-1:SYS$c000
+	x=PEEK(781)+256:IF x>=502 THEN:&"Stack Has No Garbage.{f6:2}":GOTO {:3016}
+	a=502-x:&"Stack Has {pound}!a Bytes of Garbage:{f6:2}"
+	FOR a=x+5 TO 511:b=PEEK(a):x=PEEK(a+1)+PEEK(a+2)*256
+	IF b=141 THEN:&"GOSUB on Line {pound}!x{f6}":a=a+4:GOTO {:3014}
+	ON-(b<>129)GOTO {:3014}:&"FOR "+CHR$(PEEK(x-2))+CHR$(PEEK(x-1))
+	n=PEEK(a+14)+PEEK(a+15)*256:&" On Line {pound}!n{f6}":a=a+17
+{:3014}
+	NEXT:RETURN
+{:3016}
+	&"{f6} Press A Key: {pound}g1":GOTO 1812
+	rem +.stack 2.1
+

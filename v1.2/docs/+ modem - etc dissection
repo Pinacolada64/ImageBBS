@@ -1,0 +1,266 @@
+A work in progress.
+
+Modem flags are set using "modemconfig( 19.2)".
+
+(this is 1.2's +.modem/etc which assumes high-speed ML in place)
+
+-=do not care
+
+1   2   3   4   5   6   7   8
+ms  ht  af  hu  oh  h0  hf  rc
+:   :   :   :   :   :   :   :
+:   :   :   :   :   :   :   `-- ATX [r]esult [c]ode level  Use "atx<rc>", 1-4
+:   :   :   :   :   :   :
+:   :   :   :   :   :   `-- [h]angup [f]lag   H: Use "ath"
+:   :   :   :   :   :                         -: don't
+:   :   :   :   :   :
+:   :   :   :   :   `-- (only if [hf] set)   H: Use "ath0"
+:   :   :   :   :                            N: Use "ath"
+:   :   :   :   :
+:   :   :   :   `-- [O]ff-[h]ook in         H: Use "ath1"
+:   :   :   :       local (console) mode:   N: Use "ath0"
+:   :   :   :
+:   :   :   `-- [H]ang[u]p sent in init?  H: yes    N: no
+:   :   :
+:   :   `-- Answer flag  A: Auto (ats0=1)  M: Manual (ats0=0, ata)
+:   :
+:   `-- Hangup type     D: DTR hangup     E: Escape sequence
+:
+`-- Max modem speed     1: 300   4: 4800
+                        2: 1200  5: 9600
+                        3: 2400  6: 14400
+
+900 rem"+.modem/e.modrc":fs
+
+' open "e.data", put modem init string in mt$
+901 gosub 1063:x=32:gosub 1001:&,2,2:mt$=a$:close 2
+
+' get a character from the modem
+' gosub 914 (set BPS rate based on <ms> flag in mt$)
+' gosub 995 (get char from modem until rs232 buffer empty)
+' gosub 980 (send "atz" with timeout of 50)
+902 get#131,a$:gosub 914:gosub 995:m$="z":t=50:gosub 980
+
+' AT commands: handle hangup and optional parameter
+904 m$="e0v0":if mid$(mt$,7,1)="H" then m$=m$+"h":if mid$(mt$,6,1)="0" then m$=m$+"0"
+
+' handle atx verbosity, modem speaker
+' if timeout (t=0), start over at 901
+905 m$=m$+"x"+mid$(mt$,8,1)+"m"+chr$(mf+48):gosub 908:if t=0 then 901
+
+' set auto-answer based on <aa> field, 0 or 1
+' s2=27: set escape character to Esc, instead of +
+' s7=35: ?
+' gosub 908: send commands 5x
+' *** rns: original +.modem/etc ends in "then 90" ***
+' *** rns: mhoney's line ends in "then 901" so i'm fixing that here ***
+' if timeout (t=0), start over at 901
+906 m$="s0="+chr$(48-(mid$(mt$,3,1)="A"))+"s2=27s7=35":gosub 908:if t=0 then 901
+
+' get modem init string from "e.modrc" record #1' if timeout (t=0, stated as "on t+1" since on-goto clauses can't start at 0), start over at 901
+' otherwise, goto 995: get char from modem until rs232 buffer empty
+907 dr=3:a$="e.modrc":gosub 1011:x=1:gosub 1001:&,2,2:m$=a$:gosub 908:on t+1 goto 901:goto 995
+
+' set counter to send init strings 5x:
+' we've been changing this to x=1 for telnet boards
+908 x=5
+
+' set a$ to modem command (m$)
+' set timeout (t) to 50
+' wait 1 second (&,22,10)
+' gosub 980: reset start & end of RS232 buffer
+' decrement init string counter (x)
+' loop while more init string iterations (x<>0) and a<>0 (fixme)
+909 a$=m$:t=50:&,22,10:gosub 980:x=x-1:on -(a<>0 and x<>0) goto 909:return
+
+' assign z highest bps rate flag
+' gosub 915 (check DTR flag)
+' gosub 930 (return a=0 or 1 based on sysop screen's carrier checkmark)
+' if no carrier (a=0), goto 914 (set bps)
+910 z=val(mt$):gosub 915:gosub 930:if a=. then 914
+
+' cycle through allowable bps rates
+' gosub 915 (check DTR flag)
+' gosub 930 (return a=0 or 1 based on carrier checkmark)
+' if no carrier (a=0), set highest bps rate
+912 for y=1 to z:on y gosub 990,991,992,993,994,996:gosub 915:gosub 930:if a=. then y=z
+913 next
+
+' fm=1: not sure what this does
+' based on bps rate flag (1-6), set correct bps
+' [val() stops evaluating at 1st non-numeric character in a string]
+' if not a recognized bps flag, goto 995: get char from modem until rs232 buffer empty - then RETURN
+914 fm=1:on val(mt$) goto 990,991,992,993,994,996:goto 995
+
+' check DTR flag:
+915 if mid$(mt$,2,1)="D" then 960
+' otherwise, output 3 Esc characters. 3/10 sec pause between
+916 &,22,12:for x=1 to 3:print#131,chr$(27);:&,22,3:next:&,22,12
+
+' handle hang-up flags:
+' gosub 980: reset start & end of RS232 buffer
+917 if mid$(mt$,6,1)="0" then a$="h0":gosub 980:goto 919
+918 if mid$(mt$,4,1)="H" then a$="h":gosub 980
+
+' wait 1/2 second
+' goto 995: get char from modem until rs232 buffer empty
+919 &,22,5:goto 995
+
+' local off-hook:
+920 if mid$(mt$,5,1)="H" then a$="h1":gosub 980
+921 return
+
+' a=1 if c= key hit, rc>0 (abort flag) or countdown timer<0
+' a=0 otherwise
+922 a=-(peek(653)=2 or rc>0 or t<0):return
+
+' &,4: get character from modem
+' a=1 if character received, a=0 if not
+925 &,4:a=sgn(peek(780)):return
+
+' a=1 if no carrier checkmark present, a=0 otherwise
+930 a=-(peek(1063)=250):return
+
+' display BPS rate in screen mask:
+' todo: move 'if peek(17139) then' here
+' todo: print
+' 1 qb=300:gosub 10
+' 2 qb=1200:gosub 10
+' 3 qb=14400:gosub 10
+' 9 end
+' 10 print"{rvs on}"left$(str$(qb)+"       ",7):return
+' ready.
+' run
+' | 300   |
+' | 1200  |
+' | 14400 |
+
+935 print"{home}{down}{down}{down}{down}"tab(27)"{reverse on}{light blue}Baud{reverse off}"qb"{left}  ":return
+
+' get character from modem
+' returns a=1 if character received, otherwise 0
+940 &,4:a=sgn(peek(780)):return
+
+' if fm<>0 then 998:
+' send "at"
+' wait 1/2 second
+' gosub 995 - get char from modem until rs232 buffer empty
+' if screen mask on, display baud rate
+' return
+' otherwise, wait 1/2 second, goto 935 (display BPS)
+945 on fm goto 998:&,22,5:goto 935
+
+' f2: system flag
+' qb$: bps rate message ("current baud")
+' open e.modrc
+' reset timer
+950 f2=.:qb$="":b$="":a$="e.modrc":dr=3:gosub 1011:ti$="000000"
+951 if mid$(mt$,3,1)="M" and c<>6 then print#131,"ata"
+
+' todo: gosub 959 only called once, could inline:
+' todo: could also shorten "chr$(13)" to "r$"
+952 gosub 959:on -(a$=chr$(13)) goto 955:if (a$="0" or val(a$)<>.) and len(b$)<3 then b$=b$+a$
+
+' if c= key hit, go to 954
+' otherwise, if 40 seconds haven't elapsed, loop
+953 on -(peek(653)=2) goto 954:on -(ti<2500) goto 952
+
+' hanging up?
+' wait 1/2 second
+' gosub 995: get char from modem until rs232 buffer empty
+' gosub 930: (return a=0 or 1 based on carrier checkmark)
+' set f2 to a
+' goto 990: set bps rate to 300
+954 print#131:close 2:&,22,5:gosub 995:gosub 930:f2=a:goto 990
+
+' get response values:
+' 0=ok
+' 1=ignored
+' 2=ring
+' 3=no carrier
+' 4=fixme
+' 5=ignored
+' 6-9=fixme
+955 a=val(b$):b$="":on -((a=.) or (a>1 and a<5) or (a>5 and a<9)) goto 954
+
+' get e.modrc bps rate response (qb$):
+' get action flag
+956 x=a+1:gosub 1001:&,2,2:qb$=qb$+" "+a$+"{f6}":&,2,2:a=abs(val(a$))
+
+' 1=get more modem responses, 2-5=set bps rate, otherwise loop to hang up
+957 fm=.:f2=-(a>1):on a goto 952,990,991,992,993,994,996:goto 954
+
+' fixme: investigate this, is it mangling chars returned from rs232?
+' changed 63 to 127 here too
+959 &,4:a$=chr$(peek(780) and 63):return
+
+' --- this is for SwiftLink DTR: ---
+' R=reversed DTR
+960 a=254:b=255:if mid$(mt$,9,1)="R" then a=255:b=254
+
+' goto 995: get char from modem until rs232 buffer empty
+961 &,41,a:&,22,7:&,41,b:&,22,5:goto 995
+
+' --- if you need user port DTR: ---
+' R=reversed DTR
+960 a=0:b=38:if mid$(mt$,9,1)="R" then a=38:b=0
+
+' goto 995: get char from modem until rs232 buffer empty
+961 poke 56577,a:&,22,7:poke 56577,b:&,22,5:goto 995
+
+' reset start & end of RS232 buffer
+' send "at" + a$ to modem
+' gosub 997 (display "Sent" + a$)
+980 poke 667,.:poke 668,.:a$="at"+a$:print#131,a$:c$="sent":gosub 997:a$=""
+
+' decrement timer
+' wait 1/10th of a second (&,22,1)
+' loop while RS232 recv buffer points to 0 (0=is full) *and* time still remaining
+' otherwise buffer not full, or timer depleted: set flag "a" to -1, return
+982 t=t-1:&,22,1:on -(peek(667)=. and t>.) goto 982:if t=. then a=-1:return
+
+984 t=50
+' get character from modem into a:
+' (fixme, trying to figure out how to display modem AT response)
+'   char: %--------
+'   mask: %00111111 (and 63)
+' result: %
+' test: i changed 63 to 127, still doesn't print stuff received from modem :/
+986 &,4:a=peek(780) and 63:t=t+(a=.):if a then a$=a$+chr$(a)
+988 if peek(668)<>peek(667) and a<>13 and t>. then 986
+
+' if 1st char of a$<>"0", reverses "true" result's sign (-1 to 1):
+989 a=-(left$(a$,1)<>"0"):c$="resp":goto 997
+
+' a$="1":a=-(a$<>"0"):?a
+'  1
+
+' bps rate changes:
+' goto 945:
+'     if fm<>0 then 998
+'     otherwise, wait 1/2 second, goto 935 (display BPS)
+990 qb=300:&,41,0:goto 945
+991 qb=1200:&,41,2:goto 945
+992 qb=2400:&,41,3:goto 945
+993 qb=4800:&,41,4:goto 945
+994 qb=9600:&,41,5:goto 945
+
+' get char from modem until rs232 buffer empty:
+995 &,4:on -(peek(668)<>peek(667)) goto 995:a$="":return
+
+' set bps to 14.4k:
+996 qb=14400:&,41,6:goto 945
+
+' wait 1/5th of a second
+' save BBS local mode state in z
+' set local mode (nothing is output to modem)
+' output "sent" or "recv", then data
+' restore local mode state
+997 &,22,2:z=peek(53248):poke 53248,1:&"{light blue}{pound}$c{white}:{cyan}{pound}$a{f6}":poke 53248,z:return
+
+' send "at"
+' wait 1/2 second
+' gosub 995 - get char from modem until rs232 buffer empty
+' if screen mask on, display baud rate
+998 print#131,"at":&,22,5:gosub 995:if peek(17139)=0 then gosub 935
+999 return:(for image 1.2 only)rascal:*netfix by iron axe'94*

@@ -1,3 +1,5 @@
+==== BASE ====
+{alpha:upper}
 {number:3000}
 {step:2}
 {alpha:alt}
@@ -148,8 +150,7 @@
 ' check for source (f)/target (g) drive online:
 	&"{f6}":a=f:gosub {:sub.check_device}:ON a goto {:dnp}:a=g:gosub {:sub.check_device}:if a then {:dnp}
 {:3094}
-' display queue
-	gosub {:sub.show_queue}:gosub {:sub.blocks_and_files}
+	gosub {:3202}
 {:3096}
 ' queue menu:
 ' TODO: [P]attern: <pattern> (change pattern)?

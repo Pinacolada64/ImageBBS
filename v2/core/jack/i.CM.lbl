@@ -1,4 +1,4 @@
-	ON-(AC%<1)GOTO 300:M%=3:MA=1000:CD=1000:VE=1:A$=" {lt. green}{$cd}ALL":GOSUB 50:GOTO{:3030}
+	ON-(AC%<1)GOTO 300:M%=3:MA=1000:CD=1000:VE=1:A$=" {lt. green}MALL":GOSUB 50:GOTO{:3030}
 {:3002}
 	A=7:GOSUB 11:RETURN
 {:3004}
@@ -8,133 +8,133 @@
 {:3008}
 	RETURN
 {:3010}
-	&"{f6:2}  {$d3}ORRY, {$d4}HIS {$cf}PTION {$c9}S {$ce}OT {$c1}VAILABLE"
+	&"{f6:2}  SORRY, THIS OPTION IS NOT AVAILABLE"
 {:3012}
-	&"{f6:2}  {white}{rvrs on}{$c8}IT {$c1} {$cb}EY {lt. green}{rvrs off}{pound}G1":RETURN
+	&"{f6:2}  {white}{rvrs on}HIT A KEY {lt. green}{rvrs off}{pound}G1":RETURN
 {:3014}
-	&"{f6:2}  {$d4}OO {$cd}UCH":GOSUB{:3012}:GOTO{:3050}
+	&"{f6:2}  TOO MUCH":GOSUB{:3012}:GOTO{:3050}
 {:3016}
 	C=TR%:B$=STR$(C)
-	&"{f6:2}  {lt. red}{$d9}OU {$c8}AVE{white}":&STR$(CR):&"{lt. red} {$c3}REDITS {$c1}ND{f6} {cyan}{pound}$B {lt. red}{$cd}INUTES {$cc}EFT.":ON-(FL=1)GOTO{:3008}:GOTO{:3012}
+	&"{f6:2}  {lt. red}YOU HAVE{white}":&STR$(CR):&"{lt. red} CREDITS AND{f6} {cyan}{pound}$B {lt. red}MINUTES LEFT.":ON-(FL=1)GOTO{:3008}:GOTO{:3012}
 {:3020}
-	&"{f6}{lt. green}  {$c9}S {pound}V7 {$c3}ORRECT? ":GOTO 96
+	&"{f6}{lt. green}  IS {pound}V7 CORRECT? ":GOTO 96
 {:3022}
-	&"{f6:2}{green}  {$d4}RADE {$c8}OW {$cd}ANY {pound}$C? {yellow}{pound}I1":B=ABS(INT(VAL(AN$))):RETURN
+	&"{f6:2}{green}  TRADE HOW MANY {pound}$C? {yellow}{pound}I1":B=ABS(INT(VAL(AN$))):RETURN
 {:3024}
-	&"{f6:2}  {lt. green}{$c4}O {$d9}OU {$d7}ANT {$d4}O {$d4}RADE? ":GOTO 94
+	&"{f6:2}  {lt. green}DO YOU WANT TO TRADE? ":GOTO 94
 {:3026}
-	&"{f6}{gray3}  {$d9}OU {$cd}AY {$d4}RADE {pound}$C{f6}  {$c6}OR {pound}$D.":RETURN
+	&"{f6}{gray3}  YOU MAY TRADE {pound}$C{f6}  FOR {pound}$D.":RETURN
 {:3028}
-	&"{f6:2}  {$d4}HE {$cd}AXIMUM {$d9}OU {$c3}AN {$d4}RADE {$c6}OR {$c9}S{f6}":&STR$(MA):RETURN
+	&"{f6:2}  THE MAXIMUM YOU CAN TRADE FOR IS{f6}":&STR$(MA):RETURN
 {:3030}
 	&"{clear}{white}{$b0}{$c0:37}{$ae}"
-	&"{f6}{white}{$dd} {lt. green}{$d4}HE {yellow}{rvrs on}{$ce}{$c9}{$d3:2}{$c1}{rvrs off}{lt. green} {$c3}REDIT {$cd}ALL {$c9}S {$c1} {$d3}HOPPING {white}{$dd}{f6}{white}{$dd} {lt. green}{$cd}ALL  {$c6}OR  {$d9}OU {$d4}O {$d3}HOP"
-	&"  {$c6}OR {purple}{rvrs on}{$c3}REDITS{rvrs off} {white}{$dd}{f6}{$dd} {$cf}R {$c6}OR {purple}{rvrs on}{$d4}IME{rvrs off}{lt. green}.  {$d9}OU{right} {$cd}AY  {$c5}VEN {$c4}ONATE {white}{$dd}"
-	&"{f6}{$dd} {cyan}{rvrs on}{$c3}REDITS{rvrs off} {lt. green}{$d4}O  {$c1}  {$c6}RIEND {$c9}F {$d9}OU  {$d7}OULD {white}{$dd}"
-	&"{f6}{$dd} {lt. green}{$cc}IKE.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}{f6}"
-	&"{$dd} {lt. green}{$d9}OU {$cd}AY {$c5}XCHANGE {purple}{rvrs on}{$c3}REDITS  {$c6}OR {$d4}IME{rvrs off}{lt. green}, {white}{$dd}{f6}{$dd} {yellow}{rvrs on}{$c3}ALLS  {$c6}OR {$c3}REDIT  {$cf}R"
-	&" {$d4}IME{rvrs off}{lt. green}, {$cf}R {lt. red}{rvrs on}{$d4}IME{rvrs off} {white}{$dd}{f6}{$dd} {lt. red}{rvrs on}{$c6}OR {$c3}REDITS{rvrs off}{lt. green}.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}"
+	&"{f6}{white}{$dd} {lt. green}THE {yellow}{rvrs on}NI{$d3:2}A{rvrs off}{lt. green} CREDIT MALL IS A SHOPPING {white}{$dd}{f6}{white}{$dd} {lt. green}MALL  FOR  YOU TO SHOP"
+	&"  FOR {purple}{rvrs on}CREDITS{rvrs off} {white}{$dd}{f6}{$dd} OR FOR {purple}{rvrs on}TIME{rvrs off}{lt. green}.  YOU{right} MAY  EVEN DONATE {white}{$dd}"
+	&"{f6}{$dd} {cyan}{rvrs on}CREDITS{rvrs off} {lt. green}TO  A  FRIEND IF YOU  WOULD {white}{$dd}"
+	&"{f6}{$dd} {lt. green}LIKE.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}{f6}"
+	&"{$dd} {lt. green}YOU MAY EXCHANGE {purple}{rvrs on}CREDITS  FOR TIME{rvrs off}{lt. green}, {white}{$dd}{f6}{$dd} {yellow}{rvrs on}CALLS  FOR CREDIT  OR"
+	&" TIME{rvrs off}{lt. green}, OR {lt. red}{rvrs on}TIME{rvrs off} {white}{$dd}{f6}{$dd} {lt. red}{rvrs on}FOR CREDITS{rvrs off}{lt. green}.{pound}{back arrow}38{white}{$dd}{f6}{$dd}{pound}{back arrow}38{$dd}"
 	&"{f6}{$ad}{$c0:37}{$bd}"
-	&"{f6:2}  {lt. green}{$c5}NJOY {$d4}HE {white}{$ce}{$c9}{$d3:2}{$c1}{yellow} {rvrs on}{$c3}REDIT {$cd}ALL!{pound}B2{f6}"
+	&"{f6:2}  {lt. green}ENJOY THE {white}NI{$d3:2}A{yellow} {rvrs on}CREDIT MALL!{pound}B2{f6}"
 {:3048}
 	GOSUB{:3012}:FL=1:GOTO{:3214}
 {:3050}
-	FL=.:&"{clear}{pound}{back arrow}10{yellow}{rvrs on}{pound}V5{f6}{pound}{back arrow}10{$c3}{$d2}{$c5}{$c4}{$c9}{$d4}{$a0}{$cd}{$c1}{$cc:2}{f6}{pound}{back arrow}10{pound}K7{$b8:11}{pound}K0{f6}{pound}{back arrow}07BY {$d0}ORT {$c3}OMMODORE{f6}{pound}{back arrow}10{$02}{white}{rvrs on}801-423-2734{$02}{black}"
-	&"{f6:2}  {white}{rvrs on}{$d6}2.1 -- {$d3}HOPS:{pound}{back arrow}39{f6}{lt. red}  1{white}){yellow}{rvrs on} {$d4}RADE {$d4}IME {$c6}OR {$c3}REDIT{pound}{back arrow}39{f6}"
-	&"{lt. red}  2{white}){yellow}{rvrs on} {$d4}RADE {$c3}REDIT {$c6}OR {$d4}IME.{pound}{back arrow}39{f6}"
-	&"{lt. red}  3{white}){yellow}{rvrs on} {$d4}RADE {$c3}ALLS {$c6}OR {$c3}REDIT{pound}{back arrow}39{f6}{lt. red}  4{white}){yellow}{rvrs on} {$d4}RADE {$c3}ALLS {$c6}OR {$d4}IME{pound}{back arrow}39{f6}"
-	&"{lt. red}  5{white}){yellow}{rvrs on} {$c7}IVE {$c3}REDIT {$d4}O {$c1}NOTHER {$d5}SER{pound}{back arrow}39{f6}"
-	&"{lt. red}  6{white}){yellow}{rvrs on} {$d1}UIT{pound}{back arrow}39{f6:2}  {lt. green}{$cf}{$d0}{$d4}: {lt. blue}{pound}G1{pound}V7{f6}":IF TR%<1 THEN 300
+	FL=.:&"{clear}{pound}{back arrow}10{yellow}{rvrs on}{pound}V5{f6}{pound}{back arrow}10CREDIT MA{$cc:2}{f6}{pound}{back arrow}10{pound}K7{$b8:11}{pound}K0{f6}{pound}{back arrow}07BY PORT COMMODORE{f6}{pound}{back arrow}10{$02}{white}{rvrs on}801-423-2734{$02}{black}"
+	&"{f6:2}  {white}{rvrs on}V2.1 -- SHOPS:{pound}{back arrow}39{f6}{lt. red}  1{white}){yellow}{rvrs on} TRADE TIME FOR CREDIT{pound}{back arrow}39{f6}"
+	&"{lt. red}  2{white}){yellow}{rvrs on} TRADE CREDIT FOR TIME.{pound}{back arrow}39{f6}"
+	&"{lt. red}  3{white}){yellow}{rvrs on} TRADE CALLS FOR CREDIT{pound}{back arrow}39{f6}{lt. red}  4{white}){yellow}{rvrs on} TRADE CALLS FOR TIME{pound}{back arrow}39{f6}"
+	&"{lt. red}  5{white}){yellow}{rvrs on} GIVE CREDIT TO ANOTHER USER{pound}{back arrow}39{f6}"
+	&"{lt. red}  6{white}){yellow}{rvrs on} QUIT{pound}{back arrow}39{f6:2}  {lt. green}OPT: {lt. blue}{pound}G1{pound}V7{f6}":IF TR%<1 THEN 300
 	A=VAL(AN$):IF A<1 OR A>6 THEN 300
 	ON A GOTO{:3066},{:3094},{:3120},{:3144},{:3168},1812
 {:3066}
-	&"{clear}{green}{rvrs on}{$d4}RADE {$d4}IME {$c6}OR {$c3}REDIT{pound}{back arrow}39{f6}"
+	&"{clear}{green}{rvrs on}TRADE TIME FOR CREDIT{pound}{back arrow}39{f6}"
 	B=.:GOSUB{:3006}:IF A>101 THEN B=1
 	GOSUB{:3002}:IF A THEN B=B+1
 	IF CR>MA THEN B=B+1:GOSUB{:3028}
 	IF B THEN GOSUB{:3010}:GOTO{:3050}
-	C$="{white}1{lt. blue} {$cd}INUTE":D$="{white}1{lt. blue} {$c3}REDITS.":GOSUB{:3026}
+	C$="{white}1{lt. blue} MINUTE":D$="{white}1{lt. blue} CREDITS.":GOSUB{:3026}
 	FL=1:GOSUB{:3016}:FL=.
-	GOSUB{:3024}:IF A=.THEN{:3050}
-	C$="{$cd}INUTES":GOSUB{:3022}:IF TR%<1 THEN 300
-	GOSUB{:3020}:IF A=.THEN{:3066}
+	GOSUB{:3024}:IF A=. then {:3050}
+	C$="MINUTES":GOSUB{:3022}:IF TR%<1 THEN 300
+	GOSUB{:3020}:IF A=. then {:3066}
 	GOSUB{:3006}:IF B>A THEN{:3014}
 	CR=CR+(1*B):C=TR%-B:IF C<.THEN C=.
 	TR%=C
 	GOSUB{:3016}:GOTO{:3050}
 {:3094}
-	&"{clear}{lt. blue}{rvrs on}{$d4}RADE {$c3}REDIT {$c6}OR {$d4}IME{pound}{back arrow}39{f6}"
+	&"{clear}{lt. blue}{rvrs on}TRADE CREDIT FOR TIME{pound}{back arrow}39{f6}"
 	B=.:GOSUB{:3002}:IF A THEN B=1
 	GOSUB{:3006}:IF A>101 THEN B=B+1
 	IF B THEN GOSUB{:3010}:GOTO{:3050}
-	C$="{purple}5{lt. green} {$c3}REDITS":D$="{purple}1{lt. green} {$cd}INUTE.":GOSUB{:3026}
-	&"{f6:2}  {white}({lt. blue}{$cd}AXIMUM {$cf}F 60 {$cd}INUTES{white})":FL=1:GOSUB{:3016}:FL=.
-	GOSUB{:3024}:IF A=.THEN{:3050}
-	C$="{$c3}REDITS":GOSUB{:3022}:IF TR%<1 THEN 300
-	GOSUB{:3020}:IF A=.THEN{:3094}
+	C$="{purple}5{lt. green} CREDITS":D$="{purple}1{lt. green} MINUTE.":GOSUB{:3026}
+	&"{f6:2}  {white}({lt. blue}MAXIMUM OF 60 MINUTES{white})":FL=1:GOSUB{:3016}:FL=.
+	GOSUB{:3024}:IF A=. then {:3050}
+	C$="CREDITS":GOSUB{:3022}:IF TR%<1 THEN 300
+	GOSUB{:3020}:IF A=. then {:3094}
 	GOSUB{:3006}:IF B>CR THEN{:3014}
 	IF((B/5)+A)>60 THEN{:3014}
 	CR=CR-B:TR%=TR%+(B/5)
 	GOSUB{:3016}:GOTO{:3050}
 {:3120}
-	&"{clear}{white}{rvrs on}{$d4}RADE {$c3}ALLS {$c6}OR {$c3}REDIT{pound}{back arrow}39{f6}"
+	&"{clear}{white}{rvrs on}TRADE CALLS FOR CREDIT{pound}{back arrow}39{f6}"
 	B=.:GOSUB{:3004}:B%=A:IF A=.THEN B=1
 	GOSUB{:3002}:IF A THEN B=B+1
 	IF CR>MA THEN B=B+1:GOSUB{:3028}
 	IF B THEN GOSUB{:3010}:GOTO{:3050}
-	B%=B%-CT%:C$=" {$cf}NE {$cf}F {$d9}OUR {$c3}ALLS":D$="{yellow}5{green} {$c3}REDITS.":GOSUB{:3026}
-	FL=1:GOSUB{:3016}:FL=.:&"{f6}  {$d9}OU {$c8}AVE {white}{pound}%B {lt. red}{$c3}ALLS {$d2}EMAINING."
-	GOSUB{:3024}:IF A=.THEN{:3050}
-	C$="{$c3}ALLS":GOSUB{:3022}:IF TR%<1 THEN 300
-	GOSUB{:3020}:IF A=.THEN{:3144}
-	IF B>B%THEN{:3014}
+	B%=B%-CT%:C$=" ONE OF YOUR CALLS":D$="{yellow}5{green} CREDITS.":GOSUB{:3026}
+	FL=1:GOSUB{:3016}:FL=.:&"{f6}  YOU HAVE {white}{pound}%B {lt. red}CALLS REMAINING."
+	GOSUB{:3024}:IF A=. then {:3050}
+	C$="CALLS":GOSUB{:3022}:IF TR%<1 THEN 300
+	GOSUB{:3020}:IF A=. then {:3144}
+	IF B>B% then {:3014}
 	CR=CR+(B*5):CT%=CT%+B:GOSUB{:3016}:GOTO{:3050}
 {:3144}
-	&"{clear}{lt. red}{rvrs on}{$d4}RADE {$c3}ALLS {$c6}OR {$d4}IME{pound}{back arrow}39{f6}"
+	&"{clear}{lt. red}{rvrs on}TRADE CALLS FOR TIME{pound}{back arrow}39{f6}"
 	B=.:GOSUB{:3004}:B%=A:IF A=.THEN B=1
 	GOSUB{:3006}:IF A>101 THEN B=B+1
 	IF B THEN GOSUB{:3010}:GOTO{:3050}
-	B%=B%-CT%:C$="{$cf}NE {$cf}F {$d9}OUR {$c3}ALLS":D$="{lt. red}10{white} {$cd}INUTES.":GOSUB{:3026}
-	&"{f6:2}  {white}({lt. blue}{$cd}AXIMUM {$cf}F 60 {$cd}INUTES{white})":FL=1:GOSUB{:3016}:FL=.:&"{f6}  {$d9}OU {$c8}AVE {white}{pound}%B {lt. red}{$c3}ALLS {$d2}EMAINING."
-	GOSUB{:3024}:IF A=.THEN{:3050}
-	C$="{$c3}ALLS":GOSUB{:3022}:IF TR%<1 THEN 300
-	GOSUB{:3020}:IF A=.THEN{:3144}
-	GOSUB{:3006}:IF B>B%THEN{:3014}
+	B%=B%-CT%:C$="ONE OF YOUR CALLS":D$="{lt. red}10{white} MINUTES.":GOSUB{:3026}
+	&"{f6:2}  {white}({lt. blue}MAXIMUM OF 60 MINUTES{white})":FL=1:GOSUB{:3016}:FL=.:&"{f6}  YOU HAVE {white}{pound}%B {lt. red}CALLS REMAINING."
+	GOSUB{:3024}:IF A=. then {:3050}
+	C$="CALLS":GOSUB{:3022}:IF TR%<1 THEN 300
+	GOSUB{:3020}:IF A=. then {:3144}
+	GOSUB{:3006}:IF B>B% then {:3014}
 	C=B*10:IF(C+A)>60 THEN{:3014}
 	TR%=TR%+C:CT%=CT%+B:GOSUB{:3016}:GOTO{:3050}
 {:3168}
-	&"{clear}{purple}{rvrs on}{$c7}IVE {$c3}REDIT {$d4}O {$c1}NOTHER {$d5}SER{pound}{back arrow}39{f6}"
+	&"{clear}{purple}{rvrs on}GIVE CREDIT TO ANOTHER USER{pound}{back arrow}39{f6}"
 	GOSUB{:3002}:IF A THEN GOSUB{:3010}:GOTO{:3050}
-	IF CR<1 THEN:&"{f6:2}{lt. green}{rvrs on}{$d9}OU {$c8}AVE {$ce}O {$c3}REDITS {$d4}O {$c7}IVE! {rvrs on}{yellow}{$c2}{$c5}{$c7}{$cf}{$ce}{$c5}!":GOTO{:3048}
-	&"{f6}{lt. red}  {$d9}OU {$cd}AY {$c7}IVE {$c1}NOTHER {$d5}SER {$d5}P {$d4}O{f6}{white} ":&STR$(CD):&"{lt. red} {$c3}REDITS."
+	IF CR<1 THEN:&"{f6:2}{lt. green}{rvrs on}YOU HAVE NO CREDITS TO GIVE! {rvrs on}{yellow}BEGONE!":GOTO{:3048}
+	&"{f6}{lt. red}  YOU MAY GIVE ANOTHER USER UP TO{f6}{white} ":&STR$(CD):&"{lt. red} CREDITS."
 	FL=1:GOSUB{:3016}:FL=.
-	&"{f6:2}  {$d7}HO {$d7}OULD {$d9}OU {$cc}IKE {$d4}O {$c7}IVE {$c3}REDIT {$d4}O?{f6}: {cyan}{pound}I1":ON-(AN$="")GOTO{:3050}
+	&"{f6:2}  WHO WOULD YOU LIKE TO GIVE CREDIT TO?{f6}: {cyan}{pound}I1":ON-(AN$="")GOTO{:3050}
 	IF TR%<1 THEN 300
-	GOSUB 505:IF I=.THEN:&"{f6}{pound}V7 {$d7}AS {$ce}OT {$c6}OUND.":GOSUB{:3012}:GOTO{:3168}
-	GOSUB{:3020}:IF A=.THEN{:3168}
+	GOSUB 505:IF I=.THEN:&"{f6}{pound}V7 WAS NOT FOUND.":GOSUB{:3012}:GOTO{:3168}
+	GOSUB{:3020}:IF A=. then {:3168}
 	GOSUB 35:X=I:GOSUB 1:FOR I=1 TO 23+VE:&,2,2:TT$(I)=A$:NEXT:Y=I
-	&"{f6:2}{lt. red}  {$c8}OW {$cd}ANY {$c3}REDITS {$d7}OULD {$d9}OU{f6}  {$cc}IKE {$d4}O {$c7}IVE {$d4}O:{f6}{white}  {rvrs on}":&TT$(1):&"{rvrs off}? {yellow}{pound}I1"
+	&"{f6:2}{lt. red}  HOW MANY CREDITS WOULD YOU{f6}  LIKE TO GIVE TO:{f6}{white}  {rvrs on}":&TT$(1):&"{rvrs off}? {yellow}{pound}I1"
 	ON TR%+1 GOTO 300
-	B=ABS(INT(VAL(AN$))):GOSUB{:3020}:IF A=.THEN{:3168}
+	B=ABS(INT(VAL(AN$))):GOSUB{:3020}:IF A=. then {:3168}
 	IF B>CR OR B>CD OR B<1 THEN{:3014}
 	C=VAL(TT$(19)):C=C+B:TT$(19)=STR$(C):CR=CR-B
 	W$="":FOR I=1 TO 23+VE:W$=W$+TT$(I)+R$:NEXT:GOSUB 1:PRINT# 2,W$:CLOSE 2
 	TT$=TT$(1):A$="W":GOSUB 32:IF E%THEN A$="A":GOSUB 32
-	PRINT# 2,NA$R$ID;R$D1$:PRINT# 2,"[{$c3}REDIT]"
-	PRINT# 2,"{f6:2}   {yellow}{rvrs on}{$d9}OU WERE GIVEN {white}"+STR$(B)+"{yellow} {$c3}REDITS"
-	PRINT# 2,"   {$c9}N {$d4}HE {white}{rvrs on}{$d0}ORT {$c3}OMMODORE{rvrs off}{lt. red}{f6}   {$c3}{$d2}{$c5}{$c4}{$c9}{$d4}{$a0}{$cd}{$c1}{$cc:2}{white}!!":PRINT# 2,"{up arrow}":CLOSE 2
+	PRINT# 2,NA$R$ID;R$D1$:PRINT# 2,"[CREDIT]"
+	PRINT# 2,"{f6:2}   {yellow}{rvrs on}YOU WERE GIVEN {white}"+STR$(B)+"{yellow} CREDITS"
+	PRINT# 2,"   IN THE {white}{rvrs on}PORT COMMODORE{rvrs off}{lt. red}{f6}   CREDIT MA{$cc:2}{white}!!":PRINT# 2,"{up arrow}":CLOSE 2
 	IF Y=1 THEN GOSUB 30:X=2:I=1:GOSUB 16:X=13:GOSUB 16:X=24:GOSUB 16:X=31:GOSUB 16
 	ON-(Y<>1)GOSUB 30:X=3:I=1:GOSUB 16:X=14:GOSUB 16:X=32:GOSUB 16
 	CLOSE 2:GOSUB{:3016}:GOTO{:3050}
 {:3214}
-	A=2:GOSUB 11:F%=A:B%=DC:C%=UC:D%=BU:E%=BD:B$="{$d5}PLOADED"
-	C$="{$c4}OWNLOADED":&"{clear}{green} {rvrs on}{$c1}TTENTION {$d3}HOPPERS: {pound}B2{pound}{back arrow}38{rvrs off}"
-	&"{f6} {lt. green}{$d4}HE {$ce}EW {$d3}TORE {$d0}OLICY:{f6:2} {purple}{$d9}OUR {$c3}REDIT {$d2}ATIO {$c9}S {pound}%F {$c2}LOCKS":F%=F%*M%
-	&"{f6} {$c6}OR {$c5}VERY {$c2}LOCK {$d5}PLOADED.  {$d9}OU {$c8}AVE{f6} {white}{pound}$B {pound}%C {$c6}ILES ({pound}%D {$c2}LOCKS) {$c1}ND"
-	&"{f6} {yellow}{pound}$C {pound}%B {$c6}ILES ({pound}%E {$c2}LOCKS)."
-	&"{f6:2} {purple}{$d4}O {$d5}SE {$d4}HE {$c3}REDIT {$cd}ALL {$d9}OUR {$ce}{$d5}{$cd}{$c2}{$c5}{$d2} {$cf}F{f6} {pound}$C {$c6}ILES {$d0}LUS {$d4}HE {$ce}{$d5}{$cd}{$c2}{$c5}{$d2} {$cf}F"
-	&"{f6} {$c2}LOCKS {pound}$C {$cd}AY {$ce}OT {$c5}XCEED {pound}%M{f6} {$d4}{$c9}{$cd}{$c5}{$d3} {$d9}OUR {$d2}ATIO {$d4}IMES {$d9}OUR {$c6}ILES"
-	&"{f6} {$d0}LUS {$c2}LOCKS {pound}$B. ({pound}%F {$d8}){f6:2} {lt. blue}{$d9}OUR {$c2}LOCKS {$d0}LUS {$c6}ILES":D%=D%+C%:&" {$c9}S {pound}%D"
-	IF(DC+BD)>F%*(UC+BU)+100 THEN:&"{f6} {lt. red}{$d9}OU {$c1}RE {$ce}OT {$c5}LIGIBLE {$d4}O {$d5}SE {$d4}HE {$cd}{$c1}{$cc:2}{cyan}":GOTO 300
-	&"{f6:2} {gray3}{$d9}OU {$cd}AY {$c5}NTER {$d4}HE {$cd}{$c1}{$cc:2}":GOSUB{:3012}:GOTO{:3050}
+	A=2:GOSUB 11:F%=A:B%=DC:C%=UC:D%=BU:E%=BD:B$="UPLOADED"
+	C$="DOWNLOADED":&"{clear}{green} {rvrs on}ATTENTION SHOPPERS: {pound}B2{pound}{back arrow}38{rvrs off}"
+	&"{f6} {lt. green}THE NEW STORE POLICY:{f6:2} {purple}YOUR CREDIT RATIO IS {pound}%F BLOCKS":F%=F%*M%
+	&"{f6} FOR EVERY BLOCK UPLOADED.  YOU HAVE{f6} {white}{pound}$B {pound}%C FILES ({pound}%D BLOCKS) AND"
+	&"{f6} {yellow}{pound}$C {pound}%B FILES ({pound}%E BLOCKS)."
+	&"{f6:2} {purple}TO USE THE CREDIT MALL YOUR NUMBER OF{f6} {pound}$C FILES PLUS THE NUMBER OF"
+	&"{f6} BLOCKS {pound}$C MAY NOT EXCEED {pound}%M{f6} TIMES YOUR RATIO TIMES YOUR FILES"
+	&"{f6} PLUS BLOCKS {pound}$B. ({pound}%F X){f6:2} {lt. blue}YOUR BLOCKS PLUS FILES":D%=D%+C%:&" IS {pound}%D"
+	IF(DC+BD)>F%*(UC+BU)+100 THEN:&"{f6} {lt. red}YOU ARE NOT ELIGIBLE TO USE THE MA{$cc:2}{cyan}":GOTO 300
+	&"{f6:2} {gray3}YOU MAY ENTER THE MA{$cc:2}":GOSUB{:3012}:GOTO{:3050}
 	COPR. 1994 NEW IMAGE 9/14/94

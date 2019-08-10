@@ -1,0 +1,20 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+{crunch:on}
+	rem +/lo.checknet 2019-04-10
+	poke 53248,1:&"{clear}Checking Net Files{f6:2}":gosub {:4004}:&"{f6:2}Key: {pound}g1{f6:2}":poke 53248,0:return
+{:4004}
+' pinacolada: changed 8 to dv%
+	dr=2:gosub 1010:close 1:open 1,dv%,0,"$"+dr$+"nm.l.*,p,r"
+	get#1,a$,a$:&,8,1,1:n=0
+{:4008}
+	&,8,1,1:if mid$(a$,8,5)="nm.l."then n=n+1:tt$(n)=a$:goto {:4008}
+	close 2:if n=0 then:&" No Network Files waiting...":return
+	for i=1 to n:a$=mid$(tt$(i),8,8)+",s,r":gosub 1011:a%=0:if e% then {:4016}
+{:4014}
+	a%=a%+1:&,2,2:on -(st=0) goto {:4014}
+{:4016}
+	close 2:a$=mid$(tt$(i),13,3):&" >{pound}$a -- {pound}%a Files{f6}":next
+	return
+

@@ -8,24 +8,24 @@
 	FL=.:A=9:GOSUB 1004:IF A=.THEN X=4:GOTO 1980
 	X=ABS(VAL(MID$(AN$,3))):IF X THEN:&"{f6:2}":GOTO{:60018}
 {:60012}
-	P$="":&"{f6:2}{lt. red}{$c5}NTER {$d5}SER {$c8}ANDLE {$cf}R {$c9}{$c4}#.{f6:2}":GOSUB 1006:X=ABS(VAL(AN$)):IF X THEN{:60018}
+	P$="":&"{f6:2}{lt. red}ENTER USER HANDLE OR ID#.{f6:2}":GOSUB 1006:X=ABS(VAL(AN$)):IF X THEN{:60018}
 	ON TR%+1 GOTO{:60052}:ON-(AN$="")GOTO{:60052}:GOSUB 1046:X=I:IF X THEN NN$=AN$:GOTO{:60026}
-	&"{f6:2}{white}{f5}{gray3}{pound}V7{white}{f5} {gray3}{$ce}OT {$c6}OUND.{f6}":GOTO{:60012}
+	&"{f6:2}{white}{f5}{gray3}{pound}V7{white}{f5} {gray3}NOT FOUND.{f6}":GOTO{:60012}
 {:60018}
 	I=X:IF X<1 OR X>UR THEN{:60022}
-	GOSUB 1065:GOSUB 1001:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"{$d2}{$c5}{$d3}"THEN{:60024}
+	GOSUB 1065:GOSUB 1001:INPUT# 2,NN$:IF NN$<>"{up arrow}"AND NN$<>"RES" then {:60024}
 {:60022}
-	&"{f6}{yellow}{$c9}NVALID {$c1}CCOUNT {$ce}UMBER.{f6}":X=.:GOTO{:60052}
+	&"{f6}{yellow}INVALID ACCOUNT NUMBER.{f6}":X=.:GOTO{:60052}
 {:60024}
-	&"{f6}{lt. green}{$c8}ANDLE: {rvrs on}":&NN$:&"{f6}{yellow}{$c9}S {$d4}HAT {$c3}ORRECT?: ":GOSUB 1907:IF A=.THEN{:60008}
+	&"{f6}{lt. green}HANDLE: {rvrs on}":&NN$:&"{f6}{yellow}IS THAT CORRECT?: ":GOSUB 1907:IF A=. then {:60008}
 {:60026}
 	Y=I:DR=2:GOSUB 1079:ON-(A<20)GOTO{:60048}:GOSUB 1085:IF A THEN GOSUB 1980:GOTO{:60052}
 	ON FL GOTO{:60036}
-	POKE 53252,30:&"{f6}":&"{$d3}UBJECT: ":PL=.:&,1,5:IF AN$=""THEN AN$="{$ce}OTE":C$=AN$
-	&"{up}{$d3}UBJECT: {pound}V7{f6}"
-	TT$(.)="["+AN$+"]":GOSUB 1604:A=1:ON TR%+1 GOTO{:60052}:IF KK=.THEN{:60052}
+	POKE 53252,30:&"{f6}":&"SUBJECT: ":PL=.:&,1,5:IF AN$=""THEN AN$="NOTE":C$=AN$
+	&"{up}SUBJECT: {pound}V7{f6}"
+	TT$(.)="["+AN$+"]":GOSUB 1604:A=1:ON TR%+1 GOTO{:60052}:IF KK=. then {:60052}
 {:60036}
-	&"{f6}{$c6}ILING {pound}$C {$c6}OR ":&NN$:&"...{f6}"
+	&"{f6}FILING {pound}$C FOR ":&NN$:&"...{f6}"
 	Z=1:A$="W":TT$=NN$:GOSUB 1062:IF E%THEN A$="A":Z=.:GOSUB 1062
 	PRINT# 2,NA$R$ID;R$D1$:FOR X=.TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2,"{up arrow}":CLOSE 2
 	IF Y=1 THEN GOSUB 1060:X=2:I=1:GOSUB 1025:X=13:GOSUB 1025:X=24:GOSUB 1025:X=31:GOSUB 1025
@@ -34,23 +34,23 @@
 {:60048}
 	X=2:GOSUB 1980
 {:60050}
-	&"{f6:2}{$d3}END TO ANOTHER USER? ":GOSUB 1902:IF A THEN FL=1:GOTO{:60012}
+	&"{f6:2}SEND TO ANOTHER USER? ":GOSUB 1902:IF A THEN FL=1:GOTO{:60012}
 {:60052}
 	RETURN
 {:60054}	' Top Ten list
-	&"{clear}{pound}V5'S {$d4}OP {$d4}EN {$d5}SERS!!{f6:2}"
-	DR=3:A$="E.TOP TEN,S,R":GOSUB 1011:IF E%THEN:&"{f6:2}{$ce}O LIST (KEY) {pound}G1":GOTO{:60062}
+	&"{clear}{pound}V5'S TOP TEN USERS!!{f6:2}"
+	DR=3:A$="E.TOP TEN,S,R":GOSUB 1011:IF E%THEN:&"{f6:2}NO LIST (KEY) {pound}G1":GOTO{:60062}
 {:60058}
 	&,3,2:S=ST
-	IF S=.THEN{:60058}
+	IF S=. then {:60058}
 {:60062}
 	RETURN
 {:60064}
-	IF NL=.THEN{:60086}
+	IF NL=. then {:60086}
 {:60066}
 	&"{clear}":GOSUB{:60080}:&"{home}{lt. red}{$ba}":A=1:GOSUB 1007
 {:60068}
-	ON TR%+1 GOTO{:60062}:ON-(AN$="{down}")-(AN$="{up}")*2 GOTO{:60070},{:60072}:IF AN$=R$THEN{:60094}
+	ON TR%+1 GOTO{:60062}:ON-(AN$="{down}")-(AN$="{up}")*2 GOTO{:60070},{:60072}:IF AN$=R$ then {:60094}
 {:60070}
 	&"{left}{white}.{left}{down}{lt. red}{$ba}":A=A+1:GOTO{:60074}
 {:60072}
@@ -60,39 +60,39 @@
 	IF A>4 THEN A=1:&"{left} {home}{lt. red}{$ba}":GOTO{:60068}
 	GOTO{:60068}
 {:60080}
-	&"{white}. {yellow}{rvrs on}{$cc}IST {$cf}NE {$d3}IGNATURE{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}{$cc}IST {$c1}{$cc:2} {$d3}IGNATURES{pound}{back arrow}37{gray3} {f6}"
-	&"{white}. {yellow}{rvrs on}{$c3}REATE/{$c5}DIT {$d3}IGNATURE{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}{$d1}UIT{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38{f6}"
-	&"{f6:2} {lt. green}{$c3}REATE UP TO 10 SIGNATURES.{f6}":RETURN
+	&"{white}. {yellow}{rvrs on}LIST ONE SIGNATURE{pound}{back arrow}37{f6}{white}. {yellow}{rvrs on}LIST A{$cc:2} SIGNATURES{pound}{back arrow}37{gray3} {f6}"
+	&"{white}. {yellow}{rvrs on}CREATE/EDIT SIGNATURE{pound}{back arrow}37{gray3} {f6}{white}. {yellow}{rvrs on}QUIT{pound}{back arrow}37{gray3} {f6}   {gray3}{rvrs on}{pound}{back arrow}38{f6}"
+	&"{f6:2} {lt. green}CREATE UP TO 10 SIGNATURES.{f6}":RETURN
 {:60086}
-	&"{white}1) {yellow}{$cc}IST {$cf}NE {$d3}IGNATURE{f6}"
-	&"{white}2) {yellow}{$cc}IST {$c1}{$cc:2} {$d3}IGNATURES{f6}{white}3) {yellow}{$c3}REATE/{$c5}DIT {$d3}IGNATURE{f6}{white}4) {yellow}{$d1}UIT{f6:2}"
-	&"{white}  {lt. green}{$c3}REATE {$d5}P {$d4}O 10 {$d3}IGNATURES.{f6:2}{white}  {$d9}OUR {$d3}ELECTION -=> {pound}G1":A=VAL(AN$)
+	&"{white}1) {yellow}LIST ONE SIGNATURE{f6}"
+	&"{white}2) {yellow}LIST A{$cc:2} SIGNATURES{f6}{white}3) {yellow}CREATE/EDIT SIGNATURE{f6}{white}4) {yellow}QUIT{f6:2}"
+	&"{white}  {lt. green}CREATE UP TO 10 SIGNATURES.{f6:2}{white}  YOUR SELECTION -=> {pound}G1":A=VAL(AN$)
 	IF A<1 OR A>4 THEN{:60086}
 {:60094}
 	ON A GOTO{:60096},{:60104},{:60118},{:60062}
 {:60096}
-	&"{clear}{f6:2}{green}{$d6}IEW {$d7}HICH {$cf}NE? {f6:2}{lt. green}{$c5}NTER (0-9) -=> {white}{pound}G1{pound}V7{f6}"
+	&"{clear}{f6:2}{green}VIEW WHICH ONE? {f6:2}{lt. green}ENTER (0-9) -=> {white}{pound}G1{pound}V7{f6}"
 	IF TR%<1 THEN{:60062}
 	DR=3:A$=LEFT$("PS."+AN$+NA$,16):GOSUB 1076
-	&"{f6:2}{green}{$d6}IEW {$c1}NOTHER {$cf}NE? ":GOSUB 1907:ON TR%+1 GOTO{:60062}:ON A+1 GOTO{:60066}:GOTO{:60096}
+	&"{f6:2}{green}VIEW ANOTHER ONE? ":GOSUB 1907:ON TR%+1 GOTO{:60062}:ON A+1 GOTO{:60066}:GOTO{:60096}
 {:60104}
 	&"{clear}{f6:3}":B=.
 {:60106}
-	B$=MID$(STR$(B),2):&"{green}{$cd}ACRO # {pound}$B.{f6:2}":A$=LEFT$("PS."+B$+NA$,16)
-	DR=3:GOSUB 1011:ON-(E%=.)GOTO{:60112}:CLOSE 2:&"{lt. green}{$cd}ACRO # {pound}$B {$ce}OT {$c3}ONFIGURED!{f6:2}"
+	B$=MID$(STR$(B),2):&"{green}MACRO # {pound}$B.{f6:2}":A$=LEFT$("PS."+B$+NA$,16)
+	DR=3:GOSUB 1011:ON-(E%=.)GOTO{:60112}:CLOSE 2:&"{lt. green}MACRO # {pound}$B NOT CONFIGURED!{f6:2}"
 	GOTO{:60114}
 {:60112}
-	&,12,2:CLOSE 2:&"{pound}Q0{f6:2}{yellow}{$d0}RESS {$c1} {$cb}EY {pound}G1{f6:2}":ON TR%+1 GOTO{:60062}
+	&,12,2:CLOSE 2:&"{pound}Q0{f6:2}{yellow}PRESS A KEY {pound}G1{f6:2}":ON TR%+1 GOTO{:60062}
 {:60114}
 	B=B+1:ON-(B>9)GOTO{:60116}:GOTO{:60106}
 {:60116}
-	&"{f6:2}{lt. green}{$d6}IEW {$d4}HEM {$c1}GAIN? ":B=.:GOSUB 1902:ON A+1 GOTO{:60066}:GOTO{:60104}
+	&"{f6:2}{lt. green}VIEW THEM AGAIN? ":B=.:GOSUB 1902:ON A+1 GOTO{:60066}:GOTO{:60104}
 {:60118}
-	NN$="{f6}{gray3}{$d4}HE {$cd}ULTI-{$d0}ERSONAL {$d3}IGNATURE {$cd}AKER{f6:2}"
-	&"{clear}{f6:3}{lt. green}{$c5}NTER {$ce}UMBER {$d4}O {$c3}HANGE{gray2} -=> {white}{pound}G1{pound}V7":B$=AN$:IF TR%<1 THEN{:60062}
-	&"{f6}{green}{$c7}ET {$d2}EADY {$d4}O {$c5}NTER {$d9}OUR {$d3}IGNATURE :{f6}"
+	NN$="{f6}{gray3}THE MULTI-PERSONAL SIGNATURE MAKER{f6:2}"
+	&"{clear}{f6:3}{lt. green}ENTER NUMBER TO CHANGE{gray2} -=> {white}{pound}G1{pound}V7":B$=AN$:IF TR%<1 THEN{:60062}
+	&"{f6}{green}GET READY TO ENTER YOUR SIGNATURE :{f6}"
 	GOSUB 1604:ON-(KK=.)GOTO{:60066}
-	&"{f6}{white}{$c6}ILING":&NN$:DR=3:A$=LEFT$("PS."+B$+NA$,16):GOSUB 1023
-	FOR X=1 TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2:CLOSE 2:GOSUB 1081:&"{f6:2}{lt. green}{$d3}AVED!{f6:2}"
-	&"{yellow}{$d0}RESS {$c1} {$cb}EY {pound}G1{f6:2}":GOTO{:60066}
+	&"{f6}{white}FILING":&NN$:DR=3:A$=LEFT$("PS."+B$+NA$,16):GOSUB 1023
+	FOR X=1 TO KK-1:PRINT# 2,TT$(X):NEXT:PRINT# 2:CLOSE 2:GOSUB 1081:&"{f6:2}{lt. green}SAVED!{f6:2}"
+	&"{yellow}PRESS A KEY {pound}G1{f6:2}":GOTO{:60066}
 	COPR. 1994 NEW IMAGE 9/27/94

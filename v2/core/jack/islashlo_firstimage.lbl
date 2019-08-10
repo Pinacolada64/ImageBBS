@@ -1,0 +1,81 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	rem "i/lo.firstimage (c)1995 NIS
+	rem "** q&d v.001 **
+	on lm goto {:4100},{:4090}:return
+{number:4008}
+{:4008}
+	lp=1:&"{f6}Sorry, The System Is Reserved For Network Maintenance.{f6}":goto {:4012}
+{:4010}
+	&"{f6:2}Sorry, No Calls Less Than 1200 BPS{F6}Are Currently Being Accepted.{f6:2}"
+{:4012}
+	mm=.:f1=3:goto 3000
+{number:4030}
+{:4030}
+	&,52,16,.:&chr$(27)+"[6n":&,52,16,1:b=.:for x=.to 8:&,4:a%=peek(780) and 127
+	b=-(a%=27):x=x-(9-x)*(b=1):next:on -(b=.) goto 999:&,52,18,1:&,52,19,1:nl=2
+	&,52,16,.:&r$+chr$(27)+"[1;3;5;7;46m":&,52,16,1
+	&" ANSI/Graphics Detected {f6}":return
+{number:4048}
+	rem jump-out points
+{:4050}
+	b$="img-net rcv":x=10:mm=4:gosub 3000:gosub 304:a$="nm/auto":f1=2:goto 70
+	rem b$="fido rec'v":x=10:mm=3:gosub 3000:a$="fido/rec":goto 70
+	rem b$="uucp rec'v":x=10:mm=3:gosub 3000:a$="uucp/rec":goto 70
+{number:4060}
+{:4060}
+	mm=9:goto 3000:rem ** begin login
+{number:4090}
+{:4090}
+	rem ascii detect (again!)
+	&,52,16,.:&,52,17,1:&,52,18,.:&,52,19,.:cm$="ASCII Re-Detect":gosub 9
+	goto {:4134}
+{number:4100}
+{:4100}
+' initial strings are all uppercase since we don't know what character set the terminal uses yet
+	rem find out what's out there...
+	poke 2033,.:&,52,16,1:&,52,17,1:&"{f6}":&,52,16,.:&"{pound}b1":&,52,16,1:&,22,5
+	cm$="Call Connected":gosub 9:tr%=7:gosub 12
+	rem ** response detect phase i **
+	&,22,40:&"{f6:2}CONNECTION CONFIRMED:{f6}"+qb$+r$:gosub 82:&,40
+	a%=.:if qb<1200 then:&,52,3,3:if a% then {:4010}
+{:4134}
+	mp%=.:ll%=80:poke 971,mp%:poke 970,.:poke 951,ll%
+{:4136}
+' ----+----+----+----+----+----+----+----+
+' PLEASE HIT YOUR BACKSPACE/DELETE KEY: _
+' &,52,16: ASCII Translation
+	gosub {:4030}:on b goto {:4180}:&"{f6}PLEASE HIT YOUR BACKSPACE/DELETE KEY"
+	&,52,16,.:&"{pound}b1: ":&,52,16,1
+{:4140}
+	&,4:a=peek(780) and 127:if (peek(2033) and 128)<>128 or tr%<1 then {:4012}
+	on -(a=13)-2*(a=.) goto {:4136},{:4140}
+' &,52,28: NetMail Enable - ctrl-a starts network handshake
+	&,52,28,3:if a% then on -(a=1) goto {:4050}
+	rem ** response detect phase ][ **
+' &,52,16: ASCII Translation
+	on -(a<>8 and a<>20 and a<>127) goto {:4136}:nl=-(a=20):&,52,16,1-nl
+' &,52,47: Right $2e - read "s.detect" (from i.lo)
+	&,52,47,3:if a% then a$="s.detect":mm=13:gosub 3000:goto {:4180}
+	b$="ASCII":if nl then b$="Commodore Graphics":&"{pound}k1"
+	&"{pound}$b{pound}q0 Mode Detected.{f6:2}":if tr%<1 then {:4012}
+{:4180}
+' &,52,17: Line Feed After Return
+' &,52,18: ANSI Color Enable
+' &,52,19: ANSI Graphics Enable
+	tr%=5:on -(nl>.) goto {:4190}:&,52,17,1:&,52,18,.:&,52,19,.
+	&"{f6}{lt. blue}Does Your Terminal Support{cyan}:{f6} {lt. blue}ANSI Color{cyan}?: ":gosub 96:&,52,18,a:b=a
+	&" {lt. blue}IBM Style Graphics{cyan}?: ":gosub 96:&,52,19,a:nl=-2*(a+b=2)
+{:4190}
+	&" {lt. blue}Are You In 80 Columns{cyan}?: ":a=-(nl=1):on a+1 gosub 96,94:ll%=40+(40*a)
+' &,52,41: Network Reserve
+' &,52,40: System Reserved (Default PW)
+	&,52,41,3:on a% goto {:4008}:&,52,40,3:on 1-a% goto {:4060}
+	a=.:b$="":if l2=. then b$="Temporarily "
+{:4204}
+	&"{green}The System Is {pound}$bReserved{lt. green}.{f6:2}{green}Enter Password{lt. green}: {white}":&,6:if an$=l2$ then {:4210}
+	&"{green}Sorry{lt. green}, {green}That Password Is Not Valid{lt. green}.":a=a+1
+	on -(a<3) and tr%>.) goto {:4204}:goto 4112
+{:4210}
+	&"{green}Password Accepted{lt. green}.":&,52,40,l2:goto {:4060}

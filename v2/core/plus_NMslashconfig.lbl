@@ -1,0 +1,403 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	REM "+.NM/config" 03-27-95
+	v=1.3:vn$="900610":r$=CHR$(13):GOSUB {:3104}:GOTO 1812
+{:3004}
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes":GOTO 1012
+{:3006}
+	GOSUB {:3004}:INPUT# 2,n:RETURN
+{:3008}
+	CLOSE 2:OPEN 2,dv%,2,dr$+"nm.nodes,l,"+CHR$(100):RETURN
+{:3010}
+	&"10{f6}":dr=2:a$="nm.nodes":GOTO 1011
+{:3012}
+	&"12{f6}":GOSUB {:3010}:INPUT# 2,n:RETURN
+	f$="nm.list":GOSUB {:3016}:PRINT# 2,tt$:CLOSE 2:RETURN
+{:3016}
+	dr=2:a$=f$+",s,w":GOSUB 1011:IF e%THEN a$=f$+",s,a":GOSUB 1011:RETURN
+	RETURN
+	f$="nm.sylog":GOSUB {:3016}:PRINT# 2,na$r$d1$r$tt$:CLOSE 2:RETURN
+{:3022}
+	&"22{f6}":IF x THEN x=x+1:GOSUB 1001:INPUT# 2,z$:RETURN
+	&"24{f6}":z$="{f2:3}":RETURN
+{:3026}
+	&"26{f6}":GOSUB {:3012}
+	FOR i=1 TO n:a%=i:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$:&"{pound}#2{pound}%a:/{pound}$a/{pound}{back arrow}10{pound}$b{f6}"
+	&"30{f6}":i=i+rc*n:NEXT:CLOSE 2:RETURN
+	GOSUB {:3012}:IF a<1 OR a>n THEN 32
+{:3034}
+	&"34{f6}":x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	x=a%:GOSUB {:3022}:f$=z$:x=b%:GOSUB {:3022}:g$=z$:x=c%:GOSUB {:3022}:h$=z$:x=d%:GOSUB {:3022}:i$=z$
+	&"38{f6}":CLOSE 2:RETURN
+	t$=w$:&,1,32:IF an$=""THEN an$=t$
+	IF an$<>t$THEN tz=1
+	RETURN
+	&"{pound}g1":b=-(an$="Y"):IF an$<>"N"AND an$<>"Y"THEN b=a
+	IF b THEN:&"Yes.{f6}"
+	IF b=.THEN:&"No.{f6}"
+	IF a<>b THEN tz=1
+	a=b:RETURN
+{:3056}
+	&"Destination Node (?=List):{pound}i1":IF an$="{f2}"THEN GOSUB {:3026}:GOTO {:3056}
+{:3058}
+	&"58{f6}":a$=an$:a%=VAL(a$):IF a%<1 OR a%>n THEN:&,16,2
+	&"60{f6}":IF a%=0 THEN a=0:a$="":RETURN
+	&"62{f6}":GOSUB {:3010}
+	&"64{f6}":a=a%:GOTO {:3034}
+{:3066}
+	&"{lt. blue}Node {blue}({cyan}?{blue}={lt. blue}List{blue},{cyan}A{blue}={lt. blue}Add{blue}):{white}{pound}i1":IF an$="{f2}"THEN GOSUB {:3026}:GOTO {:3066}
+	&"68{f6}":GOTO {:3058}
+{:3070}
+	pr=-1:dr=5:GOSUB 1010:a$=dr$+"++ path":&,7,dv%,2:IF e%THEN:&:RETURN
+	GOSUB {:3086}:IF e%=0 THEN RETURN
+	GOSUB {:3010}:IF e%THEN:&:GOTO {:3084}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.nodelist,p,w":PRINT# 3,CHR$(0)CHR$(194);
+	INPUT# 2,n:PRINT# 3,CHR$(n);:IF n=0 THEN{:3084}
+	FOR i=1 TO n:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,b$,b$,b$,a,b,c,d
+	PRINT# 3,LEFT$(a$+"---",3)CHR$(0)CHR$(a)CHR$(b)CHR$(c)CHR$(d);:NEXT
+{:3084}
+	CLOSE 3:CLOSE 2
+{:3086}
+	dr=2:GOSUB 1010:a$=dr$+"nm.nodelist":&,16:GOTO 1012
+{:3088}
+	x=1:z$=STR$(nn)+r$+STR$(af%)+r$+pn$+r$+vn$+r$:GOTO {:3098}
+{:3090}
+	x=2:z$=STR$(br%)+r$+h0$+r$+h1$+r$+h2$+r$:GOTO {:3098}
+{:3092}
+	x=3:z$="":FOR i=0 TO 9:z$=z$+tt$(i)+r$:NEXT:GOTO {:3098}
+{:3094}
+	x=4:z$=ct$+r$+st$+r$:GOTO {:3098}
+	x=6:z$=a1$+r$+a2$+r$+a3$+r$:GOTO {:3098}
+{:3098}
+	dr=2:a$="nm.config":GOSUB 1011:GOSUB 1001:PRINT# 2,z$;:GOSUB 1001:CLOSE 2:RETURN
+	&"Configuration Error!{f6}":GOTO 1812
+	CLOSE 2:&:&"{f6}Press a key:{pound}g1{f6}"
+{:3104}
+	IF zz=0 THEN:&"{f6}Sorry, This is a SYSOP ONLY program.{f6:2}":RETURN
+	GOSUB {:3548}:IF e%THEN RETURN
+{:3108}
+	a$=nn$:&"{clear}{f6}{white}   NetMail Configuration{f6:2}{lt. blue} Node {pound}%n{blue}:{white} {pound}$a{f6:2}"
+	&"{cyan} A. {lt. blue}Local Info{f6}"
+	&"{cyan} B. {lt. blue}Modem Specs{f6}"
+	&"{cyan} C. {lt. blue}Calling Hours{f6}"
+	&"{cyan} D. {lt. blue}Make {f5}nm.create{f5}{f6}"
+	&"{cyan} E. {lt. blue}Edit Connections{f6}"
+	&"{cyan} F. {lt. blue}Forward List{f6}"
+	&"{cyan} G. {lt. blue}Netwall/Graffiti{f6}"
+	&"{f6}{cyan}-->{white} {pound}g1":IF an$>="A"AND an$<="H"THEN a=ASC(an$)AND 31:GOSUB {:3130}:GOTO {:3108}
+	RETURN
+{:3130}
+	lp=1:&an$:ON a GOTO {:3132},{:3180},{:3296},{:3458},{:3332},{:3242},{:3512}:RETURN
+{:3132}
+	dr=2:a$="nm.config":GOSUB 1011:&,2,2:&,2,2:af%=VAL(a$):&,2,2:pn$=a$
+	x=4:GOSUB 1001:&,2,2:ct$=a$:&,2,2:st$=a$:CLOSE 2
+{:3136}
+	&"{clear}{f6}{white}   Local Info{f6:2}"
+	a%=af%:a$=pn$:b$=ct$:c$=st$
+	&"{cyan} 1. {lt. blue}Net Access   {blue}:{white}{pound}%a{f6}"
+	&"{cyan} 2. {lt. blue}Password     {blue}:{white}{pound}$a{f6}"
+	&"{cyan} 3. {lt. blue}City         {blue}:{white}{pound}$b{f6}"
+	&"{cyan} 4. {lt. blue}State        {blue}:{white}{pound}$c{f6}"
+	&"{f6:2}{lt. blue}-->{white}{pound}g1":a=VAL(an$):IF a=>1 AND a<=4 THEN ON a GOSUB {:3152},{:3162},{:3168},{:3174}:GOTO {:3136}
+	RETURN
+{:3152}
+	&"{f6:2} NM Access:{f6:2}":tz=0
+	FOR i=0 TO 9:a%=i:a=SGN(af%AND 2^i):a$=MID$("NY",a+1,1)
+	&"Group #{pound}%a ({pound}$a)? {pound}g1":IF an$="Y"OR an$="N"THEN a=-(an$="Y"):tz=1
+	af%=(af%AND NOT 2^i)OR(a*2^i):GOSUB 1904:NEXT
+	ON tz GOSUB {:3088}:RETURN
+{:3162}
+	&"{f6:2} Network Password:{f6:2}":tz=0
+	p$="Password":w$=pn$:q=16:GOSUB {:3656}:pl=1:&,1,32:IF an$<>""THEN pn$=an$:tz=1
+	ON tz GOSUB {:3088}:RETURN
+{:3168}
+	&"{f6:2} City:{f6:2}":tz=0
+	p$="City":w$=ct$:q=25:GOSUB {:3656}:pl=0:&,1,32:IF an$<>""THEN ct$=an$:tz=1
+	ON tz GOSUB {:3094}:RETURN
+{:3174}
+	&"{f6:2} State:{f6:2}":tz=0
+	p$="State":w$=st$:q=2:GOSUB {:3656}:pl=1:&,1,32:IF an$<>""THEN st$=an$:tz=1
+	ON tz GOSUB {:3094}:RETURN
+{:3180}
+	dr=2:a$="nm.config":GOSUB 1011:x=2:GOSUB 1001
+	&,2,2:br%=VAL(a$):&,2,2:h0$=a$:&,2,2:h1$=a$:&,2,2:h2$=a$:CLOSE 2
+{:3184}
+	&"{clear}{f6}{white}   Modem Specifications{f6:2}"
+	a%=br%:a$=h0$:b$=h1$:c$=h2$
+	&"{cyan} 1. {lt. blue}Max Baud Rate{blue}:{white}{pound}%a{f6}"
+	&"{cyan} 2. {lt. blue}Off-Hook Cmd {blue}:{white}{pound}$a{f6}"
+	&"{cyan} 3. {lt. blue}On-Hook Cmd  {blue}:{white}{pound}$b{f6}"
+	&"{cyan} 4. {lt. blue}Dial Command {blue}:{white}{pound}$c{f6}"
+	&"{f6:2}{lt. blue}-->{white}{pound}g1":a=VAL(an$):IF a=>1 AND a<=4 THEN ON a GOSUB {:3200},{:3214},{:3224},{:3234}:GOTO {:3184}
+	RETURN
+{:3200}
+	&"{f6:2} Max Baud Rate:{f6}"
+	&"{f6} 1.  300":IF br%=300 THEN:&"<-"
+	&"{f6} 2. 1200":IF br%=1200 THEN:&"<-"
+	&"{f6} 3. 2400":IF br%=2400 THEN:&"<-"
+	&"{f6:2} > {pound}g1":IF an$<"1"OR an$>"3"THEN RETURN
+	a=VAL(an$):b=-300*(a=1)-1200*(a=2)-2400*(a=3):IF br%=b THEN RETURN
+	br%=b:GOTO {:3090}
+{:3214}
+	&"{f6:2} Modem Off-Hook Command:{f6:2}"
+	a$=h0$:&"Current Command: {f5}{pound}$a{f5}{f6}"
+	q=15:GOSUB {:3656}:&"New Command: {pound}i0":IF an$<>""THEN h0$=an$:GOTO {:3090}
+	&"{f6}Remove Off-Hook Command? ":GOSUB 1902:IF a THEN h0$="":GOTO {:3090}
+	RETURN
+{:3224}
+	&"{f6:2} Modem On-Hook Command:{f6:2}"
+	a$=h1$:&"Current Command: {f5}{pound}$a{f5}{f6}"
+	q=15:GOSUB {:3656}:&"New Command: {pound}i0":IF an$<>""THEN h1$=an$:GOTO {:3090}
+	&"{f6}Remove On-Hook Command? ":GOSUB 1902:IF a THEN h1$="":GOTO {:3090}
+	RETURN
+{:3234}
+	&"{f6:2} Modem Dial Command:{f6:2}"
+	a$=h2$:&"Current Command: {f5}{pound}$a{f5}{f6}"
+	q=15:GOSUB {:3656}:&"New Command: {pound}i0":IF an$<>""THEN h2$=an$:GOTO {:3090}
+	RETURN
+{:3242}
+	&"{f6}":GOSUB {:3294}
+	&"{clear}{f6} {white}E-Mail Forwarding{f6:2}":IF l=0 THEN GOSUB {:3268}:GOTO {:3254}
+	FOR i=1 TO l:x=i+1:GOSUB 1001:INPUT# 2,a$,b$,c$:d$=b$+" @ ":IF b$=a$THEN d$=""
+	IF a$="{up arrow}"THEN:&"{cyan}#{pound}#2{pound}# {pound}%a {white}(Empty){f6}":NEXT:GOTO {:3254}
+	IF a$<>b$THEN c$=b$+"{lt. blue} @ {white}"+c$
+	a%=x-1:&"{cyan}#{pound}#2{pound}# {pound}%a {white}{pound}$a {lt. blue}To {white}{pound}$c{f6}":NEXT
+{:3254}
+	CLOSE 2:q=20:GOSUB {:3656}
+	a%=l:&"{f6}{white}{pound}%a {lt. blue}Forwards {blue}[{cyan}A{lt. blue}dd{blue}, {cyan}D{lt. blue}elete{blue}, {cyan}E{lt. blue}dit{blue}, {cyan}Q{lt. blue}uit{blue}]{white}? {pound}g1"
+	x=-(an$="A")-2*(an$="D"AND l>0)-3*(an$="E"AND l>0)
+	IF x THEN ON x GOSUB {:3264},{:3270},{:3280}:GOTO {:3242}
+	GOSUB {:3294}:GOTO {:3268}
+{:3264}
+	&"Add{f6:2}":GOSUB {:3286}:IF a=0 THEN RETURN
+	GOSUB {:3294}:l=l+1:x=l+1:GOSUB 1001:PRINT# 2,a1$r$a2$r$a3$
+{:3268}
+	x=1:GOSUB 1001:PRINT# 2,l;r$:GOSUB 1001:CLOSE 2:RETURN
+{:3270}
+	&"Delete{f6:2}Which #? {pound}i1":z=VAL(an$):IF z<1 OR z>l THEN RETURN
+	GOSUB {:3294}:l=l-1:IF z=l+1 THEN{:3278}
+	FOR i=z+2 TO l+2:x=i:GOSUB 1001:INPUT# 2,a1$,a2$,a3$:x=i-1:GOSUB 1001
+	PRINT# 2,a1$r$a2$r$a3$:NEXT:x=1:GOSUB 1001:PRINT# 2,l;r$:RETURN
+{:3278}
+	GOTO {:3268}
+{:3280}
+	&"Edit{f6:2}Which #? {pound}i1":z=VAL(an$):IF z<1 OR z>l THEN RETURN
+	GOSUB {:3286}:IF a=0 THEN RETURN
+	GOSUB {:3294}:x=z+1:GOSUB 1001:PRINT# 2,a1$r$a2$r$a3$:GOSUB 1001:CLOSE 2:RETURN
+{:3286}
+	a=0:&"Handle Here :{pound}i1":a1$=an$:IF an$=""THEN RETURN
+	&"Handle There:{pound}i1":a2$=an$:IF an$=""THEN a2$=a1$:a$=a1$:&"({pound}$a Assumed){f6}"
+	GOSUB {:3056}:a3$=a$:a$=a1$:b$=a2$:c$=a3$
+	&"{f6}Forward {pound}$a'S Mail To{f6}{pound}$b At {pound}$c{f6:2}Correct?" :GOTO 1902
+{:3294}
+	dr=2:a$="nm.forward,l,.":GOSUB 1011:&,2,2:l=VAL(a$):RETURN
+{:3296}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN:&:GOTO {:3328}
+	x=3:GOSUB 1001:FOR i=0 TO 9:&,2,2:IF LEN(a$)<>4 THEN a$="2306"
+	tt$(i)=a$:NEXT:CLOSE 2
+{:3302}
+	&"{clear}{f6} NetMail Call Times Editor:{f6:2}":FOR i=0 TO 9:a%=i:a$=tt$(i)
+	b%=VAL(LEFT$(a$,2)):c%=VAL(RIGHT$(a$,2))
+	b$="A":IF b%>11 THEN b%=b%-12:b$="P"
+	c$="A":IF c%>11 THEN c%=c%-12:c$="P"
+	b%=b%-12*(b%=0):c%=c%-12*(c%=0)
+	&"{pound}%a) {pound}#2{pound}# {pound}%b:00 {pound}$bM to {pound}#2{pound}# {pound}%c:59 {pound}$cM{f6}":NEXT
+	&"{f6} Change Which? {pound}g1":a=VAL(an$):IF an$<"0"OR an$>"9"THEN{:3092}
+	&"{pound}v7{f6:2}"
+	q=3:GOSUB {:3656}
+	a$="Start":GOSUB {:3326}:IF a$<>""THEN tt$(a)=a$+MID$(tt$(a),3)
+	a$="End":GOSUB {:3326}:IF a$<>""THEN tt$(a)=LEFT$(tt$(a),2)+a$
+	GOTO {:3302}
+{:3326}
+	&"{pound}$a Hour: {pound}i1":b=VAL(an$):IF an$=""OR b<0 OR b>23 THEN a$="":RETURN
+{:3328}
+	b=b+12*(b=12):IF RIGHT$(an$,1)="P"THEN b=b+12
+	a$=RIGHT$(STR$(100+b),2):RETURN
+{:3332}
+	GOSUB {:3616}:IF e%THEN RETURN
+{:3334}
+	&"{clear}{f6}{white} NetMail Connections Editor:{f6:2}"
+	&"{cyan} 1. {lt. blue}Edit Standard Connections{f6}{cyan} 2. {lt. blue}Edit Short-Cuts{f6}"
+	&"{f6}{lt. blue}Which?{white} {pound}g1{f6}":a=VAL(an$):IF a THEN ON a GOSUB {:3342},{:3344}:GOTO {:3334}
+	CLOSE 2:RETURN
+{:3342}
+	k=0:m=4:GOTO {:3346}
+{:3344}
+	x=5:GOSUB 1001:&,2,2:m=VAL(a$):k=5
+{:3346}
+	&"{clear}{f6}{white} NetMail Connections Editor:{f6:2}":z=-(k>0 AND m<56):ON-(m=0)GOTO {:3350}
+	FOR i=1 TO m:x=i+k:GOSUB 1001:a%=i:&,2,2:&"{cyan}{pound}#2{pound}# {pound}%a){lt. blue} {pound}$a   ":NEXT
+{:3350}
+	a$="":IF z THEN a$=" (A=Add) "
+	q=2:GOSUB {:3656}:&"{f6:2}{cyan}Edit/View Which{pound}$a?{white} {pound}i1":IF tr%<1 OR an$=""THEN RETURN
+	IF z AND an$="A"THEN{:3360}
+	a=VAL(an$):IF a=>1 AND a<=m THEN x=a+k:GOSUB {:3366}:GOSUB {:3370}:GOTO {:3346}
+	RETURN
+{:3360}
+	m=m+1:x=5:GOSUB 1001:PRINT# 2,m:x=k+m:GOSUB {:3362}:GOSUB {:3382}:GOTO {:3346}
+{:3362}
+	tt$(1)="{f8}":tt$(2)="{f2}":tt$(3)="-------":tt$(4)="":tt$(5)="0000000":tt$(6)="0"
+	tt$(7)="0":tt$(8)=d1$:tt$(9)=d1$:RETURN
+{:3366}
+	GOSUB 1001:FOR i=1 TO 9:&,2,2:tt$(i)=a$:NEXT:RETURN
+{:3368}
+	GOSUB 1001:a$="":FOR i=1 TO 9:a$=a$+tt$(i)+r$:NEXT:PRINT# 2,a$;:GOSUB 1001:RETURN
+{:3370}
+	GOSUB {:3432}:&"{f6}{lt. blue} Edit Which? {cyan}(A=All) {white}{pound}g1":ON-(an$="A")GOTO {:3382}:b=VAL(an$)
+	IF b THEN GOSUB {:3380}:GOTO {:3370}
+	IF tt$(1)<>"{f8}"OR k=0 THEN{:3368}
+	IF x-k<m AND m>1 THEN FOR j=x-k TO m-1:x=j+k+1:GOSUB {:3366}:x=j+k:GOSUB {:3368}:NEXT
+	m=m-1:x=5:GOSUB 1001:PRINT# 2,m:GOSUB 1001:RETURN
+{:3380}
+	&"{f6:2}{pound}q0":ON b GOTO {:3384},{:3392},{:3396},{:3406},{:3412},{:3424},{:3428}:RETURN
+{:3382}
+	GOSUB {:3362}:FOR b=1 TO 6:GOSUB {:3380}:NEXT:GOTO {:3370}
+{:3384}
+	IF k=0 THEN RETURN
+	q=3:GOSUB {:3656}:p$="Node":w$=tt$(1):pl=1:&,1,32:IF LEN(an$)=3 THEN tt$(1)=an$
+	IF an$="{f8}"THEN tt$(1)=an$
+	RETURN
+{:3392}
+	q=16:GOSUB {:3656}:p$="Password":w$=tt$(2):pl=1:&,1,32:IF an$<>""THEN tt$(2)=an$
+	RETURN
+{:3396}
+	&"{f5}-{f5}=No Call,0-9=Defined,{f5}+{f5}=24 Hours:{f6}":b$=tt$(3)
+	FOR i=1 TO 7:a$=MID$("SunMonTueWedThuFriSat",i*3-2,3):z$=MID$(b$,i,1)
+	&"{pound}$a ({pound}$z): {pound}g1":f=(an$="+"OR an$="-"OR(an$=>"0"AND an$<="9"))
+	IF f THEN b$=LEFT$(b$,i-1)+an$+MID$(b$,i+1)
+	lp=1:&MID$(b$,i,1):NEXT:tt$(3)=b$:RETURN
+{:3406}
+	q=20:GOSUB {:3656}:p$="Dial Prefix":w$=tt$(4):pl=1:&,1,32:IF an$<>""THEN tt$(4)=an$
+	IF an$=""THEN:&"Remove Dial Prefix? ":GOSUB 1902:IF a THEN tt$(4)=""
+	RETURN
+{:3412}
+	&"Calls/Day:{f6}{f5}#{f5}=# of Calls, {f5}+{f5}=Infinite:{f6}":b$=tt$(5)
+	FOR i=1 TO 7:a$=MID$("SunMonTueWedThuFriSat",i*3-2,3):z$=MID$(b$,i,1)
+	&"{pound}$a ({pound}$z): {pound}g1":f=(an$="+"OR(an$=>"0"AND an$<="9"))
+	IF f THEN b$=LEFT$(b$,i-1)+an$+MID$(b$,i+1)
+	lp=1:&MID$(b$,i,1):NEXT:tt$(5)=b$:RETURN
+	RETURN
+{:3424}
+	&"Reset Calls Today? ":GOSUB 1902:IF a THEN tt$(6)="0"
+	RETURN
+{:3428}
+	&"Reset Minutes? ":GOSUB 1902:IF a THEN tt$(7)="0":tt$(8)=d1$
+	RETURN
+{:3432}
+	a$=tt$(1):b$=tt$(2):&"{clear}{f6:2}{cyan}1. {lt. blue}Node:      {white}{pound}$a{f6}{cyan}2. {lt. blue}Password:  {white}{f5}{pound}$b{f5}{f6}"
+	a$=tt$(3):b$=tt$(4):&"{cyan}3. {lt. blue}Hours:     {white}{pound}$a{f6}{cyan}4. {lt. blue}Prefix:    {white}{pound}$b{f6}"
+	a$=tt$(5):&"{cyan}5. {lt. blue}Calls/Day: {white}{pound}$a{f6}"
+	a$=tt$(6):b$=tt$(9):&"{cyan}6. {lt. blue}Today:     {white}{pound}$a{f6}{cyan}   {lt. blue}Last Call: {white}{$04}"+b$+"{f6}"
+	a$=tt$(7):b$=tt$(8):&"{cyan}7. {lt. blue}Minutes:   {white}{pound}$a{f6}{cyan}   {lt. blue}Since:     {white}{$04}"+b$+"{f6}"
+	&"{f6:2}":RETURN
+	dr=2:a$="nm.connect":GOSUB 1011:IF e%=0 THEN RETURN
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN:&"Config Error!":&:RETURN
+	x=nn+1:GOSUB 1001:FOR i=1 TO 5:&,2,2:NEXT:FOR i=1 TO 4:&,2,2:a%(i)=VAL(a$):NEXT
+	FOR i=1 TO 4:tt$(i)="{up arrow}":IF a%(i)THEN x=a%(i)+1:GOSUB 1001:&,2,2:tt$(i)=a$
+	NEXT:CLOSE 2:dr=2:a$="nm.connect,l,"+CHR$(100):GOSUB 1011:FOR x=1 TO 4:GOSUB 1001
+	PRINT# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:NEXT
+	x=5:GOSUB 1001:PRINT# 2,0:GOSUB 1001:x=1:GOSUB 1001:RETURN
+{:3458}
+	&"{f6:2} Making {f5}nm.create{f5}..."
+	dr=2:GOSUB 1010:PRINT# 15,"s"dr$"nm.create"
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.create,s,w":GOSUB 1012:IF e%THEN{:3474}
+	GOSUB {:3006}
+	FOR a=n TO 1 STEP-1:x=a+1:GOSUB 1001:INPUT# 2,a$,b$,c$,d$,o%,a%,b%,c%,d%
+	PRINT# 3,a;r$a$r$b$r$c$r$d$r$o%AND 1;r$a%r$b%r$c%r$d%
+	NEXT:CLOSE 2:CLOSE 3
+	&"Done!{pound}w1{f6}":RETURN
+{:3474}
+	CLOSE 3:&"{f6:2}Error Creating File {f5}nm.create{f5}.{f6}":RETURN
+{:3512}
+	&"{clear}{f6}{white} NetWall/NetGrf Connections Editor:{f6:2}"
+	&"{cyan} 1. {lt. blue}Edit Netwall Connections{f6}{cyan} 2. {lt. blue}Edit Net Graffiti Connections{f6}"
+	&"{f6}{lt. blue}Which?{white} {pound}g1{f6}":a=VAL(an$):IF a THEN ON a GOSUB {:3520},{:3522}:GOTO {:3512}
+	RETURN
+{:3520}
+	k=7:m$="NetWall":GOTO {:3524}
+{:3522}
+	k=8:m$="Net Graffiti"
+{:3524}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	FOR i=1 TO 8:tt$(i)="{up arrow}":NEXT
+	x=k:GOSUB 1001:&,2,2:tt$(1)=a$:IF st=0 THEN FOR i=2 TO 8:&,2,2:tt$(i)=a$:NEXT
+{:3530}
+	&"{clear}{f6}{white} {pound}$m Connections:{f6:2}":FOR i=1 TO 8:a$=tt$(i):a%=i:&"{cyan} {pound}%a. {lt. blue}{pound}$a{f6}":NEXT
+	&"{f6}{lt. blue}Which? {pound}g1":a=VAL(an$):IF a THEN ON-(a<9)GOSUB {:3536}:GOTO {:3530}
+	a$="":FOR i=1 TO 8:a$=a$+tt$(i)+r$:NEXT:x=k:GOSUB 1001:PRINT# 2,a$;:CLOSE 2:RETURN
+{:3536}
+	a%=a:POKE 53252,7:&"Enter Connection {pound}%a: {pound}i1"
+	IF an$=""OR an$="{f8}"THEN:&"Delete #{pound}%a? ":GOSUB 1902:ON a GOTO {:3544}:RETURN
+	IF an$<>""THEN tt$(a%)=an$
+	RETURN
+{:3544}
+	IF a%<8 THEN FOR i=a%TO 7:tt$(i)=tt$(i+1):NEXT
+	tt$(8)="{up arrow}":RETURN
+{:3548}
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN CLOSE 2:GOTO {:3554}
+	&,2,2:nn=VAL(a$):&,2,2:&,2,2:&,2,2:CLOSE 2
+	IF a$<>vn$THEN:&"{f6:2}Version Mismatch! Run {f5}+.NM/convert{f5}{f6:2}":e%=1:RETURN
+{:3554}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%=0 THEN:&,2,2:n=VAL(a$):GOTO {:3586}
+	dr=2:a$="nm.create,s,r":GOSUB 1011:IF e%THEN{:3582}
+	&"{f6}Creating {f5}nm.nodes{f5} file..."
+	INPUT# 2,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st:CLOSE 2
+	GOSUB {:3008}:n=0
+	x=a+1:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	IF a>n THEN n=a:x=1:GOSUB 1001:PRINT# 2,n
+	CLOSE 2:CLOSE 3:OPEN 3,dv%,3,dr$+"nm.create,s,r"
+	GOSUB {:3008}:n=0
+{:3572}
+	INPUT# 3,a,a$,b$,c$,d$,o%,a%,b%,c%,d%:s=st
+	x=a+1:GOSUB 1001:PRINT# 2,a$r$b$r$c$r$d$r$o%r$a%r$b%r$c%r$d%
+	IF a>n THEN n=a:x=1:GOSUB 1001:PRINT# 2,n
+	IF s=.THEN{:3572}
+	CLOSE 2:CLOSE 3:PRINT# 15,"s"dr$"nm.nodelist":GOTO {:3586}
+{:3582}
+	&"No {f5}nm.create{f5} file found!{f6}Please contact your NetWork{f6}Administrator.{f6}"
+	e%=1:RETURN
+{:3586}
+	GOSUB {:3070}:IF e%THEN RETURN
+	IF nn THEN{:3612}
+	dr=2:a$="nm.nodes":GOSUB 1011:&,2,2:n=VAL(a$):CLOSE 2
+	&"{f6}Enter the Node # you were assigned: {pound}i1":nn=VAL(an$)
+	IF nn<1 OR nn>n THEN e%=1:RETURN
+	dr=2:a$="nm.config":GOSUB 1011:IF e%THEN{:3600}
+	&,2,2:&,2,2:&,2,2:af%=VAL(a$):&,2,2:pn$=a$:GOSUB {:3088}:GOTO {:3612}
+{:3600}
+	dr=2:a$="nm.config,l,z":GOSUB 1011
+	x=1:GOSUB 1001:PRINT# 2,nn;r$1022;r$"{f2}"r$vn$
+	x=2:GOSUB 1001:PRINT# 2,300;r$r$r$"atdt"
+	x=3:GOSUB 1001:a$="":FOR i=0 TO 9:a$=a$+"2306"+r$:NEXT:PRINT# 2,a$;
+	x=4:GOSUB 1001:PRINT# 2,"{up arrow}"r$"{up arrow}"
+	x=1:GOSUB 1001:CLOSE 2
+{:3612}
+	dr=2:a$="nm.nodes":GOSUB 1011:x=nn+1:GOSUB 1001:&,2,2:nn$=a$:CLOSE 2
+	n%=nn:GOTO {:3070}
+{:3616}
+	dr=2:a$="nm.connect":GOSUB 1011:IF e%=0 THEN{:3630}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN:&"Config Error!":&:RETURN
+	x=nn+1:GOSUB 1001:FOR i=1 TO 5:&,2,2:NEXT:FOR i=1 TO 4:&,2,2:a%(i)=VAL(a$):NEXT
+	FOR i=1 TO 4:tt$(i)="{up arrow}":IF a%(i)THEN x=a%(i)+1:GOSUB 1001:&,2,2:tt$(i)=a$
+	NEXT:CLOSE 2:dr=2:a$="nm.connect,l,"+CHR$(100):GOSUB 1011:FOR x=1 TO 4:GOSUB 1001
+	PRINT# 2,tt$(x)r$"{f2}"r$"-------"r$r$"0000000"r$"0"r$"0"r$d1$r$d1$:NEXT
+	x=5:GOSUB 1001:PRINT# 2,0:GOSUB 1001:x=1:GOSUB 1001:RETURN
+{:3630}
+	dr=2:a$="nm.nodes":GOSUB 1011:IF e%THEN:&"Config Error!":&:RETURN
+	x=nn+1:GOSUB 1001:&,2,2:nn$=a$:dt$(0)=a$
+	&,2,2:&,2,2:&,2,2:&,2,2:FOR i=1 TO 4:&,2,2:a%(i)=VAL(a$):NEXT
+	FOR i=1 TO 4:x=a%(i)+1:dt$(i)="":IF x>1 THEN GOSUB 1001:&,2,2:dt$(i)=a$
+	NEXT:CLOSE 2:dr=2:a$="nm.connect":GOSUB 1011:IF e%THEN CLOSE 2:RETURN
+	FOR x=1 TO 4:GOSUB 1001:b$=""
+{:3642}
+	&,2,2:b$=b$+a$+r$:ON-(st=0)GOTO {:3642}:nn$(x)=b$:NEXT
+	b$=r$+"{f2}"+r$+"-------"+r$+r$+"-------"+r$+"0"+r$+"0"+r$+d1$+r$+d1$+r$
+	FOR i=1 TO 4:FOR j=1 TO 4
+	IF LEFT$(nn$(j),3)=dt$(i)AND i<>j THEN a$=nn$(i):nn$(i)=nn$(j):nn$(j)=a$
+	NEXT:NEXT:FOR x=1 TO 4:IF dt$(x)=""THEN nn$(x)="{up arrow}"+b$
+	IF dt$(x)<>LEFT$(nn$(x),3)THEN nn$(x)=dt$(x)+b$
+	GOSUB 1001:PRINT# 2,nn$(x);:NEXT:GOSUB 1001:RETURN
+{:3656}
+	POKE 53252,q:RETURN
+	REM

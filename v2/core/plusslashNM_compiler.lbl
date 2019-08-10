@@ -1,0 +1,27 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+/NM.compiler"
+	dr=2:a$="nm.connect":GOSUB 1011:IF e%THEN RETURN
+	FOR x=1 TO 4:GOSUB 1001:&,2,2:lg$(x)=a$:NEXT
+	j=.:FOR i=1 TO 4:dr=2:a$="nm.l."+lg$(i):GOSUB 1011:IF e%THEN{:4032}
+{:4008}
+	j=j+1:&,2,2:tt$(j)=a$:ON-(st=.)GOTO {:4008}
+	dr=2:a$="nm.l."+lg$(i):ON-(LEN(lg$(i))<>3)GOTO {:4033}:GOSUB 1023
+	PRINT# 2,lg$(i)+"/"+nn$+"/A/nm.Z."+lg$(i)+"/"+nn$:CLOSE 2
+	&"{f6:2}  Compiling Files For "+lg$(i)+" ..."
+	dr=2:a$="nm.Z."+lg$(i)+"/"+nn$+",s,w":GOSUB 1011
+	IF e%THEN a$="nm.Z."+lg$(i)+"/"+nn$+",s,a":GOSUB 1011
+	FOR k=1 TO j:IF MID$(tt$(k),11,5)="nm.Z."THEN{:4030}
+	dr=2:GOSUB 1009:OPEN 3,dv%,3,dr$+MID$(tt$(k),11)+",s,r"
+	PRINT# 2,tt$(k)
+{:4026}
+	&,2,3:s=st:PRINT# 2,a$:ON-(s=.)GOTO {:4026}:PRINT# 2,"{up arrow}":CLOSE 3
+	PRINT# 15,"s"+dr$+MID$(tt$(k),11)
+{:4030}
+	NEXT k
+{:4032}
+	&" Done!{f6:2}"
+{:4033}
+	NEXT i:CLOSE 2:CLOSE 3:CLOSE 15:RETURN
+	REM 04/06/95

@@ -33,10 +33,10 @@
 3116	Rework logic of loading config files: Some are unnecessary/broken.
   .	Open before &,7 load. Skip if not found. Output "OK." or "Error!"
   .	if it *is* a needed config file. ("e.fkeys"/"nm.times" skippable.)
-  .	
+  .
 3132	add "close 2" to beginning of line
 
-3138	Clock set method reads from record #37: "&,2,2:y%=val(a$)"	
+3138	Clock set method reads from record #37: "&,2,2:y%=val(a$)"
 3146	Printer secondary address: change
 	"if a$<>"" then ..." to
 	"if a then ..."
@@ -69,7 +69,7 @@
 3362	Add GOSUB new time set flag subroutine
 3364-
 3366	LtK clock spaghetti code untangled
-3368	
+3368
 3370	New time set flag subroutine
 3372-
 3374	LtK clock code moved to 3366-3368
@@ -115,25 +115,79 @@ im.editor:
 Can make an Image ModMaker patch file, not worth uploading a new version for a 1-line change.
 
 
+2018-10-05:
+' IM date also displayed at boot time
+1336 gosub 1338:&,15:&"IM Revision: "+left$(an$,26)+"M{f6}":return
+' 1338 used at BBS bootup to set clock to something sane if brand
+' new system with no clock set method defined
+1338 an$="51810058953":return
 
-Ok, let me check. I think I had a note a
-bout that, but let me double check.
+Shorten reading text editor menu:
+was 1353 dr=1:a$="s.menu 3":goto 1075	' 24 bytes
+now 1353 a$="menu 3":goto 1350		' 17 bytes
 
-It should read st(x)=st(x)+i
+1360: neaten Area display code
+1361: removed
+1362: remains RETURN
 
-Everything before that needs to be taken
- out.
+110 bytes:
+1360 on-(peek(17139)=1)goto1603:&,69,4,21,"                       ",$8c
+1361 ifcm$<>""then:&,69,5,21,left$(cm$,21),$8c
+1362 return
 
-Oh. it's input#2,st(x)... kill that?
+81 bytes (-29 bytes)
+1360ifpE(17139)=.tH:&,69,4,21," "+leF(cm$+"                     ",21)+" ",$8c
+1362return
 
-Yeah, what was happening is when NM/auto
- ran, it moved data from e.stats records
- to the wrokg places line record 26 numb
-ers got moved to record 33 and 27 moved
-to 34 and soo on. Also when midinght aut
-omaint ran, it did the same to other rec
-ords.
+1686-1694: Instant Logoff option subroutined
 
-Oh, ick. That is bad. I will change that
- and make a note of it in my "im fixes"
-file. One sec.
+1736 un-REM loading already loaded protocol
+
+{:1014}
+	cm$=a$+"":gosub 1360:gosub 1010:if a$=pr$ then e%=.:return
+
+1805-1808:
+string variable for "Password", streamline running password-protected ECS command
+only subtract credits after correct password entered
+
+1870: Display flag status
+' 2018/08/05 X-Tec:
+'	a=1-a:a=abs(a):an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b Mode: O{pound}v7{f6}":return ' 62 bytes
+' 2018/08/06 Pinacolada:
+	a=abs(1-a):&"{f6}{pound}$b Mode: O"+mid$("ffn",a*2+1,2)+"{f6}":return ' 54 bytes
+
+1900:	remove redundant "gosub 1360" (1014 does that)
+	shorten on-goto expression:
+was	cm$=b$:gosub 1360:a$=b$:gosub 1014:on e%+1 goto 3000:goto 1906
+now	a$=b$:gosub 1014:on e%+1 goto 3000:goto 1906
+
+3138/3140: swap the two lines to read e.data records in sequential order
+3142:	read record #35 only once
+3152:	move reading record #35 to 3142
+
+3228/3232: change sysop name to JOHN DOE from RUSH LIMBAUGH
+3256/3258: Give ranges of devices/drives
+
+	change RPW to "0,^"
+
+3449	change INPUT to MCI input command
+3468	change "AutoMaint timestamp" to "system timestamp" (it's not always updated by AutoMaint)
+
++.lo:
+3026-	Redirect 3026 to 1360		cm$=a$
+3028	Quick hack, but it'll do.	goto1360
+
+1025
+X-Tec:
+It should read st(x)=st(x)+i. Everything before that needs to be taken out.
+Yeah, what was happening is when NM/auto ran, it moved data from e.stats records
+to the wrokg places line record 26 numbers got moved to record 33 and 27 moved
+to 34 and so on. Also when midinght automaint ran, it did the same to other records.
+
+May 2019:
+1884	commented out (duplicate &,52,44), also Mnu lightbar related. maybe &,52,44,a should be &,52,45,a? -36 bytes
+1905	remove extra RETURN
+1982	Changed "Disk Directory" to "Directory Entry"
+2912	Changed line length logic from ON-GOTO to IF-THEN to remove extra RETURN
+3000	Updated C64List quoter {$08} to {altdis} (disable Shift+C=)
+	Updated C64List quoter {$0e} to {lower} (switch to lowercase character set)

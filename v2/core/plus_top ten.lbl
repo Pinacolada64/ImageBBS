@@ -1,0 +1,28 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	a$=" Restart Top Ten List":GOSUB 1095:GOSUB {:3002}:GOTO 1812
+{:3002}
+	&,11:&,28,1:DIM a$(50,8):GOSUB 1065:x=0:p=50:m=mn%
+{:3004}
+	&"{f6}Reading    "
+{:3006}
+	x=x+1:x%=x:&"{pound}h3{pound}#3{pound}# {pound}%x":ON-(x>ur)GOTO {:3014}
+	GOSUB 1001:&,2,2:ON-(a$="RES"OR a$="{up arrow}")GOTO {:3006}:an$=a$:&,15,1
+	FOR i=2 TO 9:&,2,2:NEXT:i=1:GOSUB {:3030}:FOR i=10 TO 14:&,2,2:NEXT
+	FOR i=2 TO 8:&,2,2:GOSUB {:3030}:NEXT:p=p-1:ON-(p>0)GOTO {:3006}
+{:3014}
+	&" Sorting"
+	FOR i=1 TO 8:&".":&,60,7,0,a$(p+1,i),50-p:NEXT:p=40
+	ON-(x=<ur)GOTO {:3004}:m=mn%-m:IF m<0 THEN m=m+1440
+	&"{f6}Elapsed Time: {pound}!m Minutes{f6}"
+	&"{f6}{cyan}Creating TT File...":a$="e.top ten":dr=3:GOSUB 1023:RESTORE
+	PRINT# 2,"Top Ten Users"r$"{$04}"d1$r$:FOR i=1 TO 8:READ b$
+	PRINT# 2,"{f6}Hit A Key > {pound}g1{clear}{f6}{lt. blue} Total "b$"{f6}  #{pound}{back arrow}09User{f6} {pound}o{$c0}{pound}o{$c0}"
+	FOR j=50 TO 41 STEP-1:PRINT# 2,a$(j,i):NEXT:NEXT:CLOSE 2:RETURN
+{:3030}
+	a$(p,i)=RIGHT$("       "+MID$(STR$(VAL(a$)),2),7)+"{pound}{back arrow}10"+an$:RETURN
+	DATA"Calls","Downloads","Uploads","Blks D/Loaded","Blks U/Loaded"
+	DATA"Credits","Posts","Responses"
+	rem +.top ten
+

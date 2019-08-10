@@ -1,21 +1,21 @@
 	ON IM GOTO{:60002},{:60200}:RETURN
 {:60002}
-	&"{f6}{cyan}{$c3}HANGE {$d3}CAN {$c4}ATE{white}:{f6} 1. {lt. green}{$c1}DD/{$d3}UBTRACT {$c4}AYS{f6} {white}2. {lt. green}{$c5}NTER {$ce}EW {$c4}ATE{f6}"
-	&"{lt. blue}{$cc}{$c4}{cyan}: {white}{pound}G1{pound}V7{f6}":ON VAL(AN$)GOTO{:60006},{:60070}:RETURN
+	&"{f6}{cyan}CHANGE SCAN DATE{white}:{f6} 1. {lt. green}ADD/SUBTRACT DAYS{f6} {white}2. {lt. green}ENTER NEW DATE{f6}"
+	&"{lt. blue}LD{cyan}: {white}{pound}G1{pound}V7{f6}":ON VAL(AN$)GOTO{:60006},{:60070}:RETURN
 {:60006}
-	NR=1:&"{f6}{cyan}{$cc}AST {$c3}ALL: {$04}"+LD$+"{f6:2}{$c1}DD {$cf}R {$d3}UBTRACT {$c8}OW {$cd}ANY {$c4}AYS? {f6:2}{$cc}AST: {pound}I1"
+	NR=1:&"{f6}{cyan}LAST CALL: {$04}"+LD$+"{f6:2}ADD OR SUBTRACT HOW MANY DAYS? {f6:2}LAST: {pound}I1"
 	IF LEFT$(AN$,1)="@"THEN GOSUB{:60056}:GOTO{:60002}
 	A=INT(VAL(AN$)):IF TR%<1 THEN RETURN
-	ON-(A=.)GOTO{:60038}:IF A<-999 OR A>999 THEN:&"{f6}{$cf}UT {$cf}F {$d2}ANGE!{f6}":GOTO{:60002}
+	ON-(A=.)GOTO{:60038}:IF A<-999 OR A>999 THEN:&"{f6}OUT OF RANGE!{f6}":GOTO{:60002}
 	B=VAL(LEFT$(LD$,1))+A:C=VAL(MID$(LD$,2,2)):D=VAL(MID$(LD$,4,2))
 	E=VAL(MID$(LD$,6,2))+A:A$="{blue}{red}{blue}{green}{blue}{green}{blue:2}{green}{blue}{green}{blue}"
 {:60018}
-	IF E<=ASC(MID$(A$,D))THEN{:60024}
+	IF E<=ASC(MID$(A$,D)) then {:60024}
 	E=E-ASC(MID$(A$,D)):D=D+1:IF D<13 THEN{:60018}
 	D=1:C=C+1:GOTO{:60018}
 {:60024}
-	IF E>.THEN{:60030}
-	D=D-1:E=E+ASC(MID$(A$,D-12*(D=.))):IF D>.THEN{:60024}
+	IF E>. then {:60030}
+	D=D-1:E=E+ASC(MID$(A$,D-12*(D=.))):IF D>. then {:60024}
 	D=12:C=C-1:GOTO{:60024}
 {:60030}
 	IF B>7 THEN B=B-7:GOTO{:60030}
@@ -24,15 +24,15 @@
 	A$=RIGHT$("0"+MID$(STR$(C),2),2)+RIGHT$("0"+MID$(STR$(D),2),2)
 	LD$=CHR$(48+B)+A$+RIGHT$("0"+MID$(STR$(E),2),2)+RIGHT$(LD$,4)
 {:60038}
-	&"{f6}{$c3}HANGE {$d4}IME?: ":GOSUB 94:ON A GOSUB{:60042}
-	&"{f6}{$cc}AST {$c4}ATE: {$04}"+LD$:&"{f6:2}":RETURN
+	&"{f6}CHANGE TIME?: ":GOSUB 94:ON A GOSUB{:60042}
+	&"{f6}LAST DATE: {$04}"+LD$:&"{f6:2}":RETURN
 {:60042}
-	&"{f6}{$c5}NTER {$d4}IME {$c9}N {$d4}HIS {$c6}ORMAT:{f6:2}{$c5}XAMPLE:  9:20 {$c1}{$cd}--920{$c1}{f6}"
-	&"{pound}{back arrow}0911:23 {$d0}{$cd}--1123{$d0}{f6:2}{$cc}AST: {pound}I1"
+	&"{f6}ENTER TIME IN THIS FORMAT:{f6:2}EXAMPLE:  9:20 AM--920A{f6}"
+	&"{pound}{back arrow}0911:23 PM--1123P{f6:2}LAST: {pound}I1"
 	A$=RIGHT$(AN$,1):IF AN$=""THEN RETURN
-	AN$=LEFT$(AN$,LEN(AN$)-1):IF(A$<>"{$c1}"AND A$<>"{$d0}")OR VAL(RIGHT$(AN$,2))>59 THEN{:60042}
+	AN$=LEFT$(AN$,LEN(AN$)-1):IF(A$<>"A"AND A$<>"P")OR VAL(RIGHT$(AN$,2))>59 THEN{:60042}
 	IF VAL(AN$)>1259 OR VAL(AN$)<100 THEN{:60042}
-	T=-(A$="{$d0}")*8000
+	T=-(A$="P")*8000
 	LD$=LEFT$(LD$,7)+RIGHT$("0"+MID$(STR$(VAL(AN$)+T),2),4):RETURN
 {:60056}
 	IF LEN(AN$)<>7 THEN RETURN
@@ -43,11 +43,11 @@
 	IF A>0 THEN L=INT(A/4):IF(INT(A/4)=A/4)AND B<3 THEN L=L-1
 	C=C+L:C=.5+7*(C/7-INT(C/7)):LD$=CHR$(49+C)+MID$(AN$,2)+MID$(LD$,8):RETURN
 {:60070}
-	&"{f6}{cyan}{$cc}AST {$c3}ALL: {$04}"+LD$+"{f6:2}{white}{$c5}NTER {$c4}ATE {lt. blue}({$cd:2}-{$c4:2}-{$d9:2}){cyan}: {white}":C$="":FOR I=1 TO 6
+	&"{f6}{cyan}LAST CALL: {$04}"+LD$+"{f6:2}{white}ENTER DATE {lt. blue}({$cd:2}-{$c4:2}-{$d9:2}){cyan}: {white}":C$="":FOR I=1 TO 6
 {:60072}
 	&"{pound}G1":A=VAL(AN$):IF TR%<1 THEN I=7:NEXT:RETURN
 	IF A>.OR AN$="0"THEN ON I GOTO{:60088},{:60088},{:60096},{:60096},{:60104},{:60104}
-	IF AN$=CHR$(13)THEN:I=7+1:NEXT:&"{f6}{$c1}BORTED{f6}":GOTO{:60002}
+	IF AN$=CHR$(13)THEN:I=7+1:NEXT:&"{f6}ABORTED{f6}":GOTO{:60002}
 	ON-(AN$=CHR$(8)OR AN$=CHR$(20)AND I>1)GOTO{:60080}:ON-(I=2 OR I=4)GOTO{:60084}:GOTO{:60072}
 {:60080}
 	B=-(I=2 OR I=4 OR I=6)-2*(I=3 OR I=5):&"{pound}H"+MID$(STR$(B),2,1):I=I-1
@@ -71,26 +71,26 @@
 	C$=C$+AN$:&AN$:NEXT:C%=VAL(RIGHT$(C$,2))
 	ON-(A%<1 OR A%>12 OR B%<1 OR B%>31 OR C%<.OR C%>99)GOTO{:60118}
 	ON-(B%>30 AND(A%=4 OR A%=6 OR A%=9 OR A%=11))GOTO{:60118}:IF A%<>2 THEN{:60112}
-	ON-(B%>29)-2*(B%<29)GOTO{:60118},{:60112}:IF C%-(INT(C%/4)*4)<>.THEN{:60118}
+	ON-(B%>29)-2*(B%<29)GOTO{:60118},{:60112}:IF C%-(INT(C%/4)*4)<>. then {:60118}
 {:60112}
 	D%=((C%/4)+C%)+VAL(MID$("144025036146",A%,1))+B%:D%=D%-(INT(D%/7)*7)
 	LD$=MID$(STR$(D%),2,1)+RIGHT$(C$,2)+LEFT$(C$,4)+RIGHT$(LD$,4)
 	&"{f6}":GOTO{:60038}
 {:60118}
-	&"{f6:2}{lt. red}{$c9}NVALID {$c4}ATE!{f6}{pound}$C-{pound}%A/{pound}%B/{pound}%C{f6}":GOTO{:60002}
+	&"{f6:2}{lt. red}INVALID DATE!{f6}{pound}$C-{pound}%A/{pound}%B/{pound}%C{f6}":GOTO{:60002}
 {:60200}
-	POKE 53252,62:DR=3:A$="E.MACS":GOSUB 4:IF E%=.THEN{:60206}
-	&"{f6}{cyan}{$d0}LEASE {$d7}AIT, {$d3}ETTING FILES...{f6}":DR=3:A$="E.MACS,L,"+CHR$(64):GOSUB 4
+	POKE 53252,62:DR=3:A$="E.MACS":GOSUB 4:IF E%=. then {:60206}
+	&"{f6}{cyan}PLEASE WAIT, SETTING FILES...{f6}":DR=3:A$="E.MACS,L,"+CHR$(64):GOSUB 4
 	X=UR*4:GOSUB 1:PRINT# 2,"{up arrow}":CLOSE 2:GOTO{:60200}
 {:60206}
 	X=ID*4-4:FOR A=.TO 3:X=X+1:GOSUB 1:&,2,2:ON-(A$="{up arrow}")GOSUB{:60208}:TT$(A+1)=A$:NEXT:GOSUB{:60210}
 {:60208}
-	A$="{$d5}SE '{$cd}{$d8}' {$c3}OMMAND {$d4}O {$c3}ONFIGURE":RETURN
+	A$="USE 'MX' COMMAND TO CONFIGURE":RETURN
 {:60210}
-	&"{f6} {rvrs on}{cyan} {$d3}YSTEM {$cd}ACRO {$c5}DITOR {f6:3}"
+	&"{f6} {rvrs on}{cyan} SYSTEM MACRO EDITOR {f6:3}"
 	FOR A=1 TO 4:A%=A:AN$=TT$(A):&"{white}{pound}%A> {lt. blue}{pound}V7{f6}":NEXT
-	&"{f6}{lt. blue}{$c5}DIT {$d7}HICH:{white} {pound}I1":ON-(TR%<1)GOTO{:60222}:A=VAL(AN$):IF A<1 OR A>4 THEN{:60220}
-	W$=TT$(A):A%=A:&"{lt. blue}{$d2}ETURN {$c1}LONE = {$cf}LD{f6:3}":P$="{lt. blue}{$c5}DIT {pound}#0{pound}%A{white}":&,1,32:IF AN$=""THEN{:60210}
+	&"{f6}{lt. blue}EDIT WHICH:{white} {pound}I1":ON-(TR%<1)GOTO{:60222}:A=VAL(AN$):IF A<1 OR A>4 THEN{:60220}
+	W$=TT$(A):A%=A:&"{lt. blue}RETURN ALONE = OLD{f6:3}":P$="{lt. blue}EDIT {pound}#0{pound}%A{white}":&,1,32:IF AN$="" then {:60210}
 	ON-(TR%<1)GOTO{:60222}:TT$(A)=AN$:GOTO{:60210}
 {:60220}
 	X=ID*4-4:FOR A=.TO 3:X=X+1:GOSUB 1:PRINT# 2,TT$(A+1):NEXT

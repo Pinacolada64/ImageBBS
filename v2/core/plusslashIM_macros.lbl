@@ -1,0 +1,101 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	on lm goto {:4012},{:4108}
+{:4002}
+	dr=3:a$="e.macros":goto 1011
+{:4004}
+	for t=1 to len(tt$):if mid$(tt$,t,1)="{back arrow}"then tt$=left$(tt$,t-1)+"{f6}"+mid$(tt$,t+1)
+	next:return
+{:4008}
+	gosub {:4002}:if e%then:&:close 2:fl=1:return
+	x=1:&,2,2:mc=val(a$):return
+{:4012}
+	&"{f6:2}{rvrs on}   <>-     IMAGE V2.0     -<>   {rvrs off}{f6}{rvrs on}   <>-Macro Editor/Creator-<>   {rvrs off}{f6:2}"
+	lp=1:&"Keyboard Colors are active.{f6}Use the {f5}{back arrow}{f5} when you want a >RETURN< in"
+	lp=1:&" your macro."
+	poke 53252,78:goto {:4078}
+{:4020}
+	&"{f6:2}You Must [C]reate The File First"
+{:4022}
+	fl=.:&"{f6:2}C)reate, E)dit, L)ist, A)dd, Q)uit {f6:2}MC-]: {pound}g1{pound}v7{f6}"
+	if tr%<1 then{:4148}
+	on-(an$="C")-(an$="E")*2 goto {:4082},{:4030}
+	on-(an$="L")-(an$="A")*2-(an$="Q")*3 goto {:4062},{:4048},{:4148}:goto {:4022}
+{:4030}
+	gosub {:4008}:on fl goto {:4020}
+	z%=mc:&"{f6:2}There Are {pound}%z Macros, Edit Which?: {pound}i1":x=val(an$)+1
+	if an$=""or x=.or x>mc+1 then close 2:goto {:4022}
+	gosub 1001:&,2,2:b$=a$
+	x%=x-1:&"{f6}MACRO# {pound}%x{f6}{pound}$b{f6:2}Change It?: ":gosub 1907:if tr%<1 then{:4148}
+	if a=.then close 2:goto {:4022}
+	p$="{f6}Enter New MACRO #{pound}%x (78 CHRS){f6:2}":pl=.:&,1,43:p$="":if tr%<1 then{:4148}
+	if an$=""then:&"{f6:2}No Change!":close 2:goto {:4022}
+	tt$=left$(an$,78):gosub {:4004}:gosub 1001:print# 2,tt$:goto {:4022}
+{:4048}
+	&"{f6:2}Adding Macros...":gosub {:4008}:on fl goto {:4022}
+	z%=mc:&"{f6:2}There Are {pound}%z Macros{f6}Would You Like To Add One?: ":gosub 1907
+	if a=.then close 2:goto {:4022}
+	z%=z%+1:&"{f6:2}Add Macro {pound}%z (78 CHRS){f6:2}":pl=.:&,1,43:on tr%+1 goto 1603
+	if an$=""then close 2:goto {:4022}
+	tt$=an$:gosub {:4004}:mc=z%:x=mc+1:gosub 1001:print# 2,tt$:x=1:gosub 1001
+	print# 2,mc:close 2:&"{f6:2}Added...{pound}w1":goto {:4022}
+{:4062}
+	&"{f6:2}Listing Macros...{f6:2}"
+	gosub {:4008}:on fl goto {:4022}
+	b%=mc:&"Starting #? (1 to {pound}%b) {pound}i1":on tr%+1 goto 1603:a=val(an$)+1
+	if a<1 or a>mc then{:4062}
+	if an$=""then a=2
+	for x=a to mc+1
+	gosub 1001:input# 2,tt$:x%=x-1:&"[{pound}%x]{f6}":&tt$:&"{f6}"
+	next:close 2:goto {:4022}
+{:4078}
+	gosub {:4008}:on fl goto {:4080}:close 2:goto {:4022}
+{:4080}
+	&"{f6:2}No Macros Defined!!{pound}w2":close 2:goto {:4022}
+{:4082}
+	&"Creating Macros File...":a$="e.macros,l,"+chr$(100):dr=3:gosub 1011
+	x=20:gosub 1001:print# 2,chr$(255):x=1:print# 2,0:close 2
+	&"{f6:2}Macro File Has Been Created"
+{:4088}
+	&"{f6:2}How Many Macros Would You Like To Have?{f6:2}: {pound}i1":if tr%<1 then{:4148}
+	mc=int(val(an$)):if mc<1 then{:4088}
+	gosub {:4002}
+	for i=2 to mc:x%=i-1
+	&"{f6}RETURN On Blank Will End!{f6:2}"
+	&"{f6}Enter Macro #{pound}%x (78 CHRS){f6:2}":pl=.:&,1,43:if tr%<1 then{:4148}
+	if an$=""then x=mc:goto {:4104}
+	tt$=an$:gosub {:4004}:x=i:gosub 1001:print# 2,tt$
+{:4104}
+	next:&"{f6:2}Macros Are Being Saved{f6:2}Use E)dit To EDIT {pound}w3"
+	x=1:gosub 1001:print# 2,mc:close 2:goto {:4022}
+{:4108}
+	dr=3:a$="e.fkeys,s,r":gosub 1011:if e%then for i=1 to 8:tt$(i)="":next:goto {:4112}
+	for i=1 to 8:&,2,2:tt$(i)=a$:next
+{:4112}
+	close 2:cf=.
+{:4114}
+	&"{clear}{f6}{gray3}Function Key Editor 2.0{f6}{white}{pound}vj":poke 53252,38
+	&"{f6:2}Use {f5}{back arrow}{f5} for a >RETURN<{f6:2}"
+	for i=1 to 8:a$=left$(tt$(i),35):a%=i
+	&"{green}F{pound}#1{pound}%a{blue}) {white}{pound}$a{f6}":i=i+rc*n:next
+	&"{white}{pound}vj{green}E{lt. green}dit Which{blue}?{white} {pound}g1":a=val(an$):if a<1 or a>8 then{:4130}
+	&an$:&"{f6:2}":w$=tt$(a):p$="F"+chr$(48+a):poke 53252,75:pl=.:&,1,32
+	if an$<>""then tt$(a)=an$:cf=1
+	goto {:4114}
+{:4130}
+	&"Quit{f6:2}":if cf=. then {:4148}
+	&"Save Changes? ":gosub 1907:if a=. then {:4138}
+	dr=3:a$="e.fkeys":gosub 1023
+	for i=1 to 8:print# 2,tt$(i):next:close 2
+{:4138}
+	&"Activate? ":gosub 1907:if a=. then return
+	for i=1 to 8:a$=tt$(i):if right$(a$,1)="{back arrow}"then a$=left$(a$,len(a$)-1)+r$
+	tt$(i)=a$:next
+	f1$=tt$(1):f2$=tt$(2):f3$=tt$(3):f4$=tt$(4)
+	f5$=tt$(5):f6$=tt$(6):f7$=tt$(7):f8$=tt$(8)
+{:4148}
+	return
+	copr. 1994 new image 9/25/94
+	rem "+/IM.macros"
+

@@ -1,0 +1,122 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM "+.MM.sb-post"
+	rt=1:ON lm GOTO {:4004},{:4006},{:4012},{:4036},{:4080},{:4082}
+{:4004}
+	sh=.:GOSUB 3010:IF a<1 OR a>rn THEN a=br:GOTO {:4008}
+{:4006}
+	br=a
+{:4008}
+	&"{f6}":xx=.:GOSUB {:4010}:a=br-fl:GOSUB 3014:GOTO 3228
+{:4010}
+	rq=.:sh=.
+{:4012}
+	a=br:GOSUB 3172:IF rq THEN c$=ed$(br):GOSUB 3046:IF b%THEN rq=.
+	GOSUB 3464:a$=ed$(br):GOSUB 3024:GOSUB 3004:GOSUB 3470:IF e%<>.OR sh<>.THEN RETURN
+	IF rq=.AND xx<>.THEN GOSUB 3478:GOTO {:4024}
+	GOSUB {:4076}:ON-((xx%=.)OR(sh<>.)OR(tr%=.))GOTO {:4036}:IF rq=.THEN b%=0:&,16,6:GOTO {:4024}
+	&"{f6}{pound}q0New Responses:{f6}":a$=ld$:GOSUB 3032:an$=a$
+	&,16:ON-(b%>xx%)GOTO {:4036}:ON-(a%<>.)GOTO {:4024}:b%=b%-1:&,16,6
+{:4024}
+	x=a%:GOSUB 1001:x=x+1:&,2,2:&,2,2:z$=a$:&,2,2:an$=a$:GOSUB 1990:d$=an$:IF q THEN{:4028}
+	ON-(ASC(d$)<>42 AND(f2 AND 3)<>2)GOTO {:4028}:IF q=.OR(f2 AND 3)=2 THEN d$=l$
+{:4028}
+	GOSUB 1914:a%=xx%:&"{lt. red}{f6:2}-{pound}$k #{pound}#0{pound}%b of {pound}%a-{f6}{yellow}By {pound}$d{pound}q0":kk=sh
+	ON-(d$=l$)GOTO {:4032}:&"{f6}On {$04}"+z$:kk=kk+sh
+{:4032}
+	GOSUB {:4154}:&"{f6:2}{pound}q0":ON-(kk+sh<>.)GOTO {:4036}:GOSUB {:4078}
+	ON-((b%=xx%)OR(sh<>.))GOTO {:4036}:&,16,6:GOTO {:4024}
+{:4036}
+	CLOSE 2:rq=.:GOSUB 3504:GOSUB 1914:IF pm=.THEN RETURN
+{:4038}
+	sh=.:fl=.:p$="{f6:2}{pound}q0End Of {pound}$j. Command?":pl=1:&,1:GOSUB 3026:a$=LEFT$(an$,1)
+	xx=INT(ABS(VAL(LEFT$(an$,3)))):ON-(xx=.)GOTO {:4042}:IF xx>xx%THEN xx=.
+{:4042}
+	ON-(a$="F")-(a$="R")*2-(a$="{f2}")*3-(a$="O"OR xx<>.)*4 GOTO {:4126},{:4052},3268,{:4010}
+	IF a$="P"THEN GOSUB {:4122}:GOTO {:4038}
+	IF an$="K"AND q THEN x%=br:y%=br:fl=2:GOTO 3376
+	IF a$="N"THEN sh=.:rq=1:xx=.:&"{f6}":GOTO {:4012}
+	sh=-(a$="Q"OR a$="/"):RETURN
+{:4052}
+	IF ASC(ed$(br))=140 THEN:&"{f6}Frozen {pound}$j. No {pound}$k Possible.":GOTO {:4038}
+	IF xx%=512 THEN:&"{f6}Only 512 {pound}$ks Possible Per Post.":GOTO {:4038}
+	&"{f6} - Add A {pound}$k To This {pound}$j:{f6}":GOSUB 3028:IF a=.THEN x=4:GOSUB 1980:GOTO {:4038}
+	m%=.:GOSUB 3004:GOSUB 1079:ON-(a<35)GOTO 1978
+	a$=k$:ON rt GOSUB {:4152}:rt$=LEFT$("*",-(an$<>""))+an$:GOTO {:4098}
+{:4062}
+	a$=k$:GOSUB 3002:a$=ed$(br):GOSUB 3024:GOSUB 3004:e%=.:GOSUB 3470:rp=rp+1:GOSUB 3428:xx=x
+	GOSUB 1001:a$=d1$:GOSUB 3032:PRINT# 2,a$r$d1$r$zz$r$rt$:an$=a$:&,16:b%=b%-(a%>.)
+	a%=xx:&,16,4:x=x+1:GOSUB 3446:GOSUB {:4142}:nr=nr+1
+	a=VAL(MID$(np$,br,1))OR 1:np$=LEFT$(np$,br-1)+MID$(STR$(a),2,1)+MID$(np$,br+1)
+	GOSUB 1081
+	GOSUB 1060:i=1:x=5:GOSUB 1025:x=16:GOSUB 1025:x=27:GOSUB 1025:x=34:GOSUB 1025:CLOSE 2
+	&,16,10:d%(br)=a%:xx%=a%:a=br:GOSUB 3052:dt$(br)=b$+d1$:s=br:GOSUB 3146:GOTO {:4038}
+{:4076}
+	x=zz%:GOSUB 1001:GOSUB 1012:IF e%THEN RETURN
+{:4078}
+	rc=.:sh=.:&"{pound}q0":&,57,2:RETURN
+{:4080}
+	GOSUB {:4082}:GOTO 3228
+{:4082}
+	ww%=.:m%=1:&"{f6} - Post To {pound}v8:{f6}":GOSUB 3028:IF a=.THEN x=4:GOTO 1980
+	IF rn>29 THEN:&"{f6}Too Many {pound}$js Already.{f6}":RETURN
+	GOSUB 3004:GOSUB 1085:IF a<.THEN 1982
+	GOSUB 1079:IF a<35 THEN 1978
+{:4090}
+	a$=j$:GOSUB {:4152}:IF an$=""THEN RETURN
+	rt$="*"+an$:a$=j$:b$="P:":f1=.:ON rn+1 GOTO {:4098}
+	FOR x=1 TO rn:IF LEFT$(an$,14)=LEFT$(ed$(x),14)THEN x=rn:f1=1
+	NEXT:ON f1 GOTO {:4120}
+{:4098}
+	tt$=an$:IF(f2 AND 3)=2 THEN a=1:GOTO {:4102}
+	a=.:IF(f2 AND 3)<2 THEN:&"{f6}File This {pound}$lly?: ":GOSUB 1902:IF tr%<1 THEN RETURN
+{:4102}
+	n$=MID$("*",1-a+1,1)+na$
+	GOSUB 3054:zz$=a$:GOSUB 1604:ON-(kk=.AND(m%<>.))GOTO 3008:ON kk+1 GOTO {:4038}
+	GOSUB 3056:GOSUB 3464:tt$(kk)="{up arrow}":IF m%=.THEN{:4062}
+	a$=j$:GOSUB 3002:ps=ps+1:GOSUB 1060
+	i=1:x=4:GOSUB 1025:x=15:GOSUB 1025:x=26:GOSUB 1025:x=33:GOSUB 1025:CLOSE 2:GOSUB 3004
+	GOSUB 3474
+	x=zz%:GOSUB 3446:GOSUB {:4142}:GOSUB 1081:np$=np$+"2":np=np+1:rn=rn+1
+	dt$(rn)=d1$+"10001011200"
+	ed$(rn)=tt$:nn$(rn)=zz$:c%(rn)=.:d%(rn)=.:s=rn:GOSUB 3146:RETURN
+{:4120}
+	f1=.:&"{f6}Your Title Must Be Unique{f6}To This {pound}$h.{f6}":GOTO {:4090}
+{:4122}
+	lm=1:GOTO 3402
+	ON-(q=.)GOTO 3228:z$="SM":GOTO 1301
+{:4126}
+	IF(na$<>nn$(br)AND"*"+na$<>nn$(br)OR d%(br))AND q=.THEN{:4036}
+	IF ASC(ed$(br))=140 THEN{:4132}
+	c$="{f8}"+ed$(br):d$="F":GOTO {:4134}
+{:4132}
+	c$=MID$(ed$(br),2):d$="Unf"
+{:4134}
+	a$=ed$(br):GOSUB 3024:b$=a$:a$=c$:GOSUB 3024:GOSUB 3004:GOSUB 1010
+	PRINT# 15,"r"dr$a$"="dr$b$:GOSUB 1012
+	IF e%THEN:&"{f6}Sorry, {pound}$j Can Not be {pound}$drozen{f6}":CLOSE 15:GOTO {:4036}
+	ed$(br)=c$:s=br:GOSUB 3146:&"{f6}{pound}$j {pound}$drozen{f6}":GOTO {:4036}
+{:4142}
+	ON-((f2 AND 16)=16)GOTO {:4158}:ON-((f2 AND 8)=.)GOTO {:4150}:a$="nm.S.temp,s,a":dr=2:GOSUB 1011
+	IF e%THEN a$="nm.S.temp,s,w":GOSUB 1011:IF e%THEN{:4150}
+	GOSUB 3422
+{:4148}
+	a$=bb$(bn):GOSUB 3006:PRINT# 2,e%(bn);r$ed$(br)r$n$r$rt$r$k:FOR tt=1 TO kk:PRINT# 2,tt$(tt):NEXT
+{:4150}
+	CLOSE 2:&,11:GOTO 3350
+{:4152}
+	rt$="":POKE 53252,20:p$="{f6}Enter The Title Of Your {pound}$a:{f6:2}Title":GOTO 1005
+{:4154}
+	&,2,2:ON-(LEFT$(a$,1)<>"*")GOTO {:4156}:a$=MID$(a$,2):&"{f6:2}{lt. red}Subtopic: {pound}$a"
+{:4156}
+	GOTO 1001
+{:4158}
+	GOSUB 1063:x=50:GOSUB 1001:&,2,2:k=VAL(a$):k=k+1:GOSUB 1001:PRINT# 2,k:CLOSE 2
+	dr=2:a$="nm.P.count,s,a":GOSUB 1011:IF e%=0 THEN PRINT# 2,d1$k
+	CLOSE 2
+	a$="nm.P.sub"+STR$(e%(bn))+",s,a":dr=2:GOSUB 1011
+	IF e%THEN a$="nm.P.sub"+STR$(e%(bn))+",s,w":GOSUB 1011:IF e%THEN{:4150}
+	GOTO {:4148}
+	copr.1990 NEW image 11/18/90
+	REM 180807 x-tec

@@ -1,0 +1,83 @@
+{alpha:alt}
+{number:60000}
+{step:1}
+' im=1: get file list from directory
+' im=2: get file list from struct (I guess, it has struct commands)
+	kk=0:IF im<1 OR im>2 THEN RETURN
+{:60001}
+	&"[Y]es [N]o [S]tart [E]very [A]bort{f6}":GOSUB{:60010}
+{:60002}
+	GOSUB{:60030}
+{:60003}
+	&"{f6}{pound}q0S)can C)lear D)load K)ill A)dd Q)uit: {pound}g1{pound}v7{f6}":a$=an$
+	x=-(a$="S")-2*(a$="Q")-3*(a$="C")-4*(a$="D")-5*(a$="A")
+	IF tr%>0 THEN ON x GOTO{:60002},{:60006},{:60008},{:60007},{:60001}:GOTO{:60003}
+{:60006}
+	kk=0
+{:60007}
+	RETURN
+{:60008}
+	kk=0:GOTO{:60002}
+{step:2}
+{:60010}
+	ON im GOSUB{:60100},{:60200}:x=kk
+{:60012}
+	ON im GOSUB{:60110},{:60210}:IF an$=""THEN RETURN
+	&"{white}: ":IF y$<>"E"THEN:&"{pound}g1":y$=an$
+	IF y$="E"THEN:&"Every{f6}":GOTO{:60026}
+	IF y$="Y"THEN:&"Yes{f6}":GOTO{:60026}
+	IF y$="S"THEN:&"Start{f6}":RETURN
+	IF y$="A"THEN:&"Abort{f6}":kk=x:RETURN
+	&"No{f6}":GOTO{:60012}
+{:60026}
+	GOSUB{:60050}:&"{f6}":ON fl GOTO{:60012}:kk=kk+1:tt$(kk)=MID$(STR$(b%),2)+":"+f$
+	GOTO{:60012}
+{:60030}
+	&"{f6}":IF kk=0 THEN:&"No files selected.{f6}":RETURN
+	d$="":IF co%>2 THEN d$="k"
+' &,15,6,58: Split an$ into an$ and a$ if chr$(58) (:)
+'		returns an$ [chr$(58)] a$
+	t=0:FOR i=1 TO kk:an$=tt$(i):&,15,6,58:a%=VAL(a$):t=t+a%
+	d$="Blks":IF co%>2 THEN d$="K":a%=INT(a*254/1024)
+	&"{white}{pound}!i){pound}{back arrow}04{yellow}{pound}#5{pound}# {pound}%a {pound}$d{pound}{back arrow}15{cyan}{f5}{pound}v7{f5}{f6}":NEXT
+	d$="Blocks":IF co%>2 THEN d$="Kbytes":t=INT(t*254/1024)
+	&"{f6}{yellow}{pound}!t Total {pound}$d{f6}{pound}q0":RETURN
+{nice:50}
+{:60050}
+	fl=1:a=b%*254/qb*10/.95:a%=a:c%=(a-a%)*60:v$="{f6}Sorry, you "
+	d%=b%:d$="Blocks":IF co%>2 THEN d$="Kbytes":d%=b%*254/1024
+	&"{pound}%d {pound}$d Total, Transfer Time: {pound}#2{pound}%a:{pound}%c{f6}":a=7:GOSUB 1004
+	IF a%>tr%AND tr%<100 THEN lp=1:&"{pound}$vdon't have enough Time!":RETURN
+	IF a=0 AND b%>l THEN lp=1:&"{pound}$vdon't have enough Credits!":RETURN
+	IF dc%>=da%AND da%<>0 THEN lp=1:&"{pound}$v have downloaded your limit!":RETURN
+	fl=0:RETURN
+{nice:100}
+{:60100}
+' this locks up:
+'	dr=7:GOSUB 1010:CLOSE 15:IF st THEN RETURN
+' 1008: ask Device,Drive
+' 1470: evaluate DCdv,dr command line
+	gosub 1008:gosub 1470
+	&"{f6}Pattern: ":GOSUB 1499:b$="*"
+	FOR i=1 TO LEN(an$):IF MID$(an$,i,1)="*"THEN b$=""
+	NEXT:an$=an$+b$:&"{f6}":CLOSE 1:OPEN 1,dv%,0,"$"+dr$+an$
+	GET#1,a$,a$:&,8,1,1:&"{pound}$a{f6:2}":y$="":RETURN
+{:60110}
+' get filetype (t$), check for 1st quote mark, get block size (b%), an$=filename
+	&,8,1,1:t$=MID$(a$,26,1):an$=a$:&,15,6,34:b%=VAL(a$):IF an$=""THEN RETURN
+' duplicate lines:
+'	a%=b%:d$="":IF co%>2 THEN a%=a%*254/1024:d$="k"
+' &,15,6,34: split an$ on ", returning an$ up to ", a$ after "
+'	&,15,6,34:f$=a$+","+t$:&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":RETURN
+	&,15,6,34:goto {:60214}
+{nice:100}
+{:60200}
+	n=0:RETURN
+{nice:10}
+{:60210}
+	IF n=>s%(0,0)THEN an$="":RETURN
+	n=n+1:b%=s%(39,n):&,60,1,16,s%(13,n),f$
+{:60214}
+	a%=b%:d$="":IF co%>2 THEN a%=a%*254/1024:d$="k"
+	&"{yellow}{pound}%a{white}{pound}$d{pound}{back arrow}07{cyan}{f5}{pound}$f{f5}{pound}{back arrow}30":RETURN
+	rem im.select

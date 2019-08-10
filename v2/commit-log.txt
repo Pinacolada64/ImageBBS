@@ -96,10 +96,21 @@ no {alpha:} directive, so inverted 'ascii' text works for now
 careful of comments after 'ascii' pseudo-ops, they are assembled too (bug)
 
 30/Dec/2016 13:45
-ml.editor:
+[1.2] ml.editor:
 renamed to ml_editor_converting.lbl
 A few string fixups
 .Abort now confirms, doesn't always work after choosing .New Text
 
 equates-1_2.lbl:
 Added more equates notes
+
+2019-05:
+[1.3] s.menu 4:
++ IM command
++ MM: now Display Memory Usage, not Force Garbage Collect
++ TEST: load "image", and NORM commands
++ RP command
++ Headline Text
+
++/lo.on:
+4118: re-add truncated "close 2" to end of line

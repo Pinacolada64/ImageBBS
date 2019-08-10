@@ -1,17 +1,17 @@
 	REM ACCESS MODULE
-	&"{clear}{white}{f6:2}{$cc}OADING {$c1}CCESS {$c7}ROUP {$c4}ATA...":GOSUB{:4072}
+	&"{clear}{white}{f6:2}LOADING ACCESS GROUP DATA...":GOSUB{:4072}
 	DR=3:A$="E.ACCESS":GOSUB 4:FOR I=0 TO 9:X=I+1:GOSUB 1:&,2,2:TT$(I)=A$
 	&,2,2:TT$(I+10)=A$:NEXT
 {:4008}
-	&"{clear}{f6}#  {$c7}ROUP {$ce}AME{pound}{back arrow}19{$c6}LAGS{f6}{pound}VJ":FOR I=0 TO 9:A$=TT$(I):B$=TT$(I+10):A%=I
+	&"{clear}{f6}#  GROUP NAME{pound}{back arrow}19FLAGS{f6}{pound}VJ":FOR I=0 TO 9:A$=TT$(I):B$=TT$(I+10):A%=I
 	&"{pound}%A> {pound}$A{pound}{back arrow}19{pound}$B{f6}":IF RC THEN I=9
-	NEXT:&"{white}{pound}VJ{cyan}{f6} {$c5}DIT (0-9): {pound}G1{pound}V7{f6}":IF TR%<1 THEN{:4024}
-	ON-(AN$="{$cc}")GOTO{:4008}:ON-(AN$<"0"OR AN$>"9")GOTO{:4020}:T=VAL(AN$):&"{f6}"
-	POKE 53252,20:W$=TT$(T):P$="{$c7}ROUP {$ce}AME":PL=.:&,1,32:IF AN$<>""THEN TT$(T)=AN$
+	NEXT:&"{white}{pound}VJ{cyan}{f6} EDIT (0-9): {pound}G1{pound}V7{f6}":IF TR%<1 THEN{:4024}
+	ON-(AN$="L")GOTO{:4008}:ON-(AN$<"0"OR AN$>"9")GOTO{:4020}:T=VAL(AN$):&"{f6}"
+	POKE 53252,20:W$=TT$(T):P$="GROUP NAME":PL=.:&,1,32:IF AN$<>""THEN TT$(T)=AN$
 	Q$=TT$(T+10):F$=Q$:GOSUB{:4026}:TT$(T+10)=Q$:GOTO{:4008}
 {:4020}
-	&" {$d3}AVE {$c3}HANGES?: ":GOSUB 94:IF A=.THEN{:4024}
-	&"{f6}{$d3}AVING...":FOR I=.TO 9:X=I+1:GOSUB 1:PRINT# 2,TT$(I)R$TT$(I+10):NEXT
+	&" SAVE CHANGES?: ":GOSUB 94:IF A=. then {:4024}
+	&"{f6}SAVING...":FOR I=.TO 9:X=I+1:GOSUB 1:PRINT# 2,TT$(I)R$TT$(I+10):NEXT
 {:4024}
 	CLOSE 2:RETURN
 {:4026}
@@ -21,19 +21,19 @@
 	IF I=6 THEN B$=MID$(STR$((VAL(B$)+1)*10),2):GOTO{:4042}
 	IF I=18 THEN B$=MID$(Q$,I,2):GOTO{:4042}
 	IF I=19 THEN{:4044}
-	IF B$="1"THEN B$="{$d9}ES"
-	IF B$="0"THEN B$="{$ce}O"
+	IF B$="1"THEN B$="YES"
+	IF B$="0"THEN B$="NO"
 {:4042}
 	A%=I:C$=DT$(I):&"{pound}#2{pound}# {pound}%A--{pound}$C{pound}{back arrow}20: {pound}$B{f6}"
 {:4044}
-	NEXT:&"{$c3}HANGE?: {pound}I1"
+	NEXT:&"CHANGE?: {pound}I1"
 	A=VAL(AN$):IF TR%<1 OR A<1 OR A>20 THEN RETURN
 	ON-(A=16 OR A=17 OR A=20)-2*(A=18)-3*(A=19)GOTO{:4062},{:4066},{:4026}
 	ON-(A=2 OR A=6)GOTO{:4052}:B$=MID$(STR$(1-VAL(MID$(Q$,A,1))),2):GOTO{:4060}
 {:4052}
 	IF A=2 THEN B$=MID$(Q$,2,1)+"/1"
 	IF A=6 THEN B$=MID$(STR$((VAL(MID$(Q$,6,1))+1)*10),2)
-	P$=DT$(A):W$=B$:&,1,32:IF AN$=""THEN{:4026}
+	P$=DT$(A):W$=B$:&,1,32:IF AN$="" then {:4026}
 	B$=LEFT$(AN$,1):IF A=6 THEN B$=MID$(STR$(INT(VAL(AN$)/10)-1),2,1)
 {:4060}
 	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+1):&"{f6}":GOTO{:4026}
@@ -45,25 +45,25 @@
 	IF LEN(B$)=1 THEN B$="0"+B$
 	Q$=LEFT$(Q$,A-1)+B$+MID$(Q$,A+2):&"{f6}":GOTO{:4026}
 {:4072}
-	DT$(1)="{$ce}ON-{$d7}EED {$d3}TATUS"
-	DT$(2)="{$c3}REDIT {$d2}ATIO"
-	DT$(3)="{$cc}OCAL {$cd}AINT"
-	DT$(4)="{$d0}OST/{$d2}ESPOND"
-	DT$(5)="{$d5}/{$c4} {$c1}CCESS"
-	DT$(6)="{$cd}AX.{$c5}DITOR {$cc}INES"
-	DT$(7)="{$d5}NLIMITED {$c4}/{$cc}S"
-	DT$(8)="{$d2}EMOTE {$cd}AINT"
-	DT$(9)="{$c5}{$cd}AIL"
-	DT$(10)="{$d5}SER {$cc}IST"
-	DT$(11)="{$c2}.{$c1}.{$d2}./{$cc}OG {$d6}IEW"
-	DT$(12)="{$d3}UBMAINT"
-	DT$(13)="{$c6}ILES {$cd}AINT"
-	DT$(14)="{$cd}{$c3}{$c9} {$c1}CCESS"
-	DT$(15)="{$d5}{$c4}S {$c1}T {$d0}RIMETIME"
-	DT$(16)="{$cd}AX {$c9}DLE {$d4}IME"
-	DT$(17)="{$c3}ALLS/{$c4}AY"
-	DT$(18)="{$d4}IME/{$c3}ALL"
-	DT$(19)="{$d4}IME/{$c3}ALL"
-	DT$(20)="{$c4}OWNLOADS/{$c3}ALL"
+	DT$(1)="NON-WEED STATUS"
+	DT$(2)="CREDIT RATIO"
+	DT$(3)="LOCAL MAINT"
+	DT$(4)="POST/RESPOND"
+	DT$(5)="U/D ACCESS"
+	DT$(6)="MAX.EDITOR LINES"
+	DT$(7)="UNLIMITED D/LS"
+	DT$(8)="REMOTE MAINT"
+	DT$(9)="EMAIL"
+	DT$(10)="USER LIST"
+	DT$(11)="B.A.R./LOG VIEW"
+	DT$(12)="SUBMAINT"
+	DT$(13)="FILES MAINT"
+	DT$(14)="MCI ACCESS"
+	DT$(15)="UDS AT PRIMETIME"
+	DT$(16)="MAX IDLE TIME"
+	DT$(17)="CALLS/DAY"
+	DT$(18)="TIME/CALL"
+	DT$(19)="TIME/CALL"
+	DT$(20)="DOWNLOADS/CALL"
 	RETURN
 	COPR.1988 NEW IMAGE

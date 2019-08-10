@@ -1,0 +1,99 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+' TODO: menu option to redefine Hayes s2 register, command mode escape char
+	rem "+/IM.modem" - modem/rs232 config
+	gosub {:4006}:&,2,2:mt$=a$:close 2:goto {:4014}
+{:4004}
+	gosub {:4006}:print# 2,mt$:goto 1001
+{:4006}
+	dr=3:a$="e.modem":gosub 1011:if e%then gosub {:4012}
+	p=.:if lk%then p=(peek(57092)and 15)
+	x=p+1:goto 1001
+{:4012}
+	dr=3:a$="e.modem,l,"+chr$(32):gosub 1011:x=17:gosub 1001:print# 2:goto 1001
+{:4014}
+	gosub {:4118}
+{:4016}
+	&"{clear}{white}{f6}Modem Config ":if lk%then:&"for Port #{pound}!p"
+	&"{f6:2}":f=0:for i=1 to 9:b$=" ":if mt$=left$(ed$(i),l)then b$="*":f=1
+	b%=i:a$=mid$(ed$(i),l+2):&"{pound}$b {pound}%b. {pound}$a{f6}":next:b$="":if f=0 then b$="("+mt$+")"
+	&"{f6}  C. Custom {pound}$b{f6}  Q. Quit{f6}"
+	&"{f6:2} Modem Type ":a$="Q":b$="123456789CQ":gosub {:4110}:if a$="Q" then {:4034}
+	b=val(an$):tt$=left$(ed$(b),l):if a$="C"then tt$=mt$:gosub {:4036}
+	a$=tt$:&"{f6}Is {f5}{pound}$a{f5} Ok? ":gosub 1902:if a=0 then{:4016}
+	&"{clear}{down:3}{yellow}  Writing Modem Config...{f6}"
+	mt$=tt$:gosub {:4004}:&"{f6:2}   {white}Done!"
+{:4034}
+	return
+{:4036}
+	&"{clear}{f6}":gosub {:4044}:&"{f6}Change Which (Q=Quit)? ":a$="Q":b$="123456789AQ":gosub {:4110}
+	if a$="Q"then return
+	if a$>"9"then a$=str$(10+asc(a$)-193)
+	a=val(a$):gosub {:4084}:goto {:4036}
+{:4044}
+	a%=val(left$(tt$,1)):a%=300*2^a%+300*(a%<2)
+	&"1. Highest Baud Rate:{pound}%a{f6}"
+	a$="DTR":if mid$(tt$,2,1)="E"then a$="ESC Codes"
+	&"2. Hangup Method:{pound}$a{f6}"
+	a$="Auto (ATS0=1)":if mid$(tt$,3,1)="M"then a$="Manual (ATA)"
+	&"3. Answer Method:{pound}$a{f6}"
+	a$="No ":if mid$(tt$,4,1)="H"then a$=""
+	&"4. {pound}$aATH after ESC Codes{f6}"
+	a$="On-Hook":if mid$(tt$,5,1)="H"then a$="Off-Hook"
+	&"5. Local Mode: {pound}$a{f6}"
+	a$="":if mid$(tt$,6,1)="0"then a$="0"
+	&"6. ATH Command:ATH{pound}$a{f6}"
+	a$="No":if mid$(tt$,7,1)="H"then a$="Yes"
+	&"7. ATH in Modem Reset:{pound}$a{f6}"
+	a$=mid$(tt$,8,1)
+	&"8. ATX Value: ATX{pound}$a{f6}"
+	a$="Normal":if mid$(tt$,9,1)="R"then a$="Reverse"
+	&"9. DTR Mode: {pound}$a{f6}":a$="CCITT":if mid$(tt$,10,1)="1"then a$="Bell"
+	&"A. CCITT/Bell: {pound}$a{f6}"
+	return
+{:4084}
+	a$=mid$(tt$,a,1):on a gosub {:4088},{:4092},{:4094},{:4096},{:4098},{:4100},{:4102},{:4104},{:4106},{:4108}
+	tt$=left$(tt$,a-1)+a$+mid$(tt$,a+1):return
+{:4088}
+	&"Maximum Baud Rate (0=Off,1=300,2=1200,{f6}3=2400,4=4800,5=9600,6=19200){f6}"
+	b$="0123456":goto {:4110}
+{:4092}
+	&"Hangup (E=ESC,D=DTR){f6}":b$="ED":goto {:4110}
+{:4094}
+	&"Answer (A=Auto,M=Manual){f6}":b$="AM":goto {:4110}
+{:4096}
+	&"ATH after ESC (N=No,H=Yes){f6}":b$="NH":goto {:4110}
+{:4098}
+	&"Local (N=On Hook,H=Off Hook){f6}":b$="NH":goto {:4110}
+{:4100}
+	&"ATH (0=ATH0,{f5} {f5}=ATH){f6}":b$="0 ":goto {:4110}
+{:4102}
+	&"Modem Reset (H=Hangup,N=No Hangup){f6}":b$="HN":goto {:4110}
+{:4104}
+	&"ATX Value (1, 2, 3, 4){f6}":b$="1234":goto {:4110}
+{:4106}
+	&"DTR Mode (N=Normal,R=Reverse){f6}":b$="NR":goto {:4110}
+{:4108}
+	&"CCITT/Bell (0=CCITT,1=Bell){f6}":b$="01":GOTO {:4110}
+{:4110}
+	&">"
+{:4112}
+	&"{pound}g1":if a$<>""and an$=chr$(13)then:&"{pound}$a{f6}":return
+	for i=1 to len(b$):if an$=mid$(b$,i,1)then a$=an$:&"{pound}$a{f6}":return
+	next:goto {:4112}
+{:4118}
+	rem default options
+	ed$(1)="2EANN N1N1 1670 (Old Model)"
+	ed$(2)="2EAHH H2N1 1670 (New Model)"
+	ed$(3)="2EMHH0H1N1 Hayes  300 No DTR"
+	ed$(4)="2DMHH0H1N1 Hayes  300 DTR"
+	ed$(5)="2EMHH0H1N1 Hayes 1200 No DTR"
+	ed$(6)="2DMHH0H1N1 Hayes 1200 DTR"
+	ed$(7)="3DMHH0H1N1 Hayes 2400 DTR"
+	ed$(8)="3DMHH0H4N1 Supra 2400"
+	ed$(9)="3EMHH0H4N1 Aprotek 2400"
+	ed$(0)="3EMHN0H4N1 Custom":l=10
+	return
+	rem 0,300,1200,2400,4800,9600,19200
+	rem

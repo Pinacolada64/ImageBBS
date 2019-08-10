@@ -1,0 +1,17 @@
+{number:3000}
+{alpha:alt}
+{step:2}
+	s$="     ":FOR i=1 TO 4:s$=s$+s$:NEXT
+	dr=2:a$="nm.reports,s,r":GOSUB 1011:IF e%THEN:&:GOTO {:3020}
+	CLOSE 3:OPEN 3,dv%,3,dr$+"nm.reportlist,s,a":GOSUB 1012
+	IF e%THEN CLOSE 3:OPEN 3,dv%,3,dr$+"nm.reportlist,s,w":GOSUB 1012
+	IF e%THEN:&:GOTO {:3020}
+{:3010}
+	&,2,2:s=st:ON-(s<>0)GOTO {:3020}:ON-(a$="{up arrow}"OR a$="")GOTO {:3010}
+	z$=a$:&,2,2:b$=a$:&,2,2:c$=a$:&,2,2:d$=a$:&,2,2:d$=d$+","+a$:a$=z$:s=st
+	a=45-LEN(d$):IF LEN(c$)>a THEN c$=LEFT$(c$,a-1)
+	z$=LEFT$(a$+" "+b$+s$,29)+c$+LEFT$(s$,a-LEN(c$))+d$
+	PRINT# 3,z$:&"{pound}$z{f6}":ON-(s=0 AND rc=0)GOTO {:3010}
+{:3020}
+	CLOSE 2:CLOSE 3:GOTO 1812
+	rem "+.NM/report"

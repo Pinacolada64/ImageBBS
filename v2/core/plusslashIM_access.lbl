@@ -1,0 +1,72 @@
+{number:4000}
+{step:2}
+{alpha:alt}
+	rem "+/IM.access" module
+	&"{clear}{white}{f6:2}Loading Access Group Data...":gosub {:4072}
+	dr=3:a$="e.access":gosub 1011:for i=0 to 9:x=i+1:gosub 1001:&,2,2:tt$(i)=a$
+	&,2,2:tt$(i+10)=a$:next
+{:4008}
+	&"{clear}{f6}#  Group Name{pound}{back arrow}19Flags{f6}{pound}vj":for i=0 to 9:a$=tt$(i):b$=tt$(i+10):a%=i
+	&"{pound}%a> {pound}$a{pound}{back arrow}19{pound}$b{f6}":if rc then i=9
+	next:&"{white}{pound}vj{cyan}{f6} Edit (0-9): {pound}g1{pound}v7{f6}":if tr%<1 then{:4024}
+	on-(an$="L")goto {:4008}:on-(an$<"0"or an$>"9")goto {:4020}:t=val(an$):&"{f6}"
+	poke 53252,20:w$=tt$(t):p$="Group Name":pl=.:&,1,32:if an$<>""then tt$(t)=an$
+	q$=tt$(t+10):f$=q$:gosub {:4026}:tt$(t+10)=q$:goto {:4008}
+{:4020}
+	&" Save Changes?: ":gosub 1902:if a=. then {:4024}
+	&"{f6}Saving...":for i=.to 9:x=i+1:gosub 1001:print# 2,tt$(i)r$tt$(i+10):next
+{:4024}
+	close 2:return
+{:4026}
+	&"{clear}":poke 53252,38:for i=1 to 20:b$=mid$(q$,i,1)
+	if i=2 then b$=b$+" to 1":goto {:4042}
+	if i=16 or i=17 or i=20 then{:4042}
+	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:4042}
+	if i=18 then b$=mid$(q$,i,2):goto {:4042}
+	if i=19 then{:4044}
+	if b$="1"then b$="Yes"
+	if b$="0"then b$="No"
+{:4042}
+	a%=i:c$=dt$(i):&"{pound}#2{pound}# {pound}%a--{pound}$c{pound}{back arrow}20: {pound}$b{f6}"
+{:4044}
+	next:&"Change?: {pound}i1"
+	a=val(an$):if tr%<1 or a<1 or a>20 then return
+	on-(a=16 or a=17 or a=20)-2*(a=18)-3*(a=19)goto {:4062},{:4066},{:4026}
+	on-(a=2 or a=6)goto {:4052}:b$=mid$(str$(1-val(mid$(q$,a,1))),2):goto {:4060}
+{:4052}
+	if a=2 then b$=mid$(q$,2,1)+"/1"
+	if a=6 then b$=mid$(str$((val(mid$(q$,6,1))+1)*10),2)
+	p$=dt$(a):w$=b$:&,1,32:if an$="" then {:4026}
+	b$=left$(an$,1):if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
+{:4060}
+	q$=left$(q$,a-1)+b$+mid$(q$,a+1):&"{f6}":goto {:4026}
+{:4062}
+	p$=dt$(a):b$=mid$(q$,a,1):w$=b$:poke 53252,1:pl=1:&,1,32:if an$<>""then b$=an$
+	goto {:4060}
+{:4066}
+	p$=dt$(a):b$=mid$(q$,a,2):w$=b$:poke 53252,2:pl=1:&,1,32:if an$<>""then b$=an$
+	if len(b$)=1 then b$="0"+b$
+	q$=left$(q$,a-1)+b$+mid$(q$,a+2):&"{f6}":goto {:4026}
+{:4072}
+	dt$(1)="Non-Weed Status"
+	dt$(2)="Credit Ratio"
+	dt$(3)="Local Maint"
+	dt$(4)="Post/Respond"
+	dt$(5)="U/D Access"
+	dt$(6)="Max.Editor Lines"
+	dt$(7)="Unlimited D/Ls"
+	dt$(8)="Remote Maint"
+	dt$(9)="EMail"
+	dt$(10)="User List"
+	dt$(11)="B.A.R./Log View"
+	dt$(12)="Submaint"
+	dt$(13)="Files Maint"
+	dt$(14)="MCI Access"
+	dt$(15)="UDs At Primetime"
+	dt$(16)="Max Idle Time"
+	dt$(17)="Calls/Day"
+	dt$(18)="Time/Call"
+	dt$(19)="Time/Call"
+	dt$(20)="Downloads/Call"
+	return
+	copr.1988 new image

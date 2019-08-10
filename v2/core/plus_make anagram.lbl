@@ -1,0 +1,99 @@
+{number:3000}
+{step:2}
+{alpha:alt}
+{:3000}
+' Anagram Maintenance for
+' 1234"+/lo-anagram"12345
+	&"{clear}{rvrs on}{gray3}Anagram Maintenance for{f6}{rvrs on}    {f5}+/lo-anagram{f5}     {f6}{yellow}By:"
+	&"{f6}{pound}{back arrow}05{rvrs on}Port Commodore{f6}{pound}{back arrow}06{lt. green}{rvrs on}801-423-2734":GOTO {:3014}
+{:3004}
+	dr=3:a$="e.anagram,l,"+CHR$(45):GOTO 1011
+{:3006}
+	dr=3:a$="e.anagram":GOSUB 1011:x=1:&,2,2:y=VAL(a$):ON-(e%<>.)GOTO {:3010}:RETURN
+{:3008}
+	PRINT# 2,tt$r$"0"r$"0"r$"0":RETURN
+{:3010}
+	&"{f6:2}{lt. red}File Not Found!"
+{:3012}
+	&"{f6:2}{white}{rvrs on}Hit a Key{rvrs off}{lt. blue}: {pound}g1":ON fl GOTO {:3000}:GOTO {:3014}
+{:3014}
+	&"{f6:2}{green}{rvrs on}Options{rvrs off}{white}:{f6:2}{yellow}? - {lt. green}Help Menu{f6}{yellow}1 - {lt. green}Create Word File{f6}2 - {lt. green}Add Words"
+	&"{f6}{yellow}3 - {lt. green}Edit Words{f6}{yellow}4 - {lt. green}List Words{f6}5 - {yellow}Quit{f6:2}{green}{rvrs on}Opt{rvrs off}{white}? {pound}g1{pound}v7{f6}"
+	IF an$="{f2}"THEN{:3104}
+	x=VAL(an$):IF x<1 OR x>5 THEN{:3014}
+	ON x GOTO {:3024},{:3064},{:3028},{:3082},1811:GOTO {:3014}
+{:3024}
+	&"{clear}{cyan}{rvrs on}Create Word File!{f6:2}{lt. blue}Continue{white}? ":GOSUB 1902:IF a=.THEN{:3014}
+	GOSUB {:3004}:FOR x=1 TO 20:GOSUB 1001:PRINT# 2,"{up arrow}":NEXT:CLOSE 2:&"{f6:2}{lt. green}Created{yellow}!!":GOTO {:3012}
+{:3028}
+	&"{clear}{purple}{yellow}Edit Words.{f6:2}":GOSUB {:3006}:x=y+1:IF y=.THEN y=1
+	IF x=.THEN:&"{f6:2}{yellow}No Words!!":GOTO {:3012}
+{:3032}
+	&"{f6}{lt. green}No. {green}Word           {gray3}Used    {white}Right{f6}{pound}{back arrow}26 {lt. red}1st {lt. blue}2nd"
+	FOR x=2 TO y+1:GOSUB 1001:INPUT# 2,tt$,a%,c%,d%
+	b%=x-1:IF a%>10 THEN IF c%>=10 THEN GOSUB {:3044}:GOTO {:3046}
+	IF a%>=10 THEN GOSUB {:3042}:GOTO {:3046}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{white}{pound}%a       {lt. red}{pound}%c   {lt. blue}{pound}%d":GOTO {:3046}
+{:3042}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{white}{pound}%a      {lt. red}{pound}%c   {lt. blue}{pound}%d":RETURN
+{:3044}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{white}{pound}%a      {lt. red}{pound}%c  {lt. blue}{pound}%d":RETURN
+{:3046}
+	NEXT:&"{f6:2}{lt. green}Edit Which No.? {pound}i1":ON tr%+1 GOTO 1811:b=VAL(an$):IF an$=""THEN{:3012}
+	x=b+1:IF b<1 OR b>y THEN:&"{f6:2}{yellow}Not Acceptable.":GOTO {:3032}
+	GOSUB 1001:&,2,2:nn$=a$:&"{f6:2}{green}Change {lt. green}{pound}$a? ":GOSUB 1902:IF a=.THEN{:3032}
+	&"{f6:2}{gray3}Input New Word: {pound}i1":tt$=an$:ON tr%+1 GOTO 1811
+	&"{f6:2}{yellow}Old Word: {gray3}":&nn$:&"{f6}New Word: {yellow}":&tt$:&"{f6:2}{green}Correct{white}? ":GOSUB 1902
+	IF a=.THEN:&"{f6:2}{lt. red}Aborted!":GOTO {:3012}
+	GOSUB 1001:GOSUB {:3008}:&"{f6:2}{lt. green}Change Complete. {green}Another{white}? ":GOSUB 1902
+	IF a=.THEN CLOSE 2:GOTO {:3014}
+	GOTO {:3032}
+{:3064}
+	&"{clear}{gray3}{rvrs on}Add Words{rvrs off}{white}!{f6:2}":GOSUB {:3006}:c=y:d=y:x=y+1:IF y=.THEN y=1
+{:3066}
+	&"{f6}{white}Input Word{f6}{gray3}<{white}{rvrs on}RETURN{rvrs off}{gray3}> {white}to End: {pound}i1":ON tr%+1 GOTO 1811
+	IF an$=""THEN IF c=d THEN{:3074}
+	IF an$=""THEN{:3080}
+	x=x+1:c=c+1:tt$=an$:GOTO {:3076}
+{:3074}
+	&"{f6:2}No Words Added.":GOTO {:3012}
+{:3076}
+	&"{f6:2}Add This Word? ":&tt$:&": ":GOSUB 1902:ON a+1 GOTO {:3064}:GOSUB 1001:GOSUB {:3008}
+	GOTO {:3066}
+{:3080}
+	z=x-1:x=1:GOSUB 1001:PRINT# 2,z:CLOSE 2:&"{f6:2}{gray3}{rvrs on}Word{rvrs off}{white}({rvrs on}{gray3}s{rvrs off}{white}) {gray3}{rvrs on}Added{rvrs off}{white}!":GOTO {:3012}
+{:3082}
+	&"{clear}{lt. green}{rvrs on}List Words.{f6:2}"
+	GOSUB {:3006}:IF y=.THEN:&"{f6:2}{yellow}No Words In List.":GOTO {:3012}
+	b%=y:&"{f6:2}{pound}%b Words In List."
+	&"{f6}{green}No. {lt. green}Word           {cyan}Used   {gray3}Right{f6}{pound}{back arrow}26{white}1st {yellow}2nd"
+	FOR x=2 TO y+1:GOSUB 1001:INPUT# 2,tt$,a%,c%,d%
+	b%=x-1:IF a%>10 THEN IF c%>=10 THEN GOSUB {:3100}:GOTO {:3098}
+	IF a%>=10 THEN GOSUB {:3102}:GOTO {:3098}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{yellow}{pound}%a      {white}{pound}%c   {cyan}{pound}%d"
+{:3098}
+	NEXT:&"{f6:2}{yellow}{rvrs on}Listing Complete{rvrs off}{white}! ":GOTO {:3012}
+{:3100}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{gray3}{pound}%a     {yellow}{pound}%c  {lt. blue}{pound}%d":RETURN
+{:3102}
+	&"{f6}{lt. green}{pound}%b{pound}{back arrow}04{green}":&tt$:&"{pound}{back arrow}19{lt. red}{pound}%a     {cyan}{pound}%c   {gray3}{pound}%d":RETURN
+{:3104}
+	fl=.:&"{clear}      {rvrs on}{yellow}          Help Menu          {rvrs off}"
+	&"{f6}{lt. blue}{pound}{back arrow}16{$b7:4} {$b7:4}{f6:2}  {lt. green}Use Each Option In The Order Listed."
+	&"{f6:2}  You MUST Create The File FIRST And{f6:2}  Then ADD The Words You Would "
+	&"Like To{f6:2}  Have Your Users Attempt To Decipher.{f6:2}  One FEATURE That Isn't"
+	&" Documented{f6:2}  In The {f5}+/lo-anagram{f5} File Is"
+	&"{f6:2}  The Ability To Get The CORRECT Answer{f6:2}  By Putting A ? At The Prompt"
+	&" In{f6:2}  The Anagram File - Only On The First{f6:2}  Attempt!":fl=1:GOTO {:3012}
+	rem
+	REM" By:                 "
+	REM"    Port Commodore   "
+	REM"     801-423-2734    "
+	REM"                     "
+	REM"     A NISSA File    "
+	REM"    7/14/94 (c) FSD  "
+	REM"                     "
+	REM"  Please Don't Remove"
+	REM"   Our Credit Lines. "
+	rem
+	rem +.make anagram - revised 2019-04-26 pinacolada

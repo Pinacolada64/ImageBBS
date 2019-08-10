@@ -1,0 +1,87 @@
+{number:4000}
+{step:2}
+{alpha:alt}
+{quoter:space=32}
+	rem "** i.lo.login ** 6/08/95 jlf ** user login routine"
+	goto {:4100}
+{:4004}
+	dr=5:b$="i/lo!"+a$:a$=b$:gosub 4:close 2:if e% then:&"{f6}{white}[Module {pound}$b Failed]{f6}":return
+' rns: "[...] gosub 4500:goto 4200" was just "goto 4500"
+'	(think this was a shortcut I put in, maybe something is broken here)
+' 4200 is the "login successful" routine
+	new 4500:p2$="":load dr$+b$,dv%:gosub 4500:goto {:4200}
+{:4010}
+	p$="First Name":t$=ff$:return
+{:4012}
+	p$="Last Name":t$=ll$:return
+{:4014}
+	p$="Dialing Prefix [XXX] {rvrs on}???{rvrs off}-XXXX":t$=mid$(ph$,7,3):p=1:return
+{:4016}
+	p$="Last Four Digits [XXX] XXX-{rvrs on}????{rvrs off}":t$=right$(ph$,4):p=1:return
+{number:4020}
+{:4020}
+	mm=.:f1=3:goto 3000
+{:4022}
+	im=2:gosub 445:a=-(an$="RES" or an$="{up arrow}"):on a goto 999:a$="{space:18}"
+	&,69,.,17,"User",$8f:an$=na$:&,15,1:&,69,5,17,left$(an$+a$,22),$8c
+	&,69,.,18,"Name",$8f
+	an$=left$(ff$+" "+ll$+a$,22):&,15,1:&,69,5,18,an$,$8c
+	&,69,.,19,"Phn#",$8f:&,69,5,19,left$(ph$+a$,22),$8c:return
+{:4030}
+	&"Logoff!{f6:2}":tr%=.:return
+{:4032}
+	&"ASCII Re-Detect{f6:2}":c=2:return
+{:4034}
+	&"Xpress Login{f6}":x%=1:return
+{:4040}
+	&"Mail Check{f6:2}{gray3}  Enter The Handle Of The User You Want To Check For.{f6:2}"
+	c=1:&"{white}> {pound}i1":on-(tr%<1 or an$="")goto 999:a$="r":tt$=an$:gosub 32:close 2
+	a$=mid$(" No",3*-(e%=.)+1,3):&"{f6} {cyan}{pound}v7 {lt. blue}Has{pound}$a Mail.{f6}":return
+{:4050}
+	&,52,10,3:if a%=. then {:4056}
+{:4052}
+	&"{f6:2} Sorry, No New Users Are Being Accepted At This Time.{f6:2}":goto{:4102}
+{:4056}
+	a$="lo."+"new":goto 72
+{:4060}
+	a$="help":goto {:4004}
+{:4100}
+	pw$="":k=.
+{:4102}
+	poke 53252,20:ac%=16:id=.:x%=.:i%=.:k%=.:&,52,32,3
+	&"{f6:2} {lt. blue}Press {lt. green}Return/Enter{lt. blue} To Log In;{f6} Press {lt. green}{f5}!{f5} {lt. blue}To Log Off;{f6}"
+	&" Press {lt. green}{f5}*{f5} {lt. blue}To Change ASCII Translation"
+	if a%=. then:&";{f6} Press {lt. green}{f5}M{f5} {lt. blue}For Mail Check"
+{:4110}
+	&,52,46,3:if a% then:&";{f6} Press {lt. green}{f5}X{f5} {lt. blue}For Xpress Login"
+' rns: added "chr$(asc(an$)and 127)" to lowercase input
+	&":{f6:2}{yellow}Login{white}: {pound}g1":on -(tr%<1) goto {:4020}:a$=chr$(asc(an$)and 127)
+	x=-(a$="!")-2*(a$="{f7}")-3*(a$="x")-4*(a$="m"):if a$="i" then mm=11:goto 3000
+	c=.:on x gosub {:4030},{:4032},{:4034},{:4040}:on -(tr%<1) goto {:4020}:mm=12:on c goto {:4102},3000
+	if x=. then:&"Continue Login{f6:2}"
+	&"{f6}Enter Your Handle Or Login ID#{f6:2}{pound}b1: {pound}i1":on -(tr%<1) goto {:4020}:dd$=an$
+	a=-(left$(dd$,3)="RES")-2*(dd$="NEW")-3*(dd$="HELP" or dd$="{f2}")
+	on a goto {:4056},{:4050},{:4060}:if val(an$) then dd$=cc$+an$:goto {:4180}
+	if left$(dd$,len(cc$))=cc$ and val(mid$(dd$,len(cc$)+1))>. then {:4180}
+	i=len(dd$):b$=left$(dd$,1):if i<4 or i>20 or b$<"a" or b$>"z" then id=.:goto {:4194}
+	im=1:gosub 441
+	if i then id=i:lp=1:&"{f6}{lt. blue} Your ID# Is {white}{pound}!i.  {lt. blue}Use It For A Faster Logon.{f6}":goto {:4182}
+	&"{f6:2} {f5}{pound}v7{f5} Not Found!{f6:2}":&,52,10,3:if a% then {:4052}
+	lp=1:&" Would You Like To Apply For An Account Using That Handle?: "
+	gosub 94:if a then f1=1:g$=dd$:dd$="ne"+"w":goto{:4056}
+{:4170}
+	ac%=16:k=k+1:on -(k>4) goto {:4020}:lp=1:&"{f6:2}Enter {f5}NEW{f5} If You Have No Login"
+	lp=1:&" ID, Or {f5}HELP{f5} If You Are Having Trouble Logging On.{f6}":goto{:4102}
+{:4180}
+	id=val(mid$(dd$,len(cc$)+1)):if id<. or id>ur then id=.:goto {:4194}
+{:4182}
+	gosub {:4022}:if a then:&"{f6:2}That Account Has Been Deleted.{f6}":goto {:4170}
+	&"{f6}Please Enter Your Password.{f6:2}{pound}b1: ":&,6:on-(tr%<1)goto {:4020}
+	z$=an$:if z$=""then id=.:goto {:4194}
+	&"{f6}Additional Information:":a=int(rnd(1)*4)+1:p=.:on a gosub {:4010},{:4012},{:4014},{:4016}
+	if p then lp=1:&" (Only Fill in the ?'s)"
+	&"{f6:2}":gosub 6:c$=an$:if pw$=z$ and t$=c$ and c$<>"" and z$<>"" then {:4200}
+{:4194}
+	&"{f6:2}Login Is Not Valid.":a$="telecheck":gosub {:4004}:goto {:4170}
+{:4200}
+	&"{f6}Login Successful.{f6:2}":mm=10:goto 3000

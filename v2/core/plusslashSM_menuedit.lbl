@@ -1,0 +1,46 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	REM +.menuedit 11/27/2017 - pinacolada
+	pr$="":&,28,1:DIM jm%(29,49),fd%(50):GOSUB {:4012}:&,28,1:RETURN
+{:4004}
+	FOR i=0 TO 49:jm%(0,i)=0:NEXT:tz=0
+	dr=3:GOSUB 1010:m$=dr$+"e.menu"+STR$(m):&,60,2,0,jm%(0,0),m$,dv%:GOTO 1012
+{:4008}
+	dr=3:GOSUB 1010:PRINT# 15,"s"m$:&,60,3,0,jm%(0,0),3000,m$,dv%:GOTO 1012
+{:4010}
+	&"Changes made-- Save? ":GOSUB 1902:ON a GOSUB {:4008}:RETURN
+{:4012}
+	&"{f6}Edit Which Menu: {pound}i1":m=VAL(an$):IF tr%=0 OR m=0 THEN RETURN
+	GOSUB {:4004}
+{:4016}
+	FOR x=0 TO 49:&,60,1,30,jm%(5,x),a$:a%=x:b%=jm%(1,x)AND 32767
+	&"{white}{pound}#2{pound}%a:{pound}#5{pound}%b {pound}$a{f6}":x=x+rc*50:NEXT
+{:4020}
+	&"{f6}Options: List Edit Quit{f6:2}>"
+{:4022}
+	&"{pound}g1":IF tr%=0 THEN RETURN
+	ON-(an$="Q")-2*(an$="L")-3*(an$="E")GOTO {:4026},{:4028},{:4032}:GOTO {:4022}
+{:4026}
+	&"Quit{f6:2}":ON tz GOSUB {:4010}:GOTO {:4012}
+{:4028}
+	&"List{f6:2}":GOTO {:4016}
+	&,28,1:RETURN
+{:4032}
+	POKE 53252,2:&"Edit #{pound}i1{f6}":x=VAL(an$):IF x<0 OR x>49 THEN{:4020}
+{:4034}
+	&"{clear}Item#{pound}!x:{f6:2}":a%=jm%(1,x)AND 32767
+	&"1. Access: {pound}%a{f6}":a%=jm%(0,x)AND 255
+	&"2. Flags: {pound}%a{f6}"
+	&"3. Text:{f6}":&,60,1,50,jm%(5,x),a$
+	&:&"{f6}>{pound}g1":a=VAL(an$):IF a THEN ON a GOSUB {:4046},{:4048},{:4050}:GOTO {:4034}
+	GOTO {:4020}
+{:4046}
+	POKE 53252,5:&"Access: {pound}i1":jm%(1,x)=VAL(an$):tz=1:RETURN
+{:4048}
+	POKE 53252,3:&"Flags: {pound}i1":jm%(0,x)=VAL(an$):tz=1:RETURN
+{:4050}
+	&"{f6}":POKE 53252,50:p$="Text":&,60,1,50,jm%(5,x),w$:pl=0:&,1,32
+	IF an$<>"" OR an$<>w$ THEN:&,60,0,50,jm%(5,x),an$:tz=1
+	RETURN
+	REM "+/SM.menuedit" sysop menu 180210 x-tec

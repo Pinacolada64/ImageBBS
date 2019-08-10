@@ -1,0 +1,52 @@
+{number:4000}
+{alpha:alt}
+{step:2}
+	poke 53252,30:&"{f6:2}{gray3}Play Anagrams? ":gosub 1907:on a+1 goto 1603
+	c%=25:d%=c%+5:if cr<d% then:&"{f6:2}You have insufficient credits to play."
+	if cr<d% then:&"{f6}You must have {pound}%d credits.{pound}w2":return
+	gosub {:4052}:j=len(z$)
+	for i=1 to j:tt$(i)=mid$(z$,i,1):next
+{:4010}
+	for i=1 to j:d%(i)=.:c%(i)=.:next:for i=1 to j
+{:4012}
+	k=int(rnd(1)*j)+1:if c%(k)<>. then {:4012}
+	if d%(i)=.then d%(i)=k:c%(k)=1
+	next:t$="":for i=1 to j:t$=t$+tt$(d%(i)):next:if t$=z$ then {:4010}
+	gosub 2040
+	&"{clear}{f6:2}{pound}$q{gray3}    {rvrs on}Anagrams      {f6}{pound}$q{white}By: {gray3}{rvrs on}Port Commodore{f6}{pound}$q    {rvrs on}(801-423-2734)"
+	dr=1:a$="s.anagram":gosub 1076
+	&"{f6:2}{pound}$qSolve? ":gosub 1907:if a=.then return
+	t=.:n%=n%+1
+{:4028}
+	&"{f6}{pound}$q{yellow}{rvrs on}":for i=1 to j:&tt$(d%(i)):&" ":next
+	&"{f6:2}{pound}$q{lt. green}Solution? {pound}i1":on tr%+1 goto {:4042}:if an$=z$ then {:4044}
+	if t then:&"{f6:2}{pound}$qSorry, better luck next time":goto {:4042}
+	if an$="{f2}" then {:4040}
+	if an$=""or an$="Q" then {:4042}
+	&"{f6:2}{pound}$qSorry, try again? ":gosub 1902:on a+1 goto {:4042}:t=1:goto {:4028}
+{:4040}
+	&"{f6:2}{pound}$q":&z$:cr=cr-d%:goto {:4060}
+{:4042}
+	cr=cr-c%:goto {:4060}
+{:4044}
+	m%=100:if t then:m%=25:w%=w%+1
+	if t<1 then r%=r%+1
+	&"{f6:2}{pound}$qCongratulations, you win {pound}%m credits!":cr=cr+m%
+	a$=" {yellow}Anagram winner {pound}%m credits{lt. green}":gosub 1095:goto {:4060}
+{:4052}
+	a$="e.anagram":dr=3:gosub 1011:if e% then {:4064}
+{:4054}
+	x=1:gosub 1001:&,2,2:a=val(a$):x=int(rnd(1)*a)+2:fd=x
+	gosub 1001:input# 2,z$,n%,r%,w%:if len(z$)<2 then{:4054}
+	close 2:return
+{:4060}
+	w$="":w$=z$+r$+str$(n%)+r$+str$(r%)+r$+str$(w%)
+	a$="e.anagram":dr=3:gosub 1011:x=fd:gosub 1001:print# 2,w$:close 2:return
+{:4064}
+	a=10
+	tt$(1)="CHALLENGER":tt$(2)="HERCULES":tt$(3)="CROATIA"
+	tt$(4)="TELEPHONE":tt$(5)="DISCOVERY":tt$(6)="ELEPHANT":tt$(7)="DICTIONARY"
+	tt$(8)="CROISSANT":tt$(9)="ENTERPRISE":tt$(10)="BATTLESHIP"
+	i=int(rnd(1)*a)+1:z$=tt$(i):return
+	rem "+/lo-anagram by Port Commodore"
+
