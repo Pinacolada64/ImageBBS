@@ -2,19 +2,38 @@
 {crunch:on}
 {step:2}
 {number:4000}
-	&"{f6}{green}{rvrs on}Loading Parameters{rvrs off}{white}...":f4=.:on cd%gosub {:4150}:cd%=1
+	&"{f6}{green}{rvrs on}Loading Parameters{rvrs off}{white}...":f4=.:on cd% gosub {:4150}:cd%=1
+' 4002
 	a$="":for a=1 to ll%-2:a$=a$+"{$c0}":next:ak$=" "+a$+"{f6}"
+' 4004
 	f1=.:ao%=ac%:gosub 1634
+' &,52,20: set Expert mode depending on em
+' 4006
+
 	gosub 1063:x=1:gosub 1001:&,2,2:ca=val(a$):close 2:&,52,20,em
-' &,52,$22: check More status
-' &,52, 21: check Expert mode status
-	poke 970,.:&,52,$22,val(mid$(uf$,2,1)):&,52,21,3:if i%then qb=2400:goto {:4050}
-	&,52,4,3:if a%then qb=2400
-	if a%=. then {:4018}
-	a=3:gosub 1004:if na$<>d3$or a<>. then {:4018}
-'	&"{f6}Sorry, No Back-To-Back Calls!{f6}":ac%=16:f4=1:return
+' &,52,$22: set More Prompt status (0=off, 1=on)
+' NOTE: Goal here is to fix console login (k%) line length
+' FIXME: just a test if i% overrides Loc:
+' 4008
+	poke 970,.:&,52,$22,val(mid$(uf$,2,1)):if i% then:&"i% skips!":qb=2400:goto {:4050}
+' &,52,4: Local Mode login
+' sysop console login (I think):
+' TODO: get highest BPS rate from mt$ for qb?
+' 4010
+	&,52,4,3:if a%=. then {:4016}
+' TODO: if k%=1 then set ll%=40, poke 951 (necessary?)
+' 4012
+	&"(Sysop Console Login, k%={pound}%k){f6}":qb=2400
+' 4014
 	rem
+{:4016}
+' flag 3=Local Maint, handle<>last caller:
+	a=3:gosub 1004:if a or na$<>d3$ then {:4018}
+' &,52, 21: Disallow Double Calls
+' 4018
+	&,52,21,3:if a% then:&"{f6}Sorry, No Back-To-Back Calls!{f6}":ac%=16:f4=1:return
 {:4018}
+' flag 17: calls/day
 	a=17:gosub 1004:if left$(d1$,7)<>left$(d5$,7)then ct%=.
 	f2=.:ct%=ct%+1:tc%=tc%+1:if ct%<a or a=. then {:4026}
 ' TODO: buy call for credits, put in credit pool
@@ -34,8 +53,13 @@
 	a$=a$+r$+" New User!":if id=.then a$=a$+" (Just Looking)"
 {:4048}
 	a$=a$+r$+" {lt. red}Credit {white}{rvrs on}"+str$(cr):gosub 1095
+
 {:4050}
+' continue immediate mode login
+' prime time off, initially
+' NOTE: 1003: load "user online" screen mask from im.disp
 	f1=.:pt%=.:a=1:gosub 1003
+' &,52,7: Prime Time Enabled?
 	gosub 1019:&,52,7,3:if a%then pt%=1-pt%:if p1%<1 then p1%=30
 	if pt%=. then {:4062}
 ' prime time enabled: this gets overwritten by screen mask load later. has been moved to im.disp
@@ -47,19 +71,24 @@
 	&"{f6}Note - It Is Now Prime Time -{f6}ALL Callers Are Limited To {pound}%a Minutes!{f6:2}"
 {:4062}
 	&"{f6}":cn=cn+1:gosub 1073
-	a=17:gosub 1004:on a+1 goto {:4066}:a%=a-ct%:&"{f6}{lt. green}Calls Left Today{blue}:{white} {pound}%a{f6}"
+' flag 17: calls per day (0=unlimited, 1-9)
+	a=17:gosub 1004:if a then a%=a-ct%:&"{f6}{lt. green}Calls Left Today{blue}:{white} {pound}%a{f6}"
 {:4066}
+' flag 18: Time/Call is 2 bytes
 	a%=val(mid$(fl$,18,2)):if a%>.then:&"{f6}{lt. green}Time Allowed This Call{blue}:{white} {pound}%a Min.{f6:2}"
-	tr%=a%-101*(a%=.):if len(uf$)<11 then im=4:gosub 2428:goto {:4072}
-	im=6:gosub 2428
+' set up current user's time zone (im=6),
+' otherwise ask new user's time zone, if TZ flags missing/BBS is converted from 1.2 (im=4)
+	tr%=a%-101*(a%=.):im=6:if len(uf$)<11 then im=4
+' load "im.info"
+	gosub 2428
 {:4072}
-	on-(mp%>.and mp%<>40 and mp%<>80)goto {:4078}:a$="lines/screen":gosub 1350
+	on -(mp%>. and mp%<>40 and mp%<>80) goto {:4078}:a$="lines/screen":gosub 1350
 	lp=1:&"{f6:2}{lt. green}How Many Lines Of Text Can Your Screen Display?: {pound}i1"
 	mp%=abs(val(an$))-25*(tr%=.):if mp%<1 or mp%>255 or mp%=40 or mp%=80 then mp%=.:goto {:4072}
 {:4078}
 	a$=left$("f."+na$,16)+",s,r":dr=2:gosub 1011:on e%goto {:4134}
 {:4080}
-' TODO: Move this to +/lo.fm?
+' TODO: Move this to "+/lo.forced mail"?
 	f4=.:&"{f6}":&,2,2:c$=b$:b$=a$:if a$="{up arrow}"or st<>. then {:4088}
 	fl=-(a$="ERASE"or a$="KILL"or a$="OFF"):on fl goto {:4080}
 	fl=-(left$(a$,1)="!"or left$(a$,1)="{back arrow}"or left$(a$,1)="@"):on fl goto {:4080}
@@ -84,7 +113,7 @@
 	&" Until{f6}{pound}$b...{f6}":a$=" Account Suspended!":gosub 1095:goto {:4128}
 {:4116}
 	&,52,4,3:on-(a%=1 or id=1)goto {:4134}:an$=na$:tt$=an$:gosub 1034:tt$(1)="{up arrow}":tt$(2)="d":for i=3 to 24:tt$(i)="0":next
-	gosub 1065:a$="":for i=1 to 23:a$=a$+tt$(i)+r$:next:x=id:gosub 1001:print# 2,a$:c
+	gosub 1065:a$="":for i=1 to 23:a$=a$+tt$(i)+r$:next:x=id:gosub 1001:print# 2,a$:close 2
 	if x<l1 then l1=x:x=31:gosub 1063:gosub 1001:print# 2,l1:close 2
 	a$="r":gosub 1062:close 2:if e%=.then gosub {:4134}:i=-1:x=25:gosub 1025:close 2
 	dr=2:d$=left$(tt$,14):a$="f."+d$:gosub 1024:a$="m."+d$:gosub 1024:gosub 1081

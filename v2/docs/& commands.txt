@@ -54,16 +54,17 @@ $fc03	&,12	newuser (nonabortable file read?)
 		dumparray (x=array # [,y=# of elements])
 		[1.3] im: 1074		[2.0] im: 39
 
+string-io.lbl:
 	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
 	&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 		Changes all uppercase to mixed case
 	&,15,2	converts encoded f-key characters into readable characters
 		+.t: an$="host{f3}port":&,15,2:&"{pound}v7{f6}" -> host:port
-	&,15,3	[The Chief mentions this in a post, unsure of purpose]
-	&,15,4	[The Chief mentions this in a post, unsure of purpose]
-
-	&,15,6,x	Split an$ into an$ and a$ if it finds chr$(x)
-			-> an$ [chr$(x)] a$
+	&,15,3	Points to &,15,2
+	&,15,4	Points to &,15,2
+	&,15,5	newdate: some sort of hour (?) conversion. an$="wyymmddhhmm":&,15,5:&"{$04}"+an$
+	&,15,6,x	Split an$ into a$ and an$ if it finds chr$(x)
+	&,15,6,asc("x")	-> a$ [chr$(x)] an$
 		im: 1262 &,15,6,140:uu$=an$:an$=a$ [140=f8, Image "^")]
 		im: 1472 &,15,6,133:d2%=val(an$):d1%=a:dr=.:dv%(.)=d1%:dr%(.)=d2%
 			[133=f1, Image ","]
@@ -75,7 +76,7 @@ $c003	&,17	sys49155
 	&,20	get version
 	&,21	get version
 	&,22,x	tenwait [x=tenths of a second]
-	&,23	xgetin
+	&,23	xgetin: returns char in peek(780)
 	&,24	xchrout1
 
 $f80c	&,25,x,y	sound
@@ -293,7 +294,7 @@ im.menus:
 	[Maybe this affects the console cursor position]
 
 	&,62,b,c
-		settim: b=hour, c=min? im: ~3184
+		settim: b=hour (+81=PM), c=min im: ~3184
 $f403	&,63	inline1
 $f809	&,64	convstr
 $fc09	&,65	convert
@@ -309,8 +310,8 @@ $ee03	&,68	struct
 		im.display is a good example of this
 		<column>/<row> begins at 0
 		<color> is 1-15, $8x is reverse color x
-[Question: will this plot stuff even if screen mask is off?
-I'm pretty sure it does.]
+[Question: will this plot stuff to the hidden screen mask
+even if screen mask is off? I'm pretty sure it does.]
 
 &,70	cursposn	<column>,<row>?
 	+.IM &,70,.,n/2+8.5:&"{white}"

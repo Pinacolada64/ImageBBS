@@ -34,7 +34,7 @@
 {number:4400}
 {:4400}
 	&"{clear}{f6}{pound}q0{pound}$i Options:{f6:2}"
-	&"1. Edit Emtry Text{f6}":&,60,1,30,s%(25,0),a$
+	&"1. Edit Entry Text{f6}":&,60,1,30,s%(25,0),a$
 	&"2. Prompt: {f5}{pound}$a{f5}{f6}":&,60,1,20,s%(15,0),a$
 	&"3. Name:   {f5}{pound}$a{f5}{f6}":a%=s%(2,0)
 	&"4. {pound}$i:    {pound}%a{f6}":a%=s%(3,0)

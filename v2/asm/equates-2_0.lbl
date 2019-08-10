@@ -80,6 +80,35 @@
 	cline	= 1019
 	lines	= 1022 ; $03f8: kk, # of lines in text editor buffer
 	modes	= 1023
+	;
+	; garbage collection stuff?
+	;
+	gc	= $c000
+	gchide	= $e000
+	gclen	= 4
+	;
+	; extended command set stuff:
+	;
+	ecs	= $c000
+	ecshide	= $e400
+	ecslen	= 10
+	;
+	;screen parameters
+	;
+	mcolor	= 646
+	mreverse= 199
+	curptr	= 209
+	scnpos	= 211
+	sline	= 214
+	colptr	= 243
+	undchr	= 206
+	undcol	= 647
+	crsrflg	= 204
+	crsrmode= 207	; Flag: Was Last Cursor Blink on or off?
+	; This location keeps track of whether, during the current cursor blink,
+	; the character under the cursor was reversed, or was restored to
+	; normal. This location will contain a 0 if the character is reversed,
+	; and a 1 if the character is restored to its non-reversed status.
 
 ;
 ; screen display stuff:

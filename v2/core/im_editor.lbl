@@ -2,6 +2,7 @@
 {step:2}
 {alpha:alt}
 {crunch:on}
+' TODO: in zz mode, lp=1:&"Local Mode: .Save Disabled, Using .Put Instead":&,54,preserve existing buffer
 	on im goto {:60082},{:60088}:return
 {:60002}
 	close 6:open 6,dv%,6,dr$+v$+",s,"+a$:goto 1012
