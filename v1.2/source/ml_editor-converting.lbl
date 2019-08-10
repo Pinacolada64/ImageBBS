@@ -1,4 +1,4 @@
-{uses:\Documents and Settings\User\My Documents\C64\Image BBS\image-bbs\v1.2\source\equates-1_2.lbl}
+{uses:.\equates-1_2.lbl}
 
 {asm}
 {undef:debug}
@@ -63,16 +63,16 @@ extracmd:
 
 keepbuf:
 		lda case		; 1028:002a	ad 01 d0
-		sta $03f4		; 102b:002d	8d f4 03
+		sta case1		; 102b:002d	8d f4 03
 		jmp goto1048		; 102e:0030	4c 48 10
 
 clearbuf:
 		lda case		; 1031:0033	ad 01 d0
-		sta $03f4		; 1034:0036	8d f4 03
+		sta case1		; 1034:0036	8d f4 03
 		jsr sub_1ab4		; 1037:0039	20 b4 1a
 		lda #$01		; 103a:003c	a9 01
-		sta $03fb		; 103c:003e	8d fb 03
-		sta $03f8		; 103f:0041	8d f8 03
+		sta cline		; 103c:003e	8d fb 03
+		sta mline		; 103f:0041	8d f8 03
 goto1042:
 		jsr sub_outCR		; 1042:0044	20 77 1d
 		jsr resetmci		; 1045:0047	20 8b 1d
@@ -87,12 +87,12 @@ goto1048:
 		sta mprint		; 1059:005b	8d eb 07
 		sta mspeed		; 105c:005e	8d ea 07
 goto105f:
-		lda $03f8		; 105f:0061	ad f8 03
+		lda mline		; 105f:0061	ad f8 03
 		cmp EditorLines		; 1062:0064	cd fe 03
 		beq fwd_1069		; 1065:0067	f0 02
 		bcs fwd_108a		; 1067:0069	b0 21
 fwd_1069:
-		ldx $03ff		; 1069:006b	ae ff 03
+		ldx modes		; 1069:006b	ae ff 03
 		jsr sub_1df5		; 106c:006e	20 f5 1d
 		lda chat		; 106f:0071	ad 06 d0
 		beq fwd_1084		; 1072:0074	f0 10
@@ -109,6 +109,7 @@ goto107f:
 		jmp editrts		; 1081:0083	4c 09 10
 
 fwd_1084:
+; enter chat mode while in editor?
 		jsr sub_1099		; 1084:0086	20 99 10
 		jmp goto1048		; 1087:0089	4c 48 10
 
@@ -128,7 +129,7 @@ fwd_1092:
 		jmp sub_OutXdels	; 1096:0098	4c 8d 10
 
 sub_1099:
-		ldx $03f8		; 1099:009b	ae f8 03
+		ldx mline		; 1099:009b	ae f8 03
 		cpx EditorLines		; 109c:009e	ec fe 03
 		bcc fwd_10a4		; 109f:00a1	90 03
 		beq fwd_10a4		; 10a1:00a3	f0 01
@@ -138,14 +139,14 @@ fwd_10a4:
 		lda LineNumberMode	; 10a4:00a6	ad fa 03
 		and #$01		; 10a7:00a9	29 01
 		beq fwd_10b1		; 10a9:00ab	f0 06
-		ldx $03fb		; 10ab:00ad	ae fb 03
+		ldx cline		; 10ab:00ad	ae fb 03
 		jmp goto19eb		; 10ae:00b0	4c eb 19
 
 fwd_10b1:
-		ldx $03fb		; 10b1:00b3	ae fb 03
+		ldx cline		; 10b1:00b3	ae fb 03
 		jsr sub_1b9c		; 10b4:00b6	20 9c 1b
-		inc $03fb		; 10b7:00b9	ee fb 03
-		inc $03f8		; 10ba:00bc	ee f8 03
+		inc cline		; 10b7:00b9	ee fb 03
+		inc mline		; 10ba:00bc	ee f8 03
 		rts			; 10bd:00bf	60
 
 len_Command:
@@ -156,7 +157,7 @@ sCommand:
 		.ascii "OMMAND"
 					; 10bf:00c1	tbl-10c6
 		byte colon
-		
+
 goto10c7:
 		lda len_Command		; 10c7:00c9	ad be 10
 		ldx #<sCommand		; 10ca:00cc	a2 bf
@@ -212,7 +213,7 @@ fwd_1114:
 		jmp editrts		; 1121:0123	4c 09 10
 
 fwd_1124:
-		stx $03f9		; 1124:0126	8e f9 03
+		stx comm		; 1124:0126	8e f9 03
 		txa 			; 1127:0129	8a
 		asl			; 1128:012a	0a
 		tay 			; 1129:012b	a8
@@ -448,7 +449,7 @@ pAbort:
 	; .Border (ask for single character)
 pBorder:
 		ldx #$01		; 1271:0273	a2 01
-		ldy $03f8		; 1273:0275	ac f8 03
+		ldy mline		; 1273:0275	ac f8 03
 		dey 			; 1276:0278	88
 		beq fwd_12cd		; 1277:0279	f0 54
 		jsr sub_1c8f		; 1279:027b	20 8f 1c
@@ -518,9 +519,9 @@ lbl_12de:
 
 		; .Delete line (or range of lines)
 pDelete:
-		ldx $03f8		; 12df:02e1	ae f8 03
+		ldx mline		; 12df:02e1	ae f8 03
 		dex 			; 12e2:02e4	ca
-		ldy $03f8		; 12e3:02e5	ac f8 03
+		ldy mline		; 12e3:02e5	ac f8 03
 		dey 			; 12e6:02e8	88
 		beq fwd_1324		; 12e7:02e9	f0 3b
 		jsr sub_1c8f		; 12e9:02eb	20 8f 1c
@@ -576,9 +577,9 @@ szDeleted:
 
 		; .Edit line (or range of lines)
 pEdit:
-		ldx $03f8		; 133e:0340	ae f8 03
+		ldx mline		; 133e:0340	ae f8 03
 		dex 			; 1341:0343	ca
-		ldy $03f8		; 1342:0344	ac f8 03
+		ldy mline		; 1342:0344	ac f8 03
 		dey 			; 1345:0347	88
 		beq fwd_134e		; 1346:0348	f0 06
 		jsr sub_1c8f		; 1348:034a	20 8f 1c
@@ -590,7 +591,7 @@ fwd_134e:
 		; .Find text in line (or range of lines)
 pFind:
 		ldx #$01		; 1351:0353	a2 01
-		ldy $03f8		; 1353:0355	ac f8 03
+		ldy mline		; 1353:0355	ac f8 03
 		dey 			; 1356:0358	88
 		beq fwd_138a		; 1357:0359	f0 31
 		jsr sub_1c8f		; 1359:035b	20 8f 1c
@@ -611,7 +612,7 @@ b_136d:
 		lda #$81		; 137c:037e	a9 81
 		sta mci			; 137e:0380	8d ef 07
 		lda #$80		; 1381:0383	a9 80
-		sta $03f3		; 1383:0385	8d f3 03
+		sta flag1		; 1383:0385	8d f3 03
 		jsr sub_189b		; 1386:0388	20 9b 18
 fwd_1389:
 		rts 			; 1389:038b	60
@@ -631,7 +632,7 @@ szSearchPhrase:
 		; .K (Search-and-replace) a line or range of lines
 pFindAndReplace:
 		ldx #$01		; 139c:039e	a2 01
-		ldy $03f8		; 139e:03a0	ac f8 03
+		ldy mline		; 139e:03a0	ac f8 03
 		dey 			; 13a1:03a3	88
 		beq fwd_13fa		; 13a2:03a4	f0 56
 		jsr sub_1c8f		; 13a4:03a6	20 8f 1c
@@ -669,7 +670,7 @@ fwd_13e9:
 		lda #$81		; 13ec:03ee	a9 81
 		sta mci			; 13ee:03f0	8d ef 07
 		lda #$80		; 13f1:03f3	a9 80
-		sta $03f3		; 13f3:03f5	8d f3 03
+		sta flag1		; 13f3:03f5	8d f3 03
 		jsr sub_18dd		; 13f6:03f8	20 dd 18
 fwd_13f9:
 		rts 			; 13f9:03fb	60
@@ -678,7 +679,7 @@ fwd_13fa:
 		jmp goto1cf2		; 13fa:03fc	4c f2 1c
 
 		.area 15,$00		; *** free space ***
-		
+
 szReplaceWith:
 		byte upper+$12 ; r
 		ascii "EPLACE "
@@ -701,9 +702,9 @@ pInsert:
 		jsr sub_1c75		; 1425:0427	20 75 1c
 		ldx linnum		; 1428:042a	a6 14
 		beq fwd_143c		; 142a:042c	f0 10
-		cpx $03f8		; 142c:042e	ec f8 03
+		cpx mline		; 142c:042e	ec f8 03
 		bcs fwd_143c		; 142f:0431	b0 0b
-		stx $03fb		; 1431:0433	8e fb 03
+		stx cline		; 1431:0433	8e fb 03
 		lda LineNumberMode	; 1434:0436	ad fa 03
 		ora #$01		; 1437:0439	09 01
 		sta LineNumberMode	; 1439:043b	8d fa 03
@@ -713,7 +714,7 @@ fwd_143c:
 		; .Justify line or range of lines
 		; (Center,Expand,Packed,Left,Right,Indent,Un-Indent)
 pJustify:
-		ldx $03f8		; 143d:043f	ae f8 03
+		ldx mline		; 143d:043f	ae f8 03
 		dex 			; 1440:0442	ca
 		beq fwd_1478		; 1441:0443	f0 35
 		jsr sub_GetChar		; 1443:0445	20 ab 1b
@@ -841,7 +842,7 @@ pList:
 		lda #$81		; 14f1:04f3	a9 81
 		sta lbl_153f		; 14f3:04f5	8d 3f 15
 		lda #$80		; 14f6:04f8	a9 80
-		sta $03f3		; 14f8:04fa	8d f3 03
+		sta flag1		; 14f8:04fa	8d f3 03
 		jmp goto151f		; 14fb:04fd	4c 1f 15
 
 		; .MCI Read
@@ -849,7 +850,7 @@ pMCIread:
 		lda #$00		; 14fe:0500	a9 00
 		sta lbl_153f		; 1500:0502	8d 3f 15
 		lda #$00		; 1503:0505	a9 00
-		sta $03f3		; 1505:0507	8d f3 03
+		sta flag1		; 1505:0507	8d f3 03
 		jmp goto151f		; 1508:050a	4c 1f 15
 
 		; .Clear Text (TODO: want confirmation!)
@@ -876,10 +877,10 @@ pRead:
 		lda #$81		; 1515:0517	a9 81
 		sta lbl_153f		; 1517:0519	8d 3f 15
 		lda #$00		; 151a:051c	a9 00
-		sta $03f3		; 151c:051e	8d f3 03
+		sta flag1		; 151c:051e	8d f3 03
 goto151f:
 		ldx #$01		; 151f:0521	a2 01
-		ldy $03f8		; 1521:0523	ac f8 03
+		ldy mline		; 1521:0523	ac f8 03
 		dey 			; 1524:0526	88
 		beq fwd_153c		; 1525:0527	f0 15
 		jsr sub_1c8f		; 1527:0529	20 8f 1c
@@ -900,15 +901,15 @@ lbl_153f:
 		; .Save text
 pSaveText:
 		jsr sub_ReturnKey	; 1540:0542	20 a7 1a
-		lda $03fb		; 1543:0545	ad fb 03
+		lda cline		; 1543:0545	ad fb 03
 		ldx #$01		; 1546:0548	a2 01
 		jmp editrts		; 1548:054a	4c 09 10
 pExit:
 		lda LineNumberMode	; 154b:054d	ad fa 03
 		and #$01		; 154e:0550	29 01
 		beq fwd_1563		; 1550:0552	f0 11
-		lda $03f8		; 1552:0554	ad f8 03
-		sta $03fb		; 1555:0557	8d fb 03
+		lda mline		; 1552:0554	ad f8 03
+		sta cline		; 1555:0557	8d fb 03
 		lda LineNumberMode	; 1558:055a	ad fa 03
 		and #$fe		; 155b:055d	29 fe
 		sta LineNumberMode	; 155d:055f	8d fa 03
@@ -985,7 +986,7 @@ szSetTo:
 
 pCopy:
 		ldx #$01		; 15bf:05c1	a2 01
-		ldy $03f8		; 15c1:05c3	ac f8 03
+		ldy mline		; 15c1:05c3	ac f8 03
 		dey 			; 15c4:05c6	88
 		beq fwd_15fa		; 15c5:05c7	f0 33
 		jsr sub_1c8f		; 15c7:05c9	20 8f 1c
@@ -994,18 +995,18 @@ pCopy:
 		jsr sub_outzString	; 15ce:05d0	20 d2 1d
 		lda linnum		; 15d1:05d3	a5 14
 		pha 			; 15d3:05d5	48
-		ldx $03f8		; 15d4:05d6	ae f8 03
+		ldx mline		; 15d4:05d6	ae f8 03
 		jsr sub_1c59		; 15d7:05d9	20 59 1c
 		lda linnum		; 15da:05dc	a5 14
 		beq fwd_15fa		; 15dc:05de	f0 1c
-		cmp $03f8		; 15de:05e0	cd f8 03
+		cmp mline		; 15de:05e0	cd f8 03
 		beq fwd_15e5		; 15e1:05e3	f0 02
 		bcs fwd_15fa		; 15e3:05e5	b0 15
 fwd_15e5:
-		sta $03fb		; 15e5:05e7	8d fb 03
+		sta cline		; 15e5:05e7	8d fb 03
 		pla 			; 15e8:05ea	68
 		sta linnum		; 15e9:05eb	85 14
-		ldx $03fb		; 15eb:05ed	ae fb 03
+		ldx cline		; 15eb:05ed	ae fb 03
 		cpx linnum		; 15ee:05f0	e4 14
 		bcc fwd_15f7		; 15f0:05f2	90 05
 		dex 			; 15f2:05f4	ca
@@ -1015,8 +1016,8 @@ fwd_15f7:
 		jmp goto1ad1		; 15f7:05f9	4c d1 1a
 
 fwd_15fa:
-		lda $03f8		; 15fa:05fc	ad f8 03
-		sta $03fb		; 15fd:05ff	8d fb 03
+		lda mline		; 15fa:05fc	ad f8 03
+		sta cline		; 15fd:05ff	8d fb 03
 		jmp goto1cf2		; 1600:0602	4c f2 1c
 
 szCopyTo:
@@ -1029,7 +1030,7 @@ szCopyTo:
 
 pMove:
 		ldx #$01		; 160c:060e	a2 01
-		ldy $03f8		; 160e:0610	ac f8 03
+		ldy mline		; 160e:0610	ac f8 03
 		dey 			; 1611:0613	88
 		beq fwd_1647		; 1612:0614	f0 33
 		jsr sub_1c8f		; 1614:0616	20 8f 1c
@@ -1038,18 +1039,18 @@ pMove:
 		jsr sub_outzString	; 161b:061d	20 d2 1d
 		lda linnum		; 161e:0620	a5 14
 		pha 			; 1620:0622	48
-		ldx $03f8		; 1621:0623	ae f8 03
+		ldx mline		; 1621:0623	ae f8 03
 		jsr sub_1c59		; 1624:0626	20 59 1c
 		lda linnum		; 1627:0629	a5 14
 		beq fwd_1647		; 1629:062b	f0 1c
-		cmp $03f8		; 162b:062d	cd f8 03
+		cmp mline		; 162b:062d	cd f8 03
 		beq fwd_1632		; 162e:0630	f0 02
 		bcs fwd_1647		; 1630:0632	b0 15
 fwd_1632:
-		sta $03fb		; 1632:0634	8d fb 03
+		sta cline		; 1632:0634	8d fb 03
 		pla 			; 1635:0637	68
 		sta linnum		; 1636:0638	85 14
-		ldx $03fb		; 1638:063a	ae fb 03
+		ldx cline		; 1638:063a	ae fb 03
 		cpx linnum		; 163b:063d	e4 14
 		bcc fwd_1644		; 163d:063f	90 05
 		dex			; 163f:0641	ca
@@ -1059,8 +1060,8 @@ fwd_1644:
 		jmp goto1ae1		; 1644:0646	4c e1 1a
 
 fwd_1647:
-		lda $03f8		; 1647:0649	ad f8 03
-		sta $03fb		; 164a:064c	8d fb 03
+		lda mline		; 1647:0649	ad f8 03
+		sta cline		; 164a:064c	8d fb 03
 		jmp goto1cf2		; 164d:064f	4c f2 1c
 
 sMoveTo:
@@ -1178,7 +1179,7 @@ goto170d:
 		adc #$08		; 1716:0718	69 08
 		sta dscpnt+2		; 1718:071a	85 52
 		ldx #$01		; 171a:071c	a2 01
-		ldy $03f8		; 171c:071e	ac f8 03
+		ldy mline		; 171c:071e	ac f8 03
 		dey 			; 171f:0721	88
 		jsr sub_1c8f		; 1720:0722	20 8f 1c
 sub_1723:
@@ -1381,7 +1382,7 @@ fwd_186b:
 sub_186c:
 		txa		 	; 186c:086e	8a
 		pha 			; 186d:086f	48
-		lda $03f3		; 186e:0870	ad f3 03
+		lda flag1		; 186e:0870	ad f3 03
 		bpl fwd_187d		; 1871:0873	10 0a
 		txa 			; 1873:0875	8a
 		jsr sub_outApercent	; 1874:0876	20 ba 1b
@@ -1590,17 +1591,17 @@ sub_19d0:
 		jsr sub_1b92		; 19d8:09da	20 92 1b
 		inc arisgn		; 19db:09dd	e6 6f
 		ldx arisgn		; 19dd:09df	a6 6f
-		cpx $03f8		; 19df:09e1	ec f8 03
+		cpx mline		; 19df:09e1	ec f8 03
 		bcc sub_19d0		; 19e2:09e4	90 ec
-		dec $03f8		; 19e4:09e6	ce f8 03
-		dec $03fb		; 19e7:09e9	ce fb 03
+		dec mline		; 19e4:09e6	ce f8 03
+		dec cline		; 19e7:09e9	ce fb 03
 		rts 			; 19ea:09ec	60
 
 goto19eb:
 		stx arisgn		; 19eb:09ed	86 6f
-		cpx $03f8		; 19ed:09ef	ec f8 03
+		cpx mline		; 19ed:09ef	ec f8 03
 		bcs fwd_1a0d		; 19f0:09f2	b0 1b
-		ldx $03f8		; 19f2:09f4	ae f8 03
+		ldx mline		; 19f2:09f4	ae f8 03
 		cpx EditorLines		; 19f5:09f7	ec fe 03
 		bcs fwd_1a27		; 19f8:09fa	b0 2d
 		dex 			; 19fa:09fc	ca
@@ -1617,28 +1618,28 @@ b_19fb:
 fwd_1a0d:
 		ldx arisgn		; 1a0d:0a0f	a6 6f
 		jsr sub_1b9c		; 1a0f:0a11	20 9c 1b
-		ldx $03f8		; 1a12:0a14	ae f8 03
+		ldx mline		; 1a12:0a14	ae f8 03
 		cpx EditorLines		; 1a15:0a17	ec fe 03
 		bcs fwd_1a27		; 1a18:0a1a	b0 0d
-		ldx $03fb		; 1a1a:0a1c	ae fb 03
+		ldx cline		; 1a1a:0a1c	ae fb 03
 		cpx arisgn		; 1a1d:0a1f	e4 6f
 		bcc fwd_1a24		; 1a1f:0a21	90 03
-		inc $03fb		; 1a21:0a23	ee fb 03
+		inc cline		; 1a21:0a23	ee fb 03
 fwd_1a24:
-		inc $03f8		; 1a24:0a26	ee f8 03
+		inc mline		; 1a24:0a26	ee f8 03
 fwd_1a27:
 		rts 			; 1a27:0a29	60
 
 sub_1a28:
-		stx $03f7		; 1a28:0a2a	8e f7 03
+		stx temp3		; 1a28:0a2a	8e f7 03
 		jsr sub_1b97		; 1a2b:0a2d	20 97 1b
 		ldx #$1b		; 1a2e:0a30	a2 1b
 		jsr sub_1ba1		; 1a30:0a32	20 a1 1b
-		lda $03f7		; 1a33:0a35	ad f7 03
+		lda temp3		; 1a33:0a35	ad f7 03
 		jsr sub_outApercent	; 1a36:0a38	20 ba 1b
 		jsr sub_outColon	; 1a39:0a3b	20 81 1d
 		jsr sub_outCR		; 1a3c:0a3e	20 77 1d
-		lda $03ff		; 1a3f:0a41	ad ff 03
+		lda modes		; 1a3f:0a41	ad ff 03
 		and #$ef		; 1a42:0a44	29 ef
 		ora #$a0		; 1a44:0a46	09 a0
 		tax			; 1a46:0a48	aa
@@ -1666,7 +1667,7 @@ sub_1a28:
 fwd_1a71:
 		ldy index		; 1a71:0a73	ac 0f d0
 		beq fwd_1a7c		; 1a74:0a76	f0 06
-		ldx $03f7		; 1a76:0a78	ae f7 03
+		ldx temp3		; 1a76:0a78	ae f7 03
 		jmp sub_1b9c		; 1a79:0a7b	4c 9c 1b
 
 fwd_1a7c:
@@ -1756,21 +1757,21 @@ fwd_1af0:
 
 sub_1af1:
 		jsr sub_1b97		; 1af1:0af3	20 97 1b
-		ldx $03f8		; 1af4:0af6	ae f8 03
+		ldx mline		; 1af4:0af6	ae f8 03
 		cpx EditorLines		; 1af7:0af9	ec fe 03
 		bcs fwd_1b1e		; 1afa:0afc	b0 22
-		ldx $03fb		; 1afc:0afe	ae fb 03
-		cpx $03f8		; 1aff:0b01	ec f8 03
+		ldx cline		; 1afc:0afe	ae fb 03
+		cpx mline		; 1aff:0b01	ec f8 03
 		beq fwd_1b0a		; 1b02:0b04	f0 06
 		jsr goto19eb		; 1b04:0b06	20 eb 19
 		jmp goto1b13		; 1b07:0b09	4c 13 1b
 
 fwd_1b0a:
 		jsr sub_1b9c		; 1b0a:0b0c	20 9c 1b
-		inc $03fb		; 1b0d:0b0f	ee fb 03
-		inc $03f8		; 1b10:0b12	ee f8 03
+		inc cline		; 1b0d:0b0f	ee fb 03
+		inc mline		; 1b10:0b12	ee f8 03
 goto1b13:
-		ldx $03fb		; 1b13:0b15	ae fb 03
+		ldx cline		; 1b13:0b15	ae fb 03
 		cpx linnum+1		; 1b16:0b18	e4 15
 		bcs fwd_1b1e		; 1b18:0b1a	b0 04
 		inc linnum		; 1b1a:0b1c	e6 14
@@ -1780,7 +1781,7 @@ fwd_1b1e:
 
 sub_1b1f:
 		stx arisgn		; 1b1f:0b21	86 6f
-		cpx $03fb		; 1b21:0b23	ec fb 03
+		cpx cline		; 1b21:0b23	ec fb 03
 		bcc fwd_1b59		; 1b24:0b26	90 33
 		jsr sub_1b8d		; 1b26:0b28	20 8d 1b
 		lda var			; 1b29:0b2b	a5 61
@@ -1797,7 +1798,7 @@ b_1b32:
 		jsr sub_1b92		; 1b3a:0b3c	20 92 1b
 		dec arisgn		; 1b3d:0b3f	c6 6f
 		ldx arisgn		; 1b3f:0b41	a6 6f
-		cpx $03fb		; 1b41:0b43	ec fb 03
+		cpx cline		; 1b41:0b43	ec fb 03
 		bcs b_1b32		; 1b44:0b46	b0 ec
 		pla 			; 1b46:0b48	68
 		sta var+2		; 1b47:0b49	85 63
@@ -1805,9 +1806,9 @@ b_1b32:
 		sta var+1		; 1b4a:0b4c	85 62
 		pla 			; 1b4c:0b4e	68
 		sta var			; 1b4d:0b4f	85 61
-		ldx $03fb		; 1b4f:0b51	ae fb 03
+		ldx cline		; 1b4f:0b51	ae fb 03
 		jsr sub_1b92		; 1b52:0b54	20 92 1b
-		inc $03fb		; 1b55:0b57	ee fb 03
+		inc cline		; 1b55:0b57	ee fb 03
 		rts 			; 1b58:0b5a	60
 
 fwd_1b59:
@@ -1826,7 +1827,7 @@ b_1b65:
 		jsr sub_1b92		; 1b6d:0b6f	20 92 1b
 		inc arisgn		; 1b70:0b72	e6 6f
 		ldx arisgn		; 1b72:0b74	a6 6f
-		cpx $03fb		; 1b74:0b76	ec fb 03
+		cpx cline		; 1b74:0b76	ec fb 03
 		bcc b_1b65		; 1b77:0b79	90 ec
 		pla 			; 1b79:0b7b	68
 		sta var+2		; 1b7a:0b7c	85 63
@@ -1836,7 +1837,7 @@ b_1b65:
 		sta var			; 1b80:0b82	85 61
 		dec linnum		; 1b82:0b84	c6 14
 		dec linnum+1		; 1b84:0b86	c6 15
-		ldx $03fb		; 1b86:0b88	ae fb 03
+		ldx cline		; 1b86:0b88	ae fb 03
 		dex 			; 1b89:0b8b	ca
 		jmp sub_1b92		; 1b8a:0b8c	4c 92 1b
 
@@ -1902,11 +1903,11 @@ sA_percent:
 		ascii "{pound}%A"
 
 sub_1bda:
-		lda $03f8		; 1bda:0bdc	ad f8 03
+		lda mline		; 1bda:0bdc	ad f8 03
 		cmp EditorLines		; 1bdd:0bdf	cd fe 03
 		bcc fwd_1bf6		; 1be0:0be2	90 14
 		beq fwd_1bf6		; 1be2:0be4	f0 12
-		sta $03fb		; 1be4:0be6	8d fb 03
+		sta cline		; 1be4:0be6	8d fb 03
 		lda LineNumberMode	; 1be7:0be9	ad fa 03
 		and #$04		; 1bea:0bec	29 04
 		sta LineNumberMode	; 1bec:0bee	8d fa 03
@@ -1924,14 +1925,14 @@ fwd_1c02:
 		lda LineNumberMode	; 1c02:0c04	ad fa 03
 		and #$03		; 1c05:0c07	29 03
 		beq fwd_1c15		; 1c07:0c09	f0 0c
-		lda $03fb		; 1c09:0c0b	ad fb 03
+		lda cline		; 1c09:0c0b	ad fb 03
 		jsr sub_outApercent	; 1c0c:0c0e	20 ba 1b
 		jsr sub_outColon	; 1c0f:0c11	20 81 1d
 		jsr sub_outCR		; 1c12:0c14	20 77 1d
 fwd_1c15:
 		lda #$00		; 1c15:0c17	a9 00
 		sta index		; 1c17:0c19	8d 0f d0
-		lda $03f4		; 1c1a:0c1c	ad f4 03
+		lda case1		; 1c1a:0c1c	ad f4 03
 		sta case		; 1c1d:0c1f	8d 01 d0
 		rts 			; 1c20:0c22	60
 
@@ -1940,7 +1941,7 @@ szNoRAM:
 		byte upper+5	; E
 		ascii "ND "
 		byte upper+15	; O
-		ascii "F " 
+		ascii "F "
 		byte upper+13	; M
 		ascii "EMORY **"
 															; 1c21:0c23	tbl-1c33
@@ -2024,7 +2025,7 @@ fwd_1cba:
 		iny			; 1cba:0cbc	c8
 		cpy index		; 1cbb:0cbd	cc 0f d0
 		bcc fwd_1cc9		; 1cbe:0cc0	90 09
-		ldx $03f8		; 1cc0:0cc2	ae f8 03
+		ldx mline		; 1cc0:0cc2	ae f8 03
 		dex 			; 1cc3:0cc5	ca
 		stx linnum+1		; 1cc4:0cc6	86 15
 		jmp goto1cd0		; 1cc6:0cc8	4c d0 1c
@@ -2037,7 +2038,7 @@ goto1cd0:
 		ldx linnum+1		; 1cd0:0cd2	a6 15
 		cpx linnum		; 1cd2:0cd4	e4 14
 		bcc fwd_1ceb		; 1cd4:0cd6	90 15
-		ldx $03f8		; 1cd6:0cd8	ae f8 03
+		ldx mline		; 1cd6:0cd8	ae f8 03
 		dex 			; 1cd9:0cdb	ca
 		cpx linnum		; 1cda:0cdc	e4 14
 		bcc fwd_1ceb		; 1cdc:0cde	90 0d
@@ -2097,7 +2098,7 @@ fwd_1d2b:
 		; called during find, replace, end of memory
 sub_getline:
 		jsr sub_outSpace	; 1d2e:0d30	20 86 1d
-		lda $03ff		; 1d31:0d33	ad ff 03
+		lda modes		; 1d31:0d33	ad ff 03
 		and #$08		; 1d34:0d36	29 08
 		ora #{%:01000101}	; 1d36:0d38	09 45
 		tax 			; 1d38:0d3a	aa
@@ -2143,7 +2144,7 @@ sub_outDel:
 sub_outCR:
 		lda #$0d		; 1d77:0d79	a9 0d
 		jmp sub_outChar		; 1d79:0d7b	4c 97 1d
-	
+
 ; orphaned code?
 ; output a bell (ctrl-g) character
 		lda #$07		; 1d7c:0d7e	a9 07
@@ -2197,7 +2198,7 @@ mcioff:
 		sta mci			; 1db8:0dba	8d ef 07
 
 	; output specific string variable, maybe?
-	
+
 	; call with:
 	; .a: length
 	; .x: <string_addr
@@ -2378,7 +2379,7 @@ szAborted:
 		ascii "BORTED.)"
 		byte ImageReturn
 		byte $00
-				
+
 		align $100,$ea		; fill with $ea to $1eff
 
 	; must be a patch:

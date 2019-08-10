@@ -1,12 +1,13 @@
 orig $c000
 {asm}
-{include:\Documents and Settings\User\My Documents\C64\Image BBS\v2\asm\equates-2_0.lbl}
+{uses:..\equates-2_0.lbl}
 
-; assemble with casm 4.0
+; assemble with casm 4.0:
+; wine casm.exe visual.lbl -prg:"++ visual.prg" -ovr
 
+; legacy "fast assembler" code:
 ; rem open 15,8,15,"s:ml.visual":close 15
 ; for pass=1 to 3:org $c000,-(pass=3),8,"ml.visual":print"Pass:"pass
-
 
 ;
 ;*********************
@@ -20,21 +21,21 @@ orig $c000
 numx = $14
 numy = $15
 
-; modes = $03ff
-; lines = $03fe
-; cline = $03fb
-; flags = $03fa
-; comm = $03f9
-; mline = $03f8
-; temp3 = $03f7
-; case1 = $03f4
-; flag1 = $03f3
+; modes = $03ff	; 1023
+; lines = $03fe	; 1022
+; cline = $03fb	; 1019	; current line being entered/edited?
+; flags = $03fa	; 1018
+; comm	= $03f9	; 1017
+; mline = $03f8	; 1016
+; temp3 = $03f7	; 1015
+; case1 = $03f4	; 1012
+; flag1 = $03f3	; 1011
 ;
-; colors = $e8da
+; colors = $e8da ; flashing chat page colors
 ;
-jmp visual
-	; jsr visual31
-	; jmp visual2
+	jsr visual
+;	jsr visual31	; does not exist
+	jmp visual2	; print lines entered?
 ;
 visual:
 	lda #1
@@ -362,7 +363,7 @@ crsrx:
 crsry:
 	byte 0
 crsrc:
-	byte 0
+	byte 0	; cursor column?
 crsrr:
-	byte 0
+	byte 0	; cursor row?
 {endasm}

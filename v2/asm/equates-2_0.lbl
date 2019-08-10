@@ -211,7 +211,7 @@
 	carrst	= $07f1 ; 2033: modem carrier status
 	tsp1	= $07f2	; transmit speed lo-byte
 	tsp2	= $07f3	; transmit speed hi-byte
-	chks	= $07f4
+	chks	= $07f4 ; 2036
 	readmode= $07f6
 	filenum	= $07f7
 	tmp5	= $07f8
