@@ -1,0 +1,98 @@
+	on mm goto{:4100},{:4200},{:4300},{:4400}:return
+{:4002}
+	a=abs(int(val(mid$(an$,2,4)))):return
+{:4004}
+	mm=5:goto 3000
+{:4100}
+	if s%(0,0)=60 then:&"this {pound}$h is full{f6}":return
+	br=s%(0,0)+1:s%(1,br)=1023:s%(2,br)=0:s%(3,br)=dv%(1):s%(4,br)=dr%(1)
+	s%(5,br)=0:s%(6,br)=0:&,60,4,0,s%(7,br),d1$:&,60,4,0,s%(10,br),d1$
+	&,60,0,16,s%(27,br),"":&,60,0,28,s%(13,br),""
+	s%(36,br)=0:s%(37,br)=0:s%(38,br)=0:s%(39,br)=0
+	gosub{:4500}:&,60,1,16,s%(27,br),a$:&,60,1,28,s%(13,br),b$:a=s%(1,br)
+	if a<1 or a$=""or b$=""then return
+	s%(0,0)=s%(0,0)+1:tz=1:&"added":return
+{:4200}
+	gosub{:4002}:if a>0 and a<=rn then br=e%(a):tz=1:goto{:4500}
+	return
+{:4300}
+	a$="":gosub{:4002}:if a<1 or a>rn then return
+	br=e%(a):&"{f6}{purple} {$b0}{pound}$y{$ae}{f6}":mm=4:gosub 3000:&"{purple} {$ad}{pound}$y{$bd}{f6:2}{pound}q0kill this? ":gosub 94
+	if a=0 then return
+	&"{f6}scratch {pound}$j? ":gosub 94:if a=0 then{:4314}
+	a=s%(2,br):gosub{:4004}:&,60,1,16,s%(13,br),c$:a$=b$+c$
+	d1%=s%(3,br):d2%=s%(4,br):gosub 3:print# 15,"s"dr$a$
+{:4314}
+	if br<>s%(0,0)then for a=br to s%(0,0)-1:&,60,10,80,s%(0,a+1),s%(0,a):next
+	s%(0,0)=s%(0,0)-1:tz=1:return
+{:4400}
+	&"{clear}{f6}{pound}q0{pound}$i options:{f6:2}"
+	&"1. edit entry text{f6}":&,60,1,30,s%(25,0),a$
+	&"2. prompt: {f5}{pound}$a{f5}{f6}":&,60,1,20,s%(15,0),a$
+	&"3. name:   {f5}{pound}$a{f5}{f6}":a%=s%(2,0)
+	&"4. {pound}$i:    {pound}%a{f6}":a%=s%(3,0)
+	&"5. device: {pound}%a{f6}":a%=s%(4,0)
+	&"6. drive:  {pound}%a{f6}"
+	&"{f6}> {pound}g1":a=val(an$)
+	if a then:&"{pound}v7{f6:2}":on a gosub{:4420},{:4432},{:4456},{:4438},{:4444},{:4450}:goto{:4400}
+	return
+{:4420}
+	dr=1:o$="s."+pf$(pf):a$=o$+",s,r":gosub 4:kk=1:if e%then:&:goto{:4426}
+	&"{f6}loading text...{f6:2}"
+{:4424}
+	&,2,2:if a$<>"{up arrow}"and kk<101 then tt$(kk)=a$:kk=kk+1:&".":goto{:4424}
+{:4426}
+	close 2:im=2:gosub 440:if kk=0 then return
+	&"{f6:2}saving...":dr=1:gosub 3:print# 15,"s"dr$o$:a$=o$+",s,w":gosub 4
+	&,14,2,kk-1:print# 2,"{up arrow}":close 2:&,11:return
+{:4432}
+	p$="prompt":&,60,1,30,s%(25,0),w$:poke 53252,30:pl=0
+	&,1,33:if an$=""then return
+	tz=1:&,60,0,30,s%(25,0),an$:return
+{:4438}
+	p$=i$:w$=mid$(str$(s%(2,0)),2):poke 53252,4:pl=1
+	&,1,32:if an$=""then return
+	tz=1:s%(2,0)=val(an$):return
+{:4444}
+	p$="device":w$=mid$(str$(s%(3,0)),2):poke 53252,4:pl=1
+	&,1,32:if an$=""then return
+	tz=1:s%(3,0)=val(an$):return
+{:4450}
+	p$="drive":w$=mid$(str$(s%(4,0)),2):poke 53252,4:pl=1
+	&,1,32:if an$=""then return
+	tz=1:s%(4,0)=val(an$):return
+{:4456}
+	p$="name":&,60,1,20,s%(15,0),w$:poke 53252,20:pl=0
+	&,1,32:if an$=""then return
+	tz=1:&,60,0,20,s%(15,0),an$:return
+{:4500}
+	&"{clear}{f6}":&,60,1,28,s%(13,br),a$
+	&"{blue}({white}1{blue}) {cyan}title{blue}:  {white}{pound}$a{f6}":a=s%(2,br):gosub{:4004}
+	&"{blue}({white}2{blue}) {cyan}type{blue}:   {white}{pound}$a{f6}":a%=s%(1,br)
+	&"{blue}({white}3{blue}) {cyan}access{blue}: {white}{pound}%a{f6}":a%=s%(5,br)
+	&"{blue}({white}4{blue}) {cyan}credit{blue}: {white}{pound}%a{f6}":&,60,1,16,s%(27,br),a$
+	&"{blue}({white}5{blue}) {cyan}{pound}$j{blue}:   {cyan}{pound}$b{white}{pound}$a{f6}":n=5:on-(dr=4)goto{:4516}:n=7:a%=s%(3,br)
+	&"{blue}({white}6{blue}) {cyan}device{blue}: {white}{pound}%a{f6}":a%=s%(4,br)
+	&"{blue}({white}7{blue}) {cyan}drive{blue}:  {white}{pound}%a{f6}"
+{:4516}
+	&"{f6}> {pound}g1":a=val(an$):a=val(an$):if a<1 or a>n then return
+	&"{pound}v7{f6:2}":on a gosub{:4520},{:4526},{:4558},{:4552},{:4534},{:4540},{:4546}:goto{:4500}
+{:4520}
+	p$="title":&,60,1,28,s%(13,br),w$:poke 53252,28:pl=0
+	&,1,33:if an$=""then return
+	&,60,0,28,s%(13,br),an$:return
+{:4526}
+	&"type:{f6:2}":for a=1 to 9:gosub{:4004}:a$=mid$(a$,2):lp=1:&"{pound}!a-{pound}$a ":next
+	&"{f6:2}{pound}q0> {pound}g1"
+	a=val(an$):if a<1 or a>7 then return
+	gosub{:4004}:&"{pound}$a{f6}":s%(2,br)=a:return
+{:4534}
+	a=s%(2,br):gosub{:4004}:p$=j$:&,60,1,16,s%(27,br),w$:pl=0
+	poke 53252,16-len(b$):&,1,32:if an$=""then return
+	&,60,0,16,s%(27,br),an$:return
+{:4540}
+	p$="device":w$=mid$(str$(s%(3,br)),2):poke 53252,4
+	&,1,32:if an$=""then return
+	s%(3,br)=val(an$):return
+{:4546}
+	p$="drive":w$=mid$(str$(s%(4,br)),2):poke 53252,4
