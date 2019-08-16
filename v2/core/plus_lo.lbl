@@ -466,7 +466,7 @@
 ' 3448
 	b$="Ecetera":d$="     User":gosub {:3452}
 ' 3450: turn on clock, local mode
-	poke 2042,.:&"{f6:2}":goto {:3038}
+	poke 2042,1:&"{f6:2}":goto {:3038}
 {:3452}
 	' display blocks free:
 	' 1st column, b$: disk, b%: blocks free
@@ -547,7 +547,7 @@
 ' configurable color 'c': change $8c to 1 if desired
 	&,18,1:c=$8c:an$=d3$:&,15,1:&,69,5,17,an$,c
 ' last off date, last log reset date, fix Reservation PassWord display (l2$):
-	&,69,5,18,d2$,$8c:&,69,5,19,d6$,c:an$="None":if l2 then an$=l2$
+	&,69,5,18,d2$,c:&,69,5,19,d6$,c:an$="None":if l2 then an$=l2$
 	s=19:gosub {:sub.pad_string_right}:&,69,5,20,a$,c
 ' &,52,41,3: Network Reserve
 	&,52,41,3:&,69,31,17," Res O"+mid$("ffn ",a%*2+1,2),c:kk=a%
@@ -569,4 +569,4 @@
 ' s=# of spaces to pad out to the right
 ' enter: an$, exit: a$
 	a$=left$(an$+"{space:21}",s):return
-	rem +.lo - 2018-10-27 pinacolada
+	rem +.lo - 2019-08-15 pinacolada
