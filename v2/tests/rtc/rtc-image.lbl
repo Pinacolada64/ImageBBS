@@ -1,0 +1,208 @@
+' This is for VICE 3.0+, which has an RTC option built in.
+
+' Although the address decoder might reserve a whole page of I/O space for RTC,
+' only addresses BASE+0 and BASE+1 matter. To read something from RTC you
+' first need to write RTC register address to BASE+0 and then read the data
+' from BASE+1. To write something to RTC you first write register number to
+' BASE+0 and then data to BASE+1. This chip has address space of 128 locations
+' and you can put these values into BASE+0.
+
+' NEW: check whether the chip is there.
+' I'm pretty sure if you peek the base address and it returns 0, that would indicate it's not there.
+' program crashes if hr=0
+{number:3000}
+{alpha:alt}
+{step:2}
+{crunch:off}
+{def:debug}
+	rem "+.image rtc"
+	rem this is example of using ds12c887 rtc from basic
+	rem using ytm's demo program
+	rem 2014-09-19 18:46: enhanced by pinacolada for image bbs 1.2
+	rem 2019-05-28 12:34: and again for image bbs 1.3/2.0
+	ba=$d500:rem base address of chip (54528)
+'	ba=$d600:rem base address of chip (54784)
+{ifdef:debug}
+	c=.
+{endif}
+' TODO: BASE+11 set DM (Data Mode) register to 0=BCD (register B, bit 2)
+'	m=ba+11:b=2:gosub {:sub.bit_clear}:rem set data mode to bcd
+
+' The Set bit (bit 7) in Register B should be cleared after the Data Mode bit
+' has been written to allow the real time clock to update the time and
+' calendar bytes.
+'	m=ba+11:b=7:gosub {:sub.bit_clear}
+
+' TODO: BASE+11 set 24/12 (Register B, bit 1) to 1=24 hour clock
+' spec says 12/24 bit can't be changed without rewriting hour
+'	m=ba+11:b=1:gosub {:sub.bit_set}:rem set 24-hour time
+
+	rem "set digits '{pound}#2', leading spaces '{pound}# '
+	& "Get time/date from DS12C887 RTC:{f6}"
+' choose register to read, read BCD values, convert to decimal
+	poke ba,4 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:hr=d:rem hour
+	if hr=. then:&"RTC not present at $d500.":goto 1811
+	poke ba,2 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:mi=d:rem minute
+	poke ba,0 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:sc=d:rem second
+	poke ba,6 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:dw=d:rem day of week (1=sun...7=sat)
+	poke ba,7 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:dt=d:rem day of month
+	poke ba,8 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:mo=d:rem month (1...12)
+	poke ba,9 :b=peek(ba+1):gosub {:sub.bcd_to_dec}:yr=d:rem year
+	poke ba,50:b=peek(ba+1):gosub {:sub.bcd_to_dec}:ce=d:rem century
+	rem show what we have got
+{ifdef:debug}
+' ----+----+----+----+----+----+----+----+
+' 1) hr: xx     5) mo: xx
+	a=hr:b=mo:&"{pound}#21) hr: {pound}!a{pound}{back arrow}205) mo: {pound}!b{f6}"
+	a=mi:b=dt:&"2) mi: {pound}!a{pound}{back arrow}206) dt: {pound}!b{f6}"
+	a=sc:b=ce:&"3) sc: {pound}!a{pound}{back arrow}207) ce: {pound}!b{f6}"
+	a=dw:b=yr:&"4) dw: {pound}!a{pound}{back arrow}208) yr: {pound}!b{f6}"
+{endif}
+
+' e.g., "Tue May 28, 2019  2:24:44 PM"
+	&mid$("SunMonTueWedThuFriSat",dw*3-2,3)+" "
+	&mid$("JanFebMarAprMayJunJulAugSepOctNovDec",mo*3-2,3)+" "
+	d%=dt:c%=ce:y%=yr:m%=mi:s%=sc
+	p=.:h%=hr:if h%>12 then h%=h%-12:p=-1:rem convert 24-hour to 12-hour time, set "pm" flag
+	&"{pound}#2{pound}%d, {pound}%c{pound}%y {pound}%h:{pound}%m:{pound}%s "
+	&mid$("AP",2+(hr<12),1)+"M{f6}":rem am or pm
+
+	rem set image bbs clock and date
+' adapted from +/IM.time - this works
+	d=dw:gosub {:sub.dec_to_bcd}:poke 52935,b:rem $cec7: day of the week
+	d=mo:gosub {:sub.dec_to_bcd}:poke 52936,b:rem $cec8: month
+	d=dt:gosub {:sub.dec_to_bcd}:poke 52937,b:rem $cec9: date
+	d=yr:gosub {:sub.dec_to_bcd}:poke 52938,b:rem $ceca: year
+
+{:981}
+' 56331	$DC0B	TODHRS
+' 56330 $DC0A	TODMIN
+' 56329	$DC09	TODSEC
+' 56328 $DC08	TODTEN 1/10ths of a second
+
+' build d1$:
+' day
+' 	t$=mid$(str$(dw),2,1)
+' 	a=yr:gosub {:sub.add_to_date_string}
+' 	a=mo:gosub {:sub.add_to_date_string}
+' 	a=dt:gosub {:sub.add_to_date_string}	
+' 	a=hr:gosub {:sub.add_hour}
+' 	a=mn:gosub {:sub.add_to_date_string}
+' ' set console clock
+' 	d1$=t$
+
+' 1 b=18:a=int(b/16)*10+(b-16*int(b/16)):printb"bcd is"a"decimal
+' 2 for n=1 to 24:h=n:gosub 20:next:end
+' 20 pm=h>12:ifpmthenh=h-12
+' 22 ifh=12thenpm=notpm
+' 30 printn;str$(h)":00"mid$("ap",1-pm,1)"m"
+' 40 return
+
+' set clock
+' hour - no need to convert to bcd
+' add decimal 80 for PM (not $80, setting bit 7 like TOD clock does)
+	if hr>12 then hr=hr+40 ' - does not work
+'	if hr>12 then hr=hr and 128
+' if a>0, subtract 1 minute (to roll over to a:00)
+' if a=0, subtract 0
+	mi=mi-sgn(mi) ':gosub {:sub.to_bcd}
+	&,62,hr,mi:rem set bbs time: hr=hour, mi=minute
+' h=hr, a=mn, why set seconds to 89?, 1/10ths=0
+'	poke 56331,h:poke 56330,a:poke 56329,89:poke 56328,.
+
+'	rem set cia1 clock:
+'	poke 56331,h:rem hours
+'	poke 56330,mi:rem minutes
+'	poke 56329,s:rem seconds
+'	poke 56328,0:rem 1/10 seconds ($dc08) must always be written to start clock
+
+	poke 1010,1:rem bbs "time set" flag
+
+	&"{f6}Set BBS clock:{f6}{pound}v0{f6}":rem display current time/date
+	rem that's all folks
+
+{:62_test}
+	&"&,62 test ({f5}q{f5} quits):{f6}"
+	&"+80 for PM{f6}"
+	&"Input h: {pound}i1":if an$="Q" then {:15_5_test}
+	h=val(an$)
+	&"Input m: {pound}i1":m=val(an$)
+	&,62,h,m:goto {:62_test}
+' 18 in BCD:
+' 3210 3210
+'   10   11
+'	goto 1811
+
+{:15_5_test}
+	&"&,15,5 test: (date conversion?){f6}"
+	d$=d1$:::::::::::an$=d$:&,15:&"&,15: {pound}v7{f6}":an$=d$:&,15,5:&"&,15,5: {pound}v7{f6}"
+	d$="21906259999":an$=d$:&,15:&"&,15: {pound}v7{f6}":an$=d$:&,15,5:&"&,15,5: {pound}v7{f6}"
+	goto 1811
+
+{ifdef:use_asm}
+' character-io.lbl
+newdate:
+	ldx #0
+	jsr usevar ;an$
+	lda var
+	cmp #11
+	bne newd0
+	ldy #7
+	lda (var+1),y
+	and #'1'
+	cmp #'1'
+	bne newd2
+	iny
+	lda (var+1),y
+	cmp #'2'
+	bne newd2
+	lda #'0'
+	sta (var+1),y
+	dey
+	lda (var+1),y
+	and #'8'
+	sta (var+1),y
+newd2:
+	dec var
+	inc var+1
+	bne newd1
+	inc var+2
+newd1:
+	ldx #0
+	jsr putvar ;an$
+newd0:
+	rts
+{endif}
+
+{nice:10}
+{:sub.bcd_to_dec}
+	rem convert b (bcd) to d (dec)
+	d=int(b/16)*10+(b-16*int(b/16))
+{ifdef:debug}
+	c=c+1:&"{pound}!c) in: bcd={pound}!b, out: dec={pound}!d{f6}"
+{endif}
+	return
+
+{nice:10}
+{:sub.dec_to_bcd}
+	rem convert d (dec) to b (bcd)
+	b=int(d/10)*16+(d-10*int(d/10))
+{ifdef:debug}
+	c=c+1:&"{pound}!c) in: dec={pound}!d, out: bcd={pound}!b{f6}"
+{endif}
+	return
+
+' {:sub.add_hour}
+'	t$=t$+right$("0"+mid$(str$(-80*(hr>12)+hr),2,2),2):return
+
+' {nice:10}
+' {:sub.bit_set}
+' ' m=memory location, b=bit
+' 	poke m,peek(m)or 2^b:return
+' 
+' {nice:10}
+' {:sub.bit_clear}
+' ' m=memory location, b=bit
+' 	poke m,peek(m)and 255-2^b:return
+
+	rem "+.image rtc"

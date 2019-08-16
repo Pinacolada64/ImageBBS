@@ -12,7 +12,7 @@
 {:text_menu}
 ' ----+----+----+----+----+----+----+----+
 ' System Time: Tue Feb 07, 2019 12:12 PM
-	&"{f6}System Time: {$04}"+d1$+"{f6:2}"
+	&"{f6}System Time: {pound}v0{f6:2}"
 	&"[R]emote Time Editor{f6}"
 	&"[C]lock Set Device{f6}"
 	&"[P]rime Time Options{f6:2}"
@@ -42,18 +42,23 @@
 	c$="A":e%=val(mid$(d$,8,2)):if e%>79 then e%=e%-80:c$="P"
 {:3288}
 	p$=" Hour  ":an$=mid$(str$(e%),2):gosub {:3316}:w$=an$:a=2:gosub {:3310}:if a<1 or a>12 then{:3288}
+' b=hour
 	gosub {:3308}:b=a:gosub {:3316}:hr$=an$
 {:3292}
 	p$=" Min.  ":w$=right$(d$,2):a=2:gosub {:3310}:if a<.or a>59 then{:3292}
+' c=minute
 	a=a-sgn(a):gosub {:3308}:c=a:mn$=an$:w$=c$
 {:3296}
 	p$=" A/P   ":a=1:gosub {:3310}:on-(an$<>"A"and an$<>"P")goto {:3296}:if an$<>v$then tz=1
 	if(an$="P"and b<>18)or(an$="A"and b=18)then b=b or 128:gosub {:3318}
 	on tz+1 goto {:3328}:gosub {:3320}:&"{cyan}{pound}{back arrow}10Setting Date/Time to{f6}{pound}{back arrow}07{$04}"+a$+"{f6:2} OK?   {lt. green}: "
-	gosub 1907:on a+1 goto {:3326}:gosub {:3322}:poke 56331,b:poke 56330,c:poke 56329,89
-	poke 56328,.:poke 1010,1
+	gosub 1907:if a=. then return
+	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
+	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
+	poke 56331,b:poke 56330,c:poke 56329,89:poke 56328,.:poke 1010,1
 	gosub 1063:x=19:gosub 1001:print# 2,d1$:close 2:return
 {:3308}
+' convert a to bcd
 	a=16*int(a/10)+a-int(a/10)*10:return
 {:3310}
 	v$=w$:p$="{cyan}"+p$+"{gray3}":poke 53252,a:pl=1:&,1,32:&"{f6}":if an$<>"" then 
@@ -66,11 +71,6 @@
 	hr$=right$("0"+mid$(str$(-80*(an$="P")+val(hr$)),2,2),2):return
 {:3320}
 	a$=dw$+yr$+mo$+dt$+hr$+mn$:return
-{:3322}
-	a=val(dw$):gosub {:3308}:poke 52935,a:a=val(mo$):gosub {:3308}:poke 52936,a
-	a=val(dt$):gosub {:3308}:poke 52937,a:a=val(yr$):gosub {:3308}:poke 52938,a
-{:3326}
-	return
 {:3328}
 	&"{f6}No Changes Made - Aborted!{f6:2}":return
 
@@ -79,27 +79,50 @@
 ' ----+----+----+----+----+----+----+----+
 ' BBS clock set method:
 
-' 1) CMD boot device
-' 2) LtK clock (may be deprecated later)
-' 3) System timestamp (updated at idle)
-' 4) External CMD device
+' C) CMD boot device
+' L) LtK clock (may be deprecated later)
+' S) System timestamp (updated at idle)
+' E) External CMD device (or Brain uIEC)
+' D) DS12C887 RTC at $D500 (VICE 3.0+)
 
-' Option 3 is the default.
+' Option S is the default.
 
-	& "1) CMD boot device{f6}"
-	& "2) LtK clock (may be deprecated later){f6}"
-	& "3) System timestamp (updated at idle){f6}"
-	& "4) External CMD device{f6}"
-        & "{f6}"
-	& "Option 3 is the default.{f6:2}"
+	&"C) CMD boot device{f6}"
+	&"L) LtK clock (may be deprecated later){f6}"
+	&"S) System timestamp (updated at idle){f6}"
+	&"E) External CMD device (or Brain uIEC){f6}"
+	&"D) DS12C887 RTC at $D500 (VICE 3.0+){f6:2}"
+	&"Option S is the default.{f6:2}"
 {:clock_set_option}
-	& "Option: {pound}i1":if tr%<1 then {:quit}
-	on -(an$="R")-2*(an$="C")-3*(an$="P") goto {:remote_time_editor}, {:clock_set_device}, {:prime_time_options}
-	on -(an$<>"") goto {:clock_set_option}:return
-	
+	&"Option: {pound}i1":if tr%<1 or an$="" then {:quit}
+	an=-(an$="C")-2*(an$="L")-3*(an$="S")-4*(an$="E")-5*(an$="D")
+	on an goto {:clock.cmd_boot}, {:clock.ltk}, {:clock.timestamp}, {:clock.cmd_other}, {:clock.rtc}
+	return
+
+{:clock.cmd_boot}
+' TODO: check for t-ra response
+{:clock.ltk}
+	a$="0":goto {:write_clock_method}
+{:clock.timestamp}
+	a$="0":goto {:write_clock_method}
+{:clock.cmd_other}
+' device other than cmd boot device
+' TODO: check for Jim Brain uIEC CMD-compatible clock - which device #?
+' TODO: enter 1-6=Image drive, look up device #?
+	p$="Device (7-31)":&,1:a=val(an$):if a<7 and a>31 then return
+' TODO: check for t-ra response
+	a$="0":goto {:write_clock_method}
+{:clock.rtc}
+	a$="0":goto {:write_clock_method}
+
+{:write_clock_method}
+' y%=clock set method, y1%=external cmd device (if any)
+	x=33:gosub {:1001}:print#2,an:x=34:gosub {:1001}:print#2,an$
+	return
+
 ' y%=clock set method, y1%=external cmd device (if any)
 	x=33:gosub {:1001}:&,2,2:y%=val(a$):x=34:gosub {:1001}:&,2,2:y1%=val(a$)
-' y%: 1=cmd clock, 2=ltk clock, 3=last system timestamp, 4=external cmd device
+' y%: 1=cmd clock, 2=ltk clock, 3=last system timestamp, 4=external cmd device, 5=DS12C887 RTC
 
 {nice:100}
 {:prime_time_options}
@@ -117,12 +140,12 @@
 ' not sure about the "pt%=1-pt%" (that would toggle it)
 {:pt_menu}
 '	&,52,7,3:if a% then pt%=1-pt%:if p1%<1 then p1%=30
-	&"{pound}#2":&,52,7,3:pt%=a%:if a% then if p1%<1 then p1%=30
-	       &"P)rime Time:      "+mid$("YesNo",pt%*3+1,3))
+	&,52,7,3:pt%=a%:if a% then if p1%<1 then p1%=30
+	&"P)rime Time:{pound}{left arrow}17"+mid$("YesNo",pt%*3+1,3))
 	b$="A":if p2%>80 then a%=p2%-80:b$="P"
-	a%=p2%:&"S)tart time:      {pound}%a:00 {pound}$bM{f6}"
+	a%=p2%:&"{pound}#2S)tart time:{pound}{left arrow}17{pound}%a:00 {pound}$bM{f6}"
 	b$="A":if p3%>80 then a%=p3%-80:b$="P"
-	a%=p3%:&"E)nd time:        {pound}%a:00 {pound}$bM{f6}"
+	a%=p3%:&"E)nd time:{pound}{left arrow}17{pound}%a:00 {pound}$bM{f6}"
 	a%=p1%:&"M)inutes allowed: {pound}%a{f6}"
 ' +/lo.on shows prime time status
 {:pt_option}
@@ -134,18 +157,18 @@
 	&,52,7,2:goto {:pt_menu}
 
 {:pt_start}
-	&"1-12: {pound}i1":an=val(an$):if an<1 and an>12 then {:pt_start}
+	p$="1-12":w$=str$(p2%):&,1,32:an=val(an$):if an<1 and an>12 then {:pt_start}
 	gosub {:sub.pt_ampm}:p2%=an:return
 	
 {:pt_end}
-	&"1-12: {pound}i1":an=val(an$):if an<1 and an>12 then {:pt_start}
+	p$="1-12":w$=str$(p3%):&,1,32:an=val(an$):if an<1 and an>12 then {:pt_start}
 	gosub {:sub.pt_ampm}:p3%=an:return
 
 {:sub.pt_ampm}
 	&"[A]M or [P]M: {pound}i1":an=-80*(an$="P")+an:return
 
 {:pt_minutes}
-	&"1-90, 0=30":&"Minutes: {pound}i1":an=val(an$):if an=. then an=30
+	&"1-90, 0=30{f6}":p$="Minutes":an=val(an$):if an=. then an=30
 	if an<1 then if an>90 then {:pt_minutes}
 	p1%=an:goto {:pt_menu}
 
@@ -153,6 +176,7 @@
 ' do some checks for prime time:
 ' 1) if not prime time hours, disable prime time
 	b$="Prime Time"
+' FIXME
 	if [...] then:&,52,7,1:pt=.:&"* Not {pound}$b, disabling {pound}$b{f6}   settings{f6}"
 ' 2) check whether prime time hour is upon us - if so, ask to enable prime time
 	if val(mid$(d1$,8,2)) >= p2% then:&"Enable {pound}$b?: ":gosub 1907:if a then:&,52,7,.

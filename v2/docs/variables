@@ -263,7 +263,7 @@ fl$	Both	User Flags
 	12:	SubOp maintenance access
 	13:	files maintenance access
 	14:	unlimited editor lines
-		TODO: might also be old "MCI access"
+		(+.WF, im.editor)
 	15:	U/Ds during prime time
 	16: 820 max idle time (minutes)
 	17:	calls per day (0=unlimited)

@@ -4,7 +4,8 @@
 {crunch:on}
 {def:show_build_date}
 {quoter:32=space}
-' TODO: add weedinfo routines from +.ED
+' TODO: add weedinfo routines from +.ED 1.3
+' TODO: Jay Campey added new user signup birthday date, wants editor, check stock +.new
 
 ' wine c64list3_50.exe plus_ED-pina-mod.lbl -d64:test.d64::+.ed -ovr -verbose
 
@@ -54,23 +55,24 @@
 ' ----+----+----+----+----+----+----+----+
 ' Sorry, this ED only works with Image BBS
 ' v1.3 and above.
-	&,5:if lp<1.3 then:&"Sorry, this ED only works with Image BBS v1.3 and above.":return
+	&,5:if lp<1.3 then:&"Sorry, this ED only works with Image BBS v1.3 and above.":goto 1811
 	&,27:gosub {:100}:&,28:goto 1811
 
-{nice:5}
+{nice:4}
 {:sub.change_prompt}
-	&" # to change (1-{pound}!i): {pound}i1"
+	&"{f6} # to change (1-{pound}!i): {pound}i1{f6}"
 
-{nice:5}
+{nice:4}
 {:sub.normalize_a}
 	a=abs(int(val(an$))):return
 
-{nice:5}
+{nice:4}
 {:sub.verbose_date}
 ' have to do left$() now because of added carrier drop flag
-	an$=left$(tt$(i),11):&,15:c$=an$+"M":return ' c$="{$04}"+tt$(i) <-- does not work!
+	an$=left$(tt$(i),11):&,15:c$=an$+"M":return
+'	c$="{$04}"+tt$(i) <-- does not work!
 
-{nice:5}
+{nice:4}
 {:sub.time_date_edit}
 ' copy time/date (an$) into c$ (&,15 destroys an$):
 ' copy menu option (a) into op (a is used in this subroutine)
@@ -138,7 +140,7 @@
 {:938}
 	&"{pound}{back arrow}0911:23 PM--1123P{f6:2}"
 {:940}
-	&"Last {pound}$b time: {pound}i1":a$=right$(an$,1):if an$="" or tr%<1 then return
+	&"Last {pound}$b time: {pound}i1":a$=right$(an$,1):if an$="" or tr%<1 then gosub {:sub.no_change}:return
 {:942}
 ' A {$c1} or P {$d0}
 	an$=left$(an$,len(an$)-1):if (a$<>"A" and a$<>"P") or val(right$(an$,2))>59 then {:936}
@@ -150,11 +152,12 @@
 	c$=left$(c$,7)+right$("0"+mid$(str$(val(an$)+t),2),4)
 
 {:934}
-	tt$(op)=c$:&"{f6}Last {pound}$b date:{f6}{$04}"+c$+"M{f6:2}":return
+	tt$(op)=c$:&"{f6}Last {pound}$b date:{f6}{$04}"+c$+"{f6:2}":return
 	rem time/date editor copr.1990 new image 01/02/90
 
-{nice:10}
+{nice:4}
 {:sub.get_access_group_name}
+' TODO: get all names (use which array?)
 	& "Getting access group name..."
 ' get access group name from "e.access" for displaying in page 0, or after editing to re-display
 	a$="e.access":gosub 1011:if e% then:&:&"{f6}":q$="???"
@@ -162,21 +165,28 @@
 ' reopen u.config:
 	&"{f6}":close 2:goto 1065
 
-{nice:10}
+{nice:4}
 {:sub.no_change}
 	&"(No change.){f6}":return
 
-{nice:10}
+{nice:4}
 {:sub.todo}
 	&"TODO: finish the thing!{f6}":return
+
+{nice:4}
+{:sub.write_stats}
+' write stats:
+	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:x=un:gosub 1001
+	print# 2,a$;:close 2:return
 
 {nice:100}
 {:100}	
 ' update cm$ for +.er "Pfile" area, and update "Area" window if screen mask enabled
 ' ----+----+----+----+-
-' Image Account Editor
-	cm$="{green}Image Account Editor":gosub 1360
-' FIXME: currently line 2110 takes care of this, I think
+' Account Editor
+	cm$="Account Editor":gosub 1360
+' FIXME: currently line 2110 (called from "R"un a Plus File) takes care of DIM
+' but if that gets changed, this will need to be changed back to compensate
 '	restore:read x:dim ed$(x):for i=1 to x:read ed$(i):next
 	restore:read x:for i=1 to x:read ed$(i):next
 
@@ -189,7 +199,7 @@
 	&"{white}{clear}{f6}{pound}{back arrow}05{white}{rvrs on} Image BBS User Account Editor {f6}"
 
 {ifdef:show_build_date}
-	a$="51905168632":&"{f6}Built {$04}"+a$+"{f6}"
+	&"{lt. red}Built {$04}21906108530{f6}"
 {endif}
 
 	a%=ur:&"{cyan}{f6} Users: {pound}%a{pound}{back arrow}25Next open:"+str$(l1)
@@ -197,124 +207,192 @@
 	if rr then:&"{f6}{lt. red}User count modified, reboot required"
 
 	&"{f6:2}{cyan}Enter handle or ID# of user to edit.{f6:2}"
-	p$="User Edit":gosub 1006:if an$="" then return
+	an$="":p$="User Edit":gosub 1006:if an$="" then return
+' TODO: create new user with "NEW"
+
 ' look up user:
 {:got_param}
 	gosub {:sub.normalize_a}:x=a:if x<=ur and x>. then {:110}
 	gosub 1046:x=i:if i=. then:&"{f6}{f5}{pound}v7{f5} not found.{pound}w2":goto {:102}
 {:110}
-	gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
+' un: User id Number we're editing
+	un=x:gosub 1065:gosub 1001:for i=1 to 24:&,2,2:if asc(a$+nl$)=32 then a$=mid$(a$,2)
 ' handle copied into tt$ to check if changed
-	tt$(i)=a$:next:tt$=tt$(1):close 2
-	gosub {:sub.get_access_group_name}
+	tt$(i)=a$:next:tt$=tt$(1):gosub {:sub.get_access_group_name}
+' tz=1: no changes made yet, p=0: page 0
 	tz=1:p=.
 
 {:header}
-	a%=x:&"{cyan}{clear}{f6} {pound}vn#{pound}%a{pound}{back arrow}15(Type {f5}N{f5} for next page){f6:2}"
-	if l1=x then:&" (This is the lowest deleted account.){f6:2}"
+	a%=un:&"{cyan}{clear}{f6} {pound}vn#{pound}%a{pound}{back arrow}15(Type {f5}N{f5} for next page){f6:2}"
+	if l1=un then:&" (This is the lowest deleted account.){f6:2}"
 	a$="{pound}#2{pound}# {pound}%a) {pound}$b{pound}{back arrow}15: {pound}$c"
 	if p then {:page1}
 
 ' ----+----+----+----+----+----+----+----+
+'  DE#1          (Type "N" for next page)
 ' 
-'  DE#10         (Type "N" for next page)
-' 
-'  1) Handle    : PINACOLADA
-'  2) Password  : NILREM
-'  3) First Name: RYAN
-'  4) Last Name : SHERWOOD
-'  5) Phone #   : [253] 355-0297
-'  6) Last Date : May 15, 2019 10:54 PM
-'  7) Accs Grp  : 9 (\$q)\_25af% [?]: \%q
-'  8) CallsToday: 0
+'  1) Handle     : PINACOLADA
+'  2) Password   : NILREM
+'  3) First Name : RYAN
+'  4) Last Name  : SHERWOOD
+'  5) Phone #    : [253] 355-0297
+'  6) Last Date  : May 19, 2019  4:17 PM
+'  7) Accs Group : 9 (Sysop)        NM: 0
+'  8) Calls Today: 0
 '  9) Total Calls: 0
-' 13) User Flags: 0
-' 22) Last Call : May 15, 2019 10:54 PM
+' 13) User Flags : 01000PST0400
+' 22) Last Call  : May 19, 2019  4:17 PM
+' 23) Accs Flags : 11111811111111190000
 
-   # to change (1-22):
-'  Asc  Ans  Exp  UnvZZTrc ZBel ZNet ZMac
-' User Pinacolada            ID # DE1
-' Last May 15, 2019 10:54 P  Call 0/0
-' Name Ryan Sherwood         Prms 40x25
-' Ph # [253] 355-0297        Baud 2400
-' Area Image Account Editor  User 1/1
-' C=00000 N=002 I=000 A=9   Commodore 64
-' R           M=11218  L=03010           T
-' ZWed May 15, 2019 11:48:59 PM     --:00
+' # to change (1-23):
 
 ' page 0: 1-9, 13, 22-23
 	for i=1 to 9:a%=i:b$=ed$(i):c$=tt$(i)
 ' hide password from non-sysop:
-	if i=2 and id<>1 then c$="Not available"
+	if i=2 then if id<>1 then c$="Not available"
 ' verbose last message read date:
 	if i=6 then gosub {:sub.verbose_date}
-' access group (name=q$), af% [?]:
-'	if i=7 then c$=c$+" ({pound}$q){pound}{back arrow}25af% [?]: {pound}%q"
-' FIXME
-	if i=7 then c$=c$+" ("+q$+"){pound}{back arrow}25af% [?]:"+str$(q%)
-
+' access group (name=q$), af%, send NetMail access level:
+' can't use MCI in a string?
+'	if i=7 then c$=c$+" ({pound}$q){pound}{back arrow}25NM : {pound}%q"
+' can be max 18 spaces between ac% and nm
+' ----+----+----+----+----+----+----+----+
+'  7) Accs Group : 9 (Sysop)        NM: 0
+	if i<>7 then {:end_loop0}
+' 1 c$="91":q$="Sysop"
+' 2 z$=left$(left$(c$,1)+" ("+q$+")
+'           ",19)
+' 3 z$=z$+"NM: "+right$(c$,1):c$=z$
+' 4 print" 7) Accs Group : "c$
+' ----+----+----+----+----+----+----+----+
+'  7) Accs Group : 9 (123456789abc) NM: x
+	z$=left$(left$(c$,1)+" ("+left$(q$,12)+"){space:13}",17)
+' lp=0: prevent word-wrap
+	z$=z$+"NM: "+right$(c$,1):c$=z$:lp=0
+{:end_loop0}
 	&:&"{f6}":next
 ' user flags:
-	i=13:a%=i:b$=ed$(i):&:&"{f6}"
+	i=13:a%=i:b$=ed$(i):c$=tt$(i):&:&"{f6}"
 
 ' last call + carrier drop:
 ' if carrier drop flag not present (c%=.), don't show it
 	i=22:a%=i:b$=left$(ed$(i),11):gosub {:sub.verbose_date}:&:&"{f6}":c%=-(len(ed$(i))<12):if c% then {:access_flags}
-	cd%=val(mid$(ed$(i),12,1)) and 1:&"{space:5}Carrier Drop: "+mid$("No Yes",cd%*3-2,3)+"{f6}"
+	cd%=val(mid$(ed$(i),12,1)) and 1:&"{space:5}Carrier Drop: "+mid$("No Yes",cd%*3+1,3)+"{f6}"
 ' TODO: maybe gosub 1904 instead to print "Yes/No"? uses a$ though
 {:access_flags}
-' access flags
 	i=23:a%=i:b$=ed$(i):c$=tt$(i):&:&"{f6}"
-' user flags
-	i=24:a%=i:b$=ed$(i):c$=tt$(i):&:&"{f6}"
 {:end_page0}
 	goto {:input}
 
 {:page1}
-' page 1: 10-21
-	for i=10 to 21:a%=i:b$=ed$(i):c$=tt$(i)
+'  DE#1          (Type "N" for next page)
+' 
+' 10) Computer   : Off
+' 11) Screen Size: 40x25
+' 12) Xfer Proto : None
+' 14) Expert Mode: Off
+' 15) Downloads  : Off
+' 16) Uploads    : Off
+' 17) Blks Dnld  : Off
+' 18) Blks Upld  : Off
+' 19) Credit Pts : Off
+' 20) Posts      : Off
+' 21) Responses  : Off
+' 
+'  # to change (1-23):
+
+' page 1: 10-12, 14-21
+	for i=10 to 21:if i=13 then i=14
+	a%=i:b$=ed$(i):c$=tt$(i)
 ' computer type:
-	if i=10 then c$=co$(val(tt$(i)))
+	if i=10 then c$=co$(val(c$)):goto {:page1_end}
 ' FIXME: im.misc reads ll% from u.config:
 ' screen width (ll%) + 256 * screen height (mp%):
 ' mp%=int(ll%/256):ll%=ll%-256*mp%
 ' here, c% is just a temp value
 ' w%=width, h%=height: 6440=40x25
-	if i=11 then c%=val(tt$(i)):h%=c%/256:w%=c%-256*h%:c$="{pound}%wx{pound}%h" ' e.g., 80x25
+' NOTE: compensates for 0x0
+	if i=11 then c%=val(c$):h%=c%/256:w%=c%-256*h%:c$=mid$(str$(w%),2)+"x"+mid$(str$(h%),2):goto {:page1_end} ' e.g., 80x25
 
 ' FIXME: transfer protocol: - maybe get list of protocols from s.m.proto?
-	if i=12 then c$=mid$("Punter        Xmodem        Copier        Relaxed Punter",val(tt$(i))*14-13,14)
-' 13: user flags (linefeeds, time zone)
-' 14: Expert Mode
-	if i=14 then c$=mid$("OffOn",(val(tt$(i))+1)*3-2,3)
+	if i<>12 then {:expert_mode}
+	c$="None          Punter        Xmodem        Copier        Relaxed Punter"
+' compensate for unset protocol (0)
+	c$=mid$(c$,(val(c$)+1)*14-13,14):goto {:page1_end}
+{:expert_mode}
+' 14: expert mode
+' FIXME: mine is set to 0, which crashes this. why?
+' TODO: subroutine Off/On displays
+	if i=14 then c$=mid$("OffOn ",val(c$)*3+1,3):goto {:page1_end}
 ' 1 dim tt$(13):tt$(13)="0":i=13
-' 2 if i=13 or i=14 then c$=mid$("No Yes",(val(tt$(i))+1)*3-2,3)
+' 2 if i=13 or i=14 then c$=mid$("No Yes",val(tt$(i))*3+1,3)
 ' 3 print c$
-
-{:end_loop}
-	&:next
+{:page1_end}
+	&:&"{f6}":next
 
 {:input}
-' original code:
-' 214={:sub.change_prompt}, 2={:sub.normalize_a}
-' 120 next:&"{f6}":gosub 214:&"{f6}":gosub 2:if tr%<1 then 1811
-' 122 if an$="N" {$ce} then p=1-p:goto 112
+	i=23:gosub {:sub.change_prompt}:if an$="N" then p=1-p:goto {:header}
+	on -(tr%<1) goto 1811:if a>. and a<24 then {:dispatch}
+' save
+	on tz goto {:102}:&"{f6}Save changes? ":gosub 1902:if a=. then {:102}
+	&"{clear}{f6}Writing to user data files..."
+'	if tt$(1)<>"{up arrow}" and tt$(1)<>"RES" and tt$(1)<>tt$ then gosub {:206}
+	if tt$(1)="{up arrow}" or tt$(1)="RES" and tt$(1)=tt$ then {:keep_writing}
+	&"Renaming "+tt$+"'s mail files..."
+{:206}
+' handle change: rename forced mail and regular mail files:
+' TODO: ps.* (Personal Signatures)
+	dr=2:gosub 1010:a$="f.":for i=1 to 2
+	print# 15,"r"dr$a$left$(tt$(1),13)"="a$left$(tt$,13):a$="m.":next
+' check error channel, delete old handle an$ from alphabetical user index:
+	gosub 1012:an$=tt$:kk=id:id=x:gosub 1034:an$=tt$(1)
+' insert new handle into alphabetical user index:
+	on -(an$<>"{f8}" and an$<>"RES") gosub 1038:id=kk
+':gosub {:sub.write_stats}:goto {:102}
+{:keep_writing}
+	gosub {:sub.write_stats}:if tt$(1)="RES" and tt$<>"{up arrow}" and tt$<>"RES" then {:166}
+	goto {:102}
 
-	&"{f6}":gosub {:sub.change_prompt}
-	if an$="N" then p=1-p:goto {:header}
-	on -(tr%<1)-2*(a<1 or a>24) goto 1811,{:132}
+{:dispatch}
+	on -(a=6) -2*(a=7) -3*(a=10) -4*(a=11) -5*(a=12) -6*(a=14) -7*(a=22) goto {:last_date}, {:access_group}, {:computer_type}, {:screen_size}, {:default_proto}, {:toggle_expert_mode}, {:last_call}
+' subroutines:
+	if a=13 or a=23 then on -(a=13) -2*(a=23) gosub {:sub.show_user_flags}, {:sub.show_access_flags}:goto {:header}
+	goto {:general_edit}
 
-' changing password with/without permission:
-' if not sysop, display "Sorry, restricted function." from e.text:
-	if a=2 then on -(id=1) gosub {:sub.existing_pw}:if id<>1 then x=3:gosub 1980:&"{pound}w2":goto {:header}
+{:last_date}
+' 6
+	an$=tt$(a):gosub {:sub.time_date_edit}:goto {:header}
 
-' edit Last date:
-	if a=6 then an$=tt$(a):gosub {:sub.time_date_edit}:goto {:header}
+{:access_group}
+' 7 - access level change is handled in {:general_edit}
+	lp=1:&"TODO: display access groups, edit NetMail access{f6}"
+	goto {:general_edit}
 
-' show user flags sub-menu
-	if a=13 then gosub {:sub.show_user_flags}
-' computer type
-	if a<>22 then {:computer_type}
+{:computer_type}
+' 10
+	for t=1 to 9:&" {pound}!t) "+co$(t)+"{f6}":next
+	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}
+	if a>. or a<10 then tt$(10)=str$(a):tz=.
+	goto {:header}
+
+{:screen_size}
+' 11
+' TODO: encode screen height/width like this: ll%+mp%*256
+	gosub {:sub.todo}:goto {:header}
+
+{:default_proto}
+' 12
+' FIXME: get protos from s.m.protos: gosub 1666?
+	&"1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
+	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if a>. and a<5 then tt$(12)=str$(a):tz=.
+	goto {:header}
+
+{:toggle_expert_mode}
+' 14
+	tt$(a)=mid$(str$(1-val(tt$(a))),2):goto {:header}
+
+{:last_call}
+' 22
 ' 1) edit logon time
 ' sub.time_date_edit saves a in op, destroys a
 ' sub.time_date_edit truncates tt$(a)
@@ -323,75 +401,33 @@
 
 ' 2) carrier drop flag may not exist yet, as with conversion from 1.2
 	an$=left$(tt$(a),11):gosub {:sub.time_date_edit}:if c%=. then {:header}
-	&"Carrier drop flag: "+mid$("YesNo",cd%*3-2,3)
+	&"Carrier drop flag: "+mid$("No Yes",cd%*3+1,3)
 	&", toggle?: ":gosub 1902:if a then cd%=1-cd%
 	tt$(op)=tt$(op)+chr$(48+cd%):goto {:header}
 
-{:computer_type}
-	if a=10 then gosub {:142}:goto {:header}
-
-' TODO: encode screen height/width like this: ll%+mp%*256
-	if a=11 then gosub {:sub.todo}:goto {:default_proto}
-
-{:default_proto}
-' 12 - transfer protocol
-	if a=12 then gosub {:sub.xfer_proto}:goto {:header}
-
-' 13 - User flags:
-	if a=13 then gosub {:sub.show_user_flags}:goto {:header}
-
-' show access flags:
-	if a=23 then gosub {:sub.show_access_flags}:goto {:header}
-
+{:general_edit}
 ' &,1,32
 ' p$=prompt/w$=wrapped text. input shows original value, new prompt
 ' Password: ----------
 ' Password: []
 
 ' general purpose edit:
+	if a=1 then lp=1:&"{f5}{f8}{f5} to delete, {f5}RES{f5} to create a REServed account{f6}"
 	p$=ed$(a):w$=tt$(a):&,1,32:if an$="" or an$=tt$(a) then gosub {:sub.no_change}:goto {:header}
-' handle or access group edited:
-	tt$(a)=an$:tz=.:on-(a=1)-(a=7)*2 goto {:148},{:154}:goto {:header}
-{:132}
-	on tz goto {:102}:&"{f6}Save changes? ":gosub 1902:if a=. then {:102}
-	&"{clear}{f6}Writing to user data files..."
-	if tt$(1)<>"{up arrow}" and tt$(1)<>"RES" and tt$(1)<>tt$ then gosub {:206} ':gosub {:sub.write_stats}:goto {:102}
-	gosub {:sub.write_stats}:if tt$(1)="RES" and tt$<>"{up arrow}" and tt$<>"RES" then {:166}
-	goto {:102}
-{:142}
-' 10 - computer type:
-	&"{f6}":for t=1 to 9:a%=t:&"{f6}{pound}%a) "+co$(t):next
-	w$=tt$(10):p$="Computer Type":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	on -(a<1 or a>9) goto {:142}:tt$(10)=str$(a):tz=.:return
+	tt$(a)=an$:tz=.:if a<>1 then {:header}
 
-{nice:10}
-{:sub.xfer_proto}
-' FIXME: get protos from s.m.protos: gosub 1666
-' 12 - transfer protocol:
-	&"{f6}1) Punter{f6}2) Xmodem{f6}3) Copier{f6}4) Relaxed Punter{f6:2}"
-	w$=tt$(12):p$="Protocol":&,1,32:gosub {:sub.normalize_a}:if tr%<1 then return
-	on -(a<1 or a>4) goto {:sub.xfer_proto}:tt$(12)=str$(a):tz=.:return
-
-{nice:10}
-{:edit_user_flags}
-	gosub {:sub.todo}:return
-
-{:148}
+{nice:4}
+{:change_handle}
+' 1
 ' deleted (^) or REServed users:
-	on -(an$="{f8}")-(an$="RES")*2 goto {:160},{:res_pw}:g=x:gosub 1046:x=g
+	on -(an$="{f8}")-(an$="RES")*2 goto {:delete_user},{:res_pw}:g=x:gosub 1046:x=g
 ' FIXME: always reports used by DE23 - 1046 above destroys i and a%
-	if i then:&"{f6:2}Handle already used by {pound}vn{pound}!i{pound}w2":tt$(1)=tt$
+' FIX: "if i<>un" fixes unnecessary "Handle already used" message if handle is changed back to original after editing
+	if i then if i<>un then:&"{f6:2}Handle already used by {pound}vn{pound}!i{pound}w2":tt$(1)=tt$
 	goto {:header}
-{:154}
-' TODO: update access group flags from e.access instead
-'	tt$(23)=fl$(val(tt$(7))):goto {:header}
-	&"TODO: update access group flags from {f5}e.access{f5}":goto {:header}
 
-{:sub.write_stats}
-' write stats:
-	gosub 1065:a$="":for i=1 to 24:a$=a$+tt$(i)+r$:next:gosub 1001
-	print# 2,a$;:close 2:return
-{:160}
+{nice:4}
+{:delete_user}
 ' 1901 calls "Are You Sure?: [No]" routine:
 	b$=tt$:&"{f6:2}Delete {f5}{pound}$b{f5}{f6}":gosub 1901:if a=. then {:102}
 	an$=tt$:gosub 1034
@@ -404,6 +440,7 @@
 	a$="r":gosub 1062:close 2:if e%=. then gosub 1060:i=-1:x=25:gosub 1025:close 2
 ' scratch forced mail, regular mail:
 	dr=2:b$=left$(tt$,13):a$="f."+b$:gosub 1024:a$="m."+b$:gosub 1024:goto {:102}
+
 {:res_pw}
 ' this is for creating a REServed user's pw:
 ' inform of default password:
@@ -411,7 +448,10 @@
 ' example from PRG: W$=NA$:P$="Handle":&,1,32:IF AN$<>"" THEN NA$=AN$
 
 ' this routine could be used by main password editor:
-	w$="PASS":gosub {:sub.change_pw}:for i=3 to 24:tt$(i)="0":next:goto {:header}
+' FIXME: add tt$(23) default flags
+' FIXME: add access level flags
+	w$="PASS":gosub {:sub.change_pw}:for i=3 to 24:tt$(i)="0":next
+	tt$(6)=d1$:tt$(7)="00":tt$(22)=d1$:tt$(13)="010000"+tz$:goto {:header}
 {:sub.existing_pw}
 ' this edits the current password:
 	w$=tt$(2)
@@ -420,35 +460,168 @@
 	p$="Password":&,1,32:if an$<>"" or an$<>w$ then tt$(2)=an$:tz=.
 	return
 
+{nice:4}
+{:change_access}
+' 7
+' TODO: update access group flags from e.access instead
+'	tt$(23)=fl$(val(tt$(7))):goto {:header}
+	&"TODO: update access group flags from {f5}e.access{f5}{f6}"
+	&"TODO: edit NetMail access group{f6}"
+	goto {:header}
+
+
+{nice:4}
+{:sub.show_user_flags}
+' 13
+' b$=item explanation, c$=value, tt$()=config setting
+
+' 1 dim tt$(43):tt$(43)="01000PST0400"
+' 2 for i=1 to 6:c$=tt$(43)
+' 3 if i<6 then c$=mid$("OffOn",val(mid$(c$,i,1))*3+1,3)
+' 4 if i=6 then c$=mid$(c$,9,2)+":"+mid$(c$,11,2)+" ("+mid$(c$,6,3)+")"
+' 5 print i;c$:next
+'  1 Off
+'  2 On
+'  3 Off
+'  4 Off
+'  5 Off
+'  6 04:00 (PST)
+
+' ----+----+----+----+----+----+
+'  1) Linefeeds            : Off
+'  2) Message Pause Mode   : On
+'  3) Graphic Menu Mode    : Off
+'  4) Undefined            : Off
+'  5) Undefined            : Off
+'  6) Time Zone (Offset)   : PST (04:00)
+
+	for i=1 to 6:b$=ed$(43+i):c$=mid$(tt$(13),i,1)
+' additional state of Message Pause Mode
+	if i=2 then if val(c$)=2 then c$="Messages Only":goto {:next_user_flag}
+	if i<6 then c$=mid$("OffOn",val(c$)*3+1,3)
+' e.g., "PST (04:00)"
+	if i=6 then c$=tt$(13):c$=mid$(c$,6,3)+" ("+mid$(c$,9,2)+":"+mid$(c$,11,2)+")"
+{:next_user_flag}
+	&" {pound}!i) {pound}$b{pound}{back arrow}25: {pound}$c{f6}":next
+
+{nice:4}
+{:edit_user_flags}
+	i=6:gosub {:sub.change_prompt}
+	on -(tr%<1)-2*(a<1 or a>i) goto 1811,1603
+	on a gosub {:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.todo},{:sub.tz_edit}:goto {:sub.show_user_flags}
+
+{nice:4}
+' 23
 {:sub.show_access_flags}
-	&"{clear}":for i=1 to 20:b$=mid$(tt$(23),i,1):a%=i:c$=ed$(i+23)
+'  1) Non-Weed Status  : Yes
+'  2) Credit Ratio     : 1/1
+'  3) Local Maint      : Yes
+'  4) Post/Respond     : Yes
+'  5) U/D Access       : Yes
+'  6) Max. Editor Lines: 90
+'  7) Unlimited DLs    : Yes
+'  8) Remote Maint     : Yes
+'  9) E-Mail           : Yes
+' 10) User List        : Yes
+' 11) B.A.R./Log View  : Yes
+' 12) Sub-Maint        : Yes
+' 13) Files Maint      : Yes
+' 14) Unltd Editor Lns : Yes
+' 15) UDs at Prime Time: Yes
+' 16) Max Idle Time    : 9 Minutes
+' 17) Calls Per Day    : Unlimited
+' 18) Time Per Call    : Unlimited
+' 20) Downloads/Call   : Unlimited
+' 
+'  # to change (1-20):
+
+	&"{clear}":for i=1 to 20:b$=mid$(tt$(23),i,1):b=val(b$):a%=i:c$=ed$(i+23)
+' default is bool (put first for speed, 'then...if's faster than 'and'):
+	if i<16 then if i<>2 then if i<>6 then b$=mid$("No Yes",b*3+1,3):goto {:186}
 ' credit ratio:
 	if i=2 then b$=b$+"/1":goto {:186}
-' max editor lines:
-	if i=6 then b$=mid$(str$((val(b$)+1)*10),2):goto {:186}
-' calls per day (2 bytes)
-	if i=18 then b$=mid$(tt$(23),i,2):i=19:goto {:186}
-' all others bools:
-	b$=mid$("YesNo",(1-a)*3+1,3)
-{:186}
-	&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}21: {pound}$b{f6}":next:gosub {:sub.change_prompt}
-	i=a:on -(tr%<1) goto 1811:if a<1 or a>20 then return
-' credit ratio:
-'	if a=2 then b$=mid$(tt$(23),2,1)+"/1":goto {:edit_access_flags}
-' max editor lines=multiple of 10:
-	if a=6 then b$=mid$(str$((val(mid$(tt$(23),6,1))+1)*10),2):goto {:edit_access_flags}
-' input time per call
-' toggle bool flag:
-	b$=mid$(str$(1-val(mid$(tt$(23),a,1))),2)
-{:196}
-	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+1)
-{:edit_access_flags}
-' TODO: change to yes/no for most options?
-	&"{f6}":p$=ed$(i+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="") goto 1811,{:edit_access_flags}
-'	b$=left$(an$,1):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
-	b$=left$(an$,1):if a<>6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
-	goto {:196}
+' max editor lines (0=10, 1=20, 2=30...) are multiples of 10
+	if i=6 then b=(b+1)*10:goto {:to_string}
+'	b$=mid$(str$((val(b$)+1)*10),2):goto {:to_string}
 
+' max idle time:
+	if i=16 then b$=b$+" Minutes":goto {:186}
+' calls per day (2 bytes: 00-99, 00=unlimited)
+	if i=18 then b=val(mid$(tt$(23),i,2)):i=19
+' 17, 18, 20: 0 should say "Unlimited"
+	if i>16 then if b=. then b$="Unlimited":goto {:186}
+' downloads/day: multiple of 10 (0=unlimited, 1=10, 2=20...)
+	if i=20 then b=b*10
+{:to_string}
+' convert back to string:
+	b$=mid$(str$(b),2)
+{:186}
+	&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}21: {pound}$b{f6}":next
+	i=20:gosub {:sub.change_prompt}:on -(tr%<1) goto 1811:if a<1 or a>i then return
+
+{:edit_access_flags}
+' l=length of flag string to replace (1 or 2 chars)
+	l=1:if a=18 then l=2
+' re-get flag value
+	b$=mid$(tt$(23),a,l):b=val(b$)
+
+' toggle bool flag:
+	if a<16 then if a<>2 then if a<>6 then b=1-b:goto {:update_access_flag.int}
+
+' 2, 6, 16, 17, 18-19, 20 are non-bool
+'  2: credit ratio	(1-9)
+'  6: Max editor lines	(0-9)*10: 0=10, 1=20... 9=100
+' 16: Max idle time	(1-9)
+' 17: Calls Per Day	(0-9)	[ 0=Unlimited, 1-9 ]
+' 18-19: Time Per Call	(00-99) [00=unlimited, 1-99]
+' 20: da% (Downloads Allowed) behavior was modified by X-Tec,
+'	now da%*10 instead of 1-9. 0=Unlimited, 1=10, 2=20... 9=90
+
+' m=min value (0/1)
+	m=.:if a=2 or a=16 then m=1
+' h=max value
+	h=9:if a=18 then h=99
+' u=0: 0 means 0, u=1: 0=Unlimited (just for display info in prompt)
+	u=.:if a=17 or a=18 or a=20 then u=1
+'  6: max editor lines=multiple of 10:
+	if a=6 then:&"0=10, 1=20 ... 8=90, 9=100{f6}"
+' can't edit #19
+	if a=19 then lp=1:&"Can't edit 2nd byte of "+ed$(41)+", editing 1st instead.{f6}":a=18:goto {:edit_access_flags}
+' 20: 0=Unlimited, 1=10, 2=20... 9=90
+	if a=20 then b=b*10
+' 2/16: credit ratio/max idle time: 1-9
+	if a=2 or a=16 then m=1:h=9
+{:access_flags_range}
+' display "(0=Unlimited)" if appropriate
+	&"({pound}!m-{pound}!h":if u then if m=. then:&", 0=Unlimited"
+	&"){f6}"
+{:access_flags_prompt}
+	p$=ed$(a+23):w$=b$:&,1,32:on -(tr%<1)-2*(an$="" or an$=w$) goto 1811, {:sub.no_change}
+	b=val(an$):if b<m or b>h then:&"Out of range.{f6}":goto {:access_flags_range}
+' necessary? probably not
+'	if len(an$)<>l then:&"Wrong length.":goto {:sub.show_access_flags}
+
+' is handling "0=Unlimited" necessary? m=. should take care of it
+'	b$=left$(an$,l):on-(a<>6)goto {:196}:b$=mid$(str$(int(val(an$)/10)-1),2,1)
+
+' TODO: error checking
+' editor lines/10:
+'	if a=6 then b$=mid$(str$(int(val(an$)/10)-1),2,1)
+
+	b$=right$("0"+an$,l):goto {:update_access_flag.string}
+
+{:update_access_flag.int}
+' used when updating boolean flags
+' l=1 or 2, length of flag
+'	l=1:if a=18 then l=2
+	b$=right$("0"+mid$(str$(b),2),l)
+
+{:update_access_flag.string}
+' {:196}
+	tt$(23)=left$(tt$(23),a-1)+b$+mid$(tt$(23),a+l):goto {:sub.show_access_flags}
+
+{undef:dupe_flag_stuff} ' I think this is vestigal code
+{ifdef:dupe_flag_stuff}
 ' show access flags
 {:3196}
 	&"{clear}":poke 53252,38:for i=1 to 20:b$=mid$(q$,i,1)
@@ -466,9 +639,8 @@
 {:3212}
 	a%=i:c$=dt$(i+23):&"{pound}#2{pound}# {pound}%a) {pound}$c{pound}{back arrow}20: {pound}$b{f6}"
 {:3214}
-	next:gosub {:sub.change_prompt}:a=val(an$):if tr%<1 or a<1 or a>20 then return
+	next:i=20:gosub {:sub.change_prompt}:a=val(an$):if tr%<1 or a<1 or a>i then return
 	on -(a=16 or a=17 or a=20)-2*(a=18) goto {:3232},{:3236}
-	if a=19 then:&"Flag 18 is two bytes. Cannot edit.{f6}":goto {:3196}
 	on-(a=2 or a=6)goto {:3222}:b$=mid$(str$(1-val(mid$(q$,a,1))),2):goto {:3230}
 {:3222}
 ' credit ratio
@@ -492,40 +664,71 @@
 {:sub.edit_flag}
 	p$=dt$(a):b$=mid$(q$,a,1):w$=b$:pl=1:&,1,32:if an$<>"" then b$=an$
 	return
-
-{:206}
-' handle change: rename forced mail and regular mail files:
-	dr=2:gosub 1010:a$="f.":for i=1 to 2
-	print# 15,"r"dr$a$left$(tt$(1),13)"="a$left$(tt$,13):a$="m.":next
-' check error channel, delete old handle an$ from alphabetical user index:
-	gosub 1012:an$=tt$:kk=id:id=x:gosub 1034:an$=tt$(1)
-' insert new handle into alphabetical user index:
-	on -(an$<>"{f8}"and an$<>"RES") gosub 1038:id=kk:return
+{endif}
 
 {nice:10}
-{:sub.show_user_flags}
-	gosub {:sub.todo}:return
-
-{nice:10}
-' edit user's time zone, temporarily DIMension bb$() to hold TZ data
-{:sub.edit_tz}
-	an$=mid$(tt$(44),6):&,27,1:dim bb$(50)
+' edit user's time zone
+' un-REM if im doesn't temporarily DIMension bb$() to hold TZ data
+{:sub.tz_edit}
+' save time zone to display later:
+'	an$=mid$(tt$(44),6)
+	z$=mid$(tt$(13),6,3):rem &,27,1:dim bb$(50)
 {:60018}
 	dr=1:a$="s.timezones,s,r":gosub 1011:n=.:if e% then:&:goto {:tz_done}
 {:60020}
-	&,2,2:if a$<>"{up arrow}" then n=n+1:tt$(n)=a$:if st=. then {:60020}
-	close 2:&"{f6}Select User's Time Zone:{f6:2}"
+' convert abbreviation into prompt option:
+	&,2,2:if a$<>"{up arrow}" then n=n+1:bb$(n)=a$:if left$(a$,3)=z$ then z$=mid$(str$(n),2)
+	if st=. then {:60020}
+' reset line count output
+	close 2:poke 970,.:&"Select User's Time Zone:{f6:2}"
 {:tz_list}
-	for i=1 to n:b$=left$(tt$(i),3):c$=mid$(tt$(i),8):a%=i:&"{pound}%a) ({pound}$b) {pound}$c{f6}":next
-	poke 53252,2:&"{f6}Which One (L=List)? {pound}i1":if an$="L" then {:tz_list}
-	a=val(an$):if an$=""or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
-	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
+	for i=1 to n:b$=left$(bb$(i),3):c$=mid$(bb$(i),8):a%=i:&"{pound}#2{pound}# {pound}%a) ({pound}$b) {pound}$c{f6}":next
+' ----+----+----+----+----+----+----+----+
+' 01) (SST) Midway Island
+' 02) (HST) Hawaiian Standard Time
+' 03) (AST) Alaskan Standard Time
+' 04) (PST) (US) Pacific Standard Time
+' 05) (MST) (US) Mountain Standard Time
+' 06) (CST) (US) Central Standard Time
+' 07) (EST) (US) Eastern Standard Time
+' 08) (BER) Bermuda
+' 09) (G-3) GMT -3 Hours
+' 10) (NST) Newfoundland
+' 11) (G-2) GMT -2 Hours
+' 12) (G-1) GMT -1 Hour
+' 13) (GMT) Greenwich Mean Time
+' 14) (G+1) GMT +1 Hour
+' 15) (G+2) GMT +2 Hours
+' 16) (G+3) GMT +3 Hours
+' 17) (G+4) GMT +4 Hours
+' 18) (G+5) GMT +5 Hours
+' 19) (G+6) GMT +6 Hours
+' 20) (G+7) GMT +7 Hours
+' 21) (WAT) Western Australia Time
+' 22) (KST) Korean Standard Time
+' 23) (G+9) GMT +9 Hours
+' 24) (CAT) Central Australia Time
+' 25) (EAT) Eastern Australia Time
+' 26) (G11) GMT +11 Hours
+' 27) (G12) GMT +12 Hours
+
+' 1-n, L)ist Again
+' Time Zone: 6
+' Time Zone: 
+	poke 53252,2:&"{f6} 1-{pound}!n, L)ist Again{f6}"
+	p$=" Time Zone":w$=z$:&,1,32:if an$="L" then {:tz_list}
+	a=val(an$):if an$="" or a<1 or a>n then gosub {:sub.no_change}:goto {:tz_done}
+' TODO: this is different than im.misc - check on data format
+'	tt$(44)=mid$(tt$(44),8)+left$(tt$(a),7)
+	tt$(13)=left$(tt$(13),5)+left$(bb$(a),7):tz=.
 {:tz_done}
 ' clear bb$(), re-open u.config
-	close 2:&,28,1:goto 1065
+'	close 2:&,28,1:goto 1065
+	close 2:goto 1065
 
 {nice:10}
 	data 49
+' ed$(), item descriptions
 ' data items 1-24
 	rem page 1
 ' 1, 2
@@ -566,30 +769,29 @@
 ' 10, 11, 12
 	data "User List","B.A.R./Log View","Sub-Maint"
 ' 13, 14, 15
-' TODO: verify 14 is now Unlimited Editor Lines?
-	data "Files Maint","MCI Access","UDs at Prime Time"
+	data "Files Maint","Unltd Editor Lns","UDs at Prime Time"
 ' New:
 ' 16, 17, 18 (1st byte)
-	data "Max Idle Time","Calls/Day","Time/Call"
+	data "Max Idle Time","Calls Per Day","Time Per Call"
 ' 19 (2nd byte), 20
 	data x,"Downloads/Call"
 
 	rem user flags
 ' data items 44-49
-' uf$ [6], tt$(44-49)
+' uf$ [6], ed$(44-49)
 	data "Linefeeds"
 	data "Message Pause Mode"
 	data "Graphic Menu Mode"
 	data "Undefined"
 	data "Undefined"
-	data "Time Zone/Offsets"
+	data "Time Zone (Offset)"
 
 '	 1: lf	LineFeeds
 '	 2:	Message pause mode
 '	 3:	Graphic Menu mode
 '	 4:	Undefined
 '	 5:	Undefined
-'	 6-:	3 letter time zone abbreviation, hour/minute offset
+'	 6-12:	3 letter time zone abbreviation, hour/minute offset: "01000PST0400"
 
-	rem "+.ED" 1.3 - 2019-05-16 pinacolada
+	rem "+.ED" 1.3 - 2019-06-06 pinacolada
 	rem copr. 1988-2019 new image

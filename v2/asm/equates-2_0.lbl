@@ -292,7 +292,7 @@
 ; BBS flags (really, unused VIC-II registers)
 
 	local	= $d000 ; 53248: 1=no modem output with &
-	case	= $d001 ; 53249: can POKE this or set pl=1: UPPERCASE, pl=0: Mixed Case
+	case	= $d001 ; 53249: &,1 or £Ix: can POKE this or set pl=1: UPPERCASE, pl=0: Mixed Case
 	editor	= $d002 ; 53250: flags for &,1 routine
 	tsr	= $d003 ; 53251: time remaining on call - needed by inline.s [?]
 	llen	= $d004 ; 53252: max input line length for &,1 or £Ix
@@ -313,6 +313,7 @@
 	scs	= $dc09 ; seconds
 	min	= $dc0a ; minutes
 	hrs	= $dc0b ; hours
+
 ;	carrier = $dd01 ; This definition conflicts with $d009;
 			; "carrier" is referenced by irqhn.s
 			; 56577: CIA #2 Data Port B

@@ -1,13 +1,13 @@
 ' 10887 bytes (-253 bytes from +.lo r2)
 ' 10224 after mask stuff moved to im.disp
-' FIXME: clock missing after doing something, what was it
+
 ' FIXME: Linefeeds assumed from failed login #41
 
 {alpha:alt}
 {number:3000}
 {crunch:on}
 {quoter:32=space}	' make runs of spaces easier to read
-{def:lo_mask}		' testing moving mask display stuff to im.disp
+{ndef:lo_mask}		' if undefined, mask display is handled by im.disp
 
 ' TODO: re-add "e.idlecmds" feature, it got removed
 {step:2}
@@ -90,7 +90,7 @@
 	tr%=5:if a% then:&"{f6:2}SORRY, NO 300 BPS CALLS ACCEPTED.{f6}":goto {:3266}
 ' TODO: this would be an interesting feature, but let's comment it out for now
 ' 42	rem print#131,"{stop}"chr$(.)chr$(.);:&,22,10:&,4:a=peek(780)and127
-' 16	rem iftr%>.anda=21then 3070
+' 16	rem iftr%>.anda=21then 3070 ' a={ctrl u}
 ' 51	rem ifa=6then nl=2:&,52,16,.:&"{f6}Image Term Detected.{f6}":goto 3090
 ' --
 '109
@@ -112,6 +112,7 @@
 ' &,52,19,.: (clr) ANSI Graphics Enable
 ' issue #42: clearing linefeeds after failed login: save lf status in lf%
 ' (lf is overwritten by loading stats in im.misc)
+'3090 (called from Image Term detection)
 	tr%=5:on nl goto {:3096}:&,52,18,.:&,52,19,.:&,52,17,1:lf%=1
 	&"Do You Want ANSI Color? ":gosub 1907:&,52,18,a:b=a
 	&"Do You Want IBM Graphics? ":gosub 1907:&,52,19,a:if a and b then nl=2:poke 951,80
@@ -187,6 +188,8 @@
 ' instant logon (2):
 	gosub 1071:if na$="{up arrow}"then {:3060}
 {:3170}
+' FIXME: does this set k% (console) mode?
+' should add check in +/lo.on for setting 40 columns
 	&"{up}Login Complete!{pound}{back arrow}39{f6:2}":IF zz=. THEN k%=i%:i%=.
 	goto {:3226}
 {:3174}
@@ -256,7 +259,7 @@
 
 ' log off:
 {:3256}
-' immediate mode (i%=1) or console login (k%=1?) opt-outs
+' immediate mode (i%=1) or console login (k%=1?) opt-outs (q="quick," I suppose)
 ' &,52,$22 - More Prompt On? assumed ,0 (clear) parameter?
 ' 1678: leave feedback only if not local or console login:
 	&,52,$22:q=i%+k%:if q=. then gosub 1678
@@ -532,12 +535,16 @@
 	b$="idle "+left$(am$,1):a$="a":gosub 1027:if e% then a$="w":gosub 1027
 ' FIXME: 3488: ?illegal quantity error, occasionally
 	print# 2,d1$","mid$("idleused",1-4*(p=10),4)","i","b$:close 2
-{:3490}
+
+{ifndef:lo_mask}
+' only called once, moved to im.disp:
+' {:3490}
 	z%=.:y%=.:a=st(21)+st(22)+.5:if a>1 then z%=100*st(21)/a:y%=100-z%
 	an$="U="+mid$(str$(z%),2)+" I="+mid$(str$(y%),2):s=10:gosub {:sub.pad_string_right}
 	&,69,14,22,a$,$81:return
+
 {:3496}
-{ifndef:lo_mask}
+' this is called from many points to update idle screen mask
 ' load im.disp, display idle screen mask
 	im=2:gosub 2426
 {else}
@@ -563,6 +570,7 @@
 	an$=str$(uh)+"/"+mid$(str$(ur),2):gosub {:sub.pad_string_right}:&,69,31,21,a$,c
 ' screen mask, line 22: display c=00000 (total calls to system) and n=000 (calls today)
 {endif}
+
 ' check available RAM:
 	goto 1374
 {:sub.pad_string_right}
