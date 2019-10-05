@@ -6,6 +6,8 @@ v1.0, September 28, 2019
 :doctype: book
 :encoding: utf-8
 :lang: en
+:homepage: http:/imagebbs.net
+:experimental:
 
 Copyright © 1991 _New Image Software_
 
@@ -25,7 +27,7 @@ I think that makes it too cluttered. Better to have a command summary
 appendix.
 ****
 
-== Preface
+## Preface
 
 In 2007, Dave “Metal Mage” Hartman and I found ourselves pondering why
 there wasn't an updated version of the manual available to go along with
@@ -48,7 +50,7 @@ had what we considered to be the best new changes already put in. For
 example: There were a few things changed by Bob “Iron Axe” Sisco with
 his “Year 2000” fix which I changed back for aesthetic reasons (blue
 lightbar and chat window colors don't fit in with the default grey
-scheme, IMHO[^1]).
+scheme, IMHOfootnote:[In My Humble Opinion]).
 
 Overall, we figure we've got it mostly licked.
 
@@ -57,11 +59,11 @@ sections, documentation of new (at the time) features which were once
 available as separate add-on disks (some slated for Image 1.3):
 
 -   a few games and BBS utilities
--   “AutoWeed,” which lets you remove callers who haven't called in a
+-   "`AutoWeed,`" which lets you remove callers who haven't called in a
     specified amount of time
--   the “Extended Command Set,” configurable BBS commands
--   the “TurboREL” system, faster access to message sub-boards and
-    “RELedit,” the sysop-side editor
+-   the "`Extended Command Set,`" configurable BBS commands
+-   the "`TurboREL`" system, faster access to message sub-boards and
+    "`RELedit,`" the sysop-side editor
 -   Image BBS networking
 
 The "`new`" (released long after the original manual was
@@ -87,8 +89,8 @@ you don't understand!
 or someone else. I just ran it all through a blender, baked until golden
 brown, _et voila_! It must be true: Anyone can cook.
 
-Many thanks go to Larry “Joe Commodore” Anderson for OCR'ing the 1.0
-manual plus the updates! Also thanks to Rascal, Iron Axe, Metal Mage,
+Many thanks go to Larry "`Joe Commodore`" Anderson for OCRing the 1.0
+manual plus the updates! Also thanks to Rascal, X-Tec, Iron Axe, Metal Mage,
 Fred Kreuger, and anyone else I forgot.
 
 I just want this to be the best, most comprehensive manual available,
@@ -144,7 +146,7 @@ upon pages of it.
 
 _Text output by the BBS, and filenames, are italicized._
 
-Keyboard keys (like Return) and user input are monospaced.
+Keyboard keys (like kbd:[Return]) have boxes around them.
 
 > Additional sections, information, or changes from the original manual are indented.
 
@@ -177,13 +179,15 @@ contain their own install/usage documentation on the disk image. (Note:
 Using TurboREL message bases on a 1581 drive may be problematic; e-mail
 me if you need more info on it.)
 
-> This is probably because of the "`secondary address #1`" bug.  I have
-> included the BASIC program 81bug.bas to demonstrate it, if you're
-> interested.  I need to get in touch with Larry to see whether this is in
-> fact the cause.
+****
+This is probably because of the "`secondary address #1`" bug. I have
+included the BASIC program `81bug.bas` to demonstrate it, if you're
+interested. I need to get in touch with Larry to see whether this is in
+fact the cause.
+****
 
 In its' time, Image BBS was one of the top-of-the line Commodore 64
-BBSes, even compared to PC counterparts of the day.  Image held its own
+BBSes, even compared to PC counterparts of the day. Image held its own
 in features and adaptability.
 
 NOTE: The BBS numbers in the following documentation are all long gone, please do not try calling them.
@@ -213,21 +217,21 @@ NOTE: Dead address, of course.
 
 Dear Customer and Friend:
 
-We thank you very much for ordering IMAGE BBS v1.0!!  We think that you
+We thank you very much for ordering IMAGE BBS v1.0!! We think that you
 will be very happy with your purchase, and intend to fully support our
-customers in any way that we can.  If you need any help whatsoever in
+customers in any way that we can. If you need any help whatsoever in
 setting up your BBS or maintaining it, please feel free to contact us by
 mail, phone, or BBS, and we will do what we can.
 
-This version was "`supposed`" to be released long ago, but due to problems
-in relocating our offices and other things, it is late.  (Ever have
-5,000 screaming sysops on YOUR phone line?!?) We apologize immensely for
+This version was _supposed_ to be released long ago, but due to problems
+in relocating our offices and other things, it is late. (Ever have
+5,000 screaming sysops on _your_ phone line?!?) We apologize immensely for
 this, but feel that the quality of the program will make you forget
 about this very soon! Read the manual through and see the options that
 you have with this BBS program!
 
 Please also notice that we have added a few things that are not
-documented in the manual.  The List function in the subsystems now shows
+documented in the manual. The List function in the subsystems now shows
 to the user if the sub-board/library is a "`special`" one, highlighting
 the library in color, and also showing an abbreviation at the beginning:
 
@@ -262,24 +266,25 @@ Add these variables to the list on page 53:
 Our plans for the future:
 
 There is no programmer's manual for the software available yet, but we
-_do_ plan to write one in the near future.  You will be seeing many
+_do_ plan to write one in the near future. You will be seeing many
 modules available for IMAGE soon, both translated from old popular
-winners, and brand new!  You will also see utilities for running your
+winners, and brand new! You will also see utilities for running your
 BBS, both in module form, and runnable in BASIC to make things easier
-for you.  We plan to write a terminal program that will interact with
+for you. We plan to write a terminal program that will interact with
 IMAGE to allow full sound, high-res graphics and sprites for the user,
-and will have the same module routines as the BBS does.  This will allow
+and will have the same module routines as the BBS does. This will allow
 you to write a module (plus file) for BOTH the term and the BBS that
-will interact.  A 128 version of IMAGE is also planned.  As is our
+will interact. A 128 version of IMAGE is also planned. As is our
 policy, NO release announcements will be made until the new products are
 ready.
 
 As always, we welcome comments, suggestions, and criticism at any time,
-so please let us know what you think!  Looking forward to a long, happy,
-and mutually satisfying relationship with you!  Keep in touch!
+so please let us know what you think! Looking forward to a long, happy,
+and mutually satisfying relationship with you! Keep in touch!
 
+[.text-right]
 Don Gladden
-
+[.text-right]
 New Image Software
 
 ## Addenda for Image 1.2a, page 1
@@ -290,12 +295,12 @@ We believe that you have purchased the finest BBS program available
 today for the Commodore 64.  The program is continually being updated
 and refined and some of the latest updates have not yet made it into the
 manual.  For that reason we are including this short addendum.  Version
-1.2a differs only slightly from 1.2.  It includes the “CMD Mods,” or the
+1.2a differs only slightly from 1.2.  It includes the "`CMD Mods,`" or the
 changes necessary to allow the use of partitions from 1 to 255 on that
 particular drive.  It can still be used on any other system, including
 the Lt. Kernal.  Caution should be taken however, as it is now possible
-to address LU 10, the DOS LU.  All of the “mods” are installed so there
-is no need to download any “CMD Mod” packages.
+to address LU 10, the DOS LU.  All of the "`mods`" are installed so there
+is no need to download any "`CMD Mod`" packages.
 
 Some of the features from 1.2 that are not clear in the manual include
 the selection of the proper modem file.  The manual states, incorrectly,
@@ -333,9 +338,7 @@ GearJammer's II 215-487-0463
 
 We hope you enjoy your IMAGE and if you need help don't hesitate to call.
 
-[.text-center]
-This text is centered.
-
+[.text-right]
 —NEW IMAGE SOFTWARE
 
 ## Addenda for Image 1.2a, page 2
@@ -375,27 +378,27 @@ computer is turned off for more than a few seconds.
 
 Pg 16 THE LIGHTBAR
 
-There are now two pages to the lightbar.  The first page remains the
+There are now two pages to the lightbar. The first page remains the
 same, the second page has only three functions that are used
 immediately.
 
-The first is *Asc* which is:
+The first is `Asc` which is:
 
-(L) ASCII on/off
+Left: ASCII on/off
 
-(R) linefeeds on/off
+Right: linefeeds on/off
 
-The second is *Ans* which is:
+The second is `Ans` which is:
 
-(L) ANSI on/off
+Left: ANSI on/off
 
-(R) IBM Graphics on/off.
+Right: IBM Graphics on/off.
 
-The third is *Exp* which is:
+The third is `Exp` which is:
 
-(L) expert mode on/off
+Left: expert mode on/off
 
-(R) macros on/off (note that they are already installed)
+Right: macros on/off (note that they are already installed)
 
 In addition, the Turbo-RELs use `Fn5` for:
 
@@ -403,14 +406,15 @@ Left: credit when file is uploaded or when validated
 
 Right: log off after file transfer is complete
 
-The CMD mods (1.2a) also introduced the right side of *Fn1* which turns MCI off when checked.
+The CMD mods (1.2a) also introduced the right side of `Fn1` which turns MCI off when checked.
 
 Pg 29  COMMANDS
 
 There is no longer a `BC` (baud change) option.
 
-INFO: The heck there isn't!  I put it back for historical preservation, even
-though it's unlikely to do anything useful!   Yay me.
+INFO: The heck there isn't! I put it back for historical preservation, even though it's unlikely to do anything useful! Yay me.
+
+INFO: admonition block
 
 Pg 55 THE IMAGE EDITOR
 
@@ -438,89 +442,90 @@ manual in the near future.
 Thanks go out to all who have supported us in the past with our
 programs, and for all the suggestions and ideas that have been shared
 with us.  If you need to contact us for anything at all, please feel
-free to at any of the voice or BBS numbers supplied on page v of this
+free to at any of the voice or BBS numbers supplied on page _v_ of this
 preface.
 
 Special Thanks To:
 
-Peggy:
+Peggy::
 
-> For being an understanding wife while this program was being
-> developed, taking over the business end of things at a time when it
-> was needed, and helping to make decisions, some of which were really
-> tough.  I don't believe this program would be possible without her.
+For being an understanding wife while this program was being
+developed, taking over the business end of things at a time when it
+was needed, and helping to make decisions, some of which were really
+tough.  I don't believe this program would be possible without her.
 
-Jamie, Christy, Billy, and Kim:
+Jamie, Christy, Billy, and Kim::
 
-> For their support, patience and understanding in giving Dad (and
-> sometimes Mom) up for all the extended programming and business
-> sessions.
+For their support, patience and understanding in giving Dad (and
+sometimes Mom) up for all the extended programming and business
+sessions.
 
-Ray Kelm (PROFESSOR):
+Ray Kelm (PROFESSOR)::
 
 For being the sharpest ML whiz-kid in the world, and all the quality
 work.
 
-Fred Dart (THE CHIEF):
+Fred Dart (THE CHIEF)::
 
-> For the EXTENSIVE beta-testing and bug reports.  (Not sure why I'm
-> THANKING him for bugs, but...)  Also, for his enormous phone bills in
-> getting this thing done as soon as possible.  And for many other
-> things too numerous to detail.
+For the _extensive_ beta-testing and bug reports. (Not sure why I'm
+_thanking_ him for bugs, but...) Also, for his enormous phone bills in
+getting this thing done as soon as possible. And for many other
+things too numerous to detail.
 
-Jay Levitt:
+Jay Levitt::
 
-> For representing us on QuantumLink for so long, and the work he has
-> helped with on the program, especially the e-mail routines.
+For representing us on QuantumLink for so long, and the work he has
+helped with on the program, especially the e-mail routines.
 
-Bob DiLorenzo (BLINKY):
+Bob DiLorenzo (BLINKY)::
 
-> For beta-testing, the vacation and tour of Opryland in Tennessee when
-> I needed that break so bad, and for being such a good friend.
+For beta-testing, the vacation and tour of Opryland in Tennessee when
+I needed that break so bad, and for being such a good friend.
 
-Jim Flinn (MUZAK MAN):
+Jim Flinn (MUZAK MAN)::
 
-> For designing the awesome title screen and beta testing.
+For designing the awesome title screen and beta testing.
 
-Mark Verellen (KING TRENT):
+Mark Verellen (KING TRENT)::
 
-> For bringing over the Cokes when I was broke, and being official IEEE
-> beta tester.
+For bringing over the Cokes when I was broke, and being official IEEE
+beta tester.
 
-Mike Coley (THE HAPPY HACKER):
+Mike Coley (THE HAPPY HACKER)::
 
-> For the voting booth, and so many great ideas! (Where are you, Mike,
-> haven't heard from you!)
+For the voting booth, and so many great ideas! (Where are you, Mike,
+haven't heard from you!)
 
-Julie Rhodes (BLUE ADEPT):
+Julie Rhodes (BLUE ADEPT)::
 
-> For the new BBS List program, and all her support.
+For the new BBS List program, and all her support.
 
-John Moore (LITTLE JOHN):
+John Moore (LITTLE JOHN)::
 
-> For joining up with us, and starting work on the 128 version of
-> IMAGE.  Also for the graffiti routines in the logon.
+For joining up with us, and starting work on the 128 version of
+IMAGE. Also for the graffiti routines in the logon.
 
-Rich Matteo (SHADOW WARRIOR):
+Rich Matteo (SHADOW WARRIOR)::
 
-> For the use of his modifications for the multi U/D and full disk
-> exchange routines, to make it so much easier for us to add.
+For the use of his modifications for the multi U/D and full disk
+exchange routines, to make it so much easier for us to add.
 
-Tony DeLiberato (ULTRA LORD):
+Tony DeLiberato (ULTRA LORD)::
 
-> For his help on the production of this manual and advertising layouts.
+For his help on the production of this manual and advertising layouts.
 
-John and Paul at QuantumLink:
+John and Paul at QuantumLink::
 
-> For their help and support on Q.
+For their help and support on Q.
 
 Fiscal, Xetec, Trans-Comm, InConTrol, and the many other companies who
 were so cooperative in helping us develop the program to allow their
 products to be used.
 
-And finally, to YOU, for trying IMAGE BBS
-out!  We're sure you won't be sorry you did!
+And finally, to _you_, for trying IMAGE BBS
+out! We're sure you won't be sorry you did!
 
+[text]
 Don Gladden
 
 New Image Software
@@ -622,8 +627,7 @@ Customer Sales and Support
 
 P.O. Box 525, Salem, UT 84653
 
-INFO: Dead address, of course.
-
+NOTE: Dead address, of course.
 
 ## User Support
 
@@ -659,7 +663,7 @@ way.
 
 NOTE: Until further notice, this manual covers all current versions of Image BBS: 1.0, 1.1 and 1.2.
 
-Update 7/2014: There is a Facebook group and the beginnings of a
+Update 7/2014: There is a [Facebook group](https://www.facebook.com/groups/141819789446) and the beginnings of a
 support web site, [Pinacolada's Projects](https://sites.google.com/site/pinacoladasprojects/)
 
 
@@ -686,10 +690,10 @@ work well are:
 
 ### Disk Drives
 
--   All Commodore drives (1541, 1571, 1581, and IEEE drives)
--   Xetec Lt.Kernal hard drives
--   Creative Micro Designs hard drives
--   ICT Datachief and Minichief hard drives (see notes below)
+-  All Commodore drives (1541, 1571, 1581, and IEEE drives)
+-  Xetec Lt.Kernal hard drives
+-  Creative Micro Designs hard drives
+- ICT Datachief and Minichief hard drives (see notes below)
 
 ### Lt. Kernal Hard Drives
 
@@ -710,9 +714,9 @@ fine with the ICT drive.
 
 ### Modems
 
-[title='{counter:table-number}: Supported modems']
+.Supported modems
 |===
-|File |Purpose
+|Purpose
 
 |Cell in column 1, row 1
 |Cell in column 2, row 1
@@ -737,9 +741,6 @@ RAMDOS is provided.  It is set to define your RAMdisk as device 7, which
 is how it is supported by Image BBS.
 
 *fixme*
-
-  ----- -----------------------------------------------------------------------------------
-  ----- -----------------------------------------------------------------------------------
 
 Table : RAMDOS files
 
@@ -780,6 +781,15 @@ SuperCPU speed register.
 
 ## Getting Things Going
 
+****
+If you want physical 1541/1571/1581 disks sent through postal mail,
+please send an e-mail to sym\_rsherwood@yahoo.com, specifying the
+format(s).  We'll make arrangements regarding shipping cost—not that
+it'll be much.  My goal is not to make money off this—unless you want to
+donate some—but see a revival of one of the top Commodore 64 BBSes into
+common usage again.
+****
+
 Now that you are ready to set up IMAGE BBS, we recommend you first back
 up your original disk (both sides if you are using a 1541 type disk),
 then store it in a safe place.  *Never* work with the original, just in
@@ -790,25 +800,23 @@ anything not working correctly with a backup disk.
 
 If you are copying with more than one drive, Copy-all, a great
 public-domain program by Jim Butterfield, is included on the disk to
-assist you in doing this.  Copy-all will copy PRG, SEQ, and REL files
+assist you in doing this. Copy-all will copy PRG, SEQ, and REL files
 with no problems whatsoever on any type of Commodore compatible drives
 using two drives.
 
 If you need to copy REL files using a single 1541 drive, you can use a
-program by Jim McAndrew called “Rel-Copy” specifically designed for that
-purpose.If you need to copy REL files using
-a single 1541 drive, you can use a program by Jim McAndrew called
-“Rel-Copy” specifically designed for that purpose.
+program by Jim McAndrew called "`Rel-Copy`" specifically designed for that
+purpose.
 
 ### Designating Drives
 
 IMAGE BBS is designed to use up to eight drives, and possibly use even
 more with limited functions.  It will support:
 
--   single or dual drives
--   Lt. Kernal logical units (LUs) 0 through 10 (the DOS LU, a side
-    effect of applying the "`CMD Mods`" in Image BBS v1.2a—which, among
-    other things, let the BBS access partitions numbered 1-255)
+-  single or dual drives
+-  Lt. Kernal logical units (LUs) 0 through 10 (the DOS LU, a side
+  effect of applying the "`CMD Mods`" in Image BBS v1.2a—which, among
+  other things, let the BBS access partitions numbered 1-255)
 
 You will want to plan your setup on what space you have available, so
 read the following information carefully to help you in this regard.
@@ -831,55 +839,53 @@ to 8 and 9, etc.).
 When referring to "`drive,`" we are talking about the drive number (or
 partition if using a hard drive):
 
--   0/1 on a dual drive such as the MSD-2 floppy drive
--   partition 0-10 on a Lt. Kernal hard drive
--   partition 1-255 on a Creative Micro Designs hard drive (0 refers to
-    the current partition)
--   If you have two physical drives, there may either be a switch
-    somewhere on the drives to change device numbers, or—as with older
-    1541 drives—you must cut a solder pad (the drive manual should
-    describe how).
+-  0/1 on a dual drive such as the MSD-2 floppy drive
+-  partition 0-10 on a Lt. Kernal hard drive
+-  partition 1-255 on a Creative Micro Designs hard drive (0 refers to
+  the current partition)
+-  If you have two physical drives, there may either be a switch
+  somewhere on the drives to change device numbers, or—as with older
+  1541 drives—you must cut a solder pad (the drive manual should
+  describe how).
 
-You may also “software change” the device number with the BASIC program `dv change`
-included on your IMAGE BBS disk, or online with the *CD* command.  If you only have single drives on your
+You may also "`software change`" the device number with the BASIC program `dv change`
+included on your IMAGE BBS disk, or online with the `CD` command.  If you only have single drives on your
 system, then the drive numbers will always be zero.
 
-“Directory space” refers to the number of directory entries available on
+"`Directory space`" refers to the number of directory entries available on
 the drive, which is usually limited, depending on the type of disk
 drive.  A 1541 drive allows 144 directory entries, while an SFD allows
 244, etc.  Check your drive manual to see what the limitation is.
 
-“Drive space” or “blocks free” mentioned here will refer to actual blocks used/unused on the drive.
+"`Drive space`" or "`blocks free`" mentioned here will refer to actual blocks used/unused on the drive.
 
 Now you will want to plan out which disks you want to use for which
-functions on the BBS.  There are six “designated disks” for BBS
+functions on the BBS.  There are six "`designated disks`" for BBS
 functions.  These can be combined in any form on any drive or number of
 drives.  They are described as follows:
 
-1: The “system” disk
+1: The "`system`" disk::
 
-Contains mostly SEQuential (text) files that do *not *change often. Menu
+Contains mostly SEQuential (text) files that do not change often. Menu
 files, sub-board entry files, and other text/graphics files are all
 included on this disk.  Also, BBS news files are located here.  Will not
 use too much directory or drive space.
 
-System filenames on this disk start with *s*.
+System filenames on this disk start with `s.`. News filenames start with `n.`.
 
-News filenames start with *n*.
-
-2: The “e-mail” disk
+2: The “e-mail” disk::
 
 Contains all user e-mail and forced e-mail files. Will use much more directory space than disk space.
 
-E-mail filenames start with *m*.  Forced e-mail filenames start with *f*.
+E-mail filenames start with `m.`.  Forced e-mail filenames start with `f.`.
 
 If your BBS is part of a network, the NetMail files are stored here.
 These may take up a significant amount of drive space, but not too much
 directory space.
 
-NetMail filenames start with *nm*.
+NetMail filenames start with `nm.`.
 
-3: The “etcetera” disk
+3: The "`etcetera`" disk::
 
 Contains miscellaneous files used to supply BBS information.  Many
 online games and functions use one or more of these files to store their
@@ -888,18 +894,18 @@ frequently.  Storage depends on the number and type of online games and
 programs you are using.  If no online programs use the etcetera disk, it
 will not use too much disk or directory space.
 
-Etcetera filenames start with e.
+Etcetera filenames start with `e.`.
 
-4: The “directory” disk
+4: The "`directory`" disk::
 
 Contains all directories used on the BBS, whether for sub-boards, U/D
 libraries, text file libraries, or similar.  These files change often,
 and this disk will use a fair amount of directory space, but not too
 much disk space.
 
-Directory filenames start with d.
+Directory filenames start with `d.`.
 
-5: The “plus file” disk
+5: The "`plus file`" disk::
 
 Contains all BASIC or ML modules needed to run the BBS.  They load when
 needed to execute various functions.  None of these files will change,
@@ -915,15 +921,14 @@ categories:
 `scn.` top and bottom sysop screen displays (idle screen, online user
 screens, Image Terminal screens)
 
-In this revision of Image BBS, the Extended Command Set extension is
+TIP: In this revision of Image BBS, the Extended Command Set extension is
 enabled by default. This gives the sysop more flexibility in several
-areas. For more information on the ECS system, see page
-*fixme*.
+areas. For more information, see <<extended-command-set>>.
 
 The initial `ml.ecsdefs` definition file which the ECS system needs
 should be copied here also.
 
-6: The “user” disk
+6: The “user” disk::
 
 Contains all user data files, which are expanded as new users sign on.
 There are two files that keep all user information available to the
@@ -955,16 +960,16 @@ you will not get confused as to its purpose.
 
 .Flat file structure
 ****
-Unfortunately, Image is somewhat hobbled by a “flat file
-structure”—i.e., there is no provision for using subdirectories (or even
+Unfortunately, Image is somewhat hobbled by a "`flat file
+structure`"—i.e., there is no provision for using subdirectories (or even
 partitions with 1581 drives) on mass-storage devices which support them
 (the CMD devices are a good example).  All files must reside in the root
 directory to be accessible.  This is a shortcoming I plan on addressing
 in Image BBS 2.0 with the additions of CMD hardware detection (plus any
-other hardware I can get ahold of) and the ability to
-issue DOS commands where appropriate in what is called the "General
-Files" section (which can have message bases, text and plus-file
-subdirectories in a single directory!).
+other hardware I can emulate or get ahold of). The ability to
+issue DOS commands where appropriate is in the `"General
+Files"` section (which can contain message bases, text and plus-file
+items in a single directory!).
 
 A similar modification is possible for Image 1.2b, I just haven't gotten
 much further than the planning stage; which is to say, just a bit
@@ -981,9 +986,9 @@ their proper system disks.
 NOTE: When you boot your BBS, any device can be used, but you
 _must_ use drive #0. If you wish to use a different drive number
 to boot, you must change `setup` to reflect the proper drive.)
-    
-If you are using a floppy-based setup, you need to make a “boot
-    disk,” from which you will load your IMAGE BBS.  Just use a blank
+
+If you are using a floppy-based setup, you need to make a "`boot
+    disk,`" from which you will load your IMAGE BBS.  Just use a blank
     disk, and copy the following files onto it.  This disk is used
     whenever you are re-loading (booting) your BBS.
 
@@ -1001,8 +1006,8 @@ If you are using a floppy-based setup, you need to make a “boot
 |Cell in column 2, row 2
 |===
 
--   Copy to the System disk all files beginning with `s`.
--   Copy to the Etcetera disk all files beginning with `e`. (Note: the
+-   Copy to the System disk all files beginning with `s.`.
+-   Copy to the Etcetera disk all files beginning with `e.`. (Note: the
     REL `e.say` file is optional.  This file contains "`sayings`"
     displayed to the user both at logon and when `SY` is entered at the
     main prompt.  Due to the size of this file, some sysops with smaller
@@ -1423,29 +1428,31 @@ Choose whether to hang up when resetting the modem.
 
 Table : Typical modem result codes
 
-9\. DTR:0 = Normal1 = Reversed
+9. DTR: 0 = Normal 1 = Reversed::
 
-> DTR (Data Terminal Ready) is a connection that tells the DCE (Data
-> Communication Equipment, typically a modem) that the DTE (Data
-> Terminal Equipment, typically a computer or terminal) is ready to
-> transmit and receive data[^2]. Some modems have the logic reversed; if
-> bringing DTR high (toggling it on) signals a disconnect, and then
-> select "`Reversed.`"
+DTR (Data Terminal Ready) is a connection that tells the DCE (Data
+Communication Equipment, typically a modem) that the DTE (Data
+Terminal Equipment, typically a computer or terminal) is ready to
+transmit and receive data footnote:[Source for RS232/EIA232F terminology: _Data Communications: A Business User’s Approach, Fourth Edition_, p. 120.  Also, Rascal’s excellent dissertation of modem terminology included with his "e.modrc" fix.]. Some modems have the logic reversed; if
+bringing DTR high (toggling it on) signals a disconnect, and then
+select "`Reversed.`"
 
-Telnet bridge software
+## Telnet bridge software
 
-Jim Brain's *tcpser-1.0rc6*
+### Jim Brain's `tcpser-1.0rc12`
 
-Tcpser is a telnet bridge program which can interface with either a real
+`tcpser` is a telnet bridge program which can interface with either a real
 Commodore 64 via a serial cable, or an emulator. It can be downloaded
 from:
 
 <http://www.jbrain.org/pub/linux/serial>
 
+NOTE: A slightly updated version can be gotten from FozzTexx's GitHub repository.
+
 ### Using a physical serial port
 
 NOTE: Even if you're using Windows, its ``COM`` _x_ ``:`` nomenclature is replaced by
-Linux's ``/dev/tty``_x_. COM1 is equivalent to */dev/ttys0*. 
+Linux's ``/dev/tty``_x_. COM1 is equivalent to `/dev/ttys0`.
 
 `tcpser <1> -d /dev/ttyS0 <2> -p 6400 <3> -s 19200 <4> -i"e0v0h0x4&C1&D2&K3" <5> -l7 <6> -tSsiI`
 
@@ -1453,11 +1460,15 @@ This suggested
 command line for tcpser means:
 
 use serial port 0
-use incoming telnet port
-6400
+
+use incoming telnet port 6400
+
 report the modem connect rate at 19200kBPS
+
 initialize the modem with the following string
+
 log events at level 7
+
 and show incoming and outgoing RS232 and TCP/IP traffic.
 
 
@@ -1483,11 +1494,12 @@ it via an XML file (there is a well-documented sample file included),
 then have the included `.bat` (Windows batch) or `.sh` (Linux shell script)
 file reference that XML configuration file.
 
-Leif Bloomquist's _BBS Server_
+## Leif Bloomquist's _BBS Server_
 
 This is a Windows program designed to allow a real Commodore 64 to run
 Image BBS.
 
+****
 If you use this program and you have trouble getting the BBS to answer,
 here's some information from Larry “X-TEC” Hedman:
 
@@ -1537,37 +1549,42 @@ that point you should be ready to receive calls. Try connecting to the
 BBS using whatever method you are using, and watch the RX and TX blocks.
 If it doesn't work use a different 1200 baud `+.modem` file until you
 find one that works. Hope this helps.
+****
 
 ## Telnet bridge hardware
 
 Since telnet bridges don't support BPS rate changes over telnet, you
-need to rename a custom version of +.modem called +.modem/telnet. This
-is locked at 14.4 KBPS instead of how the original +.modem file stepped
+need to rename a custom version of `+.modem` called `+.modem/telnet`. This
+is locked at 14.4 kBPS instead of how the original `+.modem` file stepped
 through its BPS rates, issuing initialization commands at each
 speed.
 
 These interfaces plug into the Commodore 64:
 
-Link232
+### Link232
 
 Expansion port; plans are available at
 <http://www.go4retro.com/projects/link232/>
 
-Lantronix UDS-10
+### Lantronix UDS-10
 
 -   sends ATA immediately upon answer
 
-CometBBS
+### CometBBS
 
 -   User port; available soon from <http://www.commodoreserver.com/>
 
-GLink232 interface
+### GLink232 interface
 
--   A SwiftLink clone available from <http://gglabs.us/>. X-TEC
-    mentions: *Tell the seller it's for hooking up to an Image BBS. This
-    makes sure all the control lines are wired correctly.*
+-   A SwiftLink clone available from <http://gglabs.us/>.
 
-# Booting Up
+[quote,X-Tec]
+____
+Tell the seller it's for hooking up to an Image BBS. This
+makes sure all the control lines are wired correctly.
+____
+
+## Booting Up
 
 You are now ready to boot up your new IMAGE BBS and make your first
 “call!”  Most likely you will want to explore and/or continue its
@@ -1580,16 +1597,16 @@ First, insert your boot disk into the proper device.  (We assume device
 
 `load"image 1.2b",8,1`
 
-# Autobooting Systems
+## Autobooting Systems
 
-Sysops with Lt. Kernal hard drives may rename *image 1.2b* to
-*autostart* and have an auto-booting BBS.
+Sysops with Lt. Kernal hard drives may rename `image 1.2b` to
+`autostart` and have an auto-booting BBS.
 
-Sysops with Commodore 128s and CMD hard drives may rename *image 1.2b*
-to *copyright cmd 89*, if the partition selected at power-on contains
+Sysops with Commodore 128s and CMD hard drives may rename `image 1.2b`
+to `copyright cmd 89`, if the partition selected at power-on contains
 this file.
 
-# First Boot
+## First Boot
 
 Now, sit back and let your BBS load up.  After you see the title screen,
 the program does a bit of work, loading various files:
@@ -1601,14 +1618,13 @@ Table : Startup files
 
 If your system files are on a different disk than your boot disk, you
 are prompted to `Insert all system disks and press RETURN`, where
-you should do just that. If all goes well, you should reach the “idle
-screen.”
+you should do just that. If all goes well, you should reach the “`idle
+screen.`”
 
-System won't start? Need troubleshooting help? There's a good discussion
-about files needed in “[The Boot Process](#anchor-299)” on page
-[101](#anchor-299).
+TIP: System won't start? Need troubleshooting help? There's a good discussion
+about files needed in <<the-boot-process>>.
 
-# The Idle Screen
+## The Idle Screen
 
 This is shown when no user is connected to the BBS.  If no keys are
 pressed for about ten seconds after the idle screen shows, the screen
@@ -1632,7 +1648,7 @@ real-time clocks (and perhaps LtK drives).
 
 For now, we will assume you are setting the BBS clock manually.
 
-To set the time and date, type kbd:[\ 1] while at this idle screen. Type the
+To set the time and date, type kbd:[1] while at this idle screen. Type the
 time and date at the following prompts:
 
 For the day of the week, type one of the following numbers:
@@ -1642,16 +1658,16 @@ For the day of the week, type one of the following numbers:
 Type the month, date, and last two digits of the year at each separate
 prompt.
 
-Enter the hour (don't use military or 24-hour time), minute, and A or P
+Enter the hour (don't use military or 24-hour time), minute, and kbd:[A] or kbd:[P]
 for AM/PM for each following prompt.
 
 The top status line changes to reflect the entered date and time.  If
-the information is correct, respond to the OK? prompt by typing y (and
-press RETURN).  Type n (or any key besides y) if you have made a mistake
+the information is correct, respond to the `OK?` prompt by typing kbd:[y] (and
+press kbd:[Return]).  Type kbd:[n] (or any key besides kbd:[y]) if you have made a mistake
 and need to re-enter the data; note that answers to prompts now reflect
 what you just typed to minimize effort.
 
-Now a large clock is displayed, and the BBS waits for a call.  At the
+Now a large clock is displayed, and the BBS waits for a call. At the
 top of the idle screen are several items of interest:
 
 ### The Status Line
@@ -1669,7 +1685,7 @@ doing, four different letters can appear next:
 [%autowidth]
 |====================
 | `P` | Text output is paused 
-| `S` | The BBS is swapping parts of itself from ROM into RAM 
+| `S` | The BBS is swapping parts of itself from undeneath ROM into RAM 
 | `G` | String garbage collection is taking place 
 | `A` | The user has hit `/` or space to abort text output 
 |====================
@@ -1677,7 +1693,7 @@ doing, four different letters can appear next:
 
 The clock and status letters are followed by the minutes and seconds
 remaining for users while they are online.  (Since no one is online at
-the idle screen, it shows ***00:00***.)  When you or a user logs in, the
+the idle screen, it shows `00:00`.)  When you or a user logs in, the
 number of minutes left is displayed.
 
 100 minutes or more is considered "`unlimited time,`" and time remaining
@@ -1691,11 +1707,11 @@ and the right check mark shows when a modem carrier signal is present.
 
 At idle, this area of information just underneath the status line shows
 the handle of the last caller, followed by their logoff time, and the
-time of the last log restart (LR).The window to the right shows the
-number of accounts currently used in the user file (UR).
+time of the last log restart (`LR`).The window to the right shows the
+number of accounts currently used in the user file (`UR`).
 
 When a user logs on, these displays will change to show additional
-information, described on page .
+information, described on page _fixme_.
 
 You may toggle this "`screen mask`" on or off using kbd:[F1], or a programming
 command (discussed in “[Other & Calls](#anchor-314),” page
@@ -1706,13 +1722,33 @@ are outlined in a menu if you press any key aside from a "`command`" key.
 The functions are as follows:
 
 
-Table : Idle screen keys
+
+[width="100%",options="header"]
+.Idle screen keys
+|====================
+| Key | Purpose 
+| kbd:[<-] | Image Term 
+| kbd:[1] |  Set time/date
+| kbd:[2] |  Board Activity Register
+| kbd:[3] |  System disk blocks free
+| kbd:[4] |  Large clock
+| kbd:[5] |  Update free memory
+| kbd:[6] |  Reset modem
+| kbd:[7] |  Reserve BBS
+| kbd:[8] |  View today's activity log
+| kbd:[+] |  Turn modem speaker on
+| kbd:[-] |  Turn modem speaker off
+| kbd:[Shift+A] | Force nightly AutoMaint 
+| kbd:[Shift+N] | Force nightly NetMail processing
+| kbd:[Space] | Redisplay current screen 
+| kbd:[x] | Manually answer modem _fixme_
+|====================
 
 
 ### The Lightbar [[the-lightbar]]
 
-The fifth screen line is referred to as the "`lightbar.`"  This line
-monitors and changes many features of the BBS.  All are toggled by the
+The fifth screen line is referred to as the _lightbar_. This line
+monitors and changes many features of the BBS.  Most can be toggled by the
 sysop at the console, or through a utility program (`+.lb move`,
 discussed in "`Miscellaneous Plus Files`"; this is handy for remote
 maintenance when you can't be at the console).
@@ -1771,25 +1807,28 @@ you wish.  Typical phrases include:
 The final section of the bottom line is the Transmit (T:) window.  This
 displays the last 10 characters sent to the modem.
 
-# Logging On
+## Logging On
 
 You're now ready to go on line and examine your new IMAGE BBS in
-action!  You can log on and edit your s. files, configure any sub-boards
+action!  You can log on and edit your `s.` files, configure any sub-boards
 and U/D libraries, or just look around and get acquainted with its
 features. You may log on either normally or use the "`instant`" logon
 feature.
 
 ### Normal Logon
 
--   Use the *F3* and/or *F5* key to highlight the Loc position on
+-   Use the kbd:[f3] key (moves the white highlight left) and/or kbd:[f5] key (moves the white highlight right) to highlight the `Loc` position on
     the lightbar.
--   Press *F7*, which puts a check mark on the left side of Loc.
+-   Press kbd:[f7], which puts a check mark on the left side of `Loc`.
 
 This starts logging in from the console, and is called a "`local login.`"
+
+****
 We suggest that if you have a telephone connected to your modem, take it
-off the hook at this time.  That way, if an incoming call connects with
+off the hook or unplug it from the modem at this time.  That way, if an incoming call connects with
 your modem but not the BBS (since you're on locally), the caller won't
 assume something is wrong with the BBS.
+****
 
 When a user has logged on, either remotely or locally, the program's
 copyright message and serial number are displayed.  With a remote login,
@@ -1803,17 +1842,17 @@ following references, the character _x_ at the end of a filename will refer
 to either the digit _0_ (this file is seen by ASCII callers) or _1_ (this
 file is seen by Commodore C/G callers).
 
-Then the user is asked to `Press RETURN/ENTER`.  Actually, `A` can
+Then the user is asked to `Press RETURN/ENTER`.  Actually, kbd:[A] can
 be typed to abort the start screen; you could mention that in the
-*s.login x* files.
+`s.login _x_` files.
 
-If `RETURN` is pressed, the program will read the
+If kbd:[Return] is pressed, the program will read the
 disk file `s.start _x_`.
 
 
 Next, the BBS instructs the user:
 
-`ENTER YOUR HANDLE OR _your board name_ ID:`
+ Enter Your Handle Or _your board name_ ID:
 
 If the user has no account, or makes a mistake entering the information,
 they are instructed to type `NEW`.
@@ -1846,7 +1885,7 @@ The main difference from a regular logon is that none of your stats will
 be updated or saved to disk, and your last call date will be set to your
 logon time.
 
-To use the instant logon feature, type `I` at the ***Hit RETURN/ENTER***
+To use the instant logon feature, type kbd:[I] at the `Hit RETURN/ENTER`
 prompt. You are prompted for your password, and immediately taken to the
 main prompt.
 
@@ -1868,17 +1907,19 @@ to them.
 If a user enters a handle that is not found in the user log, they are
 asked if they want to log on as a new user using that handle.
 
-If they type *Y*, the new user procedure is gone through, beginning with
-the reading of the file *s.new user* (but skips the handle prompt).
+If they type kbd:[Y], the new user procedure is gone through, beginning with
+the reading of the file `s.new user` (but skips the handle prompt).
 
 The NEW login procedure consists of four parts:
 
-I\.  General information: handle, real name, password
-II. Terminal parameters: computer type, column width, linefeeds, etc.
-III. Miscellaneous questions: address, occupation, baud rate, etc.
-IV. Personal statement: a chance to type a paragraph or two about
+[upperroman]
+.  General information: handle, real name, password
+. Terminal parameters: computer type, column width, linefeeds, etc.
+. Miscellaneous questions: address, occupation, baud rate, etc.
+. Personal statement: a chance to type a paragraph or two about
     themselves.  This is required; if aborted they are logged off
     without signing up as NEW.
+
 
 Once the new user login procedure is completed, this user information is
 put in new user feedback for you to view later with the *VF* command,
@@ -1960,13 +2001,13 @@ have been included on the disk, but may be edited or replaced with
 whatever you wish.
 
 While at the main command prompt, you can use the WF command (see
-“[Write File](#anchor-353),” page [62](#anchor-353)) command for this.
+<<write-file>> command for this.
 It will give you access to a line-oriented text editor you can use to
 edit files. If you have files other than ones included on the setup
 disks you would like to use, you can import them into the text editor
 using a "`get file`" dot command (type kbd:[.G] at the left margin).
 
-TIP: Be sure to type kbd:[\.] kbd:[C] kbd:[80] kbd:[Return] to set the editor line length to 80
+TIP: Be sure to type kbd:[\.C] kbd:[80] kbd:[Return] to set the editor line length to 80
 characters before ``.G``etting a file. Otherwise, lines with color/graphics
 characters in them may exceed the 40-column line length, causing
 word-wrap and ruining the file.
@@ -1977,12 +2018,12 @@ an offline C/G screen editor to edit your file instead, such as _Kaleidoscope_, 
 ****
 
 Here is a summary of the files discussed in this section. Remember, the
-suffix *x* stands for the digits 0 or 1, for ASCII or Commodore
-Color/Graphics files, respectivelY.
+suffix _x_ stands for the digits 0 or 1, for ASCII or Commodore
+Color/Graphics files, respectively.
 
-.A formal table
+.Miscellaneous editable files
 |===
-|Name of Column 1 |Name of Column 2
+|Filename |Purpose
 
 |Cell in column 1, row 1
 |Cell in column 2, row 1
@@ -1991,13 +2032,9 @@ Color/Graphics files, respectivelY.
 |Cell in column 2, row 2
 |===
 
-Table : Miscellaneous editable files
-
-To create or edit these files, use the WF option (see “page
-[62](#anchor-353)) at the main command level.  You can also use the .Put
+To create or edit these files, use the WF option (see <<write-file>> at the main command level.  You can also use the .Put
 and .Get options (page [Error: Reference source not found](#anchor-356))
-in the editor. (See “[The IMAGE Text Editor](#anchor-291),” page
-[45](#anchor-291) for more information.)
+in the editor. (See <<the-image-text-editor>> for more information.)
 
 NOTE: The next two sections need not be done if you have already
 configured your sub-boards, libraries, and access groups with the config program.
@@ -2007,7 +2044,7 @@ configured your sub-boards, libraries, and access groups with the config program
 After editing these files, you will want to set up your sub-boards and
 U/D libraries if they have not yet been configured.  You can create up
 to 30 sub-boards, 30 UD libraries, and 30 UX libraries.  To do this and
-to change them at any time after, you can run the +.reledit program from
+to change them at any time after, you can run the `+.reledit` program from
 the main command level:
 
 Type `R` at the main prompt, then after the `+.` prompt, type `reledit`.
@@ -2679,25 +2716,19 @@ Access level required to enter the sub-board
 If the user is in local or pseudo-local mode, they also have the option
 to change the current sub-board operator and device/drive assignment.
 
-While defining sub-boards using the +.reledit program, you may specify
+While defining sub-boards using the `+.reledit` program, you may specify
 any of your sub-boards to be:
 
 ### Message Bases:
-
-  ------ ------------------------- -----------------------------------------------------------------------------------------
-  ------ ------------------------- -----------------------------------------------------------------------------------------
 
 Table : Message base abbreviations
 
   -- --
   -- --
 
-Table :
+Table : _fixme_
 
 ### Upload/Download/Exchange:
-
-  --------------- --------------------------------- -------------------------------------------------------------
-  --------------- --------------------------------- -------------------------------------------------------------
 
 Table : U/D and U/X types
 
@@ -2707,7 +2738,7 @@ EITHER:
 &gt; You’re the subop User has ability to edit/delete posts and
 generally maintain the sub-board.
 
-  \* A "password" board:
+. A "password" board::
 
 This requires a password to enter.  The BBS asks any user that has
 access to that board for the password upon entering it.  If they get the
@@ -2718,21 +2749,22 @@ to guess again.  This can be used either for fun, by putting hints to a
 password up other places in the BBS, or to add a measure of security for
 certain boards that you do not want all users to access.
 
-  \* An "anonymous" board:
+. An "anonymous" board::
 
 All bulletins and responses will show as anonymous, even to the
 sub-board operator and sysops.  Great for those "war boards."
 
-  \* A "non-anonymous" board:
+. A "non-anonymous" board::
 
 No anonymous messages are permitted, and users are not asked if they
 would like the post/response to be anonymous.
 
-The RELedit System
+## The RELedit System [[the-reledit-system]]
 
-
-*This is from the documentation on *the TurboREL *disk, with slight
-modifications.*
+****
+This is from the documentation on the TurboREL disk, with slight
+modifications.
+****
 
 Image V1.2 REL SIG's Upload/Download, Exchange Subsystems
 
@@ -2771,12 +2803,12 @@ The User Exchange bases have all the same features above, plus:
 Part Two: General Setup
 
 
-A few variables can be set in line 1 of *+.UD*: *yy%* and *it*.  (They
+A few variables can be set in line 1 of `+.UD`: `yy%` and `it`.  (They
 are currently defaulted to zero.)
 
--   Setting *yy%* to 1 deducts credits for files read online. Setting
-    *YY%* to 2 deducts double credits, and so on.
--   Setting *it* to 1 freezes the user's remaining time on the BBS while
+-   Setting `yy%` to 1 deducts credits for files read online. Setting
+    `yy%` to 2 deducts double credits, and so on.
+-   Setting `it` to 1 freezes the user's remaining time on the BBS while
     they are in the U/D's, giving it back at exit.
 
 Some more things to consider:
@@ -2788,10 +2820,10 @@ Some more things to consider:
 Part Three: Available Commands
 
 
-Toggling *Fn5*'s right check on, you activate the "no credit until
-validated" feature of the BBS.  This check mark can be toggled on or off
-any time a user is online and uploading, until the point the "End Of
-Transfer" message appears.
+Toggling `Fn5`'s right check on, you activate the "`no credit until
+validated`" feature of the BBS.  This check mark can be toggled on or off
+any time a user is online and uploading, until the point the "`End Of
+Transfer`" message appears.
 
 -   If the check is off, the number of times downloaded is set to 0, and
     credits awarded to the user according to their credit ratio.
@@ -2799,10 +2831,10 @@ Transfer" message appears.
   \* If the check is on, the times downloaded is set to -1, but no
 credits awarded until the file is validated by the subop or SIGop.
 
-Toggling Fn5's left check on activates the "Log off after file transfer
-complete?" prompt.
+Toggling `Fn5`'s left check on activates the "`Log off after file transfer
+complete?`" prompt.
 
-### The "About" Option
+### The "`About`" Option
 
 A, Ax When this option is selected, the user sees information about the
 file, including:
@@ -2855,23 +2887,18 @@ version of BASIC.
     language "tail") produces a "hex dump" like a machine language
     monitor would:
 
-**
+ MMMM  HH HH HH HH HH HH HH HH  PPPPPPPP
+
+`MMMM`: Memory address
 
 
-*MMMM  HH HH HH HH HH HH HH HH  PPPPPPPP*
+`HH`: Hex value of each byte
 
+`PPPPPPPP`: PETSCII code of each byte
 
-**
-
-
-*MMMM*: Memory address
-
-
-> *HH*: Hex value of each byte
-
-> *PPPPPPPP*: PETSCII code of each byte
-
-**Discovered recently: This also works in 80 columns!**
+****
+Discovered recently: This also works in 80 columns!
+****
 
 -   As previously mentioned in the setup of the U/D system, credits can
     be charged for reading programs online by setting the variable *yy%*
@@ -4578,9 +4605,6 @@ Display the desired MCI variable.
 
 Parameters: x is MCI variable number:
 
-  ---------- --------------------- ---------- -----------------------------------
-  ---------- --------------------- ---------- -----------------------------------
-
 Table : MCI variables
 
 
@@ -4588,7 +4612,7 @@ Table : MCI variables
 £Wx Wait
 
 
-Delay x seconds before proceeding, similar to £Sx.
+Delay _x_ seconds before proceeding, similar to £Sx.
 
 Parameters: \* x ranges from 1-J (1 to 15 seconds)
 
@@ -4718,18 +4742,7 @@ the baud rate1200
 
 \[...mising text…\]
 
-This section will be altered after adding high-speed +.t to the mix...
-but keep BBSes for historical preservation)
-
-These should be separated by a carriage return, and can be added at any
-time, Example:
-
-LYON'S DEN
-
-
-1-313-437-9486
-
-1200
+****
 
 PORT COMMODORE
 
@@ -4742,6 +4755,7 @@ NIGHT FLIGHT
 1-615-824-5488
 
 1200
+****
 
 (NOTE: Make sure that the *first* line of the file contains the first
 BBS name and not a carriage return, and that there are *no* extra
@@ -4762,7 +4776,7 @@ connection.
 
 To go back to the main menu, press CTRL plus the Commodore key.
 
-File Operations
+#### File Operations
 
 
 You can change communication parameters or use file operation functions
@@ -4774,7 +4788,7 @@ here, which include:
 -   read/send a SEQ file
 -   upload/download functions (including multi-upload & download)
 
-Maintenance Functions
+## Maintenance Functions
 
 
 There are several maintenance commands available, with differing
@@ -4789,12 +4803,9 @@ Each type of command is described in this chapter.  Here is a brief
 synopsis of each command, followed by a more complete description.
 Commands marked with \* are available only from local/pseudo local mode.
 
-  --------- ------------------------------------------------------- ------------------------
-  --------- ------------------------------------------------------- ------------------------
-
 Table : Maintenance functions
 
-Local Maintenance Commands
+### Local Maintenance Commands
 
 
 ### Extended Command Set Editor [[extended-command-set]]
@@ -4803,20 +4814,19 @@ The _Extended Command Set_ or ECS allows you to add or delete commands
 from your BBS without the need to modify your im module or re-boot the
 BBS. It also gives you flexibility in these areas:
 
--   enabling or disabling commands
--   password-protecting access
--   restricting availability of sysop-only commands to local or
-    pseudo-local mode
--   restricting certain commands to specific security levels
--   configuring whether a command calls a plus-file module on disk or a
-    specific line in the memory-resident `im` module (and whether that
-    call requires a GOTO or GOSUB)
+- enabling or disabling commands
+- password-protecting access
+- restricting availability of sysop-only commands to local or pseudo-local mode
+- restricting certain commands to specific security levels
+- configuring whether a command calls a plus-file module on disk or a
+specific line in the memory-resident `im` module (and whether that
+call requires a GOTO or GOSUB)
 
 However, it will *not* allow you to make changes to the
 BASIC program. The ECS will allow you to add both main level and all
 level commands either by loading a module or calling a
 pre-positioned line in your `im` module. Each command has several
-    flags attached to it:
+flags attached to it:
 
 
 Table : Extended Command Set flags
@@ -4826,34 +4836,29 @@ Table : Extended Command Set flags
 Using the ECS command editor is really very simple—there are just a few
 things that you should know.
 
-1.  If you Add or Edit *any* commands while you are in the editor, you
+. If you Add or Edit *any* commands while you are in the editor, you
     should first (S)ave the new configuration then (M)ake it active.
-2.  A pre-configured ml.ecsdefs has been included with this package that
+. A pre-configured `ml.ecsdefs` has been included with this package that
     contains all the standard IMAGE v1.2 commands plus the commands MA
     (macro toggle) and ECS which loads the ECS editor (+.ecs).
 
 Re-boot your BBS and add or edit any commands that you wish using +.ecs
 by entering ECS at the main prompt.
 
-NOTE: `ml.ecsdefs` is a binary file and must be COPIED. Also if you plan to
-use the MACS (also included on this diskette) you must install the ECS
-prior to installing MACS.
+### User Edit
 
-EDUser Edit
-
-
-Edit your users' information whenever needed.  Type the handle or ID
+*ED* allows you to edit your users' information whenever needed.  Type the handle or ID
 number of the user to edit.
 
--   If entering the ID number, do not enter the BBS identifier (if your
-    identifier is *SS*, and you want to edit user number 50, you would
-    enter *50*, not *SS50*)
+TIP: If entering the ID number, do not enter the BBS identifier (if your
+identifier is `SS`, and you want to edit user number 50, you would
+enter kbd:[50], not kbd:[SS50].)
 
 The BBS then loads the user's stats into memory.  Anyone with
 pseudo-local maintenance access may change anything they wish.
 
 -   One exception to this is the password, which can only be seen or
-    changed by the sysop (ID\#1).
+    changed by the sysop (ID #1).
 
 The first page of user information is shown.  If you wish to change
 anything, type its number at the prompt, or *N* to view the next page of
@@ -4861,19 +4866,19 @@ information.
 
 Then enter the new information.  Don't worry if you make a mistake: you
 can change it again if you wish, nothing is permanently changed until
-you answer `Y` to the `Save changes?` prompt when you are done.
+you answer kbd:[Y] to the `Save changes?` prompt when you are done.
 
-If the information you wish to change concerns the user's "flags”—that
+If the information you wish to change concerns the user's "flags"—that
 is, certain functions the user can access—then you get a list like in
 the <<bbs-configuration-editor>>.
 
 ****
 No matter how much I read and re-read this next paragraph, it never
 made much sense to me.  So I'm re-writing it, hopefully keeping the
-spirit and intent of the original wording...  hurty head bad...
+spirit and intent of the original wording... hurty head bad...
 ****
 
-These flags reflect the default settings whenever you first change the
+These flags inherit the default settings of whichever 
 access group you gave the user.  Afterwards, they may be customized on a
 per-user basis.  Changing one flag will not affect any other flags for
 that user.
@@ -4894,7 +4899,6 @@ by changing the user's handle.
 
 ### File Copier
 
-
 `CP` allows you to access the online file copier, patterned
 after the popular "Copy-All" program by Jim Butterfield.  Our thanks go
 to him for supplying us with the source code to help us write this
@@ -4914,12 +4918,10 @@ Use `+.CP-rel` online, or `rel copy` (for one 1541 drive only) offline to do thi
 With `WF`, you may access the IMAGE text editor as a mini word-processor, to write or
 edit any sequential (SEQ) file.
 
-When you type `WF` at the
-main prompt, the text editor will load, and you are able to use it to ``.P``ut (save) and ``.G``et (load) files from any device and drive you have
-online. This makes it easy to write, edit, or—in the case of "`putting`"
-to a file which already exists, append to—a file.
-
-"`word`"
+When you type `WF` at the main prompt, the text editor will load, and you are able to
+use it to ``.P``ut (save) and ``.G``et (load) files from any device and drive you have
+online. This makes it easy to write, edit, or—in the case of "`putting`" to a file which
+already exists, append to—a file.
 
 ### Additional Dot Commands
 
@@ -4956,31 +4958,31 @@ under the given name, and if one is found, it prompts:
 
 Here, you can:
 
--   \[A\]ppend the text in the editor to the existing file
--   \[R\]eplace the file on disk with the text in the editor
--   \[Q\]uit to the editor (keeping existing text intact) without saving
+-   [A]ppend the text in the editor to the existing file
+-   [R]eplace the file on disk with the text in the editor
+-   [Q]uit to the editor (keeping existing text intact) without saving
     changes
 
-.Put
+\.Put
 
 Allows you to save the file wherever you wish, returning to where you
 left off in the editor to continue working.  You are prompted for a
 filename in the same way as above (if you used ``.G``et, the filename you
 got is displayed serving as a reminder of the default filename).  You
-are prompted for the device and drive to save to (the default is 8:0).
+are prompted for the device and drive to save to (the default is 8,0).
 
-.Query
+\.Query
 
 Re-displays the editor's opening message, showing how many lines used so
 far, remaining, and bytes of free memory.
 
-.Unborder
+\.U Unborder
 
 Removes a ``.B``order or partial ``.B``order that you have done.  It removes the
 first and last lines, and first and last characters from each line if
 they are the same character.
 
-RRun a Plus-File
+\.R Run a Plus-File
 
 
 Run any plus file you have on your plus file disk from the main prompt.
@@ -5027,7 +5029,7 @@ This month we are going to look at one of the truly outstanding features
 of IMAGE 1.2, the enhanced `+.VF` program.
 
 The basic `+.VF` from the version 1.0 has been expanded and enhanced by
-Dr.Bob of the "Enchanted Forest BBS" in Philadelphia.  Bob has worked
+Dr. Bob of the "Enchanted Forest BBS" in Philadelphia.  Bob has worked
 very closely with Little John and has really done a tremendous job with
 the `+.VF`.
 
@@ -5049,7 +5051,7 @@ entered in the editor.
 
 The Edit option will ask which message to edit.  A numeric input is
 required.  If you don't remember which one you want to edit, simply
-entering the *?* will bring up a list of titles and numbers, enter the
+entering a `?` will bring up a list of titles and numbers. Enter the
 number of the message you wish to edit and it will be loaded into the
 editor for whatever editing you desire.
 
@@ -5057,8 +5059,8 @@ The Kill option works the same way, the number of the message you want
 killed.  Better be sure here as there is no safety check: if you say
 kill, it is gone.
 
-List does just that, it will provide a list of available "canned
-messages".  You can have up to 60 of them if you desire.
+List does just that, it will provide a list of available "`canned
+messages`".  You can have up to 60 of them if you desire.
 
 The final option is Send, which simply asks which one to send.  Again,
 if you don't know a question mark will bring up the list.  Very neat.
@@ -5079,10 +5081,10 @@ have one that you send to anyone that runs into an error on your system
 will be asked "which one" and ``?`` will bring up the list of those you
 have available.
 
-*CR*ed is very handy for giving credit.  I'm sure you have all had
+`CR`ed is very handy for giving credit.  I'm sure you have all had
 occasion to need to restore some credit to a user for a bad download or
 as a reward for something, now you can do it from here, no need to go
-into ED just to give him credit.
+into `ED` just to give him credit.
 
 Del is one of my own favorites.  The user that signs on with an
 obviously fake account or the irate user that says "`just delete me from
@@ -5104,21 +5106,19 @@ auto delete.
 _Selective delete_ picks which messages you want to retain through a menu
 of options:
 
-*\[D\]elete \[K\]eep \[A\]bort*
+ [D]elete [K]eep [A]bort
 
-
-
-*The options should be self-explanatory, I hope.*
+The options should be self-explanatory, I hope.
 
 All in all the VF is now about anything a busy sysop could want to
 maintain his daily message traffic from his users.  This is really one
-of the better "hidden" features of 1.2.  Well done Dr. Bob.
+of the better "`hidden`" features of 1.2.  Well done, Dr. Bob.
 
 (A late note here, someone that just converted to IMAGE from 12.0 said
 that the "+.VF" was one of the best features he had noticed since his
 conversion.)
 
-\(c) January 1990 FandF Products
+(c) January 1990 FandF Products
 
 Permission to reprint is granted provided the file is printed in its entirety.
 
@@ -5135,7 +5135,7 @@ previously).
 After each message he has several options, including:
 
 -   advancing to any message by typing the message number
--   N or RETURN continues on to the next message
+-   N or `RETURN` continues on to the next message
 -   R responds to the message
 -   A changes the user's access
 -   F forwards the message to any other user as e-mail
@@ -5159,7 +5159,7 @@ credits and access level) can be established using this command.  A
 reserved account is useful for a new user who may sign up when you are
 not available to validate them.
 
-The RS command establishes any deleted account (where the handle is \^)
+The RS command establishes any deleted account (where the handle is kbd:[^])
 as a reserved account. When first entered, you are prompted to enter the
 starting account number.
 
@@ -5172,18 +5172,17 @@ A password, access level, and number of credits will be prompted for.
 
 After this information is entered, the BBS reserves that account.
 
-### +.weed
+### `+.weed`
 
 The weed program allows you to automatically go through your user files,
 and delete users who have not called within a specified amount of time.
 
-To use it, run +.weed.  You are asked if you would like auto-weed, or selective weed.
+To use it, run `+.weed`.  You are asked if you would like auto-weed, or selective weed.
 
 
 -   "Selective weed" prompts whether you want to delete each user that
     it finds before deleting them.
-
-It also includes users with non-weed status, since you will be prompted.
+    It also includes users with non-weed status, since you will be prompted.
 
 
 -   Auto-weed doesn't prompt, but deletes each user it finds that has
@@ -5227,23 +5226,25 @@ copyright message.  Below that is data on your BBS that includes the
 number of Subs, U/Ds, etc. that are defined, as well as your node number
 if you are on the network.  Below that are 5 options:
 
-***S – Sub***
+```
+S – Sub
 
-***U - U/D***
+U - U/D
 
-***X - U/X***
+X - U/X
 
-***G – SIG***
+G – SIG
 
-***N - NetSubs***
+N - NetSubs
+```
 
 Select S, U, X, G or N.
 
-*Note*: If you are not part of a network, the NetSubs option will not
+NOTE: If you are not part of a network, the NetSubs option will not
 appear.  This documentation assumes you are networked.  If not,
 operation is exactly the same, you just can't use the NetSub option.
 
-Editing Sub-Boards
+#### Editing Sub-Boards
 
 
 If you select S, the BBS enters the Sub-board list editor's first
@@ -5265,10 +5266,24 @@ To add a Sub, type A and hit RETURN.
 ### Ranges
 
 Typing ranges of sub-boards to add, delete, move, or insert works
-similar to BASIC's LIST command.
+similar to BASIC's kbd:[LIST] command.
 
-  --------- -------------------------------------------------------------------------------------------
-  --------- -------------------------------------------------------------------------------------------
+
+.Ranges
+[width="100%"]
+|====================
+| x | List sub #x
+|  |  
+|  |  
+|  |  
+|  |  
+|  |  
+|  |  
+|====================
+.Ranges
+===
+
+===
 
 Type the board number you want to edit, then press *RETURN*. (Pressing
 *RETURN* by itself exits to the main RELedit menu.)
@@ -5581,12 +5596,12 @@ This is the most important part. You need to find someone to network
 with. Once you find someone, or a group, you need to decide who is going
 to be the network operator. At this point you would skip forward to the
 appropriate section. If you are the network operator, read the section
-entitled **Creating A New Network**, and if you are not, then read the
+entitled <<creating-a-new-network>>, and if you are not, then read the
 section entitled **Joining An Existing Network**. If you want to join
 the existing Image Network that we are running, contact THE CHIEF on
 Port Commodore (THE CHIEF @ PCM, in Net-Lingo).
 
-Creating a New Network
+## Creating a New Network [[creating-a-new-network]]
 
 
 ### Network Planning
@@ -5611,6 +5626,7 @@ node, and then number the rest. This will be important later.
 .Network Map
 [[netmap-6-20-90]]
 ****
+_fixme_
 ```
 ABC-REG WZK SCJ RRT-TNS
 | | | |
@@ -5638,7 +5654,7 @@ CIA-TST WOL TOS
 
 ### Configuring Your Network
 
-Now comes the fun part. From within Image, run the + file *+.NM/utils*.
+Now comes the fun part. From within Image, run the plus file `+.NM/utils`.
 Since you have never configured a network on your system, it will ask
 you if you want to create a network. Say Yes.
 
@@ -5646,13 +5662,13 @@ Then, you will be taken to the Utilities menu. There are several options
 available. You will need to edit the nodes, using option A.
 
 You need to edit node 1, and put your info into it. Make sure to set
-*everything*. Then, add the other nodes in the same way.
+_everything_. Then, add the other nodes in the same way.
 
 Note that you need to change the connections while in the node editor.
-When changing a connection, you need to make sure that you edit *both*
+When changing a connection, you need to make sure that you edit _both_
 nodes to make the connection complete. Leave any empty connections as
-*0*. When you are done, press *RETURN* to get back to the utilities
-menu, and select the option to ***Make 'nm.create'***. This will make
+`0`. When you are done, press kbd:[Return] to get back to the utilities
+menu, and select the option to `Make 'nm.create'`. This will make
 the file that you must give to each of the sysops in your network so
 they can configure themselves in. You must also tell each sysop what
 his/her node # will be.
@@ -5820,41 +5836,35 @@ If you wish to have any further information about netmail, you can
 contact PROFESSOR, on Lyon's Den East. The phone number is (313)
 453-2576.
 
-Compatibility Notes
+## Compatibility Notes
 
 
 This software has been tested on the following list of equipment:
 
 COMPUTERS
 
-Commodore 64
-
-Commodore 128 in 64 mode
+* Commodore 64
+* Commodore 128 in 64 mode
 
 MODEMS
 
-Commodore 1670 (old and new)
-
-Supra 2400
-
-Transcom 1200H
-
-Aprotek 2400 (minimodem)
+* Commodore 1670 (old and new)
+* Supra 2400
+* Transcom 1200H
+* Aprotek 2400 (_MiniModem_)
 
 DISK DRIVES
 
-Commodore 1541, 1571, and 1581
-
-Commodore SFD 1001 W/IEEE Flash
-
-Lt. Kernal Hard Drives
+* Commodore 1541, 1571, and 1581
+* Commodore SFD 1001 with _IEEE Flash_ interface
+* Lt. Kernal hard drives
 
 Please note that we cannot guarantee that it will work with anything
 that is not on this list. However, most modems are compatible with those
 tested, as are most disk drives. As a general rule, most equipment that
 will work with IMAGE BBS, will work with NetMail.
 
-The IMAGE Network
+### The IMAGE Network
 
 
 As we have mentioned in several places in this manual, we are running
@@ -5878,31 +5888,32 @@ month, which would be given to those sysops that do have long distance
 connections. The idea being to share the costs a bit, so no one has to
 bear the whole burden.
 
-Programming Notes
+### Programming Notes
 
+_fixme_
 
 ### E-Mail System
 
 The e-mail system for Image 1.2 was written while the Network was in the
 planning stages, over a year ago. Several "hooks" were put into it so
 that when the Network was available, E-Mail would be ready. The file
-*+.NMextra* is a mini-module that E-Mail loads when NetMail is active.
-The routines in *+.NMextra* handle all of the network functions that the
+`+.NMextra` is a mini-module that E-Mail loads when NetMail is active.
+The routines in `+.NMextra` handle all of the network functions that the
 users can access.
 
 ### Configuration Editors
 
-The file *+.NM/config* is a stand-alone module that handles all of the
+The file `+.NM/config` is a stand-alone module that handles all of the
 network configuration that a sysop would need to be able to do.
 
-The file *+.NM/utils* is a stand-alone module that handles the Network
+The file `+.NM/utils` is a stand-alone module that handles the Network
 Administrator's functions.
 
 ### Network Maintenance
 
-The file *+.NMauto* is loaded by the *+.lo* program whenever Network
+The file `+.NMauto` is loaded by the `+.lo` program whenever Network
 Maintenance needs to be done. It is this module that handles incoming
-and outgoing calls. In addition to *+.NMauto* there are several
+and outgoing calls. In addition to `+.NMauto` there are several
 mini-modules that process files as they are received. These include
 processors for Mail, the Netwall, NetNews, Updates, and so on. Also,
 when the TurboREL Sigs are used, there are processors for NetSubs.
@@ -5912,11 +5923,17 @@ when the TurboREL Sigs are used, there are processors for NetSubs.
 There are a few ++ files that do a lot of the "dirty work" for the
 network.
 
-  ----------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  ----------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Table : NetMail Plus Files
-
+.NetMail Plus Files
+[width="100%",options="header"]
+|====================
+| File | Purpose 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+|====================
 ### Future Changes
 
 More additions are planned for the network system. A few online games
@@ -5924,14 +5941,14 @@ that send results via the net are planned, and some new features are
 going to be added to e-mail. Updates will be available on Lyon's Den
 East, and other Image Support BBSes.
 
-Programming and Troubleshooting
+## Programming and Troubleshooting
 
 
 This chapter provides programming information for those interested in
 the programming details of IMAGE BBS, and troubleshooting information
 for those that may be having problems.
 
-Overall Description
+### Overall Description
 
 
 IMAGE BBS is a modular program, consisting of both BASIC and machine
@@ -5947,7 +5964,7 @@ these modules takes time, slowing down the BBS somewhat, since you must
 wait for them to load.  However, we feel the trade-off is well worth
 it!  If you have a RAM Expansion Unit, CMD RAMLink, or faster disk drive
 (IEEE, Lt. Kernal, CMD HD, etc.), the load process is speeded up
-considerably *or is in some cases instantaneous*, and helps quite a
+considerably-or is in some cases instantaneous-and helps quite a
 bit!  Those that do not experience more waiting, but no loss of
 capabilities on the BBS.
 
@@ -5957,7 +5974,7 @@ features can be added without even changing the program, but if you can
 program in BASIC a little, you'll be surprised at how easy it is to add
 your own ideas.
 
-Modules
+### Modules
 
 
 IMAGE uses a main BASIC program (*im*), and several machine language
@@ -5979,81 +5996,26 @@ use.  We will describe a few of the most commonly used here.  This is
 *not* meant to be a detailed guide to programming, only a brief
 description so you may get the idea.
 
-*I have HTMLized the programmer's reference guide, and am working on
-continuing to improve it.*
+****
+I have HTMLized the programmer's reference guide, and am working on
+continuing to improve it.
+****
 
-Common Subroutines
+### Common Subroutines
 
+.Common subroutines
+[width="100%",options="header"]
+|====================
+| Call With | Line | Purpose 
+| GOSUB | 1001 | Position RELative file pointer 
+| x | x | x
+| x | x | x
+| x | x | x
+| x | x | x
+| x | x | x
+|====================
 
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-|  |
-+--+
-
-Table : Common subroutines
-
-Variable Handling in Modules (Plus-Files)
+### Variable Handling in Modules (Plus-Files)
 
 
 IMAGE variable usage in programming modifications and modules should be
@@ -6086,8 +6048,6 @@ straight if you know otherwise, 'k?
 
 ### Reserved String Variables
 
-  -------- -------------------------------------------------------------------------------
-  -------- -------------------------------------------------------------------------------
 
 Table : Reserved string variables
 
@@ -6095,8 +6055,6 @@ Table : Reserved string variables
 
 The current reserved integer variables for Image v1.2 are as follows:
 
-  ------- ------------------------------------------------------------------------------------
-  ------- ------------------------------------------------------------------------------------
 
 Table : Reserved integer variables
 
@@ -6105,13 +6063,9 @@ Table : Reserved integer variables
 The current reserved floating point variables for Image v1.2 are as
 follows:
 
-  ------- ------------------------------------------------------------
-  ------- ------------------------------------------------------------
+Table : Reserved floating point variables
 
-<span
-id="anchor-768"></span>Table : Reserved floating point variables
-
-Arrays
+### Arrays
 
 
 The following arrays are dimensioned by the BBS.  Most can be used for
@@ -6120,9 +6074,7 @@ your own programs, except where noted.
 
 Table : Reserved Arrays
 
-
-
-(from programmer’s ref guide)
+(_fixme_: from programmer’s ref guide)
 
    AC% User's current access level
 
@@ -6381,7 +6333,7 @@ LD\$ User's last call date (11 digits, like D1\$)
 
    X\$
 
-Image Output Routine
+### Image Output Routine
 
 
 In order to send text to the modem and screen (PRINT, for you BASIC
@@ -6391,44 +6343,44 @@ also eliminates much of the garbage collection that the C64 is notorious
 for.  Just as many are used to using the question mark as a shortcut to
 PRINT something in BASIC:
 
-*?"Hello There!"*
+ ?"Hello There!"
 
-You may use the ampersand (*&*), IMAGE's "print" character, to do the
+You may use the ampersand (`&`), IMAGE's "`print`" character, to do the
 job:
 
-*&"Hello There!"*
+ &"Hello There!"
 
 will have the desired effect in the BBS environment!  Well, almost.  By
 default, Image displays the above like using PRINT with a semicolon on
 the end.  (That does not move down to the next line when finished
 PRINTing the current line.)  If you want a carriage return to separate
-lines, add one anywhere inside quotations by typing function key *F6*,
-which displays *K*.
+lines, add one anywhere inside quotations by typing function key kbd:[f6],
+which displays `K`.
 
-*&"Hello There!K"*
+`&"Hello There!kbd:[f6]"`
 
 You may also:
 
-*&an\$* or *&tt\$(x)*(anything using a string variable)
+`&an$` or `&tt$(x)` (anything using a string variable)
 
-- BUT -
+_but_
 
-*&str\$(i)*(numeric variable output is not supported yet.)
+`&str$(i)` (numeric variable output, as in `&i`, is not supported yet.)
 
 Some oddities in syntax:
 
--   You must follow a *THEN* clause with a colon before using the
+-   You must follow a `then` clause with a colon before using the
     ampersand.  In other words:
 
-*if b then &"hello"(*will not work)
+`if b then &"hello"` will not work.
 
-*if b then:&"hello"(*must be used instead)
+`if b then:&"hello"` must be used instead.
 
 -   If the ampersand is used all by itself:
 
-*b=b+l:&:if b then ...* (*&* outputs the contents of *a\$*)
+`b=b+l:&:if b then ...` (`&` outputs the contents of `a$`)
 
-### Other & Calls
+### Other `&` Calls
 
 The ampersand is also used with arguments to call all of the machine
 language routines in IMAGE BBS.  The table of arguments that are useful
@@ -6496,49 +6448,39 @@ simply add the following to the end of line 82 in *setup*:
 
 ### Removing Extra Login Security Checks
 
-From Marc Honey:
 
+[quote,Marc "`Deadman`" Honey]
+____
 One thing that really annoys me is the extra security checks after
 entering your login id and password. To get rid of those extra checks
-all you have to do is remove the following lines from the +.lo file on
-the Plus Disk.
+all you have to do is remove the following lines from `+.lo` on
+the Plus File disk.
+____
 
-*673 &"Additional Information:":a=int(rnd(1)\*5)+1:on a goto
-675,676,677,678*
+```
+673 &"Additional Information:":a=int(rnd(1)\*5)+1:on a goto 75,676,677,678
+674 p$="FIRST name ":t$=ff$:goto679
+675 p$="LAST name ":t$=ll$:goto679
+676 p$="AREA CODE (???)XXX-YYYY ":t$=mid$(ph$,2,3):goto679
+677 p$="DIALING PREFIX (XXX)/???-YYYY":t$=mid$(ph$,7,3):goto679
+678 p$="LAST FOUR DIGITS (XXX)/YYY-???? ":t$=right$(ph$,4)
+```
 
-*674 p\$="FIRST name ":t\$=ff\$:goto679*
-
-*675 p\$="LAST name ":t\$=ll\$:goto679*
-
-*676 p\$="AREA CODE (???)XXX-YYYY ":t\$=mid\$(ph\$,2,3):goto679*
-
-*677 p\$="DIALING PREFIX (XXX)/???-YYYY ":t\$=mid\$(ph\$,7,3):goto679*
-
-*678 p\$="LAST FOUR DIGITS (XXX)/YYY-???? ":t\$=right\$(ph\$,4)*
-
-**
-
-Change line 679
+Change line 679 from: `679 gosub1006:c$=an$:goto156`
 
 
-from: *679 gosub1006:c\$=an\$:goto156*
+to: `679 goto156`
+
+Change line 157 from: `157 ifpw$=z$andt$=c$andz$&lt;&gt;""andc$&lt;&gt;""then160`
 
 
-to: *679 goto156*
-
-Change line 157
-
-
-from: *157 ifpw\$=z\$andt\$=c\$andz\$&lt;&gt;""andc\$&lt;&gt;""then160*
-
-
-to: *157 ifpw\$=z\$andz\$&lt;&gt;””then160*
+to: `157 ifpw\$=z\$andz\$&lt;&gt;””then160`
 
 That’s all there is to it! As an added bonus, removing those few lines
 will drop your +.lo file size from 40 blocks to 39 blocks and every
 little bit helps on space and speed ;)
 
-Troubleshooting / Q & A
+### Troubleshooting / Q & A
 
 
 Here are some of the most common questions and problems that people
@@ -6563,33 +6505,34 @@ following:
 6.  The disk or disk image could be faulty.  Try re-copying or
     re-downloading it.
 
-### The Boot Process
+### The Boot Process [[the-boot-process]]
 
-*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\
+****
 \* The following article appeared in \*\
 \* the May issue of \*\
-\* "The Reflection" \*\
+\* "`The Reflection`" \*\
 \* \*\
 \* It is reproduced here for the \*\
 \* benefit of any that may have \*\
 \* missed it. It may be used as a \*\
 \* text file on other boards provided \*\
-\* it is used in it's entirety. \*\
-\* \*\
-\* "The Reflection" is available by \*\
+\* it is used in its entirety. \*\
+
+\* "`The Reflection`" is available by \*\
 \* subscription for \$15.00 per year \*\
 \* from: \*\
+
 \* Reflection \*\
 \* P.O. Box 525 \*\
 \* Salem, UT 84653 \*\
 \* \*\
-\* NOTE: Subscription price is subject \*\
-\* to change without notice. \*\
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
-*
 
-*IN THE BEGINNING:\
-By: Fred Dart (THE CHIEF)*
+NOTE: Subscription price is subject to change without notice. 
+****
+
+IN THE BEGINNING
+
+By: Fred Dart (THE CHIEF)
 
 This month we'll take a look at the 'boot up' process and show what
 files are accessed and in what order.
@@ -6597,7 +6540,7 @@ files are accessed and in what order.
 There has been a lot of confusion and thus a lot of questions about what
 was happening and when, this should help a bit.
 
-IMAGE is loaded by a “loader” program called *IMAGE*, *IMAGE 1.1*, or
+IMAGE is loaded by a “`loader`” program called *IMAGE*, *IMAGE 1.1*, or
 *IMAGE 1.2* as appropriate. This loader program then loads the "ml"
 (machine language) portion of the program, called simply, "ml", or "ml"
 plus the appropriate version number. We will not continue to indicate
@@ -6610,15 +6553,15 @@ version with some additional "ml" routines loaded both before and after
 "setup") and then program control is turned over to the BASIC portion of
 the program by RUNning the "setup" program.
 
-setup will "set up" all of the system variables, DIM all variables that
+setup will "`set up`" all of the system variables, DIM all variables that
 the system needs to operate and load additional files, if necessary, and
 will then look for a file called "bd.data" which contains all of the
 device and drive information for the system.
 
-"bd.data" is a sequential file and can be on the boot disk, if there is
+`bd.data` is a sequential file and can be on the boot disk, if there is
 a separate boot disk, or on the disk that the system is booted from. If
-the "bd.data" file is not found there will be a prompt to "INSERT ALL
-SYSTEM DISKS".
+the `bd.data` file is not found there will be a prompt to `INSERT ALL
+SYSTEM DISKS`.
 
 If "bd.data" is found the program will next open the "u.config" file and
 read the information from record one, the sysop information, which is
@@ -6758,20 +6701,15 @@ string of acceptable characters.
 
 \(c) May 1990 FandF Products
 
-Permission to reprint is granted provided the file is printed in it's
+Permission to reprint is granted provided the file is printed in its
 entirety.
 
-**I*f you want physical 1541/1571/1581 disks sent through postal mail,
-please send an e-mail to sym\_rsherwood@yahoo.com, specifying the
-format(s).  We'll make arrangements regarding shipping cost—not that
-it'll be much.  My goal is not to make money off this—unless you want to
-donate some—but see a revival of one of the top Commodore 64 BBSes into
-common usage again.*
+## Questions And Answers
 
 **Q: **As reported by Ray "The Wiz" LeJuez: the bootup process seems to
 freeze with his C128D in C64 mode, after the message
 
-***Reading System Configuration...***
+ Reading System Configuration...
 
 
 The internal 1571 drive is set to device \#8, his Lt. Kernal HD is
