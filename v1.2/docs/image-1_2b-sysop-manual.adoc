@@ -1,6 +1,6 @@
 = Image BBS v1.2b Sysop Guide
 Ryan Sherwood <sym.rsherwood@gmail.com>
-v1.0, September 28, 2019
+v1.0, October 8, 2019
 :toc: auto
 :toclevels: 5
 :doctype: book
@@ -11,6 +11,16 @@ v1.0, September 28, 2019
 
 Copyright © 1991 _New Image Software_
 
+.TODOs
+****
+* fix heading levels
+* fix typographical quotes
+* command summary appendix
+* keystrokes in kbd:[x] wrapper
+* fix footnotes
+* "will <whatever>" -> "<whatever>s"
+****
+
 Manual OCRed by JOE COMMODORE.
 
 Modifications by IRON AXE, RASCAL, METAL MAGE, PINACOLADA, and many others.
@@ -18,14 +28,6 @@ Modifications by IRON AXE, RASCAL, METAL MAGE, PINACOLADA, and many others.
 Updated by PINACOLADA from documentation by DR. BOB, LITTLE JOHN, and others.
 
 Handle: ___________________________   Network Identifier: __________
-
-.Table of Contents
-****
-This is just a plain text version of the OCRed sysop guide, to remind me which sections belong where.
- I added commands before each section but
-I think that makes it too cluttered. Better to have a command summary
-appendix.
-****
 
 ## Preface
 
@@ -144,11 +146,11 @@ nothing against monospaced text—after all, it's what a BBS is made
 of—but in the long run it really makes my eyes bug out looking at pages
 upon pages of it.
 
-_Text output by the BBS, and filenames, are italicized._
+`Text output by the BBS, and filenames, are monospaced.`
 
 Keyboard keys (like kbd:[Return]) have boxes around them.
 
-> Additional sections, information, or changes from the original manual are indented.
+Additional sections, information, or changes from the original manual are put in a sidebar, like this one.
 
 There are the beginnings of cross-references to where sections are now.
 If you see a missing cross-reference, please let me know.
@@ -325,7 +327,7 @@ lines to be added to `setup` and `im` but they are already in, all you
 need is the `+.ME` (macro editor) that is available on the PlusFile disk
 ^#^4.  After you have the macro editor, you can define your macros and
 then turn them on by putting the check mark on the right side of
-*Exp* on the second page of the lightbar (press `F8`).
+`Exp` on the second page of the lightbar (press kbd:[f8]).
 
 The support numbers in the manual are wrong.  The one voice support line
 is 801-423-2209.  The BBS numbers are:
@@ -343,28 +345,33 @@ We hope you enjoy your IMAGE and if you need help don't hesitate to call.
 
 ## Addenda for Image 1.2a, page 2
 
+****
+FIXME: Fold this information into the main manual; it will reduce content
+the new sysop has to read through.
+****
+
 Here are some changes that have been made since the manual was printed.
 Please note them carefully.
 
 Pg 1  DISK DRIVES
 
-Since the release of the CMD hard drive, IMAGE was updated to version
+Since the release of the Creative Micro Designs hard drive, IMAGE was updated to version
 1.2A, which includes the "`CMD Mods.`"  IMAGE now has the ability to
 address partitions 1 through 254.
 
 Pg 4  DESIGNATING DRIVES
 
-IMAGE 1.2 added some new files called ``scn.``_xx_ (where ``xx`` are `t1 t2
-t3 t4, c1 c2 c3 c4` files.  This consists of eight "`screen`" files.
+IMAGE 1.2 added some new files called ``scn.xx`` (where ``xx`` are `t1 t2
+t3 t4 c1 c2 c3 c4`).  These eight "`screen`" files are the text of and
+color for 4 screen masks displayed either at system idle, or other areas
+on the BBS.
 These files must be placed on the plus file drive for proper operation.
-They are text and color, respectively, of the screen masks displayed at
-system idle, or other areas on the BBS.
 
 Pg 5  COPYING FILES
 
 In this section you are told to choose the modem file that matches your
 modem and rename it to `+.modem`.  That is no longer necessary.  There
-is now only *one* modem file for all 1200 and 2400 baud modems, and it
+is now only _one_ modem file for all 1200 and 2400 baud modems, and it
 is `+.modem`.  After you have completed the configuration of your board,
 run the `modemconfig` file and select the modem type you are using.  It
 will then write the parameters to the etcetera disk.  Any time you
@@ -412,16 +419,7 @@ Pg 29  COMMANDS
 
 There is no longer a `BC` (baud change) option.
 
-INFO: The heck there isn't! I put it back for historical preservation, even though it's unlikely to do anything useful! Yay me.
-
-INFO: admonition block
-
-Pg 55 THE IMAGE EDITOR
-
-
-Some commands have been changed and some print modes have been added or
-changed.  Check the menu in the editor for current commands/modes.
-
+NOTE: The heck there isn't! I put it back for historical preservation, even though it's unlikely to do anything useful! Yay me.
 
 ## Preface
 
@@ -525,16 +523,15 @@ products to be used.
 And finally, to _you_, for trying IMAGE BBS
 out! We're sure you won't be sorry you did!
 
-[text]
-Don Gladden
+[.text-right]
+-Don Gladden
 
 New Image Software
 
 ## Product Information
 
 This section contains all warranty, program usage, and support
-information. This section contains all
-warranty, program usage, and support information.
+information.
 
 ## Usage Agreement
 
@@ -557,7 +554,7 @@ Image Software for further instructions regarding transfer.
 ## Copyright
 
 This program and documentation manual are copyrighted under the laws of
-the United States and Canadia* governments.  You may not copy the
+the United States and Canadian governments.  You may not copy the
 program for distribution purposes at any time, whether for personal gain
 or not.  You may NOT remove the copyright notice or serial number at any
 time.
@@ -663,9 +660,10 @@ way.
 
 NOTE: Until further notice, this manual covers all current versions of Image BBS: 1.0, 1.1 and 1.2.
 
+****
 Update 7/2014: There is a [Facebook group](https://www.facebook.com/groups/141819789446) and the beginnings of a
 support web site, [Pinacolada's Projects](https://sites.google.com/site/pinacoladasprojects/)
-
+****
 
 Also, stop by Jeff Ledger's [Commodore TelBBS forum](http://jledger.proboards19.com/), where there is
 some archived information about Qlink and telnet BBSes.
@@ -702,7 +700,9 @@ IMAGE was completely developed using a Lt. Kernal drive, using LUs 0 to
 
 ### CMD Hard Drives
 
-They work.  CMD mods.
+****
+TODO: move "`CMD Mods`" from addenda to here.
+****
 
 ### ICT Hard Drives
 
@@ -716,18 +716,16 @@ fine with the ICT drive.
 
 .Supported modems
 |===
-|Purpose
-
-|Cell in column 1, row 1
-|Cell in column 2, row 1
-
-|Cell in column 1, row 2
-|Cell in column 2, row 2
+| Commodore 1650 | Hesmodem II
+| Commodore 1660 with CD | Commodore 1670 (both models)
+| MPP 1604 | Avatex 1200hc
+| Total-Tel | Aprotek Trans-Com TCM 1200H & 1200H jr.
+| Westridge | Supra 2400 baud
+| Mitey-Mo | Most Hayes-compatible modems
 |===
 
 
-See the "`Questions & Answers`" section, page *fixme*
-in the programming chapter for more information on setting the BBS up
+See <<modem-configuration>> for more information on setting the BBS up
 for your particular modem or telnet bridge.  (NOTE: The modem routines
 in IMAGE BBS are contained in individual modules, so if a modem is not
 supported, it is very likely that a module will be written for it that
@@ -740,15 +738,29 @@ conjunction with other peripherals.  Version 071487 of Commodore's
 RAMDOS is provided.  It is set to define your RAMdisk as device 7, which
 is how it is supported by Image BBS.
 
-*fixme*
+#### AutoRAMDOS
 
-Table : RAMDOS files
+.RAMDOS files
+[%autowidth]
+[%header]
+|===
+| Filename | Purpose
+| g | (fixme)
+| f | file copier, copies any file with a two or more character long filename to a disk (fixme: which one?)
+| r | BBS setup file, modified by Jay Levitt for use with REUs
+| s | RAMDOS binary
+|===
+
+****
+TODO: expand this section with actual usage/setup info.
+The RAMDOS interface page is 207, I believe.
+****
 
 ### Printers
 
 Most Commodore compatible printers should work with IMAGE BBS.  Standard
-Commodore routines are used by the program; using logical file \#4,
-device \#4, with a secondary address of 7 to allow for upper- and
+Commodore routines are used by the program; using logical file #4,
+device #4, with a secondary address of 7 to allow for upper- and
 lower-case.
 
 ### Other Interfaces
@@ -761,8 +773,9 @@ Batteries Included, both of which perform well.
 
 ### RS232 (EIA232) Interfaces
 
-There are two files: `ml.rs232/user` and `ml.rs232/swift`—depending on
-the type of modem or telnet bridge you'll be using, rename one to
+There are two files: `ml.rs232/user` (for the user port)
+and `ml.rs232/swift` (for a SwiftLink or Turbo232 high-speed interface).
+Depending on the type of modem or telnet bridge you'll be using, rename one to
 `ml.rs232` in order to achieve the proper setup.
 
 ### Fastload Cartridges
@@ -775,15 +788,15 @@ success with using.
 
 ### Creative Micro Designs SuperCPU
 
-There are patches to make the BBS run at 20 mHz. During file
-transfers, the BBS must be slowed down to 1 mHz with a POKE to the
-SuperCPU speed register.
+There are patches to make the BBS run at 20 mHz. During serial
+I/O, the BBS must be slowed down to 1 mHz with a POKE to the
+SuperCPU's speed register.
 
 ## Getting Things Going
 
 ****
 If you want physical 1541/1571/1581 disks sent through postal mail,
-please send an e-mail to sym\_rsherwood@yahoo.com, specifying the
+please send an e-mail to sym.rsherwood@gmail.com, specifying the
 format(s).  We'll make arrangements regarding shipping cost—not that
 it'll be much.  My goal is not to make money off this—unless you want to
 donate some—but see a revival of one of the top Commodore 64 BBSes into
@@ -924,7 +937,6 @@ screens, Image Terminal screens)
 TIP: In this revision of Image BBS, the Extended Command Set extension is
 enabled by default. This gives the sysop more flexibility in several
 areas. For more information, see <<extended-command-set>>.
-
 The initial `ml.ecsdefs` definition file which the ECS system needs
 should be copied here also.
 
@@ -976,69 +988,94 @@ much further than the planning stage; which is to say, just a bit
 further than the BBS editor quoting... sigh.
 ****
 
-### Setting Up Your Image BBS
-
 We'll start by copying the files which the BBS needs to function to
 their proper system disks.
 
 #### Boot Disk
 
+If you are using a floppy-based setup, you need to make a "`boot
+disk,`" from which you will load your IMAGE BBS.  Just use a blank
+disk, and copy the following files onto it.  This disk is used
+whenever you are re-loading (booting) your BBS.
+
 NOTE: When you boot your BBS, any device can be used, but you
 _must_ use drive #0. If you wish to use a different drive number
 to boot, you must change `setup` to reflect the proper drive.)
 
-If you are using a floppy-based setup, you need to make a "`boot
-    disk,`" from which you will load your IMAGE BBS.  Just use a blank
-    disk, and copy the following files onto it.  This disk is used
-    whenever you are re-loading (booting) your BBS.
+Whether you're using a floppy disk or hard drive partition, copy the
+following files to the device you want to boot from:
 
--   Whether you're using a floppy disk or hard drive partition, copy the
-    following files to the device you want to boot from:
-
-[title='Required boot disk files']
+.Required Boot Disk files
+[%autowidth]
+[%header]
 |===
-|File |Purpose
-
-|Cell in column 1, row 1
-|Cell in column 2, row 1
-
-|Cell in column 1, row 2
-|Cell in column 2, row 2
+|Filename | Purpose/notes
+| `image 1.2b`
+| Boot file (load"image 1.2b",_device_,1)
+| `im` | Core BBS routines, written in BASIC
+| `ml 1.2` | Core machine language routines
+| `ml.editor.loader` | Swaps BBS text editor into place from RAM underneath ROM when needed
+| `ml.editor`
+| BBS text editor routines
+| `ml.extra`
+| Fast garbage collect; most are two seconds in length
+| `ml.pmodes`
+| Print mode definitions (see <<message-command-interpreter>>)
+| `ml.rs232`
+| RS232 communication ML, renamed as above
+| `screen 1.2`
+| Title screen graphic file
+| `setup`
+| Initialization routines, written in BASIC
 |===
 
--   Copy to the System disk all files beginning with `s.`.
--   Copy to the Etcetera disk all files beginning with `e.`. (Note: the
-    REL `e.say` file is optional.  This file contains "`sayings`"
-    displayed to the user both at logon and when `SY` is entered at the
-    main prompt.  Due to the size of this file, some sysops with smaller
-    systems may wish to copy over `e.say-smaller` as `e.say`, or not use
-    this feature at all by omitting the file entirely.)
--   Copy to the Plus File disk all files beginning with `+.` (don't
-    forget `+.modem`), `++`, and `scn.`. Also, `ml.ecsdefs` should be
-    copied here in order for the default Extended Command Set
-    definitions to work properly upon bootup.
--   The user files are written during the first-time configuration
-    process, directory and e-mail files after your BBS is up
-    and running.
+. Copy to the System disk all files beginning with `s.`.
+. Copy to the Etcetera disk all files beginning with `e.`.
+
+NOTE: The REL `e.say` file is optional.  This file contains "`sayings`"
+displayed to the user both at logon and when `SY` is entered at the
+main prompt.  Due to the size of this file, some sysops with smaller
+systems may wish to copy over `e.say-smaller` as `e.say`, or not use
+this feature at all by omitting the file entirely.
+
+. Copy to the Plus File disk the following files beginning with `+.` (don't
+forget `+.modem`), `++`, and `scn.`. Also, `ml.ecsdefs` should be
+copied here in order for the default Extended Command Set
+definitions to work properly upon bootup.
+
+.Required Plus-File Disk files
+[%header]
+[%autowidth]
+|===
+|Filename | Purpose/notes
+
+|+.modem
+|Modem communication routines; rename as necessary
+
+|+.lo
+|Idle screen (waiting for call) plus-file
+
+|ml.ecsdefs
+|Extended Command Set definitions (see <<extended-command-set>>)
+
+|scn.*
+|Text and color information for screen masks
+|===
 
 If you are using a user port modem, rename `ml.rs232/user` to
 `ml.rs232`. If you are using a high-speed modem or telnet bridge
-program, rename `ml.rs232/swift` to `ml.rs232`. `config` may be modified
-in the future to make this procedure automatic.
+program, rename `ml.rs232/swift` to `ml.rs232`.
+
+****
+`config` may be modified in the future to make this procedure automatic.
+****
+
+The user files are created during the first-time configuration
+process; directory and e-mail files after your BBS is up
+and running.
 
 It is fine to put these boot files on your System disk, assuming you
 have sufficient drive space.
-
-[title='Required plus-file disk files']
-|===
-|File |Purpose
-
-|Cell in column 1, row 1
-|Cell in column 2, row 1
-
-|Cell in column 1, row 2
-|Cell in column 2, row 2
-|===
 
 Now you are ready to configure IMAGE BBS!
 
@@ -1057,7 +1094,7 @@ Bla bla, some sort of intro. *fixme*
 
 ### Configuring a New System
 
-You begin by loading the configuration program from your back-up disk.
+You begin by loading the configuration program from your back-up disk (side 2 of a 1541 disk).
 Use the standard Commodore `load` command (assuming 8 is the device
 number you're booting from):
 
@@ -1067,36 +1104,199 @@ After it is loaded, type `run`. The configuration editor is very
 complete and self-documenting.  You should follow each step in sequence
 just as they are listed in the configuration menu.
 
-#### Device/Drive Assignments
+### Available Keys
+
+To select an option, use the kbd:[crsr &#129121;] and kbd:[crsr &#129123;]
+keys. To change the value the highlight bar is on, hit kbd:[Return].
+
+You can usually back out of a menu option by pressing kbd:[<-].
+
+Use this procedure with any menu item in the configuration editor.
+
+### Devices/Drives
 
 The first menu selection helps define the devices and drives you have to
-run your BBS on.  Selecting the DEVICE/DRIVE menu option will bring up a
+run your BBS on.  Selecting the `Devices/Drives` menu option will bring up a
 sub-menu of options.  The system of sub-menus will take you completely
 through your device and drive setup, defining each of the six required
 system drives, identifying which device and drive they are set to, as
 decided earlier.
 
-The default values are for device 8, drive 0. To select an option, use
-the *CRSR up* and *CRSR down* keys. To change the value the highlight
-bar is on, hit *RETURN*. Use this procedure with any menu item in the
-configuration editor.
+The default values are for device 8, drive 0. 
 
-### Message Base, Upload/Download / Exchange Setup
+### Message Base Section
 
-.RELedit System
+.TurboRELs System
 ****
-Since this configuration editor was written, New Image Software
-developed improved handling regarding these sections. Called the
-TurboRELs, they can be configured while on the BBS via the
-“RELedit” system.
+After this configuration editor was written, New Image Software
+developed improved handling regarding the message bases and
+file transfer areas. Called the TurboRELs, they can be configured
+while on the BBS via the "`RELedit`" system.
 
-NOTE: If you'd like to join the BBS network, you must use
-this, instead of the built in SEQ style message bases.
+NOTE: If you'd like to join the BBS network, you must use the
+TurboRELs, instead of the older SEQuential style message bases
+created by this configuration editor.
+
+You can start off with this older message base system and upgrade
+later, there are conversion programs included on the TurboREL disk.
+TODO: add notes about converting
 
 See <<the-reledit-system>> for more information.
 ****
 
-### Access Levels
+#### Edit Subboard
+
+##### Name
+
+##### Access
+
+##### Subop
+
+You also enter a _subop_ (_sub_-board _op_erator; a user given an area of
+the BBS to maintain) for each sub-board/library.  This is done by typing
+the ID number of the user desired.  If you are configuring a new BBS,
+you have no users yet.  Therefore, assign the subop duties to either
+yourself (user 1) or to no-one (user -1).  Of course, you may change
+this later.
+
+Each sub-board/library must be defined as to which device and drive to
+put the files on (posts, responses, U/D files).  The device and drive
+menu options allow you to set these.
+
+When you're done with your selections, select the last option, "Keep
+Parameters" and you are returned to the prompt to assign another
+sub-board/library.  When you're done, simply select the "`Main Menu`"
+option.
+
+##### Device
+
+##### Drive
+
+### Upload/Download Section
+
+### UD Exchange Section
+
+### Access Groups
+
+You should now define your access groups.  There are 10 groups, numbered 0-9.
+Each access group can have different capabilities as you wish.
+
+All new users signing on to the BBS are automatically placed into group 0.
+
+We also suggest that, at least to start, you define group 9 as the most
+powerful group.  When you first log on to your BBS as sysop, you are
+assigned group 9 access.  You may change your access group after logging
+on for the first time.
+
+#### Edit Access Group
+
+The parameters for each group consist of:
+
+-   Group name
+-   Time in minutes permitted per call (1-99 or 0=infinite)
+-   Number of calls permitted per day (1-254 or 0=infinite)
+-   Amount of time permitted idling (no activity at a command prompt)
+    (1-9 minutes)
+-   Number of downloads per call (1-255 or 0=infinite)
+
+When you have completed all assignments for a group, select the `Keep
+Parameters` option and move on to another group.  When all groups are
+assigned satisfactorily, choose `Return to Main Menu`.
+
+NOTE: Any changes in access group information, either with the offline
+`config` editor or the online `+.reconfig` editor, require a reboot
+before the changes take effect.
+
+##### Group Name
+
+##### Time/Call
+
+##### Calls/Day
+
+##### Idle Time
+
+##### Downloads/Call
+
+##### Edit Flags
+
+Each group has a set of "`flags`" assigned to users placed in that group.
+These flags may be customized for individual users at a later time if
+desired.  With this editor, you set the flags as you wish them assigned
+when first entering the particular group.  The flags usually toggle
+between "`Yes`" or "`No,`" but a few require numeric input.
+
+###### User Flags [[user-flags]]
+
+The 15 flags assigned to each access group:
+
+.User Flags
+[%autowidth]
+[%header]
+|===
+|Flag | Type | Purpose
+
+| Non-Weed Status
+| Yes/No
+| Yes: Group is not deleted from the user log after not calling for a specified number of months.  (See <<AutoWeed>>.)
+
+| Credit Ratio
+| Numeric
+| The number of credits awarded (1-9) per line written in a post, response or file block uploaded. Default ratio is 1:1.
+
+| Local Maintenance
+| Yes/No
+| Yes: Group has access to BBS maintenance commands. Only give very trusted users access to this.
+
+| Post/Respond Capability
+| Yes/No
+| Yes: Group can post messages in message bases.
+
+| UD/UX Access
+| Yes/No
+| Yes: Group can use Upload/Download or User eXchange subsystems.
+
+| Maximum Editor Lines
+| Numeric
+| Lines of text (10-100, in multiples of 10: 0=10, 1=20, 2=30...) group has available to write messages, e-mail, or feedback.
+
+| Unlimited DL Credit
+| Yes/No
+| Yes: no credit is deducted when files are downloaded.
+
+| Remote Maintenance
+| Yes/No
+| Yes: can write or remove forced e-mail, view feedback, and view system logs.
+
+| E-mail Access
+| Yes/No
+| Yes: group can send/receive e-mail.
+
+| User List Access
+| Yes/No
+| Yes: group can list BBS users.
+
+| B.A.R./Log Access
+| Yes/No
+| Yes: group can view the <<board-activity-register>> or daily system logs.
+
+| Sub-board Maintenance
+| Yes/No
+| Yes: group can edit or re-configure SIGs or sub-boards, and edit or delete other users' posts.
+
+| Files Maintenance
+| Yes/No
+| Yes: group can edit, validate, award credit to users in the U/D section.
+
+| MCI Access
+| Yes/No
+| Yes: group has access to the <<message-command-interpreter>>.
+
+| UD/UX at Prime Time
+| Yes/No
+| Yes: group can upload or download from U/Ds or U/Xs during prime time.
+|===
+
+#### Access Levels
 
 You must then assign access to each of your boards/libraries.  Access is
 calculated using the following method, which is used throughout the BBS.
@@ -1105,14 +1305,14 @@ group’s access value:
 
 .Access group values
 [%autowidth]
-[options="header"]
+[%header]
 |===
 | Group   | Value
-| Group 0 | 1 
-| Group 1 | 2  
-| Group 2 | 4  
-| Group 3 | 8  
-| Group 4 | 16  
+| Group 0 | 1
+| Group 1 | 2
+| Group 2 | 4
+| Group 3 | 8
+| Group 4 | 16
 | Group 5 | 32
 | Group 6 | 64
 | Group 7 | 128
@@ -1120,12 +1320,12 @@ group’s access value:
 | Group 9 | 512
 |===
 
-### An Example
+#### An Access Group Example
 
 If you wished groups 3, 5, 7, and 9 to access a given board, you would
 add:
 
-.Access group example
+.Adding access groups together
 [%autowidth]
 [options="header",options="footer"]
 |===
@@ -1145,136 +1345,53 @@ the BBS will go through groups 0-9, asking you if that group gets access
 immediately display) the value for you. You may do this in the
 configuration editor, or any part of the BBS that defines an access level.
 
-You also enter a _subop_ (sub-board operator; a user given an area of
-the BBS to maintain) for each sub-board/library.  This is done by typing
-the ID number of the user desired.  If you are configuring a new BBS,
-you have no users yet.  Therefore, assign the subop duties to either
-yourself (user 1) or to no-one (user -1).  Of course, you may change
-this later.
 
-Each sub-board/library must be defined as to which device and drive to
-put the files on (posts, responses, U/D files).  The device and drive
-menu options allow you to set these.
+### BBS Info
 
-When you're done with your selections, select the last option, "Keep
-Parameters" and you are returned to the prompt to assign another
-sub-board/library.  When you're done, simply select the "`Main Menu`"
-option.
-
-### Editing Access Groups
-
-You should now define your access groups.  There are ten groups, zero
-through nine.  Each access group can have different capabilities as you wish.
-All new users signing on to the BBS are automatically placed into group
-zero.  The parameters for each group consist of:
-
--   Group name
--   Number of calls permitted per day (1-254 or infinite \[0\])
--   Time in minutes permitted per call (1-99  or infinite \[0\])
--   Amount of time permitted idling (no activity at a command prompt)
-    (1-9 minutes)
--   Number of downloads per call  (1-255 or infinite \[0\])
-
-### User Flags [[user-flags]]
-
-Each group has a set of "`flags`" assigned to users placed in that group.
-These flags may be customized for individual users at a later time if
-desired.  With this editor, you set the flags as you wish them assigned
-when first entering the particular group.  The flags usually toggle
-between “Yes” or “No,” but a few require numeric input.
-
-.User Flags
-[%autowidth]
-[%header]
-|===
-|Flag | Type | Purpose
-
-| Non-Weed Status   | Yes/No |  Yes: Group is not deleted from the user log after not calling for a specified number of
-                                months.  (See <<AutoWeed>>.)
-
-| Credit Ratio      | Numeric | The number of credits awarded (1-9) per
-                                line written in a post or file block uploaded.
-                                Default ratio is 1:1.
-
-
-| Local Maintenance       |  Yes/No |   Yes: Group has access to BBS maintenance
-                                    commands. Only give very trusted users
-                                    access to this.
-
-| Post/Respond Capability |  Yes/No |   Yes: Group can post messages in message
-                                    bases.
-
-| UD/UX Access            |  Yes/No |   Yes: Group can use upload/download or user
-                                    exchange subsystems.
-
-| Maximum Editor Lines    |  Numeric |  Lines of text (10-100, in multiples of 10:
-                                    0=10, 1=20, 2=30...) group has available to
-                                    write messages, e-mail, or feedback.
-
-| Unlimited DL Credit     |  Yes/No |   Yes: no credit is deducted when files are
-                                    downloaded.
-
-| Remote Maintenance      |  Yes/No |   Yes: can write or remove forced e-mail, view
-                                    feedback, and view system logs.
-
-| E-mail Access           |  Yes/No |   Yes: group can send/receive e-mail.
-
-| User List Access        |  Yes/No |   Yes: group can list BBS users.
-
-| B.A.R./Log Access       |  Yes/No |   Yes: group can view the Board Activity
-                                    Register or daily system logs.
-
-| Sub-board Maintenance   |  Yes/No |   Yes: group can edit or re-configure SIGs or
-                                    sub-boards, and edit or delete other users'
-                                    posts.
-
-| Files Maintenance       |  Yes/No |   Yes: group can edit, validate, award credit
-                                    to users in the U/D section.
-
-| MCI Access              |  Yes/No |   Yes: group has access to the Message
-                                    Command Interpreter.
-
-| UD/UX at Prime Time     |  Yes/No |   Yes: group can upload or download from U/Ds
-                                    or U/Xs during prime time.
-|===
-
-We also suggest that, at least to start, you define group 9 as the most
-powerful group.  When you first log on to your BBS as sysop, you are
-assigned group 9 access.  You may change your access group after logging
-on for the first time.
-
-When you have completed all assignments for a group, select the *Keep
-Parameters* option and move on to another group.  When all groups are
-assigned satisfactorily, choose "`Return to Main Menu`".
-
-NOTE: Any changes in access group information, either with the offline
-`config` editor or the online `+.reconfig` editor, require a reboot
-before the changes take effect.
-
-### BBS Information
-
-Now you get to identify your BBS.  Select the *BBS Info* option from the
+Now you get to identify your BBS.  Select the `BBS Info` option from the
 main menu.  It has several specific questions about you and your BBS to
 help personalize it.
 
-First, the sysop's information:
+#### New User Credits
 
-You are asked for the handle you have chosen to use on your BBS.  This
-information is assigned to user number one, the sysop account.
+Credits are points that users accrue or lose depending on their actions
+on the BBS. They earn more by uploading files, posting bulletins in the
+message bases, playing games, the credit exchange and possibly by other
+methods. They can also be awarded by the sysop for no good reason! The
+final selection here is to set the number of credit points new users
+receive when first signing up to your BBS.  This can be from 0 to
+65,000, but we assume most sysops will not want to assign that many to
+new users.
 
-You are also asked to provide a password. Choose it carefully since this
-is usually the most powerful account on the BBS, and you will not want
-it compromised.
+#### Set BBS Name
 
-Then you are asked a few other questions that are added to the data in
-your account to start the user file.  This information can be changed
-inside the BBS later, if you desire (using the `ED` or `EP` commands).
+#### Set System Identifier
 
-*fixme*
+NOTE: This is different than the _node ID_ used if you set up a network later.
 
-Table : BBS setup information
+#### Set Sysop Information
 
-### Prime Time
+This information is assigned to user #1, the sysop account.
+
+##### Handle
+
+You are asked for the handle you have chosen to use on your BBS.
+
+##### Password
+
+##### First/Last Name
+
+##### Phone Number
+
+#### Set Main Level Prompt
+
+This is a message users see when they are not in any particular
+subsystem.  It can be anything you want, but should be short. The
+default prompt is `IMAGE:`.
+
+After establishing your prompt, return to the *BBS Info* menu.
+
+### Prime Time Options [[prime-time]]
 
 A period where everyone is limited to being online a certain number of
 minutes, and U/D access is limited to users with the “U/D at Prime Time”
@@ -1291,24 +1408,17 @@ This information may be changed later if you wish.
 
 When you are finished with the Prime Time option, choose *Keep Parameters* to return to the *BBS Info* menu.
 
-## Main Prompt
+### Load Configuration Files
 
-This is a message users see when they are not in any particular
-subsystem.  It can be anything you want, but should be short. The
-default prompt is `IMAGE:`.
+### Save/Resave Configuration Files
 
-After establishing your prompt, return to the *BBS Info* menu.
+### Exit Configuration Editor
 
-## Credit Points
 
-Credits are points that users accrue or lose depending on their actions
-on the BBS. They earn more by uploading files, posting bulletins in the
-message bases, playing games, the credit exchange and possibly by other
-methods. They can also be awarded by the sysop for no good reason! The
-final selection here is to set the number of credit points new users
-receive when first signing up to your BBS.  This can be from 0 to
-65,000, but we assume most sysops will not want to assign that many to
-new users.
+
+
+
+
 
 This completes the *BBS Info* section of your configuration!
 
@@ -1333,15 +1443,16 @@ This completes the configuration of the BBS!  You can now select "Exit
 Configuration Editor" and choose the appropriate option:
 
 ```
-Return to BASIC
-Cold start the machine
+Exit To BASIC
 Boot IMAGE BBS
+Cold Start BASIC
+Main Menu
 ```
 
-(If you change your mind, you can still escape with ←.) For now, let's
-select `Return to BASIC` and continue with setting up the modem.
+(If you change your mind, you can still escape with kbd:[<-] or `Main Menu`.)
+For now, let's select `Exit To Basic` and continue with setting up the modem.
 
-## Modem Configuration
+## Modem Configuration [[modem-configuration]]
 
 You can run a dial-up BBS (and in fact some people still do), but for
 convenience's sake, and to get the most callers possible, you'll
@@ -1350,7 +1461,7 @@ probably want to have incoming connections via the Internet.
 If you're using a real Commodore 64, you'll be using an interface which
 plugs in to either the user port (for example, an Omnitronix RS232
 interface), or expansion port (a Turbo232 or Glink interface). A serial
-cable connects to a PC which runs TCP/IP to RS232 “bridge” software,
+cable connects to a PC which runs TCP/IP to RS232 "`bridge`" software,
 allowing the BBS to send and receive modem commands and BBS data even
 though there's not a real modem connected.
 
@@ -1382,10 +1493,10 @@ Image 1.2 Modem Configuration
   15 -- Hayes 19.2k(ATA/DTR/X4)
   16 -- Customized
 
-Modem Type? \[\]
+Modem Type?
 ```
 
-Type 16 (Customized) is the one you'll want for operation with a telnet bridge program.
+`Type 16 (Customized)` is the one you'll want for operation with a telnet bridge program.
 
 Here is a summary of options presented when that choice is made:
 
@@ -1393,37 +1504,37 @@ Here is a summary of options presented when that choice is made:
 
 Pick the highest rate your modem or telnet bridge supports.
 
-2\. 0 = Escape codes (+++)1 = Data Terminal Ready (DTR) hangup
+2\. 0 = Escape codes (\+\+\+) 1 = Data Terminal Ready (DTR) hangup
 
-> +++ escape codes are used mostly on older modems such as the Commodore
-> 1670.  Hayes-compatible modems usually support the DTR line with the
-> Commodore user port or an RS232 interface in the expansion port.
+****
+\+\+\+ escape codes are used mostly on older modems such as the Commodore
+1670.  Hayes-compatible modems usually support the DTR line with the
+Commodore user port or an RS232 interface in the expansion port.
+****
 
-3\. 0 = Auto answer (*ATS0=1*)1 = Manual answer (*ATA*)
+3\. 0 = Auto answer (`ATS0=1`) 1 = Manual answer (`ATA`)
 
-4\. 0 = ATH1 = No ATH
+4\. 0 = ATH 1 = No ATH
 
-
-
-This refers to whether your modem includes *ATH* in its command set.
+This refers to whether your modem includes `ATH` in its command set.
 
 5\. 0 = Local off-hook1 = Not
 
-> When you are logged on to the BBS from the local console, should the
-> modem be taken off-hook so people trying to call in get a busy signal?
+When you are logged on to the BBS from the local console, should the
+modem be taken off-hook so people trying to call in get a busy signal?
 
-6\. 0 = ATH01 = ATH
+6\. 0 = ATH0 1 = ATH
 
-This is just a matter of semantics: does your modem use *ATH* or *ATH0* to hang up?
+This is just a matter of semantics: does your modem use `ATH` or `ATH0` to hang up?
 
 7\. 0 = Hang-up in modem reset1 = Not
 
 Choose whether to hang up when resetting the modem.
 
-8\. Value for *ATX*
+8\. Value for `ATX`
 
-> This controls the number of error reporting (1-4) codes used by the
-> modem (*VOICE*, *ERROR*, etc.) It is usually left at 4.
+This controls the number of error reporting (1-4) codes used by the
+modem (`VOICE`, `ERROR`, etc.) It is usually left at 4.
 
 
 Table : Typical modem result codes
@@ -1445,9 +1556,10 @@ select "`Reversed.`"
 Commodore 64 via a serial cable, or an emulator. It can be downloaded
 from:
 
-<http://www.jbrain.org/pub/linux/serial>
+http://www.jbrain.org/pub/linux/serial
 
-NOTE: A slightly updated version can be gotten from FozzTexx's GitHub repository.
+NOTE: A slightly updated version can be gotten from FozzTexx's GitHub repository:
+https://github.com/FozzTexx/tcpser
 
 ### Using a physical serial port
 
@@ -1456,14 +1568,13 @@ Linux's ``/dev/tty``_x_. COM1 is equivalent to `/dev/ttys0`.
 
 `tcpser <1> -d /dev/ttyS0 <2> -p 6400 <3> -s 19200 <4> -i"e0v0h0x4&C1&D2&K3" <5> -l7 <6> -tSsiI`
 
-This suggested
-command line for tcpser means:
+This suggested command line for `tcpser` means:
 
 use serial port 0
 
 use incoming telnet port 6400
 
-report the modem connect rate at 19200kBPS
+report the modem connect rate at 19200 kBPS
 
 initialize the modem with the following string
 
@@ -1503,18 +1614,18 @@ Image BBS.
 If you use this program and you have trouble getting the BBS to answer,
 here's some information from Larry “X-TEC” Hedman:
 
-> Jeff, I experienced the same problems you described when I started using
+Jeff, I experienced the same problems you described when I started using
 BBS Server with an Omnitronix RS232 interface plugged into the modem
 port. I never could get it to work at any of the 2400 baud settings but
 1200 baud works fine and connections say connected at 1200 baud but in
 actuality, the speed is much faster.
 
-> On my Image 1.0 version, I am using the Avatex 1200 *+.modem* file. If
+On my Image 1.0 version, I am using the Avatex 1200 *+.modem* file. If
 using 1.2a I think I used the 1670 modem file but you can try any of the
 1200 baud modem files until you find one that works. In BBS Server, you
 must build and use the TelBBS Standard Cable as described in the docs.
 
-> On the Comms page, set for *1200,N,8,1*. Set the serial cable type to
+On the Comms page, set for *1200,N,8,1*. Set the serial cable type to
 option 1 and click on ***Set Defaults***. You should have check marks
 for *Enable hardware flow control* and *ATE1 (local Echo)* set by
 default.
@@ -1564,7 +1675,7 @@ These interfaces plug into the Commodore 64:
 ### Link232
 
 Expansion port; plans are available at
-<http://www.go4retro.com/projects/link232/>
+http://www.go4retro.com/projects/link232/
 
 ### Lantronix UDS-10
 
@@ -1572,11 +1683,11 @@ Expansion port; plans are available at
 
 ### CometBBS
 
--   User port; available soon from <http://www.commodoreserver.com/>
+-   User port; available soon from http://www.commodoreserver.com/
 
 ### GLink232 interface
 
--   A SwiftLink clone available from <http://gglabs.us/>.
+-   A SwiftLink clone available from http://gglabs.us/.
 
 [quote,X-Tec]
 ____
@@ -1587,7 +1698,7 @@ ____
 ## Booting Up
 
 You are now ready to boot up your new IMAGE BBS and make your first
-“call!”  Most likely you will want to explore and/or continue its
+"`call!`"  Most likely you will want to explore and/or continue its
 configuration, using included tools to:
 
 	*fixme*
@@ -1604,7 +1715,7 @@ Sysops with Lt. Kernal hard drives may rename `image 1.2b` to
 
 Sysops with Commodore 128s and CMD hard drives may rename `image 1.2b`
 to `copyright cmd 89`, if the partition selected at power-on contains
-this file.
+this file. You also need a program which sends the 128 into 64 mode.
 
 ## First Boot
 
@@ -1637,7 +1748,7 @@ turn back on.
 ### Setting the Time
 
 Unless your BBS clock is set automatically, you should see a flashing
-message to *Set Time!*  The message continues to flash until you do
+message to `Set Time!`  The message continues to flash until you do
 so.  (The BBS runs fine if the time is not set but timestamps for news
 items, message base posts, and such will be incorrect.)
 
@@ -1653,7 +1764,16 @@ time and date at the following prompts:
 
 For the day of the week, type one of the following numbers:
 
-*fixme*
+[%autowidth]
+|===
+| kbd:[1] | Sunday
+| kbd:[2] | Monday
+| kbd:[3] | Tuesday
+| kbd:[4] | Wednesday
+| kbd:[5] | Thursday
+| kbd:[6] | Friday
+| kbd:[7] | Saturday
+|===
 
 Type the month, date, and last two digits of the year at each separate
 prompt.
@@ -1683,18 +1803,18 @@ doing, four different letters can appear next:
 
 .Activity indicator letters
 [%autowidth]
-|====================
+|===
 | `P` | Text output is paused 
 | `S` | The BBS is swapping parts of itself from undeneath ROM into RAM 
 | `G` | String garbage collection is taking place 
-| `A` | The user has hit `/` or space to abort text output 
-|====================
+| `A` | The user has hit kbd:[/] or space to abort text output 
+|===
 
 
 The clock and status letters are followed by the minutes and seconds
 remaining for users while they are online.  (Since no one is online at
 the idle screen, it shows `00:00`.)  When you or a user logs in, the
-number of minutes left is displayed.
+number of minutes left on the call is displayed.
 
 100 minutes or more is considered "`unlimited time,`" and time remaining
 changes to `--:xx` (_xx_ being seconds).
@@ -1721,15 +1841,14 @@ Several functions are available at this screen from the console, which
 are outlined in a menu if you press any key aside from a "`command`" key.
 The functions are as follows:
 
-
-
-[width="100%",options="header"]
+[%header]
+[%autowidth]
 .Idle screen keys
 |====================
 | Key | Purpose 
 | kbd:[<-] | Image Term 
 | kbd:[1] |  Set time/date
-| kbd:[2] |  Board Activity Register
+| kbd:[2] |  <<board-activity-register>>
 | kbd:[3] |  System disk blocks free
 | kbd:[4] |  Large clock
 | kbd:[5] |  Update free memory
@@ -1738,23 +1857,41 @@ The functions are as follows:
 | kbd:[8] |  View today's activity log
 | kbd:[+] |  Turn modem speaker on
 | kbd:[-] |  Turn modem speaker off
-| kbd:[Shift+A] | Force nightly AutoMaint 
+| kbd:[Shift+A] | Force nightly AutoMaint
 | kbd:[Shift+N] | Force nightly NetMail processing
-| kbd:[Space] | Redisplay current screen 
-| kbd:[x] | Manually answer modem _fixme_
+| kbd:[Space] | Redisplay current screen
+| kbd:[x] _fixme_ | Manually answer modem
 |====================
 
 
 ### The Lightbar [[the-lightbar]]
 
-The fifth screen line is referred to as the _lightbar_. This line
-monitors and changes many features of the BBS.  Most can be toggled by the
-sysop at the console, or through a utility program (`+.lb move`,
-discussed in "`Miscellaneous Plus Files`"; this is handy for remote
-maintenance when you can't be at the console).
+The fifth screen line is referred to as the _lightbar_.
+This line monitors and changes many features of the BBS.
+It displays eight abbreviations per page (there are two pages) for functions or options on the BBS.
+Check marks on one, both or neither side of the option indicate the state of a particular feature or setting is enabled.
+It is light gray and has a "`lit`" white portion indicating the current function or option you can change the behavior of.
+Most options can be toggled locally by the sysop at the console, or remotely through utility programs (`+.lb move`, discussed in <<misc-plus-files>>).
+This is handy for remote maintenance when you can't be at the console).
 
 (If the screen has blanked itself due to inactivity, it is restored when
 you receive a call or hit a key on the keyboard.)
+
+
+#### Lightbar Keys
+
+.Lightbar Keys
+[%header]
+[%autowidth]
+|===
+|Key | Purpose
+|kbd:[f1] |          Toggle screen mask on/off
+|kbd:[f2] or kbd:[f4] |  Toggle lightbar page
+|kbd:[f3] |          Move white highlight left, switch pages if necessary
+|kbd:[f5] |          Move white highlight right, switch pages if necessary
+|kbd:[f7] |          Toggle left check mark of highlighted selection
+|kbd:[f8] |          Toggle right check mark of highlighted selection
+|===
 
 The first of two pages shows as follows:
 
@@ -1763,13 +1900,103 @@ The first of two pages shows as follows:
 These check marks tell the BBS to do various things.  The following
 descriptions assume each check mark described is selected.
 
-Table : Lightbar, page 1
+.Lightbar functions, page 1
+[%header]
+[%autowidth]
+|===
+|  Option  | Left                            | Right
+|   `Sys`
+| Enable sysop chat availability. If the user enters kbd:[C]
+  at any major prompt, three sirens will sound. Reason for chat is logged.
+| Enable BASIC line execution trace. Slow down with kbd:[Shift] or
+  kbd:[Shift-Lock]. Normally only used for debugging.
+
+| `Acs`
+| Change access level of user. kbd:[f3] increases level, wraps from 9 to   
+  0. kbd:[f5] decreases level, wraps from 0 to 9. kbd:[f7] exits.
+
+| Disable 300 baud users from logging in.
+
+|   `Loc`
+| Log in to the BBS from the C64.
+
+| Enable "`pseudo-local`" mode. Gives access to certain maintenance commands.
+
+|   `Tsr`
+| Add or subtract time remaining
+  for user. kbd:[f1] zeroes time (log
+  off when able). kbd:[f2] gives
+  unlimited time (`--:00` display).
+  kbd:[f3] +1 minute. kbd:[f4] +10 minutes.
+  kbd:[f5] -1 minute. kbd:[f6] -10 minutes.
+  kbd:[f7] exits.
+| Toggle Prime Time status.
+
+| `Cht`
+| Enable chat mode.
+| Enable local bells, _i.e._, bells
+  sent to the user are heard on the
+  console also.
+
+|   `New`
+|  Disable `NEW` users from signing up.
+| Disable screen blanking mode. The
+  screen is visible between calls.
+
+|   `Prt`
+| Prints text output to a printer.
+
+| Prints log entries to a printer.
+
+| `U/D`
+| Prevents users from entering the U/D section.
+| Prevents 300 baud users from entering the U/D section.
+|===
 
 The second page of lightbar options is as follows:
 
  Asc  Ans  Exp  Fn5  Fn4  Fn3  Fn2  Fn1
 
-Table : Lightbar, page 2
+## Lightbar, page 2
+
+.Lightbar functions, page 2
+[%header]
+[%autowidth]
+|===
+| Option  | Left | Right
+| `Asc`
+| Enable ASCII translation.
+| Enable linefeeds.
+
+| `Ans`
+| Enable ANSI translation.
+| Enable IBM graphics.
+
+| `Exp`
+| Enable Expert Mode (skips most entry screens).
+| Enable main prompt macros.
+
+| `Fn5`
+| Enabled: user receives credit when upload is validated. Disabled: credit awarded after file uploaded.
+| Enabled: user asked whether to `Auto-Logoff After Transfer Complete` in U/Ds.
+
+| `Fn4`
+| Undefined.
+| Undefined.
+
+| `Fn3`
+| Undefined.
+| Undefined.
+
+| `Fn2`
+| Undefined.
+| Undefined.
+
+| `Fn1`
+| Undefined.
+| Enabled: MCI is not interpreted.
+|===
+
 
 ### Bottom Screen Mask
 
@@ -2007,13 +2234,13 @@ edit files. If you have files other than ones included on the setup
 disks you would like to use, you can import them into the text editor
 using a "`get file`" dot command (type kbd:[.G] at the left margin).
 
-TIP: Be sure to type kbd:[\.C] kbd:[80] kbd:[Return] to set the editor line length to 80
-characters before ``.G``etting a file. Otherwise, lines with color/graphics
+TIP: Be sure to type kbd:[.C] kbd:[80] kbd:[Return] to set the editor line length to 80
+characters before `kbd:[.G]`etting a file. Otherwise, lines with color/graphics
 characters in them may exceed the 40-column line length, causing
 word-wrap and ruining the file.
 
 ****
-If that happens, type ``.A`` ``Return`` to abort your changes. Consider using
+If that happens, type kbd:[.A] kbd:[Return] to abort your changes. Consider using
 an offline C/G screen editor to edit your file instead, such as _Kaleidoscope_, _Digital Paint_, _Tyron Paint_ or similar.
 ****
 
@@ -2021,9 +2248,11 @@ Here is a summary of the files discussed in this section. Remember, the
 suffix _x_ stands for the digits 0 or 1, for ASCII or Commodore
 Color/Graphics files, respectively.
 
+[%header]
+[%autowidth]
 .Miscellaneous editable files
 |===
-|Filename |Purpose
+|Filename | Purpose
 
 |Cell in column 1, row 1
 |Cell in column 2, row 1
@@ -2032,8 +2261,8 @@ Color/Graphics files, respectively.
 |Cell in column 2, row 2
 |===
 
-To create or edit these files, use the WF option (see <<write-file>> at the main command level.  You can also use the .Put
-and .Get options (page [Error: Reference source not found](#anchor-356))
+To create or edit these files, use the `WF` option (see <<write-file>>) at the main command level.
+You can also use the kbd:[.P]ut and kbd:[.G]et options 
 in the editor. (See <<the-image-text-editor>> for more information.)
 
 NOTE: The next two sections need not be done if you have already
@@ -2068,7 +2297,7 @@ allowed, how many minutes at idle is allowed (how many minutes may pass
 without pressing any keys before the BBS automatically hangs up), and
 how many downloads can be made per call.
 
-Done!
+## Done!
 
 Now your IMAGE BBS v1.2b is ready to go on-line for calls!  You may wish
 to post a few bulletins and news files to get the BBS started.
@@ -2127,31 +2356,51 @@ always _win_ them.
 A few commands consist of only one letter. Here are the descriptions of
 the general commands and how to use them.
 
-## Chat Request/Chat Mode
+### Chat Request
 
-C requests a chat with the sysop.  A short (38 character) reason for
+kbd:[C] requests a chat with the sysop.  A short (38 character) reason for
 chat is requested; the first sixteen characters of that is displayed at
-the bottom of the system screen.  This reason is also recorded in the
+the bottom of the sysop's screen.  This reason is also recorded in the
 call log on disk and printer (if used).
 
 If the left side of `Sys` is checked, the user is given a message
 informing them that the sysop is being paged, and the BBS monitor sounds
 three sirens.
 
-If there is no checkmark, the user is told that you are not available.
+If the left side of `Sys` is not checked, the user is told that you are not available.
 The `s.chat x` file is shown, and they are asked if they want to leave
 feedback instead.
 
 The "`reason for request`" continues to flash until they log off or you
 answer the chat page.  If the user requests chat more than once without
 you answering the first chat request, they are told that the page is
-already on, discouraging them from continuing to type C.
+already on, discouraging them from continuing to type kbd:[C].
 
-## Feedback
+#### Chat Mode
+
+To answer the chat request, or enter chat mode at almost any place on the BBS,
+check the left side of `Cht`. To exit chat mode, uncheck the left side of `Cht`.
+
+The BBS displays
+
+ ``* Entering Chat Mode *``
+
+and let you and the user type whatever they wish. It's useful to hit kbd:[Return]
+twice at the end of your message to each other; it lets the other party know it's
+their turn to type now.
+
+If the user is in the BBS text editor after chat mode is exited, an additional
+message is displayed:
+
+ ``* Returning to the Editor *``
+
+and any text in the buffer is waiting for them.
+
+### Feedback
 
 Feedback is "`mail`" left on the BBS to the sysop(s), that any user with
 local or remote maintenance access may read.  It is left to the sysop(s)
-by entering F at most prompts, or when logging off.  The user is placed
+by entering kbd:[F] at most prompts, or when logging off.  The user is placed
 into the editor to write their message.
 
 Any user, including a new user, is allowed to leave up to three feedback
@@ -2162,86 +2411,82 @@ Feedback, along with new user information and error messages, are read
 by the sysop by typing VF at the main command prompt. (VF is described
 more on page [63](#anchor-292).)
 
-Help
+### Help
 
-? reads a menu of commands available at whichever command level the user
+kbd:[?] reads a menu of commands available at whichever command level the user
 happens to be.  Depending on how much information is in the menu, a
 "`More?`" prompt for additional command information may appear (although
-this is put in the menu file itself, and is not always necessary,
-depending on the file's length).  At this prompt, Y (meaning yes)
+this is put in the menu file itself, and is not always present,
+depending on the file's length).  At this prompt, kbd:[Y] (meaning yes)
 continues, most others mean no and stop reading the file.
 
 If the user is not at the main prompt, the main menu is then read.
 
-BBS Information
+### BBS Configuration
 
-
-CF shows the file s.config.  This file should contain general
+kbd:[CF] shows the file `s.config`.  This file should contain general
 information about your BBS, perhaps the hardware and software it runs
 on, its hours (if not 24 hours a day) and anything else interesting
 about it.
 
-Change/View Last Call Date/Time
+### Change or View Last Call Date and Time
 
+The _last call date_ is used to determine which messages on the BBS will
+be displayed as new when a "`read new messages`" command is given.
+If a user needs to log off before they can see all new messages, the
+next time they call, they can use kbd:[LD] to move their last call date
+back to the date of their last call.
 
-The *last call date* is used to determine which messages on the BBS are
-new and which are old.  If a user is logged off before they have a
-chance to see all new messages, they can use this command to move their
-last call date back the next time they call.
+### Log Off Options
 
-Log Off
+kbd:[O] will ask if the user really wants to log off (type kbd:[Y] to do so),
+asking if they want to leave feedback first.
 
-
-O will ask if the user really wants to log off (type Y to do so), asking
-if they want to leave feedback first.
-
-O% saves the last call date, in case they did not read all the new
+kbd:[O%] saves the last call date, in case they did not read all the new
 messages in the message bases.
 
-O! logs off instantly, without prompting for feedback.
+kbd:[O!] logs off instantly, without prompting for feedback.
 
-O% and O! may be combined: 0%! logs off instantly and saves the last
+kbd:[O%] and kbd:[O!] may be combined: kbd:[O%!] logs off instantly and saves the last
 call date.
 
-Quit
+### Quit
 
 
-From most prompts (and in some subsystems, just pressing Return) gets
+From most prompts (and in some subsystems, just pressing kbd:[Return]) gets
 the user to the main prompt.
 
-If Q is entered at the main prompt, the user is asked whether they wish
+If kbd:[Q] is entered at the main prompt, the user is asked whether they wish
 to log off, as above.
 
-Time/Date
+### Time/Date
 
 
-T displays the current time, the time the user logged on, and the amount
+kbd:[T] displays the current time, the time the user logged on, and the amount
 of time remaining on the BBS this call.
 
-Edit Terminal Parameters
+### Edit Terminal Parameters
 
-
-EP enters a menu which allows a user to change their computer type,
+kbd:[EP] enters a menu which allows a user to change their computer type,
 graphics translation mode, terminal line length, whether linefeeds are
 required, toggle their expert mode, and change their account password.
 
-Prompt Mode
+### Prompt Mode
 
-
-PM toggles prompt mode on or off. When on, when a user reads new
-messages in the message base (using RN or RA commands), they do not
+kbd:[PM] toggles prompt mode on or off. When on, and a user reads new
+messages in the message base (using `RN` or `RA` commands), they do not
 receive the "`end-of-bulletin`" prompt between message threads, or the
-"`\[P\]ost \[N\]ext \[Q\]uit`" prompt between sub-boards.
+`[P]ost [N]ext [Q]uit` prompt between sub-boards.
 
 Useful for callers who want to speed-read or buffer messages.
 
-It also eliminates the prompt after the A (About this file) command in
+It also eliminates the prompt after the kbd:[A] (`About this file`) command in
 the U/D subsystem.
 
-Status
+### Status
 
 
-ST allows users to see their status on the BBS, including:
+kbd:[ST] allows users to see their status on the BBS, including:
 
 -   Their handle, plus real first and last name
 -   Last call date and time
@@ -2259,40 +2504,45 @@ ST allows users to see their status on the BBS, including:
 Then the user is asked if they wish to view this information again. If
 not, they are returned to the BBS.
 
-### `SY` Saying
+### Saying
 
-Reads a random "`saying`" or "`fortune,`" such as the one read at logon,
+kbd:[SY] reads a random "`saying`" or "`fortune,`" such as the one read at logon,
 from the RELative file `e.say`.
 
 ### Activity Log
 
-*LG* Designated users may read the daily log, listing what activities callers
+kbd:[LG] lets designated users read the daily log, listing what activities callers
 have done on the BBS.
 
-### BAR Stats
+### BAR Stats [[board-activity-register]]
 
-*BA* Designated users may view the Board Activity Register stats as shown
-between calls.  See <<board-activity-register>> for more details.
+kbd:[BA] lets designated users view the Board Activity Register stats as shown
+between calls.
+
+****
+|===
+| TODO: insert graphic/table of BAR screen here
+|===
+****
 
 ### C/G / ASCII / ANSI Mode Toggle
 
-*AT* Chooses between Commodore Color/Graphics, plain ASCII, and ANSI
-graphics.  This option is saved to the user file when logging out.
+kbd:[AT] chooses between Commodore Color/Graphics, plain ASCII, and ANSI
+graphics modes.  This option is saved to the user file when logging out.
 
 ### Expert Mode
 
-*XP* Toggles Expert Mode.  When on, subsystem and sub-board entry screens are
+kbd:[XP] toggles Expert Mode.  When on, subsystem and sub-board entry screens are
 skipped.  This option is saved to the user file when logging out.
 
 ### New User Message
 
-*NU* Re-read the `s.new user` file, displayed when a new user logs on to the BBS for
+kbd:[NU] reads the `s.new user` file, displayed when a new user logs on to the BBS for
 the first time.
 
 ### Local Mode
 
-*ZZ* 
-This allows users with local mode access to enter pseudo-local mode so
+kbd:[ZZ] allows users with local mode access to enter pseudo-local mode so
 they can do maintenance functions remotely.  These functions include
 copying files, reading directories, sending DOS commands, etc.  This is
 very powerful, and should be given to only the most trusted users on
@@ -2300,13 +2550,11 @@ your BBS.
 
 ### Command Stacking
 
-
 Any of the main commands entered at any prompt can be "`stacked`" by using
-the up arrow key (\^) between the commands. If the following command
+the up arrow key (kbd:[^]) between the commands. If the following command
 were entered at the main prompt:
 
- SB9\^RN\^<\^R3\^UD\^SA
-
+ SB9^RN^<^R3^UD^SA
 
 Then the BBS would:
 
@@ -2610,7 +2858,7 @@ K begins listing all bulletins starting with the first one
 
 The user is asked whether they want to kill the bulletin:
 
-Y)es N)o A)bort or S)tart
+ Y)es N)o A)bort or S)tart
 
 K followed by a number begins the listing with that number, offering the
 same choices.  Once the end of the list is reached (or S is typed), the
@@ -2901,7 +3149,7 @@ Discovered recently: This also works in 80 columns!
 ****
 
 -   As previously mentioned in the setup of the U/D system, credits can
-    be charged for reading programs online by setting the variable *yy%*
+    be charged for reading programs online by setting the variable `yy%`
     to the number of credits you want subtracted per block read.
 
 For users with maintenance access:
@@ -2933,26 +3181,28 @@ S Scan files normally
 This has been enhanced to use both 40- and 80-column screens.  A normal
 file scan will list files in this format:
 
-*\#\#\# Bk’s  Dl’d  Name*
-
-*----------------------------------------*
-
-*001 \[200\] \[001\] “file.txt,s”*
-
-*----------------------------------------*
+```
+### Bk’s  Dl’d  Name
+----------------------------------------
+001 [200] [001] "file.txt,s"
+----------------------------------------
+```
 
 From left to right, the columns represent:
 
-*001* The number of the listing in the directory
+[%autowidth]
+|===
+|`001`| The number of the listing in the directory
 
 
-*\[200\]* The number of Commodore 254-byte blocks (or Kilobytes if using
+|`[200]`| The number of Commodore 254-byte disk blocks (or Kilobytes if using
 another computer type)
 
-*\[001\]* The number of times the file has been downloaded
+|`[001]`| The number of times the file has been downloaded
 
-*"file.txt,s"* The filename and file type.  Unvalidated files have a
+|`"file.txt,s"`| The filename and file type.  Unvalidated files have a
 *\** in front of the name, if the user is the uploader or subop.
+|===
 
 After all files have been selected, the total estimated download time is
 displayed to the screen with a new prompt allowing you to:
@@ -2985,80 +3235,72 @@ description of each file:
 
 ### Sysop Commands
 
-UM Upload multiple files
+Upload multiple files
 
 
-With the Copier protocol loaded, the BBS gives you a directory of the
+kbd:[UM] With the Copier protocol loaded, the BBS gives you a directory of the
 designated drive of the current U/D board.  You are prompted to select
 either:
 
-  \[Y\]es, \[N\]o or \[A\]bort
+ [Y]es, [N]o or [A]bort
 
 (This is similar to downloading multiple files in the U/X base.)
 
 After all files have been selected, you are prompted:
 
-"Manual or Auto descriptions?"
+ Manual or Auto descriptions?
 
-  \* Auto descriptions:
+* *Auto descriptions* asks you for one description for all files uploaded.
 
-Asks you for one description to add it to all files selected before
-writing the directory.
-
-    \* Manual:
-
-  Asks for a description of each file selected.
+- *Manual* asks for a separate description for each file uploaded.
 
 Sysop commands are now active whenever the Copier is loaded as a
 protocol, not when local or psuedo-local modes are on.  In addition, if
 you are logged onto the BBS from console mode, you are forced to use the
 copier.  Anyone accessing the BBS as a sysop must turn on pseudo-local
-mode to use the copier with the PR command.
+mode to use the copier with the `PR` command.
 
-Vx, VN The Validate or Validate New commands allow you to validate all
+Vx, VN The `Validate` or `Validate New` commands allow you to validate all
 uploads to the current U/D library.
 
-If the "no credit" option is active:
-
-
+If the "`no credit awarded until file validated`" option (left `Fn5` is
+enabled) is active, you may type kbd:[%] to award a percentage of credits
+to the user for uploading the file.
 
 (fixme: until validated?)
 
-\* You may type % to award a percentage of credits to the user for
-uploading the file.
-
-\* Otherwise, the full amount of credits is added to the uploader's
+Otherwise, the full amount of credits is added to the uploader's
 account.
 
-UM If the copier protocol is loaded, to Upload Multiple files you are
-prompted for a pattern.  (RETURN defaults to \*).  You are prompted with
+`UM` If the copier protocol is loaded, to Upload Multiple files you are
+prompted for a pattern.  (kbd:[Return] defaults to `*`).  You are prompted with
 each filename matching the pattern, and have the ability to reply:
 
-\[Y\]es \[N\]o \[S\]tart or \[A\]bort the upload.
+ [Y]es [N]o [S]tart or [A]bort
 
 When all files have been selected, you are given a list of files
-selected, then an "Are You Sure?" prompt.
+selected, then an `Are You Sure?` prompt.
 
-  \* \[Y\]es continues with the multi-upload.
+  \* kbd:[Y]es continues with the multi-upload.
 
-  \* \[N\]o aborts.
+  \* kbd:[N]o aborts.
 
-DMJust like the Upload Multiple command, you can also Download Multiple
+`DM` Just like the Upload Multiple command, you can also Download Multiple
 files from the current library to the destination drive of your choice.
 
-ASUsers can apply for access as the subop of the current board if there
+`AS` Users can apply for access as the subop of the current board if there
 is not currently one assigned.
 
-ACAny user with subop or remote maintenance access may add up to 500
+`AC` Any user with subop or remote maintenance access may add up to 500
 credits to any user's account.
 
-IDxDisplays user information just like a UL user list.  Posts,
+`IDx` Displays user information just like the UL user list.  Posts,
 responses, uploads and downloads are shown to subops and SIGops.
 
 A few notes:
 
-\* The current protocol is saved to the user's stats by using the
-variable UL (which was previously used for upper/lowercase flag—not
+* The current protocol is saved to the user's stats by using the
+variable `UL` (which was previously used for upper/lowercase flag—not
 needed but still supported in the user file).
 
 \* Any C-64 or C-128 user who currently has this flag set to 1 will have
@@ -3066,17 +3308,17 @@ a default protocol of Xmodem.  Be sure to inform your users of this when
 you put the system up.  Once they change their protocol to Punter, it
 will remain Punter unless they change it.
 
-UDUpload/Download System
+## Upload/Download System
 
 
 This is the IMAGE BBS "file transfer base."  All users read the file
-s.UD when entering the U/D section, regardless of whether they are in
+`s.UD` when entering the U/D section, regardless of whether they are in
 "Expert Mode" or not.  (fixme: correct?)
 
-Moving To Another Library
+### Moving To Another Library
 
 
-Main U/D prompt
+### Main U/D prompt
 
 
 The user is shown the
@@ -3093,11 +3335,11 @@ If they are the library's subop, they are informed of this.
 If a move cannot be made, they are told the requested library number
 does not exist.
 
-Typing N displays the name of the current library.
+Typing kbd:[N] displays the name of the current library.
 
-Libraries which a user can access are listed by typing L.
+Libraries which a user can access are listed by typing kbd:[L].
 
-Changing protocols
+### Changing protocols
 
 
 New Punter, Slow Punter (for noisy telephone lines) and Xmodem-CRC/1K
@@ -3111,10 +3353,10 @@ your BBS is reachable by Starlink, people will be able to use the "Slow
 Punter" for file transfer, or you can use it to call boards using
 Starlink.
 
-(NOTE: These protocols have been updated for IMAGE v1.2a, and are very
-efficient.  We think you'll be very happy with them.)
+NOTE: These protocols have been updated for IMAGE v1.2a, and are very
+efficient.  We think you'll be very happy with them.
 
-Single file upload
+### Single file upload
 
 
 Each library allows a maximum of 60 files.  The user is asked for
@@ -3126,12 +3368,12 @@ uploaded.
 There is also an option to add a file comment, used to describe what the
 file is for.  Other users can view this comment, and add their own.
 
-Multi File Upload
+### Multi File Upload
 
 
 (The user must be using the Multi-Punter protocol.)  The BBS prompts:
 
-***Go to multi-send mode!***
+ Go to multi-send mode!
 
 The BBS records filenames as they are received, entering them into the
 directory, along with the:
@@ -3145,10 +3387,10 @@ directory, along with the:
 Users may edit the entry to provide descriptions.  Credit is given just
 as with a single file upload.
 
-(NOTE: Occasionally, noise on the phone line will cause multi-uploaded
+NOTE: Occasionally, noise on the phone line will cause multi-uploaded
 file titles to be corrupted.  While impossible to prevent, it is a rare
-occurrence, and should not cause much trouble.  You could just use the E
-option afterward to edit the filename.)
+occurrence, and should not cause much trouble.  You could just use the kbd:[E]
+option afterward to edit the filename.
 
 D, Dx Single File Download
 
@@ -3171,29 +3413,29 @@ They must have at least as many credit points as the number of blocks
 that the file contains, unless their status includes unlimited downloads
 (in this case, no credits are subtracted for a download).
 
-Multi File Downloads
+### Multi File Downloads
 
 
 The user is asked for a starting file number, then shown each file in
 the directory from that file number, and prompted
 
-`Y`es `N`o `S`tart `A`bort
+ [Y]es [N]o [S]tart [A]bort
 
-Each [Y]es selection: the approximate download time is shown for
+Each kbd:[Y]es selection: the approximate download time is shown for
 their baud rate.  All the requirements to add the file to the download
 queue are the same as for downloading a single file.  If everything is
 okay, they can continue adding files until they reach the maximum number
 of files, or choose as many files as they want to.
 
-\[S\]tart: The BBS shows the list of files chosen, asking them to
+kbd:[\]tart: The BBS shows the list of files chosen, asking them to
 confirm the list. If they do so, they are given 20 seconds to go to
 receive mode, and the files will be transferred.
 
 NOTE: Users can abort any file transfer in any mode and any protocol by
-sending *CTRL-X* three times: that is, holding down the *CONTROL* key
-and then typing the letter X three times.
+sending [kbd:Ctrl+X] three times: that is, holding down the kbd:[Control] key
+and then typing the letter kbd:[X] three times.
 
-Listing Files
+### Listing Files
 
 
 Scanning the file directory shows:
@@ -3225,7 +3467,7 @@ SS ............ Scan titles sorted by:
 
 SU ............ Scan for unvalidated files
 
-Spacebar or / aborts.
+kbd:[Space] or kbd:[/] aborts.
 
 ### Other Commands
 
@@ -3238,7 +3480,7 @@ to information displayed by the "scan" command above:
 -   The computer type it's meant for
 -   Comments about the file
 
-Killing Files
+### Killing Files
 
 
 A sysop, subop, or the user that uploaded the file may enter K followed
@@ -3253,7 +3495,7 @@ in the file directory.
 When a file is killed, credit points are deducted equal to the number of
 points they were given when they uploaded the file.
 
-Editing Files
+### Editing Files
 
 
 A sysop, subop, or the user who uploaded the file may type E followed by
@@ -3261,7 +3503,7 @@ the file number to change information about it.
 
 (fixme)
 
-Reading a File
+### Reading a File
 
 
 A user may enter R followed by the number of the file to display a SEQ
@@ -3269,7 +3511,7 @@ or PRG file.  They may also select R when doing an "About" on a file.
 
 (fixme: dupe)
 
-Validating Files
+### Validating Files
 
 
 Sysops, subops, and the user who uploaded the file can "see" all
@@ -3293,21 +3535,19 @@ Subops or sysops validate files by typing:
 Unvalidated files will have a leading asterisk in the filename, and show
 zero for times downloaded:
 
-\#\#\# Bk’s  Dl’d  Name
+```
+### Bk’s  Dl’d  Name
+001 [200] [000] *"file,s"
+```
 
 
-
-001 \[200\] \[000\] \*"file,s"
-
-
-
-When a file is validated, the number of downloads changes to one.
+When a file is validated, the number of downloads changes to 1.
 
 A user who uploaded a file that is not yet validated has full access to
-read or download it, but will *not* have the power to validate it
+read or download it, but will _not_ have the power to validate it
 (unless they happen to be the library's subop).
 
-DxCopying Files
+### Copying Files
 
 
 If a user is in true local mode (from the console), when they enter the
@@ -3317,16 +3557,17 @@ time, allowing a filename change, or to be copied to a different
 device/drive.
 
 If no destination device is specified, it defaults to one number higher
-than the source device.  (NOTE: Any device may be the target device, but
-this function will ONLY copy files to drive \#0.)
+than the source device.
 
-MxMoving Files
+NOTE: Any device may be the target device, but this function will _only_ copy files to drive #0.)
+
+### Moving Files
 
 
 If a user is in local or pseudo-local mode, type M and the file number.
 They are prompted for the new directory to move the file to.
 
-  \* L lists all available boards.
+  \* kbd:[L] lists all available boards.
 
   \* If the directory is to a different device/drive, the file is copied
 to that device/drive, otherwise only the directory entry is moved.
@@ -3334,7 +3575,7 @@ to that device/drive, otherwise only the directory entry is moved.
   \* If the file is moved, an option is given to scratch the file from
 its source device/drive after the move is completed.
 
-UXFull Disk Exchange
+## Full Disk Exchange
 
 
 Full disk exchange operates very similarly to the U/D section, except
@@ -3345,32 +3586,31 @@ UX is sub-divided into libraries just as UD is.  Each can have its own
 subop, entry file, access and configuration.  Multi upload and download
 functions the same as in the UD section.
 
-Users may enter UX at most prompts to enter the full disk exchange area.
+Users may enter kbd:[UX] at most prompts to enter the full disk exchange area.
 
-The file s.UX will be read regardless of Expert Mode status. (fixme:
+The file `s.UX` will be read regardless of Expert Mode status. (fixme:
 correct?)
 
-\$, SListing Files
+### Listing Files
 
 
-A listing of files may be obtained by entering \$ or S. The user is
+A listing of files may be obtained by entering kbd:[$] or kbd:[S]. The user is
 prompted for a pattern (if none is given, the default is \* for all
 files).
 
-Free UD/UX Library
+### Free UD/UX Library
 
 
-While defining libraries using the +.reledit program, you may specify
+While defining libraries using the `+.reledit` program, you may specify
 any of your libraries in the U/D or U/X to be FREE libraries; that is,
 no credit is deducted from the user when he downloads from these areas.
-To specify a FREE board, use the +.reledit program or the Z command for
+To specify a FREE board, use the `+.reledit` program or the kbd:[Z] command for
 local maintenance.
 
 In a FREE download board, the number of files per call and credit points
 are not checked prior to starting a download.
 
-EMElectronic Mail Subsystem
-
+## Electronic Mail Subsystem
 
 This is IMAGE BBS's private mail section.  If a user has access to this
 section, on logon they will be informed if they have mail waiting, and
@@ -3378,42 +3618,41 @@ given the option to enter the e-mail subsystem at this time.  Upon
 entering the mail system, they are told how many messages they have
 waiting.
 
-A user may also enter the e-mail subsystem by entering *EM* at any major
-prompt.  The prompt for this section is "E-Mail: ".
+A user may also enter the e-mail subsystem by entering kbd:[EM] at any major
+prompt.  The prompt for this section is `E-Mail:`.
 
-L, LxListing E-mail
+### Listing E-mail
 
 To obtain a list of the e-mail a user has waiting in the order they were
-received, type L (or L followed by a number to begin listing at a
+received, type kbd:[L] (or kbd:[L] followed by a number to begin listing at a
 specific message) at the "E-Mail: " prompt.  This lists all messages,
-reporting
+reporting:
 
 -   Handle of the sender
 -   Date and time it was sent
 -   Message subject
 
-Rx READING E-MAIL
+### Reading E-mail
 
+Press kbd:[Return] to begin reading (or read the next message in a series).
 
-Press RETURN to begin reading (or read the next message in a series).
+Once the last message is read, they are told `No more mail.`
 
-Once the last message is read, they are told "No more mail."
+To read a specific message, type kbd:[R] and that message's number.
 
-To read a specific message, type R and that message's number.
+To read all messages, type kbd:[A].  All messages are displayed in succession.
 
-To read all messages, type A.  All messages are displayed in succession.
+Typing kbd:[N] reads any new messages since their last call.
 
-Typing N reads any new messages since their last call.
-
-RESPONDING TO A MESSAGE
+### Responding To a Message
 
 
 This replies privately to the user who sent the message being read.
 After reading a message, the user is presented with several options:
 
-"Reply to &lt;sender's handle&gt;: "
+ Reply to &lt;sender's handle&gt;: 
 
-  \* \[Y\]es:
+  \* kbd:[Y]es:
 
     This replies to the author.
 
@@ -3422,18 +3661,15 @@ After reading a message, the user is presented with several options:
 To respond to a specific message from the list of messages received, a
 user may type R followed by the number of the message to respond to.
 
-S SENDING PRIVATE E-MAIL
-
+### Sending Private E-Mail
 
 The BBS prompts for the handle or user ID number who will receive this
 message.  If the ID number is entered, the user log is searched, and the
 handle (if found) is shown.  The sender confirms this is the
-
 user they intended to send the message to, and are placed in the BBS
 text editor.
 
-D DELETING E-MAIL FILES
-
+### Deleting E-Mail Messages
 
 (This option also appears when they leave the e-mail subsystem, if there
 are messages left in their mailbox.  This encourages users to keep their
@@ -3441,57 +3677,51 @@ mailboxes tidy and not use un-necessary disk space.)
 
 When a user deletes their e-mail, they get the following prompt:
 
-  Delete \[A\]ll, \[S\]ome or \[N\]one of your mail?
+ Delete [A]ll, [S]ome or [N]one of your mail?
 
-  \* \[A\]ll
+  \* kbd:[A]ll deletes every message held in their mailbox, after confirming an `Are
+you sure?` prompt with kbd:[Y]es.
 
-Deletes every message held in their mailbox, after confirming an "Are
-you sure" prompt with \[Y\]es.
+  \* kbd:[N]one keeps every message held in their mailbox.
 
-  \* \[N\]one
+  \* kbd:[S]ome goes through all messages in the user's mailbox, prompting them:
 
-Keeps every message held in their mailbox.
+ [D]elete, [K]eep, [R]ead, [F]ile away:
 
-  \* \[S\]ome
+  \* kbd:[D]elete deletes the selected e-mail message.
 
-Goes through all messages in the user's mailbox, prompting them:
+  \* kbd:[K]eep holds the message in the user's mailbox.
 
-  \[D\]elete, \[K\]eep, \[R\]ead, \[F\]ile away:
-
-  \* \[D\]elete Exactly as described above.
-
-  \* \[K\]eep Holds the message in the user's mailbox.
-
-  \* \[R\]ead Views the message to help decide whether they wish to keep
+  \* kbd:[R]ead views the message to help decide whether they wish to keep
 or delete it.
 
   \* \[F\]ile away Removes the message from the user's mailbox, but
 places it in a separate file on the e-mail disk.  These stored messages
-can be later accessed with the FR (File Retrieval) command at the e-mail
-prompt.
+can be later accessed with the `FR` (File Retrieval) command at the e-mail
+prompt, discussed now.
 
-FRPersonal File Storage
+### Personal File Storage
 
 
 Using this command, users can
 
 -   Read previously "filed away" e-mail messages
--   Get a directory of their personal e-mail files with \$
+-   Get a directory of their personal e-mail files with kbd:[$]
 -   (fixme) is there a delete option?
 
-VVerifying E-Mail
+### Verifying E-Mail
 
 
 Type V (and the user's handle when prompted) to see how many e-mail
 messages they have, and how many are from you.
 
-VEEditing E-Mail
+### Editing E-Mail
 
 
-Type VE (and the user's handle when prompted) to edit any e-mail you
+Type kbd:[VE] (then the user's handle when prompted) to edit any e-mail you
 have already sent to that user.
 
-FMForced E-Mail
+### Forced E-Mail
 
 
 A user with remote maintenance access may send "forced e-mail," that is,
@@ -3512,7 +3742,7 @@ contain the single word
 Note that `ERASE` and/or `OFF` must both be entered with all capital
 letters.
 
-QLeaving the E-Mail Subsystem
+### Leaving the E-Mail Subsystem
 
 
 Type `Q` or a command that takes you to any other subsystem.
@@ -3520,75 +3750,74 @@ Type `Q` or a command that takes you to any other subsystem.
 If the user has any messages left in their e-mail inbox, they are
 prompted whether they want to delete them.
 
-News Files Subsystem
+## News Files Subsystem
 
 
 The news files are structurally different from the other file areas of
 the BBS—such as Movie Files or Program Files—and for that reason they
 are covered separately here.
 
-Typing `NF` at most prompts takes you to the News File library. Here,
+Typing kbd:[NF] at most prompts takes you to the News File library. Here,
 users can re-read BBS news files they see at login, and you can write
 new ones.
 
 If you have "File Maint Access" you will be placed in `News-Maint:`
 Otherwise, the prompt users see is `News:`.
 
-AAdding a News Item
+### Adding a News Item
 
 
 To add a file to a directory, you are asked for the title.  This is what
 the user will see when they list news items; it also names the file on
 disk where the news text is stored.
 
-If the filename begins with a `\$` (dollar sign), it becomes a "repeating"
+If the filename begins with a `$` (dollar sign), it becomes a "repeating"
 news file, shown to users each time they log on to the BBS.
 
 All News files are non-abortable the first time they are shown to a
 user.
 
-Reading News
+### Reading News
 
 
 Type the number of a news file (see List) to read that item.
 
-KxKilling a News File
+### Killing a News File
 
 
 A maintenance operation, type K followed by the number of the news file
 you wish to kill.  (fixme: confirmation?)
 
-E*x* EDITING A FILE
+### Editing a News File
 
-If you have maintenance access, type `E` followed by the number of the
+If you have maintenance access, type kbd:[E] followed by the number of the
 entry to edit.  You may then change the information you entered using A:
 (fixme: news file name, whether it's a repeating news item) and the file
 will be loaded into the editor for editing. When the file is re-saved,
 you are given the opportunity to update the date of the file so it again
 appears as a new file.
 
-L_x_ LISTING NEWS FILES
-_x_
-Type L or Lx (x is the starting number to list from) at the prompt to
+### Listing News Files
+
+Type kbd:[L] or kbd:[Lx] (_x_ is the starting number to list from) at the prompt to
 list all news files available to that access level.  Each is given a
 number, and if you have News-Maint access, you can also see access
 information for that file.
 
-**Q** LEAVING
+### Leaving
 
-
-Entering Q will return a user to the main command level.  A user may
+Type kbd:[Q] to return to the main command level.  A user may
 also go to any other section of the board by entering the appropriate
 command.
 
-The File Libraries (Movie, Plus, RLE, Text)
+## The File Libraries (Movie, Plus, RLE, Text)
 
 
 There are three sections of the IMAGE BBS that provide very different
 functions but the sections themselves are functionally identical.  They
 use the same routines and all of the same commands.
 
-Explanation of Subsystems
+### Explanation of Subsystems
 
 
 There are four separate types of files handled by the same program:
@@ -3607,7 +3836,7 @@ There are four separate types of files handled by the same program:
 We describe the Movie File Library here, but the same principles apply
 to other libraries.
 
-MF Movie File Library
+### Movie File Library
 
 
 Type this at any prompt to enter the Movie-File library.
@@ -3619,7 +3848,7 @@ sub-directories under those sub-directories, the number following the
 prompt refers to the directory level you are at.  When you first enter
 the Movie Files section, you are placed in directory level 1.
 
-Adding Sub-Directories
+### Adding Sub-Directories
 
 
 To add a sub-directory, you must have Movie-File Maint access.  Select A
@@ -3632,13 +3861,10 @@ relation to the actual filename about to be created.
 
   \* Next, you are asked for the filename.
 
-o To create a directory, type "d." followed by the sub-directory
+NOTE: To create a directory, type kbd:[d.] followed by the sub-directory
 filename you want to have on the Directory disk.
 
-     For example, if you enter "d.movies", the BBS adds "m." to the
-name, and the sub-directory is saved as "d.m.movies".
-
-   The letter added depends on the subsystem used:
+The letter added depends on the subsystem used:
 
    m. movie files
 
@@ -3648,10 +3874,15 @@ name, and the sub-directory is saved as "d.m.movies".
 
    t. text files
 
+****
+For example, if you are in the `MF` subsystem and enter kbd:[d.movies],
+the BBS adds `m.` to the name, and the sub-directory is saved as `d.m.movies`.
+****
+
 -   Next, enter the access level(s) which see that sub-directory when
     listing the files available.  Access is determined in the usual way;
-    either from the chart shown earlier, or by typing "?" and answering
-    Y or N for each group.
+    either from the chart shown in <<access-groups>>, or by typing kbd:[?] and
+    answering kbd:[Y] or kbd:[N] for each group.
 -   Finally, you are asked for how many credits to charge users to enter
     this sub-directory.  You can charge credits for:
 
@@ -3660,8 +3891,8 @@ name, and the sub-directory is saved as "d.m.movies".
     -   both entering the sub-directory and viewing the files within
 
 Or you need charge nothing if you wish.  It's up to you! The credits
-charged here are put into the BBS-wide credit pool.  Refer to section
-... to learn how to set that up.
+charged here are put into the BBS-wide credit pool.  Refer to <<credit-pool>>
+to learn how to set that up.
 
 ### Adding a File
 
@@ -3767,21 +3998,18 @@ The active commands for this module are:
 The last three options only appear if the user has post and respond
 capabilities.
 
-### LListing a Number
+### Listing a Number
 
-This brings up another menu of options which allow users to narrow down
+kbd:[L] brings up another menu of options which allow users to narrow down
 the scope of the listing they would like:
-
-  ------------------- ------------------------------------------------------------------------------------------------------------
-  ------------------- ------------------------------------------------------------------------------------------------------------
 
 Table : Bulletin board listing options
 
-The spacebar or / key aborts any of the listings.
+kbd:[Space] or kbd:[/] aborts any of the listings.
 
-### AAdding a Number
+### Adding a Number
 
-Typing this at the *dBASE* prompt allows users with post/respond
+Typing this at the `dBASE` prompt allows users with post/respond
 capabilities to add a BBS number to the listing.  They are prompted for
 the complete information on the board they wish to add, including
 
@@ -3799,7 +4027,7 @@ user lists that BBS):
     -   Is PC Pursuitable, networked, etc.
 
 The database is checked for a duplicate under this phone number.  If
-there is one, the user is notified, and returned to the *dBase* prompt.
+there is one, the user is notified, and returned to the `dBase` prompt.
 
 After all prompts have been answered, the results are shown, and they
 can
@@ -3811,42 +4039,43 @@ can
 Adding an entry first uses any previously deleted entries, otherwise
 adds to the end of the list.
 
-### RRemoving An Entry
+### Removing an Entry
 
 Only the sysop, a user with maintenance access, or the user that posted
 a number may remove it.  Anyone else attempting to remove a number is
 told the entry can only be removed by the original poster.
 
-A BBS name is prompted for.  The list will be searched and if the entry was posted by the same user, it will be deleted.
+A BBS name is prompted for.  The list will be searched and if the entry
+was posted by the same user, it will be deleted.
 
 
-### EEditing Information
+### Editing Information
 
 A sysop or the user who posted a BBS number may edit the information.
 The program asks for the entry number to edit, checking to make sure the
 user has access.  If so, they may change any information in the entry,
 and re-file it.
 
-### DDisplay Notes
+### Display Notes
 
-This brings up a listing of abbreviations used in the BBS listings.
+kbd:[D] brings up a listing of abbreviations used in the BBS listings.
 These include CBM for Commodore, etc.
 
-### QAll Done
+### Quitting
 
-To leave the BBS Lister, type Q (which takes users to the main command level), or a command taking you to any other area of the BBS.
-
-
-VB VOTING BOOTH
+kbd:[Q] quits the BBS Lister, (which takes users to the main command level),
+or a command taking you to any other area of the BBS.
 
 
-This takes you to the Voting Booth.  If you have Remote Maint Access,
+## Voting Booth
 
-you see the prompt "Vote-Maint-&gt;", otherwise you will see
+The Voting Booth is fixme [...]
+
+kbd:[VB] takes you to the Voting Booth.  If you have Remote Maint Access,
+you see the prompt `Vote-Maint-&gt;`, otherwise you will see
 "Vote-&gt;".
 
 If there are no topics available and you do not have Vote-Maint access,
-
 you are returned to the main command level.
 
 A ADD A TOPIC
@@ -3859,164 +4088,112 @@ An explanation of the prompts:
   \* Subject: Enter a short but descriptive title of the vote topic.
 
   \* Access: Enter the access level this topic may be seen by.  This
-
     is set as with other areas of the BBS.
 
 Now you are placed in the IMAGE text editor.  Type the question text.
 
 (Do not include the answers, these are entered separately after you save
-
-the question text.)  When done, enter .S on the first column to save
-
+the question text.)  When done, enter kbd:[.S]ave on the first column to save
 the text and continue to the next section.
 
 Now enter the choices a user has for this topic, and a short amount of
-
-
 text which better describes this option.
 
 There is a limit of 9 choices, after which the voting booth
-
-
-automatically saves the topic.  If you have fewer choices, hit RETURN
-
+automatically saves the topic.  If you have fewer choices, hit kbd:[Return]
 at the last one, and you save the choices then.
 
-Kx KILL A TOPIC
+### Killing a Topic
 
 
 This function is only available to users with Vote-Maint access.  Type
-
-K and the topic number (see LIST below) to be killed.  You are asked
-
-to verify killing the topic.  If you answer Y, the topic is killed
-
+kbd:[K] and the topic number (see LIST below) to be killed.  You are asked
+to verify killing the topic.  If you answer kbd:[Y], the topic is killed
 from the Voting Booth topic directory, and erased from the disk.
 
-VOTE/VIEW RESULTS
-
+### Vote/View Results
 
 Available to all users, typing the topic number allows you to vote on
-
-
 it (if you have not yet voted on that topic) and/or view the results.
 
 The voting booth uses ID numbers and handles to keep track of who
-
 voted, so a user cannot vote twice on the same topic.
 
-L LIST TOPICS
+### List Topics
 
 
-Available to all users, this lists all topics available to that user's
-
-
+Available to all users, kbd:[L] lists all topics available to that user's
 access level and the date each topic was created.
 
 If you have Vote-Maint access, the access level for each topic is also
-
-
 listed.
 
-LEAVING
+### Quitting
 
-
-Users may leave the voting area by typing Q to return to the main
-
-
+Users may leave the voting area by typing kbd:[Q] to return to the main
 command level, or type a command which takes them to any other area
-
 of the BBS.
 
-UL USER LIST
+## User List
 
-
-Available to those who have their User List flag set, this lists
-
-
+Available to those who have their User List flag set, kbd:[UL] lists
 either all users, or a subset of users according to specific attributes.
 
-Q QUICK LISTING
+### Quick Listing
 
+A "`quick list`" shows you only the handle and user ID number.
+You can sort the user list one of two ways:
 
-A "quick list" displays the user list sorted one of two ways:
+* Numerically
+* Alphabetically
 
-Numerically
+You can start listing at a particular user ID number or alphabetic character(s)
+depending on the type of sort you select.
 
-
-Alphabetically
-
-This list shows you only the handle and ID numbers.  You can start
-
-
-listing at any number or alphabetic character(s) depending on the
-
-type of sort you select.
-
-R REGULAR LISTING
-
+### Regular Listing
 
 To search for a particular user or attribute (or if you want more
-
-
 information than just the handle and ID), use this option.
 
 Type the number of attribute(s) to search for, then fill in the
-
-
 information to narrow down the search.
 
-When you are done, or if you wish to list all users, hit RETURN.
-
+When you are done, or if you wish to list all users, hit kbd:[Return].
 
 Next, type the number to start the listing from.  The program continues
-
-
 from that point to the end of the user file.
 
-The space bar or slash key aborts the list at any time.
-
+kbd:[Space] or kbd:[/] aborts the list at any time.
 
 If a user has remote maintenance access, the list shows all information
-
-
 about a user:
 
 handle
-
 ID number
-
 last call date
-
 computer type
-
 area code and phone number
-
 access group
-
 real name
 
 Otherwise, the list only shows:
 
 handle
-
 ID number
-
 last call date
-
 computer type
-
 area code
 
-QLeaving
+### Quitting
 
 
-To leave the user list, type Q or hit RETURN (which takes users to the
+To leave the user list, type kbd:[Q] or hit kbd:[Return] (which takes users to the
 main command level), or a command taking you to any other area of the
 BBS.
 
-See the section on
-[header identifiers](#header-identifiers-in-html-latex-and-context).
+<!-- See the section on
+[header identifiers](#header-identifiers-in-html-latex-and-context). FIXME -->
+
 
 ## The IMAGE Text Editor [[the-image-text-editor]]
 
@@ -4025,42 +4202,47 @@ See <<the-image-text-editor>> for details.
 The text editor is where any messages on the BBS will be entered.  It
 works by letting users type anything they want to type.
 
+****
 This is a line-based editor; you cannot use cursor keys to move up and
 down a line like you can in most modern text editors/word processors.
+****
 
-## Entering Text
+## Entering Text [[entering-text]]
 
 
-Simply type it into the editor.  There is no need to press *RETURN* at
-the end of each line; the editor "wraps" words, so they aren't chopped
-in half.
+Simply type it into the editor.  There is no need to press kbd:[Return] at
+the end of each line; the editor "`wraps`" words, so they aren't chopped
+in half at the right edge of the screen.
 
-When you reach the end of the text buffer, or if you type a *.* at the
+When you reach the end of the text buffer, or if you type a kbd:[.] at the
 first column, you will be automatically put into _Command Mode_ (see
 below).
 
 As the sysop, you can define how many lines of text (in multiples of
-ten) a user can type into the editor.  (See <<access-flags>> for more
+ten) a user can type into the editor.  (See <<user-flags>> for more
 information.)  If a user is in local or pseudo-local mode, they are
 allowed 253 lines in the editor.
 
 The amount of free memory is kept track of. If this amount becomes too
-small (less than 256 bytes), the message ***\*\*\* End Of Memory \*\*\*
-***appears, and you must use *.S* to save, or *.A* to abort.
+small (less than 256 bytes), the message 
+
+ `*** End of Memory ***`
+
+appears, and you must type kbd:[.S] to save, or kbd:[.A] to abort.
 
 Entering the editor in local or pseudo-local also mode reports how many
 bytes are free.
 
-Editor Commands
+## Editor Commands
 
 
 ### Dot Commands
 
-Type a *.* (period) as the first character on a line.  This displays
-***Command:*** and waits for you to press another key (called a “dot
-command”).  This is Command Mode.
+These are called "`dot commands`" because they begin with a kbd:[.] (period)
+as the first character on a line.  They display
+`Command:` and wait for you to press another key.  This is _Command Mode_.
 
--   If you press *Delete* or *Return* keys, the `Command:` prompt is
+-   If you press kbd:[Delete] or kbd:[Return] keys, the `Command:` prompt is
     removed, and you are returned to the editor.
 -   If you press an unrecognized command key, the editor exits to BASIC
     to check if you have added that command before assuming it is an
@@ -4073,23 +4255,29 @@ command”).  This is Command Mode.
 If you press a key corresponding to a command, the editor displays the
 command, waiting for you to either:
 
--   enter a line range (or another character, for some commands). You
-    can tell when a command accepts a line range because the cursor ends up one
-    space to the right of a command.
--   or press `Return` to accept the command.
+-   enter a _line range_ (or another character, for some commands).
 
-### Line Ranges
+TIP: A command accepts a line range when there is an extra
+space after it.
+
+-   or press kbd:[Return] to accept the command.
+
+### Line Ranges [[line-ranges]]
 
 Most commands allow a line range to be entered after the command, just
 like BASIC's `list` command.  A line range can be specified in one of
 the following ways:
 
-Specifier     Meaning
----------     -------
-        x     Just line \#x
-       x-     From line \#x to the end of the message
-      x-y     From lines \#x to \#y
-       -y     From lines \#1 to line \#y
+[%autowidth]
+[%header]
+.Line range specifications
+|===
+|Specifier | Meaning
+|        x | Just line #x
+|       x- | From line #x to the end of the message
+|      x-y | From lines #x to #y
+|       -y | From lines #1 to line #y
+|===
 
 Any delimiter (comma, etc.) may be used in place of the `-`, depending on
 your preference.
@@ -4102,8 +4290,11 @@ and discussed here.
 There are two ways to get out of the editor:
 
 -   The first way is to abort the message you were typing, with the
-    `.A`bort command.  *There is no confirmation, unfortunately.*
--   The second way is to save the message with the `.S`ave
+    kbd:[.A]bort command. 
+
+WARNING: There is no confirmation, unfortunately. Yet. I almost have that fixed.
+
+-   The second way is to save the message with the kbd:[.S]ave
     Text command.
 -   Neither command requires or allows line ranges.
 
@@ -4111,74 +4302,70 @@ There are two ways to get out of the editor:
 
 There are several options to view the text you have already typed:
 
--   First, the `.R`ead command.  This displays each line just as it
+-   First, the kbd:[.R]ead command.  This displays each line just as it
     was typed.  Each color change character and MCI command is shown
-    without being acted upon. This might be useful to "proofread" your message.
--   Next, the `.M`CI Read command.  This interprets MCI commands, and
+    without being acted upon. This might be useful to "`proofread`" your message.
+-   Next, the kbd:[.M]CI Read command.  This interprets MCI commands, and
     displays color change codes.
--   Finally, you can also `.L`ist the text, which displays line numbers
-    (used in line ranges for other commands), plus behaving like `.R`ead.
+-   Finally, you can also kbd:[.L]ist the text, which displays line numbers
+    (used in line ranges for other commands), plus behaving like kbd:[.R]ead.
 
-If no line range is given for the `.R`ead, `.M`CI Read or `.L`ist
+If no line range is given for the kbd:[.R]ead, kbd:[.M]CI Read or kbd:[.L]ist
 commands, all text in the buffer is read or listed.
 
-You can pause text with *Ctrl-S* or *Home* keys at any time.  Messages may
-be aborted while paused with the spacebar or `/` keys.
+You can pause text with kbd:[Ctrl+S] or kbd:[Home] keys at any time.  Messages may
+be aborted while paused with kbd:[Space] or kbd:[/] keys.
 
 ### Manipulating Text
 
-`.D`elete removes lines of text from your message permanently; there is no
+kbd:[.D]elete removes lines of text from your message permanently; there is no
 "undo" capability.
 
--   Any line range you type after .Delete is removed from the buffer.
+-   Any line range you type after kbd:[.D]elete is removed from the buffer.
 -   If no line range is specified, the last line of text is deleted.
 
-<!-- comment: bla -->
-
--   `.E`dit changes lines of text.  When a line is edited this way, the
-    line number is displayed, then the text itself, just like the `.L`ist
+-   kbd:[.E]dit changes lines of text.  When a line is edited this way, the
+    line number is displayed, then the text itself, just like the kbd:[.L]ist
     command does.  You may then type the new line below it.  (See
-    “[Control Keys](#anchor-595)” for useful editing keystrokes.)
--   Pressing *Delete* or *Return* as the first character on the line causes
+    <<control-keys>> for useful editing keystrokes.)
+-   Pressing kbd:[Delete] or kbd:[Return] as the first character on the line causes
     the editor responds with `(No Change.)` and returns to allowing text entry.
--   Typing `.` as the first character causes `Command: Exit` to appear and
+-   Typing kbd:[.] as the first character causes `Command: Exit` to appear and
     abort the Edit command, once again allowing text entry.
--   If no line range is specified, `.E`dit defaults to the last line of
+-   If no line range is specified, kbd:[.E]dit defaults to the last line of
     text entered.
 
 ### Editor Modes
 
-## Insert Mode
-The `.I`nsert command enters Insert Mode.  Any line number you specify after
-`.I` is where you start inserting lines.  If no line number is specified,
-line \#1 is assumed.
+#### Insert Mode
+The kbd:[.I]nsert command enters Insert Mode.  Any line number you specify after
+kbd:[.I] is where you start inserting lines.  If no line number is specified,
+line #1 is assumed.
 
-When you are in Insert mode, it is shown by displaying *Ix:*, where *x* is
+When you are in Insert mode, it is shown by displaying `Ix:`, where _x_ is
 the line number you are inserting at.
 
 As you type each line of text, text on subsequent lines is moved down in
 the buffer, then your line is put in its place.
 
-You can exit Insert Mode by typing a `.` as the first character on the
-line.  This responds with *Command: Exit* and goes back to the normal
+You can exit Insert Mode by typing a kbd:[.] as the first character on the
+line.  This responds with `Command: Exit` and goes back to the normal
 editor.
 
-## Line Numbering Mode
-The `.O` command toggles Line Numbering Mode on or off.  This mode, when
+#### Line Numbering Mode
+The kbd:[.O] command toggles Line Numbering Mode on or off.  This mode, when
 on, displays line numbers as you type text.
 
 ### Shaping Your Text
 
-The `.J`ustify command allows you to format your text in one of 7
+The kbd:[.J]ustify command allows you to format your text in one of 7
 different ways.  After typing the J command, you are prompted:
 
-`Justify (C,E,I,P,L,R,U): `
-
-**
+ Justify (C,E,I,P,L,R,U):
 
 These are the seven Justify commands.  Press the key corresponding to
 which justification mode you want, or to escape, type (fixme: period?)
-*Delete* or *Return*.
+kbd:[Delete] or kbd:[Return].
 
 If a valid command is selected, the editor displays the command name,
 and then allows you to enter a line range.
@@ -4188,114 +4375,140 @@ text in the buffer.
 
 The Justify commands are:
 
-  ----------- -------------------------------------------------------------------------
-  ----------- -------------------------------------------------------------------------
+[%autowidth]
+[%header]
+.Text editor justification commands
+|===
+|Command         | Purpose
+|kbd:[C]enter    | Center text within the current kbd:[.C]olumn width
+|kbd:[E]xpand    | Justify text within the current kbd:[.C]olumn width
+|kbd:[I]ndent    | Indent text a space to the right
+|kbd:[P]acked    | Remove spaces added throughout the line by `E`xpand
+|kbd:[L]eft      | Align text to the left margin
+|kbd:[R]ight     | Align text to the right margin
+|kbd:[U]n-Indent | Remove spaces added by `I`ndent
+|===
 
-Table : Text editor justification commands
-
-The *.B*order command puts a border around your text. If you do not
+The kbd:[.B]order command puts a border around your text made up of a
+character you specify after the `Border Character:` prompt. If you do not
 specify a line range, it will default to all text entered. If there is
 not enough room on a particular line to add both border characters, that
 line is ignored.
 
-**Tip: Set the *.C*olumns width to 2-4 characters less than your current
-line width before typing the text to be bordered.**
+TIP: Set the kbd:[.C]olumns width to 2-4 characters less than your current
+line width before typing the text to be surrounded by a kbd:[.B]order.
 
-The *.C*olumns command **followed by a two-digit number between 22 and
-80** changes the number of characters the editor allows you to type on a
-line *before wrapping overly-long lines to the next line* between 22
-**columns (f*or VIC-20s*)** and 80.
+TIP: If you want to undo a kbd:[.B]order command, there is an kbd:[.U]nborder
+command in `+.WF`.
+
+The kbd:[.C]olumns command followed by a two-digit number between 22 (for VIC-20s) and
+80 (for 80-column Commodore 128s, or ASCII/ANSI terminals) changes the number of
+characters the editor allows you to type on a line before wrapping text
+around to the next line.
 
 If you do not specify a column width after the command, the current
 column width is displayed.
 
-A related command is *.\#*—this displays a 40-column scale for manually
+A related command is kbd:[.#]. This displays a 40-column scale for manually
 centering text, among other purposes.  There is no prompt for a line
-range; the scale gets displayed as soon as you hit \#.
+range; the scale gets displayed as soon as you hit kbd:[#].
 
 ### Starting Over
 
-The *.N*ew (Clear Text) command re-starts the editor, erasing all text
-you have typed.  *There is no confirmation, unfortunately, something I
-plan on remedying in Image BBS 2.0!*
+The kbd:[.N]ew (Clear Text) command re-starts the editor, erasing all text
+you have typed.
+
+WARNING: There is no confirmation, unfortunately; something I
+plan on remedying in Image BBS 2.0!
 
 ### Searching For Text
 
-The *.F*ind command allows you to search for any occurrence of a
+The kbd:[.F]ind command allows you to search for any occurrence of a
 character, word or phrase.  If no line range is entered, all text will
 be searched.  Find will prompt you for the text to search for, and will
 list all occurrences of it.
 
 ### Replacing Text
 
-The *.K* (Replace) command will prompt you for an optional line range,
-then a ***Search Phrase:*** as *.F*ind does, but also ask what phrase
+The kbd:[.K] (Replace) command will prompt you for an optional line range,
+then a `Search Phrase:` as kbd:[.F]ind does, but also ask what phrase
 you want to replace it with.  Then it will go through the text.  If the
 replacement phrase is too large to fit within the current line length,
-the editor will display ***Too big, can't fit.*** and skip that line.
+the editor will display `Too Big, Can't Fit.` and skip that line.
 
 ### Disk Access
 
 (These commands are available from local/pseudo-local mode only.)  The
-`.G`et and `.P`ut commands allow you to load a file from, edit using all the
+kbd:[.G]et and kbd:[.P]ut commands allow you to load a file from, edit using all the
 normal editing facilities, then save that file to any device and drive,
 rename it, etc., and resave them to the same device/drive, or a
 different device/drive if desired.
 
-*fixme* Rewrite:
+TIP: See <<write-file>> for additional editing dot commands only
+available from local or pseudo-local mode.
 
-(These commands are only available from local or pseudo-local mode.)
+****
+fixme: move this section there?
 
-`.Get` allows you to load a text file from any device and drive. It
+kbd:[.G]Get allows you to load a text file from any device and drive. It
 appends the file to any text already in the editor's buffer.
 
 You can then use all the normal editing facilities.
 
-> A suggestion: if you are trying to work with SEQ files with C/G codes
-> in them, use `.Columns 80` first, so lines don't word-wrap.
+TIP: if you are trying to work with SEQ files with C/G codes
+in them, use kbd:[.C]olumns 80 first, so lines don't word-wrap.
 
-`.Put` allows you to save the text file in the buffer to a specified
+kbd:[.P]ut allows you to save the text file in the buffer to a specified
 device and drive. If the specified filename already exists, you can
 either replace the file or append the text in the buffer to the existing
 file.
 
-`.$` (View Directory) command views a disk directory of any device and
+kbd:[.$] (View Directory) command views a disk directory of any device and
 drive, with a pattern if desired.
 
-`.&` reads an existing file. A filename, device and drive are prompted
+kbd:[.&] reads an existing SEQuential file. A filename, device and drive are prompted
 for.
 
-`.!` issues a DOS command. If a “new” (`n0:diskname,id`) or “scratch” (`s0:filename`) command is issued, you
+kbd:[.!] issues a DOS command. If a "`new`" (`n0:diskname,id`) or "`scratch`" (`s0:filename`) command is issued, you
 are prompted to confirm your actions.
+****
 
 ### Getting Help
 
-Type `.?` or `.H` to read a condensed version of this manual section.
+Type kbd:[.?] or kbd:[.H] to read a condensed version of this manual section.
 
-### Control Keys
+### Control Keys [[control-keys]]
 
 Certain key combinations are used to edit your text while you are typing
 it, whether in the BBS editor or at a BBS prompt.  For example, any
-character that you delete with the *Delete* key can be “re-typed” with
-*Ctrl-U*.  Other control keys:
+character that you delete with the kbd:[Delete] key can be "`re-typed`" with
+kbd:[Ctrl+U].  Other control keys:
 
-  Right     Left     Center     Default
--------     ------ ----------   -------
-     12     12        12            12
-    123     123       123          123
-      1     1          1             1
+[%autowidth]
+[%header]
+.Text Editing Control Keys
+|===
+|Command | Purpose
+|kbd:[Delete] | Move back one character
+|kbd:[Ctrl+B] | Delete to beginning of line
+|kbd:[Ctrl+D] | Delete character under cursor
+|kbd:[Ctrl+I] | Insert character under cursor
+|kbd:[Ctrl+N] | Move forward to end of line
+|kbd:[Ctrl+O] | Duplicate all text on current line
+|kbd:[Ctrl+U] | Re-type one character from buffer
+|kbd:[Ctrl+V] | Verify text in buffer (re-print input)
+|kbd:[Ctrl+W] | Delete previous word
+|kbd:[Ctrl+X] | Abort input [prints a British pound sign (£) on Commodore terminals,
+or a backslash (\\) on ASCII terminals]
+ |kbd:[Ctrl+Y] | Re-type word from buffer (move forward one word)
+|===
 
-Table: Demonstration of simple table syntax
-
-
-Table: Text editor & BBS prompt control keys
-
-### Message Command Interpreter
+### Message Command Interpreter [[message-command-interpreter]]
 
 The Message Command Interpreter (MCI) allows you to do a variety of
 things within messages you type.  Each MCI command consists of:
 
--   the British pound character (£) for Commodore users, or
+-   the British pound sign (£) for Commodore users, or
     backslash (\\) for other computers
 -   a command letter (can be either upper- or lowercase)
 -   a number or letter
@@ -4305,32 +4518,32 @@ Numbers must be entered in a certain way.  Since the parameter after a
 command letter may only be one character, letters are substituted in
 some cases, as follows:
 
-  --- -------- ---- --------
-  --- -------- ---- --------
-
 Table : MCI numbering system
 
-*Think of it as "extended hexadecimal."  And by the way, this next
+****
+Think of it as "extended hexadecimal."  And by the way, this next
 good-sized chunk was pretty extensively reworked; I think the examples
-in the original manual don't always explain themselves very well.*
+in the original manual don't always explain themselves very well.
 
-*Plus, one thing to mention: If ever you need to output a British pound
-sign, type two of them.  This is technically called "escaping" MCI; the
+Plus, one thing to mention: If ever you need to output a British pound
+sign, type two of them.  This is technically called "`escaping`" MCI; the
 first prepares to interpret the following character as an MCI command,
-the second cancels it.*
+the second cancels it.
+****
 
-In general, MCI is what "spices up" an IMAGE BBS.  It allows you to add
-color, cursor movement, and a "personal touch."  The MCI commands
+
+In general, MCI is what "`spices up`" an IMAGE BBS.  It allows you to add
+color, cursor movement, and a "`personal touch.`"  The MCI commands
 available in IMAGE BBS are:
 
-***£AnTEXT£ About***
+£AnTEXT£ About
 
 
 Compare MCI variable £Vn to TEXT.  Notice the ending pound sign which
 delimits the comparison.  (For a list of MCI variables, see the £V
 command.)  The comparison result can be used with £D or £T.
 
-*£A2SYSOP£*Compares the user's handle (*£V2*) to *SYSOP*.
+£A2SYSOP£ Compares the user's handle (`£V2`) to `SYSOP`.
 
 ***£Bx Bells***
 
@@ -4687,7 +4900,7 @@ Notes: \* Use the back-arrow key to the left of the 1 key.
 If the tab-to column specified is less than the column where the cursor
 is now, any text after the tab command is displayed as normal.
 
-The Image Terminal Program
+## The Image Terminal Program
 
 
 IMAGE BBS has a built in Commodore 1670/Hayes-compatible terminal
@@ -4702,10 +4915,10 @@ off-line.  It is equipped with several features, including:
 For the most part it is self-documenting, with several on-line menus to
 help you.
 
-Using the Terminal Program
+### Using the Terminal Program
 
 
-To load and use the term program, press ← at BBS idle mode, and the term
+To load and use the term program, press kbd:[←] at BBS idle mode, and the term
 will load and display the opening menu, along with several parameters
 displayed on the top right window of the screen.  To change any of these
 parameters, select the "Term Parameters" option from the main menu.
@@ -4721,7 +4934,7 @@ Other options on the main menu include terminal mode, file operations,
 phone book, disconnect, return to the BBS environment, and send line
 break (for the MERIT system).
 
-The Phone Book
+### The Phone Book
 
 
 Here is where you may dial numbers entered into your s.phonebook file,
@@ -4808,7 +5021,7 @@ Table : Maintenance functions
 ### Local Maintenance Commands
 
 
-### Extended Command Set Editor [[extended-command-set]]
+## Extended Command Set Editor [[extended-command-set]]
 
 The _Extended Command Set_ or ECS allows you to add or delete commands
 from your BBS without the need to modify your im module or re-boot the
@@ -4831,7 +5044,7 @@ flags attached to it:
 
 Table : Extended Command Set flags
 
-#### Using The ECS Editor
+### Using The ECS Editor
 
 Using the ECS command editor is really very simple—there are just a few
 things that you should know.
@@ -4845,7 +5058,7 @@ things that you should know.
 Re-boot your BBS and add or edit any commands that you wish using +.ecs
 by entering ECS at the main prompt.
 
-### User Edit
+## User Edit
 
 *ED* allows you to edit your users' information whenever needed.  Type the handle or ID
 number of the user to edit.
@@ -4912,18 +5125,17 @@ NOTE: `CP` will _not_ copy files to the same device and drive. Use the
 NOTE: `CP` will also not copy REL files.
 Use `+.CP-rel` online, or `rel copy` (for one 1541 drive only) offline to do this.
 
-### Write File
-
+### Write File [[write-file]]
 
 With `WF`, you may access the IMAGE text editor as a mini word-processor, to write or
 edit any sequential (SEQ) file.
 
 When you type `WF` at the main prompt, the text editor will load, and you are able to
-use it to ``.P``ut (save) and ``.G``et (load) files from any device and drive you have
+use it to `kbd:[.P]`ut (save) and `kbd:[.G]`et (load) files from any device and drive you have
 online. This makes it easy to write, edit, or—in the case of "`putting`" to a file which
 already exists, append to—a file.
 
-### Additional Dot Commands
+#### Additional Dot Commands
 
 There are also additional editor commands built into the `WF` function
 not normally available from the editor subsystem:
@@ -4936,6 +5148,7 @@ not normally available from the editor subsystem:
 | .$ | Disk directory 
 | .G | Get file from disk 
 | .P | Put file to disk 
+| .U | Unborder
 | .& | Read SEQ file 
 | .Q | Query used lines, show available RAM 
 |====================
@@ -4948,7 +5161,7 @@ it as necessary or create a new file if you wish.  (fixme: correct?)
 
 When finished, you have two choices:
 
-\.Save
+.Save
 
 Saves the file (prompting for a filename if one hasn't been established
 with the Get command).  It checks for the presence of an existing file
@@ -4958,40 +5171,39 @@ under the given name, and if one is found, it prompts:
 
 Here, you can:
 
--   [A]ppend the text in the editor to the existing file
--   [R]eplace the file on disk with the text in the editor
--   [Q]uit to the editor (keeping existing text intact) without saving
+-   kbd:[A]ppend the text in the editor to the existing file
+-   kbd:[R]eplace the file on disk with the text in the editor
+-   kbd:[Q]uit to the editor (keeping existing text intact) without saving
     changes
 
-\.Put
+\.Put::
 
 Allows you to save the file wherever you wish, returning to where you
 left off in the editor to continue working.  You are prompted for a
-filename in the same way as above (if you used ``.G``et, the filename you
+filename in the same way as above (if you used kbd:[.G]et, the filename you
 got is displayed serving as a reminder of the default filename).  You
 are prompted for the device and drive to save to (the default is 8,0).
 
-\.Query
+\.Query::
 
 Re-displays the editor's opening message, showing how many lines used so
 far, remaining, and bytes of free memory.
 
-\.U Unborder
+ .U Unborder
 
-Removes a ``.B``order or partial ``.B``order that you have done.  It removes the
+Removes a `kbd:[.B]`order or partial `kbd:[.B]`order that you have done.  It removes the
 first and last lines, and first and last characters from each line if
 they are the same character.
 
-\.R Run a Plus-File
-
+### Run a Plus-File
 
 Run any plus file you have on your plus file disk from the main prompt.
-You are prompted
+Type kbd:[R]. You are prompted:
 
  Run +.
 
-Type the filename after that.  (Pressing RETURN by itself exits to the
-main command level.)
+Type the filename (minus the `+.` prefix) after that. 
+(Pressing kbd:[Return] by itself exits to the main command level.)
 
 ## Remote Maintenance Commands
 
@@ -5012,7 +5224,7 @@ following categories:
 I'll let Fred Dart explain the operation of some features, with slight
 formatting changes to the file:
 
-The following article appeared in the January issue of "The Reflection"
+The following article appeared in the January issue of "`The Reflection`."
 
 It is reproduced here for the
 benefit of any that may have missed
@@ -5081,10 +5293,10 @@ have one that you send to anyone that runs into an error on your system
 will be asked "which one" and ``?`` will bring up the list of those you
 have available.
 
-`CR`ed is very handy for giving credit.  I'm sure you have all had
+``CR``ed is very handy for giving credit.  I'm sure you have all had
 occasion to need to restore some credit to a user for a bad download or
 as a reward for something, now you can do it from here, no need to go
-into `ED` just to give him credit.
+into ``ED`` just to give him credit.
 
 Del is one of my own favorites.  The user that signs on with an
 obviously fake account or the irate user that says "`just delete me from
@@ -5114,7 +5326,7 @@ All in all the VF is now about anything a busy sysop could want to
 maintain his daily message traffic from his users.  This is really one
 of the better "`hidden`" features of 1.2.  Well done, Dr. Bob.
 
-(A late note here, someone that just converted to IMAGE from 12.0 said
+(A late note here, someone that just converted to IMAGE from CNET 12.0 said
 that the "+.VF" was one of the best features he had noticed since his
 conversion.)
 
@@ -5125,21 +5337,21 @@ Permission to reprint is granted provided the file is printed in its entirety.
 If the user is in "Local" or "pseudo-local" mode, they are given an option to delete the entries.
 
 
-Entering N, E, or F will allow them to read the entries beginning with
+Entering `N`, `E`, or `F` will allow them to read the entries beginning with
 the first entry or with any entry number he may wish to enter (Example:
 if there were 10 feedback messages, they could start reading number 5 by
-entering a 5 at the prompt, or enter N to begin reading those entries
+entering a `5` at the prompt, or enter N to begin reading those entries
 that are NEW since his last call, if the feedback was not deleted
 previously).
 
 After each message he has several options, including:
 
 -   advancing to any message by typing the message number
--   N or `RETURN` continues on to the next message
--   R responds to the message
--   A changes the user's access
--   F forwards the message to any other user as e-mail
--   Q quits back to the options menu
+-   kbd:[N] or kbd:[Return] continues on to the next message
+-   kbd:[R] responds to the message
+-   kbd:[A] changes the user's access
+-   `F` forwards the message to any other user as e-mail
+-   `Q` quits back to the options menu
 
 After all messages have been read, the user is returned to the options
 menu.  If access is assigned to a new user the Sysop is given the option
@@ -5151,7 +5363,9 @@ user feedback to a file called e.nark (which could be backed up from
 time to time, as many sysops like to do).  This eliminates the search
 through older messages each time VF starts up.
 
-## Reserve Account [[reserve-account]]
+## Miscellaneous Plus Files [[misc-plus-files]]
+
+### Reserve Account [[reserve-account]]
 
 
 A reserved account (an account with a pre-assigned password, number of
@@ -5270,7 +5484,7 @@ similar to BASIC's kbd:[LIST] command.
 
 
 .Ranges
-[width="100%"]
+[%autowidth]
 |====================
 | x | List sub #x
 |  |  
@@ -5280,33 +5494,29 @@ similar to BASIC's kbd:[LIST] command.
 |  |  
 |  |  
 |====================
-.Ranges
-===
 
-===
 
-Type the board number you want to edit, then press *RETURN*. (Pressing
-*RETURN* by itself exits to the main RELedit menu.)
+Type the board number you want to edit, then press kbd:[Return]. (Pressing
+kbd:[Return] by itself exits to the main RELedit menu.)
 
-Editing Sub-Board Options
+### Editing Sub-Board Options
 
 
 A menu appears with 9 options:
 
-  ---------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  ---------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[%autowidth]
 
 Table : RELedit sub-board definitions
 
 These 9 options are the same for the U/D and U/X editors as well.  The
-only difference is the `Type` question which asks ***Downloads
-Only?*** and ***Free Downloads?*** as well as Password.
+only difference is the `Type` question which asks `Downloads
+Only?` and `Free Downloads?` as well as Password.
 
-If the access is 0 or the title is ---, the data will not be saved (or
+If the access is 0 or the title is `---`, the data will not be saved (or
 deleted if editing an existing record).  The BBS also goes through the
 SIGs (if defined) and removes the board from any SIGs it is on.
 
-The SIG Editor
+### The SIG Editor
 
 
 This is much like the Sub, U/D and U/X editors.  The list displays:
@@ -5343,35 +5553,35 @@ boards for that SIG.
 
 The commands are as follows:
 
-[A]dd board
+kbd:[A]dd board
 
 Add a board to the end of the list of boards for this SIG.  This command
 accepts ranges, or type just A and you are asked for the board number
 (which is the record number you saw in the Sub, U/D and U/X editors).
 
-Typing *L* at the main `Edit` or `Add Which` prompts
+Typing kbd:[L] at the main `Edit` or `Add Which` prompts
 list the defined Subs/UDs/UXs (depending on which type you are
 editing).
 
 The Add command also allows multiple adds by giving it a range to add.
-For example, `A5-10` will add Subs 5 to 10. Range commands also work at
-the "Add Which" prompt.
+For example, kbd:[A5-10] will add Subs 5 to 10. Range commands also work at
+the `Add Which` prompt.
 
-*\[I\]nsert board*
+kbd:[I]nsert board
 
-Identify the number *before* the board(s) you want inserted. Typing *S*
-at the edit prompt or the ***Insert Before Which*** prompt lists the
+Identify the number _before_ the board(s) you want inserted. Typing kbd:[S]
+at the edit prompt or the `Insert Before Which` prompt lists the
 boards in that SIG (again, you can enter a range here as well).  You can
 give the board number you want the new boards inserted before by typing
-*I* followed by the number.
+kbd:[I] followed by the number.
 
 *fixme* Table
 
-Pressing *RETURN* saves the list, returning you to the editing screen
+Pressing kbd:[Return] saves the list, returning you to the editing screen
 for the SIG information.
 
 When you hit RETURN at the SIG Edit prompt, the data is saved unless the
-title is *---* or the access is 0.
+title is `---` or the access is 0.
 
 If a SIG is deleted, the SIG list for that SIG is also deleted.
 
@@ -5576,8 +5786,6 @@ These files should be put on your Plus Files disk:
 
 
 Table : Networking Plus Files
-
-###
 
 ### Installing NetMail
 
@@ -6040,11 +6248,13 @@ possibly even crash the BBS.
 Here is a list of reserved system variables that you should NEVER use,
 except for their intended system functions:
 
+****
 Since I think it's sort of important to know what the variables are
-actually *used* for, and not just their names, I'm going to steal a page
-from the *Image BBS Programmer's Reference Guide* and explain their
-meanings to the best of my ability.  Feel free to set the record
+actually _used_ for, and not just their names, I'm going to steal a page
+from the "`Image BBS Programmer's Reference Guide`" and explain their
+meanings to the best of my ability. Feel free to set the record
 straight if you know otherwise, 'k?
+****
 
 ### Reserved String Variables
 
@@ -6098,7 +6308,7 @@ Table : Reserved Arrays
 
    BU
 
-   CL\$ I think this is C1\$ instead; "Entering chat" message
+   C1\$ "Entering chat" message
 
    C2\$ "Exiting chat" message
 
@@ -6151,7 +6361,7 @@ D1\$ 11-digit current date/time
    DA%
 
 
-   DC
+   DC	Download count
 
    DC%
 
@@ -6229,9 +6439,9 @@ LD\$ User's last call date (11 digits, like D1\$)
 
    NL\$ CHR\$(0), a null character
 
-   NP
+   NP	Number of posts
 
-   NR
+   NR	Number of responses
 
    NV
 
@@ -6280,7 +6490,7 @@ LD\$ User's last call date (11 digits, like D1\$)
    QT\$ CHR\$(34), a quote character
 
 
-   R\$ CHR\$(13), a RETURN character
+   R\$ CHR\$(13), a kbd:[Return] character
 
    RC
 
@@ -6804,8 +7014,6 @@ specially before you put it on line.  Run the *2400 setup* program on
 the IMAGE disk with the modem on-line and turned on, and then boot your
 IMAGE BBS!
 
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Index
 
