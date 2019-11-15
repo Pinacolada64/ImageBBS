@@ -1,0 +1,21 @@
+TODO:
+
+Check whether every command matches up with its documentation.
+
+Can document attributes be used for macros, such as:
+{pause} -> "Text output can be paused with Home, or aborted with Space or /."
+
+Look at FIXMEs.
+
+Why is {revdate} not displaying on title page?
+
+Find out how to include list of Tables in Table of Contents
+
+* fix table of contents heading levels
+* fix typographical quotes
+* command summary appendix
+* keystrokes in kbd:[x] wrapper
+* fix footnotes
+* "will <whatever>" -> "<whatever>s"
+* include screenshots
+* separate chapter files for possible inclusion in v1.3+ docs

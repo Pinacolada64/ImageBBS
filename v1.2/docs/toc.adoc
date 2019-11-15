@@ -1,0 +1,326 @@
+## Preface
+
+## Product Information
+
+# Setting Up Your Image BBS
+
+##    Hardware Considerations
+##    Disk Drives
+##    Modems
+##    RAM expanders
+##    AutoRAMDOS
+##    Printers
+##    Interfaces
+##    RS232 interfaces
+##    Fastload cartridges
+
+# Getting Things Going
+
+## Designating Drives
+
+## Copying Files
+
+## Boot Disk
+
+## The Configuration Editor
+
+## How to Configure a New System
+
+## Device/Drive Assignments
+
+## Entering BBS Information
+
+## Reloading Configuration Files
+
+## Saving Configuration Files
+
+## Modem Setup
+
+### `modemconfig 19.2`
+
+### Telnet BBSes and Server Software
+
+#### `tcpser 1.0rc12`
+
+#### `tcpser4j`
+
+#### `BBS Server`
+
+#### *fixme* any others...?
+
+# On-Line
+
+## Booting Up
+
+## The idle screen
+## Screen masks
+## The lightbar
+## The bottom mask
+## Setting the time
+## Other command keys
+
+# Logging On
+
+## RES users
+## NEW users
+## The top screen after logon
+## Editing system info files
+## Editing sub-boards/libraries
+
+# General Commands
+
+## Chat request/chat mode
+## Feedback
+## Help menus
+## System information
+## Last call date
+## Logging off
+## Quitting to main level
+## Time and date
+## Edit Parameters
+##  Credit exchange
+##  Prompt mode
+##  Status
+##  Sayings
+##  Activity log
+##  Board Activity Register
+##  C/G, ASCII, ANSI mode toggle
+##  Expert mode
+##  New user message
+##  Pseudo-local mode
+##  Entering/changing subsystems
+##  Command stacking
+
+# Sub-Boards
+
+##  Message base system
+##  Moving to another sub-board
+##  L  Lx Listing sub-boards
+##  Sx SA SN Scanning bulletins
+##  A  Ax About bulletins
+##  RA RN Reading bulletins
+##  New messages
+##  P  Posting new bulletins
+##  Kx Killing bulletins
+##  Ex Editing bulletins
+##  ^  Frozen bulletins
+##  Subops
+##  Anonymous/password/non-anonymous boards
+
+# Upload/Download/Exchange Subsystem
+
+##  Moving to another library
+##  PR Upload/Download protocol
+##  U Single file upload
+##  UM Multi file upload
+##  D Single file download
+##  DM Multi file download
+##  L  Lx   Listing files
+##  Kx Ex   Killing/editing files
+##  Rx Reading sequential/program files
+##  Subops
+##  Vx Validating files
+##  Copying/moving files
+##  UX Full disk exchange libraries
+##  Free UD/UX library
+
+# Electronic Mail Subsystem
+
+##  L Listing e-mail
+
+##  #, Ret  Reading e-mail
+
+##  R  Rx   Responding to a message
+
+##  S Sending private e-mail
+
+##  D Delete e-mail
+
+##  FR Personal file storage
+
+##  Verifying e-mail
+
+##  (move)  Forced e-mail
+
+# News Subsystem
+
+##  A Adding a news file
+##  ``R``, kbd:[Return] Reading news
+##  ``K``  ``Kx``   Killing news files
+##  E  Ex   Editing news files
+##  L  Lx   Listing news files
+
+# Movie/Plus/RLE/Text File Libraries
+
+    MF  Movie file library
+    PF Plus file library
+    RF RLE file library
+    TF Text file library
+
+    d.name  Making subdirectories
+
+    A Adding a file
+
+    \# Entering a subdirectory or running a file
+
+    K  Kx   Killing a subdirectory or file
+
+    E  Ex   Editing a subdirectory or file
+
+    L  Lx   Listing files
+
+9 BBS DATABASE SUBSYSTEM
+
+BB BBS command menu
+
+L Listing BBSes ........................................35
+
+A Adding a BBS .........................................35
+
+R Removing a BBS .......................................36
+
+E Editing BBS flags ....................................36
+
+D Display BBS notes ....................................36
+
+# VOTING BOOTH SUBSYSTEM
+
+##  `A` Add a topic
+##  `K` Kill a topic
+##  `#` Vote/view results
+##  `L` List topics
+
+# User List Subsystem
+
+##  `Q` Quick listing
+##  `R` Regular listing
+
+# The IMAGE Text Editor
+
+##  Entering text
+##  Editor commands
+### .A / .Q Exiting the editor
+### .R / .M Reading what you have typed
+### Manipulating text
+### Editor modes
+### Shaping your text
+### .N Starting over
+### .F / .K Searching for or replacing text
+### Disk access
+### .? / .H Getting help
+### Control keys
+### Message Command Interpreter (MCI)
+
+# Online Terminal
+
+    Using the terminal program
+    The phonebook
+    File operations
+
+# Maintenance Functions
+
+## Instant Logon
+## Local maintenance commands
+## Run a plus file
+## User editor 
+## Online file copier 
+## Write/edit file
+## Extended Command Set editor
+
+# Remote Maintenance Functions
+
+## VF   View feedback
+
+## RS   Reserve an account
+
+# Weeding old users
+
+# Nightly AutoMaint
+
+# Hourly NetMaint
+
+# Miscellaneous Plus Files
+
+## `+.access`
+
+## `+.alpha/ind`
+
+## `+.e.modrc-config`
+
+## `+.file counter`
+
+## `+.LB`
+
+## `+.mail weed`
+
+## `+.modemconfig`
+
+## `+.reconfig`
+
+## `+.reledit`
+
+## `+.text msg ed`
+
+## Credit Pool Setup
+
+## BASIC 2.0 utilities
+
+## `81bug.bas`
+
+## `1581diag`
+
+## `2400 setup`
+
+## `copy-all`
+
+## `dv change`
+
+## `edata edit`
+
+## `image mod maker`
+
+## `image seq reader`
+
+## `rel copier`
+
+## `uconfig edit`
+
+# Image BBS Networking
+
+## Planning a network
+
+## Network utilities
+
+### `+.NM/util`
+
+# Programming
+
+## Overall Description
+
+## Modules
+
+## Common Subroutines
+
+## Variable Handling
+
+## Image BBS Output Routine
+
+## POKEs And Machine Language Routines
+
+## Common Modifications
+
+### Hidden Lt.Kernal User
+
+### Automatic CMD Device Clock Set
+
+### Lt.Kernal Fast Blocks Free Read 
+
+# Troubleshooting/Q & A
+
+# Versatile Commodore Emulator Settings 
+
+# Index
+
+# Appendix: Command Summary
+
+*fixme*
