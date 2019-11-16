@@ -33,14 +33,14 @@ ml3:
 	jmp rs232	; $0800
 
 rslow:
-	byte <rs232a,<rs232b
+	byte <rs232a,<rs232b ; $2d $1f
 rshigh:
-	byte >rs232a,>rs232b
+	byte >rs232a,>rs232b ; $c0 $c3
 
-	{info:INFO: Embedding "rs232-user.prg"}
-rs232a: embed "rs232-user.prg"
-	{info:INFO: Embedding "rs232-swift.prg"}
-rs232b: embed "rs232-swift.prg"
+	{info:INFO: Embedding "rs232-user.bin"}
+rs232a: embed "rs232-user.bin"
+	{info:INFO: Embedding "rs232-swift.bin"}
+rs232b: embed "rs232-swift.bin"
 
 ; FIXME: since load addresses ($00 $08) are part of the binaries,
 ; the program is JMPing there and hitting a BRK instruction
