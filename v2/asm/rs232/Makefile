@@ -24,9 +24,8 @@ C64_FILENAME =	ML.RS232
 
 all: $(DISKIMAGE)
 
-
 # rs232-swift.prg rs232-user.prg
-# rs232.prg depends on rs232-{user,swift}-no-load-address.prg
+# rs232.prg depends on rs232-{user,swift}.prg
 #	$(WINE) $(CASM) $< -bin:$@ $(C64LISTFLAGS)
 #	@echo $^
 
@@ -50,6 +49,6 @@ $(DISKIMAGE): rs232.prg
 	$(C1541) $(DISKIMAGE) -dir
 
 clean:
-	rm -f *.prg $(DISKIMAGE)
+	rm -f *.bin *.prg $(DISKIMAGE)
 	# format a fresh disk image
 	$(C1541) -format $(DISKHEADER),$(DISKID) d64 $(DISKIMAGE)
