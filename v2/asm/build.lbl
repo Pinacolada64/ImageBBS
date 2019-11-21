@@ -1,5 +1,5 @@
 ; command line:
-; wine casm.exe build.lbl -prg -verbose > build-errors
+; wine casm.exe build.lbl -prg:ml20.prg -verbose > build-errors
 
 ; changes from asm900827 to c64list3.50:
 ; - change "dup" to "area"
@@ -13,63 +13,71 @@
 
 ;	print "{clear}Image BBS 2.0 ML "version$
 
-	{uses:equates-2_0.lbl}
+	{include:equates-2_0.lbl}
 	; for pass=1 to 3:print "{up} pass:"pass
 	; org $6c00,-(pass=3),8,"@:ml 2.0"
 orig $6c00
 
 ;	if pass < 3 then area 0,$a000-*:goto {:1000}
 ;	wedge: load addr $0c00, reloc $0c00
-	{info:embed wedge.prg}
+	{info:embedding wedge.bin}
+	{embed:wedge.bin}
 ;	if *<$7000 then area 0,$7000-*
-align $300
+orig $7000
 
-; orig:  the individual .prg file's load address
-; embed: where in RAM the .prg file gets put
+; orig:  the individual .bin file's load address
+; embed: where in RAM the .bin file gets put
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
 
 ; orig $1800, embed $7000, reloc $d000: editor
-	{info:embed editor.prg}
+	{embed:editor.bin}
 ;	if *<$8000 then area 0,$8000-*
 ;
+orig $8000
 ; orig $c000, embed $8000, reloc $e000: garbage collect
-	{info:embed garbage-collect.prg}
+	{embed:garbage-collect.bin}
 ;	if *<$8400 then area 0,$8400-*
 ;
+orig $8400
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
-	{info:embed ecs.prg}
+	{embed:ecs.bin}
 ;	if *<$8e00 then area 0,$8e00-*
 ;
+orig $8e00
 ; orig $c000, embed $8e00, reloc $ee00: struct
-	{info:embed struct.prg}
+	{embed:struct.bin}
 ;	if *<$9400 then area 0,$9400-*
 ;
-; orig $????, embed $9400, reloc $f400: swap1
-	{info:embed swap1.prg}
+orig $9400
+; orig $c000, embed $9400, reloc $f400: swap1
+	{embed:swap1.bin}
 ;	if *<$9800 then area 0,$9800-*
 ;
-; orig $????, embed $9800, reloc $f800: swap2
-	{info:swap2.prg}
+orig $9800
+; orig $c000, embed $9800, reloc $f800: swap2
+	{embed:swap2.bin}
 ;	if *<$9c00 then area 0,$9c00-*
 ;
-; orig $????, embed $9c00, reloc $fc00: swap3
-	{info:swap3.prg}
+orig $9c00
+; orig $c000, embed $9c00, reloc $fc00: swap3
+	{embed:swap3.bin}
 ;	if *<$a000 then area 0,$a000-*
 ;
-;	if *>$a000 then print "extra modules exceed $a000.":end ' by pina
+orig $a000
+;	if *>$a000 then print "extra modules exceed $a000.":end ; by pina
 ; cannot comment out a "uses:" line, so changing it to "info:"
-	{uses:jump-table.lbl}
-	{uses:string-io.lbl}
-	{info:mci-commands.lbl}
-	{uses:character-io.lbl}
-	{info:disk-io.lbl}
-	{uses:irqhn.lbl}
-	{info:setup.lbl}
-	{uses:varbl.lbl}
-	{info:miscl.lbl}
-	{info:screen-handler.lbl}
-	{uses:modem.lbl}
-	{uses:calls.lbl}
+	{include:jump-table.lbl}
+	{include:string-io.lbl}
+	{include:mci-commands.lbl}
+	{include:character-io.lbl}
+	{include:disk-io.lbl}
+	{include:irqhn.lbl}
+	{include:setup.lbl}
+	{include:varbl.lbl}
+	{include:miscl.lbl}
+	{include:screen-handler.lbl}
+	{include:modem.lbl}
+	{include:calls.lbl}
 
 ;
 ; put intro program (fake protocol) in
@@ -78,9 +86,9 @@ align $300
 ;	:print" free under rom:     {left:5}" ($c000-*)
 ;	:if *<$c000 then area 0,$c000-*
 	{info:Aligning to $c000.}
-	orig $c000
+orig $c000
 	;
-	{uses:intro.lbl}
+	{include:intro.lbl}
 	;
 ;	:print" free proto ram:     {left:5}" ($ca80-*)
 	;
@@ -89,8 +97,8 @@ align $300
 ;	:if *>$cb00 then print "error":end
 ;	:if *<$cb00 then area 0,$cb00-*
 	{info:Aligning to $cb00.}
-	orig $cb00
-; * = $cb00
+orig $cb00
+
 swapper:
 	sta swappg1 ; source page #
 	sty swappg2 ; target page #
@@ -292,6 +300,8 @@ outastr1:
 	bne outastr1
 outastr2:
 	rts
+
+	; $cd00
 outastr:
 	jsr chrgot
 	bne outastr1
@@ -384,7 +394,7 @@ spchars:
 ;	:if *>$cd00 then print "error":end
 ;	:if *<$cd00 then area 0,$cd00-*
 	{info:Aligning to $cd00.}
-	orig $cd00
+orig $cd00
 ;
 ; interface page
 ;
@@ -544,7 +554,7 @@ farerr:
 ;	if *>$ce00 then print "error":end
 ;	if *<$ce00 then area 0,$ce00-*
 	{info:Aligning to $ce00.}
-	orig $ce00
+orig $ce00
 ;
 ; buffer page
 ;

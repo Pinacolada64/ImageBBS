@@ -257,7 +257,7 @@
 
 ; transfer protocol area
 
-	protostart	= $c000
+	protosta	= $c000
 	protoend	= $ca80	; 2680 bytes
 
 ;
@@ -300,7 +300,7 @@
 	chat	= $d006 ; 53254: [1.2] Flag for returning from & for an abort
 	inchat	= $d007 ; 53255
 	chatpage= $d008 ; 53256: [1.2] 1=flashing chat page on
-	access	= $d009 ; 53257: [1.2] shadow of ac%
+	carrier	= $d009 ; 53257: *** modem carrier status [?] ***
 	mxor	= $d00a ; 53258: [1.2] carrier XOR value
 	mkolor	= $d00b ; 53259: [1.2] MCI Kolorific mode flag
 	mupcase	= $d00c ; 53260: [1.2] Uppercase mode flag

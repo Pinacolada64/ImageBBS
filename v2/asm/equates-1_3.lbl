@@ -2,65 +2,77 @@
 	;
 	; Since there ARE some differences in variable definitions (make a list),
 	; try assembling with "equ13" instead. Maybe that will build working "ml 2.0"
-	var	= $61
+
+	var	= $0061	;
 	chrget	= $73
 	chrgot	= $79
-	ridbe	= $29b
-	ridbs	= $29c
 
 ;
 ; serial # stuff
 ;
+	ridbe	= $029b
+	ridbs	= $029c
+
 	bsnpre	= $02fd	; 765 serial # prefix (a/b/g...)
 	bsnval	= $02fe	; 766 serial # lo byte, 767=hi byte
+
+
+	jmptbl	= $a000 ; table of IRQ routines
+
+	linkprg	= $a533
+	gone1	= $a7e7
+	gone2	= $a7ea
+	frmnum	= $ad8a
+	eval1	= $ae8d
+	parchk	= $aef1
+	synerr	= $af08
+	ptrget1	= $b0e7	; set up descriptor stored in ($45) [varname],
+			; returns address in (varpnt)
+	ilqerr	= $b248
+	makerm1	= $b475
+	getbytc	= $b79b
+	getnum	= $b7eb
+	retval	= $bc49
+	getadr	= $b7f7
+	retbyt	= $b3a2
 
 	ten	= $dc08
 	scs	= $dc09
 	min	= $dc0a
 	hrs	= $dc0b
+
 ;	carrier = $dd01
 
-	getin	= $ffe4
-	chkout	= $ffc9
-	chrout	= $ffd2
-	clrchn	= $ffcc
-	chkin	= $ffc6
-	setnam	= $ffbd
-	setlfs	= $ffba
-	loadf	= $ffd5
-	savef	= $ffd8
-	readst	= $ffb7
-	colors	= $e8da
-	chrin	= $ffcf
-	setmsg	= $ff90
-	openf	= $ffc0
-	closef	= $ffc3
-
-	poketok	= 151
-	peektok	= 194
-	systok	= 158
-	loadtok	= 147
-
-	linkprg	= $a533
-	makerm1	= $b475
-	getbytc	= $b79b
-	ptrget1	= $b0e7
-	synerr	= $af08
-	getnum	= $b7eb
-	ilqerr	= $b248
-	retval	= $bc49
-	parchk	= $aef1
-	getadr	= $b7f7
-	retbyt	= $b3a2
-	gone1	= $a7e7
-	gone2	= $a7ea
-	eval1	= $ae8d
-	frmnum	= $ad8a
 	syscll	= $e130
 	comma	= $aefd
 	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
 
-	jmptbl	= $a000 ; table of IRQ routines
+	colors	= $e8da	; flashing chat page colors
+
+	setmsg	= $ff90
+	readst	= $ffb7
+	setlfs	= $ffba
+	setnam	= $ffbd
+	openf	= $ffc0
+	closef	= $ffc3
+	chkin	= $ffc6
+	chkout	= $ffc9
+	clrchn	= $ffcc
+	chrin	= $ffcf
+	chrout	= $ffd2
+	loadf	= $ffd5
+	savef	= $ffd8
+	getin	= $ffe4
+
+;
+; Extended BASIC tokens:
+;
+
+	poketok	= 151	; poke $addr,$val
+	peektok	= 194	; peek($addr)
+	systok	= 158	; sys $addr
+	loadtok	= 147	; load"filename",<device>,<segment>
+
 	outastrp= $cd00
 	usetbl1	= $cd03
 	swapper	= $cd06

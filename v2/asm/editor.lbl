@@ -1,5 +1,5 @@
 ; version$="01/22/91 06:51p"
-{uses:equates-2_0.lbl}
+{include:equates-2_0.lbl}
 orig $1800
 ; for pass=1 to 3:org $1800,-(pass=3),8,"@:ml.editor":print"Pass:"pass
 
@@ -150,7 +150,7 @@ com1:
 	sta comchar
 	ldx #4
 	ldy #5
-	jsr chkflags
+	jsr >@chkflags
 	bne com2
 	lda carrst
 	and #127
@@ -1497,7 +1497,7 @@ xchrout1:
 prtln:
 	lda #39
 	jmp usetbl1
-chkflags:
+@chkflags:
 	lda #52
 	jmp usetbl1
 inline:

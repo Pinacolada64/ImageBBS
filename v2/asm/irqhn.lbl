@@ -3,7 +3,7 @@
 ; 12/08/90 01:28a
 ;* counter to execute a different
 ;* part of the routine each jiffy
-
+{info:equates-2_0.lbl}
 irq:
 	jsr irq9
 	jsr irq10
@@ -431,13 +431,13 @@ dt1:
 dt2:
 	ora #$30
 dt3:
-pha
-tya
-jsr dispdt
-pla
-jsr dispdt
-lda #58		; ':'
-jmp dispdt
+	pha
+	tya
+	jsr dispdt
+	pla
+	jsr dispdt
+	lda #':'
+	jmp dispdt
 
 ; screen blanking
 irq3:
@@ -590,7 +590,7 @@ irq7c:
 	pla
 	sta tmpbar
 irq7z:
-rts
+	rts
 
 irq7d:
 	lsr
@@ -1029,7 +1029,7 @@ t2fk4a:
 	beq t2fk4b
 	iny
 	dex
-	bne >@l2
+	bne <@l2
 t2fk4b:
 	tya
 	jsr settsr
@@ -1047,7 +1047,7 @@ t2fk6a:
 	beq t2fk6b
 	dey
 	dex
-	bne >@l1
+	bne <@l1
 t2fk6b:
 	jmp t2fk4b
 

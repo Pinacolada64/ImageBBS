@@ -1,7 +1,8 @@
-; "12/26/90 01:28a"
+; "string-io.lbl 12/26/90 01:28a"
 ;*
 ;* string output routines *
 ;*
+{info:equates-2_0.lbl}
 ;
 ;* output string
 outstr:
@@ -221,17 +222,17 @@ colrch1:
 	rts
 
 ctrlchk2:
-	cmp #"{rvs on}"
+	cmp #'{rvrs on}'
 	beq ctrlch2a
-	cmp #"{rvs off}
+	cmp #'{rvrs off}'
 	beq ctrlch2a
-	cmp #"{crsr down}"
+	cmp #'{down}'
 	beq ctrlch2a
-	cmp #"{crsr up}"
+	cmp #'{up}'
 	beq ctrlch2a
-	cmp #"{crsr left}"
+	cmp #'{left}'
 	beq ctrlch2a
-	cmp #"{crsr right}"
+	cmp #'{right}'
 	beq ctrlch2a
 	sec
 	rts
@@ -274,7 +275,7 @@ l2:
 	lda #1
 	jsr comy0
 	bne more1
-	lda #"/"
+	lda #'/'
 	sta chat
 more1:
 	ldy #0

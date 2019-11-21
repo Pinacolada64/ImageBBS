@@ -265,5 +265,3 @@ ansicol:	ascii "1;"
 ansir2:		ascii "4"
 ansibak:	ascii "0"
 		byte $6d, 0
-
-

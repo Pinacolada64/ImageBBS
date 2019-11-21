@@ -1,5 +1,5 @@
-; screen-handler.lbl
-
+; "screen-handler.lbl"
+{info:equates-2_0.lbl}
 ; print"05/21/91 03:25p"
 outscn:
 outscn0:

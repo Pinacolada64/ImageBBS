@@ -3,7 +3,7 @@
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.swap1":print pass;
 
 orig $c000
-	{uses:equates-2_0.lbl}
+	{include:equates-2_0.lbl}
 
 hc000:
 	jmp inline
@@ -91,7 +91,7 @@ chatmode:
 ;* location (chat) holds:          *
 ;* 0 = normal                      *
 ;* 1 = delete on column one        *
-;* or dot on column one            *
+;*     or dot on column one        *
 ;* 2 = chat check hit              *
 ;* 3 = carrier/time loss           *
 ;***********************************

@@ -1,5 +1,5 @@
 ;	print"04/04/90 05:59p"
-{asm}
+{info:equates-2_0.lbl}
 inline:
 	lda #00
 	byte $2c
@@ -21,7 +21,7 @@ convert:
 copyrite:
 	lda #67
 	jsr usetbl1
-	jmp outastr
+	jmp $cd00	; outastr, deefined in build.lbl
 
 ;
 ; passed address in x (hi),y (lo)
@@ -92,5 +92,3 @@ callpage:
 	byte 0
 calltemp:
 	byte 0
-
-{endasm}

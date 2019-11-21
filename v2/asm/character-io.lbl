@@ -1,3 +1,4 @@
+{info:equates-2_0.lbl}
 ; print"02/02/91 01:25p"
 ;
 ;* character output routines *
@@ -11,7 +12,7 @@ xchrout1:
 	pha
 	txa
 	pha
-jsr outchr
+	jsr outchr
 xchrout2:
 	pla
 	tax
@@ -91,7 +92,7 @@ outchr0:
 	jmp outchr1
 
 outchr1:
-	jsr ctrlchk0
+	jsr ctrlchk0	; dependency in string-io.lbl
 	bcc outchr3
 	lda mask
 	sta $fe
@@ -114,7 +115,7 @@ outchr2:
 outchr2a:
 	sta $fe
 outchr3:
-	jsr outscn0
+	jsr outscn0	; dependency of inline.lbl, swap2.lbl or screen-handler.lbl?
 	jsr outmdm0
 	jmp outptr
 

@@ -4,6 +4,9 @@
 ;* variable handling routines *
 ;********************************
 
+{info:equates-2_0.lbl}
+{info:string-io.sym}
+
 	;* get descriptor for tt$(.x)
 getarr:
 	jsr findarr
@@ -180,13 +183,10 @@ minusone:
 	lda #$81
 	sta var
 	rts
-	
-	
+
 	;********************************
 	;* variables used by ml *
 	;********************************
-	
-	
 vars:
 	ascii "aN"	;  0-an$
 	ascii "a{$80}"	;  1-a$

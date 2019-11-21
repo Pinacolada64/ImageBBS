@@ -1,4 +1,5 @@
 ; 5/Jun/2016 21:43 - assemble with casm 4.0 beta
+{uses:..\equates-2_0.lbl}
 
 ; There are a few problems/things I want to improve with with this version of the SwiftLink driver:
 ; 1) 19.2k communication "looks slower", according to others.
@@ -16,7 +17,7 @@
 
 ; gets relocated when LOADed and &,16,1 is issued at BBS init
 orig $0800
-{asm}
+
 ; unused:
 ; baudof = $0299 ; $299-$29a: Time Required to Send a Bit
 
@@ -26,15 +27,15 @@ orig $0800
 ; ridbe and ridbs are already defined in equates-2_0.lbl
 ; ridbe	= $029b ; RS-232: Index to End of Receive Buffer
 ; ridbs	= $029c ; RS-232: Index to Start of Receive Buffer
-rodbs	= $029d ; RS-232: Index to Start of Transmit Buffer
-rodbe	= $029e ; RS-232: Index to End of Transmit Buffer
+  rodbs	= $029d ; RS-232: Index to Start of Transmit Buffer
+  rodbe	= $029e ; RS-232: Index to End of Transmit Buffer
 
 ; unused:
 ; enabl	= $02a1 ; RS-232 Interrupts Enabled
 
 ; SwiftLink/Turbo232
-io1	= $de00 ; Base Address of SwiftLink/Turbo232
-;io2	= $df00 ; alternate address, not used here
+  io1	= $de00 ; Base Address of SwiftLink/Turbo232
+; io2	= $df00 ; alternate address, not used here
 port	= io1
 slData    = port   ; SL/T232 data register
 slStatus  = port+1 ; SL/T232 status register
@@ -53,35 +54,51 @@ norest	= $fe72 ; set up rs232 timing?
 ; unused:
 ; nmiexit = $febc
 
-; $DE01 - SwiftLink status register:
+; $DE01 - SwiftLink status register (slStatus):
 
 statint	= {%:10000000}	; bit 7: acia interrupt active
 statdcd	= {%:01000000}	; bit 6: carrier detect
 			; bit 5: dsr ready
-stattxd	= {%:00010000}	; bit 4: transmit register empty
+stattxd	= {%:00010000}	; bit 4: 0=transmit register empty
 statrxd	= {%:00001000}	; bit 3: receive register full
 			; bit 2: overrun error
 			; bit 1: framing error
 			; bit 0: parity error
 
-imagecd0 = {%:00000000}	; bit 4: carrier low
-imagecd1 = {%:00010000}	; bit 4: carrier high
+imagecd0 = {%:00000000}	; bit 4: 0=carrier low
+imagecd1 = {%:00010000}	; bit 4: 1=carrier high
 
-; $DE02 - SwiftLink command register:
+; $DE02 - SwiftLink command register (slCommand):
 
 			; bits 7-5: parity
 			; bit 4: echo (should be 0)
 			; bit 3|2
 			;     1|0 disable txd interrupts
 			;     0|1  enable rxd interrupts
-			; bit 1: rxd interrupts
-			; bit 0: acia interrupts
-;          %:76543210
-comint0	= {%:00001010}	; acia nmi off
-comint1	= {%:00001001}	; rxd on
-comint2	= {%:00000101}	; txd/rxd
-comdtr0	= {%:00001000}	; dtr off
-comrts0	= {%:00000001}	; rts off
+			; bit 1: rxd irq: 1=yes
+			; bit 0: acia irq "master control" - clear to disable receiver entirely
+
+;        bit 76543210
+comint0	= {%:00001010}	; TxD/RxD/ACIA IRQ off
+			; 1 = TxD IRQ off
+			; 0 = RTS low
+			; 1 = RxD IRQ off
+			; 0 = DTR high
+
+comint1	= {%:00001001}	; RxD IRQ on
+			; 1 = TxD IRQ off
+			; 0 = RTS low
+			; 0 = RxD IRQ on
+			; 1 = DTR low
+
+comint2	= {%:00000101}	; TxD/RxD on
+			; 0 = TxD IRQ on
+			; 1 = RTS high
+			; 0 = RxD IRQ on
+			; 1 = DTR low
+
+comdtr0	= {%:00001000}	; dtr disabled
+comrts0	= {%:00000001}	; rts disabled
 
 ; $DE03 - SwiftLink control register:
 			; bit 4: clock source
@@ -155,7 +172,7 @@ setup:
 ; TODO: multiple people have mentioned VICE at startup has an RS232 IRQ pending
 ; which needs to be acknowledged, so do this. This does not happen on real hardware.
 
-	lda #comint0	; turn SwiftLink NMIs off
+	lda #comint0	; disable SwiftLink txd/rxd NMIs
 	sta slCommand
 
 	ldx #0
@@ -185,7 +202,7 @@ setup2:
 setup3:
 	lda #0
 	sta slStatus
-	lda #comint1	; rxd on
+	lda #comint1	; rxd irq on
 	sta shcomm	; save rxd
 	jsr inable
 	jsr setcarr
@@ -238,7 +255,7 @@ setup3:
 
 setcarr:
 ; toggle dcd
-	ldy #imagecd1
+	ldy #imagecd1	; carrier present?
 	lda slStatus
 	and #statdcd	; carrier already high?
 	beq setcarr1	; yes
@@ -257,9 +274,9 @@ nmi64:
 	pha
 	cld
 	lda slStatus
-	and #statint
+	and #statint	; bit 7 on: acia irq active
 	beq notacia
-	lda #comint0
+	lda #comint0	; txd/rxd/acia irq disabled
 	sta slCommand
 	jsr rsint
 	lda shcomm
@@ -280,8 +297,8 @@ notacia:
 rsint:
 	jsr setcarr
 	lda slStatus
-	and #statrxd
-	beq rsint2
+	and #statrxd	; receive register full?
+	beq rsint2	; yes
 	lda slData
 	ldy ridbe
 	sta ribuf,y
@@ -328,7 +345,7 @@ rsint4:
 disabl:
 	php
 	pha
-	lda #comint0
+	lda #comint0	; txd/rxd/acia irq disabled
 	sta slCommand
 	pla
 	plp
@@ -366,7 +383,7 @@ rsout2:
 	cpy rodbs
 	beq rsout0
 	sty rodbe
-	lda #comint2
+	lda #comint2	; txd/rxd enabled
 	sta shcomm
 rsout4:
 	lda shcomm
