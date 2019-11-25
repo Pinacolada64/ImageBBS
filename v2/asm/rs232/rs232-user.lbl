@@ -1,18 +1,36 @@
 ; "ml.rs232/user"
 {uses:..\equates-2_0.lbl}
 
+	BITCI	= $a8	; RS-232 Input Bit Count
+	RIDATA	= $aa	; RS-232 Input Byte Buffer
+	BITTS	= $b4	; RS-232 Output Bit Count
+	NXTBIT	= $b5	; RS-232 Next Bit to Send
+	RODATA	= $b6	; RS-232 Output Byte Buffer
+
+	BAUDOF	= $0299 ; $299-$29a: Time Required to Send a Bit
+	ENABL	= $02a1	; RS-232 Interrupts Enabled
+
+; CIA #1
+	CI1CRA	= $dc0e ; Control Register A
+
+; CIA #2
+	CI2PRA	= $dd00 ; Data Port A
+	CI2PRB	= $dd01	; Data Port B
+	TI2ALO	= $dd04 ; Timer A (low byte)
+	TI2AHI	= $dd05 ; Timer A (high byte)
+	TI2BLO	= $dd06 ; Timer B (low byte)
+	TI2BHI	= $dd07 ; Timer B (high byte)
+	CI2ICR	= $dd0d ; Interrupt Control Register
+	CI2CRA	= $dd0e ; Control Register A
+	CI2CRB	= $dd0f	; Control Register B
+
 {def:comment_out}
 {ifdef:comment_out}
 	{info:INFO: commenting out oldout and nchrout}
 {endif}
 
 orig $0800
-baudof	= $299
-; ridbe = $29b
-; ridbs = $29c
-rodbe	= $29e	; RS232 Output Buffer Tail Pointer
-rodbs	= $29d	; RS232 Output Buffer Head Pointer
-enabl	= $2a1
+
 rstkey	= $fe56
 norest	= $fe72
 nmiexit	= $febc
@@ -66,7 +84,7 @@ setup:	ldx #0
 setup1: lda vectbl,x
 	beq setup3
 	sta 20
-	lda #$4c
+	lda #$4c	; replace with JMP opcode
 	sta vectbl,x
 	inx
 	ldy #0
@@ -83,11 +101,11 @@ setup2: lda vectbl,x
 	jmp setup1
 setup3: ldx #$01
 	ldy #<426
-	lda $2a6
+	lda $2a6	; NTSC/PAL flag (0=NTSC)
 	beq setup4
 	ldx #$81
 	ldy #<416
-setup4: stx $dc0e
+setup4: stx CI1CRA	; $dc0e
 	sty baudofs+6
 	rts
 
@@ -97,88 +115,88 @@ nmi64:	pha
 	tya
 	pha
 nmi128: cld
-	lda $dd01
+	lda CI2PRB	; $dd01
 	and #{%:00010000}
 	sta carrier
-	ldx $dd07
+	ldx TI2BHI	; $dd07
 	lda #$7f
-	sta $dd0d
-	lda $dd0d
+	sta CI2ICR	; $dd0d
+	lda CI2ICR	; $dd0d
 	bpl notcia
-	cpx $dd07
-	ldy $dd01
+	cpx TI2BHI	; $dd07
+	ldy CI2PRB	; $dd01
 	bcs >@mask	; forward search local label @mask
 	ora #2
-	ora $dd0d
-@mask:	and enabl
+	ora CI2ICR	; $dd0d
+@mask:	and ENABL	; $02a1
 	tax
 	lsr
 	bcc ckflag
-	lda $dd00
+	lda CI2PRA	; $dd00
 	and #$fb
-	ora $b5
-	sta $dd00
+	ora NXTBIT	; $b5
+	sta CI2PRA	; $dd00
 ckflag:	txa
 	and #$10
 	beq nmion
 strtlo:	lda #$42
-	sta $dd06
+	sta TI2BLO	; $dd06
 strthi:	lda #$04
-	sta $dd07
+	sta TI2BHI	; $dd07
 	lda #$11
-	sta $dd0f
+	sta CI2CRB	; $dd0f
 	lda #$12
 	eor enabl
 	sta enabl
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 fulllo:	lda #$4d
-	sta $dd06
+	sta TI2BLO	; $dd06
 fullhi:	lda #$03
-	sta $dd07
+	sta TI2BHI	; $dd07
 	lda #$08
-	sta $a8
+	sta BITCI	; $a8
 	bne chktxd
 
 notcia:	ldy #$00
 	jmp rstkey
 
 nmion:	lda enabl
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 	txa
 	and #$02
 	beq chktxd
 	tya
 	lsr
-	ror $aa
-	dec $a8
+	ror RIDATA	; $aa
+	dec BITCI	; $a8
 	bne txd
 	ldy ridbe
-	lda $aa
+	lda RIDATA	; $aa
 	sta ribuf,y
 	iny
 	bpl nowrp
 	ldy #0
 nowrp:	sty ridbe
 	lda #$00
-	sta $dd0f
+	sta CI2CRB	; $dd0f
 	lda #$12
 switch:	ldy #$7f
-	sty $dd0d
-	sty $dd0d
+	sty CI2ICR	; $dd0d
+	sty CI2ICR	; $dd0d
 	eor enabl
 	sta enabl
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 txd:
 	txa
 	lsr
 chktxd:	bcc exit
-	dec $b4
+	dec BITTS	; $b4
 	bmi char
 	lda #$04
-	ror $b6
+	ror RODATA	; $b6
 	bcs store
 low:	lda #$00
-store:	sta $b5
+store:	sta NXTBIT	; $b5
 exit:	jmp nmiexit
 char:	ldy rodbs
 	cpy rodbe
@@ -186,19 +204,19 @@ char:	ldy rodbs
 	jsr sendchr
 	bne low
 txoff:	ldx #0
-	stx $dd0e
+	stx CI2CRA	; $dd0e
 	lda #1
 	bne switch
 
 sendchr:
 	lda robuf,y
-	sta $b6
+	sta RODATA	; $b6
 	iny
 	bpl send1
 	ldy #0
 send1:	sty rodbs
 	lda #9
-	sta $b4
+	sta BITTS	; $b4
 	rts
 
 disabl:	pha
@@ -206,7 +224,7 @@ test:	lda enabl
 	and #$03
 	bne test
 	lda #$10
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 	lda #$02
 	and enabl
 	bne test
@@ -216,8 +234,8 @@ test:	lda enabl
 
 fulbuf: jsr strtup
 	jmp point
-@rsout:	sta $9e
-	sty $97
+@rsout:	sta ptr1	; $9e
+	sty xsav	; $97
 point:	ldy rodbe
 	sta robuf,y
 	iny
@@ -242,48 +260,50 @@ strtup:
 	lda enabl
 	and #1
 	bne ret3
-	sta $b5
+	sta NXTBIT	; $b5
 	ldy rodbs
 	jsr sendchr
 	lda baudof
-	sta $dd04
+	sta TI2ALO	; $dd04
 	lda baudof+1
-	sta $dd05
+	sta TI2AHI	; $dd05
 	lda #$11
-	sta $dd0e
+	sta CI2CRA	; $dd0e
 	lda #$81
 change:
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 	php
 	sei
 	ldy #$7f
-	sty $dd0d
-	sty $dd0d
+	sty CI2ICR	; $dd0d
+	sty CI2ICR	; $dd0d
 	ora enabl
 	sta enabl
-	sta $dd0d
+	sta CI2ICR	; $dd0d
 	plp
 ret3:	clc
-	ldy $97
-	lda $9e
+	ldy xsav	; $97
+	lda ptr1	; $9e
 	rts
 
 nchkin: stx xtmp
 	jsr findfn
 	bne nosuch
 	jsr devnum
-	lda $ba
-	cmp #2	; rs232
+	lda $ba		; current output device
+	cmp #2		; rs232
 	bne back
-	sta $99
-inable:	sta $9e
-	sty $97
+	sta dfltn	; $99 - input device
+inable:	sta ptr1	; $9e
+	sty xsav	; $97
 	jsr getenabl
 	bne ret1
-	sta $dd0f
+	sta CI2CRB	; $dd0f
 	lda #$90
 	jmp change
+
 nosuch:	jmp nofile
+
 back:	ldx xtmp
 	jsr disab
 	jsr oldchk
@@ -291,17 +311,17 @@ back:	ldx xtmp
 xtmp:	byte 0
 
 ngetin: pha
-	lda $9a
-	cmp #2
+	lda dflto	; $9a
+	cmp #2		; rs232?
 	bne notget
 	pla
-@rsget:	sta $9e
-	sty $97
+@rsget:	sta ptr1	; $9e
+	sty xsav	; $97
 	ldy ridbs
 	cpy ridbe
 	beq ret2
 	lda ribuf,y
-	sta $9e
+	sta ptr1	; $9e
 	iny
 	bpl rsget1
 	ldy #0
@@ -310,16 +330,17 @@ rsget1: sty ridbs
 	bne ret1
 	ldy #0
 inpdisp:
+; scroll input window
 	lda sdisp+2,y
 	sta sdisp+1,y
 	iny
 	cpy #9
 	bcc inpdisp
-	lda $9e
-	sta sdisp+10
+	lda ptr1	; $9e
+	sta sdisp+10	; put last char rec'd
 ret1:	clc
-ret2:	ldy $97
-	lda $9e
+ret2:	ldy xsav	; $97
+	lda ptr1	; $9e
 	rts
 notget: pla
 	jsr disab
@@ -356,7 +377,7 @@ dtrtable:
 setdtr: and #1
 	tay
 	lda dtrtable,y
-	sta 56577
+	sta CI2PRB	; $dd01
 	rts
 
 setbaud:
@@ -382,7 +403,7 @@ setbaud1:
 	sta baudof+1
 	jsr getenabl
 	bne ret1
-	sta $dd0f
+	sta CI2CRB	; $dd0f
 	rts
 
 ; question: do we comment this out? it was originally

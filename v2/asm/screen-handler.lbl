@@ -237,7 +237,7 @@ chrtbl:
 	word scret,scdel
 	word scbell
 chrs:
-	ascii "{14}{142}{rvrs on}{rvrs off}{home}{clear}{left}{right}{down}{up}{13}{20}{7}"
+	ascii "{14}{142}{rvrs on}{rvrs off}{home}{clear}{right}{left}{down}{up}{13}{20}{7}"
 
 nchrs = *-chrs
 

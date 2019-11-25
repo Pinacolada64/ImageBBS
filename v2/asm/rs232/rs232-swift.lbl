@@ -10,28 +10,13 @@
 {undef:set_parity}
 
 ; 3) testing out whether un-commenting 'oldout' and 'nchrout' routines actually does anything
-{def:comment_out}
+{undef:comment_out}
 
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
 
 ; gets relocated when LOADed and &,16,1 is issued at BBS init
 orig $0800
-
-; unused:
-; baudof = $0299 ; $299-$29a: Time Required to Send a Bit
-
-; Location Range: 667-670 ($29B-$29E)
-; Byte Indices to the Beginning and End of Receive and Transmit Buffers
-
-; ridbe and ridbs are already defined in equates-2_0.lbl
-; ridbe	= $029b ; RS-232: Index to End of Receive Buffer
-; ridbs	= $029c ; RS-232: Index to Start of Receive Buffer
-  rodbs	= $029d ; RS-232: Index to Start of Transmit Buffer
-  rodbe	= $029e ; RS-232: Index to End of Transmit Buffer
-
-; unused:
-; enabl	= $02a1 ; RS-232 Interrupts Enabled
 
 ; SwiftLink/Turbo232
   io1	= $de00 ; Base Address of SwiftLink/Turbo232
@@ -51,8 +36,6 @@ rstkey	= $fe56 ; check for an autostart cartridge?
 		; http://unusedino.de/ec64/technical/aay/c64/romfe43.htm
 norest	= $fe72 ; set up rs232 timing?
 		; http://unusedino.de/ec64/technical/aay/c64/romfe66.htm
-; unused:
-; nmiexit = $febc
 
 ; $DE01 - SwiftLink status register (slStatus):
 
@@ -368,12 +351,12 @@ rsout0:
 	jsr rsint
 	jmp rsout1
 @rsout:
-	sta $9e
-	sty $97
+	sta ptr1	; $9e
+	sty xsav	; $97
 	lda #comint0
 	sta slCommand
 rsout1:
-	lda $9e
+	lda ptr1	; $9e
 	ldy rodbe
 	sta robuf,y
 	iny
@@ -405,7 +388,7 @@ nchkin:
 	lda $ba		; current device
 	cmp #2		; rs232?
 	bne nchkin1
-	sta $99
+	sta dfltn	; $99 - input device
 	clc
 	jmp inable
 
@@ -423,7 +406,7 @@ nchkout:
 	lda $ba		; current device
 	cmp #2		; rs232?
 	bne nchkout1
-	sta $9a
+	sta dflto	; $9a - default output device
 	clc
 	jmp inable
 
@@ -434,7 +417,7 @@ nchkout1:
 
 ngetin:
 	pha
-	lda $9a
+	lda dflto	; $9a - default output device
 	cmp #2
 	bne notget
 	pla
@@ -442,13 +425,13 @@ ngetin:
 ; ** rs232 getin
 ;
 @rsget:
-	sta $9e
-	sty $97
+	sta ptr1	; $9e
+	sty xsav	; $97
 	ldy ridbs
 	cpy ridbe
 	beq ret2
 	lda ribuf,y
-	sta $9e
+	sta ptr1	; $9e
 	iny
 	bpl rsget1
 	ldy #0
@@ -465,8 +448,8 @@ rsget1:
 ret1:
 	clc
 ret2:
-	ldy $97
-	lda $9e
+	ldy xsav	; $97
+	lda ptr1	; $9e
 	rts
 
 notget:

@@ -10,6 +10,14 @@
 	chrget	= $0073	; two bytes for zero-page JSR
 	chrgot	= $0079 ; same
 	status	= $90	; Kernal I/O Status Word
+	xsav	= $97	; Temporary .X Register Save Area
+;
+; rs232
+;
+	dfltn	= $99	; Default Input Device (Set to 0 for Keyboard)
+	dflto	= $9a	; default output device
+	ptr1	= $9e	; temp storage
+
 ;
 ; screen parameters
 ;
@@ -28,8 +36,13 @@
 	color	= 646	; $0286: Current Foreground Color for Text
 	undcol	= 647	; $0287
 
-	ridbe	= $029b	; 667, RS-232: Index to End of Receive Buffer
-	ridbs	= $029c	; 668, RS-232: Index to Start of Receive Buffer
+; Location Range: 667-670 ($29B-$29E)
+; Byte Indices to the Beginning and End of Receive and Transmit Buffers
+
+	ridbe	= $029b ; 667, RS-232: Index to End of Receive Buffer
+	ridbs	= $029c ; 668, RS-232: Index to Start of Receive Buffer
+	rodbs	= $029d ; 669, RS-232: Index to Start of Transmit Buffer
+	rodbe	= $029e ; 670, RS-232: Index to End of Transmit Buffer
 
 ; $02a7-$02ff ($58 bytes) (679-767, 88 bytes): unused by OS
 
