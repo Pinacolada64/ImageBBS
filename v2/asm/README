@@ -1,5 +1,0 @@
-README
-
-Some handy regexes to format source code in Kate:
-
-(:)(\S) -> \n\t\2 Search for : not followed by whitespace, replace with newline and tab

@@ -24,15 +24,10 @@ C64_FILENAME =	ML.RS232
 
 all: $(DISKIMAGE)
 
-# rs232-swift.prg rs232-user.prg
-# rs232.prg depends on rs232-{user,swift}.prg
-#	$(WINE) $(CASM) $< -bin:$@ $(C64LISTFLAGS)
-#	@echo $^
-
-# I want ml.rs232 which includes ml.rs232-user and ml.rs232-swift
-# 1) casm.exe rs232-user.lbl -bin:ml.rs232-user
-# 2) casm.exe rs232-swift.lbl -bin:ml.rs232-swift
-# 3) casm.exe rs232.lbl -prg:ml.rs232 # this includes both ml.rs232-{user,swift}
+# I want to generate "ml.rs232" on disk which includes ml.rs232-user and ml.rs232-swift
+# 1) casm.exe rs232-user.lbl -bin
+# 2) casm.exe rs232-swift.lbl -bin
+# 3) casm.exe rs232.lbl -prg # this includes both rs232-{user,swift}.bin
 
 rs232.prg: rs232.lbl rs232-user.bin rs232-swift.bin
 
@@ -43,7 +38,7 @@ rs232.prg: rs232.lbl rs232-user.bin rs232-swift.bin
 	$(CASM) $< -bin:$@ $(C64LISTFLAGS)
 
 $(DISKIMAGE): rs232.prg
-	# import rs232.prg into ($DISKIMAGE) as "ml.rs232"
+	# import rs232.prg into $(DISKIMAGE) as "ml.rs232"
 	$(C64LIST) $< $(C64LISTFLAGS) -d64:$@::$(C64_FILENAME)
 	# show contents
 	$(C1541) $(DISKIMAGE) -dir
