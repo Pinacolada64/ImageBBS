@@ -1,0 +1,277 @@
+1000 end:copr.1990 new image 10/15/90
+1001 gosub1002:&,22,1
+1002 print#15,"p{$02}"chr$(xand255)chr$(x/256)"{$01}":return
+1003 gosub1009:&,18+a,dv%,d3%:return
+1004 a=val(mid$(fl$,a,1)):return
+1005 pl=.:goto1028
+1006 gosub1250:on-(an$<>"")goto1603:pl=1:&,1:u$=an$:goto1250
+1007 poke53249,1:&,13:a$=an$:return
+1008 &"{f6}Device,Drive: {pound}i1":an$="  "+an$:return
+1009 dv%(.)=d1%:dr%(.)=d2%:dv%=dv%(dr):dr$=mid$(str$(dr%(dr)),2)+":":d3%=dr%(dr):return
+1010 close15:gosub1009:open15,dv%,15:return
+1011 close2:gosub1010:open2,dv%,2,dr$+a$
+1012 input#15,e%,e$,t%,s%:a$="{f6}Status:{pound}#2{pound}%e:{pound}$e:{pound}%t:{pound}%s{f6}":return
+1013 dr=5:cm$=a$:gosub1360:ifa$=pr$thene%=.:return
+1014 p$="":gosub1474:ifathene%=1:e$="DNP":a$="{f6}Error: DNP":return
+1015 gosub1010:a$=dr$+"+."+a$:&,7,dv%:pr$=cm$+"":goto1012
+1016 dr=5:cm$=a$:gosub1360:gosub1014:goto[1]
+1019 a$=d1$:gosub1520:a=int(a/60):pt%=-(a>=p2%anda<p3%)*sgn(p1%):return
+1023 gosub1024:a$=a$+",s,w":goto1011
+1024 gosub1010:print#15,"s"dr$a$:return
+1025 st(x)=st(x)+i
+1026 gosub1001:print#2,st(x):return
+1027 dr=3:a$="e."+b$+",s,"+a$:goto1011
+1028 poke53249,pl:lp=.:&,1:return
+1029 &:return
+1030 sh=.:rc=.:poke2038,.:poke2024,-(qe=.andrq=1)*255
+1031 &,3,sr:s=st
+1032 poke144,sand255:a=rc:gosub1914:rc=a:return
+1034 gosub1046:ifi=.thenreturn
+1035 a=5:goto1039
+1038 gosub1046:a=4:ifithenreturn
+1039 a%=id:&,16,a:dr=6:gosub1010:a$=dr$+"u.index":print#15,"s"a$:&,16,2:return
+1040 ifpr<>4thengosub1045:b%=.
+1041 &,16,6:return
+1045 a=4:gosub1736:dr=6:gosub1010:a$=dr$+"u.index":&,16,1:return
+1046 gosub1045:gosub1065:&,16:close2
+1047 i=a%:return
+1060 dr=3:a$="e.stats":goto1011
+1062 dr=2:a$="m."+left$(tt$,13)+",s,"+a$:goto1011
+1063 dr=3:a$="e.data":goto1011
+1064 b$="log":goto1027
+1065 dr=6:a$="u.config":goto1011
+1067 cm$=a$:gosub1360:gosub1014:f1=sgn(e%):goto[1]
+1070 on-(id=.ori%=1)goto1603:gosub1065
+1071 a$=na$+r$+pw$+r$+ff$+r$+ll$+r$+ph$+r$+ld$+r$+str$(ac%)+r$+str$(ct%)+r$
+1072 a$=a$+str$(tc%)+r$+str$(co%)+r$+str$(ll%)+r$+str$(ul)+r$+str$(lf)+r$
+1073 a$=a$+str$(em)+r$+str$(dc)+r$+str$(uc)+r$+str$(bd)+r$+str$(bu)+r$+str$(cr)+r$
+1074 a$=a$+str$(ps)+r$+str$(rp)+r$+lt$+r$+fl$+r$+jn$:x=id:gosub1001:print#2,a$:return
+1075 &"{clear}"
+1076 gosub1010:open5,dv%,5,dr$+a$+",s,r":c$=b$:gosub1012:b$=c$:&"{f6}"
+1077 ife%=.thensr=5:gosub1030:sr=2
+1078 close5:return
+1079 ifdr<7thenifbf(dr)>-1thengosub1009:a=bf(dr):bf=a:goto1378
+1081 gosub1010:on-(dv%<>0)goto1083:a$=dr$:ifdr$="10:"thena$="a"
+1082 a=2:print#15,"lg"left$(a$,1):input#15,e%,a$,a$,a$,a$,a$:goto1084
+1083 a=1:close2:open2,dv%,0,"$"+dr$+"{black}":get#2,a$,a$:&,8,2,1:&,8,2,1:close2
+1084 a=val(a$)*a:bf=a:gosub1400:goto1378
+1085 a$="{black},u,w":gosub1011:close2
+1086 a$="{black}":gosub1024:a=-sgn(e%):return
+1088 gosub1470:onagoto1995:gosub1081:a%=dv%:b$=dr$:&"{f6:2}{pound}%a:{pound}$b":&str$(a):return
+1089 gosub1470:onagoto1995:&"{f6}Pattern: ":gosub1499
+1090 close1:open1,dv%,0,"$"+dr$+an$:&"{f6}":&,8,1:close1:return
+1093 fori=1to4:&,11,i:next
+1094 &,11,.:return
+1095 oni%goto1603:gosub1490
+1096 a=a%:&,52,13,3:b=a%:a%=a:onb+1goto1603:open16,4,15:close16:ifstthenreturn
+1097 print#4,a$:return
+1098 s=.:sh=.:gosub1914:cm$=p$:gosub1360:poke53252,38:gosub1908:&"{f6:2}":gosub1006
+1099 cm$=left$(p$,11)+":"+left$(an$,4):gosub1360:cm$=p$:return
+1100 b$="Get":gosub1200:onflgoto1628:&"{f6:2}":gosub1005:v$=an$:ifv$=""then1629
+1102 gosub1008:gosub1470:ifathengosub1995:goto1102
+1104 gosub1010:open6,dv%,6,dr$+v$+",s,r":gosub1012:ife%thenclose6:&:goto1629
+1105 gosub1372:a=1948
+1106 &,2,6:tt$(kk)=a$:kk=kk+1
+1107 on-((peek(a)<>176orpeek(a+1)<>176)andkk<254andst=.)goto1106:close6:goto1629
+1110 onkkgoto1628:b$="Put":gosub1200:onflgoto1628:&"{f6:2}"
+1112 ifv$<>""thenpoke53252,16:w$=v$:&,1,32:goto1116
+1114 gosub1005:ifan$=""then1629
+1116 ifan$<>""thenv$=an$
+1118 gosub1008:gosub1470:ifathengosub1995:goto1118
+1119 gosub1010
+1120 open6,dv%,6,dr$+v$+",s,w":gosub1012:ife%=.then1130
+1122 close6:&:ife%<>63then1132
+1124 &"{f6} [A]ppend [R]eplace [Q]uit: {pound}i1":ifan$="Q"ortr%<1then1132
+1126 ifan$="R"thena$=v$:gosub1024:goto1120
+1128 on-(an$<>"A")goto1124:open6,dv%,6,dr$+v$+",s,a"
+1130 fori=1tokk-1:iftt$(i)="{f8}"thentt$(i)="{^}"
+1131 print#6,tt$(i):next
+1132 close6:gosub1081:goto1629
+1140 &"View Directory{pound}g1":gosub1202
+1142 onflgoto1628:gosub1008:gosub1089:goto1629
+1200 p$="Filename":&"{pound}$b File{pound}g1"
+1202 fl=.:ifan$<>r$then:&"{pound}h"+chr$(64+peek(2)-8):fl=1:return
+1204 &"{f6}":return
+1206 a%=peek(1022)-1:c%=a%-b%:&"{pound}q0{f6:2}Total Lines:{f6}Available  : {pound}%a"
+1208 &"{f6}In Memory  : {pound}%b{f6}Remaining  : {pound}%c":ifzzthen:&"{f6}Free Memory: {pound}%z"
+1210 &"{f6:2}":return
+1250 u=-(an$=u$):an$="":ifu$=""thenreturn
+1252 forct=1tolen(u$):a$=mid$(u$,ct,1):ifa$<>"{f8}"thenan$=an$+a$:goto1256
+1254 u$=mid$(u$,ct+1):ct=len(u$)+1
+1256 ifct=len(u$)thenu$="":ct=.
+1258 next:onugoto1603:&"{pound}$p: {pound}v7{f6}":return
+1280 &"Disk Command {pound}g1":gosub1202:onflgoto1628:&"{f6:2}":gosub1450:goto1629
+1282 b$="Read":gosub1200:onflgoto1628:&"{f6:2}":gosub1005:v$=an$:ifv$=""then1629
+1284 gosub1008:gosub1470:ifathengosub1995:goto1284
+1286 gosub1010:open6,dv%,6,dr$+v$+",s,r":gosub1012:ife%thenclose6:&:goto1629
+1288 &,3,6:close6:goto1629
+1300 a$=z$:y$=pr$:gosub1013:on-(e%<>.)goto1603:gosub[1]:a$=y$:on-(lc<>1)goto1013:return
+1301 a$=z$:gosub1013:on1-(e%=.)goto1812,[1]
+1310 a$=mid$("nf",(left$(z$,1)="N")+2,1):rs=1:f1=.:goto1016
+1318 br=.:mm=.:a=9:gosub1004:on-(a<>.)goto1301:x=4:gosub1980:goto1812
+1320 &,52,14,3:ifa%thenx=1:gosub1980:goto1812
+1321 gosub1019:a=5:gosub1004:b=a:a=15:gosub1004
+1322 &,52,15,3:ifb=.or(pt%anda=.)or(a%<>.andqb<1200)thenx=4:gosub1980:goto1812
+1323 a$=z$:gosub1350:goto1301
+1340 bn=.:r=int(val(mid$(an$,3))):ifr<1thenr=1
+1342 on-(z$="UD"orz$="UX")goto1320:goto1323
+1345 gosub1351:goto1812
+1348 a$="new user":goto1350
+1349 a$="config"
+1350 a$="s."+a$:dr=1:goto1075
+1351 dr=1:a$="s.menu"+str$(lc):gosub1075:onlcgoto1603:a$="s.menu 1":goto1076
+1352 dr=1:a$="s.menu 4":goto1075
+1353 dr=1:a$="s.menu 3":goto1075
+1354 gosub1470:onagoto1995:&"{f6:2}Filename?: ":gosub1499:ifan$=""thenreturn
+1356 a$=an$+",s,r":gosub1011:ife%then:&:return
+1358 &,2,2:s=st:lp=-(len(a$)<>80):&:on-(rc+s=.)goto1358:goto1032
+1360 onpeek(17139)goto1603:print"{home}{down:5}{right:5}{rvrs off} "left$(cm$+"               ",15):return
+1370 onpeek(17139)goto1603:x=b:printspc(c)right$(str$(a+1e5),x);:return
+1371 onpeek(17139)goto1603:print"{home}{down:23}{right:3}{rvrs on}{white}";:return
+1372 &,40:a$=chr$(1):z%=(peek(52)-peek(50))*256+peek(51)-peek(49):return
+1374 gosub1371:a=ca:b=5:c=9:gosub1370:a=cn:b=3:c=4:goto1370
+1375 a$=co$(co%):co$=a$
+1376 an$=a$:&,9:return
+1377 a$="                ":goto1376
+1378 gosub1371:a=dv%:b=2:c=23:gosub1370:a=val(dr$):b=3:c=1:gosub1370
+1379 a=bf:b=5:c=2:goto1370
+1400 fora=1to6:ifdv%(a)=dv%anddr%(a)=val(dr$)thenbf(a)=bf
+1402 next:a=bf:return
+1450 gosub1470:onagoto1995:&"{f6}Disk Command?: ":poke53252,58
+1452 gosub1499:z$=an$:ifz$=""orz$="@"thengosub1010:gosub1012:&:return
+1453 b$=left$(z$,1):ifb$="n"orb$="s"thengosub1901:ifa=.thenreturn
+1454 gosub1010:print#15,z$:gosub1012:&:return
+1460 &"{f6:2}#Credits?: {pound}i1":cr=cr+int(val(left$(an$,6)))
+1461 b$=str$(cr):&"{f6}Now:{pound}$b Credits{f6}":return
+1470 a=int(val(mid$(an$,3,2))):ifa>.thenifa<7thendr=a:goto1474
+1471 x=3:ifa<7ora>15thena=8
+1472 ifmid$(an$,x,1)<>"{f1}"thenifx<len(an$)thenx=x+1:goto1472
+1473 d2%=val(mid$(an$,x+1)):d1%=a:dr=.
+1474 gosub1010:close15:a=-(st<>.):return
+1490 c$=a$:a$="a":gosub1064:ife%=.thenprint#2,c$
+1492 close2:a$=c$:an$=c$:return
+1499 &"{pound}i0":ifan$=""thenreturn
+1500 forx=1tolen(an$):a$=mid$(an$,x,1)
+1502 ifa$>="{f1}"thenifa$<="{f8}"thena$=mid$(",:{f5}*?={f6}{f8}",asc(a$)-132,1)
+1504 an$=left$(an$,x-1)+a$+mid$(an$,x+1):next:return
+1520 a=val(right$(a$,4)):a=a+6800*(a>1259):a=a+1200*((a>1159anda<1300)ora>2359)
+1522 a=(int(a/100))*60+(a-(int(a/100))*100):return
+1530 fora=1tox:&,25:next:return
+1581 pu$=p$:v$="":return
+1582 pq=pr:goto1736
+1590 p$=pu$:goto1914
+1599 a=14:gosub1004:&,52,31,3:poke1023,87:ona%goto1603:poke1023,87+a*8:return
+1600 gosub1599:poke53249,.:poke1016,kk:poke1018,4:poke1019,kk
+1601 pl=.:x=1022:pokex,le+1:gosub1372:ifz%<le*79thenpokex,int((z%-100)/79)+1
+1602 poke53250,.:poke53252,ll%-1:ifzzthenpokex,254
+1603 return
+1604 gosub1581:kk=1:ifle<1thenp$=pu$:kk=.:return
+1606 gosub1600:&"{f6}{yellow}* IMAGE BBS Editor *{f6}{white}Enter Your Text."
+1607 onemgoto1608:&"{f6:2}Commands:{f6}.A (Abort){f6}.S (Done){f6}.H (Help)"
+1608 b%=.:gosub1206:&,54:poke53250,10:goto1612
+1610 gosub1581:ifle<1thenp$=pu$:kk=.:return
+1611 goto1629
+1612 kk=peek(1016):onpeek(781)goto1614,1616,1618:&"{f6:2}":b%=kk-1:kk=.:goto1590
+1614 poke2031,.:b%=kk-1:&"{f6}{pound}%b Lines Used.{f6}":ifkk=1thenpoke781,.:goto1612
+1615 b%=kk:goto1590
+1616 an$=chr$(peek(780)or128):goto1620
+1618 poke2031,.:gosub1353:goto1610
+1620 b%=kk-1:on-(zz=.)goto1628
+1621 on-(an$="G")-(an$="P")*2-(an$="{$a4}")*3goto1100,1110,1140
+1622 on-(an$="{$a1}")-(an$="{$a6}")*2goto1280,1282
+1628 &,54,2:goto1612
+1629 b%=kk-1:gosub1600:gosub1206:poke2031,1:&,54,1:poke53250,10:goto1612
+1630 f1=.:gosub1920:goto1812
+1634 gosub1063:x=ac%+2:gosub1001:&,2,2:forx=1to4:poke827+x,asc(mid$(a$,x,1)):next
+1636 da%=peek(831):ifac%<>ao%thenfl$=fl$(ac%):ao%=ac%:a=6:gosub1004:le=(a+1)*10
+1637 ag$=mid$(a$,5):close2:return
+1640 ifpeek(53256)then:&"{f6}Page Is On.{f6}":return
+1642 poke53256,1:&"{f6}Reason For Chat?{f6:2}"
+1644 b$="C: ":&"{pound}$b{pound}i1":a$=" "+b$+an$:d$=an$
+1646 gosub1095:a$=d$:gosub1376
+1648 &,52,0,3:ifa%then1650
+1649 dr=1:a$="s.chat":gosub1076:goto1678
+1650 &"{f6}Paging Now!{f6}":fora=1to3:&,25,1:next:return
+1656 &"{f6}Time And Date:{f6:2}Logon: {$04}"+lt$:&"{f6}Now:   {pound}v0{f6:2}Minutes Left: "
+1658 a%=tr%:a$="{pound}%a":ifa%>99thena$="Infinite"
+1660 &:return
+1678 o$="Feedback":&"{f6}Leave {pound}$o?: ":gosub1902:ifa=.thenreturn
+1680 ifpeek(832)>2thenb$=o$:goto1985
+1681 dr=3:gosub1079:ifa<35then1978
+1682 &"{f6}{pound}$o:{f6}":gosub1604:on-(kk=.)goto1603:poke832,peek(832)+1
+1684 &"{f6:2}Filing {pound}$o...{f6:2}":a$="a":b$="fback":gosub1027
+1686 ife%thena$="w":b$="fback":gosub1027
+1687 print#2,na$r$id;r$d1$r$ac%;r$ph$r$rn$r$co$(co%)
+1689 forx=1tokk-1:print#2,tt$(x):next:print#2,"{^}":close2:gosub1081:&,11,.
+1691 gosub1060:i=1:x=1:gosub1025:x=12:gosub1025:x=23:gosub1025:x=30:gosub1025
+1692 close2:return
+1694 ifmid$(an$,2,1)<>"%"thenld$=lt$
+1695 ifright$(an$,1)="!"thenf1=2:goto1700
+1696 &"{f6:2}Logoff?: ":gosub1902:ifa=.thenf1=-3*(x=2):onxgoto1630,[1],[1]
+1698 f1=1:iftr%<1thenb$="Time":gosub1985:f1=2
+1700 a$="lo":goto1016
+1736 ifa=prandan$<>"PR"then1740
+1738 pr=a:dr=5:gosub1009
+1739 a$=dr$+"++"+str$(a):&,7,dv%,2
+1740 d4$=mid$("Punter X-ModemCopier Slow P IndexerClock  ",1+pr*7,7):return
+1811 gosub1093
+1812 b$=a$:onpfgoto1815:iflc<>1thenlc=1:gosub1093:sy$=""
+1813 &,28:&,52,21,3:on-(a%=.)goto1815:a$="e.macros":dr=3:gosub1011
+1814 ife%=.thenx=int(rnd(1)*mc)+1:gosub1001:&,2,2:&"{f6:2}":&
+1815 close2:p$=po$:a$=b$:ifpfanda$<>"Q"andtr%thenpf=.:z$="PF":an$=z$:goto1310
+1816 lc=1:gosub1098:ontr%+1goto1698:gosub1850:onrsgoto1812
+1820 on-(zz=.)goto1830:ifz$="ED"orz$="PC"orz$="CP"orz$="WF"then1301
+1822 ifan$="R"thenpoke53252,14:goto1900
+1830 a=8:gosub1004:on-(a=.)goto1840:ifz$="VF"orz$="RS"then1301
+1840 x=1:on-(a$="O"ora$="Q")-(a$="{f2}")*2goto1694,1345
+1842 iff4then:&,28
+1843 x=1:gosub1093:ifz$="PF"orz$="TF"orz$="NF"orz$="MF"orz$="RF"then1310
+1844 on-(z$="UD"orz$="UX"orz$="SB")-(z$="EM")*2goto1340,1318
+1846 on-(z$="BB"orz$="VB"orz$="UL")goto1301:gosub1989:goto1812
+1850 f4=.:x=1:on-(ac%<>ao%)gosub1634:rq=.:rs=1:a$=left$(an$,1):z$=left$(an$,2)
+1851 &,52,5,3:zz=a%:&,52,20,3:em=a%
+1852 &,52,4,3:ifan$="ZZ"anda%thenzz=1-zz:goto1916
+1854 ifzz=.then1860
+1856 on-(z$="RD")-(z$="DC")*2-(z$="CA")*3-(z$="{f2:2}")*4goto1354,1450,1460,1352
+1858 on-(z$="DR")-(z$="BF")*2-(z$="NL"orz$="CD")*3goto1089,1088,1300
+1859 ifan$="MM"thengosub1094:goto1372
+1860 ifan$="LD"oran$="ST"oran$="EX"orz$="BA"orz$="EP"orz$="QM"then1300
+1861 on-(z$="LG"orz$="AT")-(z$="XP")*2-(z$="SY")*3goto1300,1880,1910
+1862 on-(z$="NU")-(z$="CF")*2-(z$="OR")*3goto1348,1349,1300
+1863 ifz$="EM"orz$="MF"orz$="NF"orz$="PF"orz$="SB"orz$="TF"thenf4=1:pf=.
+1864 ifz$="UD"orz$="UL"orz$="UX"orz$="VB"orz$="BB"orz$="RF"thenf4=1:pf=.
+1865 on-(an$="C")-(an$="T")*2-(an$="F")*3goto1640,1656,1678
+1866 on-(z$="PM")goto1881
+1867 ifan$="ZZ"thena=3:gosub1004:ifathena=zz:b$="Local":gosub1870:zz=a:goto1916
+1868 rs=.:return
+1870 a=1-a:an$=mid$("ffn",a*2+1,2):&"{f6}{pound}$b Mode: O{pound}v7{f6}":return
+1880 a=em:b$="Expert":gosub1870:em=a:&,52,20,2:return
+1881 a=pm:b$="Prompt":gosub1870:pm=a:return
+1900 &"{f6:2}Run: +.{pound}i0":a$=an$:on-(a$="")goto1812:gosub1013:on1-(e%=.)goto1906,[1]
+1901 &"{f6}Are You Sure?: "
+1902 gosub1007
+1903 a=-(a$="Y")
+1904 a$="No":ifathena$="Yes"
+1905 &:&"{f6}{pound}q0":return
+1906 pr$="":&:goto1812
+1908 an$=d1$:&,15:b$=right$(an$,7):&"{f6:2} - {pound}$bM":a%=tr%:ifa%>99thenreturn
+1909 &" - {pound}%a Min. Left":return
+1910 dr=3:a$="e.say":gosub1011:onsgn(e%)goto1603:x=1:gosub1001:input#2,x
+1911 a=rnd(-ti):&"{f6}":x=int(rnd(1)*x)+2:gosub1001
+1912 input#2,b$,c$,d$,f$:&"{white} {pound}$b{f6}{cyan} {pound}$c{f6}{yellow} {pound}$d{f6}{orange} {pound}$f{f6}{pound}q0":close2:return
+1914 lp=.:poke2024,.:poke2031,.:poke53260,.:poke53253,.:&"{pound}q3":return
+1915 &,52,4,3:zz=a%
+1916 &,52,5,zz:return
+1920 &"{f6} Aborted!{f6}":return
+1978 x=2
+1980 &"{f6}":dr=3:a$="e.text":gosub1011:gosub1001:&,2,2:&:close2:&"{f6}":return
+1982 b$="Disk Directory"
+1985 &"{f6}Sorry, {pound}$b Limit Exceeded.{f6}":return
+1989 &"{f6:2}Illegal Command. Enter {f5}?{f5} For Help":return
+1995 x=6:goto1980
+2000 poke53248,.:poke22,25:x=peek(780):el=peek(781)+peek(782)*256:&,38:poke2031,.
+2010 fori=2topeek(152):closepeek(603):next:ifx>127then2015
+2011 cm$=cm$+"":p$=p$+"":pr$=pr$+""
+2012 dr=5:gosub1010:a$=dr$+"+.er":&,7,dv%:gosub1012:ife%=.then[1]
+2013 a$="FATAL ERROR!!":gosub1096:sys64789:print"{clear}{switchdisable}{white}{lowercase}{down:2}"a$:end
+2015 &,38:print"{home}{down:9}&,37:goto1812:":end
