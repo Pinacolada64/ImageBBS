@@ -1,6 +1,4 @@
-==== BASE ====
 orig $c000
-{asm}
 {uses:..\equates-2_0.asm}
 
 ; assemble with casm 4.0:
@@ -368,5 +366,3 @@ crsrc:
 	byte 0	; cursor column?
 crsrr:
 	byte 0	; cursor row?
-{endasm}
-==== BASE ====
