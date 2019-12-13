@@ -1,4 +1,4 @@
-{info:equates-2_0.lbl}
+{info:equates-2_0.asm}
 ; print"02/02/91 01:25p"
 ;
 ;* character output routines *

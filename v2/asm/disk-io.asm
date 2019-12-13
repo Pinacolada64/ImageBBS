@@ -1,5 +1,5 @@
 ; "dskio.s"
-; {info:equates-2_0.lbl}
+; {info:equates-2_0.asm}
 ; {info:screen-handler.sym}
 modtype:
 	byte 0

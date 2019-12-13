@@ -1,4 +1,4 @@
-{info:equates-2_0.lbl}
+{info:equates-2_0.asm}
 {info:build.sym}
 {info:modem.sym}
 ; print"11/08/90 03:28p"

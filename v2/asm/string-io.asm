@@ -2,7 +2,7 @@
 ;*
 ;* string output routines *
 ;*
-{info:equates-2_0.lbl}
+{info:equates-2_0.asm}
 ;
 ;* output string
 outstr:

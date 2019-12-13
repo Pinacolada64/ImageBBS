@@ -13,7 +13,7 @@
 
 ;	print "{clear}Image BBS 2.0 ML "version$
 
-	{include:equates-2_0.lbl}
+	{include:equates-2_0.asm}
 	; for pass=1 to 3:print "{up} pass:"pass
 	; org $6c00,-(pass=3),8,"@:ml 2.0"
 orig $6c00

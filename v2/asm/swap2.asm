@@ -3,7 +3,7 @@
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.swap2":print pass;
 
 orig $c000
-	{include:equates-2_0.lbl}
+	{include:equates-2_0.asm}
 
 hc000: jmp term
 hc003: jmp chatmode
@@ -77,7 +77,7 @@ chat1a:
 	jsr getmod
 	beq chat1
 chat2:
-	cmp #'.'
+	cmp #'{home}'
 	beq chat1
 	jsr xchrout
 	jmp chat1

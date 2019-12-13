@@ -3,7 +3,7 @@
 ; print pass
 
 orig $0c00
-{include:equates-2_0.lbl}
+{include:equates-2_0.asm}
 ;
 ; jump table
 ;

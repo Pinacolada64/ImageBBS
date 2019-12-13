@@ -1,4 +1,4 @@
-{include:equates-2_0.lbl}
+{include:equates-2_0.asm}
 {asm}
 orig $c000
 ; inline.s - assemble with casm

@@ -1,5 +1,5 @@
 ; "ml.rs232/user"
-{uses:..\equates-2_0.lbl}
+{include:..\equates-2_0.asm}
 
 	BITCI	= $a8	; RS-232 Input Bit Count
 	RIDATA	= $aa	; RS-232 Input Byte Buffer

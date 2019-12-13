@@ -1,5 +1,5 @@
 ; 5/Jun/2016 21:43 - assemble with casm 4.0 beta
-{uses:..\equates-2_0.lbl}
+{uses:..\equates-2_0.asm}
 
 ; There are a few problems/things I want to improve with with this version of the SwiftLink driver:
 ; 1) 19.2k communication "looks slower", according to others.
@@ -11,6 +11,10 @@
 
 ; 3) testing out whether un-commenting 'oldout' and 'nchrout' routines actually does anything
 {undef:comment_out}
+
+; 4) It has been reported that while the BBS is online, if it loads a (large?) module, and the user keeps typing during the
+;	load, the loaded module is corrupt. CTS is handled by the 6551, so an IRQ problem?
+;	"rsdisab" is called before a load in "disk-io"
 
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
@@ -105,7 +109,7 @@ xx06:
 	jmp disabl
 xx09:
 ; forward branch (>) to local (@) "rsget" label instead of the global one
-; defined in equates-2_0.lbl:
+; defined in equates-2_0.asm:
 	jmp >@rsget
 xx0c:
 	jmp >@rsout
@@ -316,7 +320,7 @@ rsint1:
 ;
 rsint2:
 	lda slStatus
-	and #stattxd	; ok to transmit?
+	and #stattxd	; transmit register empty?
 	beq rsint4	; no
 	lda shcomm
 	cmp #comint1

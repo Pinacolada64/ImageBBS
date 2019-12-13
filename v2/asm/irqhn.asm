@@ -3,7 +3,7 @@
 ; 12/08/90 01:28a
 ;* counter to execute a different
 ;* part of the routine each jiffy
-{info:equates-2_0.lbl}
+{info:equates-2_0.asm}
 irq:
 	jsr irq9
 	jsr irq10

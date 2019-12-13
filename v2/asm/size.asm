@@ -1,5 +1,5 @@
 
-{include:equates-2_0.lbl}
+{include:equates-2_0.asm}
 
 {asm}
 orig $cf00

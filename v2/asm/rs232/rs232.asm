@@ -1,4 +1,4 @@
-{uses:..\equates-2_0.lbl}
+{uses:..\equates-2_0.asm}
 orig $c000
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.rs232"
 ; print pass
@@ -38,9 +38,9 @@ rshigh:
 	byte >rs232a,>rs232b ; $c0 $c3
 
 	{info:INFO: Embedding "rs232-user.bin"}
-rs232a: embed "rs232-user.bin"
+rs232a: {include:"rs232-user.bin"}
 	{info:INFO: Embedding "rs232-swift.bin"}
-rs232b: embed "rs232-swift.bin"
+rs232b: {include:"rs232-swift.bin"}
 
 ; FIXME: since load addresses ($00 $08) are part of the binaries,
 ; the program is JMPing there and hitting a BRK instruction

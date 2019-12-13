@@ -4,7 +4,7 @@
 ;* variable handling routines *
 ;********************************
 
-{info:equates-2_0.lbl}
+{info:equates-2_0.asm}
 {info:string-io.sym}
 
 	;* get descriptor for tt$(.x)

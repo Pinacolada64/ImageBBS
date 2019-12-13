@@ -1,5 +1,5 @@
 ;	print"04/04/90 05:59p"
-{info:equates-2_0.lbl}
+{include:equates-2_0.asm}
 inline:
 	lda #00
 	byte $2c

@@ -1,7 +1,7 @@
 ==== BASE ====
 orig $c000
 {asm}
-{uses:..\equates-2_0.lbl}
+{uses:..\equates-2_0.asm}
 
 ; assemble with casm 4.0:
 ; wine casm.exe visual.lbl -prg:"++ visual.prg" -ovr

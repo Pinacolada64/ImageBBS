@@ -1,5 +1,5 @@
 ; version$="01/22/91 06:51p"
-{include:equates-2_0.lbl}
+{include:equates-2_0.asm}
 orig $1800
 ; for pass=1 to 3:org $1800,-(pass=3),8,"@:ml.editor":print"Pass:"pass
 
