@@ -1,6 +1,4 @@
 ; miscl.s "06/01/91 05:33p"
-{info:build.sym}
-{info:equates-2_0.sym}
 
 callmod:
 	ldx #<imodline

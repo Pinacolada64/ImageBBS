@@ -3,7 +3,7 @@
 ; 12/08/90 01:28a
 ;* counter to execute a different
 ;* part of the routine each jiffy
-{info:equates-2_0.asm}
+
 irq:
 	jsr irq9
 	jsr irq10
@@ -992,7 +992,7 @@ t1fk7a:
 t1fk7b:
 	jmp t2init ;tsr
 t1fk7c:
-	lda outptrfl
+	lda outptrfl	; defined in character-io.asm
 	eor #1
 	sta outptrfl
 	rts
@@ -1276,7 +1276,7 @@ d1str:		area 11
 ha560:
 	byte $31,$28,$31,$30,$31,$30,$31,$31,$30,$00
 
-	
+
 ; from includes (23 bytes + $00)
 daytbl:
 	ascii "SunMonTueWedThuFriSat"
@@ -1284,5 +1284,5 @@ daytbl:
 ;>C:c000  53 75 6e 4d  6f 6e 54 75   SunMonTu
 ;>C:c008  65 57 65 64  54 68 75 46   eWedThuF
 ;>C:c010  72 69 53 61  74 00 00 00   riSat...
-	
-{endasm}
+
+{endif}

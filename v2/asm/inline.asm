@@ -1,5 +1,3 @@
-{include:equates-2_0.asm}
-{asm}
 orig $c000
 ; inline.s - assemble with casm
 
@@ -12,7 +10,7 @@ orig $c000
 
 ; open 15,8,15,"s:ml.inline":close 15
 ; include "equat.s",8
-; for pass=1 to 3:org $c000,-(pass=3),8,"ml.inline":print pass; 
+; for pass=1 to 3:org $c000,-(pass=3),8,"ml.inline":print pass;
 
 ARYTAB	= 47	; start of arrays
 VARPNT	= 71	; $47-$48 Pointer to the Current BASIC Variable Value

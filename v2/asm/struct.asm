@@ -1,5 +1,5 @@
-{include:equates-2_0.asm}
 orig $c000
+{include:equates-2_0.asm}
 ; print "Struct: [" ;
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.struct":print pass;
 ;

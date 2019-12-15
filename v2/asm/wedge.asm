@@ -4,6 +4,7 @@
 
 orig $0c00
 {include:equates-2_0.asm}
+
 ;
 ; jump table
 ;
@@ -422,7 +423,7 @@ getaxy:
 getparm:
 	jsr chrgot
 	ldx #0
-	cmp #','
+	cmp #44		; ","
 	bne getparm1
 	jsr getbytc
 getparm1:

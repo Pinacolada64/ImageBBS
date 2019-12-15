@@ -1,5 +1,5 @@
 ; command line:
-; wine casm.exe build.lbl -prg:ml20.prg -verbose > build-errors
+; wine casm4_00-beta-a.exe build.asm -prg:ml20.prg -verbose > build-errors
 
 ; changes from asm900827 to c64list3.50:
 ; - change "dup" to "area"
@@ -7,7 +7,7 @@
 ; in assembler, cmp #"{up}" does not work - see bug #73 on bughost
 ; lda #'a' (single quotes only) works
 
-	revision = 1
+revision	= 1
 ;	version$ = "06/07/91 03:42p"
 ;	serial = 3 + (asc("A")and 15)*4096
 
@@ -18,7 +18,7 @@
 	; org $6c00,-(pass=3),8,"@:ml 2.0"
 orig $6c00
 
-;	if pass < 3 then area 0,$a000-*:goto {:1000}
+;	if pass < 3 then area 0,$a000-*:goto 1000
 ;	wedge: load addr $0c00, reloc $0c00
 	{info:embedding wedge.bin}
 	{embed:wedge.bin}
@@ -30,54 +30,62 @@ orig $7000
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
 
 ; orig $1800, embed $7000, reloc $d000: editor
+	{info:embedding editor.bin}
 	{embed:editor.bin}
 ;	if *<$8000 then area 0,$8000-*
 ;
 orig $8000
 ; orig $c000, embed $8000, reloc $e000: garbage collect
+	{info:embedding garbage-collect.bin}
 	{embed:garbage-collect.bin}
 ;	if *<$8400 then area 0,$8400-*
 ;
 orig $8400
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
+	{info:embedding ecs.bin}
 	{embed:ecs.bin}
 ;	if *<$8e00 then area 0,$8e00-*
 ;
 orig $8e00
 ; orig $c000, embed $8e00, reloc $ee00: struct
+	{info:embedding struct.bin}
 	{embed:struct.bin}
 ;	if *<$9400 then area 0,$9400-*
 ;
 orig $9400
 ; orig $c000, embed $9400, reloc $f400: swap1
+	{info:embedding swap1.bin}
 	{embed:swap1.bin}
 ;	if *<$9800 then area 0,$9800-*
 ;
 orig $9800
 ; orig $c000, embed $9800, reloc $f800: swap2
+	{info:embedding swap2.bin}
 	{embed:swap2.bin}
 ;	if *<$9c00 then area 0,$9c00-*
 ;
 orig $9c00
 ; orig $c000, embed $9c00, reloc $fc00: swap3
+	{info:embedding swap3.bin}
 	{embed:swap3.bin}
 ;	if *<$a000 then area 0,$a000-*
 ;
 orig $a000
 ;	if *>$a000 then print "extra modules exceed $a000.":end ; by pina
 ; cannot comment out a "uses:" line, so changing it to "info:"
-	{include:jump-table.lbl}
-	{include:string-io.lbl}
-	{include:mci-commands.lbl}
-	{include:character-io.lbl}
-	{include:disk-io.lbl}
-	{include:irqhn.lbl}
-	{include:setup.lbl}
-	{include:varbl.lbl}
-	{include:miscl.lbl}
-	{include:screen-handler.lbl}
-	{include:modem.lbl}
-	{include:calls.lbl}
+@usetbl1:
+	{include:jump-table.asm}
+	{include:string-io.asm}
+	{include:mci-commands.asm}
+	{include:character-io.asm}
+	{include:disk-io.asm}
+	{include:irqhn.asm}
+	{include:setup.asm}
+	{include:varbl.asm}
+	{include:miscl.asm}
+	{include:screen-handler.asm}
+	{include:modem.asm}
+	{include:calls.asm}
 
 ;
 ; put intro program (fake protocol) in
@@ -88,7 +96,7 @@ orig $a000
 	{info:Aligning to $c000.}
 orig $c000
 	;
-	{include:intro.lbl}
+	{include:intro.asm}
 	;
 ;	:print" free proto ram:     {left:5}" ($ca80-*)
 	;
@@ -99,11 +107,11 @@ orig $c000
 	{info:Aligning to $cb00.}
 orig $cb00
 
-swapper:
+@swapper:
 	sta swappg1 ; source page #
 	sty swappg2 ; target page #
 	stx swapsiz ; # of pages to swap
-swapagn:
+@swapagn:
 	lda #'s'
 	sta tdisp+31
 	jsr rsdisab
@@ -112,13 +120,13 @@ swapagn:
 	pha
 	lda #$34
 	sta 1
-swappg1:
+swappg1	= *+1
 	lda #$00
 	sta $6a
-swappg2:
+swappg2	= *+1
 	lda #$00
 	sta $6c
-swapsiz:
+swapsiz	= *+1
 	lda #$00
 	sta $6d
 	ldy #0
@@ -289,7 +297,7 @@ outastr0:
 outastr1:
 	cmp #';'
 	beq outastr0
-	cmp #','
+	cmp #44		; ","
 	beq outcomma
 	jsr getstr
 	stx var+1
@@ -396,17 +404,17 @@ spchars:
 	{info:Aligning to $cd00.}
 orig $cd00
 ;
-; interface page
+; interface page	; target
 ;
-hcd00: jmp outastr
-hcd03: jmp usetbl1
-hcd06: jmp swapper	; $cb00
-hcd09: jmp swapagn
-hcd0c: jmp trace
-hcd0f: jmp chkspcl
-hcd12: jmp convchr
+hcd00: jmp   outastr
+hcd03: jmp <@usetbl1	; $a000
+hcd06: jmp <@swapper	; $cb00
+hcd09: jmp <@swapagn	; $cb09
+hcd0c: jmp   trace
+hcd0f: jmp >@chkspcl
+hcd12: jmp >@convchr	; $cd15
 
-convchr:
+@convchr:
 	jsr chkspcl
 	cmp #0
 	bmi convchr1
@@ -417,7 +425,7 @@ convchr1:
 	and #127
 	rts
 
-chkspcl:
+@chkspcl:
 	cmp #$85
 	bcc chkspcl1
 	cmp #$8d
@@ -432,7 +440,7 @@ chkspcl1:
 	cmp #0
 	rts
 
-usetbl1:
+@usetbl1:
 	sta 780
 	stx 781
 	sty 782
@@ -562,9 +570,9 @@ orig $ce00
 d1str:
 	ascii "           "	; 11 bytes
 	ascii "Tue Jan  1, 1988 12:00 PM   "
-buf2:
+; buf2   ($ce27-$ce76)
 	area 32,80
-buffer:
+; buffer ($ce77-$cec7)
 	area 32,80
 
 ;
@@ -630,7 +638,7 @@ versnum:
 ;	rem
 ;	print"total size:" ;*-$6c00
 ;	end
-;{:61000}
+;61000
 ;	print f$ tab(38) "{back arrow}{up}":print tab(10);
 ;	include f$,8
 ;	print "{up}"tab(30) (*-label) tab(38) " "

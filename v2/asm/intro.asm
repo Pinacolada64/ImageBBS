@@ -1,5 +1,5 @@
 ; "12/13/90 03:31p"
-{include:equates-2_0.asm}
+
 	devnum = 186
 
 ; intro is a proto

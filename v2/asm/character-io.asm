@@ -1,4 +1,3 @@
-{info:equates-2_0.asm}
 ; print"02/02/91 01:25p"
 ;
 ;* character output routines *
@@ -92,7 +91,7 @@ outchr0:
 	jmp outchr1
 
 outchr1:
-	jsr ctrlchk0	; dependency in string-io.lbl
+	jsr ctrlchk0	; defined in string-io.asm
 	bcc outchr3
 	lda mask
 	sta $fe
@@ -115,7 +114,7 @@ outchr2:
 outchr2a:
 	sta $fe
 outchr3:
-	jsr outscn0	; dependency of inline.lbl, swap2.lbl or screen-handler.lbl?
+	jsr outscn0	; defined in inline.asm, swap2.asm or screen-handler.asm?
 	jsr outmdm0
 	jmp outptr
 
@@ -230,13 +229,11 @@ outmdm2:
 outmdmc:
 	byte 0
 
-; FIXME: also defined in includes-2_0.lbl
-; mprtr = *+1
 outptr:
 	ldx #0
 	bne outptr5
-outptrfl=*+1
 outptr6:
+outptrfl = *+1	; referenced in irqhn.asm
 	ldx #0
 	bne outptr5
 	rts
@@ -273,7 +270,7 @@ outptr1:
 	jsr chrout
 outptr2:
 	lda #0
-	sta mprtr
+	sta outptr+1
 	ldx mleft
 	beq outptr3
 outptr7:

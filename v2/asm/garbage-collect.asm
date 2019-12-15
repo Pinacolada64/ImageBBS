@@ -1,5 +1,6 @@
 ; print fre(0) - (fre(0)<0) * 65536
 orig $c000
+{include:equates-2_0.asm}
 
 ;
 ; image 2.0 garbage collection
@@ -8,7 +9,7 @@ orig $c000
 hi	= 51
 size	= 128
 
-tdisp	= $0400+(40*24)	; screen RAM, last row
+; tdisp	= $0400+(40*24)	; screen RAM, last row
 
 ;
 ; setup gc parameters
@@ -38,7 +39,7 @@ initgc:
 	stx hi+1
 gc0:
 	lda #0
-	sta index
+	sta >@index
 ; loop thru scalars
 	lda 45
 	ldx 46
@@ -101,10 +102,10 @@ gc5:
 	sta 4
 	jmp gc4
 gc6:
-	lda index
+	lda >@index
 	beq gc7
 	jsr collect
-	lda index
+	lda >@index
 	cmp #size
 	beq gc0
 gc7:
@@ -199,7 +200,7 @@ dostr:
 	lda 6
 	sbc hi+1
 	bcs dostr0
-	ldx index
+	ldx >@index
 	beq dostr4
 	ldx #0
 dostr1:
@@ -237,15 +238,15 @@ dostr4:
 	sta tbldl,x
 	lda 6
 	sta tbldh,x
-	lda index
+	lda >@index
 	cmp #size
 	beq dostr5
-	inc index
+	inc >@index
 dostr5:
 	rts
 dostr6:
 	inx
-	cpx index
+	cpx >@index
 	bcc dostr1
 	cpx #size
 	bcc dostr4
@@ -256,7 +257,7 @@ collect0:
 collect:
 	ldx #0
 collect1:
-	cpx index
+	cpx >@index
 	beq collect0
 	lda tblpl,x
 	sta 3
@@ -296,7 +297,7 @@ collect2:
 	inx
 	jmp collect1
 
-index:
+@index:
 	byte $00
 temp:
 	byte $00
