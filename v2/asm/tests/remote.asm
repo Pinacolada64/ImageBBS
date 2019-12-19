@@ -1,13 +1,30 @@
 orig $c000
 ; save as "remote.prg" (or "++ remote"?)
 
+; sets usable RAM to $0a01-$4000?
+
+LINNUM	= $14	; Integer Line Number Value
+INDEX	= $22	; $22-$25: Misc Temporary Pointers and Save Area
+TXTTAB	= $2b	; Pointer to the Start of BASIC Program Text
+VARTAB	= $2d	; start of BASIC variables
+ARYTAB	= $2f	; Pointer to the Start of the BASIC Array Storage Area
+STREND	= $31	; Pointer to End of the BASIC Array Storage Area (+1), and the Start of Free RAM
+FRETOP	= $33	; Pointer to the Bottom of the String Text Storage Area
+MEMSIZ	= $37	; Pointer to the Highest Address Used by BASIC
+
+IERROR	= $300	; Vector to the Print BASIC Error Message Routine
+IMAIN	= $302	; Vector to the Main BASIC Program Loop
+IGONE	= $308	; Vector to the Routine That Executes the Next BASIC Program Token
+
+IBSOUT	= $326	; Vector to Kernal CHROUT Routine (Default at 61898 ($F1CA))
+
 newtxt	= $0a01
 newvar	= $0a03
 newary	= $0a03
 newstr	= $0a03
 newtop	= $4000
 
-newgon	= $a7e4 ; Read and Execute the Next Statement
+newgon	= $a7e4 ; standard Read and Execute the Next Statement
 newerr	= $e38b	; standard Kernal error message handler
 
 linkprg = $a533
@@ -17,14 +34,14 @@ runc	= $a68e ; Reset Pointer to Current Text Character to the Beginning of Progr
 		; that the next byte of text that the interpreter will read comes from
 		; the beginning of program text.
 
-usetbl1 = $cd03
+usetbl1 = $cd03	; Image routine table
 
 hc000:
 	jmp entry
 
 	byte 255
 
-	area 20		; 20 $00 bytes
+	area 0,20		; 20 $00 bytes
 
 oldout:
 	word $0000
@@ -48,111 +65,111 @@ oldmem:
 	word $0000
 
 entry:
-	lda $326
-	ldx $327
+	lda IBSOUT	; $326
+	ldx IBSOUT+1	; $327
 	sta oldout
 	stx oldout+1
 	lda #<newout
 	ldx #>newout
-	sta $326
-	stx $327
+	sta IBSOUT	; $326
+	stx IBSOUT	; $327
 
-	lda $300
-	ldx $301
+	lda IERROR	; $300
+	ldx IERROR+1	; $301
 	sta olderr
 	stx olderr+1
 	lda #<newerr
 	ldx #>newerr
-	sta $300
-	stx $301
+	sta IERROR	; $300
+	stx IERROR+1	; $301
 
-	lda $302
-	ldx $303
+	lda IMAIN	; $302
+	ldx IMAIN+1	; $303
 	sta oldmai
 	stx oldmai+1
 	lda #<newmai
 	ldx #>newmai
-	sta $302
-	stx $303
+	sta IMAIN	; $302
+	stx IMAIN	; $303
 
-	lda $308
-	ldx $309
+	lda IGONE	; $308
+	ldx IGONE+1	; $309
 	sta oldgon
 	stx oldgon+1
 	lda #<newgon
 	ldx #>newgon
-	sta $308
-	stx $309
+	sta IGONE	; $308
+	stx IGONE+1	; $309
 
-	lda $2b
-	ldx $2c
+	lda TXTTAB	; $2b
+	ldx TXTTAB+1	; $2c
 	sta oldtxt
 	stx oldtxt+1
 	lda #<newtxt
 	ldx #>newtxt
-	sta $2b
-	stx $2c
+	sta TXTTAB	; $2b
+	stx TXTTAB+1	; $2c
 
-	lda $2d
-	ldx $2e
+	lda VARTAB	; $2d
+	ldx VARTAB+1	; $2e
 	sta oldvar
 	stx oldvar+1
 	lda #<newvar
 	ldx #>newvar
-	sta $2d
-	stx $2e
+	sta VARTAB	; $2d
+	stx VARTAB+1	; $2e
 
-	lda $2f
-	ldx $30
+	lda ARYTAB	; $2f
+	ldx ARYTAB+1	; $30
 	sta oldary
 	stx oldary+1
 	lda #<newary
 	ldx #>newary
-	sta $2f
-	stx $30
+	sta ARYTAB	; $2f
+	stx ARYTAB+1	; $30
 
-	lda $31
-	ldx $32
+	lda STREND	; $31
+	ldx STREND+1	; $32
 	sta oldstr
 	stx oldstr+1
 	lda #<newstr
 	ldx #>newstr
-	sta $31
-	stx $32
+	sta STREND	; $31
+	stx STREND+1	; $32
 
-	lda $33
-	ldx $34
+	lda FRETOP	; $33
+	ldx FRETOP+1	; $34
 	sta oldtop
 	stx oldtop+1
 	lda #<newtop
 	ldx #>newtop
-	sta $33
-	stx $34
+	sta FRETOP	; $33
+	stx FRETOP+1	; $34
 
-	lda $37
-	ldx $38
+	lda MEMSIZ	; $37
+	ldx MEMSIZ+1	; $38
 	sta oldmem
 	stx oldmem+1
 	lda #<newtop
 	ldx #>newtop
-	sta $37
-	stx $38
+	sta MEMSIZ	; $37
+	stx MEMSIZ+1	; $38
 
 	lda #0
 	sta newtxt-1
 	jsr linkprg
-	lda $22
-	ldx $23
+	lda INDEX	; $22
+	ldx INDEX+1	; $23
 	clc
 	adc #2
 	bcc *+2
 	inx
-	sta $2d
-	stx $2e
-	sta $2f
-	stx $30
-	sta $31
-	stx $32
+	sta VARTAB	; $2d
+	stx VARTAB+1	; $2e
+	sta ARYTAB	; $2f
+	stx ARYTAB+1	; $30
+	sta STREND	; $31
+	stx STREND+1	; $32
 
 	jmp runc
 
@@ -163,7 +180,7 @@ newout:
 	pha
 	tya
 	pha
-	lda #55
+	lda #55		; &,55: output
 	jsr usetbl1
 	pla
 	tay
@@ -175,61 +192,61 @@ newout:
 newmai:
 	lda oldout
 	ldx oldout+1
-	sta $326
-	stx $327
+	sta IBSOUT	; $326
+	stx IBSOUT+1	; $327
 
 	lda olderr
 	lda olderr+1
-	sta $300
-	stx $301
+	sta IERROR	; $300
+	stx IERROR+1	; $301
 
 	lda oldmai
 	lda oldmai+1
-	sta $302
-	stx $303
+	sta IMAIN	; $302
+	stx IMAIN+1	; $303
 
 	lda oldgon
 	lda oldgon+1
-	sta $308
-	stx $309
+	sta IGONE	; $308
+	stx IGONE+1	; $309
 
 	lda oldtxt
 	ldx oldtxt+1
-	sta $2b
-	stx $2c
+	sta TXTTAB	; $2b
+	stx TXTTAB	; $2c
 
 	lda oldvar
 	ldx oldvar+1
-	sta $2d
-	stx $2e
+	sta vartab	; $2d
+	stx vartab+1	; $2e
 
 	lda oldary
 	ldx oldary+1
-	sta $2f
-	stx $30
+	sta ARYTAB	; $2f
+	stx ARYTAB+1	; $30
 
 	lda oldstr
 	ldx oldstr+1
-	sta $31
-	stx $32
+	sta STREND	; $31
+	stx STREND+1	; $32
 
 	lda oldtop
 	ldx oldtop+1
-	sta $33
-	stx $34
+	sta FRETOP	; $33
+	stx FRETOP+1	; $34
 
 	lda oldmem
 	ldx oldmem+1
-	sta $37
-	stx $38
+	sta MEMSIZ	; $37
+	stx MEMSIZ+1	; $38
 
 	lda #<1
-	sta $14
+	sta LINNUM	; $14
 	lda #>1
-	sta $15
+	sta LINNUM	; $15
 	ldx #$fa
 	txs
-	jsr $a8a3
+	jsr $a8a3	; Perform GOTO
 	jmp $a7ae	; NEWSTT: Set Up Next Statement for Execution
 			;
 			; This routine tests for the STOP key, updates the pointer to the
