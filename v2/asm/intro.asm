@@ -35,8 +35,8 @@ loop1:
 	sty $2c
 	ldx #<prgstart+2
 	ldy #>prgstart+2
-	stx $2d
-	sty $2e
+	stx vartab	; $2d
+	sty vartab+1	; $2e
 	stx $2f
 	sty $30
 	stx $31
@@ -348,10 +348,10 @@ setp1:
 	tay
 	sec
 	lda $47
-	sbc $2d
+	sbc vartab	; $2d
 	sta vars,y
 	lda $48
-	sbc $2e
+	sbc vartab+1	; $2e
 	sta vars+1,y
 	dec tmp1
 	bpl setp1

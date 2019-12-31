@@ -43,7 +43,8 @@ PREREQS = wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
 # 2) call build.asm, include *.asm files not listed in $(PREREQS)
 ml20.prg: $(PREREQS) build.asm
 	# need beta a since it embeds .bin files
-	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg # -d64:$(DISKIMAGE)::$(C64_FILENAME) [can't output two targets?]
+	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg
+	$(C64LIST4BETAA) build.asm -lst
 	$(C1541) $(DISKIMAGE) -write $@ $(C64_FILENAME) -dir
 
 # $(DISKIMAGE): ml20.prg
@@ -111,7 +112,7 @@ ml20.prg: $(PREREQS) build.asm
 
 clean:
 	# "-" prefix allows 'clean' to continue despite possible missing files
-	-rm *.bin *.prg $(DISKIMAGE)
+	-rm *.bin *.prg *.lst $(DISKIMAGE)
 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 
 # FIXME: not sure this really works

@@ -101,10 +101,10 @@ gvarptr:
 	tay
 	clc
 	lda vars,y
-	adc $2d
+	adc vartab	; $2d
 	tax
 	lda vars+1,y
-	adc $2e
+	adc vartab+1	; $2e
 	tay
 	rts
 varnam:

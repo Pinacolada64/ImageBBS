@@ -8,70 +8,61 @@
 ; lda #'a' (single quotes only) works
 
 revision	= 1
+
 ;	version$ = "06/07/91 03:42p"
 ;	serial = 3 + (asc("A")and 15)*4096
 
 ;	print "{clear}Image BBS 2.0 ML "version$
 
 	{include:equates-2_0.asm}
-	; for pass=1 to 3:print "{up} pass:"pass
-	; org $6c00,-(pass=3),8,"@:ml 2.0"
 orig $6c00
 
-;	if pass < 3 then area 0,$a000-*:goto 1000
 ;	wedge: load addr $0c00, reloc $0c00
 	{info:embedding wedge.bin}
 	{embed:wedge.bin}
-;	if *<$7000 then area 0,$7000-*
-orig $7000
-
 ; orig:  the individual .bin file's load address
 ; embed: where in RAM the .bin file gets put
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
 
 ; orig $1800, embed $7000, reloc $d000: editor
+{info:Aligning to $7000.}
+align $0400,$00
 	{info:embedding editor.bin}
 	{embed:editor.bin}
-;	if *<$8000 then area 0,$8000-*
-;
-orig $8000
+{info:Aligning to $8000.}
+align $1000,$00
 ; orig $c000, embed $8000, reloc $e000: garbage collect
 	{info:embedding garbage-collect.bin}
 	{embed:garbage-collect.bin}
-;	if *<$8400 then area 0,$8400-*
-;
-orig $8400
+{info:Aligning to $8400.}
+align $0400,$00
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
 	{info:embedding ecs.bin}
 	{embed:ecs.bin}
-;	if *<$8e00 then area 0,$8e00-*
-;
-orig $8e00
+{info:Aligning to $8e00.}
+align $0800,$00
+	byte $00
+align $0400,$00
 ; orig $c000, embed $8e00, reloc $ee00: struct
 	{info:embedding struct.bin}
 	{embed:struct.bin}
-;	if *<$9400 then area 0,$9400-*
-;
-orig $9400
+{info:Aligning to $9400.}
+align $0600,$00
 ; orig $c000, embed $9400, reloc $f400: swap1
 	{info:embedding swap1.bin}
 	{embed:swap1.bin}
-;	if *<$9800 then area 0,$9800-*
-;
-orig $9800
+{info:Aligning to $9800.}
+align $0400,$00
 ; orig $c000, embed $9800, reloc $f800: swap2
 	{info:embedding swap2.bin}
 	{embed:swap2.bin}
-;	if *<$9c00 then area 0,$9c00-*
-;
-orig $9c00
+{info:Aligning to $9c00.}
+align $0400,$00
 ; orig $c000, embed $9c00, reloc $fc00: swap3
 	{info:embedding swap3.bin}
 	{embed:swap3.bin}
-;	if *<$a000 then area 0,$a000-*
-;
-orig $a000
-;	if *>$a000 then print "extra modules exceed $a000.":end ; by pina
+{info:Aligning to $a000.}
+align $0400,$00
 ; cannot comment out a "uses:" line, so changing it to "info:"
 @usetbl1:
 	{include:jump-table.asm}
@@ -91,21 +82,14 @@ orig $a000
 ; put intro program (fake protocol) in
 ;
 
-;	:print" free under rom:     {left:5}" ($c000-*)
-;	:if *<$c000 then area 0,$c000-*
-	{info:Aligning to $c000.}
-orig $c000
-	;
+{info:Aligning to $c000.}
+align $2000,$00
 	{include:intro.asm}
-	;
-;	:print" free proto ram:     {left:5}" ($ca80-*)
-	;
-	;* skip rest of proto area *
-	;
-;	:if *>$cb00 then print "error":end
-;	:if *<$cb00 then area 0,$cb00-*
-	{info:Aligning to $cb00.}
-orig $cb00
+;
+;* skip rest of proto area *
+;
+{info:Aligning to $cb00.}
+align $0200,$00
 
 @swapper:
 	sta swappg1 ; source page #
@@ -396,13 +380,8 @@ evalbyt:
 spchars:
 	ascii ",:{34}*?={13}{up arrow}"
 
-;	rem
-;	: print " interrupt page:" tab(30) (*-$cb00)
-;	rem
-;	:if *>$cd00 then print "error":end
-;	:if *<$cd00 then area 0,$cd00-*
-	{info:Aligning to $cd00.}
-orig $cd00
+{info:Aligning to $cd00.}
+align $2000,$00
 ;
 ; interface page	; target
 ;
@@ -559,10 +538,8 @@ farerr:
 ;	rem
 ;	print " interface page:" tab(30) (*-$cd00)
 ;	rem
-;	if *>$ce00 then print "error":end
-;	if *<$ce00 then area 0,$ce00-*
-	{info:Aligning to $ce00.}
-orig $ce00
+{info:Aligning to $ce00.}
+align $0100,00
 ;
 ; buffer page
 ;
@@ -621,25 +598,3 @@ version:
 ;
 versnum:
 	byte $81,$26,$66,$66,$66
-
-;	:print " buffer page:" ;tab(30);*-$ce00
-;	next pass:close 8:print
-;	open 2,8,2,"ml revisions,s,a":print#2,version$,revision:close 2
-;	rem open 2,8,2,"@:ml.serialinfo,s,w":print#2,version$:print#2,"rev#"revision
-;	rem print#2,serial1a
-;	rem print#2,serial1b
-;	rem print#2,serial2a
-;	rem print#2,serial2b
-;	rem print#2,serial3a
-;	rem print#2,serial3b
-;	rem print#2,serial4a
-;	rem print#2,serial4b
-;	rem close 2
-;	rem
-;	print"total size:" ;*-$6c00
-;	end
-;61000
-;	print f$ tab(38) "{back arrow}{up}":print tab(10);
-;	include f$,8
-;	print "{up}"tab(30) (*-label) tab(38) " "
-;	return

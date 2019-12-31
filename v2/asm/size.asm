@@ -25,11 +25,11 @@ orig $cf00
 	lda $22		; cf04 a5 22
 	ldy $23		; cf06 a4 23
 	adc $2b		; cf08 65 2b
-	sta $2d		; cf0a 85 2d
+	sta vartab	; cf0a 85 2d
 	bcc cf0f	; cf0c 90 01
 	iny		; cf0e c8
 cf0f:
-	sty $2e		; cf0f 84 2e
+	sty vartab+1	; cf0f 84 2e
 	jsr $a65c	; cf11 20 5c a6
 	ldy #$00	; cf14 a0 00
 cf16:
@@ -40,10 +40,10 @@ cf16:
 	bne cf16	; cf1f d0 f5
 cf21:
 	sec		; cf21 38
-	lda $2d		; cf22 a5 2d
+	lda vartab	; cf22 a5 2d
 	sbc $2b		; cf24 e5 2b
 	sta cf97	; cf26 8d 97 cf
-	lda $2e		; cf29 a5 2e
+	lda vartab+1	; cf29 a5 2e
 	sbc $2c		; cf2b e5 2c
 	sta cf98	; cf2d 8d 98 cf
 	lda cf98	; cf30 ad 98 cf

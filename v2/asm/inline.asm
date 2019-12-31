@@ -551,6 +551,7 @@ prprompt:
 prpr1:
 	rts
 
+; build.lst line 224 = inline.asm line 555
 ; on exit: carry clear if control char
 ctrlchk:
 	pha

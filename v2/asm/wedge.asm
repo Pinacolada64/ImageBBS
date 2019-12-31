@@ -116,14 +116,14 @@ chopfil1:
 	sta $af
 
 closroom:
-	ldx $2d
-	ldy $2e
+	ldx vartab	; $2d
+	ldy vartab+1	; $2e
 	stx $ac
 	sty $ad
 	ldx $ae
 	ldy $af
-	stx $2d
-	sty $2e
+	stx vartab	; $2d
+	sty vartab+1	; $2e
 	ldx #$2f
 	jsr clrm
 	ldx #$31
@@ -486,10 +486,10 @@ arraysv0:
 arsv1:
 	sec
 	lda $002f,y
-	sbc $2d
+	sbc vartab	; $2d
 	sta arryptrs+0,x
 	lda $0030,y
-	sbc $2e
+	sbc vartab+1	; $2e
 	sta arryptrs+1,x
 	inx
 	inx
@@ -509,10 +509,10 @@ arrayrs0:
 arrs1:
 	clc
 	lda arryptrs+0,x
-	adc $2d
+	adc vartab	; $2d
 	sta $002f,y
 	lda arryptrs+1,x
-	adc $2e
+	adc vartab+1	; $2e
 	sta $0030,y
 	inx
 	inx

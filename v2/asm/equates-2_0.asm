@@ -9,6 +9,7 @@
 	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
 	chrget	= $0073	; two bytes for zero-page JSR
 	chrgot	= $0079 ; same
+	vartab	= $2d	; start of BASIC variables
 	status	= $90	; Kernal I/O Status Word
 	xsav	= $97	; Temporary .X Register Save Area
 ;
@@ -368,7 +369,7 @@
 ; module addresses:
 ;
 	death	= $1800 ; 1.3 is $0800
-	prgstart= $1801
+	prgstart= $1801	; im
 	bmpstart= $2001
 	mmpstart= $3001
 	lmpstart= $4001
