@@ -1,0 +1,69 @@
+	     Label or BASIC
+Decimal	Hex	var	Purpose
+======= =====   ======= =======
+97	$0061	var	Store value of variable for usevar, putvar, zero, minusone, getarr, putarr, getin, putin, etc.
+
+144	$0090	st	I/O status flag
+
+828	$033c		Time allowed on system
+829	$033d		Calls per day	
+830	$033e	idlemax	Maximum idle time allowed
+831	$033f	access	User's access level
+			im line 1636: da% (downloads allowed)
+832	$0340		# of feedback messages left during call
+
+1016	$03f8	kk	# of lines in text editor buffer at save
+1018	$03fa
+1019	$03fb
+1022	$03fe	le	total lines available in editor to user
+1023	$03ff
+
+2024	$07e8	mjump	Number of lines to skip for £J, £E, £D
+2025	$07e9	mresult	Result of £T, £A
+2026	$07ea	mspeed	Print speed for £S
+2027	$07eb	mprint	Print mode for £P
+2028	$07ec	mcolor	Current color for £C
+2029	$07ed	mprtr	Printer flag for £L
+2030	$07ee	mreverse  Reverse mode flag for £R
+2031	$07ef	mci	MCI on/off flag
+2032	$07f0	mdigits	Number of digits for £%
+2033	$07f1	carrst	Carrier flag
+2034	$07f2	tsp1	Transmit speed lo byte
+2035	$07f3	tsp2	Transmit speed hi byte
+2036	$07f4	chks	Checkmark flag for Lightbar (left side)
+2037	$07f5		Checkmark flag for Lightbar (right side)
+2038	$07f6	readmodeStores the unabortable file read flag
+2039	$07f7	filenum	Stores the file number for read0/dskin
+2040	$07f8	tmp5	Temporary storage
+2041	$07f9	abtchr	Alternate abort character (works like <space>)
+2042	$07fa	clock	Turns on BIG clock
+2043	$07fb	filetyp Filetype for Punter transfer protocol
+
+Tables
+======
+16384	$4000	tempbott  Temporary storage for bottom of screen (for full screen)
+16464	$4050	tempbotc  Temporary storage for bottom of screen color memory (full screen)
+16544	$40a0	pmodetbl  Print mode definition table (for £Px command)
+16640	$4100	tempscn	  Temporary storage for top of screen (full screen)
+16880	$41f0	tempcol	  Temporary storage for top of screen color memory (full screen)
+59610	$e8da	colors	Flashing chat page color table
+
+17124	$42ef	curdsp	Current display number (for top of screen)
+17138	$42f2	mask	Password mask character
+17139	$42f3	scnmode	Screen mask mode (1=full or 0=mask)
+
+53248	$d000	local	Flag for local mode (1=nothing output to modem)
+53249	$d001	case	Uppercase lock flag (pl)
+53250	$d002	editor	Flags for the &,1 routine
+53251	$d003	tsr	Time remaining
+53252	$d004	llen	Line length for &,1
+53253	$d005	flag	?
+53254	$d006	chat	Flag for returning from, and for an abort
+53256	$d008	chatpage  1=chat request made (turns on the flashing page request)
+53257	$d009	access	Shadow for ac%
+53258	$d00a	mxor	Carrier XOR value
+53259	$d00b	mkolor	Kolorific mode flag
+53260	$d00c	mupcase	Uppercase mode flag
+53261	$d00d	irqcount  IRQ slowdown flag
+53262	$d00e	trans	ASCII translation flag
+53263	$d00f	index	Length of line returned by inline
