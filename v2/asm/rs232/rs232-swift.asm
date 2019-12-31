@@ -5,16 +5,21 @@
 ; 1) 19.2k communication "looks slower", according to others.
 ; Not sure why yet.  Wrong BPS rate, I'm guessing?
 
-; 2) Testing out setting parity to "space" so tcpser enters 8-bit binary mode (shouldn't get "stuck" during a file transfer looking for valid telnet NVT IAC $ff responses)
+; 2) Testing out setting parity to "space" so tcpser enters 8-bit binary mode
+; (shouldn't get "stuck" during a file transfer looking for valid telnet NVT IAC $ff responses)
 ; (another option might be to put setting the parity parameter in the OPEN 2 statement in "im")
 {undef:set_parity}
 
-; 3) testing out whether un-commenting 'oldout' and 'nchrout' routines actually does anything
-{undef:comment_out}
+; 3) testing out whether un-commenting 'oldout' and 'nchrout' routines actually does anything.
+; The code was commented out in the FastAssembler version.
+; when the code is uncommented, it outputs lots of data even if DCD is not asserted.
+; {undef:comment_out} allows the 'oldout' and 'nchrout' code to be included in the final binary.
+{def:comment_out}
 
-; 4) It has been reported that while the BBS is online, if it loads a (large?) module, and the user keeps typing during the
-;	load, the loaded module is corrupt. CTS is handled by the 6551, so an IRQ problem?
-;	"rsdisab" is called before a load in "disk-io"
+; 4) It has been reported that while the BBS is online, if it loads a (large?)
+;	module, and the user keeps typing during the load, the loaded module is corrupt.
+;	CTS is handled by the 6551, so an IRQ problem?
+;	"rsdisab" is called before a load in "disk-io.asm"
 
 ; from "fast assembler":
 ; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
@@ -66,7 +71,7 @@ statcd1 = {%:01000000}	; bit 6: 1=carrier detect high
 
 ; $DE02 - SwiftLink command register (slCommand):
 
-; 	      xxx-----	; bits 7-5: parity
+;	      xxx-----	; bits 7-5: parity
 ;	      ---x----	; bit 4: echo (should be 0)
 ;	      ----x---	; bit 3: 1=disable TXD IRQ
 ;	      -----x--	; bit 2: 1=enable RXD IRQ
@@ -153,8 +158,8 @@ oldchr:
 	byte $24
 	word nchrin
 
-{ifdef:comment_out}
-; TODO: try uncommenting this
+{ifndef:comment_out}
+; TODO: try uncommenting this: $0830
 oldout:
 	byte $26
 	word nchrout
@@ -169,7 +174,7 @@ setup:
 ; TODO: multiple people have mentioned VICE at startup has an RS232 IRQ pending
 ; which needs to be acknowledged, so do this. This does not happen on real hardware.
 
-; At startup, $de01 (slStatus) reads %00010000: bit 5 (DSR) is set
+; At startup, $de01 (slStatus) reads %00010000: bit 4: 1=transmit register empty
 
 	lda #comint0	; disable SwiftLink txd/rxd NMIs
 	sta slCommand
@@ -188,7 +193,7 @@ setup1:
 	ldy #0
 setup2:
 	lda vectbl,x	; get JMP from table
-	pha		; push on stack?
+	pha		; push on stack
 	lda (20),y	; lda $0300,y
 	sta vectbl,x	; re-save it?
 	pla		; pop off stack
@@ -494,7 +499,7 @@ setbaud3:
 	sta slControl
 	rts
 
-{ifdef:comment_out}
+{ifndef:comment_out}
 ; TODO: try uncommenting this
 nchrout:
 	jsr disabl

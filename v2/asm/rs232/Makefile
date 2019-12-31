@@ -2,14 +2,16 @@ DISKIMAGE = test-disk.d64
 DISKHEADER = swiftlink/t232
 DISKID = rs
 
-WINE = wine
-C64LIST = $(WINE) c64list4_00.exe
-C64LISTFLAGS = -ovr -verbose
-CASM = $(C64LIST) # c64list 4.0 now includes former casm functionality
-C1541 = c1541
+WINE		= wine
+C64LIST		= $(WINE) c64list4_00-beta-a.exe
+	# this version can embed .bin files
+C64LISTFLAGS	= -ovr -verbose
+CASM		= $(C64LIST)
+	# c64list 4.0 now includes former casm functionality
+C1541		= c1541
 
-# must be in reverse case to import as "ml.rs232"
-C64_FILENAME =	ML.RS232
+# must use reverse case in c64list to import as "ml.rs232"
+C64_FILENAME	= ML.RS232
 
 # $(basename names...)
 # Extracts all but the suffix of each file name in names.
@@ -31,17 +33,15 @@ all: $(DISKIMAGE)
 
 rs232.prg: rs232.asm rs232-user.bin rs232-swift.bin
 
-%.prg:%.asm
+# %.prg: %.asm
 	$(CASM) $< -prg:$@ $(C64LISTFLAGS)
 
-%.bin:%.asm
+%.bin: %.asm
 	$(CASM) $< -bin:$@ $(C64LISTFLAGS)
 
 $(DISKIMAGE): rs232.prg
-	# import rs232.prg into $(DISKIMAGE) as "ml.rs232"
-	$(C64LIST) $< $(C64LISTFLAGS) -d64:$@::$(C64_FILENAME)
-	# show contents
-	$(C1541) $(DISKIMAGE) -dir
+	# import rs232.prg into $(DISKIMAGE) as "ml.rs232", show contents
+	$(C1541) $(DISKIMAGE) -write rs232.prg "ml.rs232" -dir
 
 clean:
 	rm -f *.bin *.prg $(DISKIMAGE)
