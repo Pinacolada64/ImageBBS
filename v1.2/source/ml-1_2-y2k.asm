@@ -338,7 +338,6 @@ var_7ab6 = $7ab6
 var_84be = $84be
 var_9b9a = $9b9a
 var_9f9e = $9f9e
-sub_b5a5 = $b5a5 ; somewhere in garbage collection
 var_bf7b = $bf7b
 
 protosta = $c000
@@ -387,8 +386,6 @@ cia1sec	 = $dc09
 cia1min	 = $dc0a
 cia1hour = $dc0b
 cia1icr	 = $dc0d ; interrupt control register
-
-var_dcdd = $dcdd
 
 cia2prta = $dd00
 carrier	 = $dd01
@@ -444,66 +441,69 @@ clear	 = #$93 ; 147
 
 	; first address in table is modified by $ae78
 	; called by $cc77 (main irq switch routine), $cc6c
-	;		; addr:offset (incl. load address)
-irqtable:
-	.word irq_b567	; $00	a000:0002
-	.word irq_be23  ; $01
-	.word irq_abdc  ; $02
-	.word irq_be68  ; $03
-	.word irq_a95c  ; $04
-	.word irq_b773  ; $05
-	.word irq_be2d  ; $06
-	.word irq_aa84  ; $07
-	.word irq_ab3a  ; $08
-	.word irq_be63  ; $09
-	.word irq_be4f  ; $0a
-	.word irq_be59  ; $0b	a00c:000e
-	.word irq_be6d  ; $0c
-	.word irq_a858	; $0d
-	.word $0000	; $0e   maybe self-modifying?
-	.word irq_a128	; $0f
-	.word $c000	; $10
-	.word $c003	; $11	a018:001a
-	.word irq_b099	; $12	print to screen?
-	.word irq_b450	; $13
-	.word irq_b426	; $14	a024:0026
-	.word irq_b3fa 	; $15	a02a:002c
-	.word irq_a6f2	; $16 - wait for .x seconds		 a02c:002e
-	.word irq_a827	; $17					a02e:0030
-	.word irq_a704 ; $18					    a030:0032
-	.word $be84 ; $19					    a032:0034
-	.word $a95c ; $1a					    a034:0036
-	.word $be72 ; $1b					    a036:0038
-	.word $be77 ; $1c					    a038:003a
-	.word $b591 ; $1d					    a03a:003c
-	.word $b5a5 ; $1e - inside garbage collection	a03c:003e
-	.word $b5b9 ; $1f					    a03e:0040
-	.word $b5c4 ; $20					    a040:0042
-	.word $b4d7 ; $21					    a042:0044
-	.word $b4ff ; $22					    a044:0046
-	.word $b4df ; $23 - called from ml.editor		a046:0048
-	.word $b507 ; $24					    a048:004a
-	.word $b75f ; $25					    a04a:004c
-	.word $b758 ; $26					    a04c:004e
-	.word $b4f9 ; $27					    a04e:0050
-	.word $b76a ; $28					    a050:0052
-	.word $b4d3 ; $29					    a052:0054
-	.word $caed ; $2a					    a054:0056
-	.word $aa08 ; $2b					    a056:0058
-	.word $b66c ; $2c - garbage collection		a058:005a
-	.word $b57a ; $2d					    a05a:005c
-	.word $b580 ; $2e					a05c:005e
-	.word $a9c4 ; $2f					    a05e:0060
-	.word $a949 ; $30					    a060:0062
-	.word $ba23 ; $31					    a062:0064
-	.word $b7a6 ; $32					    a064:0066
-	.word $ba8d ; $33					    a066:0068
-	.word $b323 ; $34					    a068:006a
-	.word $b462 ; $35					    a06a:006c
-	.word $be32 ; $36					    a06c:006e
-	.word $a712 ; $37					    a06e:0070
-	.word $be54 ; $38					    a070:0072
-	.word $be5e ; $39					a072:0074
+	;						addr:offset (incl. load address)
+amptable:
+; ampersand routines table
+; TODO: make sure the listed target addresses match symbols
+	.word outastr	; &,0  $b567 output a$		a000:0002
+	.word inline	; &,1  $be23 inline
+	.word dskin	; &,2  $abdc dskin
+	.word read0	; &,3  $be68 read0
+	.word getmdm	; &,4  $a95c getmdm
+	.word getversn  ; &,5  $b773 getversn
+	.word password  ; &,6  $be2d password
+	.word prg	; &,7  $aa84 prg
+	.word dskdir	; &,8  $ab3a dskdir
+	.word btmvar	; &,9  $be63 btmvar
+	.word term	; &,10 $be4f term
+	.word clrarr	; &,11 $be59 clrarr		a00c:000e
+	.word newusr	; &,12 $be6d newusr
+	.word inchr	; &,13 $a858 inchr
+	.word $0000	; &,14 $0000 bell1 - maybe self-modifying?
+	.word convan	; &,15 $a128 convan
+	.word $c000	; &,16 $c000 sys 49152
+	.word $c003	; &,17 $c003 sys 49155		a018:001a
+	.word setmode	; &,18 $b099 setmode
+	.word disp1	; &,19 $b450 disp1
+	.word disp2	; &,20 $b426 disp2		a024:0026
+	.word disp3 	; &,21 $b3fa disp3		a02a:002c
+	.word tenwait	; &,22 $a6f2 tenwait		a02c:002e
+	.word xgetin	; &,23 $a827 xgetin		a02e:0030
+	.word xchrout	; &,24 $a704 xchrout		a030:0032
+	.word sound	; &,25 $be84 sound		a032:0034
+	.word getmdm	; &,26 $a95c getmdm (like &,4)	a034:0036
+	.word arraysav	; &,27 $be72 arraysav		a036:0038
+	.word arrayres	; &,28 $be77 arrayres		a038:003a
+	.word usevar	; &,29 $b591 usevar		a03a:003c
+	.word putvar	; &,30 $b5a5 put $61 in var .x	a03c:003e
+	.word zero	; &,31 $b5b9			a03e:0040
+	.word minusone	; &,32 $b5c4 			a040:0042
+	.word getarr	; &,33 $b4d7			a042:0044
+	.word putarr	; &,34 $b4ff 			a044:0046
+	.word getln	; &,35 $b4df (from ml.editor)	a046:0048
+	.word putln	; &,36 $b507			a048:004a
+	.word trapon	; &,37 $b75f			a04a:004c
+	.word trapoff	; &,38 $b758			a04c:004e
+	.word prtln	; &,39 $b4f9			a04e:0050
+	.word forcegc	; &,40 $b76a			a050:0052
+	.word setbaud	; &,41 $b4d3			a052:0054
+	.word jmp_caed	; &,42 $caed reserved 		a054:0056
+	.word jmp_aa08	; &,43 $aa08 reserved		a056:0058
+	.word chatchk	; &,44 $b66c (old notes say garbage collection)		a058:005a
+	.word prtvar	; &,45 $b57a			a05a:005c
+	.word prtvar0	; &,46 $b580			a05c:005e
+	.word carchk	; &,47 $a9c4			a05e:0060
+	.word getkbd	; &,48 $a949			a060:0062
+	.word getmod	; &,49 $ba23			a062:0064
+	.word outscn	; &,50 $b7a6			a064:0066
+	.word outmod	; &,51 $ba8d			a066:0068
+	.word chkflags	; &,52 $b323			a068:006a
+	.word disp4	; &,53 $b462			a06a:006c
+	.word editor	; &,54 $be32			a06c:006e
+	; the & table cuts off here, in the Programmers' Reference Guide
+	.word sub_a712	; &,55 $a712			a06e:0070
+	.word jmp_be54	; &,56 $be54			a070:0072
+	.word jmp_be5e	; &,57 $be5e			a072:0074
 
 	;
 	; called from $b4fc, $b577, $b57d
@@ -532,7 +532,7 @@ skipa08f:
 	bne skipa0b1	; a099:009b   d0 16
 gotoa09b:
 	ldx #$0f	; a09b:009d   a2 0f
-	jsr sub_b591	; a09d:009f   20 91 b5
+	jsr usevar	; a09d:009f   20 91 b5
 	lda fac1	; a0a0:00a2   a5 61
 	cmp #$81	; a0a2:00a4   c9 81
 	bne skipa0b9	; a0a4:00a6   d0 13
@@ -544,28 +544,28 @@ gotoa09b:
 skipa0b1:
 	jsr sub_b5b9	; a0b1:00b3   20 b9 b5
 	ldx #$0f	; a0b4:00b6   a2 0f
-	jsr sub_b5a5	; a0b6:00b8   20 a5 b5
+	jsr putvar	; a0b6:00b8   20 a5 b5
 skipa0b9:
 	rts		; a0b9:00bb   60
 
 skipa0ba:
 	jsr sub_b5b9	; a0ba:00bc   20 b9 b5
 	ldx #$11	; a0bd:00bf   a2 11
-	jsr sub_b5a5	; a0bf:00c1   20 a5 b5
+	jsr putvar	; a0bf:00c1   20 a5 b5
 	jsr sub_a0fe	; a0c2:00c4   20 fe a0
 	jsr sub_b5b9	; a0c5:00c7   20 b9 b5
 	lda chat	; a0c8:00ca   ad 06 d0
 	sta fac1+1	; a0cb:00cd   85 62
 	ldx #$26	; a0cd:00cf   a2 26
-	jsr sub_b5a5	; a0cf:00d1   20 a5 b5
+	jsr putvar	; a0cf:00d1   20 a5 b5
 	lda chat	; a0d2:00d4   ad 06 d0
 	beq skipa0fb	; a0d5:00d7   f0 24
 	jsr sub_b5c4	; a0d7:00d9   20 c4 b5
 	ldx #$11	; a0da:00dc   a2 11
-	jsr sub_b5a5	; a0dc:00de   20 a5 b5
+	jsr putvar	; a0dc:00de   20 a5 b5
 	jsr sub_b5b9	; a0df:00e1   20 b9 b5
 	ldx #$12	; a0e2:00e4   a2 12
-	jsr sub_b5a5	; a0e4:00e6   20 a5 b5
+	jsr putvar	; a0e4:00e6   20 a5 b5
 	lda chat	; a0e7:00e9   ad 06 d0
 	cmp #$2f	; a0ea:00ec   c9 2f
 	bne skipa0fb	; a0ec:00ee   d0 0d
@@ -574,7 +574,7 @@ skipa0ba:
 	lda #$3c	; a0f2:00f4   a9 3c
 	sta fac1+1	; a0f4:00f6   85 62
 	ldx #$12	; a0f6:00f8   a2 12
-	jsr sub_b5a5	; a0f8:00fa   20 a5 b5
+	jsr putvar	; a0f8:00fa   20 a5 b5
 skipa0fb:
 	jmp gotoa09b	; a0fb:00fd   4c 9b a0
 
@@ -602,9 +602,9 @@ loopa115:
 	bcc loopa115	; a125:0127   90 ee
 skipa127:
 	rts		; a127:0129   60
-irq_a128:
+convan:
 	ldx #$00	; a128:012a   a2 00
-	jsr sub_b591	; a12a:012c   20 91 b5
+	jsr usevar	; a12a:012c   20 91 b5
 	ldy #$00	; a12d:012f   a0 00
 loopa12f:
 	lda (fac1+1),y	; a12f:0131   b1 62
@@ -620,7 +620,7 @@ loopa12f:
 	lda #$ce	; a144:0146   a9 ce
 	sta fac1+2	; a146:0148   85 63
 	ldx #$00	; a148:014a   a2 00
-	jmp sub_b5a5	; a14a:014c   4c a5 b5
+	jmp putvar	; a14a:014c   4c a5 b5
 
 sub_a14d:
 	lda d1day	; a14d:014f   ad 31 a2
@@ -1021,7 +1021,7 @@ jmp_a3f1:
 	lda lbl_a2eb	; a3f1:03f3   ad eb a2
 	and #$01	; a3f4:03f6   29 01
 	sta case	; a3f6:03f8   8d 01 d0
-	jmp irq_a858	; a3f9:03fb   4c 58 a8
+	jmp inchr	; a3f9:03fb   4c 58 a8
 
 jmp_a3fc:
 	lda #$14	; a3fc:03fe   a9 14
@@ -1039,7 +1039,7 @@ jmp_a401:
 	sta passmode	; a415:0417   8d fa 42
 	jsr sub_b5b9	; a418:041a   20 b9 b5
 	ldx #$00	; a41b:041d   a2 00
-	jsr sub_b5a5	; a41d:041f   20 a5 b5
+	jsr putvar	; a41d:041f   20 a5 b5
 	lda syno	; a420:0422   a5 96
 	pha		; a422:0424   48
 	lda fbufpt	; a423:0425   a5 71
@@ -1151,7 +1151,7 @@ jmp_a4c1:
 	cmp #$02	; a4c4:04c6   c9 02
 	bne skipa4d6	; a4c6:04c8   d0 0e
 	ldx #$18	; a4c8:04ca   a2 18
-	jsr sub_b591	; a4ca:04cc   20 91 b5
+	jsr usevar	; a4ca:04cc   20 91 b5
 	lda fac1+1	; a4cd:04cf   a5 62
 	and #$0f	; a4cf:04d1   29 0f
 	ora #$30	; a4d1:04d3   09 30
@@ -1419,11 +1419,13 @@ skipa69f lda mprint	; a69f:06a1   ad eb 07
 	inx		; a6ac:06ae   e8
 	lda pmodetbl,x	; a6ad:06af   bd a0 40
 	sta mod_a6b3+2	; a6b0:06b2   8d b5 a6
-mod_a6b3 lda $ffff	; a6b3:06b5   ad ff ff
+mod_a6b3:
+	lda $ffff	; a6b3:06b5   ad ff ff
 	beq skipa6cb	; a6b6:06b8   f0 13
 	cmp #$ff	; a6b8:06ba   c9 ff
 	beq skipa6cc	; a6ba:06bc   f0 10
-gotoa6bc sta z_fe	; a6bc:06be   85 fe
+gotoa6bc:
+	sta z_fe	; a6bc:06be   85 fe
 	jsr sub_a712	; a6be:06c0   20 12 a7
 	inc mod_a6b3+1	; a6c1:06c3   ee b4 a6
 	bne mod_a6b3	; a6c4:06c6   d0 ed
@@ -1432,34 +1434,42 @@ gotoa6bc sta z_fe	; a6bc:06be   85 fe
 skipa6cb:
 	rts		; a6cb:06cd   60
 
-skipa6cc jsr sub_a6d5	; a6cc:06ce   20 d5 a6
+skipa6cc:
+	jsr sub_a6d5	; a6cc:06ce   20 d5 a6
 	lda tmp4	; a6cf:06d1   ad ff 07
 	jmp gotoa6bc	; a6d2:06d4   4c bc a6
 			;
-sub_a6d5 ldx mspeed	; a6d5:06d7   ae ea 07
+sub_a6d5:
+	ldx mspeed	; a6d5:06d7   ae ea 07
 	beq skipa6dd	; a6d8:06da   f0 03
 	jsr sub_a6f2	; a6da:06dc   20 f2 a6
-skipa6dd lda mkolor	; a6dd:06df   ad 0b d0
+skipa6dd:
+	lda mkolor	; a6dd:06df   ad 0b d0
 	beq skipa6f1	; a6e0:06e2   f0 0f
 	ldx mcolor	; a6e2:06e4   ae ec 07
-loopa6e5 inx		; a6e5:06e7   e8
+loopa6e5:
+	inx		; a6e5:06e7   e8
 	txa		; a6e6:06e8   8a
 	and #$0f	; a6e7:06e9   29 0f
 	beq loopa6e5	; a6e9:06eb   f0 fa
 	sta lbl_a2eb	; a6eb:06ed   8d eb a2
 	jsr jmp_a3c4	; a6ee:06f0   20 c4 a3
-skipa6f1 rts		; a6f1:06f3   60
+skipa6f1:
+	rts		; a6f1:06f3   60
 
-; wait for .x seconds?
-
-sub_a6f2 cpx #$00	; a6f2:06f4   e0 00
+tenwait:
+; &,22,.x - wait for .x/10 seconds
+	cpx #$00	; a6f2:06f4   e0 00
 	beq skipa701	; a6f4:06f6   f0 0b
-loopa6f6 lda cia1dsec	; a6f6:06f8   ad 08 dc
-loopa6f9 cmp cia1dsec	; a6f9:06fb   cd 08 dc
+loopa6f6:
+	lda cia1dsec	; a6f6:06f8   ad 08 dc
+loopa6f9:
+	cmp cia1dsec	; a6f9:06fb   cd 08 dc
 	beq loopa6f9	; a6fc:06fe   f0 fb
 	dex		; a6fe:0700   ca
 	bne loopa6f6	; a6ff:0701   d0 f5
-skipa701 rts		; a701:0703   60
+skipa701:
+	rts		; a701:0703   60
 
 gotoa702:
 	sta z_fe	; a702:0704   85 fe
@@ -1498,7 +1508,8 @@ skipa735:
 	stx videoram+32; a735:0737   8e 20 04
 	rts		; a738:073a   60
 
-skipa739 lda #$d0	; a739:073b   a9 d0	; P - Pause indicator
+skipa739:
+	lda #$d0	; a739:073b   a9 d0	; P - Pause indicator
 	sta videoram+30	; a73b:073d   8d 1e 04
 	jsr sub_a83f	; a73e:0740   20 3f a8
 	lda #$a0	; a741:0743   a9 a0
@@ -1519,7 +1530,8 @@ gotoa74b:
 	sta z_fe	; a760:0762   85 fe
 	jmp skipa788	; a762:0764   4c 88 a7
 
-skipa765 lda mci	; a765:0767   ad ef 07
+skipa765:
+	lda mci		; a765:0767   ad ef 07
 	bpl skipa788	; a768:076a   10 1e
 	lda z_fe	; a76a:076c   a5 fe
 	jsr sub_a247	; a76c:076e   20 47 a2
@@ -1534,30 +1546,39 @@ skipa765 lda mci	; a765:0767   ad ef 07
 	jsr sub_a786	; a77f:0781   20 86 a7
 	lda #$92	; a782:0784   a9 92
 	pha		; a784:0786   48
-skipa785 pla		; a785:0787   68
-sub_a786 sta z_fe	; a786:0788   85 fe
-skipa788 jsr sub_b7a6	; a788:078a   20 a6 b7
+skipa785:
+	pla		; a785:0787   68
+sub_a786:
+	sta z_fe	; a786:0788   85 fe
+skipa788:
+	jsr outscn	; a788:078a   20 a6 b7
 	ldx inchat	; a78b:078d   ae 07 d0
 
 ; called from new IERROR routine
 	bne skipa795	; a78e:0790   d0 05
 	jsr sub_a9f8	; a790:0792   20 f8 a9
 	bne skipa798	; a793:0795   d0 03
-skipa795 jsr sub_ba8d	; a795:0797   20 8d ba
-skipa798 jmp gotoa79b	; a798:079a   4c 9b a7
+skipa795:
+	jsr sub_ba8d	; a795:0797   20 8d ba
+skipa798:
+	jmp gotoa79b	; a798:079a   4c 9b a7
 
-gotoa79b lda mprtr	; a79b:079d   ad ed 07
+gotoa79b:
+	lda mprtr	; a79b:079d   ad ed 07
 	bne skipa7a7	; a79e:07a0   d0 07
 	lda chk_left	; a7a0:07a2   ad f4 07
 	and #$40	; a7a3:07a5   29 40
 	beq skipa7cd	; a7a5:07a7   f0 26
-skipa7a7 lda z_fe	; a7a7:07a9   a5 fe
+skipa7a7:
+	lda z_fe	; a7a7:07a9   a5 fe
 	and #$7f	; a7a9:07ab   29 7f
 	cmp #$20	; a7ab:07ad   c9 20
-lbl_a7ad bcs skipa7b3	; a7ad:07af   b0 04
+lbl_a7ad:
+	bcs skipa7b3	; a7ad:07af   b0 04
 	cmp #$0d	; a7af:07b1   c9 0d
 	bne skipa7cd	; a7b1:07b3   d0 1a
-skipa7b3 ldx #$04	; a7b3:07b5   a2 04
+skipa7b3:
+	ldx #$04	; a7b3:07b5   a2 04
 	jsr chkout	; a7b5:07b7   20 c9 ff
 	lda status	; a7b8:07ba   a5 90
 	bmi skipa7ca	; a7ba:07bc   30 0e
@@ -1567,11 +1588,14 @@ skipa7b3 ldx #$04	; a7b3:07b5   a2 04
 	bne skipa7ca	; a7c3:07c5   d0 05
 	lda #$00	; a7c5:07c7   a9 00
 	sta mprtr	; a7c7:07c9   8d ed 07
-skipa7ca jmp clrch	; a7ca:07cc   4c cc ff
+skipa7ca:
+	jmp clrch	; a7ca:07cc   4c cc ff
 
-skipa7cd rts		; a7cd:07cf   60
+skipa7cd:
+	rts		; a7cd:07cf   60
 
-sub_a7ce sta ptr1	; a7ce:07d0   85 9e
+sub_a7ce:
+	sta ptr1	; a7ce:07d0   85 9e
 	txa		; a7d0:07d2   8a
 	pha		; a7d1:07d3   48
 	tya		; a7d2:07d4   98
@@ -1589,7 +1613,7 @@ sub_a7d7:
 	cmp #$02	; a7df:07e1   c9 02	; rs232
 	beq gotoa7f0	; a7e1:07e3   f0 0d
 	ldx #$01	; a7e3:07e5   a2 01
-	jsr irq_b099	; a7e5:07e7   20 99 b0
+	jsr setmode	; a7e5:07e7   20 99 b0
 	lda ptr1	; a7e8:07ea   a5 9e
 	jsr out_scrn	; a7ea:07ec   20 16 e7
 	jmp gotoa80c	; a7ed:07ef   4c 0c a8
@@ -1600,26 +1624,26 @@ gotoa7f0:
 	bne skipa807	; a7f3:07f5   d0 12
 
 ; update modem I/O window:
-	ldx #$00		; a7f5:07f7   a2 00
+	ldx #$00	; a7f5:07f7   a2 00
 loopa7f7:
-	lda mask_bot+69,x	; a7f7:07f9   bd dd 07
-	sta mask_bot+68,x	; a7fa:07fc   9d dc 07
-	inx			; a7fd:07ff   e8
-	cpx #$09		; a7fe:0800   e0 09
-	bne loopa7f7		; a800:0802   d0 f5
-	lda ptr1		; a802:0804   a5 9e
-	sta mask_bot+77		; a804:0806   8d e5 07
+	lda mask_bot+69,x;a7f7:07f9   bd dd 07
+	sta mask_bot+68,x;a7fa:07fc   9d dc 07
+	inx		; a7fd:07ff   e8
+	cpx #$09	; a7fe:0800   e0 09
+	bne loopa7f7	; a800:0802   d0 f5
+	lda ptr1	; a802:0804   a5 9e
+	sta mask_bot+77	; a804:0806   8d e5 07
 skipa807:
-	lda ptr1		; a807:0809   a5 9e
-	jsr rsPutChar		; a809:080b   20 0c 43
+	lda ptr1	; a807:0809   a5 9e
+	jsr rsPutChar	; a809:080b   20 0c 43
 gotoa80c:
-	pla			; a80c:080e   68
-	tay			; a80d:080f   a8
-	pla			; a80e:0810   68
-	tax			; a80f:0811   aa
-	lda ptr1		; a810:0812   a5 9e
-	clc			; a812:0814   18
-	rts			; a813:0815   60
+	pla		; a80c:080e   68
+	tay		; a80d:080f   a8
+	pla		; a80e:0810   68
+	tax		; a80f:0811   aa
+	lda ptr1	; a810:0812   a5 9e
+	clc		; a812:0814   18
+	rts		; a813:0815   60
 
 	sta ptr1	; a814:0816   85 9e
 	txa		; a816:0818   8a
@@ -1634,34 +1658,39 @@ gotoa80c:
 	lda #$14	; a822:0824   a9 14
 	jmp gotoa702	; a824:0826   4c 02 a7
 
-a827:0829   20 3f a8 loopa827 jsr sub_a83f
-a82a:082c   c9 13		cmp #$13
-a82c:082e   f0 f9		beq loopa827
-a82e:0830   c9 5c		cmp #pound
-a830:0832   d0 0c		bne skipa83e
-a832:0834   ad 02 d0		lda editor
-a835:0837   29 08		and #$08
-a837:0839   d0 03		bne skipa83c
-a839:083b   4c 27 a8		jmp loopa827
+loopa827:
+	jsr sub_a83f	; a827:0829   20 3f a8
+	cmp #$13        ; a82a:082c   c9 13
+	beq loopa827    ; a82c:082e   f0 f9
+	cmp #pound      ; a82e:0830   c9 5c
+	bne skipa83e    ; a830:0832   d0 0c
+	lda editor      ; a832:0834   ad 02 d0
+	and #$08        ; a835:0837   29 08
+	bne skipa83c    ; a837:0839   d0 03
+	jmp loopa827    ; a839:083b   4c 27 a8
 
-a83c:083e   a9 5c    skipa83c lda #pound	; pound sign?
-a83e:0840   60       skipa83e rts
+skipa83c:
+	lda #pound	; a83c:083e   a9 5c
+skipa83e:
+	rts		; a83e:0840   60
 
-a83f:0841   20 71 a8 sub_a83f jsr sub_a871
-a842:0844   20 c4 a9		jsr sub_a9c4
-a845:0847   d0 0a		bne skipa851
-a847:0849   20 08 aa		jsr sub_aa08
-a84a:084c   d0 05		bne skipa851
-a84c:084e   a5 fe		lda z_fe
-a84e:0850   f0 ef		beq sub_a83f
-a850:0852   60		rts
+sub_a83f:
+	jsr sub_a871	; a83f:0841   20 71 a8
+	jsr sub_a9c4    ; a842:0844   20 c4 a9
+	bne skipa851    ; a845:0847   d0 0a
+	jsr sub_aa08    ; a847:0849   20 08 aa
+	bne skipa851    ; a84a:084c   d0 05
+	lda z_fe        ; a84c:084e   a5 fe
+	beq sub_a83f    ; a84e:0850   f0 ef
+	rts             ; a850:0852   60
 
-a851:0853   a9 0d    skipa851 lda #$0d
-a853:0855   60		rts
+skipa851:
+	lda #$0d	; a851:0853   a9 0d
+	rts             ; a853:0855   60
 
 a854:0856   tbl-a857 tabla854 .byte $80,$80,$00,$00
 
-irq_a858:
+inchr:
 	jsr loopa827	; a858:085a   20 27 a8
 	lda z_fe	; a85b:085d   a5 fe
 	sta buffer	; a85d:085f   8d 77 ce
@@ -1672,7 +1701,7 @@ irq_a858:
 	lda #>buffer	; a868:086a   a9 ce
 	sta fac1+2	; a86a:086c   85 63
 	ldx #$00	; a86c:086e   a2 00
-	jmp sub_b5a5	; a86e:0870   4c a5 b5
+	jmp putvar	; a86e:0870   4c a5 b5
 
 a871:0873   20 49 a9 sub_a871 jsr sub_a949
 a874:0876   d0 08		bne skipa87e
@@ -1789,52 +1818,55 @@ a957:0959   a9 00		lda #$00
 a959:095b   c9 00    skipa959 cmp #$00
 a95b:095d   60		rts
 
-irq_a95c:	; irq routine #5
-a95c:095e   20 03 43 lbl_a95c jsr rsEnable
-a95f:0961   38		sec
-a960:0962   20 09 43		jsr rsGetChar
-a963:0965   b0 3e		bcs skipa9a3
-a965:0967   48		pha
-a966:0968   ad e5 42		lda bar
-a969:096b   29 01		and #$01
-a96b:096d   f0 04		beq skipa971
-a96d:096f   68		pla
-a96e:0970   29 7f		and #$7f
-a970:0972   48		pha
-a971:0973   ad f3 42 skipa971 lda scnmode
-a974:0976   d0 2b		bne skipa9a1
-a976:0978   a0 00		ldy #$00
-a978:097a   ad f5 07		lda chk_right
-a97b:097d   29 01		and #$01
-a97d:097f   f0 02		beq skipa981
-a97f:0981   a0 06		ldy #$06
-a981:0983   b9 c3 07 skipa981 lda mask_bot+43,y
-a984:0986   99 c2 07		sta mask_bot+42,y
-a987:0989   c8		iny
-a988:098a   c0 09		cpy #$09
-a98a:098c   d0 f5		bne skipa981
-a98c:098e   68		pla
-a98d:098f   48		pha
-a98e:0990   29 7f		and #$7f
-a990:0992   c9 20		cmp #$20
-a992:0994   68		pla
-a993:0995   48		pha
-a994:0996   90 08		bcc skipa99e
-a996:0998   ae fa 42		ldx passmode
-a999:099b   f0 03		beq skipa99e
-a99b:099d   ad f2 42		lda mask
-a99e:09a0   8d cb 07 skipa99e sta mask_bot+51
-a9a1:09a3   68       skipa9a1 pla
-a9a2:09a4   60		rts
+getmdm:		; &,4 / &,26
+	jsr rsEnable	; a95c:095e   20 03 43
+	sec		; a95f:0961   38
+	jsr rsGetChar	; a960:0962   20 09 43
+	bcs skipa9a3	; a963:0965   b0 3e
+	pha		; a965:0967   48
+	lda bar		; a966:0968   ad e5 42
+	and #$01	; a969:096b   29 01
+	beq skipa971	; a96b:096d   f0 04
+	pla		; a96d:096f   68
+	and #$7f	; a96e:0970   29 7f
+	pha		; a970:0972   48
+skipa971:
+	lda scnmode	; a971:0973   ad f3 42
+	bne skipa9a1	; a974:0976   d0 2b
+	ldy #$00	; a976:0978   a0 00
+	lda chk_right	; a978:097a   ad f5 07
+	and #$01	; a97b:097d   29 01
+	beq skipa981	; a97d:097f   f0 02
+	ldy #$06	; a97f:0981   a0 06
+skipa981:
+	lda mask_bot+43,y;a981:0983   b9 c3 07
+	sta mask_bot+42,y;a984:0986   99 c2 07
+	iny		; a987:0989   c8
+	cpy #$09	; a988:098a   c0 09
+	bne skipa98     ; a98a:098c   d0 f5
+	pla		; a98c:098e   68
+	pha		; a98d:098f   48
+	and #$7f	; a98e:0990   29 7f
+	cmp #$20	; a990:0992   c9 20
+	pla		; a992:0994   68
+	pha		; a993:0995   48
+	bcc skipa99e	; a994:0996   90 08
+	ldx passmode	; a996:0998   ae fa 42
+	beq skipa99e	; a999:099b   f0 03
+	lda mask	; a99b:099d   ad f2 42
+skipa99e:
+	sta mask_bot+51 ; a99e:09a0   8d cb 07
+skipa9a1:
+	pla             ; a9a1:09a3   68
+	rts		; a9a2:09a4   60
 
-a9a3:09a5   a9 00    skipa9a3 lda #$00
-a9a5:09a7   60		rts
+skipa9a3:
+	lda #$00	; a9a3:09a5   a9 00
+	rts             ; a9a5:09a7   60
 
-a9a6:09a8   tbl-a9ad spclchar .text ",:"
-				.byte 34
-				.text "*?="
-				.byte 13
-				.text "^"
+spclchar:
+	.text ",:{34}*?={13}^"
+			; a9a6:09a8   tbl-a9ad
 
 a9ae:09b0   c9 85    sub_a9ae cmp #$85
 a9b0:09b2   90 11		bcc skipa9c3
@@ -1923,7 +1955,7 @@ aa3c:0a3e   d0 02		bne skipaa40
 aa3e:0a40   a9 08		lda #$08
 aa40:0a42   8d f7 07 skipaa40 sta filenum
 aa43:0a45   a2 01		ldx #$01
-aa45:0a47   20 91 b5		jsr sub_b591
+aa45:0a47   20 91 b5		jsr usevar
 aa48:0a4a   a9 00		lda #$00
 aa4a:0a4c   20 90 ff		jsr setmsg
 aa4d:0a4f   a9 01		lda #$01
@@ -1955,7 +1987,7 @@ aa80:0a82   60       skipaa80 rts
 
 aa81:0a83   4c 12 aa loopaa81 jmp gotoaa12
 
-irq_aa84:
+prg:
 aa84:0a86   ad 0e aa		lda lbl_aa0e
 aa87:0a89   29 0f		and #$0f
 aa89:0a8b   8d ff 02		sta $02ff
@@ -2056,7 +2088,7 @@ ab36:0b38   68		pla
 ab37:0b39   91 ac		sta (sal),y
 ab39:0b3b   60		rts
 
-irq_ab3a:
+dskdir:
 ab3a:0b3c   8c f4 42		sty dflag
 ab3d:0b3f   e0 00		cpx #$00
 ab3f:0b41   f0 03		beq skipab44
@@ -2074,10 +2106,10 @@ ab5b:0b5d   ad f4 42		lda dflag
 ab5e:0b60   d0 14		bne skipab74
 ab60:0b62   20 c4 b5		jsr sub_b5c4
 ab63:0b65   a2 0f		ldx #$0f
-ab65:0b67   20 a5 b5		jsr sub_b5a5
-ab68:0b6a   20 67 b5		jsr irq_b567
+ab65:0b67   20 a5 b5		jsr putvar
+ab68:0b6a   20 67 b5		jsr outastr
 ab6b:0b6d   a2 11		ldx #$11
-ab6d:0b6f   20 91 b5		jsr sub_b591
+ab6d:0b6f   20 91 b5		jsr usevar
 ab70:0b72   a5 61		lda fac1
 ab72:0b74   f0 e0		beq skipab54
 ab74:0b76   60       skipab74 rts
@@ -2127,10 +2159,11 @@ abce:0bd0   85 62		sta fac1+1
 abd0:0bd2   a9 ce		lda #$ce
 abd2:0bd4   85 63		sta fac1+2
 abd4:0bd6   a2 01		ldx #$01
-abd6:0bd8   20 a5 b5		jsr sub_b5a5
+abd6:0bd8   20 a5 b5		jsr putvar
 abd9:0bdb   4c 03 43		jmp rsEnable
 
-abdc:0bde   e0 00    irq_abdc cpx #$00
+dskin:
+abdc:0bde   e0 00    dskin cpx #$00
 abde:0be0   d0 03		bne skipabe3
 abe0:0be2   8e f7 07		stx filenum
 abe3:0be5   c0 00    skipabe3 cpy #$00
@@ -2162,7 +2195,7 @@ ac1c:0c1e   85 62		sta fac1+1
 ac1e:0c20   a9 ce		lda #$ce
 ac20:0c22   85 63		sta fac1+2
 ac22:0c24   a2 01		ldx #$01
-ac24:0c26   20 a5 b5		jsr sub_b5a5
+ac24:0c26   20 a5 b5		jsr putvar
 ac27:0c29   20 cc ff		jsr clrch
 ac2a:0c2c   4c 03 43		jmp rsEnable
 
@@ -2454,9 +2487,9 @@ ae6f:0e71   d0 0f		bne skipae80
 ae71:0e73   ad 03 d0		lda tsr
 ae74:0e76   f0 0a		beq skipae80
 ae76:0e78   a9 7c		lda #$7c		; $be7c -> ($a000)
-ae78:0e7a   8d 00 a0		sta irqtable
+ae78:0e7a   8d 00 a0		sta amptable
 ae7b:0e7d   a9 be		lda #$be
-ae7d:0e7f   8d 01 a0		sta irqtable+1
+ae7d:0e7f   8d 01 a0		sta amptable+1
 ae80:0e82   ad 03 d0 skipae80 lda tsr
 ae83:0e85   cd e9 42		cmp cphase
 ae86:0e88   8d e9 42		sta cphase
@@ -2715,13 +2748,13 @@ b089:108b   0a		asl a
 b08a:108c   0d ee 42		ora var_42ee
 b08d:108f   aa		tax
 b08e:1090   a0 02		ldy #$02
-b090:1092   4c 23 b3		jmp gotob323
+b090:1092   4c 23 b3		jmp chkflags
 
 b093:1095   ae f3 42 skipb093 ldx scnmode
 b096:1098   4c 9e b0		jmp gotob09e
 
 ; output to screen
-b099:109b   ec f3 42 irq_b099 cpx scnmode
+b099:109b   ec f3 42 setmode cpx scnmode
 b09c:109e   d0 cb		bne skipb069
 b09e:10a0   e0 00    gotob09e cpx #$00
 b0a0:10a2   d0 13		bne skipb0b5
@@ -2905,7 +2938,7 @@ b213:1215   d0 01		bne skipb216
 b215:1217   60		rts
 
 b216:1218   a2 01    skipb216 ldx #$01
-b218:121a   4c 99 b0		jmp irq_b099
+b218:121a   4c 99 b0		jmp setmode
 
 b21b:121d   tbl-b21c lbl_b21b .byte $d1
 
@@ -3030,9 +3063,10 @@ b31d:131f   60		rts
 b31e:1320   b1 14    sub_b31e lda (linnum),y
 b320:1322   4c 0b b3		jmp skipb30b
 
-b323:1325   a5 14    gotob323 lda linnum
+chkflags:
+b323:1325   a5 14	lda linnum
 b325:1327   48		pha
-b326:1328   a5 15		lda linnum+1
+b326:1328   a5 15	lda linnum+1
 b328:132a   48		pha
 b329:132b   8e 99 b3 lbl_b329 stx lbl_b399
 b32c:132e   8a		txa
@@ -3086,7 +3120,7 @@ b37d:137f   f0 01		beq skipb380
 b37f:1381   c8		iny
 b380:1382   84 62    skipb380 sty fac1+1
 b382:1384   a2 1e		ldx #$1e
-b384:1386   20 a5 b5		jsr sub_b5a5
+b384:1386   20 a5 b5		jsr putvar
 b387:1389   68       gotob387 pla
 b388:138a   85 15		sta linnum+1
 b38a:138c   68		pla
@@ -3142,17 +3176,17 @@ b3eb:13ed			.text " Fn3 "
 b3f0:13f2			.text " Fn2 "
 b3f5:13f7			.text " Fn1 "
 
-irq_b3fa:
+disp3:
 	stx lbl_b4d1	; b3fa:13fc   8e d1 b4
-	sty lbl_b4d2    ; b3fd:13ff   8c d2 b4
+	sty lbl_b4d2	; b3fd:13ff   8c d2 b4
 lbl_b400:
-	lda #$02        ; b400:1402   a9 02
-	jsr sub_b478    ; b402:1404   20 78 b4
-	lda #clear        ; b405:1407   a9 93
-	sta z_fe        ; b407:1409   85 fe
-	jsr sub_b7a6    ; b409:140b   20 a6 b7
-	inc mod_b24f+1  ; b40c:140e   ee 50 b2
-	rts             ; b40f:1411   60
+	lda #$02	; b400:1402   a9 02
+	jsr sub_b478	; b402:1404   20 78 b4
+	lda #clear	; b405:1407   a9 93
+	sta z_fe	; b407:1409   85 fe
+	jsr outscn	; b409:140b   20 a6 b7
+	inc mod_b24f+1	; b40c:140e   ee 50 b2
+	rts		; b40f:1411   60
 
 b410:1412   a2 27    sub_b410 ldx #$27
 b412:1414   a9 06		lda #$06
@@ -3165,7 +3199,7 @@ b41f:1421   8d 1f 04		sta videoram+31
 b422:1424   8d 20 04		sta videoram+32
 b425:1427   60		rts
 
-irq_b426:
+disp2:
 	stx lbl_b4d1	; b426:1428   8e d1 b4
 	sty lbl_b4d2	; b429:142b   8c d2 b4
 	lda #$00	; b42c:142e   a9 00
@@ -3183,7 +3217,7 @@ irq_b426:
 	inc mod_b24f+1	; b44c:144e   ee 50 b2
 	rts		; b44f:1451   60
 
-irq_b450:
+disp1:
 	stx lbl_b4d1	; b450:1452   8e d1 b4
 	sty lbl_b4d2	; b453:1455   8c d2 b4
 	lda #$01	; b456:1458   a9 01
@@ -3199,11 +3233,11 @@ b462:
 	jmp sub_b475	; b46a:146c   4c 75 b4
 
 
-scnfiles
+scnfiles:
 	.text "0:scn."	; b46d:146f
 
 
-scntype
+scntype:
 	.text "t"	; b473:1475
 	; screen type: "t" for "text", "c" for "color"
 
@@ -3214,12 +3248,12 @@ scnnum:
 
 sub_b475:
 	sta curdisp	; b475:1477   8d e4 42
-	sub_b478:
+sub_b478:
 	clc		; b478:147a   18
 	adc #$31	; b479:147b   69 31
 	sta scnnum	; b47b:147d   8d 74 b4
 	ldx #$01	; b47e:1480   a2 01
-	jsr irq_b099	; b480:1482   20 99 b0
+	jsr setmode	; b480:1482   20 99 b0
 	lda #$54	; b483:1485   a9 54
 	sta scntype	; b485:1487   8d 73 b4
 	jsr sub_b4ac	; b488:148a   20 ac b4
@@ -3235,7 +3269,7 @@ sub_b475:
 	lda #$ce	; b4a0:14a2   a9 ce
 	sta fac1+2	; b4a2:14a4   85 63
 	ldx #$04	; b4a4:14a6   a2 04
-	jsr sub_b5a5	; b4a6:14a8   20 a5 b5
+	jsr putvar	; b4a6:14a8   20 a5 b5
 skipb4a9:
 	jmp sub_b410	; b4a9:14ab   4c 10 b4
 
@@ -3264,6 +3298,7 @@ lbl_b4d1:
 lbl_b4d2:
 	.byte $00	; b4d2:14d4   00
 
+setbaud:		; &,41: setbaud
 	 txa		; b4d3:14d5   8a
 	 jmp rsSetBaud	; b4d4:14d6   4c 0f 43
 
@@ -3271,7 +3306,7 @@ sub_b4d7:
 	jsr sub_b522	; b4d7:14d9   20 22 b5
 	ldy #$02	; b4da:14dc   a0 02
 	jmp gotob59c	; b4dc:14de   4c 9c b5
-			;
+getln:
 	jsr sub_b4d7	; b4df:14e1   20 d7 b4
 	ldy fac1	; b4e2:14e4   a4 61
 	sty index	; b4e4:14e6   8c 0f d0
@@ -3303,15 +3338,18 @@ gotob4ff:
 	ldy index	; b50f:1511   ac 0f d0
 	beq skipb51d	; b512:1514   f0 09
 	dey		; b514:1516   88
-loopb515 lda buffer,y	; b515:1517   b9 77 ce
+loopb515:
+	lda buffer,y	; b515:1517   b9 77 ce
 	sta (fac1+1),y	; b518:151a   91 62
 	dey		; b51a:151c   88
 	bpl loopb515	; b51b:151d   10 f8
-skipb51d pla		; b51d:151f   68
+skipb51d:
+	pla		; b51d:151f   68
 	tax		; b51e:1520   aa
 	jmp gotob4ff	; b51f:1521   4c ff b4
 
 sub_b522:
+; search for variable in .x?
 	stx varpnt	; b522:1524   86 47
 	lda #$00	; b524:1526   a9 00
 	asl varpnt	; b526:1528   06 47
@@ -3356,7 +3394,7 @@ sub_b560:
 	stx varnam+1	; b562:1564   86 46
 	jmp gotocd4f	; b564:1566   4c 4f cd
 
-irq_b567:
+outastr:
 	ldx #$01	; b567:1569   a2 01
 	jsr chrgot	; b569:156b   20 79 00
 	beq skipb57a	; b56c:156e   f0 0c
@@ -3367,7 +3405,7 @@ irq_b567:
 	jmp gotoa074	; b577:1579   4c 74 a0
 
 skipb57a:
-	jsr sub_b591	; b57a:157c   20 91 b5
+	jsr usevar	; b57a:157c   20 91 b5
 	jmp gotoa074	; b57d:157f   4c 74 a0
 
 gotob580:
@@ -3381,7 +3419,7 @@ loopb586:
 	sta mci		; b58d:158f   8d ef 07
 	rts		; b590:1592   60
 
-sub_b591:
+usevar:
 	jsr sub_b552	; b591:1593   20 52 b5
 	jmp gotob59a	; b594:1596   4c 9a b5
 
@@ -3397,8 +3435,8 @@ gotob59c:
 	bpl gotob59c	; b5a2:15a4   10 f8
 	rts		; b5a4:15a6   60
 
-sub_b5a5:
-; call with .x: variable # to print?
+putvar:
+; put value at $61 into variable .x
 	jsr sub_b552	; b5a5:15a7   20 52 b5
 	jmp gotob5ae	; b5a8:15aa   4c ae b5
 
@@ -3550,7 +3588,7 @@ sub_b6a3 lda tsr	; b6a3:16a5   ad 03 d0
 	sta lbl_b756	; b6ab:16ad   8d 56 b7
 	sta fac1+1	; b6ae:16b0   85 62
 	ldx #$1d	; b6b0:16b2   a2 1d
-	jsr sub_b5a5	; b6b2:16b4   20 a5 b5
+	jsr putvar	; b6b2:16b4   20 a5 b5
 skipb6b5 inc scnlock	; b6b5:16b7   ee fb 42
 	lda scnmode	; b6b8:16ba   ad f3 42
 	bne skipb6c0	; b6bb:16bd   d0 03
@@ -3637,15 +3675,20 @@ b755:1757	       lbl_b755 .byte $00
 
 b756:1758	       lbl_b756 .byte $00,$00
 
-b758:175a   a9 8b		lda #$8b
-b75a:175c   a2 e3		ldx #$e3
-b75c:175e   4c 63 b7		jmp gotob763
+trapoff:
+; restore standard error handler
+	lda #$8b	; b758:175a   a9 8b
+	ldx #$e3	; b75a:175c   a2 e3
+	jmp gotob763	; b75c:175e   4c 63 b7
 
-b75f:1761   a9 79		lda #$79
-b761:1763   a2 cd		ldx #$cd
-b763:1765   8d 00 03 gotob763 sta ierror
-b766:1768   8e 01 03		stx ierror+1
-b769:176b   60		rts
+trapon:
+; install custom error handler
+	lda #$79	; b75f:1761   a9 79
+	ldx #$cd	; b761:1763   a2 cd
+gotob763:
+	sta ierror	; b763:1765   8d 00 03
+	stx ierror+1	; b766:1768   8e 01 03
+	rts		; b769:176b   60
 
 b76a:176c   a5 31		lda strend
 b76c:176e   85 33		sta fretop
@@ -3653,7 +3696,7 @@ b76e:1770   a5 32		lda strend+1
 b770:1772   85 34		sta fretop+1
 b772:1774   60		rts
 
-irq_b773:
+getversn:
 b773:1775   a9 0f		lda #$0f
 b775:1777   85 61		sta fac1
 b777:1779   a9 e7		lda #$e7
@@ -3661,23 +3704,24 @@ b779:177b   85 62		sta fac1+1
 b77b:177d   a9 ce		lda #$ce
 b77d:177f   85 63		sta fac1+2
 b77f:1781   a2 01		ldx #$01
-b781:1783   20 a5 b5		jsr sub_b5a5
+b781:1783   20 a5 b5		jsr putvar
 b784:1786   a0 04		ldy #$04
 b786:1788   b9 f6 ce loopb786 lda tablcef6,y
 b789:178b   99 61 00		sta fac1,y
 b78c:178e   88		dey
 b78d:178f   10 f7		bpl loopb786
 b78f:1791   a2 0f		ldx #$0f
-b791:1793   20 a5 b5		jsr sub_b5a5
+b791:1793   20 a5 b5		jsr putvar
 b794:1796   20 b9 b5		jsr sub_b5b9
 b797:1799   ad e5 ce		lda lbl_cee5
 b79a:179c   85 62    lbl_b79a	sta fac1+1
 b79c:179e   ad e6 ce		lda lbl_cee6
 b79f:17a1   85 61		sta fac1
 b7a1:17a3   a2 1e		ldx #$1e
-b7a3:17a5   4c a5 b5		jmp sub_b5a5
+b7a3:17a5   4c a5 b5		jmp putvar
 
-b7a6:17a8   a9 00    sub_b7a6	lda #$00
+outscn:
+b7a6:17a8   a9 00    outscn	lda #$00
 b7a8:17aa   8d e0 42		sta idlejif
 b7ab:17ad   aa			tax
 b7ac:17ae   a8			tay
@@ -3819,7 +3863,7 @@ b8c8:18ca   ad f5 07		lda chk_right
 b8cb:18cd   29 10		and #$10
 b8cd:18cf   f0 05		beq skipb8d4
 b8cf:18d1   a2 02		ldx #$02
-b8d1:18d3   20 84 be		jsr sub_be84
+b8d1:18d3   20 84 be		jsr sound
 b8d4:18d6   60       skipb8d4 rts
 
 b8d5:18d7   a5 ac    sub_b8d5 lda sal
@@ -4093,7 +4137,7 @@ bb03:1b05   20 6e a2		jsr sub_a26e
 bb06:1b08   90 6e		bcc skipbb76
 bb08:1b0a   4c ce a7 skipbb08 jmp sub_a7ce
 
-skipbb0b
+skipbb0b:
 	rts			; bb0b:1b0d   60
 
 bb0c:1b0e   ae f7 42 skipbb0c ldx interm
@@ -4300,7 +4344,7 @@ be01:1e03   aa		tax
 be02:1e04   68		pla
 be03:1e05   60		rts
 
-be04:1e06   4c 00 c0 mod_be04 jmp lbl_c000
+be04:1e06   4c 00 c0 mod_be04 jmp $c000
 
 be07:1e09   tbl-be09 mod_be07 .byte $00,$00,$d0
 
@@ -4309,22 +4353,25 @@ be0b:1e0d   8d 05 be gotobe0b sta mod_be04+1
 be0e:1e10   a9 f0		lda #$f0
 be10:1e12   4c c9 bd		jmp gotobdc9
 
-be13:1e15   8d 05 be gotobe13 sta mod_be04+1
+jmp_be13:
+; do routine in .a?
+be13:1e15   8d 05 be jmp_be13 sta mod_be04+1
 be16:1e18   a9 f4		lda #$f4
 be18:1e1a   4c c9 bd		jmp gotobdc9
 
-be1b:1e1d   8d 05 be gotobe1b sta mod_be04+1
+sub_be1b:
+be1b:1e1d   8d 05 be sub_be1b sta mod_be04+1
 be1e:1e20   a9 f8		lda #$f8
 be20:1e22   4c c9 bd		jmp gotobdc9
 
-irq_be23:
+inline:
 be23:1e25   a9 00		lda #$00
 be25:1e27   4c 0b be		jmp gotobe0b
 
 be28:1e2a   a9 03    sub_be28 lda #$03
 be2a:1e2c   4c 0b be		jmp gotobe0b
 
-irq_be2d:
+password:
 be2d:1e2f   a9 06		lda #$06
 be2f:1e31   4c 0b be		jmp gotobe0b
 
@@ -4345,46 +4392,50 @@ be4b:1e4d   a2 01		ldx #$01
 be4d:1e4f   8a		txa
 be4e:1e50   60		rts
 
-irq_be4f:
+term:
 be4f:1e51   a9 00    lbl_be4f lda #$00
-be51:1e53   4c 13 be		jmp gotobe13
+be51:1e53   4c 13 be		jmp jmp_be13
 
-be54:1e56   a9 03		lda #$03
-be56:1e58   4c 13 be		jmp gotobe13
+jmp_be54:
+	lda #$03	; be54:1e56   a9 03		l
+	jmp jmp_be13	; be56:1e58   4c 13 be
 
-irq_be59:
-be59:1e5b   a9 06    sub_be59 lda #$06
-be5b:1e5d   4c 13 be		jmp gotobe13
+clrarr:
+	lda #$06	; be59:1e5b   a9 06
+	jmp jmp_be13    ; be5b:1e5d   4c 13 be
 
-be5e:1e60   a9 09    lbl_be5e lda #$09
-be60:1e62   4c 13 be		jmp gotobe13
+jmp_be5e:
+	lda #$09	; be5e:1e60   a9 09
+	jmp jmp_be13	; be60:1e62   4c 13 be
 
-irq_be63:
+btmvar:
 be63:1e65   a9 0c		lda #$0c
-be65:1e67   4c 13 be		jmp gotobe13
+be65:1e67   4c 13 be		jmp jmp_be13
 
-irq_be68:
+read0:
 be68:1e6a   a9 00		lda #$00
-be6a:1e6c   4c 1b be		jmp gotobe1b
+be6a:1e6c   4c 1b be		jmp sub_be1b
 
-irq_be6d:
+newusr:
 be6d:1e6f   a9 03		lda #$03
-be6f:1e71   4c 1b be		jmp gotobe1b
+be6f:1e71   4c 1b be		jmp sub_be1b
 
+arraysav:
 be72:1e74   a9 06		lda #$06
-be74:1e76   4c 1b be		jmp gotobe1b
+be74:1e76   4c 1b be		jmp sub_be1b
 
+arrayres:
 be77:1e79   a9 09    lbl_be77 lda #$09
-be79:1e7b   4c 1b be		jmp gotobe1b
+be79:1e7b   4c 1b be		jmp sub_be1b
 
 be7c:1e7e   a9 0c		lda #$0c
-be7e:1e80   20 1b be		jsr gotobe1b
-be81:1e83   4c 67 b5		jmp irq_b567
+be7e:1e80   20 1b be		jsr sub_be1b
+be81:1e83   4c 67 b5		jmp outastr
 
 ; some serial # stuff?
-sub_be84:
+sound:
 	lda #$0f	; be84:1e86   a9 0f
-	jsr gotobe1b	; be86:1e88   20 1b be
+	jsr sub_be1b	; be86:1e88   20 1b be
 	ldx #$02	; be89:1e8b   a2 02
 	lda mod_be07+1,x; be8b:1e8d   bd 08 be
 	lsr a		; be8e:1e90   4a
@@ -4598,13 +4649,13 @@ c122:2124   d0 f2		bne sub_c116
 c124:2126   ad 35 c0		lda chk_c033+2
 c127:2129   c9 c2		cmp #$c2
 c129:212b   d0 eb		bne sub_c116	; not JSR $c2b1... loop back
-c12b:212d   a9 17		lda #%00010111
+c12b:212d   a9 17		lda #{%:00010111}
 c12d:212f   8d 18 d0		sta vicbase
 c130:2132   a9 1b		lda #$1b
 c132:2134   8d 11 d0		sta vicregy
 c135:2137   a9 c8		lda #$c8
 c137:2139   8d 16 d0		sta vicregx
-c13a:213c   a9 c7		lda #%11000111
+c13a:213c   a9 c7		lda #{%:11000111}
 c13c:213e   8d 00 dd		sta cia2prta
 c13f:2141   a9 93		lda #clear
 c141:2143   20 d2 ff		jsr chrout
@@ -4645,7 +4696,7 @@ c184:2186   tbl-c184 lbl_c184 .byte $08
 
 ; looks like some kind of initialization...
 c185:2187   a9 00    gotoc185 lda #$00
-c187:2189   8d fa 07		sta $07fa
+c187:2189   8d fa 07		sta clock
 c18a:218c   8d 08 d0		sta chatpage
 c18d:218f   8d 03 d0		sta tsr
 c190:2192   8d f4 07		sta chk_left
@@ -5166,6 +5217,8 @@ caea:2aec   68		pla
 caeb:2aed   28		plp
 caec:2aee   60		rts
 
+jmp_caed:
+; swap $c000 with $e800 & back
 caed:2aef   8a		txa
 caee:2af0   48		pha
 caef:2af1   a9 c0		lda #$c0
@@ -5177,10 +5230,11 @@ caf9:2afb   aa		tax
 cafa:2afc   20 00 c0		jsr $c000
 cafd:2aff   4c 89 ca		jmp swapagn
 
+; initial setup, display boot message
 cb00:2b02   a9 01		lda #$01
 cb02:2b04   8d 00 d0		sta local
 cb05:2b07   a2 00		ldx #$00
-cb07:2b09   20 99 b0		jsr irq_b099
+cb07:2b09   20 99 b0		jsr setmode
 cb0a:2b0c   a9 05		lda #$05
 cb0c:2b0e   20 03 cd		jsr usetbl1
 cb0f:2b11   a9 1b		lda #$1b	; message length
@@ -5190,7 +5244,7 @@ cb15:2b17   85 62		sta fac1+1
 cb17:2b19   a9 cb		lda #>bootmsg	; #$cb
 cb19:2b1b   85 63		sta fac1+2
 cb1b:2b1d   a2 00		ldx #$00
-cb1d:2b1f   20 a5 b5		jsr sub_b5a5
+cb1d:2b1f   20 a5 b5		jsr putvar
 cb20:2b22   a2 00		ldx #$00
 cb22:2b24   4c 80 b5		jmp gotob580
 
@@ -5282,9 +5336,9 @@ cc71:2c73   a9 36		lda #$36
 cc73:2c75   85 01		sta $01
 cc75:2c77   08		php
 cc76:2c78   78		sei
-cc77:2c79   bd 00 a0		lda irqtable,x
+cc77:2c79   bd 00 a0		lda amptable,x
 cc7a:2c7c   a8		tay
-cc7b:2c7d   bd 01 a0		lda irqtable+1,x
+cc7b:2c7d   bd 01 a0		lda amptable+1,x
 cc7e:2c80   aa		tax
 cc7f:2c81   28		plp
 cc80:2c82   68		pla

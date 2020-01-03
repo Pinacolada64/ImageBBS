@@ -19,50 +19,56 @@ orig $6c00
 
 ;	wedge: load addr $0c00, reloc $0c00
 	{info:embedding wedge.bin}
-	{embed:wedge.bin}
+	embed wedge.bin
 ; orig:  the individual .bin file's load address
 ; embed: where in RAM the .bin file gets put
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
 
 ; orig $1800, embed $7000, reloc $d000: editor
 {info:Aligning to $7000.}
-align $0400,$00
+orig $7000
 	{info:embedding editor.bin}
-	{embed:editor.bin}
+	embed editor.bin
+
 {info:Aligning to $8000.}
-align $1000,$00
+orig $8000
+
 ; orig $c000, embed $8000, reloc $e000: garbage collect
 	{info:embedding garbage-collect.bin}
-	{embed:garbage-collect.bin}
+	embed garbage-collect.bin
+
 {info:Aligning to $8400.}
-align $0400,$00
+orig $8400
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
 	{info:embedding ecs.bin}
-	{embed:ecs.bin}
+	embed ecs.bin
+
 {info:Aligning to $8e00.}
-align $0800,$00
-	byte $00
-align $0400,$00
+orig $8e00
 ; orig $c000, embed $8e00, reloc $ee00: struct
 	{info:embedding struct.bin}
-	{embed:struct.bin}
+	embed struct.bin
+
 {info:Aligning to $9400.}
-align $0600,$00
+orig $9400
 ; orig $c000, embed $9400, reloc $f400: swap1
 	{info:embedding swap1.bin}
-	{embed:swap1.bin}
+	embed swap1.bin
+
 {info:Aligning to $9800.}
-align $0400,$00
+orig $9800
 ; orig $c000, embed $9800, reloc $f800: swap2
 	{info:embedding swap2.bin}
-	{embed:swap2.bin}
+	embed swap2.bin
+
 {info:Aligning to $9c00.}
-align $0400,$00
+orig $9c00
 ; orig $c000, embed $9c00, reloc $fc00: swap3
 	{info:embedding swap3.bin}
-	{embed:swap3.bin}
+	embed swap3.bin
+
 {info:Aligning to $a000.}
-align $0400,$00
+orig $a000
 ; cannot comment out a "uses:" line, so changing it to "info:"
 @usetbl1:
 	{include:jump-table.asm}
@@ -83,13 +89,13 @@ align $0400,$00
 ;
 
 {info:Aligning to $c000.}
-align $2000,$00
+orig $c000
 	{include:intro.asm}
 ;
 ;* skip rest of proto area *
 ;
 {info:Aligning to $cb00.}
-align $0200,$00
+orig $cb00
 
 @swapper:
 	sta swappg1 ; source page #
@@ -381,7 +387,7 @@ spchars:
 	ascii ",:{34}*?={13}{up arrow}"
 
 {info:Aligning to $cd00.}
-align $2000,$00
+orig $cd00
 ;
 ; interface page	; target
 ;
@@ -460,17 +466,17 @@ nothing:
 ;
 
 newout:
-	sta $9e
+	sta ptr1	; $9e
 	lda 1
 	pha
 	lda #$36
 	sta 1
-	lda $9e
+	lda ptr1	; $9e
 	jsr out
-	sta $9e
+	sta ptr1	; $9e
 	pla
 	sta 1
-	lda $9e
+	lda ptr1	; $9e
 	rts
 oldout:
 	jmp $ffff
@@ -539,7 +545,7 @@ farerr:
 ;	print " interface page:" tab(30) (*-$cd00)
 ;	rem
 {info:Aligning to $ce00.}
-align $0100,00
+orig $ce00
 ;
 ; buffer page
 ;

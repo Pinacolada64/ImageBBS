@@ -114,7 +114,7 @@ outchr2:
 outchr2a:
 	sta $fe
 outchr3:
-	jsr outscn0	; defined in inline.asm, swap2.asm or screen-handler.asm?
+	jsr outscn0	; defined in swap2.asm or screen-handler.asm?
 	jsr outmdm0
 	jmp outptr
 
