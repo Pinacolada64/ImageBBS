@@ -224,7 +224,8 @@ setup3:
 ; 		::::::.--- bits
 ; 		:::::::.-- 0-3
 ;	bit	76543210
-	lda #{%:00011010}
+	lda #{%:00011010}	; bit 4=1: internal generator
+				; bits 3210=1010:
 	sta slControl
 
 ; The ACIA "command" register controls the parity, echo mode, transmit and
@@ -247,10 +248,12 @@ setup3:
 ; 		:::::::.--- DTR control, 1 = DTR low
 
 ;	bit	76543210
-;	lda #{%:00001001} ; no parity
+;	lda #{%:00001001}	; bits 7-5=000: no parity
 
-; setting space parity here so that tcpser enters 8-bit binary mode
-	lda #{%:11101001} ; space parity?
+; setting "space" parity here so that tcpser enters 8-bit binary mode
+	lda #{%:11101001}	; bits 7-5=111: space parity
+				; bit 3/2=10: RxD IRQ off, RTS low
+				; bit 0=1: DTR low
 	sta slCommand
 {endif}
 
@@ -258,7 +261,7 @@ setup3:
 	jmp setbaud
 
 setcarr:
-; check for DCD, update $d009 with status
+; check for DCD, update $d009 (carrier) with status
 ; toggle dcd
 	ldy #statcd1	; carrier present?
 	lda slStatus
@@ -373,12 +376,12 @@ rsout0:
 	jsr rsint
 	jmp rsout1
 @rsout:
-	sta ptr1	; $9e
+	sta ptr1	; $9e - save char in .a
 	sty xsav	; $97
 	lda #comint0
 	sta slCommand
 rsout1:
-	lda ptr1	; $9e
+	lda ptr1	; $9e - get char in .a
 	ldy rodbe
 	sta robuf,y
 	iny
@@ -388,10 +391,24 @@ rsout2:
 	cpy rodbs
 	beq rsout0
 	sty rodbe
+; adding "scroll output window" from rs232-user.asm:
+	ldy scnmode	; split screen?
+	bne rsout3	; 1=no
+	pha		; char in .a
+	ldy #0
+outdisp:
+	lda sdisp+30,y
+	sta sdisp+29,y
+	iny
+	cpy #9
+	bcc outdisp
+	pla
+	sta sdisp+38
+; end addition
+rsout3:
 	lda #comint2	; txd/rxd enabled
 	sta shcomm
-rsout4:
-	lda shcomm
+;	lda shcomm
 	sta slCommand
 	jmp ret1
 
@@ -459,6 +476,20 @@ ngetin:
 	ldy #0
 rsget1:
 	sty ridbs
+; added code from rs232-user.asm:rsget1
+	ldy scnmode
+	bne ret1
+	ldy #0
+inpdisp:
+; scroll input window
+	lda sdisp+2,y
+	sta sdisp+1,y
+	iny
+	cpy #9
+	bcc inpdisp
+	lda ptr1	; $9e
+	sta sdisp+10	; put last char rec'd
+; end of addition
 	lda ridbe
 	sec
 	sbc ridbs
@@ -485,7 +516,7 @@ setbaud:
 	cmp #254
 	bcc setbaud3
 	beq setbaud1
-	lda shcomm	; get rxd/txd status
+	lda shcomm	; get saved rxd/txd status
 	jmp setbaud2
 setbaud1:
 	lda #comdtr0	; dtr off

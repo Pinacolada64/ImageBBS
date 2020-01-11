@@ -234,7 +234,8 @@ test:	lda enabl
 
 fulbuf: jsr strtup
 	jmp point
-@rsout:	sta ptr1	; $9e
+
+@rsout:	sta ptr1	; $9e, char in .a
 	sty xsav	; $97
 point:	ldy rodbe
 	sta robuf,y
@@ -244,8 +245,9 @@ point:	ldy rodbe
 rsout1: cpy rodbs
 	beq fulbuf
 	sty rodbe
-	ldy scnmode
-	bne strtup
+; scroll output window
+	ldy scnmode	; split screen?
+	bne strtup	; 1=no
 	pha
 	ldy #0
 outdisp:
