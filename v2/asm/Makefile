@@ -44,7 +44,11 @@ PREREQS = wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
 ml20.prg: $(PREREQS) build.asm
 	# need beta a since it embeds .bin files
 	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg
+# output symbols
+	$(C64LIST4BETAA) build.asm -sym
+# output disassembly
 	$(C64LIST4BETAA) build.asm -lst
+# write ml 2.0 to disk
 	$(C1541) $(DISKIMAGE) -write $@ $(C64_FILENAME) -dir
 
 # $(DISKIMAGE): ml20.prg

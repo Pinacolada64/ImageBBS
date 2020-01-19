@@ -155,7 +155,7 @@ getversn:
 	ldy #4
 loop:
 	lda versnum,y
-	sta var,y
+	sta $0061,y	; var
 	dey
 	bpl loop
 	ldx #15
@@ -299,8 +299,8 @@ outastr1:
 outastr2:
 	rts
 
-	; $cd00
-outastr:
+	; $cc2b
+@outastr:
 	jsr chrgot
 	bne outastr1
 	ldx #1
@@ -391,13 +391,20 @@ orig $cd00
 ;
 ; interface page	; target
 ;
-hcd00: jmp   outastr
-hcd03: jmp <@usetbl1	; $a000
-hcd06: jmp <@swapper	; $cb00
-hcd09: jmp <@swapagn	; $cb09
-hcd0c: jmp   trace
-hcd0f: jmp >@chkspcl
-hcd12: jmp >@convchr	; $cd15
+; outastr[p]:
+	jmp <@outastr	; $cc2b
+; usetbl1:
+	jmp <@usetbl1	; $a000
+; swapper:
+	jmp <@swapper	; $cb00
+; swapagn:
+	jmp <@swapagn	; $cb09
+; trace:
+	jmp  _trace	; $bc30 screen-handler.asm
+; chkspcl:
+	jmp >@chkspcl	; $cd25
+; convchr:
+	jmp >@convchr	; $cd15
 
 @convchr:
 	jsr chkspcl

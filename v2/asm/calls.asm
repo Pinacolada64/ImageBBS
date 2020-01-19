@@ -20,7 +20,7 @@ convert:
 copyrite:
 	lda #67
 	jsr usetbl1	; $cd03
-	jmp outastrp	; $cd00, defined in build.asm
+	jmp outastr	; $cd00, defined in build.asm
 
 ;
 ; passed address in x (hi),y (lo)

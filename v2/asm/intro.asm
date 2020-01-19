@@ -60,7 +60,7 @@ loop1:
 	lda #$17
 	sta $d018
 	lda #'{clear}'
-	jsr $e716
+	jsr prtscn	; $e716
 	lda #27
 	sta $d011
 ; fake lightbar table

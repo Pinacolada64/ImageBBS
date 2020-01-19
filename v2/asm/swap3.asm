@@ -18,7 +18,7 @@ hc00c:
 ;
 ; jump table routines
 ;
-outastr:
+@outastr:
 	lda #0
 	byte $2c
 dskin:
@@ -139,9 +139,9 @@ movdly:
 ; print copyright message
 ;
 copyrite:
-	lda outastrp+1
+	lda outastr+1
 	sta jmptbl
-	lda outastrp+2
+	lda outastr+2
 	sta jmptbl+1
 	ldy #copylen-1
 loop:

@@ -6,10 +6,55 @@
 ; [?]  : not certain of purpose of routine
 ; ($xx): Indirect addressing: $xx *256+ ($xx+1)
 
-	var	= $0061	; $61-$66: FAC1, Floating Point Accumulator #1
+	d6510	= $00
+	r6510	= $01
+	zp_02	= $02	; free for use
+	adray1	= $03
+	adray2	= $05
+	charac	= $07
+	endchr	= $08
+	dimflg	= $0c
+	valtyp	= $0d
+	intflg	= $0e
+	tansgn	= $12
+	linnum	= $14
+	temppt	= $16
+	lastpnt	= $17
+	tempst	= $19
+	zp_index= $22 ; official name is "index", named so as not to conflict with BBS flag @ $d00f
+	resho	= $26
+	txttab	= $2b
+	vartab	= $2d	; start of BASIC variables
+	arytab	= $2f
+	strend	= $31
+	fretop	= $33
+	frespc	= $35
+	memsiz	= $37
+	curlin	= $39	; ($39) Current BASIC Line Number
+	oldlin	= $3b	; ($3b) Previous BASIC Line Number
+	oldtxt	= $3d
+	datlin	= $3f
+	datptr	= $41
+	inpptr	= $43 ; pointer to source of data (read, input, get)
+	varnam	= $45
+	varpnt	= $47
+	forpnt	= $49
+	opptr	= $4b
+	opmask	= $4d
+	defpnt	= $4e
+	dscpnt	= $50
+	four6	= $53
+	jmper	= $54
+	numwork	= $57	; 6 bytes
+
+	var	= $61	; $61-$66: FAC1, Floating Point Accumulator #1
+	fac2	= $69
+	arisgn	= $6f	; arithmetic sign
+	fbufpt	= $71
+	chrinc	= $76
 	chrget	= $0073	; two bytes for zero-page JSR
 	chrgot	= $0079 ; same
-	vartab	= $2d	; start of BASIC variables
+
 	status	= $90	; Kernal I/O Status Word
 	xsav	= $97	; Temporary .X Register Save Area
 ;
@@ -18,6 +63,46 @@
 	dfltn	= $99	; Default Input Device (Set to 0 for Keyboard)
 	dflto	= $9a	; default output device
 	ptr1	= $9e	; temp storage
+
+;	jiffy	= $a2
+	sal	= $ac
+	eal	= $ae
+	nxtbit	= $b5
+	rodata	= $b6 ; RS-232 Output Byte Buffer
+	fnlen	= $b7 ; filename length
+	la	= $b8
+	sa	= $b9
+	fa	= $ba ; current output device
+	fnadr	= $bb
+	fsblk	= $be
+	mych	= $bf
+	stal	= $c1
+	zp_c4	= $c4
+	lstx	= $c5
+	ndx	= $c6
+;	rvs	= $c7
+	sfdx	= $cb
+	blnsw	= $cc
+	blnct	= $cd
+	gdbln	= $ce
+	blnon	= $cf
+	crsw	= $d0
+	pnt	= $d1
+	pntr	= $d3
+	qtsw	= $d4
+	lnmx	= $d5
+	tblx	= $d6
+	zp_d7	= $d7 ; temp storage for ASCII value of last char printed
+	insrt	= $d8
+	ldtb1	= $d9
+
+;	ribuf	= $f7
+;	robuf	= $f9
+	free_fb	= $fb
+	free_fc	= $fc
+	free_fd	= $fd
+	free_fe	= $fe
+	free_ff	= $ff
 
 ;
 ; screen parameters
@@ -31,6 +116,11 @@
 	scnclm	= scnpos; screen column
 	sline	= 214	; $d6, current screen row (0-24)
 	colptr	= 243	; $f3
+
+	sat      = $026d ; secondary address table
+	keyd     = $0277
+	gdcol    = $0287
+	shflag   = $028d
 
 ; original docs had this labeled "mcolor," same as $07ec (MCI color).
 ; I'm favoring "color," "Mapping the C64"'s label:
@@ -79,12 +169,12 @@
 	sndrept = 962
 	sndtim1a= 963
 	sndtim2a= 964
-	jiffy	= 965
+	jiffy	= 965	; $a2
 	blnkflag= 966	; screen blank flag
 	blnkcntr= 967	; screen blank counter
 	ptrlin	= 968
 	ptrlinm	= 969
-	usrlin	= 970   ; mp%: user's screen height [?]
+	usrlin	= 970	; mp%: user's screen height [?]
 	usrlinm	= 971	; how many lines output to modem [?]
 	fredmode= 972
 	montbl	= 973	; month names, 36 bytes (12*3)
@@ -271,8 +361,8 @@
 
 ; transfer protocol area
 
-	protosta	= $c000
-	protoend	= $ca80	; 2680 bytes
+	protosta= $c000
+	protoend= $ca80	; 2680 bytes
 
 ;
 ; garbage collection stuff
@@ -289,7 +379,7 @@
 
 ; Image routines:
 
-	outastrp= $cd00	; output a$ [?]
+	outastr	= $cd00	; output a$
 	usetbl1	= $cd03	; irq addresses table at $a000
 	swapper	= $cd06	; swap pages of memory
 	swapagn	= $cd09	; re-swap same pages set up by 'swapper'
@@ -322,6 +412,8 @@
 	trans	= $d00e ; 53262: [1.2] ASCII translation flag
 	index	= $d00f ; 53263: [1.2] length of string returned by &,1 or £Ix
 
+	colorram= $d800
+
 ; CIA #2 Time-of-Day clock stuff
 	ten	= $dc08	; tenths of second
 	scs	= $dc09 ; seconds
@@ -339,6 +431,7 @@
 
 	syscll	= $e130
 	getfile	= $e1d4 ; 57812 (print last filename in BASIC)
+	prtscn	= $e716	; output char in .a to screen regardless of output device
 
 	setmsg	= $ff90
 	readst	= $ffb7

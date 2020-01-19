@@ -107,7 +107,7 @@ gvarptr:
 	adc vartab+1	; $2e
 	tay
 	rts
-varnam:
+@varnam:
 	jsr gvarptr
 	stx $47
 	sty $48
@@ -138,15 +138,15 @@ prtvar0:
 ;* get variable descriptor
 ;
 usevar:
-	jsr varnam
+	jsr <@varnam
 	jmp usevar2
 usevar0:
 	jsr findvar
 usevar2:
 	ldy #4
 usevar1:
-	lda ($0047),y
-	sta var,y
+	lda ($0047),y	; varpnt
+	sta ($0061),y	; var
 	dey
 	bpl usevar1
 	rts
@@ -154,15 +154,15 @@ usevar1:
 ;* put variable descriptor
 ;
 putvar:
-	jsr varnam
+	jsr <@varnam
 	jmp putvar2
 putvar0:
 	jsr findvar
 putvar2:
 	ldy #4
 putvar1:
-	lda var,y
-	sta ($47),y
+	lda ($0061),y	; var
+	sta ($47),y	; varpnt
 	dey
 	bpl putvar1
 	rts
@@ -171,7 +171,7 @@ zero:
 	lda #0
 	ldy #4
 zero1:
-	sta var,y
+	sta $0061,y	; var
 	dey
 	bpl zero1
 	rts
