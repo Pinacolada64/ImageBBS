@@ -1,6 +1,5 @@
-{uses:.\equates-1_2.lbl}
+{uses:.\equates-1_2.asm}
 
-{asm}
 {undef:debug}
 orig $1000	; start assembling at $1000
 ; tabs are 4 characters wide
@@ -144,7 +143,7 @@ fwd_10a4:
 
 fwd_10b1:
 		ldx cline		; 10b1:00b3	ae fb 03
-		jsr sub_1b9c		; 10b4:00b6	20 9c 1b
+		jsr getln		; 10b4:00b6	20 9c 1b
 		inc cline		; 10b7:00b9	ee fb 03
 		inc mline		; 10ba:00bc	ee f8 03
 		rts			; 10bd:00bf	60
@@ -154,7 +153,7 @@ len_Command:
 
 sCommand:
 		byte upper+3	; "C"
-		.ascii "OMMAND"
+		ascii "OMMAND"
 					; 10bf:00c1	tbl-10c6
 		byte colon
 
@@ -170,7 +169,7 @@ goto10c7:
 		ldx #$00		; 10da:00dc	a2 00
 		beq fwd_1114		; 10dc:00de	f0 36
 fwd_10de:
-		jsr sub_GetChar		; 10de:00e0	20 ab 1b
+		jsr xgetin		; 10de:00e0	20 ab 1b
 		and #$7f		; 10e1:00e3	29 7f
 		tax 			; 10e3:00e5	aa
 		lda chk_left		; 10e4:00e6	ad f4 07
@@ -182,7 +181,7 @@ fwd_10de:
 		beq fwd_10f5		; 10f0:00f2	f0 03
 		jmp goto107f		; 10f2:00f4	4c 7f 10
 
-	; check for . hit?
+	; check for . hit - cancels command
 fwd_10f5:
 		txa			; 10f5:00f7	8a
 		cmp #period		; 10f6:00f8	c9 2e
@@ -470,11 +469,11 @@ pBorder:
 	; output prompt - calls usetbl1
 		jsr sub_outzString	; 1294:0296	20 d2 1d
     ; another variable
-	; sub_GetChar -> usetbl1
-		jsr sub_GetChar		; 1297:0299	20 ab 1b
+	; xgetin -> usetbl1
+		jsr xgetin		; 1297:0299	20 ab 1b
 		sta brdrchar		; 129a:029c	8d dc 12
 		jsr sub_outChar		; 129d:029f	20 97 1d
-	; sub_outCR -> sub_1bb0 (use another routine)
+	; sub_outCR -> xchrout (use another routine)
 		jsr sub_outCR		; 12a0:02a2	20 77 1d
 lbl_12a3:
 		lda brdrchar		; 12a3:02a5	ad dc 12
@@ -678,7 +677,7 @@ fwd_13f9:
 fwd_13fa:
 		jmp goto1cf2		; 13fa:03fc	4c f2 1c
 
-		.area 15,$00		; *** free space ***
+		area 15,$00		; *** free space ***
 
 szReplaceWith:
 		byte upper+$12 ; r
@@ -717,7 +716,7 @@ pJustify:
 		ldx mline		; 143d:043f	ae f8 03
 		dex 			; 1440:0442	ca
 		beq fwd_1478		; 1441:0443	f0 35
-		jsr sub_GetChar		; 1443:0445	20 ab 1b
+		jsr xgetin		; 1443:0445	20 ab 1b
 		and #$7f		; 1446:0448	29 7f
 		ldx #$ff		; 1448:044a	a2 ff
 		cmp #$43		; 144a:044c	c9 43
@@ -1086,9 +1085,9 @@ pScale:
 l_scale:
 		byte ImageReturn	; 1662:0664	tbl-1662
 
-	 	ascii "{pound}{back arrow}101"
-	 	ascii "{pound}{back arrow}202"
-	 	ascii "{pound}{back arrow}303"
+		ascii "{pound}{back arrow}101"
+		ascii "{pound}{back arrow}202"
+		ascii "{pound}{back arrow}303"
 	 				; 1663:0665	tbl-1671
 
 		byte ImageReturn	; 1672:0674	tbl-1672
@@ -1188,7 +1187,7 @@ sub_1723:
 		cpx linnum+1		; 1726:0728	e4 15
 		bcs out_szDone		; 1728:072a	b0 24
 		inx 			; 172a:072c	e8
-		jsr sub_1b97		; 172b:072d	20 97 1b
+		jsr putarr		; 172b:072d	20 97 1b
 		ldx index		; 172e:0730	ae 0f d0
 		beq fwd_1744		; 1731:0733	f0 11
 		dex 			; 1733:0735	ca
@@ -1197,7 +1196,7 @@ sub_1723:
 		lda index		; 1739:073b	ad 0f d0
 		jsr sub_1755		; 173c:073e	20 55 17
 		ldx linnum		; 173f:0741	a6 14
-		jsr sub_1b9c		; 1741:0743	20 9c 1b
+		jsr getln		; 1741:0743	20 9c 1b
 fwd_1744:
 		ldx linnum		; 1744:0746	a6 14
 		cpx linnum+1		; 1746:0748	e4 15
@@ -1402,14 +1401,14 @@ fwd_187d:
 		lda #$00		; 188d:088f	a9 00
 		sta var+4		; 188f:0891	85 65
 		ldx #$0f		; 1891:0893	a2 0f
-		jsr sub_1ba1		; 1893:0895	20 a1 1b
+		jsr putvar		; 1893:0895	20 a1 1b
 		pla 			; 1896:0898	68
 		tax 			; 1897:0899	aa
 		jmp goto1bb5		; 1898:089a	4c b5 1b
 
 sub_189b:
 		ldx linnum		; 189b:089d	a6 14
-		jsr sub_1b97		; 189d:089f	20 97 1b
+		jsr putarr		; 189d:089f	20 97 1b
 		ldx #$00		; 18a0:08a2	a2 00
 		stx lbl_18d9		; 18a2:08a4	8e d9 18
 b_18a5:
@@ -1454,7 +1453,7 @@ lbl_18dc:
 		brk 			; 18dc:08de	00
 sub_18dd:
 		ldx linnum		; 18dd:08df	a6 14
-		jsr sub_1b97		; 18df:08e1	20 97 1b
+		jsr putarr		; 18df:08e1	20 97 1b
 		ldx #$00		; 18e2:08e4	a2 00
 		stx lbl_18d9		; 18e4:08e6	8e d9 18
 		stx lbl_18dc		; 18e7:08e9	8e dc 18
@@ -1496,7 +1495,7 @@ fwd_191f:
 fwd_1929:
 		inc lbl_18dc		; 1929:092b	ee dc 18
 		ldx linnum		; 192c:092e	a6 14
-		jsr sub_1b97		; 192e:0930	20 97 1b
+		jsr putarr		; 192e:0930	20 97 1b
 		lda index		; 1931:0933	ad 0f d0
 		sec 			; 1934:0936	38
 		sbc lbl_18d8		; 1935:0937	ed d8 18
@@ -1532,7 +1531,7 @@ b_195d:
 		bpl b_195d		; 1977:0979	10 e4
 fwd_1979:
 		ldx linnum		; 1979:097b	a6 14
-		jsr sub_1b9c		; 197b:097d	20 9c 1b
+		jsr getln		; 197b:097d	20 9c 1b
 		lda lbl_18d9		; 197e:0980	ad d9 18
 		clc 			; 1981:0983	18
 		adc lbl_18db		; 1982:0984	6d db 18
@@ -1586,9 +1585,9 @@ fwd_19cf:
 sub_19d0:
 		stx arisgn		; 19d0:09d2	86 6f
 		inx 			; 19d2:09d4	e8
-		jsr sub_1b8d		; 19d3:09d5	20 8d 1b
+		jsr minusone		; 19d3:09d5	20 8d 1b
 		ldx arisgn		; 19d6:09d8	a6 6f
-		jsr sub_1b92		; 19d8:09da	20 92 1b
+		jsr getarr		; 19d8:09da	20 92 1b
 		inc arisgn		; 19db:09dd	e6 6f
 		ldx arisgn		; 19dd:09df	a6 6f
 		cpx mline		; 19df:09e1	ec f8 03
@@ -1607,17 +1606,17 @@ goto19eb:
 		dex 			; 19fa:09fc	ca
 b_19fb:
 		stx numwork+8		; 19fb:09fd	86 5f
-		jsr sub_1b8d		; 19fd:09ff	20 8d 1b
+		jsr minusone		; 19fd:09ff	20 8d 1b
 		ldx numwork+8		; 1a00:0a02	a6 5f
 		inx 			; 1a02:0a04	e8
-		jsr sub_1b92		; 1a03:0a05	20 92 1b
+		jsr getarr		; 1a03:0a05	20 92 1b
 		ldx numwork+8		; 1a06:0a08	a6 5f
 		dex 			; 1a08:0a0a	ca
 		cpx arisgn		; 1a09:0a0b	e4 6f
 		bcs b_19fb		; 1a0b:0a0d	b0 ee
 fwd_1a0d:
 		ldx arisgn		; 1a0d:0a0f	a6 6f
-		jsr sub_1b9c		; 1a0f:0a11	20 9c 1b
+		jsr getln		; 1a0f:0a11	20 9c 1b
 		ldx mline		; 1a12:0a14	ae f8 03
 		cpx EditorLines		; 1a15:0a17	ec fe 03
 		bcs fwd_1a27		; 1a18:0a1a	b0 0d
@@ -1632,9 +1631,9 @@ fwd_1a27:
 
 sub_1a28:
 		stx temp3		; 1a28:0a2a	8e f7 03
-		jsr sub_1b97		; 1a2b:0a2d	20 97 1b
+		jsr putarr		; 1a2b:0a2d	20 97 1b
 		ldx #$1b		; 1a2e:0a30	a2 1b
-		jsr sub_1ba1		; 1a30:0a32	20 a1 1b
+		jsr putvar		; 1a30:0a32	20 a1 1b
 		lda temp3		; 1a33:0a35	ad f7 03
 		jsr sub_outApercent	; 1a36:0a38	20 ba 1b
 		jsr sub_outColon	; 1a39:0a3b	20 81 1d
@@ -1668,7 +1667,7 @@ fwd_1a71:
 		ldy index		; 1a71:0a73	ac 0f d0
 		beq fwd_1a7c		; 1a74:0a76	f0 06
 		ldx temp3		; 1a76:0a78	ae f7 03
-		jmp sub_1b9c		; 1a79:0a7b	4c 9c 1b
+		jmp getln		; 1a79:0a7b	4c 9c 1b
 
 fwd_1a7c:
 		lda len_NoChange	; 1a7c:0a7e	ad 86 1a
@@ -1706,7 +1705,7 @@ sCmdExit:
 		jmp sub_OutXdels	; 1aa4:0aa6	4c 8d 10
 
 sub_ReturnKey:
-		jsr sub_GetChar		; 1aa7:0aa9	20 ab 1b
+		jsr xgetin		; 1aa7:0aa9	20 ab 1b
 		cmp #return		; 1aaa:0aac	c9 0d
 		beq fwd_1ab1		; 1aac:0aae	f0 03
 		jmp goto1cf2		; 1aae:0ab0	4c f2 1c
@@ -1726,11 +1725,11 @@ b_1aba:
 		rts 			; 1ac3:0ac5	60
 
 sub_1ac4:
-		jsr sub_1b8d		; 1ac4:0ac6	20 8d 1b
+		jsr minusone		; 1ac4:0ac6	20 8d 1b
 		lda #$00		; 1ac7:0ac9	a9 00
 		sta var			; 1ac9:0acb	85 61
 		ldx linnum		; 1acb:0acd	a6 14
-		jsr sub_1b92		; 1acd:0acf	20 92 1b
+		jsr getarr		; 1acd:0acf	20 92 1b
 		rts 			; 1ad0:0ad2	60
 
 goto1ad1:
@@ -1756,7 +1755,7 @@ fwd_1af0:
 		rts		 	; 1af0:0af2	60
 
 sub_1af1:
-		jsr sub_1b97		; 1af1:0af3	20 97 1b
+		jsr putarr		; 1af1:0af3	20 97 1b
 		ldx mline		; 1af4:0af6	ae f8 03
 		cpx EditorLines		; 1af7:0af9	ec fe 03
 		bcs fwd_1b1e		; 1afa:0afc	b0 22
@@ -1767,7 +1766,7 @@ sub_1af1:
 		jmp goto1b13		; 1b07:0b09	4c 13 1b
 
 fwd_1b0a:
-		jsr sub_1b9c		; 1b0a:0b0c	20 9c 1b
+		jsr getln		; 1b0a:0b0c	20 9c 1b
 		inc cline		; 1b0d:0b0f	ee fb 03
 		inc mline		; 1b10:0b12	ee f8 03
 goto1b13:
@@ -1783,7 +1782,7 @@ sub_1b1f:
 		stx arisgn		; 1b1f:0b21	86 6f
 		cpx cline		; 1b21:0b23	ec fb 03
 		bcc fwd_1b59		; 1b24:0b26	90 33
-		jsr sub_1b8d		; 1b26:0b28	20 8d 1b
+		jsr minusone		; 1b26:0b28	20 8d 1b
 		lda var			; 1b29:0b2b	a5 61
 		pha 			; 1b2b:0b2d	48
 		lda var+1		; 1b2c:0b2e	a5 62
@@ -1793,9 +1792,9 @@ sub_1b1f:
 b_1b32:
 		ldx arisgn		; 1b32:0b34	a6 6f
 		dex 			; 1b34:0b36	ca
-		jsr sub_1b8d		; 1b35:0b37	20 8d 1b
+		jsr minusone		; 1b35:0b37	20 8d 1b
 		ldx arisgn		; 1b38:0b3a	a6 6f
-		jsr sub_1b92		; 1b3a:0b3c	20 92 1b
+		jsr getarr		; 1b3a:0b3c	20 92 1b
 		dec arisgn		; 1b3d:0b3f	c6 6f
 		ldx arisgn		; 1b3f:0b41	a6 6f
 		cpx cline		; 1b41:0b43	ec fb 03
@@ -1807,12 +1806,12 @@ b_1b32:
 		pla 			; 1b4c:0b4e	68
 		sta var			; 1b4d:0b4f	85 61
 		ldx cline		; 1b4f:0b51	ae fb 03
-		jsr sub_1b92		; 1b52:0b54	20 92 1b
+		jsr getarr		; 1b52:0b54	20 92 1b
 		inc cline		; 1b55:0b57	ee fb 03
 		rts 			; 1b58:0b5a	60
 
 fwd_1b59:
-		jsr sub_1b8d		; 1b59:0b5b	20 8d 1b
+		jsr minusone		; 1b59:0b5b	20 8d 1b
 		lda var			; 1b5c:0b5e	a5 61
 		pha 			; 1b5e:0b60	48
 		lda var+1		; 1b5f:0b61	a5 62
@@ -1822,9 +1821,9 @@ fwd_1b59:
 b_1b65:
 		ldx arisgn		; 1b65:0b67	a6 6f
 		inx 			; 1b67:0b69	e8
-		jsr sub_1b8d		; 1b68:0b6a	20 8d 1b
+		jsr minusone		; 1b68:0b6a	20 8d 1b
 		ldx arisgn		; 1b6b:0b6d	a6 6f
-		jsr sub_1b92		; 1b6d:0b6f	20 92 1b
+		jsr getarr		; 1b6d:0b6f	20 92 1b
 		inc arisgn		; 1b70:0b72	e6 6f
 		ldx arisgn		; 1b72:0b74	a6 6f
 		cpx cline		; 1b74:0b76	ec fb 03
@@ -1839,40 +1838,46 @@ b_1b65:
 		dec linnum+1		; 1b84:0b86	c6 15
 		ldx cline		; 1b86:0b88	ae fb 03
 		dex 			; 1b89:0b8b	ca
-		jmp sub_1b92		; 1b8a:0b8c	4c 92 1b
+		jmp getarr		; 1b8a:0b8c	4c 92 1b
 
-	; think these are irq routines
-sub_1b8d:
+	; these are & routines
+
+	; &,32: minusone
+minusone:
 		lda #$21		; 1b8d:0b8f	a9 21
 		jmp usetbl1		; 1b8f:0b91	4c 03 cd
 
-sub_1b92:
+	; &,33: getarr
+getarr:
 		lda #$22		; 1b92:0b94	a9 22
 		jmp usetbl1		; 1b94:0b96	4c 03 cd
 
-sub_1b97:
+	; &,34: putarr
+putarr:
 		lda #$23		; 1b97:0b99	a9 23
 		jmp usetbl1		; 1b99:0b9b	4c 03 cd
 
-sub_1b9c:
+	; &,35: getln
+getln:
 		lda #$24		; 1b9c:0b9e	a9 24
 		jmp usetbl1		; 1b9e:0ba0	4c 03 cd
 
-sub_1ba1:
+	; &,30: putvar
+putvar:
 		lda #$1e		; 1ba1:0ba3	a9 1e
 		jmp usetbl1		; 1ba3:0ba5	4c 03 cd
 
-sub_1ba6:
+outastr:
 		lda #$00		; 1ba6:0ba8	a9 00
 		jmp usetbl1		; 1ba8:0baa	4c 03 cd
 
-	; seems to be part of a "get character" routine
-	; main irq routine #$17 - wait for .x seconds?
-sub_GetChar:
+	; &,23: xgetin - returns char typed in .a
+xgetin:
 		lda #$17		; 1bab:0bad	a9 17
 		jmp usetbl1		; 1bad:0baf	4c 03 cd
 
-sub_1bb0:
+	; &,24: xchrout
+xchrout:
 		lda #$18		; 1bb0:0bb2	a9 18
 		jmp usetbl1		; 1bb2:0bb4	4c 03 cd
 
@@ -1881,7 +1886,7 @@ goto1bb5:
 		jmp usetbl1		; 1bb7:0bb9	4c 03 cd
 
 sub_outApercent:
-; output value in .a as MCI integer {pound}%a
+	; output value in .a as MCI integer £%a
 
 		sta var+1		; 1bba:0bbc	85 62
 		lda mci			; 1bbc:0bbe	ad ef 07
@@ -1889,7 +1894,7 @@ sub_outApercent:
 		lda #$00		; 1bc0:0bc2	a9 00
 		sta var			; 1bc2:0bc4	85 61
 		ldx #$1e		; 1bc4:0bc6	a2 1e
-		jsr sub_1ba1		; 1bc6:0bc8	20 a1 1b
+		jsr putvar		; 1bc6:0bc8	20 a1 1b
 		lda #$03		; 1bc9:0bcb	a9 03
 		ldx #<sA_percent	; 1bcb:0bcd	a2 d7
 		ldy #>sA_percent	; 1bcd:0bcf	a0 1b
@@ -2166,7 +2171,7 @@ resetmci:
 		ldy #>sMCIreset		; 1d8f:0d91	a0 1d
 		jmp mcioff		; 1d91:0d93	4c ac 1d
 
-; output {pound}q0
+; output "£q0"
 sMCIreset:
 		ascii "{pound}Q0"
 					; 1d94:0d96	tbl-1d96
@@ -2175,11 +2180,11 @@ sMCIreset:
 sub_outChar:
 		sta free_fe		; 1d97:0d99	85 fe
 		pha 			; 1d99:0d9b	48
-		jsr sub_1bb0		; 1d9a:0d9c	20 b0 1b
+		jsr xchrout		; 1d9a:0d9c	20 b0 1b
 		pla 			; 1d9d:0d9f	68
 		rts 			; 1d9e:0da0	60
 
-; orphaned code? 13 bytes
+; orphaned code? 13 bytes - print the buffer at $ce77
 		lda index		; 1d9f:0da1	ad 0f d0
 		ldx #<buffer		; 1da2:0da4	a2 77
 		ldy #>buffer		; 1da4:0da6	a0 ce
@@ -2199,7 +2204,7 @@ mcioff:
 
 	; output specific string variable, maybe?
 
-	; call with:
+	; call sub_outString with:
 	; .a: length
 	; .x: <string_addr
 	; .y: >string_addr
@@ -2213,8 +2218,8 @@ sub_outString:
 ; assign string length:
 		sta dscpnt+2		; 1dc2:0dc4	85 52
 		ldx #$01		; 1dc4:0dc6	a2 01
-		jsr sub_1ba1		; 1dc6:0dc8	20 a1 1b
-		jsr sub_1ba6		; 1dc9:0dcb	20 a6 1b
+		jsr putvar		; 1dc6:0dc8	20 a1 1b
+		jsr outastr		; 1dc9:0dcb	20 a6 1b
 		lda #$01		; 1dcc:0dce	a9 01
 		sta mci			; 1dce:0dd0	8d ef 07
 		rts 			; 1dd1:0dd3	60
@@ -2267,7 +2272,7 @@ NewTextPatch:
 	; FIXME: get # of lines in editor (not sure which memory location):
 	;	lda $ffff
 
-	; has output "[K]Clear Text[KK]Are You Sure [y/N]? "
+	; has output "[K]Clear Text[KK]Are You Sure [y/N]?: "
 	;	lda #period		; to show space was printed
 	;	jsr sub_outChar
 	;	jsr sub_outCR
@@ -2286,6 +2291,9 @@ sub_outAborted:
 DoNewText:
 	; moved from old NewText routine:
 	; this is when the buffer gets nuked
+
+	; FIXME: will 2 pla's fix it?
+	; brk here, check sp, check .x
 		ldx stackptr		; 150e:0510	ae 47 11
 		txs 			; 1511:0513	9a
 		jmp clearbuf		; 1512:0514	4c 31 10
@@ -2317,10 +2325,10 @@ sub_AreYouSure:
 		ldy #>szAreYouSure
 		jsr sub_outzString
 	; get character:
-		jsr sub_GetChar		; 1297:0299	20 ab 1b
+		jsr xgetin		; 1297:0299	20 ab 1b
 	; returns with char typed in .a:
 	; knock high bit off (shift-lock)
-		and #%01111111
+		and #{%:01111111}
 
 ; {ifdef:debug}
 ;		pha
@@ -2349,7 +2357,7 @@ SayYes:
 		rts
 
 szAreYouSure:
-	; "[K]Are You Sure [y/N]? "
+	; "[K]Are You Sure [y/N]?: "
 		byte ImageReturn
 		byte upper+$01	; a
 		ascii "RE "
@@ -2358,7 +2366,7 @@ szAreYouSure:
 		byte upper+$13	; s
 		ascii "URE [Y/"
 		byte upper+$0e	; n
-		ascii "]? "
+		ascii "]?: "
 		byte $00
 
 szYes:
@@ -2391,4 +2399,3 @@ sub_1f00:
 		rts 			; 1f04:0f06	60
 
 		align $100,$ea		; fill with $ea to $1fff
-{endasm}

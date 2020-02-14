@@ -46,6 +46,10 @@ ml20.prg: $(PREREQS) build.asm
 	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg
 # output symbols
 	$(C64LIST4BETAA) build.asm -sym
+# TODO: make one-byte zp symbols ($61) two bytes ($0061) for purposes of sorting and ease of diff'ing
+
+# sort symbols
+	$(shell sort build.sym -t $ --key 2)
 # output disassembly
 	$(C64LIST4BETAA) build.asm -lst
 # write ml 2.0 to disk

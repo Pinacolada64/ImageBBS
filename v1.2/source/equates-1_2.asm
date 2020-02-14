@@ -1,4 +1,3 @@
-{asm}
 ; image 1.2 ml equates
 ; sorted and de-duped (12/Jul/2016 14:16)
 
@@ -314,4 +313,3 @@ pound	= 92 ; $5c
 
 ImageReturn = $8b ; f6
 upper	= $60 ; normally $c0 ; +1 = A ... +26 = z
-{endasm}

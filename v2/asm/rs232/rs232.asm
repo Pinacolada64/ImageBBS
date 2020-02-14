@@ -39,10 +39,10 @@ rshigh:
 
 rs232a:
 	{info:INFO: Embedding "rs232-user.bin"}
-	embed rs232-user.bin
+	embed "rs232-user.bin"
 rs232b:
 	{info:INFO: Embedding "rs232-swift.bin"}
-	embed rs232-swift.bin
+	embed "rs232-swift.bin"
 
 ; FIXME: since load addresses ($00 $08) are part of the binaries,
 ; the program is JMPing there and hitting a BRK instruction

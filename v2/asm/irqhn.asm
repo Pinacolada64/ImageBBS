@@ -635,6 +635,9 @@ irq7i:
 chkflag:
 	ldy #5
 chkflags:
+; &,52,.x,.y
+; enter with .x: lightbar item to work with (&,52,$hex,y allowed)
+; .y: mode: see comments
 	lda $ff
 	pha
 	stx $ff
@@ -652,17 +655,17 @@ chkflags:
 	pla
 	iny
 	dey
-	beq chkflag0
+	beq chkflag0	; &,52,x,0: clear
 	dey
-	beq chkflag1
+	beq chkflag1	; &,52,x,1: set
 	dey
-	beq chkflag2
+	beq chkflag2	; &,52,x,2: toggle
 	dey
-	beq chkflag3
+	beq chkflag3	; &,52,x,3: read status into a% (0=off, 1=on)
 	dey
-	beq chkflag4
+	beq chkflag4	; &,52,x,4: move lit section to .y
 	dey
-	beq chkflag5
+	beq chkflag5	; (ML only?): like &,52,x,3 but return status in .a?
 chkflag6:
 	sta chktbl,x
 chkflag7:
@@ -712,7 +715,7 @@ tmpbar:
 fkey:
 	ldx tmpkey
 	lda 653
-	and #4
+	and #4		; ctrl hit
 	bne fkey1
 	inx
 fkey1:

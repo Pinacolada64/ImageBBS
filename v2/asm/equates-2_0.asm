@@ -155,7 +155,7 @@
 	uzonem	= 869 ; user time zone minute
 	wrapbuf	= 870 ; 80 bytes
 	wrapflg	= 950
-	modclmn	= 951 ; user's screen width
+	modclmn	= 951 ; ll%: user's screen width
 	ptrclmn	= 952 ; printer column [?]
 	wrapind	= 953
 	wrapdmp	= 954
@@ -174,7 +174,7 @@
 	blnkcntr= 967	; screen blank counter
 	ptrlin	= 968
 	ptrlinm	= 969
-	usrlin	= 970	; mp%: user's screen height [?]
+	usrlin	= 970	; mp%: user's screen height
 	usrlinm	= 971	; how many lines output to modem [?]
 	fredmode= 972
 	montbl	= 973	; month names, 36 bytes (12*3)
@@ -295,7 +295,7 @@
 	ptrlnfd	= $12f0	; 4848: printer linefeed. 1.3's +/IM.misc is $42f0 (17136)
 	ha577	= $12f1	; 4849
 	mask	= $12f2	; 4850: password mask character (1.3 is 17138)
-	scnmode	= $12f3	; 4851
+	scnmode	= $12f3	; 4851: 17139: 1=mask off
 	dflag	= $12f4	; 4852
 	dstat	= $12f5	; 4853
 	cytmp 	= $12f6	; 4854

@@ -2,12 +2,9 @@ DISKIMAGE = test-disk.d64
 DISKHEADER = swiftlink/t232
 DISKID = rs
 
-WINE		= wine
-C64LIST		= $(WINE) c64list4_00-beta-a.exe
-	# this version can embed .bin files
-C64LISTFLAGS	= -ovr -verbose
-CASM		= $(C64LIST)
+C64LIST		= wine c64list4_00.exe
 	# c64list 4.0 now includes former casm functionality
+C64LISTFLAGS	= -ovr -verbose
 C1541		= c1541
 
 # must use reverse case in c64list to import as "ml.rs232"
@@ -30,20 +27,25 @@ all: $(DISKIMAGE)
 # 1) wine c64list4_00.exe rs232-user.asm -bin
 # 2) wine c64list4_00.exe rs232-swift.asm -bin
 # 3) wine c64list4_00.exe rs232.asm -prg # this includes both rs232-{user,swift}.bin
+# for debugging, generate symbols for Vice:
+# 4) wine c64list4_00.exe rs232-swift.asm -sym -ovr | dos2unix
 
-rs232.prg: rs232.asm rs232-user.bin rs232-swift.bin
-
-# %.prg: %.asm
-	$(CASM) $< -prg:$@ $(C64LISTFLAGS)
+rs232.prg: rs232-user.bin rs232-swift.bin rs232-swift.sym rs232.asm
 
 %.bin: %.asm
-	$(CASM) $< -bin:$@ $(C64LISTFLAGS)
+	$(C64LIST) $< -bin:$@ $(C64LISTFLAGS)
+
+%.sym: %.asm
+	$(C64LIST) $< -sym:$@ $(C64LISTFLAGS)
+
+%.prg: %.asm
+	$(C64LIST) $< -prg:$@ $(C64LISTFLAGS)
 
 $(DISKIMAGE): rs232.prg
 	# import rs232.prg into $(DISKIMAGE) as "ml.rs232", show contents
 	$(C1541) $(DISKIMAGE) -write rs232.prg "ml.rs232" -dir
 
 clean:
-	rm -f *.bin *.prg $(DISKIMAGE)
+	rm -f *.bin *.prg *.sym $(DISKIMAGE)
 	# format a fresh disk image
 	$(C1541) -format $(DISKHEADER),$(DISKID) d64 $(DISKIMAGE)

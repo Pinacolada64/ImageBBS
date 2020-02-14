@@ -4,8 +4,8 @@
 	BITCI	= $a8	; RS-232 Input Bit Count
 	RIDATA	= $aa	; RS-232 Input Byte Buffer
 	BITTS	= $b4	; RS-232 Output Bit Count
-	NXTBIT	= $b5	; RS-232 Next Bit to Send
-	RODATA	= $b6	; RS-232 Output Byte Buffer
+;	NXTBIT	= $b5	; RS-232 Next Bit to Send
+;	RODATA	= $b6	; RS-232 Output Byte Buffer
 
 	BAUDOF	= $0299 ; $299-$29a: Time Required to Send a Bit
 	ENABL	= $02a1	; RS-232 Interrupts Enabled
@@ -43,7 +43,7 @@ xx00:	jmp setup
 xx03:	jmp inabl
 xx06:	jmp disab
 xx09:	jmp >@rsget	; forward search local label @rsget
-xx0c:	jmp rsout
+xx0c:	jmp >@rsout	; FIXME: infinite loop
 xx0f:	jmp setbaud
 ;
 ;	word 0300,0600,1200,2400
