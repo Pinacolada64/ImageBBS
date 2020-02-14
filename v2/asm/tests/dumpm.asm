@@ -1,19 +1,29 @@
-' save as "++ dumpm" @ $c000?
+orig $c000
 
-' poke 56,144:poke 52,144:clr
-' for pass=1 to 3:org $9000,-(pass=3)
-' next pass:close 8
+usetbl1	= $cd03
+chrout	= $ffd2
+clrchn	= $ffcc
+chkout	= $ffc9
+var	= $61
 
-{asm}
-usetbl1=$cd03
-chrout =$ffd2
-clrchn =$ffcc
-chkout =$ffc9
-var=$61
+{undef:standalone}
+{ifdef:standalone}
+save_x:
+	.byte $00
+save_y:
+	.byte $00
+{endif}
 
 dump:
-	stx dump3+1
-	sty dump7+1
+; for standalone code only - I don't think "&,16,x,y"
+; needs this temporary storage stuff
+
+{ifdef:standalone}
+	ldx save_x
+	ldy save_y
+{endif}
+	stx dump3+1	; output device #
+	sty dump7+1	; # of arrays to output
 	lda #1
 	sta dump1+1
 	lda #0
@@ -60,4 +70,3 @@ dump7:
 getarr:
 	lda #33		; &,33: getarr
 	jmp usetbl1
-{endasm}

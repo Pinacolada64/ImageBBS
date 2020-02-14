@@ -14,6 +14,12 @@
 ; 65352	      $FF48
 ; Main IRQ/BRK Interrupt Entry Point
 
+; Anytime the BRK instruction is encountered or an IRQ interrupt occurs,
+; this routine will be executed. The routine first saves the .A, .X,
+; and .Y registers on the stack, and then tests the BRK bit of the
+; status register (.P) to see if a BRK was executed.  If it was, the
+; routine exits through the RAM BRK vector at 790 ($316)
+
 ; FF48: 48        PHA		; push .a
 ; FF49: 8A        TXA		; .x -> .a
 ; FF4A: 48        PHA		; push .x
@@ -21,21 +27,13 @@
 ; FF4C: 48        PHA		; push .y
 ; FF4D: BA        TSX		; put stack ptr in .x
 ; FF4E: BD 04 01  LDA $0104,X   ; 6510 Hardware Stack Area
+; ff51: 29 10       AND #$10	; %00010000 | check BRK flag...
+; ff53: F0 03       BEQ $FF58	;  NV-BDIZC | ...if not set, branch to IRQ routine
+; ff55: 6C 16 03    JMP ($0316)	; Vector: BRK Instruction Interrupt
+; ff58: 6C 14 03    JMP ($0314)	; Vector: IRQ Interrupt Routine
 
 ; 256-266 $100-$10A Work Area for Floating Point to String Conversions
 
-;				; put something in .a...
-; FF51: 29 10     AND #$10	; reduce to $01-10?
-; FF53: F0 03     BEQ $FF58
-; FF55: 6C 16 03  JMP ($0316)   ; Vector: BRK Instruction Interrupt Address
-
-; current address left in .a, apparently
-
-; Anytime the BRK instruction is encountered or an IRQ interrupt occurs,
-; this routine will be executed. The routine first saves the .A, .X,
-; and .Y registers on the stack, and then tests the BRK bit of the
-; status register (.P) to see if a BRK was executed.  If it was, the
-; routine exits through the RAM BRK vector at 790 ($316)
 setup:
 	lda #<brk1
 	sta $316
@@ -46,11 +44,14 @@ setup:
 brkbuf	= $c000
 
 brk1:
+	inc $0400	; I think this is in a loop
 	ldx #5		; counter for pulling 6 bytes of stack info
-	lda #27
-	sta $d011
+;	lda {%:00100111}	; #27
+			; 5: enable bitmap mode?
+			; 2-0: fine scroll display?
+;	sta $d011
 brk2:
-	pla
+	pla		; pull saved .y (1), .x (1), .a (1), address (2)
 	sta brkbuf,x
 	dex
 	bpl brk2
@@ -88,18 +89,20 @@ brk3a:
 	lda brkbuf,x
 	jsr hex
 	inx
-	cpx #10		; printed 16 bytes?
+	cpx #10		; printed 10 bytes?
 	bne brk3	; no
 	lda #$0d	; yes, output cr
 	jsr hex2
 	ldy #0
 brk3b:
 	lda msg2,y	; print 2nd message
-	beq brk3c
+	beq brk3c	; until zero byte
 	jsr hex2
 	iny
 	jmp brk3b
 brk3c:
+	jmp ($a002)	; basic warm start
+; here's where things go off the rails:
 	ldy #0
 brk4:
 	pla
@@ -124,6 +127,7 @@ brk5:
 	lda #$0d
 	jsr hex2
 
+;	rts
 	jmp ($a002)	; BASIC warm start vector
 
 ; original code crashes here:
@@ -190,58 +194,32 @@ char:
 	byte 0
 ;
 msg1:
-alpha	= $40	; for poking lowercase strings to screen, $40+1 = "a"
-
 ; Original source had no strings here, "msg1:" and "msg2:" are therefore
 ; placeholders until I figure out what they're supposed to say
 
 ; these 6 bytes are | these are also
 ; pulled off stack  | displayed by
 ; by this routine   | this routine
-;  0 1  2  3  4  5  |
-;  addr ac xr yr ?? | sp 00 01 df02?
+;  0 1  2  3  4  5  | 6  7  8  9
+;  addr ac xr yr ?? | sp 00 01 df02
 ;  033c 30 08 00 00 | f6 2f 37 00
 
-	byte $41	; "a"
-	byte $44	; "d"
-	byte $44	; "d"
-	byte $52	; "r"
-	byte $20	; " "
-	byte $41	; "a"
-	byte $43	; "c"
-	byte $20	; " "
-	byte $58	; "x"
-	byte $52	; "r"
-	byte $20	; " "
-	byte $59	; "y"
-	byte $52	; "r"
-	byte $20	; " "
-	byte 63		; "?"
-	byte 63		; "?"
-	byte $20	; " "
-	byte $53	; "s"
-	byte $50	; "p"
-	byte $20	; " "
-	byte $30	; "0"
-	byte $30	; "0"
-	byte $20	; " "
-	byte $30	; "0"
-	byte $31	; "1"
-	byte $20	; " "
-	byte $44	; "d"
-	byte $46	; "f"
-	byte $30	; "0"
-	byte $32	; "2"
-	byte 63		; "?"
+; vice:
+;   ADDR A  X  Y  SP 00 01 NV-BDIZC LIN CYC  STOPWATCH
+; .;e5d1 00 00 0a f3 2f 37 00100010 012 002  218338122
+
+{alpha:poke}
+	ascii "addr ac xr yr ?? sp 00 01 df02"
 	byte 13		; <return>
 	byte 0		; <null>
 
 msg2:
-	byte $4d	; "m"
-	byte $53	; "s"
-	byte $47	; "g"
-	byte $32	; "2"
-	byte 58		; ":"
+	ascii "msg2:"
+; 	byte $4d	; "m"
+; 	byte $53	; "s"
+; 	byte $47	; "g"
+; 	byte $32	; "2"
+; 	byte 58		; ":"
 	byte 13		; <return>
 	byte 0		; <null>
 {endasm}
