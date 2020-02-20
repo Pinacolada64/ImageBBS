@@ -94,13 +94,15 @@ l4350:
 l4365:
 	lda #$00        ; 4365  a9 00
 	sta $de01       ; 4367  8d 01 de
+; enable RxD IRQ
 	lda #$09        ; 436a  a9 09
 	sta $de02       ; 436c  8d 02 de
 ; cia #2 data direction register b:
-; set bit 4 to output
+; set bit 4 to output - why?
 	lda #$10        ; 436f  a9 10
 	sta $dd03       ; 4371  8d 03 dd
 	ldx #$00        ; 4374  a2 00
+; check for DCD:
 	lda $de01       ; 4376  ad 01 de
 	and #$40        ; 4379  29 40
 	beq l437f       ; 437b  f0 02
@@ -110,6 +112,8 @@ l437f:
 	lda #$02        ; 4382  a9 02
 	jmp >@rsbaud	; 4384  4c 4f 44
 l4387:
+; from 43a3:
+; enable RxD IRQ:
 	lda #$09        ; 4387  a9 09
 	sta $de02       ; 4389  8d 02 de
 	ldy #$00        ; 438c  a0 00
@@ -122,22 +126,32 @@ newnmi:
 	tya		; 4394  98
 	pha		; 4395  48
 	cld		; 4396  d8
+; get SwiftLink status
 	lda $de01       ; 4397  ad 01 de
+; TxD/RxD IRQs off:
 	ldx #$0b        ; 439a  a2 0b
 	stx $de02       ; 439c  8e 02 de
+; %10001000? what is it comparing against?
 	and #$88        ; 439f  29 88
 	beq l4387       ; 43a1  f0 e4
 	ldx #$00        ; 43a3  a2 00
+; get SwiftLink status
 	lda $de01       ; 43a5  ad 01 de
+; bit 6: DCD high
 	and #$40        ; 43a8  29 40
 	beq l43ae       ; 43aa  f0 02
 	ldx #$10        ; 43ac  a2 10
 l43ae:
 	stx $cfff       ; 43ae  8e ff cf
+; get SwiftLink status
 	lda $de01       ; 43b1  ad 01 de
+; receive register full?
 	and #$08        ; 43b4  29 08
+; yes
 	beq l43c9       ; 43b6  f0 11
+; get byte from acia
 	lda $de00       ; 43b8  ad 00 de
+; get rs232 recv buffer tail pointer
 	ldy $029b       ; 43bb  ac 9b 02
 ; FIXME: 2.0's input buffer is at $0b00
 	sta $cb00,y     ; 43be  99 00 cb
@@ -145,8 +159,10 @@ l43ae:
 	bpl l43c6       ; 43c2  10 02
 	ldy #$00        ; 43c4  a0 00
 l43c6:
+; update rs232 recv buffer tail pointer
 	sty $029b       ; 43c6  8c 9b 02
 l43c9:
+; re-enable RxD IRQ:
 	lda #$09        ; 43c9  a9 09
 	sta $de02       ; 43cb  8d 02 de
 	pla		; 43ce  68
@@ -155,6 +171,7 @@ l43c9:
 	tax		; 43d1  aa
 	pla		; 43d2  68
 	rti		; 43d3  40
+
 @rsdisab:
 	php		; 43d4  08
 	pha		; 43d5  48
@@ -176,10 +193,14 @@ l43c9:
 @rsout:
 	sta $9e		; 43e8  85 9e
 l43ea:
+; get SwiftLink status
 	lda $de01       ; 43ea  ad 01 de
+; bit 4: is TxD empty?
 	and #$10        ; 43ed  29 10
+; yes
 	beq l43ea       ; 43ef  f0 f9
 	lda $9e		; 43f1  a5 9e
+; put it in the acia
 	sta $de00       ; 43f3  8d 00 de
 	rts		; 43f6  60
 

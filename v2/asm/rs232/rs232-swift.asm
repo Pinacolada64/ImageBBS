@@ -15,10 +15,10 @@
 ; (another option might be to put setting the parity parameter in the OPEN 2 statement in "im")
 {undef:set_parity}
 
-; 3) testing out whether un-commenting 'oldout' and 'nchrout' routines actually does anything.
+; 3) testing out whether un-commenting 'oldchrout' and 'newchrout' routines actually does anything.
 ; The code was commented out in the FastAssembler version.
 ; when the code is uncommented, it outputs lots of data even if DCD is not asserted.
-; {undef:comment_out} allows the 'oldout' and 'nchrout' code to be included in the final binary.
+; {undef:comment_out} allows the 'oldchrout' and 'newchrout' code to be included in the final binary.
 {undef:comment_out}
 
 ; 4) It has been reported that while the BBS is online, if it loads a (large?)
@@ -203,32 +203,30 @@ oldnmi:	; $81b
 	byte $18	; was $18, NMINV
 ;	byte $14	; changing  CINV doesn't work
 	word slNmiHandler;$fe47 (default) was $08a2
-oldopn:
+oldopen:
 	byte $1a
-	word nopen	; $f34a (default)
-oldcls:
+	word newopen	; $f34a (default)
+oldclose:
 	byte $1c
-	word nclose	; $f291 (default)
-oldchk:
+	word newclose	; $f291 (default)
+oldchkin:
 	byte $1e
-	word nchkin	; $f20e (default)
-oldcho:
+	word newchkin	; $f20e (default)
+oldchkout:
 	byte $20
-	word nchkout	; $f250 (default)
-oldclr:
+	word newchkout	; $f250 (default)
+oldclrchn:
 	byte $22
-	word nclrch	; $f333 (default)
-oldchr:
+	word newclrchn	; $f333 (default)
+oldchrin:
 	byte $24
-	word nchrin	; $f157 (default)
-
-oldout:
+	word newchrin	; $f157 (default)
+oldchrout:
 	byte $26
-	word nchrout	; $cd83? ($f1ca default)
-
-oldget:
+	word newchrout	; $cd83? ($f1ca default)
+oldgetin:
 	byte $2a
-	word ngetin	; $f13e (default)
+	word newgetin	; $f13e (default)
 	byte 0
 
 @setup:
@@ -418,7 +416,7 @@ slNmiExit:
 rsint:
 	jsr setcarr
 	lda slStatus
-	and #{%:00001000}; bit 3=byte received
+	and #{%:00001000}; bit 3=byte received?
 	beq xmitchar	; yes
 	lda slData
 	ldy ridbe
@@ -443,7 +441,7 @@ rsint1:
 ;
 xmitbyte:
 	lda slStatus
-	and #{%:00010000}	; bit 3=transmit register empty?
+	and #{%:00010000}	; bit 4: 1=transmit register empty?
 	beq xmitbyte	; yes
 xmitchar:
 	ldy rodbs
@@ -456,7 +454,7 @@ rsint3:
 	sty rodbs	; update buffer start
 	cpy rodbe
 	bne rsint4
-	lda xmiton	; txd irq on
+	lda #xmiton	; txd irq on
 	sta shcomm
 rsint4:
 	rts
@@ -500,13 +498,13 @@ rsout0:
 	sta slCommand
 rsout1:
 	lda ptr1	; $9e - get char to send from .a
-	ldy rodbe	; buffer end pointer
+	ldy rodbe	; output buffer end pointer
 	sta robuf,y
 	iny
 	bpl rsout2
 	ldy #0
 rsout2:
-	cpy rodbs	; buffer start pointer
+	cpy rodbs	; ouput buffer start pointer
 	beq rsout0
 	sty rodbe
 ; adding "scroll output window" from rs232-user.asm:
@@ -536,45 +534,45 @@ xtmp:
 	byte 0
 
 nosuch:
-	jmp nofile
+	jmp nofile	; $f701
 
-nchkin:
+newchkin:
 	stx xtmp
-	jsr findfn
+	jsr findfn	; $f30f
 	bne nosuch
-	jsr devnum
+	jsr devnum	; $f31f
 	ldx xtmp
 	lda $ba		; current device
 	cmp #2		; rs232?
-	bne nchkin1
+	bne newchkin1
 	sta dfltn	; $99 - input device
 	clc
 	jmp inable
 
-nchkin1:
+newchkin1:
 	jsr disabl
-	jsr oldchk
+	jsr oldchkin
 	jmp inable
 
-nchkout:
+newchkout:
 	stx xtmp
-	jsr findfn
+	jsr findfn	; $f30f
 	bne nosuch
-	jsr devnum
+	jsr devnum	; $f31f
 	ldx xtmp
 	lda $ba		; current device
 	cmp #2		; rs232?
-	bne nchkout1
+	bne newchkout1
 	sta dflto	; $9a - default output device
 	clc
 	jmp inable
 
-nchkout1:
+newchkout1:
 	jsr disabl
-	jsr oldcho
+	jsr oldchkout
 	jmp inable
 
-ngetin:
+newgetin:
 	pha
 	lda dflto	; $9a - default output device
 	cmp #2
@@ -628,7 +626,7 @@ ret2:
 notget:
 	pla
 	jsr disabl
-	jsr oldget
+	jsr oldgetin
 	jmp inable
 
 @setbaud:
@@ -678,29 +676,29 @@ setbaud3:
 
 	rts
 
-nchrout:
+newchrout:
 	jsr disabl
-	jsr oldout
+	jsr oldchrout
 	jmp inable
 
-nopen:
+newopen:
 	jsr disabl
-	jsr oldopn
+	jsr oldopen
 	jmp inable
 
-nclose:
+newclose:
 	jsr disabl
-	jsr oldcls
+	jsr oldclose
 	jmp inable
 
-nclrch:
+newclrchn:
 	jsr disabl
-	jsr oldclr
+	jsr oldclrchn
 	jmp inable
 
-nchrin:
+newchrin:
 	jsr disabl
-	jsr oldchr
+	jsr oldchrin
 	jmp inable
 
 xmiton:
