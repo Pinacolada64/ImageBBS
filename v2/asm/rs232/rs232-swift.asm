@@ -26,11 +26,31 @@
 ;	CTS is handled by the 6551, so an IRQ problem?
 ;	"rsdisab" is called before a load in "disk-io.asm"
 
-; from "fast assembler":
-; for pass=1 to 3:org $0800,-(pass=3),8,"@:ml.rs232/swift"
-
 ; gets relocated when LOADed and &,16,1 is issued at BBS init
 orig $0800
+
+; Using the ACIA frees many addresses in zero page normally used by
+; Kernal RS-232 routines. The addresses for the buffer pointers were
+; chosen arbitrarily. The buffer vector addresses are those used by
+; the Kernal routines.
+
+rhead	= $a7	; pointer to next byte to be removed from
+		; receive buffer
+rtail	= $a8	; pointer to location to store next byte received
+rbuff	= $f7	; receive buffer vector
+thead	= $a9	; pointer to next byte to be removed from
+		; transmit buffer
+ttail	= $aa	; pointer to location to store next byte
+		; in transmit buffer
+tbuff	= $f9	; transmit buffer
+xmitcnt	= $ab	; count of bytes remaining in transmit (xmit) buffer
+recvcnt = $b4	; count of bytes remaining in receive buffer
+errors	= $b5	; DSR, DCD, and received data errors information
+xmiton	= $b6	; storage location for model of command register
+		; which turns both receive and transmit interrupts on
+xmitoff	= $bd	; storage location for model of command register
+		; which turns the receive interrupt on and the
+		; transmit interrupts off
 
 ; SwiftLink/Turbo232
   io1	= $de00 ; Base Address of SwiftLink/Turbo232
@@ -62,7 +82,7 @@ rstkey	= $fe56 ; check for an autostart cartridge?
 ; 6	DSR	Data Set Ready		In
 ; 7	RTS	Request to Send		Out
 ; 8	CTS	Clear to Send		In	(6551 handles this automatically)
-; 9	RI	Ring Indicator		In
+; 9	RI	Ring Indicator		In	not connected
 
 ; $DE01 - SwiftLink status register (slStatus, stat* labels):
 
@@ -179,23 +199,6 @@ disabl:
 setbaud:
 	jmp >@setbaud	; $080f
 
-bauds:
-; bit 4=1: use internal clock generator
-	byte {%:00010101} ; 0300
-	byte {%:00010110} ; 0600
-	byte {%:00010111} ; 1200
-	byte {%:00011000} ; 2400
-	byte {%:00011010} ; 4800
-	byte {%:00011100} ; 9600
-	byte {%:00011110} ;19200
-	byte {%:00011111} ;38400
-
-shcomm:
-; saves SwiftLink RxD/TxD IRQ status, DTR status
-; "SHadow" register?
-	byte cmdRxOn	; initialize with RxD IRQ on, DTR low
-			; (to get init commands, I guess)
-
 ; these vectors are replaced with their defaults after setup is done
 vectbl:
 ;			; gets rewritten to:
@@ -212,9 +215,11 @@ oldclose:
 oldchkin:
 	byte $1e
 	word newchkin	; $f20e (default)
+
 oldchkout:
 	byte $20
 	word newchkout	; $f250 (default)
+
 oldclrchn:
 	byte $22
 	word newclrchn	; $f333 (default)
@@ -234,22 +239,27 @@ oldgetin:
 ; which needs to be acknowledged, so do this. This does not happen on real hardware.
 
 ; At startup, $de01 (slStatus) reads %00010000: bit 4: 1=transmit register empty
-{ifdef:swiftlib}
-	lda $318
-	sta slNmiSave+1
-	lda $319
-	sta slNmiSave+2
-{endif}
 
-; reset rs232 buffer start/end pointers
+; reset rs232 input/output buffer head/tail pointers
 	lda #$00
-	sta ridbs
-	sta rodbs
-	sta ridbe
-	sta rodbe
+	sta rhead
+	sta rtail
+	sta thead
+	sta ttail
+
+	sta xmitcnt
+	sta recvcnt
+
+	sta errors
+
+; address of transmit/receive buffers ($0b00/$0b80) have already been set up
+
+; 1 stop bit, 8 bit word length, 19200 bps
+	lda #{%:00011110}
+	sta slControl
 
 ; set acia for no parity check, no echo, disable transmit interrupt, and enable receive interrupts (RTS and DTR low)
-	lda #{%:00001001}
+	lda #{%:00001001}	; #$09, or cmdRxOn
 	sta slCommand
 
 ;Besides initialization, also call the following code whenever the user
@@ -262,12 +272,11 @@ oldgetin:
 
 ;initialize with transmit interrupts off since
 ;buffer will be empty
-
-      sta    xmitoff       ;store as a model for future use
-      and    #{%:11110000}    ;mask off interrupt bits, keep parity/echo bits
-      ora    #{%:00000101}    ;and set bits to enable both transmit and
-                           ;receive interrupts
-      sta    xmiton        ;store also for future use
+	sta xmitoff		; #$09, store as a model for future use
+	and #{%:11110000}	; mask off interrupt bits, keep parity/echo bits
+	ora #{%:00000101}	; and set bits to enable both transmit and
+				; receive interrupts (equivalent to cmdTxRxOff)
+	sta xmiton		; #$0b, store also for future use
 
 ; set up vectors:
 	ldx #0
@@ -296,9 +305,9 @@ setup2:
 	bcc setup2
 	jmp setup1
 setup3:
-;	cli		; doesn't work
-	lda #0
-	lda #xmiton	; rxd/txd irq on
+; me	cli		; doesn't work
+
+	lda #xmiton	; #$09? rxd/txd irq on
 	sta shcomm	; save rxd irq status
 	sta slStatus
 	jsr inable
@@ -348,8 +357,181 @@ setup3:
 	sta slCommand
 {endif}
 
-	lda #7		; start at 19.2Kbps
+	lda #$06		; start at 19.2Kbps
 	jmp setbaud
+
+;
+; ** enable nmi
+;
+@inable:
+	php
+	pha
+	lda #cmdRxOn	; #$09
+	sta slCommand
+;me	lda slCommand
+;me	and shcomm
+;me	sta slCommand
+	pla
+	plp
+	rts
+
+;
+; ** disable nmi
+;
+@disabl:
+	php
+	pha
+	lda #cmdTxRxOff	; comint0 - #$0b TxD/RxD IRQs disabled
+	sta slCommand
+	pla
+	plp
+	rts
+
+;
+; ** rs232 getin
+; keep in mind buffer is $80 chars
+;
+@rsget:
+	sta ptr1	; $9e
+	sty xsav	; $97
+	lda slStatus
+	and #{%:00001000};if bit 3 not set,
+	beq ret1	; no received byte in acia, restore registers
+	lda slData	; get received byte
+	ldy rtail	; index to buffer
+	cpy #$80	; 127 bytes
+	bcc ret1	; buffer full
+	sta (rbuff),y	; and store it
+	inc rtail	; move index to next slot
+	inc recvcnt	; increment # of bytes received
+; added code from rs232-user.asm:rsget1
+	ldy scnmode
+	bne ret1
+	ldy #0
+inpdisp:
+; scroll input window
+	lda sdisp+2,y
+	sta sdisp+1,y
+	iny
+	cpy #9
+	bcc inpdisp	; >9? loop back
+	lda ptr1	; $9e
+	sta sdisp+10	; put last char rec'd
+; end of addition
+	lda rtail	; input buffer end
+	sec
+	sbc rhead	; input buffer start
+	and #127	;???
+	cmp #100	;???
+	bcs ret1	; >100 chars in buffer? return
+	lda shcomm
+	sta slCommand
+ret1:
+	clc
+ret2:
+	ldy xsav	; $97
+	lda ptr1	; $9e
+	rts
+
+;
+; ** rs232 bsout
+;
+; Briefly, each buffer has a "head" and "tail" pointer.
+; The head points to the next byte to be removed from the buffer.
+; The tail points to the next free location in which to store a byte.
+; If the head and tail both point to the same location, the buffer is empty.
+; If (tail + 1) = head, the buffer is full.
+
+; *** buffers are $80 (127) bytes ***
+
+@rsout:
+ 	sta ptr1	; $9e - save char to send in .a
+ 	sty xsav	; $97
+ 	lda #cmdTxRxOff	; comint0
+ 	sta slCommand
+ 	lda xmitcnt	; any characters to transmit?
+ 	beq ret1	; no, restore registers
+waitTxEmpty:
+	lda slStatus
+	and #{%:00010000}	; bit 4: 1=transmit register empty?
+	beq waitTxEmpty		; yes
+xmitchar:
+	ldy thead		; get transmit buffer head
+	lda (tbuff),y		; get character at head of buffer
+	sta slData		; place in acia for transmit
+	inc thead		; point to next character in buffer,
+				; store new index
+	dec xmitcnt		; subtract one from count of bytes
+				; in xmit buffer
+	beq ret1		; nothing left to transmit
+
+; adding "scroll output window" from rs232-user.asm:
+	ldy scnmode	; split screen?
+	bne rsout4	; 1=no
+	pha		; char still in .a
+	ldy #0
+outdisp:
+	lda sdisp+30,y
+	sta sdisp+29,y
+	iny
+	cpy #9
+	bcc outdisp
+	pla
+	sta sdisp+38
+; end addition
+	lda #cmdTxRxOn	; comint2
+	sta shcomm
+rsout4:
+;me	lda shcomm
+;me	and #cmdTxRxOn	; txd/rxd enabled
+	lda shcomm
+	sta slCommand
+	jmp ret1	; restore registers
+
+@setbaud:
+; enter with baud rate # from 'bauds' table in .a
+	cmp #254	; %11111110
+	bcc setbaud3
+	beq setbaud1
+	lda shcomm	; get saved rxd/txd status
+	jmp setbaud2
+setbaud1:
+	lda #cmdDtrOff	; dtr off
+setbaud2:
+	sta slCommand
+	rts
+setbaud3:
+	and #7
+	tay
+	lda bauds,y
+	sta slControl
+
+{ifdef:swiftlib}
+; from SwiftLib
+	lda slTemp
+	and #{%:11100000}
+	ora #{%:00010000}
+	sta slTemp
+	txa
+	and #$0f
+	ora slTemp
+	sta slControl
+; set clock generator bit
+	txa
+	and #$30
+	beq >@
+	lsr
+	lsr
+	lsr
+	lsr
+	eor #$03
+	sta slClock
+; set new parity
+@:
+	lda slTemp+1
+{endif}
+
+	rts
 
 setcarr:
 ; check for DCD, update $d009 (carrier) with status
@@ -386,22 +568,25 @@ slNmiHandler:
 	cld
 
 	lda slStatus
+
 ; Now prevent any more NMIs from the ACIA
 	ldx #{%:00000011}	; disable all interrupts, bring RTS inactive, and
 				; leave DTR active (0)
 	stx slCommand		; send to ACIA-- code at end of interrupt handler
 				; will re-enable interrupts
+	sta errors
 	and #{%:00011000}	; mask out all but transmit and
 				; receive interrupt indicators
 	beq slNmiExit
 
-	jsr rsint		; receive/transmit chars
-	lda #shcomm
-	sta slCommand
-slNmiExit:
-	lda #xmiton		; #$09: enable Tx/Rx IRQs
+	jsr rsget		; receive characters
+	jsr rsout		; transmit characters
+	lda shcomm		; shadow of slCommand
 	sta slCommand
 
+	lda #xmitoff		; #$09: disable TxD IRQ
+nmiCommand:
+	sta slCommand
 	pla
 	tay
 	pla
@@ -409,129 +594,9 @@ slNmiExit:
 	pla
 	rti
 
-;
-; ** check for incoming character:
-; returns received char in .a
-;
-rsint:
-	jsr setcarr
-	lda slStatus
-	and #{%:00001000}; bit 3=byte received?
-	beq xmitchar	; yes
-	lda slData
-	ldy ridbe
-	sta ribuf,y
-	iny
-	bpl rsint1
-	ldy #0
-rsint1:
-	sty ridbe
-	tya
-	sec
-	sbc ridbs
-	and #127
-	cmp #120
-	bcc xmitbyte
-;	lda #comRTS0	; drop rts?
-;	sta slCommand
-;
-; ** check if ok to transmit
-; w exec .rsint2
-; del <breakpoint>
-;
-xmitbyte:
-	lda slStatus
-	and #{%:00010000}	; bit 4: 1=transmit register empty?
-	beq xmitbyte	; yes
-xmitchar:
-	ldy rodbs
-	lda robuf,y
-	sta slData
-	iny		; move output buffer pointer
-	bpl rsint3
-	ldy #0
-rsint3:
-	sty rodbs	; update buffer start
-	cpy rodbe
-	bne rsint4
-	lda #xmiton	; txd irq on
-	sta shcomm
-rsint4:
-	rts
-
-;
-; ** disable nmi
-;
-@disabl:
-	php
-	pha
-	lda #cmdTxRxOff	; comint0 - #$0b TxD/RxD IRQs disabled
-	sta slCommand
-	pla
-	plp
-	rts
-;
-; ** enable nmi
-;
-@inable:
-	php
-	pha
-	lda #cmdRxOn	; #$09
-	sta slCommand
-;me	lda slCommand
-;me	and shcomm
-;me	sta slCommand
-	pla
-	plp
-	rts
-;
-; ** rs232 bsout
-;
-rsout0:
-	jsr rsint	; send/receive char
-	jmp rsout1
-
-@rsout:
-	sta ptr1	; $9e - save char to send in .a
-	sty xsav	; $97
-	lda #cmdTxRxOff ; comint0
-	sta slCommand
-rsout1:
-	lda ptr1	; $9e - get char to send from .a
-	ldy rodbe	; output buffer end pointer
-	sta robuf,y
-	iny
-	bpl rsout2
-	ldy #0
-rsout2:
-	cpy rodbs	; ouput buffer start pointer
-	beq rsout0
-	sty rodbe
-; adding "scroll output window" from rs232-user.asm:
-	ldy scnmode	; split screen?
-	bne rsout4	; 1=no
-	pha		; char in .a
-	ldy #0
-outdisp:
-	lda sdisp+30,y
-	sta sdisp+29,y
-	iny
-	cpy #9
-	bcc outdisp
-	pla
-	sta sdisp+38
-; end addition
-	lda #cmdTxRxOn	; comint2
-	sta shcomm
-rsout4:
-;me	lda shcomm
-;me	and #cmdTxRxOn	; txd/rxd enabled
-	lda shcomm
-	sta slCommand
-	jmp ret1
-
-xtmp:
-	byte 0
+slNmiExit:
+	ldy #$00
+	jmp rstkey	; $fe56
 
 nosuch:
 	jmp nofile	; $f701
@@ -576,105 +641,15 @@ newgetin:
 	pha
 	lda dflto	; $9a - default output device
 	cmp #2
-	bne notget
+	bne notmodem
 	pla
-;
-; ** rs232 getin
-;
-@rsget:
-	sta ptr1	; $9e
-	sty xsav	; $97
-	ldy ridbs	; get input buffer start
-	cpy ridbe	; compare to input buffer end
-	beq ret2
-	lda ribuf,y
-	sta ptr1	; $9e
-	iny
-	bpl rsget1
-	ldy #0
-rsget1:
-	sty ridbs
-; added code from rs232-user.asm:rsget1
-	ldy scnmode
-	bne ret1
-	ldy #0
-inpdisp:
-; scroll input window
-	lda sdisp+2,y
-	sta sdisp+1,y
-	iny
-	cpy #9
-	bcc inpdisp
-	lda ptr1	; $9e
-	sta sdisp+10	; put last char rec'd
-; end of addition
-	lda ridbe
-	sec
-	sbc ridbs
-	and #127
-	cmp #100
-	bcs ret1
-	lda shcomm
-	sta slCommand
-ret1:
-	clc
-ret2:
-	ldy xsav	; $97
-	lda ptr1	; $9e
-	rts
+	jmp rsget
 
-notget:
-	pla
+notmodem:
+	pla		;
 	jsr disabl
 	jsr oldgetin
 	jmp inable
-
-@setbaud:
-; enter with baud rate # from 'bauds' table in .a
-	cmp #254
-	bcc setbaud3
-	beq setbaud1
-	lda slCommand
-	and shcomm	; get saved rxd/txd status
-	jmp setbaud2
-setbaud1:
-	and #cmdDtrOff	; dtr off
-setbaud2:
-	sta slCommand
-	rts
-setbaud3:
-	and #7
-	tay
-	lda slControl
-	and bauds,y
-	ora #cmdDtrOff	; 0 = DTR high
-	sta slControl
-{ifdef:swiftlib}
-; from SwiftLib
-	lda slTemp
-	and #{%:11100000}
-	ora #{%:00010000}
-	sta slTemp
-	txa
-	and #$0f
-	ora slTemp
-	sta slControl
-; set clock generator bit
-	txa
-	and #$30
-	beq >@
-	lsr
-	lsr
-	lsr
-	lsr
-	eor #$03
-	sta slClock
-; set new parity
-@:
-	lda slTemp+1
-{endif}
-
-	rts
 
 newchrout:
 	jsr disabl
@@ -701,11 +676,24 @@ newchrin:
 	jsr oldchrin
 	jmp inable
 
-xmiton:
-	byte $ff	; storage location for model of command register
-			; which turns both receive and transmit interrupts on
-xmitoff:
-	byte $ff	; storage location for model which turns the receive interrupt
-			; on and the transmit interrupt off
+bauds:
+; bit 4=1: use internal clock generator
+	byte {%:00010101} ; 0300
+	byte {%:00010110} ; 0600
+	byte {%:00010111} ; 1200
+	byte {%:00011000} ; 2400
+	byte {%:00011010} ; 4800
+	byte {%:00011100} ; 9600
+	byte {%:00011110} ;19200
+	byte {%:00011111} ;38400
 
-	addrcheck $0a7f
+shcomm:
+; saves SwiftLink RxD/TxD IRQ status, DTR status
+; "SHadow" register?
+	byte cmdRxOn	; initialize with RxD IRQ on, DTR low
+			; (to get init commands, I guess)
+
+xtmp:
+	byte 0
+
+	addrcheck $0a7f	; 49 bytes free

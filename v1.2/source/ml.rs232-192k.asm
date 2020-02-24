@@ -65,6 +65,7 @@ oldgetin:
 	byte $00	; 4332  00
 
 @rsinit:
+; TxD/RxD IRQ off, DTR low (comint0)
 	lda #$0b        ; 4336  a9 0b
 	sta $de02       ; 4338  8d 02 de
 ; set up vectors
