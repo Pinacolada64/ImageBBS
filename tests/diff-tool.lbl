@@ -1,0 +1,528 @@
+{ascii:alt}
+{:10}
+	goto {:screen}
+' init:
+' TODO: ask from directory or specific track/sector
+' TODO: output log: screen, printer, disk
+
+' input any init:
+	a$="":i%=.
+' max file entries on a 1541 disk:
+' sl$=source list, tl$=target list
+	dim sl$(144),tl$(144)
+{:open_directory}
+	open 2,8,.,"$0:"+pa$
+' from lfn#2, get 15 bytes, crskip=0, get dir entry into a$
+	sys ia,2,16,.,a$
+	print a$;:
+; TODO: when changing display/highlight color:
+;	lda colorDisplay
+;	cmp colorBackground
+;	beq chooseAgain		; avoids invisible text
+{:screen}
+	print"{switchdisable}{lowercase}{clear}{down}":gosub{:sector_frame}
+	print" Links: 000  Diffs: 00000  Bytes: 000000"
+'                       ^     1       ^       2      ^
+'             0123456789abcdef0123456789abcdef01234567
+'	print "{switchdisable}{lowercase}{clear}{down:9} Link: 000  Diff: 000000  Bytes: 000000"
+	gosub {:sector_frame}
+	sys{sym:fill_test}
+	end
+
+' links: max 664 blocks
+' diffs: max 65535?
+' bytes: max 174848 per disk
+
+{:sector_frame}
+	print"{$a0:40}{down:6}"tab(15)"{176}{$a0:39}{189}"
+' ;{:test_fill}
+'	print"{up:8}";:for x=1 to 255:print ".";:next:print
+	return
+
+{asm}
+	status	= $90	; serial i/o status
+
+	string	= $f7	; temp pointer for string address, used by print_at
+	temp	= $f9	; temp pointer for quick zp loops
+	buffer	= $f9	; does double duty as current buffer address
+	pbuf_orig= $fb	; pointer to original buffer
+	pbuf_diff= $fd	; pointer to difference buffer
+
+	linprt	= $bdcd ; print floating point # in >.a <.x
+	setmsg	= $ff90
+	readst	= $ffb7
+	setlfs	= $ffba
+	setnam	= $ffbd
+	openf	= $ffc0
+	closef	= $ffc3
+	chkin	= $ffc6
+	chkout	= $ffc9
+	clrchn	= $ffcc
+	chrin	= $ffcf
+	chrout	= $ffd2
+	loadf	= $ffd5
+	savef	= $ffd8
+	stop	= $ffe1 ; .z = 1 if pressed
+	getin	= $ffe4
+
+; screen memory
+	text_ram	= $0400
+; base_* = physical line # on screen within screen/color ram
+; (add text_ram or color_ram to get final address)
+	base_orig	= (40*4)	;  4th row
+	base_status_row	= (40*12)	; 12th row
+	base_diff	= (40*14)	; 14th row
+
+; since we're using screen ram as buffers, add that constant:
+	buf_orig	= text_ram + base_orig		; $04xx, 1024
+	buf_status_row	= text_ram + base_status_row	; $04xx,
+	buf_diff	= text_ram + base_diff		; $04xx,
+
+; color memory
+	color_ram	= $d800
+	col_orig	= color_ram + base_orig		; color for original buffer
+	col_status_row	= color_ram + base_status_row	; color for status line
+	col_diff	= color_ram + base_diff		; color for difference buffer
+
+init:
+; FIXME - jsr table in rough order of operations
+	jsr >@init
+	jsr >@set_buf_diff
+	jsr >@get_sector
+	jsr >@set_buf_orig
+; TODO	jsr   get_sector
+; TODO	jsr >@compare_links
+	jsr   compare_buffers
+; TODO	jsr >@logging
+
+@init:
+; set up addresses of i/o buffers for (zp),y addressing
+; $fa/fb: (buf_curr) (gets loaded with buf_orig at start)
+; $fc/fd: (original)	lda ($fc),y
+; $fe/ff: (difference)	cmp ($fe),y
+;			bne ...
+
+; use:			; instead of two disk i/o loops like:
+;			;		and later:
+; jsr getin		; jsr getin	jsr getin
+; sta (buf_curr),y	; sta ($fc),y	sta ($fe),y
+; iny			; iny		iny
+; bne ...		; bne ...	bne ...
+; hmm
+
+@set_buf_diff:
+; point ($f9) to difference buffer
+	lda buf_diff
+	sta buffer
+	lda buf_diff+1
+	sta buffer+1
+	jmp >@get_sector
+
+@set_buf_orig:
+; point ($f9) to original buffer:
+	lda buf_orig
+	sta buffer
+	lda buf_orig+1
+	sta buffer+1
+; TODO	jmp >@get_sector
+
+@get_sector:
+; fill selected buffer [($f9)] with data:
+; will point to (original) or (difference)
+	jsr getin
+	pha		; save byte
+	lda status	; get i/o status
+; TODO	bne disk_error
+	pla		; restore byte
+	sta (buffer),y	; put in current buffer
+	iny
+	bne @>get_sector
+
+; @swap_buffers:
+; to swap buffers (i.e., which buffer disk input is filling), load $fa/fb with:
+; FIXME
+;	lda curr_buf	; low byte of curr_buff
+;	cmp $fc		; orig_buf?
+;	bne ...		; no
+;	cmp $fe		; diff_buf?
+;	bne ...		; no
+; it really should be one or the other, so if it isn't, set default (maybe on init?)
+;@:
+;	sta curr_buf
+
+; reset color memory for buf_orig and buf_diff to display color to
+; negate any highlighted diffs on reading a new sector
+	lda #>col_orig
+	sta buffer
+	lda #<col_orig
+	sta buffer+1
+
+	lda colorDisplay
+	jsr reset
+
+	lda #>col_diff
+	sta buffer
+	lda #<col_diff
+	sta buffer+1
+
+	lda colorDisplay
+	jsr reset
+
+; reset buffer contents
+	lda #>buf_orig
+	sta buffer
+	lda #<buf_orig
+	sta buffer+1
+
+	lda colorDisplay
+	jsr reset
+
+	lda #>buf_diff
+	sta buffer
+	lda #<buf_diff
+	sta buffer+1
+
+	lda #$a0	; fill byte to display
+
+reset:
+; clear ($f9) with .a
+	ldy #$00	; counter
+@:
+	sta (buffer),y	; fill color ram
+	sta (buffer),y
+;	stx (buffer),y	; fill buffer
+;	stx (buffer),y
+	iny
+	bne >@
+	rts
+
+; read sector, display it
+; supply lfn# in .x
+;	ldx #$03 	;#$03
+	jsr chkin 	;$ffc6
+; zero counter:
+	ldy #$00
+@:
+	jsr getin 	;$ffe4
+	sta c0f9 	;store byte?
+	jsr getin 	;$ffe4
+	sta byte_in 	;$c0fa
+	sta (buffer),y	; store in buffer
+	jsr getin 	;$ffe4
+	sta c0fb 	;$c0fb
+	jsr clrchn 	;$ffcc
+	jmp *	 	;$c047 FIXME
+
+; &,16,2? reset counters
+	lda #$ff 	;#$ff
+	sta c0f9 	;$c0f9
+	sta byte_in 	;$c0fa
+	sta c0fb 	;$c0fb
+
+; &,16 continued
+	lda #$00 	;#$00
+	sta c0fc 	;$c0fc
+	ldx #$03 	;#$03
+	jsr chkin 	;$ffc6
+	ldy #$00 	;#$00
+	ldx #$00 	;#$00
+; get byte, put on screen
+	jsr chrin	;$ffcf
+	sta (buffer),y	;fill current buffer
+	iny
+	lda c0f9 	;$c0f9
+	bne c06c 	;$c06c
+	lda byte_in 	;$c0fa
+	bne c069 	;$c069
+	dec c0fb 	;$c0fb
+c069:
+	dec byte_in 	;$c0fa
+c06c:
+	dec c0f9 	;$c0f9
+	lda c0f9 	;$c0f9
+	ora byte_in 	;$c0fa
+	ora c0fb 	;$c0fb
+c07a:
+	bne c07f 	;$c07f
+
+	inc c0fc 	;$c0fc
+c07f:
+	bne c08a 	;$c08a
+	cpy #$fe 	;#$fe
+	beq c08a 	;$c08a
+	lda status 	;$90
+	beq $c055 	;$c055
+	inc $c0fc 	;$c0fc
+c08a:
+	sty c0f8
+	jsr clrchn 	;$ffcc
+	ldx #$02 	;#$02
+	jsr chkout 	;$ffc9
+; read data from screen
+	ldy #$00 	;#$00
+@:
+	lda (buffer),y	; get data from current buffer
+	iny
+; .y=bytes in sector?
+	cpy $c0f8 	;c09e  cc f8 c0	 $c0f8
+	bne $c097 	;c0a1  d0 f4   	 $c097
+	jsr clrchn 	;c0a3  20 cc ff	 $ffcc
+; increment on-screen and in-memory byte count
+	jsr incByteCount;c0a6  20 04 c1	 $c104
+	lda $c0fc	;c0a9  ad fc c0	 $c0fc
+	beq $c04c	;c0ac  f0 9e   	 $c04c
+	rts             ;c0ae  60
+
+; TODO: what about file length mismatches
+; between f1 and f2?
+
+; &,16,1 - scan file on lfn#3 (count bytes)
+	ldx #$03 	;c0af  a2 03   	 #$03
+	jsr chkin 	;c0b1  20 c6 ff	 $ffc6
+	lda #$00 	;c0b4  a9 00   	 #$00
+	sta $c0f9 	;c0b6  8d f9 c0	 $c0f9
+	sta byte_in 	;c0b9  8d fa c0	 $c0fa
+	sta $c0fb 	;c0bc  8d fb c0	 $c0fb
+	jsr getin 	;c0bf  20 e4 ff	 $ffe4
+	inc $c0f9 	;c0c2  ee f9 c0	 $c0f9
+	bne $c0cf 	;c0c5  d0 08   	 $c0cf
+	inc byte_in 	;c0c7  ee fa c0	 $c0fa
+	bne $c0cf 	;c0ca  d0 03   	 $c0cf
+	inc $c0fb 	;c0cc  ee fb c0	 $c0fb
+	jsr incByteCount;c0cf  20 fd c0	 $c0fd
+	jsr stop
+;	bne <blah>	; stop pressed
+	lda status 	;c0d2  a5 90   	 $90
+	beq $c0bf 	;c0d4  f0 e9   	 $c0bf
+; disk error:
+	ldx #$0f
+	jsr chkin
+; TODO: get error status message from drive
+
+	jsr clrchn 	;c0d6  20 cc ff	 $ffcc
+	ldx #$02 	;c0d9  a2 02   	 #$02
+	jsr chkout 	;c0db  20 c9 ff	 $ffc9
+	lda $c0f9 	;c0de  ad f9 c0	 $c0f9
+	jsr chrout 	;c0e1  20 d2 ff	 $ffd2
+	lda byte_in 	;c0e4  ad fa c0	 $c0fa
+	jsr chrout 	;c0e7  20 d2 ff	 $ffd2
+	lda $c0fb 	;c0ea  ad fb c0	 $c0fb
+	jsr chrout 	;c0ed  20 d2 ff	 $ffd2
+	jsr clrchn 	;c0f0  20 cc ff	 $ffcc
+	lda #$03 	;c0f3  a9 03   	 #$03
+	jmp closef 	;c0f5  4c c3 ff	 $ffc3
+
+c0f8:
+	brk
+; current lfn?
+c0f9:
+	brk
+byte_in:
+	brk		;c0fa
+c0fb:
+	brk             ;c0fb
+bad_byte:
+C0FC:
+	brk		;c0fc
+
+incLinkDiffs:
+; increment in-memory link diff count:
+; (for logging)
+	inc link_diffs+1
+	lda link_diffs+1
+	bne >@
+	inc link_diffs
+
+; increment on-screen link diff count:
+@:
+	ldx #$09	; offset
+	ldy #$03	; 3 digits
+	jmp c108
+
+incByteDiffs:
+; increment in-memory byte diff count:
+; (for logging)
+	inc byte_diffs+1
+	lda byte_diffs+1
+	bne >@
+	inc byte_diffs
+
+; increment on-screen byte diff count
+	ldx #$16 	;offset
+	ldy #$06 	;digits
+	jmp c108 	;$c108
+
+incByteCount:
+; increment on-screen byte count
+	ldx #$27 	;offset
+	ldy #$06 	;digits
+c108:
+	inc buf_status_row,x
+	lda buf_status_row,x
+	cmp #$3a	; ':'
+	bne c11b
+	lda #'0'
+	sta buf_status_row,x
+	dex
+	dey
+	bne c108 	;$c108
+c11b:
+	rts
+
+fill_test:
+	ldy #$00
+	lda #'.'	; fill character
+@:
+	sta (pbuf_orig),y	; original buffer
+	sta (pbuf_diff),y	; difference buffer
+	iny
+	beq >@
+
+compare_buffers:
+	ldy #$00
+@:
+	lda (pbuf_orig),y; source
+	cmp (pbuf_diff),y; target
+	bne inc_diff
+	iny
+	beq <@
+	jmp >@
+@:
+	rts
+
+inc_diff:
+; peek(sym:diff_count)+256*(peek(sym:diff_count))+1 is the # of differences
+	inc diff_count+1
+	beq <@
+	inc diff_count
+@:
+; highlight the diff in orig_buf and diff_buf color memory
+; .y is diff position in either buffer
+	pha	; save comparison char in orig_buf
+	lda colorHighlight
+	sta col_diff,y
+	sta col_orig,y
+	pla	; get comparison char
+; TODO: add to diff tables
+	lda (pbuf_diff),y
+; assuming f2 is target to compare f1 against
+; FIXME: ugh do I need linked lists? diff_count is 16-bit,
+; can't just do sta diff_count,y -- f1/f2 byte tables will most likely grow >256 bytes,
+; and what do you do when a table > 1 page?
+;	sta f2,x	; help
+	jsr incByteDiffs
+	rts
+
+print_at:
+; gets x/y coords from 1st 2 bytes;
+; string format is "<x> <y> <text> {0}"
+; lda (temp) to increment where to plot to screen_ram
+; get address
+	lda >msg_status_line
+	sta string
+	lda <msg_status_line
+	sta string+1
+	ldy #$00	; reset counter
+; get/set coordinates
+	lda (string),y	; get x coord
+	iny		; increment pointer
+	inc string	; increment base addr
+	tax		; row=.x for plot routine
+	iny		; increment pointer
+	inc string	; increment base addr
+	lda (string),y	; get y coord
+	tay		; col=.y for plot routine
+
+;	clc		; set cursor position
+;	jsr plot	; $e50a
+	ldy string	; get pointer back
+@:
+	lda (string),y
+	beq >@		; 0-byte is end of string
+	inc string	; prep to print next char
+	sta (temp),y	; store on screen
+	iny		; inc pointer
+	jmp <@
+
+@:
+	rts
+
+; tables:
+
+; colors:
+colorBackground:
+	byte $08
+colorDisplay:
+	byte $01
+colorHighlight:
+	byte $02
+
+; strings:
+sector_frame_top:
+	ascii "{$a0:40}{0}"
+sector_frame_bottom:
+	ascii "{$xx}{$a0:40}{$xx}{$00}"
+
+msg_press_any_key:
+; column, row
+	byte $0a,$00
+	ascii "Press any key to end{0}"
+
+msg_status_line:
+	byte $01,$0a
+	ascii "Link: 000  Diff: 000000  Bytes: 000000{0}"
+
+diff_count: word $0000
+link_diffs: word $0000
+byte_diffs: word $0000
+diff_sectors:
+
+
+;           Press any key to end
+; ----------------------------------------
+; x.......................................
+; ........................................
+; ........................................
+; ........................................
+; ........................................
+; ........................................
+; ...............+------------------------
+; ---------------+    filename
+;  Link: 000  Diff: 000000  Bytes: 000000
+; ----------------------------------------
+; x.......................................
+; ........................................
+; ........................................
+; ........................................
+; ........................................
+; ........................................
+; ...............+------------------------
+; ---------------+    filename
+;  Source  $th,$sh  $ws/$wfhex  $h1  "s"
+;  Target  $th,$sh              $h2        [offsets not duplicated here
+;  Source  trk,sec              d01         since they will be the same]
+;  Target  trk,sec  wsd/ wfdec  d02  "s"
+
+;  source: source file
+;  target: target file
+
+;  Link
+;  $th: track  (hex) [links to next track/sector could differ
+;  $sh: sector (hex)  if files are from different disk images]
+;  trk: track  (dec)
+;  sec: sector (dec)
+
+; Offsets ($02-$ff: track/sector link bytes counted above)
+; bytes on 1541: 174848 <=> $2ab00
+;   $ws: within sector (hex,    $00-$ff)
+;$wfhex: within file   (hex, $00000-$2ab00)
+;   wsd: within sector (dec,    000-255)
+; wfdec: within file   (dec, 000000-174848)
+
+; Byt: $h1/$h2 = file1/2 byte (hex)
+;      d01/d02 = file1/2 byte (dec)
+
+; Scn "s"=screen code
+; (only if output is screen, could result in unprintable
+; characters if logging to disk or printer)
+{endasm}
