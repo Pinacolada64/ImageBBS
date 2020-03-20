@@ -1,5 +1,6 @@
+{loadaddr:$0801}
 {ascii:alt}
-{:10}
+{number:10}
 	goto {:screen}
 ' init:
 ' TODO: ask from directory or specific track/sector
@@ -15,27 +16,27 @@
 ' from lfn#2, get 15 bytes, crskip=0, get dir entry into a$
 	sys ia,2,16,.,a$
 	print a$;:
-; TODO: when changing display/highlight color:
-;	lda colorDisplay
-;	cmp colorBackground
-;	beq chooseAgain		; avoids invisible text
+' TODO: when changing display/highlight color:
+'	lda colorDisplay
+'	cmp colorBackground
+'	beq chooseAgain		; avoids invisible text
 {:screen}
-	print"{switchdisable}{lowercase}{clear}{down}":gosub{:sector_frame}
-	print" Links: 000  Diffs: 00000  Bytes: 000000"
-'                       ^     1       ^       2      ^
-'             0123456789abcdef0123456789abcdef01234567
-'	print "{switchdisable}{lowercase}{clear}{down:9} Link: 000  Diff: 000000  Bytes: 000000"
+	print"{switchdisable}{lowercase}{clear}":gosub{:sector_frame}
+	print" Link: 000  Diff: 000000  Bytes: 000000"
+'                      ^      1      ^        2     ^
+'             0123456789abcdef0123456789abcdef0123456
 	gosub {:sector_frame}
-	sys{sym:fill_test}
+	rem sys{sym:reset_buffers}
+	sys{sym:incLinkDiffs}:sys{sym:incDiffCount}:sys{sym:incByteCount}
 	end
 
 ' links: max 664 blocks
-' diffs: max 65535?
+' diffs: max 174848
 ' bytes: max 174848 per disk
 
 {:sector_frame}
-	print"{$a0:40}{down:6}"tab(15)"{176}{$a0:39}{189}"
-' ;{:test_fill}
+	print"{$c0:40}{down:6}"tab(15)"{176}{$c0:39}{189}"
+' {:test_fill}
 '	print"{up:8}";:for x=1 to 255:print ".";:next:print
 	return
 
@@ -67,29 +68,29 @@
 
 ; screen memory
 	text_ram	= $0400
-; base_* = physical line # on screen within screen/color ram
+; row_* = physical line # on screen within screen/color ram
 ; (add text_ram or color_ram to get final address)
-	base_orig	= (40*4)	;  4th row
-	base_status_row	= (40*12)	; 12th row
-	base_diff	= (40*14)	; 14th row
+	row_orig	= (40*2)	;  2nd row
+	row_status_line	= (40*10)	; 10th row
+	row_diff	= (40*12)	; 12th row
 
 ; since we're using screen ram as buffers, add that constant:
-	buf_orig	= text_ram + base_orig		; $04xx, 1024
-	buf_status_row	= text_ram + base_status_row	; $04xx,
-	buf_diff	= text_ram + base_diff		; $04xx,
+	buf_orig	= text_ram + row_orig		; $0450, 1104
+	buf_status_line	= text_ram + row_status_line	; $04xx,
+	buf_diff	= text_ram + row_diff		; $04xx,
 
 ; color memory
 	color_ram	= $d800
-	col_orig	= color_ram + base_orig		; color for original buffer
-	col_status_row	= color_ram + base_status_row	; color for status line
-	col_diff	= color_ram + base_diff		; color for difference buffer
+	col_orig	= color_ram + row_orig		; color for original buffer
+	col_status_line	= color_ram + row_status_line	; color for status line
+	col_diff	= color_ram + row_diff		; color for difference buffer
 
 init:
 ; FIXME - jsr table in rough order of operations
 	jsr >@init
-	jsr >@set_buf_diff
+	jsr   set_text_diff
 	jsr >@get_sector
-	jsr >@set_buf_orig
+	jsr   set_text_orig
 ; TODO	jsr   get_sector
 ; TODO	jsr >@compare_links
 	jsr   compare_buffers
@@ -110,33 +111,51 @@ init:
 ; bne ...		; bne ...	bne ...
 ; hmm
 
-@set_buf_diff:
-; point ($f9) to difference buffer
-	lda buf_diff
-	sta buffer
-	lda buf_diff+1
+set_text_orig:
+; point ($f9) to original buffer (text)
+	lda #>buf_orig
 	sta buffer+1
-	jmp >@get_sector
+	lda #<buf_orig+1
+	sta buffer
+	rts
 
-@set_buf_orig:
-; point ($f9) to original buffer:
-	lda buf_orig
-	sta buffer
-	lda buf_orig+1
+set_text_diff:
+; point ($f9) to difference buffer (text)
+	lda #>buf_diff
 	sta buffer+1
-; TODO	jmp >@get_sector
+	lda #<buf_diff+1
+	sta buffer
+	rts
+
+set_col_orig:
+; point ($f9) to original buffer (color)
+	lda #>col_orig
+	sta buffer+1
+	lda #<col_orig+1
+	sta buffer
+	rts
+
+set_col_diff:
+; point ($f9) to original buffer (color)
+	lda #>col_diff
+	sta buffer+1
+	lda #<col_diff+1
+	sta buffer
+	rts
 
 @get_sector:
-; fill selected buffer [($f9)] with data:
+; fill selected buffer ($f9) with data:
 ; will point to (original) or (difference)
 	jsr getin
 	pha		; save byte
 	lda status	; get i/o status
+	beq >@
 ; TODO	bne disk_error
+@:
 	pla		; restore byte
 	sta (buffer),y	; put in current buffer
 	iny
-	bne @>get_sector
+	bne <@get_sector
 
 ; @swap_buffers:
 ; to swap buffers (i.e., which buffer disk input is filling), load $fa/fb with:
@@ -150,50 +169,37 @@ init:
 ;@:
 ;	sta curr_buf
 
-; reset color memory for buf_orig and buf_diff to display color to
+reset_buffers:
+; reset text/color memory for buf_orig and buf_diff to display color to
 ; negate any highlighted diffs on reading a new sector
-	lda #>col_orig
-	sta buffer
-	lda #<col_orig
-	sta buffer+1
+; +2459
 
+; reset buffer text
+	jsr set_text_orig
+	lda #$01	; fill char
+	jsr reset
+
+	jsr set_text_diff
+	lda #$02	; fill char
+	jsr reset
+
+; reset buffer colors
+	jsr set_col_orig
 	lda colorDisplay
 	jsr reset
 
-	lda #>col_diff
-	sta buffer
-	lda #<col_diff
-	sta buffer+1
-
-	lda colorDisplay
-	jsr reset
-
-; reset buffer contents
-	lda #>buf_orig
-	sta buffer
-	lda #<buf_orig
-	sta buffer+1
-
-	lda colorDisplay
-	jsr reset
-
-	lda #>buf_diff
-	sta buffer
-	lda #<buf_diff
-	sta buffer+1
-
-	lda #$a0	; fill byte to display
+	jsr set_col_diff
+	lda colorHighlight
+;	jsr reset
 
 reset:
 ; clear ($f9) with .a
 	ldy #$00	; counter
 @:
-	sta (buffer),y	; fill color ram
-	sta (buffer),y
-;	stx (buffer),y	; fill buffer
-;	stx (buffer),y
+	sta (temp),y	; fill buffer
+;	stx (buffer),y	; valid instruction
 	iny
-	bne >@
+	bne <@
 	rts
 
 ; read sector, display it
@@ -335,11 +341,11 @@ incLinkDiffs:
 
 ; increment on-screen link diff count:
 @:
-	ldx #$09	; offset
+	ldx #$09	; offset from buf_status_line
 	ldy #$03	; 3 digits
 	jmp c108
 
-incByteDiffs:
+incDiffCount:
 ; increment in-memory byte diff count:
 ; (for logging)
 	inc byte_diffs+1
@@ -348,35 +354,27 @@ incByteDiffs:
 	inc byte_diffs
 
 ; increment on-screen byte diff count
-	ldx #$16 	;offset
+@:
+	ldx #$17 	;offset from buf_status_line
 	ldy #$06 	;digits
 	jmp c108 	;$c108
 
 incByteCount:
 ; increment on-screen byte count
-	ldx #$27 	;offset
+	ldx #$26 	;offset from buf_status_line
 	ldy #$06 	;digits
 c108:
-	inc buf_status_row,x
-	lda buf_status_row,x
+	inc buf_status_line,x
+	lda buf_status_line,x
 	cmp #$3a	; ':'
 	bne c11b
 	lda #'0'
-	sta buf_status_row,x
+	sta buf_status_line,x
 	dex
 	dey
 	bne c108 	;$c108
 c11b:
 	rts
-
-fill_test:
-	ldy #$00
-	lda #'.'	; fill character
-@:
-	sta (pbuf_orig),y	; original buffer
-	sta (pbuf_diff),y	; difference buffer
-	iny
-	beq >@
 
 compare_buffers:
 	ldy #$00
@@ -410,7 +408,7 @@ inc_diff:
 ; can't just do sta diff_count,y -- f1/f2 byte tables will most likely grow >256 bytes,
 ; and what do you do when a table > 1 page?
 ;	sta f2,x	; help
-	jsr incByteDiffs
+	jsr incDiffCount
 	rts
 
 print_at:
@@ -461,7 +459,7 @@ colorHighlight:
 sector_frame_top:
 	ascii "{$a0:40}{0}"
 sector_frame_bottom:
-	ascii "{$xx}{$a0:40}{$xx}{$00}"
+	ascii "{176}{$a0:40}{189}{$00}"
 
 msg_press_any_key:
 ; column, row
