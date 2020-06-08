@@ -196,6 +196,7 @@ ha083:
 	bne tchk1
 	jsr gettsr
 	beq tchk1
+; display copyright msg when time expired:
 	lda #<copyrite
 	sta jmptbl
 	lda #>copyrite

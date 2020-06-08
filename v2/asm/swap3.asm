@@ -166,7 +166,7 @@ loop:
 	lda bsnval+1
 	sta var
 	ldx #31
-	jsr putvar ;a%
+	jsr putvar ;a% (yet original source string has b%?)
 
 	lda #copylen
 	sta var
@@ -183,7 +183,7 @@ loop:
 ; FIXME: remove this "and 255" stuff?
 ; enc 255
 copymsg:
-	ascii "{f6}{pound}{back arrow}07IMAGE BBS 64 V2.0 S# {pound}$a{pound}#4{pound}{back arrow}%b"
+	ascii "{f6}{pound}{back arrow}07IMAGE BBS 64 V2.0 S# {pound}$a{pound}#4{pound}%b"
 	ascii "{f6}{pound}{back arrow}06(C) 1991  NEW IMAGE SOFTWARE{f6}"
 ; enc 0
 	copylen = *-copymsg
