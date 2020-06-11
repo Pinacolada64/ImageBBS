@@ -37,10 +37,12 @@ rslow:
 rshigh:
 	byte >rs232a,>rs232b ; $c0 $c3
 
+rs232a:
 	{info:INFO: Embedding "rs232-user.bin"}
-rs232a: {include:"rs232-user.bin"}
+	embed "rs232-user.bin"
+rs232b:
 	{info:INFO: Embedding "rs232-swift.bin"}
-rs232b: {include:"rs232-swift.bin"}
+	embed "rs232-swift.bin"
 
 ; FIXME: since load addresses ($00 $08) are part of the binaries,
 ; the program is JMPing there and hitting a BRK instruction

@@ -1,8 +1,24 @@
-	ON IM GOTO{:60004}:RETURN
+{number:60000}
+{step:2}
+' want to be able to input just "DC/DR" and be prompted "Device, Drive"
+' or input "DR5" and skip the prompt
+' 350: check DC/DR device[,drive] params, a=1: device not present
+' 349: ask for device/drive if not specified
+	gosub 350:if a=. then gosub 349:goto 60000
+	if a then:&"Device not present!{f6}":return
 {:60004}
-	GOSUB 350:ON A GOTO{:60012}:POKE 53252,58:&"{f6}DISK COMMAND?: {pound}I0":&,15,2
-	Z$=AN$:IF Z$=""OR Z$="@"THEN GOSUB 3:GOSUB 5:&:RETURN
-	B$=LEFT$(Z$,1):IF B$="N"OR B$="S"THEN:GOSUB 93:IF A=0 THEN RETURN
-	GOSUB 3:PRINT# 15,Z$:GOSUB 5:&:RETURN
-{:60012}
-	&"DEVICE NOT PRESENT!{f6}":RETURN
+	poke 53252,58:on im gosub {:disk_command},{:get_directory}:poke 53252,ll%:return
+{:disk_command}
+	&"{f6}Disk Command: {pound}i0":&,15,2
+	z$=an$:if z$="" or z$="@" then gosub 3:gosub 5:&:return
+	b$=left$(z$,1):if b$="n" or b$="s" then gosub 93:if a=. then return
+	gosub 3:print# 15,z$:gosub 5:&:return
+{nice:100}
+{:get_directory}
+	t%=.:b%=.:&"{f6}Pattern (*): {pound}i0":if an$="" then an$="*"
+	&,15,2:close 1:open 1,dv%,.,"$"+dr$+an$:&,8,1,1:&:&"{f6}"
+' TODO: check st instead?
+{:get_directory_2}
+	&,8,1,1:if mid$(a$,7,6)<>"blocks" then b%=b%+val(a$):t%=t%+1:&:goto {:get_directory_2}
+	close 1:&"{pound}# {pound}#5%b blocks.{f6}{pound}#5{pound}%t files.{f6}":return
+	rem sub.sysdos 1/14/2020 pinacolada

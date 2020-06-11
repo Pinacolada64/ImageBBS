@@ -3,7 +3,7 @@
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.swap3":print pass;
 
 orig $c000
-	{include:equates-2_0.asm}
+{include:equates-2_0.asm}
 
 hc000:
 	jmp read0
@@ -18,7 +18,7 @@ hc00c:
 ;
 ; jump table routines
 ;
-outastr:
+@outastr:
 	lda #0
 	byte $2c
 dskin:
@@ -139,9 +139,9 @@ movdly:
 ; print copyright message
 ;
 copyrite:
-	lda outastrp+1
+	lda outastr+1
 	sta jmptbl
-	lda outastrp+2
+	lda outastr+2
 	sta jmptbl+1
 	ldy #copylen-1
 loop:
@@ -166,7 +166,7 @@ loop:
 	lda bsnval+1
 	sta var
 	ldx #31
-	jsr putvar ;a%
+	jsr putvar ;a% (yet original source string has b%?)
 
 	lda #copylen
 	sta var
@@ -183,7 +183,7 @@ loop:
 ; FIXME: remove this "and 255" stuff?
 ; enc 255
 copymsg:
-	ascii "{f6}{pound}{back arrow}07IMAGE BBS 64 V2.0 S# {pound}$a{pound}#4{pound}{back arrow}%b"
+	ascii "{f6}{pound}{back arrow}07IMAGE BBS 64 V2.0 S# {pound}$a{pound}#4{pound}%b"
 	ascii "{f6}{pound}{back arrow}06(C) 1991  NEW IMAGE SOFTWARE{f6}"
 ; enc 0
 	copylen = *-copymsg

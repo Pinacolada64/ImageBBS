@@ -1,5 +1,5 @@
-{include:equates-2_0.asm}
 orig $c000
+{include:equates-2_0.asm}
 ; print "Struct: [" ;
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.struct":print pass;
 ;
@@ -297,7 +297,7 @@ getd2:
 getd3:
 	ldy #4
 getd4:
-	lda var,y	; $61
+	lda $0061,y	; var
 	sta ($47),y
 	dey
 	bpl getd4
@@ -688,8 +688,8 @@ scansum1:
 	clc
 scansum2:
 	lda ($6b),y
-	adc var,y
-	sta var,y
+	adc $0061,y	; var (force zp address)
+	sta $0061,y	; var (force zp address)
 	dey
 	bpl scansum2
 	lda size

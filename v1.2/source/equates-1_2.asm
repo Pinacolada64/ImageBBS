@@ -1,4 +1,3 @@
-{asm}
 ; image 1.2 ml equates
 ; sorted and de-duped (12/Jul/2016 14:16)
 
@@ -49,23 +48,23 @@ var      = $61	; Floating point accumulator:
 			; store value of variable for usevar, putvar, zero,
 			; minusone, getarr, putarr, getin, putin, etc.
 fac2     = $69
-arisgn   = $6f ; arithmetic sign
+arisgn   = $6f	; arithmetic sign
 fbufpt   = $71
-chrget   = $0073 ; 2 bytes for proper zero-page JSR
+chrget   = $0073; 2 bytes for proper zero-page JSR
 chrinc   = $76
-chrgot   = $0079 ; 2 bytes for proper zero-page JSR
+chrgot   = $0079; 2 bytes for proper zero-page JSR
 txtptr   = $7a
 cmpspace = $80
 rndx     = $8b
-status   = $90
+status   = $90	; Kernal I/O Status Word
 svxt     = $92
 verck    = $93
 syno     = $96	; Cassette Block Synchronization Number
-xsav     = $97
-dfltn    = $99
-dfltno   = $9a
+xsav     = $97	; Temporary .X Register Save Area
+dfltn    = $99	; Default Input Device (Set to 0 for Keyboard)
+dfltno   = $9a	; default output device
 dpsw     = $9c
-ptr1     = $9e
+ptr1     = $9e	; temp storage
 jiffy    = $a2
 sal      = $ac
 eal      = $ae
@@ -314,4 +313,3 @@ pound	= 92 ; $5c
 
 ImageReturn = $8b ; f6
 upper	= $60 ; normally $c0 ; +1 = A ... +26 = z
-{endasm}

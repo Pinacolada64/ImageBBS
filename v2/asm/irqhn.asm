@@ -3,7 +3,7 @@
 ; 12/08/90 01:28a
 ;* counter to execute a different
 ;* part of the routine each jiffy
-{info:equates-2_0.asm}
+
 irq:
 	jsr irq9
 	jsr irq10
@@ -196,6 +196,7 @@ ha083:
 	bne tchk1
 	jsr gettsr
 	beq tchk1
+; display copyright msg when time expired:
 	lda #<copyrite
 	sta jmptbl
 	lda #>copyrite
@@ -635,6 +636,9 @@ irq7i:
 chkflag:
 	ldy #5
 chkflags:
+; &,52,.x,.y
+; enter with .x: lightbar item to work with (&,52,$hex,y allowed)
+; .y: mode: see comments
 	lda $ff
 	pha
 	stx $ff
@@ -652,17 +656,17 @@ chkflags:
 	pla
 	iny
 	dey
-	beq chkflag0
+	beq chkflag0	; &,52,x,0: clear
 	dey
-	beq chkflag1
+	beq chkflag1	; &,52,x,1: set
 	dey
-	beq chkflag2
+	beq chkflag2	; &,52,x,2: toggle
 	dey
-	beq chkflag3
+	beq chkflag3	; &,52,x,3: read status into a% (0=off, 1=on)
 	dey
-	beq chkflag4
+	beq chkflag4	; &,52,x,4: move lit section to .y
 	dey
-	beq chkflag5
+	beq chkflag5	; (ML only?): like &,52,x,3 but return status in .a?
 chkflag6:
 	sta chktbl,x
 chkflag7:
@@ -712,7 +716,7 @@ tmpbar:
 fkey:
 	ldx tmpkey
 	lda 653
-	and #4
+	and #4		; ctrl hit
 	bne fkey1
 	inx
 fkey1:
@@ -992,7 +996,7 @@ t1fk7a:
 t1fk7b:
 	jmp t2init ;tsr
 t1fk7c:
-	lda outptrfl
+	lda outptrfl	; defined in character-io.asm
 	eor #1
 	sta outptrfl
 	rts
@@ -1276,7 +1280,7 @@ d1str:		area 11
 ha560:
 	byte $31,$28,$31,$30,$31,$30,$31,$31,$30,$00
 
-	
+
 ; from includes (23 bytes + $00)
 daytbl:
 	ascii "SunMonTueWedThuFriSat"
@@ -1284,5 +1288,5 @@ daytbl:
 ;>C:c000  53 75 6e 4d  6f 6e 54 75   SunMonTu
 ;>C:c008  65 57 65 64  54 68 75 46   eWedThuF
 ;>C:c010  72 69 53 61  74 00 00 00   riSat...
-	
-{endasm}
+
+{endif}

@@ -5,13 +5,14 @@
 
 WINE = wine
 C1541 = c1541
-CASM = $(WINE) casm.exe
+C64LIST4BETAA = $(WINE) c64list4_00-beta-a.exe # needed for .bin generation/inclusion
+C64LIST4BETAC = $(WINE) c64list4_00-beta-c.exe # latest version
 DISKIMAGE = test-ml20.d64
+C64_FILENAME = "ml 2.0"
+	# c64list: petscii translation results in "ml 2.0", but it can't output both .prg and to .d64 in a single command line
+	# c1541: needs no translation
 
-# "build.lbl" needs $PREREQS assembled first
-all: $(DISKIMAGE)
-#	wine casm.exe $(OBJECTS) -prg:$@ -ovr -verbose
-#	$(C1541) $(DISKIMAGE) -del $@ -write $@
+all: ml20.prg
 
 # from 'make' documentation ('files' function):
 # If the command required each argument to be on a separate line of the input
@@ -22,118 +23,85 @@ all: $(DISKIMAGE)
 #	@rm $@.in
 
 #	(foreach variable,list,text)
-#	$(foreach O,$(basename $(OBJECTS)),$(echo "wine casm.exe @$@.lbl -prg" $O))
-#	echo wine casm.exe @$@ -prg
+#	$(foreach O,$(basename $(OBJECTS)),$(echo "wine $(C64LIST4BETAC) @$@.asm -prg" $O))
+#	echo wine $(C64LIST4BETAC) @$@ -prg
 #	@rm $@.in
 
-# The "basic" build target builds "*.lbl" files into "*.bin" files,
+# *.lbl files are being kept as BASIC programs.
+# The "basic" build target builds "*.lbl" files into "*.prg" files,
 # then puts them on (currently) "test.d81" disk image, with some
 # filename transformation (see "build-plus_file.lbl" for examples)
 
-# "ml20.prg" is the goal
-
-# maybe generate a master symbol file with only important symbols ("!symbol")?
-# loop through all the *.lbl files and append symbols to "symbols.sym"
-# (not sure how to do that yet), shell syntax is 'echo "bla" >> outputfile'
-
-# would need to generate an actual .prg file so that symbols resolve to the
-# right addresses though?
-
-# dependencies: *.sym=symbol file, *.bin=binary (.prg sans load address)
-
-# promote labels needed by other modules to "important" (e.g., "!label")?
-
-# build.lbl doesn't need symbols output from .bin rule
-
-# prerequisites:
-build.lbl: wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
+# 1) prerequisites must be built before build.asm can embed the .bin files
+PREREQS = wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
 	swap1.bin swap2.bin swap3.bin
 
-jump-table.lbl: build.sym modem.sym
+%.bin: %.asm
+	# this must stay beta a for now; this version outputs and includes .bin files
+	$(C64LIST4BETAA) $< -bin:$@
 
-string-io.lbl: character-io.sym
+# 2) call build.asm, include *.asm files not listed in $(PREREQS)
+ml20.prg: $(PREREQS) build.asm
+	# need beta a since it embeds .bin files
+	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg
+# output symbols
+	$(C64LIST4BETAA) build.asm -sym
+# TODO: make one-byte zp symbols ($61) two bytes ($0061) for purposes of sorting and ease of diff'ing
 
-mci-commands.lbl: character-io.sym
+# sort symbols
+	$(shell sort build.sym -t $ --key 2)
+# output disassembly
+	$(C64LIST4BETAA) build.asm -lst
+# write ml 2.0 to disk
+	$(C1541) $(DISKIMAGE) -write $@ $(C64_FILENAME) -dir
 
-character-io.lbl: string-io.sym
+# $(DISKIMAGE): ml20.prg
+# 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
+# 	# import ml20.prg into $(DISKIMAGE) as "ml 2.0"
+# 	$(C64LIST4BETAC) $< -d64:$@::$(C64_FILENAME)
+# 	# show contents
+# 	$(C1541) $(DISKIMAGE) -dir
 
-disk-io.lbl: build.sym varbl.sym screen-handler.sym
+### historical dependencies:
 
-irqhn.lbl: build.sym irqhn.sym
+# jump-table.asm: build.sym modem.sym
 
-intro.lbl: irqhn.sym varbl.sym
+# string-io.asm: character-io.sym
 
-miscl.lbl: equates-2_0.sym irqhn.sym
+# mci-commands.asm: character-io.sym
 
-modem.lbl: screen-handler.sym
+# character-io.asm: string-io.sym
 
-screen-handler.lbl: irqhn.sym wedge.sym equates-2_0.sym
+# disk-io.asm: build.sym varbl.sym screen-handler.sym
 
-varbl.lbl: equates-2_0.sym build.sym string-io.sym
+# irqhn.asm: build.sym irqhn.sym
 
-wedge.lbl: equates-2_0.sym
+# intro.asm: irqhn.sym varbl.sym
 
-PREREQS: wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
-	swap1.bin swap2.bin swap3.bin
+# miscl.asm: equates-2_0.sym irqhn.sym
 
-ml20.prg: $(PREREQS) calls.bin varbl.bin string-io.bin \
-	character-io.bin ecs.bin inline.bin intro.bin irqhn.bin jump-table.bin \
-	modem.bin screen-handler.bin struct.bin
+# modem.asm: screen-handler.sym
 
-symbols: calls.lbl varbl.lbl string-io.lbl \
-	character-io.lbl ecs.lbl inline.lbl intro.lbl irqhn.lbl jump-table.lbl \
-	modem.sym screen-handler.sym struct.sym
-	for i in $(PREREQS); do \
-		$(CASM) $< –sym:con –syml:g
-	done
+# screen-handler.asm: irqhn.sym wedge.sym equates-2_0.sym
 
-%.prg: %.lbl
-	$(CASM) $< -prg:$@
+# varbl.asm: equates-2_0.sym build.sym string-io.sym
 
-%.bin: %.lbl
-	$(CASM) $< -bin:$@
-
-%.sym: %.lbl
-	echo --- Generating symbol table: \'$@\'
-	# symbol level: general, output symbols to console
-	$(CASM) $< -syml:g -sym:$@
-
-$(DISKIMAGE): ml20.prg
-	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
-	# import ml20.prg into $(DISKIMAGE) as "ml 2.0"
-	$(C64LIST) $< -d64:$@::$(C64_FILENAME)
-	# show contents
-	$(C1541) $(DISKIMAGE) -dir
+# wedge.asm: equates-2_0.sym
 
 # ...should resolve to:
 # ($OUTPUT_PATH) is just the current directory
-#	$(shell echo "# wine casm.exe $(OUTPUT_PATH)/$(basename $@).lbl -prg:$(OUTPUT_PATH)/$(basename $@).prg -ovr -verbose")
-#	                wine casm.exe $(OUTPUT_PATH)/$(basename $@).lbl -prg:$(OUTPUT_PATH)/$(basename $@).prg -ovr -verbose
+#	$(shell echo "# wine casm.exe $(OUTPUT_PATH)/$(basename $@).asm -prg:$(OUTPUT_PATH)/$(basename $@).prg -ovr -verbose")
+#	                wine casm.exe $(OUTPUT_PATH)/$(basename $@).asm -prg:$(OUTPUT_PATH)/$(basename $@).prg -ovr -verbose
 # and
 #	           c1541 test.d81 -del "boot" -write "boot.prg" "boot"
 
-# continue build script:
-#	wine casm.exe build.lbl -prg:"ml\ 2_0" -ovr -verbose
-
-
-# TODO: filename transformations: _ to . (ml_rs232.prg -> ml.rs232, mainly)
+# TODO: filename transformations: _ to . ("ml_rs232.prg" -> "ml.rs232", mainly)
 #	$(shell echo "# $(C1541) $(OUTPUT_PATH)/$(OUTPUT_DISK) -del ml.$(basename $@) -write $(OUTPUT_PATH)/$(basename $@).prg ml.$(basename $@)")
 #	                $(C1541) $(OUTPUT_PATH)/$(OUTPUT_DISK) -del ml.$(basename $@) -write $(OUTPUT_PATH)/$(basename $@).prg ml.$(basename $@)
 
-# ml20.prg: $(OBJECTS)
-# 'casm' targets are *.lbl files, but only for assembly language
-# (c64list3_05.exe has an assembler built in, but it's slightly buggy)
-# a convention is that the filename end in "-casm.lbl"
-# casm: %-casm.lbl
-# TODO: establish build rules (mostly the same as "module" target)
-
 # Include build date of module
-# Example output: "Fri Jun 29 10:36:18 PDT 2018"
-# FIXME: Do this with every module build, make a function of this?
-# FIXME: Might not need "PDT" displayed
-# Must end in CR/LF to keep DOS/wine happy
-# build-date:
-#	$(shell echo "print \"`date`\"\r\n" > build-date_basic.lbl)
+# C64LIST4BETAC does this with build revision tracking
+# Example usage: bd$={usedef:__BuildDate}:bt$={usedef:__BuildTime}
 
 # The "make disk" target will add all the *.prg files to a .d81 at once
 # TODO: update disk directory timestamp, maybe with
@@ -152,7 +120,8 @@ $(DISKIMAGE): ml20.prg
 
 clean:
 	# "-" prefix allows 'clean' to continue despite possible missing files
-	-rm *.bin *.prg *.sym $(OUTPUT_DISK)
+	-rm *.bin *.prg *.lst $(DISKIMAGE)
+	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 
 # FIXME: not sure this really works
 #	$(C1541) -format $(DISKNAME),$(ID) d64 $(DISKFILENAME)
@@ -162,7 +131,7 @@ clean:
 
 # The "test" target just creates a few files for "make clean" to clean up
 test:
-	touch bla.prg bla.bin bla.sym $(OUTPUT_DISK)
+	touch bla.prg bla.bin $(OUTPUT_DISK)
 # list files in directories $(dirs) to $(files):
 # https://www.gnu.org/software/make/manual/make.html#Foreach-Function
 
@@ -180,23 +149,24 @@ test:
 
 	dirs=$(OUTPUT_PATH)
 # desired output:
-# build.lbl calls.lbl character-io.lbl ecs.lbl [...]
-	files=$(foreach dir,$(OBJECTS),$(wildcard $(dir)/*.lbl))
+# build.asm calls.asm character-io.asm ecs.asm [...]
+	files=$(foreach dir,$(OBJECTS),$(wildcard $(dir)/*.asm))
 
 	VAR="bla bla bla"
 
 	echo I am writing to ${OUTPUT_PATH}!
 	$(info [Info]: VAR is [$(VAR)])
 
-	echo Files ending in *.lbl:
+	echo Files ending in *.asm:
 	echo $(files)
 
-transform: %.lbl
+transform: %.asm %.prg
 # desired command line (this does work!):
 # c1541 test.d81 -write boot.prg boot -write bla.prg bla -dir
 
 # c64 filename: _ -> ., .prg extension removed:
-	C64_FILENAME="$(subst _,.,$(patsubst %.lbl,%,$^)"
+	C64_FILENAME="$(subst _,.,$(patsubst %.asm,%,$^)"
+
 # filesystem filename:
 	FS_FILENAME=$@
 # attach target disk image:

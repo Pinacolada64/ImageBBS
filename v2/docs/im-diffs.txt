@@ -1,34 +1,34 @@
 Image BBS 2.0 IM line number translation:
 (from "im.emul13")
 
-9/21/1994 - New Image Software (nis)
+9/21/1994 - New Image Software (1.x, 2.0)
 :
-:	5/6/1996 - Jack L. Followay (jlf)
+:	5/6/1996 - Jack L. Followay (3.0)
 :	:
 :	:	1/2/1999 - im.emul13 (emu)
 :	:	:
 1000	1000	goto 2004
 1001	1	goto 1		Position REL pointer (gosub 1002)
 1002	10	goto 10		Position REL pointer
-1003	2426	goto 2426	?
+1003	2426	goto 2426	Show various screen masks
 1004	11	goto 11		Get user flag #a in fl$
 1005		goto 1028	Uppercase/lowercase input: an$
 1006	6	goto 6		Command stacking, return uppercase input: an$
 1007	7	goto 7		Get uppercase character: an$
-1008	8 -> 96	goto 1008	jlf: remove [rns: I think it should be goto 96]
+1008	8 -> 96	goto 1008	3.0: remove [rns: I think it should be goto 96]
 1907	8			1.3: display [Yes]
 				emu: device/drive prompt, return
 1009	2	goto 2		Get device/drive of system drive 'dr'
 1010	3	goto 3		Close/reopen command channel
 1011	4	goto 4		Open file 'a$' on logical file# 2
 1012	5	1012 -> 5	check error channel
-1013	6->310	1013 -> 1014	jlf: command stacking/input prompt
+1013	6->310	1013 -> 1014	3.0: command stacking/input prompt
 				emu: set drive 5 (plus files)
 1014		1014 -> 1015	Display a$ in "area" window, set system drive
 1015	70	1015 -> 1012	Load plus file
 1016	71	1016 -> 3000	*** main entry point to load plus file ***
-				nis: Load "+."+a$ plus-file
-				jlf: Load "i."+a$, goto 3000
+				1.2: Load "+."+a$ plus-file
+				3.0: Load "i."+a$, goto 3000
 1019	84	1019 -> return	calculate a=minutes left, pt%=prime time?
 		1020 -> 18
 1023	18			scratch and rewrite SEQ file a$ (gosub 1024)
@@ -41,8 +41,8 @@ Image BBS 2.0 IM line number translation:
 1075	13			Clear screen...
 1076	14			...and read file in a$
 	15			close logical file #2
----	20-27			jlf: remove
-1750	28-29			jlf: Load protocol "++ "+a$
+---	20-27			3.0: remove
+1750	28-29			3.0: Load protocol "++ "+a$
 1060	30			Open "e.stats"
 1061	31			Open "e.access"
 1062	32			Open mail file "m."+tt$+",s,"+a$
@@ -53,7 +53,7 @@ Image BBS 2.0 IM line number translation:
 	37			Append or write "e."+b$ (gosub 36)
 	38			Write user data to lfn#2
 	39			Dump array tt$() to open lfn#2
----	40-47			jlf: Redirect to 440-447
+---	40-47			3.0: Redirect to 440-447
 1095	50			Check if instant logon used: if so, RETURN
 1096	51			...otherwise, log a$ to daily log
 	52			check Prt "print log entries" lightbar enabled
@@ -72,10 +72,10 @@ Image BBS 2.0 IM line number translation:
 	73			...load "i/"+a$ module, goto 4000
 	74			set plus file drive, load "sub."+a$ module, gosub 60000
 	75			something to do with activity queue
-	76			jlf: set up i.* module load
-	77			jlf: set up i/* module load
-	78			jlf: set up sub.* module load
-	79			jlf: display "L:"+a$ in Area window, load module
+	76			3.0: set up i.* module load
+	77			3.0: set up i/* module load
+	78			3.0: set up sub.* module load
+	79			3.0: display "L:"+a$ in Area window, load module
 	80			load module in z$?
 	82			Clear some arrays
 	83			Clear another array
@@ -83,16 +83,17 @@ Image BBS 2.0 IM line number translation:
 
 1920	92			Display ">>Canceled!"
 1901	93			Display "Are You Sure?: "
-1902	94			Display "[No]", wait for keypress 
+1902	94			Display "[No]", wait for keypress
 	95			Display "Are You Sure?: "
 1907	96	8 -> 96		Display "[Yes]", wait for keypress
 	97			Display yes/no response chosen
-1264	314			Display p$+an$
+1264	314			Display p$+an$ (command stacking)
 1265	315			Display hs$() array of commands
 
 1811	200			Main prompt
 
-1360	9	2		nis: display 'an$' in Area window
+1360	9	2		1.2: display 'an$' in Area window
+1470	350			Evaluate device,drive parameters after 2-character command
 1604	440			Load editor
 1870	370			Display b$+": O[ff|n]"
 1871				Get user flag 'b', gosub 1870, toggle flag 'b'
@@ -102,10 +103,11 @@ Image BBS 2.0 IM line number translation:
 1920	242			Display "Aborted!"
 1930		goto330
 1980		goto390
-
-1811?	300			jlf: load "i.main"
-1700	302			nis: load "+.lo"
-				jlf: load "i.lo"
+1995	390			1.2: Display "Device not present" from e.text
+				3.0: x=6:gosub 390
+1811	300			3.0: load "i.main" (main prompt)
+1700	302			2.0: load "+.lo"
+				3.0: load "i.lo"
 
 2100	304-308			DIMension 1.2 style arrays
 
@@ -113,10 +115,10 @@ Image BBS 2.0 IM line number translation:
 		24xx -> 2500	load "im.screens"
 2406	430			 430 2.0: load "sub.param1"
 				2406 1.3: load "im.params"
-	431			     2.0: load "im.params2"
+	431			     2.0: load "sub.params2"
 	441			2.0: load "sub.handles"
 1666	442			1.3: load "im.params"
-				jlf: load "sub.protos"
+				3.0: load "sub.protos"
 	443	2426 -> 43	load "im.display"
 		2428 -> 47	load "im.info"
 
@@ -129,26 +131,34 @@ Image BBS 2.0 IM line number translation:
 1079	61
 1081	62
 1085	60
-1093	82
-1094	83
+1093	82			gosub	Clear 4 arrays, goto 1094/83
+1094	83			gosub	Clear array
 1095	50
 1096	51
 1260	310
 1360	9
+1372					force garbage collection, calculate free RAM [?]
+					3.0: sub.local: moved 2.0's 1372 to 60008
 1450	360
 1490	50
-1603	99	general purpose RETURN
+1499	---			Input an$, if null then return
+1500				Translate encoded f-key characters, return
+
+1603	999			general purpose RETURN
 1678	85
 1700	302
 1750	28
 1811	300
 1812	300
 1901	93
-1902	94
+1902	94	Ask "Are You Sure?: "
 1904	97
 1907	96
 1914	12
 1920	92
+
+2428	447	1.3: Load "im.info"
+		3.0: Load "sub.info"
 
 Al's "+/GF-maint":
 1902	3	Yes/no questions

@@ -1,5 +1,5 @@
 ; 05/29/91 09:24p
-; "outm" symbol is in "screen-handler.lbl"
+; "outm" symbol is in "screen-handler.asm"
 getmod:
 	jsr getmdm
 	sta $fe

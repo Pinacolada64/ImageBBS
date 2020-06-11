@@ -1,5 +1,5 @@
 ; command line:
-; wine casm.exe build.lbl -prg:ml20.prg -verbose > build-errors
+; wine casm4_00-beta-a.exe build.asm -prg:ml20.prg -verbose > build-errors
 
 ; changes from asm900827 to c64list3.50:
 ; - change "dup" to "area"
@@ -7,103 +7,101 @@
 ; in assembler, cmp #"{up}" does not work - see bug #73 on bughost
 ; lda #'a' (single quotes only) works
 
-	revision = 1
+revision	= 1
+
 ;	version$ = "06/07/91 03:42p"
 ;	serial = 3 + (asc("A")and 15)*4096
 
 ;	print "{clear}Image BBS 2.0 ML "version$
 
 	{include:equates-2_0.asm}
-	; for pass=1 to 3:print "{up} pass:"pass
-	; org $6c00,-(pass=3),8,"@:ml 2.0"
 orig $6c00
 
-;	if pass < 3 then area 0,$a000-*:goto {:1000}
 ;	wedge: load addr $0c00, reloc $0c00
 	{info:embedding wedge.bin}
-	{embed:wedge.bin}
-;	if *<$7000 then area 0,$7000-*
-orig $7000
-
+	embed wedge.bin
 ; orig:  the individual .bin file's load address
 ; embed: where in RAM the .bin file gets put
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
 
 ; orig $1800, embed $7000, reloc $d000: editor
-	{embed:editor.bin}
-;	if *<$8000 then area 0,$8000-*
-;
+{info:Aligning to $7000.}
+orig $7000
+	{info:embedding editor.bin}
+	embed editor.bin
+
+{info:Aligning to $8000.}
 orig $8000
+
 ; orig $c000, embed $8000, reloc $e000: garbage collect
-	{embed:garbage-collect.bin}
-;	if *<$8400 then area 0,$8400-*
-;
+	{info:embedding garbage-collect.bin}
+	embed garbage-collect.bin
+
+{info:Aligning to $8400.}
 orig $8400
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
-	{embed:ecs.bin}
-;	if *<$8e00 then area 0,$8e00-*
-;
+	{info:embedding ecs.bin}
+	embed ecs.bin
+
+{info:Aligning to $8e00.}
 orig $8e00
 ; orig $c000, embed $8e00, reloc $ee00: struct
-	{embed:struct.bin}
-;	if *<$9400 then area 0,$9400-*
-;
+	{info:embedding struct.bin}
+	embed struct.bin
+
+{info:Aligning to $9400.}
 orig $9400
 ; orig $c000, embed $9400, reloc $f400: swap1
-	{embed:swap1.bin}
-;	if *<$9800 then area 0,$9800-*
-;
+	{info:embedding swap1.bin}
+	embed swap1.bin
+
+{info:Aligning to $9800.}
 orig $9800
 ; orig $c000, embed $9800, reloc $f800: swap2
-	{embed:swap2.bin}
-;	if *<$9c00 then area 0,$9c00-*
-;
+	{info:embedding swap2.bin}
+	embed swap2.bin
+
+{info:Aligning to $9c00.}
 orig $9c00
 ; orig $c000, embed $9c00, reloc $fc00: swap3
-	{embed:swap3.bin}
-;	if *<$a000 then area 0,$a000-*
-;
+	{info:embedding swap3.bin}
+	embed swap3.bin
+
+{info:Aligning to $a000.}
 orig $a000
-;	if *>$a000 then print "extra modules exceed $a000.":end ; by pina
 ; cannot comment out a "uses:" line, so changing it to "info:"
-	{include:jump-table.lbl}
-	{include:string-io.lbl}
-	{include:mci-commands.lbl}
-	{include:character-io.lbl}
-	{include:disk-io.lbl}
-	{include:irqhn.lbl}
-	{include:setup.lbl}
-	{include:varbl.lbl}
-	{include:miscl.lbl}
-	{include:screen-handler.lbl}
-	{include:modem.lbl}
-	{include:calls.lbl}
+@usetbl1:
+	{include:jump-table.asm}
+	{include:string-io.asm}
+	{include:mci-commands.asm}
+	{include:character-io.asm}
+	{include:disk-io.asm}
+	{include:irqhn.asm}
+	{include:setup.asm}
+	{include:varbl.asm}
+	{include:miscl.asm}
+	{include:screen-handler.asm}
+	{include:modem.asm}
+	{include:calls.asm}
 
 ;
 ; put intro program (fake protocol) in
 ;
 
-;	:print" free under rom:     {left:5}" ($c000-*)
-;	:if *<$c000 then area 0,$c000-*
-	{info:Aligning to $c000.}
+{info:Aligning to $c000.}
 orig $c000
-	;
-	{include:intro.lbl}
-	;
-;	:print" free proto ram:     {left:5}" ($ca80-*)
-	;
-	;* skip rest of proto area *
-	;
-;	:if *>$cb00 then print "error":end
-;	:if *<$cb00 then area 0,$cb00-*
-	{info:Aligning to $cb00.}
+	{include:intro.asm}
+;
+;* skip rest of proto area *
+;
+{info:Aligning to $cb00.}
 orig $cb00
 
-swapper:
+@swapper:
 	sta swappg1 ; source page #
 	sty swappg2 ; target page #
 	stx swapsiz ; # of pages to swap
-swapagn:
+@swapagn:
 	lda #'s'
 	sta tdisp+31
 	jsr rsdisab
@@ -112,13 +110,13 @@ swapagn:
 	pha
 	lda #$34
 	sta 1
-swappg1:
+swappg1	= *+1
 	lda #$00
 	sta $6a
-swappg2:
+swappg2	= *+1
 	lda #$00
 	sta $6c
-swapsiz:
+swapsiz	= *+1
 	lda #$00
 	sta $6d
 	ldy #0
@@ -157,7 +155,7 @@ getversn:
 	ldy #4
 loop:
 	lda versnum,y
-	sta var,y
+	sta $0061,y	; var
 	dey
 	bpl loop
 	ldx #15
@@ -289,7 +287,7 @@ outastr0:
 outastr1:
 	cmp #';'
 	beq outastr0
-	cmp #','
+	cmp #44		; ","
 	beq outcomma
 	jsr getstr
 	stx var+1
@@ -301,8 +299,8 @@ outastr1:
 outastr2:
 	rts
 
-	; $cd00
-outastr:
+	; $cc2b
+@outastr:
 	jsr chrgot
 	bne outastr1
 	ldx #1
@@ -388,25 +386,27 @@ evalbyt:
 spchars:
 	ascii ",:{34}*?={13}{up arrow}"
 
-;	rem
-;	: print " interrupt page:" tab(30) (*-$cb00)
-;	rem
-;	:if *>$cd00 then print "error":end
-;	:if *<$cd00 then area 0,$cd00-*
-	{info:Aligning to $cd00.}
+{info:Aligning to $cd00.}
 orig $cd00
 ;
-; interface page
+; interface page	; target
 ;
-hcd00: jmp outastr
-hcd03: jmp usetbl1
-hcd06: jmp swapper	; $cb00
-hcd09: jmp swapagn
-hcd0c: jmp trace
-hcd0f: jmp chkspcl
-hcd12: jmp convchr
+; outastr[p]:
+	jmp <@outastr	; $cc2b
+; usetbl1:
+	jmp <@usetbl1	; $a000
+; swapper:
+	jmp <@swapper	; $cb00
+; swapagn:
+	jmp <@swapagn	; $cb09
+; trace:
+	jmp  _trace	; $bc30 screen-handler.asm
+; chkspcl:
+	jmp >@chkspcl	; $cd25
+; convchr:
+	jmp >@convchr	; $cd15
 
-convchr:
+@convchr:
 	jsr chkspcl
 	cmp #0
 	bmi convchr1
@@ -417,7 +417,7 @@ convchr1:
 	and #127
 	rts
 
-chkspcl:
+@chkspcl:
 	cmp #$85
 	bcc chkspcl1
 	cmp #$8d
@@ -432,7 +432,7 @@ chkspcl1:
 	cmp #0
 	rts
 
-usetbl1:
+@usetbl1:
 	sta 780
 	stx 781
 	sty 782
@@ -473,17 +473,17 @@ nothing:
 ;
 
 newout:
-	sta $9e
+	sta ptr1	; $9e
 	lda 1
 	pha
 	lda #$36
 	sta 1
-	lda $9e
+	lda ptr1	; $9e
 	jsr out
-	sta $9e
+	sta ptr1	; $9e
 	pla
 	sta 1
-	lda $9e
+	lda ptr1	; $9e
 	rts
 oldout:
 	jmp $ffff
@@ -551,9 +551,7 @@ farerr:
 ;	rem
 ;	print " interface page:" tab(30) (*-$cd00)
 ;	rem
-;	if *>$ce00 then print "error":end
-;	if *<$ce00 then area 0,$ce00-*
-	{info:Aligning to $ce00.}
+{info:Aligning to $ce00.}
 orig $ce00
 ;
 ; buffer page
@@ -562,9 +560,9 @@ orig $ce00
 d1str:
 	ascii "           "	; 11 bytes
 	ascii "Tue Jan  1, 1988 12:00 PM   "
-buf2:
+; buf2   ($ce27-$ce76)
 	area 32,80
-buffer:
+; buffer ($ce77-$cec7)
 	area 32,80
 
 ;
@@ -613,25 +611,3 @@ version:
 ;
 versnum:
 	byte $81,$26,$66,$66,$66
-
-;	:print " buffer page:" ;tab(30);*-$ce00
-;	next pass:close 8:print
-;	open 2,8,2,"ml revisions,s,a":print#2,version$,revision:close 2
-;	rem open 2,8,2,"@:ml.serialinfo,s,w":print#2,version$:print#2,"rev#"revision
-;	rem print#2,serial1a
-;	rem print#2,serial1b
-;	rem print#2,serial2a
-;	rem print#2,serial2b
-;	rem print#2,serial3a
-;	rem print#2,serial3b
-;	rem print#2,serial4a
-;	rem print#2,serial4b
-;	rem close 2
-;	rem
-;	print"total size:" ;*-$6c00
-;	end
-;{:61000}
-;	print f$ tab(38) "{back arrow}{up}":print tab(10);
-;	include f$,8
-;	print "{up}"tab(30) (*-label) tab(38) " "
-;	return

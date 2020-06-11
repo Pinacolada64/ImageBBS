@@ -1278,7 +1278,7 @@
 {:sub.check_for_file}
 ' check for file f$: returns 62=file not found, 63=file exists
 	gosub {:1010}:print# 15,"r"+dr$+f$+"="+f$:goto {:1012}
-	
+
 {nice:10}
 	data"Commodore 64","Commodore 128","Amiga","Apple/Comp."
 	data"IBM/Comp.","Macintosh","Atari/ST","Tandy Series","Other Type"
@@ -1298,7 +1298,7 @@
 	close 2:if x<>1 then x=.
 ' Initializing SwiftLink ML...
 	&"{f6}Initializing "
-{:init}	
+{:init}
 	&mid$("user portSwiftLink",(x+1)*9-8,9)+" ML..."
 	a$=dr$+"ml.rs232":&,7,dv%,2:&,16,x:return
 {endif}

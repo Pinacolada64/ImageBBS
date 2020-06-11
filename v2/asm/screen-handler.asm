@@ -1,5 +1,4 @@
 ; "screen-handler.lbl"
-{info:equates-2_0.asm}
 ; print"05/21/91 03:25p"
 outscn:
 outscn0:
@@ -53,7 +52,7 @@ sc4:
 	jsr scroll
 sc8:
 	lda $fe
-	jsr $e716
+	jsr prtscn	; $e716
 	lda #0
 	sta scnpos
 	lda #39
@@ -62,7 +61,7 @@ sc8:
 	jmp sccrsr
 sc5:
 	lda $fe
-	jmp $e716
+	jmp prtscn	; $e716
 sc9:
 	lda fredmode
 	beq sc9a
@@ -95,7 +94,7 @@ scret:
 	beq scret0
 scret1:
 	lda #' '
-	jsr $e716
+	jsr prtscn	; $e716
 	dex
 	bne scret1
 scret0:
@@ -137,7 +136,7 @@ scdn:
 	jsr scroll
 	pla
 scrt1:
-	jmp $e716
+	jmp prtscn	; $e716
 scdel:
 sclf:
 	ldx scnpos
@@ -147,7 +146,7 @@ scup:
 	bne scrt1
 	rts
 scrvs:
-	jmp $e716
+	jmp prtscn	; $e716
 scbell:
 	ldx #26
 	ldy #5
@@ -308,7 +307,7 @@ out:
 	inc scnlock
 	jsr crsroff
 	lda $9e
-	jsr $e716
+	jsr prtscn	; $e716
 	dec scnlock
 	jmp out4
 out1:
@@ -596,7 +595,7 @@ dectbl2:
 ;*
 ;* memory and trace update
 ;*
-@trace:
+_trace:
 	inc scnlock
 	lda scnmode
 	bne trace1

@@ -276,7 +276,7 @@ comlist:
 	byte 'n',{%:0001}
 	word tclrt,clrtx
 	byte 'o',{%:1100}
-	word tline,linnum
+	word tline,>@linnum
 	byte 'r',{%:0101}
 	word tread,cread
 	byte 's',{%:0001}
@@ -704,7 +704,7 @@ exit:
 exit1:
 	jmp dontdo
 
-linnum:
+@linnum:
 	lda flags
 	eor #2
 	sta flags
@@ -1485,7 +1485,7 @@ putlnx:
 putvar:
 	lda #30
 	jmp usetbl1
-outastr:
+@outastr:
 	lda #0
 	jmp usetbl1
 @xgetin:
@@ -1777,7 +1777,7 @@ prmsg:
 	sta delx
 	ldx #1
 	jsr putvar ;a$
-	jsr outastr
+	jsr <@outastr
 	lda #1
 	sta mci
 	rts

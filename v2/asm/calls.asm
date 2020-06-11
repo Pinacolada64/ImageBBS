@@ -1,5 +1,4 @@
 ;	print"04/04/90 05:59p"
-{include:equates-2_0.asm}
 inline:
 	lda #00
 	byte $2c
@@ -17,11 +16,11 @@ convstr:
 	byte $2c
 convert:
 	lda #65
-	jmp usetbl1
+	jmp usetbl1	; $cd03
 copyrite:
 	lda #67
-	jsr usetbl1
-	jmp $cd00	; outastr, deefined in build.lbl
+	jsr usetbl1	; $cd03
+	jmp outastr	; $cd00, defined in build.asm
 
 ;
 ; passed address in x (hi),y (lo)
