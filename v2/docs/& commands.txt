@@ -5,19 +5,28 @@ Last updated 25/Dec/2008 16:43
 5/Jun/2015 14:08
 
 (calls.s)
+>C:a000  2b cc 00 f4  7c ac 00 fc  b3 aa 4d cb  06 f4 76 ab   +...|.....M...v.
+>C:a010  d3 ab 06 f8  00 f8 00 ee  03 fc 8b b8  e4 ac 79 a1   ..............y.
+>C:a020  00 c0 03 c0  1b bc 4d cb  4d cb 4d cb  80 a7 88 a9   ......M.M.M.....
+>C:a030  92 a7 0c f8  fa b7 09 0c  0c 0c 3c b6  50 b6 64 b6   ..........<.P.d.
+>C:a040  6f b6 8a b5  b2 b5 92 b5  ba b5 03 0c  00 0c ac b5   o...............
+>C:a050  0f 0c 86 b5  00 e4 17 ab  0c cd 25 b6  2b b6 cf aa   ..........%.+...
+>C:a060  89 aa 85 bd  15 b9 06 be  4f b1 5e b5  09 f4 a0 a7   ........O.^.....
+>C:a070  03 f8 06 fc  9f b2 f5 cd  0e b7 d6 ba  9c b2 03 f4   ................
+>C:a080  09 f8 09 fc  e6 b7 0c fc  03 ee 60 bb  a6 b7 a9 00   ..........`.....
 
 Addr	Call	Purpose
 ========================
-	&[,0]	out a$
+$cc2b	&[,0]	out a$
 $f400	&,1	inline
-	&,2,x	disk file input (x=channel #) -> a$
+$ac7c	&,2,x	disk file input (x=channel #) -> a$
 $fc00	&,3,x	read file from disk, x=logical file #
-	&,4	get byte from modem
-	&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
+$aab3	&,4	get byte from modem
+$cb4d	&,5	get version -> lp: major/minor (1.3), a%: revision (1), a$: date
 		im 1335: "Image BBS 64 V1.3.1: 12/29/91  1:18p"
 $f406	&,6	password input -> an$
 
-	&,7,<device>[,segment] - load file
+$ab76	&,7,<device>[,segment] - load file
 		dskio.s has segment info:
 			0: 0		Undefined?
 			1: 0		"        "
@@ -34,7 +43,7 @@ $f406	&,6	password input -> an$
 			12: netalrm
 			13: wedgemem
 
-	&,8,x,y	disk directory
+$abd3	&,8,x,y	disk directory
 		open2,10,2,"0:$"
 		&,8,2,y (x=lfn 2,y=flag: 0=entire directory, 1=single line [assuming similar to Image 1.2])
 		puts result in a$
@@ -46,16 +55,16 @@ $f806	&,9,x
 	&,9,4	looks like d1$
 		(x seems to follow the variable table definitions of Image 1.2)
 
-$f800	&,10	terminal program (CTRL + C= gets out)
+$f800	&,10	terminal mode (CTRL + C= gets out)
 $ee00	&,11,x	clear array
 $fc03	&,12	newuser (nonabortable file read?)
-	&,13	inchr
-	&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
+$b88b	&,13	inchr
+$ace4	&,14,x[,y]	Output elements 1-end [or 1-y] to open lfn#2
 		dumparray (x=array # [,y=# of elements])
 		[1.3] im: 1074		[2.0] im: 39
 
 string-io.lbl:
-	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
+$a179	&,15[,0]	an$=d1$:&,15:&an$ -> displays verbose date
 			i.e., "Sat Jan 25, 2020 12:02 PM"
 	&,15,1	an$="THE CHIEF":&,15,1:&an$ -> The Chief
 		Changes all uppercase to mixed case
@@ -72,13 +81,13 @@ string-io.lbl:
 
 $c000	&,16	sys49152
 $c003	&,17	sys49155
-	&,18,x	setmode (screen mask) x=0: off, 1=on
-	&,19	get version
-	&,20	get version
-	&,21	get version
-	&,22,x	tenwait [x=tenths of a second]
-	&,23	xgetin: returns char in peek(780)
-	&,24	xchrout1
+$bc1b	&,18,x	setmode (screen mask) x=0: off, 1=on
+$cb4d	&,19	get version
+$cb4d	&,20	get version
+$cb4d	&,21	get version
+$a780	&,22,x	tenwait [x=tenths of a second]
+$a988	&,23	xgetin: checks for Ctrl-S and {pound} keys, returns char in peek(780)
+$a792	&,24	xchrout1
 
 $f80c	&,25,x,y	sound
 		[y=# of times to repeat]
@@ -87,22 +96,22 @@ $f80c	&,25,x,y	sound
 	&,25,2	higher pitched ding
 	&,25,3	gong sound from ccgms!
 
-	&,26	callmod
-	&,27,x	save variable pointers		(x=level, see "Image 2.0
-	&,28,x	restore variable pointers	Facts vs. Fiction")
-	&,29	usevar
-	&,30	putvar
-	&,31	zero
-	&,32	minusone
-	&,33	getarr
-	&,34	putarr
-	&,35	getln
-	&,36	putln
-	&,37	trapon
-	&,38	trapoff
-	&,39	prtln
-	&,40	forcegc
-	&,41	setbaud
+$b7fa	&,26	callmod
+$0c09	&,27,x	save variable pointers		(x=level, see "Image 2.0
+$0c0c	&,28,x	restore variable pointers	Facts vs. Fiction")
+$b63c	&,29	usevar
+$bc50	&,30	putvar
+$b664	&,31	zero
+$b66f	&,32	minusone
+$b58a	&,33	getarr
+$b5b2	&,34	putarr
+$b592	&,35	getln
+$b5ba	&,36	putln
+$0c03	&,37	trapon
+$0c00	&,38	trapoff
+$b5ac	&,39	prtln
+$0c0f	&,40	forcegc
+$b586	&,41	setbaud
 
 $e400	&,42	ecschk - determine whether an$ is an ecs command
 		call with a%: local mode, b%=access
@@ -120,39 +129,39 @@ $e400	&,42	ecschk - determine whether an$ is an ecs command
 		[2.0] im 3106: loads "e.ecs.main"
 	&,42,5	ecssave - save ECS definitions to "e.ecs.main"
 
-	&,43	chatchk
-	&,44	trace
-	&,45	prtvar	[MCI on?]
-	&,46	prtvar0 [MCI off?]
-	&,47	carchk
-	&,48	getkbd	check for function key or keypress in buffer, returns in .a [peek(780)]
-	&,49	getmod
-	&,50	outscn
-	&,51	outmod
-	&,52,x,y	(&,52,$hex,y allowed)
+$ab17	&,43	chatchk
+$cd0c	&,44	trace
+$b625	&,45	prtvar	[MCI on?]
+$b62b	&,46	prtvar0 [MCI off?]
+$aacf	&,47	carchk
+$aa89	&,48	getkbd	check for function key or keypress in buffer, returns in .a [peek(780)]
+$bd85	&,49	getmod
+$b915	&,50	outscn
+$be06	&,51	outmod
+$b14f	&,52,x,y	(&,52,$hex,y allowed)
 		chkflags
 			y=0: clear x	y=2: toggle x		y=4: move litebar to x
 			y=1: set x	y=3: read status of x, return in a% (0=off, 1=on)
 			&,52,x,5 is like &,52,x,3 - called from chatchk (&,43) and probably returns the status in .a
 
-	&,53[,0] logoff
+$b55e	&,53[,0] logoff
 	&,53,a	im: &,53,a
 $f409	&,54,x	useeditr
 	&,54,0	don't preserve text in tt$() array
 	&,54,1	re-enter main
 	&,54,2	re-enter, not command
-	&,55	output
+$a7a0	&,55	output
 $f803	&,56	chatmode
 $fc06	&,57	relread
 		Reads until EOF! Nice.
 
-	&,58,x,y
+$b29f	&,58,x,y
 		setalarm
-	&,59	farerr
+$cdf5	&,59	farerr
 	&,59,1,a	+.CP, pretty sure "set line length," seems to crash BBS.
 			Use poke 53252,a for now.
 
-&,60	struct
+$b70e	&,60	struct
 
 struct%(0,0) holds # of records in a struct
 
@@ -300,23 +309,23 @@ im.menus:
 	Usage:	&,60,13,count,size,a$,a%(a,b),b$
 	No examples yet.
 
-	&,61,col,row
+$bad6	&,61,col,row
 		poscrsr
 		[jack] im 4006: &,38:&,61,.,8:print"&,37:goto 1812:":end
 	[Maybe this affects the console cursor position]
 
-	&,62,b,c
+$b29c	&,62,b,c
 		settim: b=hour (+81=PM), c=min im: ~3184
 $f403	&,63	inline1
 $f809	&,64	convstr
 $fc09	&,65	convert
-	&,66	calcgoto	Calculated GOTO
+$b7e6	&,66	calcgoto	Calculated GOTO
 	Example: a%=3100+(a%*10):&,66 (see "i.test calcgoto")
 $fc0c	&,67	copyrite
 $ee03	&,68	struct
 	[What's the difference between &,60 and &,68?]
 
-	&,69	dispstr
+$bb60	&,69	dispstr
 
 	&,69,<column>,<row>,<text>,<color>
 	Example: &,69,4,21,left$(" "+cm$+"<16 spaces>",16),$8c
@@ -326,7 +335,7 @@ $ee03	&,68	struct
 [Question: will this plot stuff to the hidden screen mask
 even if screen mask is off? I'm pretty sure it does.]
 
-&,70	cursposn	<column>,<row>?
+$b7a6	&,70	cursposn	<column>,<row>?
 	+.IM &,70,.,n/2+8.5:&"{white}"
 [what is the difference between &,61 and &,70?]
 [Maybe &,70 affects the user's terminal cursor position]

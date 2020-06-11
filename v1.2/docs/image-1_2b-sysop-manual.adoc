@@ -6,7 +6,7 @@ v1.0
 :doctype: book
 :encoding: utf-8
 :lang: en
-:homepage: http:/imagebbs.net
+:homepage: http://imagebbs.net
 :experimental:
 :icons: font
 
@@ -1518,38 +1518,44 @@ Modem Type?
 
 Here is a summary of options presented when that choice is made:
 
-1. Baud rate0 = 300 ... 5 = 19200
+. Baud rate 0 = 300 ... 5 = 19200
 
 Pick the highest rate your modem or telnet bridge supports.
 
-2. 0 = Escape codes (`+++`) 1 = Data Terminal Ready (DTR) hangup
+. 0 = Escape codes (+++) 1 = Data Terminal Ready (DTR) hangup
 
 ****
 `+++` escape codes are used mostly on older modems such as the Commodore
-1670.  Hayes-compatible modems usually support the DTR line with the
-Commodore user port or an RS232 interface in the expansion port.
+1670. Hayes-compatible modems usually support the DTR line with the
+Commodore user port or an RS-232 interface in the expansion port.
 ****
 
-3. 0 = Auto answer (`ATS0=1`) 1 = Manual answer (`ATA`)
+[start=3]
+. 0 = Auto answer (`ATS0=1`) 1 = Manual answer (`ATA`)
 
-4. 0 = ATH 1 = No ATH
+[start=4]
+. 0 = ATH 1 = No ATH
 
 This refers to whether your modem includes `ATH` in its command set.
 
-5. 0 = Local off-hook   1 = Not
+[start=5]
+. 0 = Local off-hook   1 = Not
 
 When you are logged on to the BBS from the local console, should the
 modem be taken off-hook so people trying to call in get a busy signal?
 
-6. 0 = ATH0 1 = ATH
+[start=6]
+. 0 = ATH0 1 = ATH
 
 This is just a matter of semantics: does your modem use `ATH` or `ATH0` to hang up?
 
-7. 0 = Hang-up in modem reset   1 = Not
+[start=7]
+. 0 = Hang-up in modem reset   1 = Not
 
 Choose whether to hang up when resetting the modem.
 
-8. Value for `ATX`
+[start=8]
+. Value for `ATX`
 
 This controls the number of error reporting (1-4) codes used by the
 modem (`VOICE`, `ERROR`, etc.) It is usually left at 4.
@@ -1557,12 +1563,13 @@ modem (`VOICE`, `ERROR`, etc.) It is usually left at 4.
 
 Table : Typical modem result codes
 
-9. DTR: 0 = Normal   1 = Reversed
+[start=9]
+. DTR: 0 = Normal   1 = Reversed
 
 DTR (Data Terminal Ready) is a connection that tells the DCE (Data
 Communication Equipment, typically a modem) that the DTE (Data
 Terminal Equipment, typically a computer or terminal) is ready to
-transmit and receive data footnote:[Source for RS232/EIA232F terminology: _Data Communications: A Business User’s Approach, Fourth Edition_, p. 120.  Also, Rascal’s excellent dissertation of modem terminology included with his "e.modrc" fix.]. Some modems have the logic reversed; if
+transmit and receive data footnote:[Source for RS232/EIA232F terminology: _Data Communications: A Business User’s Approach, Fourth Edition_, p. 120.  Also, Rascal’s excellent dissertation of modem terminology included with his "`e.modrc`" fix.]. Some modems have the logic reversed; if
 bringing DTR high (toggling it on) signals a disconnect, and then
 select "`Reversed.`"
 
@@ -1581,21 +1588,22 @@ https://github.com/FozzTexx/tcpser
 NOTE: Even if you're using Windows, its ``COM`` _x_ ``:`` nomenclature is replaced by
 Linux's ``/dev/tty``_x_. COM1 is equivalent to `/dev/ttys0`.
 
+
 `tcpser <1> -d /dev/ttyS0 <2> -p 6400 <3> -s 19200 <4> -i"e0v0h0x4&C1&D2&K3" <5> -l7 <6> -tSsiI`
 
 This suggested command line for `tcpser` means:
 
-use serial port 0
+-   use serial port 0
 
-use incoming telnet port 6400
+-   use incoming telnet port 6400
 
-report the modem connect rate at 19200 kBPS
+-   report the modem connect rate at 19200 kBPS
 
-initialize the modem with the following string
+-   initialize the modem with the following string
 
-log events at level 7
+-   log events at level 7
 
-and show incoming and outgoing RS232 and TCP/IP traffic.
+-   and show incoming and outgoing RS232 and TCP/IP traffic.
 
 
 #### Using the VICE emulator
@@ -1724,7 +1732,7 @@ configuration, using included tools to:
 First, insert your boot disk into the proper device.  (We assume device
 #8 here.)  Type:
 
-`load"image 1.2b",8,1`
+ load"image 1.2b",8,1
 
 ## Autobooting Systems
 
@@ -2671,13 +2679,13 @@ re-listed, instead of exiting to the main prompt.
 When a user enters a sub-board/library number that is too high,
 available boards are re-listed.
 
-Pressing RETURN/ENTER at the "`Which Sub (or U/D or U/X)?`" prompts
-return the user to the list of available SIGs.  (If SIGs are not active,
+Pressing kbd:[Return] at the `Which Sub (or U/D or U/X)?` prompts
+return the user to the list of available SIGs. (If SIGs are not active,
 they exit to the main prompt.)
 
 ### Sub-Board Name
 
-*N* This displays the current sub-board's name.
+`N` displays the current sub-board's name.
 
 ### Moving To Other Sub-Boards or SIGs
 
@@ -2703,10 +2711,10 @@ requested does not exist.
 
 This is IMAGE BBS's public message base, where users can write messages
 about anything they want, replying to other users in "`threads`" which
-keep responses organized.  Users access message bases by typing *SB* at
-most prompts.
+keep responses organized.  Users access message bases by typing kbd:[SB]
+at most prompts.
 
-If the user knows which SIG they want, they can combine the `SB` command
+If the user knows which SIG they want, they can combine the kbd:[SB] command
 and the SIG number:
 
 `SB3` This takes the user to SIG 3, assuming they have access.
@@ -3050,7 +3058,7 @@ consists of four general parts:
 -   Available commands
 -   Sysop commands
 
-    Part One: System Overview
+### Part One: System Overview
 
 
 The program makes available to you several new features which enhance
@@ -3059,19 +3067,19 @@ your BBS to its maximum potential, including:
 -   Enhanced board types
 -   Separate password for each board
 
-    In the case of U/D's or U/X's:
+In the case of U/D's or U/X's:
 
 -   Last download date
 -   Local mode multi-uploads and downloads
--   Expanded "about" function
+-   Expanded "`about`" function
 -   Online program reader
 
 The User Exchange bases have all the same features above, plus:
 
--   The *E* command when downloading multiple files to select all files
+-   The `E` command when downloading multiple files to select all files
     matching a selected pattern, with one easy keystroke.
 
-Part Two: General Setup
+### Part Two: General Setup
 
 
 A few variables can be set in line 1 of `+.UD`: `yy%` and `it`.  (They
@@ -3088,22 +3096,22 @@ Some more things to consider:
 -   With SIGs defined, you are allowed 999 board names (30 libraries
     per SIG).
 
-Part Three: Available Commands
+### Part Three: Available Commands
 
 
-Toggling `Fn5`'s right check on, you activate the "`no credit until
+Toggling `Fn5` 's right check on, you activate the "`no credit until
 validated`" feature of the BBS.  This check mark can be toggled on or off
-any time a user is online and uploading, until the point the "`End Of
-Transfer`" message appears.
+any time a user is online and uploading, until the point the `End Of
+Transfer` message appears.
 
 -   If the check is off, the number of times downloaded is set to 0, and
-    credits awarded to the user according to their credit ratio.
+    credits are awarded to the user according to their credit ratio.
 
-  \* If the check is on, the times downloaded is set to -1, but no
-credits awarded until the file is validated by the subop or SIGop.
+-   If the check is on, the times downloaded is set to -1, but no
+    credits are awarded until the file is validated by the subop or SIGop.
 
-Toggling `Fn5`'s left check on activates the "`Log off after file transfer
-complete?`" prompt.
+Toggling `Fn5` 's left check on activates the `Log off after file transfer
+complete?` prompt.
 
 ### The "`About`" Option
 
@@ -3114,24 +3122,24 @@ file, including:
 -   the date and time it was last downloaded
 -   the type of computer it's for
 
-  (If a C128 user views a file meant for the C64, they are told it is
+(If a C128 user views a file meant for the C64, they are told it is
 for the C128 in 64 mode.)
 
-  \* approximate download time
+-   approximate download time
 
-  \* if any user-submitted comments exist for the file *and if so, the
-first one is displayed; a quick mod by Pinacolada*.
+-   if any user-submitted comments exist for the file (and if so, the
+first one is displayed; a quick mod by Pinacolada).
 
 After that information is displayed, the user is prompted with the
 following options:
 
-C Comments read/add.  *This feature *was written b*y DER DEUTSCHER.* If
+kbd:[C] Comments read/add. This feature was written by DER DEUTSCHER. If
 the user would like to add a comment, they may.
 
-D Download the file.  If the user has selected a multi-file transfer
+kbd:[D] Download the file.  If the user has selected a multi-file transfer
 protocol, this adds the file to the download queue.  (fixme: correct?)
 
-N Move to the next file in the directory; if they are on the last file,
+kbd:[N] Move to the next file in the directory; if they are on the last file,
 they wrap around to the first file.
 
 L Move to the previous file in the directory; if they are on the first
@@ -3143,33 +3151,33 @@ R Read any file, whether SEQuential or PRoGram.
 
 -   A program with a hexadecimal load addresses of:
 
-    -   \$0401 (CBM PET)
-    -   \$0801 (The Commodore 64's BASIC 2.0)
-    -   \$C101
-    -   \$4001 (The Commodore 128's BASIC 7.0 (fixme))
+    -   $0401 (CBM PET)
+    -   $0801 (The Commodore 64's BASIC 2.0)
+    -   $C101
+    -   $4001 (The Commodore 128's BASIC 7.0 (fixme))
 
-  display the program just as if LISTed with that computer's respective
+display the program just as if LISTed with that computer's respective
 version of BASIC.
 
--   You can also opt to display "control characters" such as clear/home,
+-   You can also opt to display "`control characters`" such as clear/home,
     delete, or color codes in quotes in an expanded,
     easy-to-read format.
--   A program with any other load address (or a BASIC "head" and machine
-    language "tail") produces a "hex dump" like a machine language
+-   A program with any other load address (or a BASIC "`head`" and machine
+    language "`tail`") produces a "`hex dump`" like a machine language
     monitor would:
 
  MMMM  HH HH HH HH HH HH HH HH  PPPPPPPP
 
 `MMMM`: Memory address
 
-
 `HH`: Hex value of each byte
 
 `PPPPPPPP`: PETSCII code of each byte
 
-****
+[TIP]
+====
 Discovered recently: This also works in 80 columns!
-****
+====
 
 -   As previously mentioned in the setup of the U/D system, credits can
     be charged for reading programs online by setting the variable `yy%`
@@ -3177,43 +3185,39 @@ Discovered recently: This also works in 80 columns!
 
 For users with maintenance access:
 
+kbd:[U] Unvalidate a file, taking back credit for the upload.
 
-
-U Unvalidate a file, taking back credit for the upload.
-
-V Validate new uploads.
+kbd:[V] Validate new uploads.
 
 For the user who uploaded the file:
 
-
-
-E Edit the file (computer it's for, and filename)
+kbd:[E] Edit the file (computer it's for, and filename)
 
 All commands selected here, including Download, return you to the same
 file in the listing you were on before selecting the command.
 
-Hitting RETURN (or any key not listed/not applicable to the user) aborts
-the About function.
+Hitting kbd:[Return] (or any key not listed/not applicable to the user) 
+aborts the About function.
 
-SCANNING FILES
+### Scanning Files
 
+kbd:[S] Scan files normally
 
-S Scan files normally
-
-
-This has been enhanced to use both 40- and 80-column screens.  A normal
+This has been enhanced to use both 40- and 80-column screens. A normal
 file scan will list files in this format:
 
+---
+
 ```
-### Bk’s  Dl’d  Name
-----------------------------------------
-001 [200] [001] "file.txt,s"
-----------------------------------------
+\### Bk’s  Dl’d  Name
+ ----------------------------
+ 001 [200] [001] "file.txt,s"
+ ----------------------------
 ```
 
 From left to right, the columns represent:
 
-[%autowidth]
+[%autowidth,%noheader]
 |===
 |`001`| The number of the listing in the directory
 
@@ -3224,32 +3228,32 @@ another computer type)
 |`[001]`| The number of times the file has been downloaded
 
 |`"file.txt,s"`| The filename and file type.  Unvalidated files have a
-*\** in front of the name, if the user is the uploader or subop.
+* in front of the name, if the user is the uploader or subop.
 |===
 
 After all files have been selected, the total estimated download time is
 displayed to the screen with a new prompt allowing you to:
 
-\[S\]can selected files
+kbd:[S]can selected files
 
-\[D\]ownload selected files
+kbd:[D]ownload selected files
 
-\[C\]lear list and restart
+kbd:[C]lear list and restart
 
-\[K\]ill a file from the list
+kbd:[K]ill a file from the list
 
 (All other user features are the same except having been moved into
 mini-plus files to make the system easily expandable.)
 
-SS Sorted scan
+kbd:[SS] Sorted scan
 
 The scanned files can be sorted by:
 
-  \* Size
+-   Size
 
-  \* Number of times downloaded
+-   Number of times downloaded
 
-  \* Alphabetically
+-   Alphabetically
 
 DM Download Multiple Files
 
@@ -3258,7 +3262,7 @@ description of each file:
 
 ### Sysop Commands
 
-Upload multiple files
+#### Upload multiple files
 
 
 kbd:[UM] With the Copier protocol loaded, the BBS gives you a directory of the
@@ -3344,7 +3348,7 @@ This is the IMAGE BBS "file transfer base."  All users read the file
 ### Main U/D prompt
 
 
-The user is shown the
+The user is shown the:
 
 
 -   Total number of files in the directory
@@ -3358,13 +3362,13 @@ If they are the library's subop, they are informed of this.
 If a move cannot be made, they are told the requested library number
 does not exist.
 
-Typing kbd:[N] displays the name of the current library.
+kbd:[N] displays the name of the current library.
 
 Libraries which a user can access are listed by typing kbd:[L].
 
 ### Changing protocols
 
-
+kbd:[PR] 
 New Punter, Slow Punter (for noisy telephone lines) and Xmodem-CRC/1K
 protocols are available for use with IMAGE BBS.  Commodore 64/128 and
 Amiga users default to Punter; all others use Xmodem.
@@ -3623,7 +3627,6 @@ files).
 
 ### Free UD/UX Library
 
-
 While defining libraries using the `+.reledit` program, you may specify
 any of your libraries in the U/D or U/X to be FREE libraries; that is,
 no credit is deducted from the user when he downloads from these areas.
@@ -3632,6 +3635,8 @@ local maintenance.
 
 In a FREE download board, the number of files per call and credit points
 are not checked prior to starting a download.
+
+>>>
 
 ## Electronic Mail Subsystem
 
@@ -3647,23 +3652,23 @@ prompt.  The prompt for this section is `E-Mail:`.
 ### Listing E-mail
 
 To obtain a list of the e-mail a user has waiting in the order they were
-received, type kbd:[L] (or kbd:[L] followed by a number to begin listing at a
-specific message) at the "E-Mail: " prompt.  This lists all messages,
-reporting:
+received, type kbd:[L] (or kbd:[L _x_] to begin listing at message #_x_)
+at the `E-Mail:` prompt. This reports:
 
 -   Handle of the sender
--   Date and time it was sent
+-   Date and time the message was sent
 -   Message subject
 
 ### Reading E-mail
 
-Press kbd:[Return] to begin reading (or read the next message in a series).
+kbd:[Return] reads the first e-mail message (or the next message if the user
+has multiple messages in their inbox).
 
 Once the last message is read, they are told `No more mail.`
 
-To read a specific message, type kbd:[R] and that message's number.
+kbd:[R _x_] reads message #_x_.
 
-To read all messages, type kbd:[A].  All messages are displayed in succession.
+kbd:[A] reads all messages. All messages are displayed in succession.
 
 Typing kbd:[N] reads any new messages since their last call.
 
@@ -3673,16 +3678,13 @@ Typing kbd:[N] reads any new messages since their last call.
 This replies privately to the user who sent the message being read.
 After reading a message, the user is presented with several options:
 
- Reply to &lt;sender's handle&gt;: 
+ Reply to <sender's handle>:
 
-  \* kbd:[Y]es:
-
-    This replies to the author.
+-   kbd:[Y]es: This replies to the sender.
 
 (fixme)
 
-To respond to a specific message from the list of messages received, a
-user may type R followed by the number of the message to respond to.
+kbd:[R _x_] responds to message #_x_ from the list of messages received.
 
 ### Sending Private E-Mail
 
@@ -3694,65 +3696,64 @@ text editor.
 
 ### Deleting E-Mail Messages
 
-(This option also appears when they leave the e-mail subsystem, if there
-are messages left in their mailbox.  This encourages users to keep their
-mailboxes tidy and not use un-necessary disk space.)
+kbd:[D] prompts to delete messages. (fixme)
+
+(The user is also prompted to delete messages if there are any left in the
+mailbox before either kbd:[Q]uitting the e-mail subsystem or typing a command to
+change subsystems, like kbd:[UD] or kbd:[SB]. This encourages users to keep
+their mailboxes tidy and not use un-necessary disk space.)
 
 When a user deletes their e-mail, they get the following prompt:
 
  Delete [A]ll, [S]ome or [N]one of your mail?
 
-  \* kbd:[A]ll deletes every message held in their mailbox, after confirming an `Are
+-   kbd:[A]ll deletes every message held in their mailbox, after confirming an `Are
 you sure?` prompt with kbd:[Y]es.
 
-  \* kbd:[N]one keeps every message held in their mailbox.
+-   kbd:[N]one keeps every message held in their mailbox.
 
-  \* kbd:[S]ome goes through all messages in the user's mailbox, prompting them:
+-   kbd:[S]ome goes through all messages in the user's mailbox, prompting them:
 
  [D]elete, [K]eep, [R]ead, [F]ile away:
 
-  \* kbd:[D]elete deletes the selected e-mail message.
+-   kbd:[D]elete deletes the selected e-mail message.
 
-  \* kbd:[K]eep holds the message in the user's mailbox.
+-   kbd:[K]eep holds the message in the user's mailbox.
 
-  \* kbd:[R]ead views the message to help decide whether they wish to keep
-or delete it.
+-   kbd:[R]ead views the message to help decide whether they wish to keep
+    or delete it.
 
-  \* \[F\]ile away Removes the message from the user's mailbox, but
+-   kbd:[F]ile away Removes the message from the user's mailbox, but
 places it in a separate file on the e-mail disk.  These stored messages
 can be later accessed with the `FR` (File Retrieval) command at the e-mail
 prompt, discussed now.
 
 ### Personal File Storage
 
+kbd:[FR] (File Retrieval) lets users:
 
-Using this command, users can
-
--   Read previously "filed away" e-mail messages
+-   Read previously "`filed away`" e-mail messages
 -   Get a directory of their personal e-mail files with kbd:[$]
 -   (fixme) is there a delete option?
 
 ### Verifying E-Mail
 
-
-Type V (and the user's handle when prompted) to see how many e-mail
+Type kbd:[V] (and the user's handle when prompted) to see how many e-mail
 messages they have, and how many are from you.
 
 ### Editing E-Mail
-
 
 Type kbd:[VE] (then the user's handle when prompted) to edit any e-mail you
 have already sent to that user.
 
 ### Forced E-Mail
 
-
-A user with remote maintenance access may send "forced e-mail," that is,
+A user with remote maintenance access may send "`forced e-mail;`" that is,
 e-mail which is displayed to a user when they log on to the BBS.  It is
 unabortable, and cannot be deleted by the user.
 
 The user creating this e-mail is asked whether they want to create or
-remove a "forced e-mail" file, and prompted for the user's handle the
+remove a "`forced e-mail`" file, and prompted for the user's handle the
 forced e-mail is for.
 
 When reading a forced e-mail file, if either of the last two lines
@@ -3767,147 +3768,200 @@ letters.
 
 ### Leaving the E-Mail Subsystem
 
-
-Type `Q` or a command that takes you to any other subsystem.
+kbd:[Q] or a command that takes you to any other subsystem.
 
 If the user has any messages left in their e-mail inbox, they are
 prompted whether they want to delete them.
 
+<<<
+
 ## News Files Subsystem
 
-
-The news files are structurally different from the other file areas of
+The News Files are structurally different from the other file areas of
 the BBS—such as Movie Files or Program Files—and for that reason they
 are covered separately here.
 
-Typing kbd:[NF] at most prompts takes you to the News File library. Here,
+kbd:[NF] at most prompts takes you to the News File library. Here,
 users can re-read BBS news files they see at login, and you can write
 new ones.
 
-If you have "File Maint Access" you will be placed in `News-Maint:`
+If you have "File Maint Access" the prompt reads `News-Maint:`
 Otherwise, the prompt users see is `News:`.
 
-### Adding a News Item
+### Maintenance Commands
 
+#### Adding a News File
 
-To add a file to a directory, you are asked for the title.  This is what
-the user will see when they list news items; it also names the file on
-disk where the news text is stored.
+kbd:[A] adds a News File to the directory.
 
-If the filename begins with a `$` (dollar sign), it becomes a "repeating"
-news file, shown to users each time they log on to the BBS.
+. Enter the title.
 
-All News files are non-abortable the first time they are shown to a
+This is shown to the user when they list News Files; it also names the file on disk
+where the news text is stored.
+
+[NOTE]
+====
+If the filename begins with a `$` (dollar sign), it becomes a "`repeating`"
+News File, shown to users each time they log on to the BBS.
+====
+
+[start=2]
+. Enter the access level of the News File.
+
+. Write the text of the News File in the text editor. When done, use kbd:[.S] to save the text.
+
+All News Files are non-abortable the first time they are shown to a
 user.
 
-### Reading News
+#### Editing a News File
 
+kbd:[E _x_] edits entry #_x_. You may then change the information you entered
+using kbd:[A]dd:
 
-Type the number of a news file (see List) to read that item.
+-   (fixme: news file name, whether it's a repeating news item, and access level?)
 
-### Killing a News File
+and the News File text is loaded into the text editor for editing.
+When the file is re-saved, you can update the date of the News File so it again
+appears as a new News File.
 
+#### Killing a News File
 
-A maintenance operation, type K followed by the number of the news file
-you wish to kill.  (fixme: confirmation?)
+kbd:[K _x_] erases News File #_x_. (fixme: confirmation?)
 
-### Editing a News File
+### User Commands
 
-If you have maintenance access, type kbd:[E] followed by the number of the
-entry to edit.  You may then change the information you entered using A:
-(fixme: news file name, whether it's a repeating news item) and the file
-will be loaded into the editor for editing. When the file is re-saved,
-you are given the opportunity to update the date of the file so it again
-appears as a new file.
+#### Reading News Files
 
-### Listing News Files
+Type the number of a News File (similar to List) to read that item.
 
-Type kbd:[L] or kbd:[Lx] (_x_ is the starting number to list from) at the prompt to
-list all news files available to that access level.  Each is given a
+#### Listing News Files
+
+Type kbd:[L] or kbd:[L _x_] (to list from _x_) at the prompt to
+list all news files available to that access level. Each is given a
 number, and if you have News-Maint access, you can also see access
-information for that file.
+level information for that file.
 
-### Leaving
+#### Leaving
 
-Type kbd:[Q] to return to the main command level.  A user may
+kbd:[Q] returns to the main command level. A user may
 also go to any other section of the board by entering the appropriate
 command.
 
+<<<
+
 ## The File Libraries (Movie, Plus, RLE, Text)
 
-
-There are three sections of the IMAGE BBS that provide very different
-functions but the sections themselves are functionally identical.  They
+There are four sections of IMAGE BBS that provide very different
+functions, but the sections themselves are functionally identical. They
 use the same routines and all of the same commands.
 
-### Explanation of Subsystems
-
+### Types of Subsystems
 
 There are four separate types of files handled by the same program:
 
--   Movie files Files containing cursor movement, color, and
-    uppercase/graphics characters, displayed if the user is in Commodore
-    C/G mode).
--   Plus files Sysops can add games or BBS utilities in this section.
--   Text files Plain Commodore PETSCII or ASCII text files.
--   RLE files Short for "Run-Length Encoded," this is a black-and-white
-    high-resolution file format which requires certain
-    telecommunications or viewer programs.  Graphics data is represented
-    by ASCII text. Control sequences begin and end the file, telling the
-    terminal or viewer to switch into or out of high-resolution modes.
+Movie Files::
+SEQuential (text) files containing cursor movement, color, and
+uppercase/graphics characters, displayed if the user is in Commodore
+C/G mode). A delay between each character output can be set.
 
-We describe the Movie File Library here, but the same principles apply
-to other libraries.
+Plus Files::
+Games or BBS utilities.
+
+RLE Files::
+Black-and-white, high-resolution graphics which require certain
+telecommunications or viewer programs. Graphics data is represented
+by ASCII text. Control sequences begin and end the file, telling the
+terminal or viewer to switch into or out of high-resolution graphics mode.
+
+[NOTE]
+====
+RLE is short for "`Run-Length Encoded,`" and is a type of file compression.
+====
+
+Text files::
+Plain Commodore PetSCII text files.
+
+### Sub-Directories
+
+Since the subsystem libraries may have sub-directories--and possibly
+sub-directories under _those_ sub-directories--the number following the
+prompt refers to the _directory level_ you are at. When you first enter
+a subsystem, you are placed in directory level 1 (the _Main Directory_).
+
+(We'll use `<Subsystem>-Maint` as an example in this section, but the same principles apply
+to the other library types.)
+If you have "`File Maint Access,`" you start in `<Subsystem>-Maint 1`. Otherwise the prompt is `<Subsystem> 1`.
+
+To enter a sub-directory, type the number of the item tagged `(Directory)`.
+
+If you've entered a sub-directory and wish to return to the "`parent`" directory
+(the directory "`above`" the one you are in), type kbd:[B] or kbd:[<] at the
+subsystem prompt.
+
+kbd:[M] returns you to `<Subsystem>-Maint 1` (the Main Directory) from any
+sub-directory level.
+
+.Traversing Directories
+[width="100%",options="header,autowidth"]
+|====================
+| Action | Type 
+| You are in `Movie-Files 3` (directory level 3) and wish to return to `Movie-Files 1` (the Main Directory).  | kbd:[M]
+| You are in `Text-Maint 3` (directory level 3) and wish to return to `Text-Maint 2` (directory level 2).  | kbd:[<] or kbd:[B]
+|====================
 
 ### Movie File Library
 
+kbd:[MF] at most prompts enters the Movie File library.
 
-Type this at any prompt to enter the Movie-File library.
+kbd:[CS] is the Change Speed command, which allows you to set the delay between
+characters output while viewing the Movie File.
 
-If you have "File Maint Access," you are placed in "Movie-Maint 1".
+### Entering a Sub-Directory/Running a File
 
-Since the Movie File libraries may have sub-directories and
-sub-directories under those sub-directories, the number following the
-prompt refers to the directory level you are at.  When you first enter
-the Movie Files section, you are placed in directory level 1.
+Type the number (see List) of a file to:
+
+-   read it (Movie Files, Text Files)
+-   run it (Plus Files)
+-   enter it (sub-directories)
 
 ### Adding Sub-Directories
 
+To add a sub-directory, you must have "`File Maint access.`" Type kbd:[A]
+at the `<Subsystem>-Maint` prompt.
 
-To add a sub-directory, you must have Movie-File Maint access.  Select A
-at the "Movie-Maint" prompt.
-
-  \* You are asked for the Title.
+. Enter the title.
 
 This is the title the user sees when listing the directory.  It has no
 relation to the actual filename about to be created.
 
-  \* Next, you are asked for the filename.
+. Enter the filename.
 
-NOTE: To create a directory, type kbd:[d.] followed by the sub-directory
+[NOTE]
+====
+To create a directory, type kbd:[d.] followed by the sub-directory
 filename you want to have on the Directory disk.
 
-The letter added depends on the subsystem used:
+Image BBS will add a letter after the `d.` filename, depending on the subsystem you're in:
 
-   m. movie files
+-   `m.` movie files
 
-   p. plus files
+-   `p.` plus files
 
-   r. RLE files
+-   `r.` RLE files
 
-   t. text files
+-   `t.` text files
 
-****
-For example, if you are in the `MF` subsystem and enter kbd:[d.movies],
-the BBS adds `m.` to the name, and the sub-directory is saved as `d.m.movies`.
-****
+If you are in the Movie File subsystem and enter kbd:[d.movies],
+the BBS adds `m.` to the filename, and the sub-directory is saved as `d.m.movies`.
+====
 
--   Next, enter the access level(s) which see that sub-directory when
-    listing the files available.  Access is determined in the usual way;
-    either from the chart shown in <<access-groups>>, or by typing kbd:[?] and
+[start=2]
+. Enter the access level(s) which see that sub-directory when
+    listing the files available. Access is determined in the usual way;
+    either from the chart shown in [[access-groups]], or by typing kbd:[?] and
     answering kbd:[Y] or kbd:[N] for each group.
--   Finally, you are asked for how many credits to charge users to enter
-    this sub-directory.  You can charge credits for:
+. Enter how many credits to charge users to access
+    this sub-directory, if any. You can charge credits for:
 
     -   entering the sub-directory, but make accessing the files free
     -   viewing the files within, but not entering the directory itself
@@ -3924,67 +3978,52 @@ sub- directory where you wish to add the file, type A at the prompt.
 
 Here is a discussion of the following prompts:
 
-  \* Title: As above.  Again, this is just what the user sees, and has
+. Title: As above. Again, this is just what the user sees, and has
 no relation to the actual filename viewed when the item is selected.
 
-  \* Filename: Type the filename as it appears on disk.  (In the
-PlusFile area, there is no need to type the leading "+.", the program
+. Filename: Type the filename as it appears on disk.  (In the
+PlusFile area, there is no need to type the leading `+.`, the program
 adds that automatically.)
 
-  \* Device: Type the device number where the item can be found.
+. Device: Type the device number where the item can be found.
 
-  \* Drive: Type the drive number where the file can be found.
+. Drive: Type the drive number where the file can be found.
 
 If you do not have a dual drive (or the file is not on a dual drive),
-just press RETURN.
+just press kbd:[Return].
 
-  \* Access: Type the access level you will allow to view this file.
-(Remember, you can enter a ? at the access   prompt to let the BBS help
+. Access: Type the access level you will allow to view this file.
+(Remember, you can type kbd:[?] at the access prompt to let the BBS help
 calculate it.)
 
-  \* Credits: Type the number of credits (if any) you will charge users
+. Credits: Type the number of credits (if any) you will charge users
 for viewing this file.
 
-xEntering a Sub-Directory/Running a File
+Killing a File/Sub-Directory
 
-
-Type the number (see LIST) of a file to read/run it, or sub-directory to
-enter it.
-
-If you wish to go back one level when in a sub-directory (for example:
-you are at "Movie-Maint 2" and wish to return to "Movie-Maint 1"), type
-B or "&lt;" at the prompt.
-
-Type M to return you to "Movie-Maint 1" (the Main Directory) from any
-sub-directory level.
-
-KxKilling a File/Sub-Directory
-
-
-A maintenance only operation, type K followed by the number of the file
-or sub-directory you wish to kill.  You will also have the option of
+A maintenance only operation, kbd:[K] followed by the number of the file
+or sub-directory you wish to kill. You will also have the option of
 scratching the file referenced by the directory entry off the disk.
 Killing a sub-directory is not possible if there are files present in
 that directory.
 
-ExEditing a File/Sub-Directory
+#### Editing a File/Sub-Directory
 
-
-If you are have Movie-Maint access, type E and the number of the entry
+If you have "`File-Maint`" access, type E and the number of the entry
 to edit.  You can change any of the information you entered originally.
 
-LList
+### User Commands
 
+#### List
 
-Typing L lists all files and/or sub-directories available at that
-level.  Each is listed by number.  If you have "File-Maint" access, you
+kbd:[L] lists all files and/or sub-directories available at that
+level.  Each is listed by number.  If you have "`File-Maint`" access, you
 can see the filename, access, credit, device and drive information for
 that file or sub-directory.
 
-QLQuickList
+### QuickList
 
-
-This lists the items in the directory like List does, but
+kbd:[QL] lists the items in the directory like List does, but
 
 QLeaving
 
@@ -5043,15 +5082,10 @@ the baud rate1200
 ****
 
 PORT COMMODORE
-
 1-801-423-2734
-
 2400
-
 NIGHT FLIGHT
-
 1-615-824-5488
-
 1200
 ****
 
@@ -5060,6 +5094,7 @@ BBS name and not a carriage return, and that there are *no* extra
 carriage returns before, between, or after the information, or the BBS
 will not read the information in correctly.)
 
+fixme
 "next page", or "previous page".  Simply hitting return at the prompt
 will take you back to the main menu.  Selecting next or previous page
 will go on through the list in your phonebook.  Selecting any of the
@@ -5067,12 +5102,12 @@ numbers, or "Dial number not shown", and entering the number when
 prompted, will then prompt you for the autodial (repeat) option.
 
 If the autodial option is selected, it will keep track of how many tries
-for that number (Press "/" to abort the autodialer).
+for that number (Press kbd:[/] to abort the autodialer).
 
 Once a connection is made, you are put into term mode for the
 connection.
 
-To go back to the main menu, press CTRL plus the Commodore key.
+To go back to the main menu, press kbd:[Ctrl+Commodore] key.
 
 #### File Operations
 
@@ -5253,7 +5288,7 @@ already exists, append to—a file.
 There are also additional editor commands built into the `WF` function
 not normally available from the editor subsystem:
 
-.WF editor dot commands
+.WF Editor Dot Commands
 [%autowidth]
 |====================
 | .! | DOS command
@@ -5559,6 +5594,7 @@ Enter it in the format shown, then tell the program which ID number to
 start from.  Everything else works automatically, and you hear a beep
 when the program is finished.
 
+## Credit Pool Setup <<credit-pool>>
 
 ## The RELedit System
 
@@ -5566,7 +5602,7 @@ when the program is finished.
 This documentation was modified slightly from the text files on the
 RELedit and Networking plus-file disks.  I in no way take credit for the
 original documentation, just the cleanup and integration into these more
-current, streamlined docs.
+current, streamlined documentation.
 ****
 
 RELedit is a program which eases the setup and administration of message
@@ -5621,7 +5657,7 @@ Typing ranges of sub-boards to add, delete, move, or insert works
 similar to BASIC's kbd:[LIST] command.
 
 
-.Ranges
+.Editing Ranges
 [%autowidth]
 |====================
 | x | List sub #x
@@ -5644,11 +5680,23 @@ A menu appears with 9 options:
 
 [%autowidth]
 
-Table : RELedit sub-board definitions
+.RELedit sub-board definitions
+[width="100%",options="header,autowidth"]
+|====================
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+| x | x 
+|====================
 
 These 9 options are the same for the U/D and U/X editors as well.  The
-only difference is the `Type` question which asks `Downloads
-Only?` and `Free Downloads?` as well as Password.
+only difference is the `Type` question which asks `Downloads Only?` and
+`Free Downloads?` as well as Password.
 
 If the access is 0 or the title is `---`, the data will not be saved (or
 deleted if editing an existing record).  The BBS also goes through the
@@ -5718,8 +5766,8 @@ kbd:[I] followed by the number.
 Pressing kbd:[Return] saves the list, returning you to the editing screen
 for the SIG information.
 
-When you hit RETURN at the SIG Edit prompt, the data is saved unless the
-title is `---` or the access is 0.
+When you hit kbd:[Return] at the `SIG Edit:` prompt, the data is saved,
+unless the title is `---` or the access is 0.
 
 If a SIG is deleted, the SIG list for that SIG is also deleted.
 
@@ -6046,7 +6094,7 @@ will automatically install the changes in their system.
 
 ### Configuring Your System
 
-You will need to get a copy of the file *nm.create* from your network
+You will need to get a copy of the file `nm.create` from your network
 operator. Put this file on your Email disk. Also, you need to find out
 what your node number is, and what BBSes are connected to you. You will
 need to make up a password, and give it to each of the sysops of the
@@ -6085,7 +6133,7 @@ Once you finish configuring, you are all set! NetMail is up and running
 on your system. Any time more nodes are added, it will automatically add
 them into your system.
 
-E-Mail Forwarding
+### E-Mail Forwarding
 
 
 E-mail forwarding lets you pick a few people whose E-mail will be
@@ -6096,7 +6144,7 @@ configuration menu for this. You need to specify what their handle is on
 your BBS, and what it is on the destination BBS, and, of course, what
 the destination BBS is.
 
-NetMail Online Functions
+### NetMail Online Functions
 
 
 NetMail adds several commands into the e-mail section of Image BBS.
@@ -6105,21 +6153,21 @@ Those commands are listed here, along with descriptions of what they do:
 
 Table : NetMail Commands
 
-Network File Transfers
+### Network File Transfers
 
 
 Files may be transferred between sysops through the network. There is a
-separate program to do his, it is called *+.NM/file*. When files are
-transferred, they are put into a special *nm.F* file. This allows
+separate program to do this, called `+.NM/file`. When files are
+transferred, they are put into a special `nm.F` file. This allows
 multiple files to be sent at one time, by just sending a single file.
 When you receive files, it will notify you in your e-mail. You should
-then run this program.
+then run `+.NM/file`.
 
-When you run the program, it will scan to see if any of these *nm.F*
+When you run the program, it will scan to see if any of these `nm.F`
 files are waiting for you. If any are, it will ask you if you want to
 extract the files. Extracting the files will put them on the Email disk,
 so be sure you have enough room. The program will tell you the length of
-the *nm.F* file. The extracted files will have approximately the same
+the `nm.F` file. The extracted files will have approximately the same
 number of blocks total.
 
 When that is finished, or if there were no files received, it will ask
@@ -6128,35 +6176,35 @@ you if you want to send files. The prompts are self-explanatory here.
 Keep in mind that some of the Nodes that you send files though may not
 have enough disk space to hold the file (even temporarily) while it is
 waiting to be sent on to the next node. It is not generally a good idea
-to send a *lot* of files at a time for this reason, or very large files.
+to send a _lot_ of files at a time for this reason, or very large files.
 Also, since some of the connections may be long distance, you may be
 running up someone's phone bill considerably. (And yes, they will know
 exactly who did it because they will know where the files came from, and
 where they were going. You don't want to get your fellow network members
 mad at you!)
 
-NetGrf/NetWall
+### NetGrf/NetWall
 
 
 Two versions of the Network "Wallwriter" are supplied with the Network.
-One is the *normal* Wallwriter with network abilities added. The other
-is a 10-line version that allows a lot more text. MCI commands are *not*
+One is the _normal_ Wallwriter with network abilities added. The other
+is a 10-line version that allows a lot more text. MCI commands are _not_
 allowed on the wall, but color codes and graphics are. Both versions can
-be accessed by the program *+.NW*.
+be accessed by the program `+.NW`.
 
-The easiest way to install NetWall is by adding it into your *PF*
-section. Or, you could add it in as a command in your *im* file. (This
+The easiest way to install NetWall is by adding it into your `PF`
+section. Or, you could add it in as a command in your `im` file. (This
 is only suggested if you are familiar with doing such things.) The other
 option, and some people have already done so, is to merge it into your
-*+.on* file, so that it can be used during the logon sequence, just as
+`+.on` file, so that it can be used during the logon sequence, just as
 Wallwriter is.
 
 There is one important thing to know about the NetWall. It will get
-*big! Very big!* As responses come in from all over the network, they
+_big_! _Very big!_ As responses come in from all over the network, they
 will accumulate. It is up to you to keep it to a useable amount. When
-you run *+.NW* while in Local Mode, it will ask you if you want to edit
+you run `+.NW` while in Local Mode, it will ask you if you want to edit
 the wall. This will allow you to selectively delete messages from the
-wall. Deleting them on your system *will not* delete them from other
+wall. Deleting them on your system _will not_ delete them from other
 systems, so you are free to keep as many as you like, or as few as you
 like. We suggest that you check the size of the file at least once a
 week.
@@ -6165,15 +6213,15 @@ There is also a Weed option that will do this for you. You only need to
 tell it how many days back to set the cutoff point, then it will delete
 the messages older than that day.
 
-If you do *not* want to use the NetWall, then you should change the
-*g1=1* in line 801 of *+.NW.walls* to *g1=0*. This will turn the 10-line
+If you do _not_ want to use the NetWall, then you should change the
+`g1=1` in line 801 of `+.NW.walls` to `g1=0`. This will turn the 10-line
 version off.
 
-If you do *not* want to use the Network WallWriter, then you should
-change the *g2=1* in line 801 of *+.NW.walls* to *g1=0*. This will turn
+If you do _not_ want to use the Network WallWriter, then you should
+change the `g2=1` in line 801 of `+.NW.walls` to `g1=0`. This will turn
 the 1-line version off.
 
-NetMail Support/Information
+### NetMail Support/Information
 
 
 If you wish to have any further information about netmail, you can
@@ -6218,16 +6266,16 @@ to join it. There is only one catch. In order to join our network, you
 have to find someone who is already on our network who is willing to
 sponsor you. If you are local to one of our nodes, then this is usually
 not a problem. But if you are not local, then you must find someone who
-is willing to connect you *long distance* to their BBS.
+is willing to connect you long distance to their BBS.
 
 This is not usually a problem. A typical long distance network call
 lasts about 3-4 minutes, and they do not necessarily occur every night.
 Using 2400 baud helps a lot for the phone bill, as it will take only
-half the time to send the same files. Estimates are at about \$30 a
+half the time to send the same files. Estimates are at about $30 a
 month for a long distance connection.
 
 In the future, we may request that sysops who do not have long distance
-connections on their nodes to voluntarily contribute \$15 - \$25 per
+connections on their nodes to voluntarily contribute $15 - $25 per
 month, which would be given to those sysops that do have long distance
 connections. The idea being to share the costs a bit, so no one has to
 bear the whole burden.
@@ -6278,6 +6326,7 @@ network.
 | x | x 
 | x | x 
 |====================
+
 ### Future Changes
 
 More additions are planned for the network system. A few online games
@@ -6321,10 +6370,10 @@ your own ideas.
 ### Modules
 
 
-IMAGE uses a main BASIC program (*im*), and several machine language
-modules (the *ml.\** files) which remain in memory at all times.  It
-also uses BASIC modules (*+.\** files), and machine language modules
-(*++\** files).  You may write as many of your own modules as you'd
+IMAGE uses a main BASIC program (`im`), and several machine language
+modules (the `ml.*` files) which remain in memory at all times.  It
+also uses BASIC modules (`+.*` files), and machine language modules
+(`++ *` files).  You may write as many of your own modules as you'd
 like, adding them at any time.  The main consideration is to know which
 variables and subroutines to use, and how to use them.  Be careful when
 modifying the main program (*im*) so you do not add too much, or you
@@ -6333,8 +6382,8 @@ crashing due to being short on free memory.
 
 Adding to a plus-file cannot hurt, as long as you do not go over 56 CBM
 disk blocks for any individual module.  However, defining new
-variables—especially arrays—can eat up memory and cause the
-same problems mentioned above, so be selective in your variable usage.
+variables--especially arrays--can eat up memory and cause the
+same problems mentioned above, so be selective in your variable usage.
 There are many routines in the program which are available for you to
 use.  We will describe a few of the most commonly used here.  This is
 *not* meant to be a detailed guide to programming, only a brief
@@ -6347,7 +6396,7 @@ continuing to improve it.
 
 ### Common Subroutines
 
-.Common subroutines
+.IM subroutines
 [width="100%",options="header"]
 |====================
 | Call With | Line | Purpose 
@@ -6367,7 +6416,7 @@ done carefully.  If you were to change any variables that the BBS uses
 for particular functions, you could be in serious trouble!  This could
 corrupt your user files, or do any number of nasty things!  Because of
 this, we are giving you a list here of all system variables that you
-should *never* use.  Even if you are using "temporary" variables, make
+should _never_ use.  Even if you are using "temporary" variables, make
 sure any subroutines in the main program or program module you are
 modifying do not change these variables and wreak havoc!  Most
 one-letter variables, integer variables, and string variables are
@@ -6377,7 +6426,7 @@ Variables not in this list are cleared when the main prompt is reached,
 so don't use one to count the number of times a game is played per call
 in that manner; the BBS will not permanently remember it.  However, the
 same routine allows you to DIMension variables and arrays in modules
-without worrying about a "?redim'd array error".  Be careful not to
+without worrying about a `?redim'd array error`.  Be careful not to
 waste memory with excess variables, or your modules will run slowly, and
 possibly even crash the BBS.
 
@@ -6394,295 +6443,183 @@ straight if you know otherwise, 'k?
 
 ### Reserved String Variables
 
-
-Table : Reserved string variables
+.Reserved string variables
+[width="100%",options="header"]
+|====================
+| Name  | Purpose 
+| `a$`  | Reserved for output to screen and modem.
+| `ag$` | Access group name of user currently online. (Also £vm)
+| `ak$` | Prints line across screen (" " + "-" * LL% -2 + R$). (Also `£vj`)
+| `an$` | Last user input. (Also `£v7`)
+|====================
 
 ### Reserved Integer Variables
 
 The current reserved integer variables for Image v1.2 are as follows:
 
-
-Table : Reserved integer variables
+.Reserved integer variables
+[width="100%",options="header"]
+|====================
+| Name | Purpose 
+| `ac%` | Access level (0-9) of user online
+| `ao%` | Access level of user at login 
+|====================
 
 ### Reserved Floating Point Variables
 
 The current reserved floating point variables for Image v1.2 are as
 follows:
 
-Table : Reserved floating point variables
+.Reserved floating point variables
+[width="100%",options="header"]
+|====================
+| Name | Purpose 
+| `bd` | Total number of CBM blocks downloaded by user online.
+| `bu` | Total number of CBM blocks uploaded by user online.   
+|====================
 
 ### Arrays
 
 
-The following arrays are dimensioned by the BBS.  Most can be used for
+The following arrays are dimensioned by the BBS. Most can be used for
 your own programs, except where noted.
 
-
-Table : Reserved Arrays
-
-(_fixme_: from programmer’s ref guide)
-
-   AC% User's current access level
-
-   AC%(
-
-   AG\$ Access group name
-
-   AK\$ "Line divider;" space, LL%-2 "-"'s, RETURN character
-
-   AN\$ Last user input
-
-   AO% User's old access level (used in access level change situations)
-
-   BD
-
-
-   BF( Number of blocks free on the six system disks
-
-
-   BN\$ BBS name
-
-   BU
-
-   C1\$ "Entering chat" message
-
-   C2\$ "Exiting chat" message
-
-   C3\$ "Returning to editor" message (fixme: pretty sure anyway)
-
-   CA
-
-
-   CC\$ 2-character BBS identifier
-
-
-   CM\$ Displayed in the "Area" section \[when the top screen mask is
-enabled\]
-
-   CN
-
-
-   CO\$( User's computer type name array
-
-
-   CO% User's computer type number array
-
-   CR
-
-   CT
-
-   CT% BBS calls today?
-
-D1\$ 11-digit current date/time
-
-   DL\$ Again, D1\$? bad ocr?
-
-   DL% Again, D1%? bad ocr?
-
-   D2\$
-
-
-   D2%
-
-
-   D3\$ Last user on BBS
-
-   D4\$ Current ML protocol
-
-   D5\$ True last call (date? fixme: more info)
-
-   D6\$
-
-
-   DA%
-
-
-   DC	Download count
-
-   DC%
-
-   DD\$
-
-   DR Set 1-6 to designate system drive \#
-
-   DR\$
-
-   DV%
-
-   DV%(
-
-   EL
-
-   EM User's expert mode: 0=off, 1=on
-
-   F1
-
-   F2
-
-   F3
-
-   FF\$ User's real first name
-
-   FL
-
-   FL\$
-
-   F1\$(
-
-   GS
-
-   I1\$
-
-   I2\$
-
-   I3\$
-
-   ID User's ID number
-
-   KK Lines of text in BBS editor; if 0, aborted or time limit expired
-
-   L1
-
-   LC
-
-LD\$ User's last call date (11 digits, like D1\$)
-
-   LE
-
-
-   LF User's linefeed flag?
-
-
-   LL\$ User's last name
-
-   LL% User's line length
-
-   LP
-
-   LT\$
-
-   MF 11-digit date format of user's last call
-
-   MW
-
-   NA\$ User's handle
-
-   NC
-
-   ND
-
-   NL User's current graphics mode: 0=ASCII, 1=Commodore C/G
-
-   NL\$ CHR\$(0), a null character
-
-   NP	Number of posts
-
-   NR	Number of responses
-
-   NV
-
-   OC\$
-
-   P\$
-
-   PL% P1%?
-
-   P2%
-
-
-   P3%
-
-
-   PH\$ User's phone number
-
-   PL
-
-   PM
-
-
-   PO\$ Main prompt string
-
-   PP\$
-
-   PQ
-
-   PR
-
-   PR\$
-
-   PS \# of posts?
-
-   PT% Probably a prime time flag
-
-   PU\$
-
-   PW\$ some password
-
-   QB bits per second rate ("current baud")
-
-   QE
-
-
-   QT\$ CHR\$(34), a quote character
-
-
-   R\$ CHR\$(13), a kbd:[Return] character
-
-   RC
-
-   RN\$  User's real name (FF\$ + " " + LL\$)
-
-   RP   \# of responses
-
-   RQ
-
-   RS
-
-   SH   Updated by ML routines; "spacebar hit": 0=no, 1=yes
-
-   SO%( Subop array, used in SB, UD, UX subsystems
-
-   SR Logical file number in certain routines
-
-   ST   Commodore BASIC reserved variable; serial status
-
-   ST(
-
-   SY\$
-
-   T1
-
-   TC%  Total calls to system (grand total?)
-
-   TF
-
-
-   TI   Commodore BASIC reserved variable; jiffy clock
-
-   TI\$  Commodore BASIC reserved variable; 24-hour clock
-
-   TR%  User's time remaining, in minutes
-
-   TT\$( Lines of text stored in editor
-
-   U\$ Stacked commands
-
-   UC
-
-   UH   Highest user account \# in user file?
-
-   UL
-
-
-   UR
-
-
-   X\$
+.Reserved arrays
+[width="100%",options="header"]
+|====================
+| Name | Purpose 
+| ac%(31) | Can be used for any plus file outside of UD/UX/SB.
+| bf(x,y) | Blocks free on system drives. _Should never be used._
+| co$(9)  | Text for computer types supported. _Should never be used._
+|====================
+
+.Variables from programmer’s ref guide)
+[width="100%",options="header"]
+|====================
+|AC%( |
+|AG$|Access group name
+|AK$|"Line divider;" space, LL%-2 "-"'s, RETURN character
+|AN$|Last user input
+|BF(6)|number of blocks free on the six system disks
+|BN$|BBS name
+|C1$|"Entering chat" message
+|C2$|"Exiting chat" message
+|C3$|"Returning to editor" message
+|CA |
+|CC$|2-character BBS identifier
+|CM$|Displayed in the `"Area"` section (when the top screen mask is
+enabled)
+|CN|
+| CO$()| User's computer type name array
+| CO%| User's computer type number array
+| CR| User's credits
+| CT| User's calls today?
+| CT%|BBS calls today?
+|d1$|11-digit current date/time
+|dl$|Again, d1$? bad ocr?
+|dl%|Again, d1%? bad ocr?
+|d2$|
+|d2%|
+|D3$|Last user on BBS
+|d4$|Current ML protocol
+|d5$|True last call (date? fixme: more info)
+|d6$|
+|da% | Downloads allowed
+|dc|Download count
+|dc%|
+|dd$|
+|dr|Set 1-6 to designate system drive number
+|dr$|drive number prefix (e.g., `0:`)
+|dv%|device number
+|dv%()|
+|el | Error line, reported by `+.er`
+|em |User's expert mode: 0=off, 1=on
+|f1 | 
+|f2 |
+|f3 |
+|ff$| User's real first name
+|fl|
+|fl$|User's <<user-flags>>
+|f1$()|
+|gs |
+|i1$|
+|i2$|
+|i3$|
+|id | User's ID number
+|kk | Lines of text in BBS editor; if 0, aborted or time limit expired
+|l1 |
+|lc |
+|ld$|User's last call date (11 digits, like D1$)
+|le |Lines allowed in Editor (from fl$)
+|lf |User's linefeed flag?
+|ll$|User's last name
+|ll%|User's line length
+|lp |
+|lt$|Logon time?
+|ld$|11-digit date format of user's last call
+|MW |
+|NA$| User's handle
+|NC |
+|ND |
+|NL |User's current graphics mode: 0=ASCII, 1=Commodore C/G
+|NL$|chr$(0), a null character
+|NP|Number of posts
+|NR|Number of responses
+|nv |
+|oc$|Old SEQ subs "open/closed?" string (?)
+|NV|
+|OC$|
+|P$|
+|PL%|
+|P1%?|
+|P2%|
+|P3%|
+|PH$|User's phone number
+|pl|If user input at prompt is uppercase (0) or upper- and lowercase (1)
+|PM|Prompt mode
+|PO$| Main prompt string
+|PP$|
+ PQ
+ PR|Protocol loaded
+ PR$
+ PS \# of posts?
+ PT% Probably a prime time flag
+ PU$
+ PW$ some password
+ QB bits per second rate ("current baud")
+ QE
+ QT$ CHR$(34), a quote character
+ R$ CHR$(13), a kbd:[Return] character
+ RC
+ RN$  User's real name (FF$ + " " + LL$)
+ RP   \# of responses
+ RQ
+ RS
+ SH   Updated by ML routines; "spacebar hit": 0=no, 1=yes
+ SO%( Subop array, used in SB, UD, UX subsystems
+ SR Logical file number in certain routines
+ ST   Commodore BASIC reserved variable; serial status
+ ST(
+ SY$
+ T1
+ TC%  Total calls to system (grand total?)
+ TF
+ TI   Commodore BASIC reserved variable; jiffy clock
+ TI$  Commodore BASIC reserved variable; 24-hour clock
+ TR%  User's time remaining, in minutes
+|tt$(254)|Lines of text stored in editor
+ U$ Stacked commands
+|UC|
+|UH|Highest user account number in user file
+|UL|
+|UR|
+|X$|
+|====================
 
 ### Image Output Routine
 
 
-In order to send text to the modem and screen (PRINT, for you BASIC
+In order to send text to the modem and screen (`PRINT`, for you BASIC
 people) as easily as possible, we have developed a routine that works
 very similar to the BASIC PRINT statement.  Used properly, this routine
 also eliminates much of the garbage collection that the C64 is notorious
@@ -6732,8 +6669,13 @@ The ampersand is also used with arguments to call all of the machine
 language routines in IMAGE BBS.  The table of arguments that are useful
 in BASIC and a brief description follow:
 
+.& calls
+[width="100%",options="header"]
+|====================
+| Function | Purpose 
+| `&` | Output quoted string or contents of `a$` 
+|====================
 
-Table : & calls
 
 ### POKEs
 
@@ -6741,12 +6683,18 @@ This is a list of some of the memory locations used by IMAGE that can be
 usefully POKEd:
 
 
-Table : Useful POKE locations
+.Useful POKE locations
+[width="100%",options="header"]
+|====================
+| Location | Purpose 
+| 17138    | Password mask character  
+|====================
+
 
 ## Common Modifications
 
 
-### Hidden LtK User
+### Hidden Lt.Kernal User
 
 In `setup`, line 93 has a REMmed out line that Lt.Kernal SysOps might
 be interested in.  If you unREM this line and move your boot disk files
