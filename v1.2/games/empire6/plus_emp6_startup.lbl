@@ -31,7 +31,7 @@
 	if b%=. then input# 2,b$,c$,d$:s=(64 and st):goto {:628}
 {:636}
 	close 2:close 15
-' NEW: fixed check for post/respond capability using IM routine to be a model 
+' NEW: fixed check for post/respond capability using IM routine to be a model
 ' of compliance:
 '	if mid$(fl$,4,1)="0" then {:646}
 	a=4:gosub 1004:if a=. then {:646}
@@ -39,7 +39,7 @@
 	on -(tr%<1)-2*(a=.) goto 1811,{:646}
 	poke 53252,76:&"{f6}{orange}Go ahead and write{lt. blue}{f6}:{pound}i0":if an$="" or tr%<1 then {:646}
 ' there is an "append or write" routine in IM (sort of):
-' a$="e.emp6wall,s,a":dr=3:gosub 1011:if e% then a$="e.emp6wall,s,w":gosub 1011
+' a$="e.emp6.wall,s,a":dr=3:gosub 1011:if e% then a$="e.emp6.wall,s,w":gosub 1011
 ' 1027 dr=3:a$="e."+b$+",s,"+a$:goto 1011
 ' so, open for append - if error, fall back to writing a new file:
 	b$="emp6.wall":a$="a":gosub 1027:if e% then b$="w":gosub 1027
