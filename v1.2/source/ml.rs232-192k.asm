@@ -113,7 +113,7 @@ l437f:
 	lda #$02        ; 4382  a9 02
 	jmp >@rsbaud	; 4384  4c 4f 44
 l4387:
-; from 43a3:
+; from 43a1:
 ; enable RxD IRQ:
 	lda #$09        ; 4387  a9 09
 	sta $de02       ; 4389  8d 02 de

@@ -1,134 +1,133 @@
 {number:60000}
 {step:2}
 ' TODO: add option to redefine s2 (command mode escape char)
-	ON(IM)GOTO{:60005},{:60055},{:60075},{:60100},{:60135},{:60190},{:60180},{:60325},{:60395},{:60070}:GOTO{:60110}
+	on(im)goto{:60005},{:60055},{:60075},{:60100},{:60135},{:60190},{:60180},{:60325},{:60395},{:60070}:goto{:60110}
 {:60005}
-	IF VAL(MT$)=0 THEN RETURN
+	if val(mt$)=0 then return
 {:60010}
-	GET#131,A$:GOSUB{:60070}:GOSUB{:60395}:M$="Z":T=50:GOSUB{:60325}
-	M$="E0V0":IF MID$(MT$,7,1)="H"THEN M$=M$+"H":IF MID$(MT$,6,1)="0"THEN M$=M$+"0"
-	M$=M$+"X"+MID$(MT$,8,1)+"M"+CHR$(MF+48)+"B"+MID$(MT$,10,1)
-	GOSUB{:60045}:ON-(T=0)GOTO{:60010}:&,52,43,3:A=49:IF A%OR MID$(MT$,3,1)<>"A"THEN A=48
-	M$="S0="+CHR$(A)+"S2=27S7=25":GOSUB{:60045}:ON-(T=0)GOTO{:60010}:&,22,10
-	AN$=IN$:&,15,2:M$=AN$:GOSUB{:60045}
-	ON-(T=0)GOTO{:60010}:&,22,10:GOTO{:60395}
+	get#131,a$:gosub{:60070}:gosub{:60395}:m$="z":t=50:gosub{:60325}
+	m$="e0v0":if mid$(mt$,7,1)="H"then m$=m$+"h":if mid$(mt$,6,1)="0"then m$=m$+"0"
+	m$=m$+"x"+mid$(mt$,8,1)+"m"+chr$(mf+48)+"b"+mid$(mt$,10,1)
+	gosub{:60045}:on-(t=0)goto{:60010}:&,52,43,3:a=49:if a%or mid$(mt$,3,1)<>"A"then a=48
+	m$="s0="+chr$(a)+"s2=27s7=25":gosub{:60045}:on-(t=0)goto{:60010}:&,22,10
+	an$=in$:&,15,2:m$=an$:gosub{:60045}
+	on-(t=0)goto{:60010}:&,22,10:goto{:60395}
 {:60045}
-	X=5
+	x=5
 {:60050}
-	A$=M$:T=50:&,22,10:GOSUB{:60325}:X=X-1:ON-(A<>0 AND X>0)GOTO{:60050}:RETURN
+	a$=m$:t=50:&,22,10:gosub{:60325}:x=x-1:on-(a<>0 and x>0)goto{:60050}:return
 {:60055}
-	Z=VAL(MT$):GOSUB{:60075}:GOSUB{:60185}:IF A=. then {:60070}
-	FOR Y=1 TO Z:ON Y GOSUB{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:GOSUB{:60075}:GOSUB{:60185}:IF A=.THEN Y=Z
-	NEXT
+	z=val(mt$):gosub{:60075}:gosub{:60185}:if a=. then {:60070}
+	for y=1 to z:on y gosub{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:gosub{:60075}:gosub{:60185}:if a=.then y=z
+	next
 {:60070}
-	ON VAL(MT$)GOTO{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:RETURN
+	on val(mt$)goto{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:return
 {:60075}
-	IF MID$(MT$,2,1)="D" then {:60295}
-	&,22,15:FOR X=1 TO 3:PRINT# 131,CHR$(27);:&,22,5:NEXT:&,22,10
-	IF MID$(MT$,6,1)="0"THEN A$="H0":GOSUB{:60325}:GOTO{:60095}
-	IF MID$(MT$,4,1)="H"THEN A$="H":GOSUB{:60325}
+	if mid$(mt$,2,1)="D" then {:60295}
+	&,22,15:for x=1 to 3:print# 131,chr$(27);:&,22,5:next:&,22,10
+	if mid$(mt$,6,1)="0"then a$="h0":gosub{:60325}:goto{:60095}
+	if mid$(mt$,4,1)="H"then a$="h":gosub{:60325}
 {:60095}
-	&,22,5:GOTO{:60395}
+	&,22,5:goto{:60395}
 {:60100}
-	IF LEFT$(MT$,1)<>"0"AND MID$(MT$,5,1)="H"THEN A$="H1":GOSUB{:60325}
-	RETURN
+	if left$(mt$,1)<>"0"and mid$(mt$,5,1)="H"then a$="h1":gosub{:60325}
+	return
 {:60110}
-	DR=3:A$="E.I.MODEM":P=.:MT$="0":IF LK%THEN P=(PEEK(57092)AND 15)
-	GOSUB 4:ON-(E%>0)GOTO 999:X=P+1:GOSUB 1
-	&,2,2:MT$=A$:&,2,2:IN$=A$:CLOSE 2:A$="E.MODEM":IF LK%THEN A$=A$+STR$(P)
-	DIM MR%(15,50):&,60,2,0,MR%(0,0),DR$+A$,DV%:RETURN
-	REM&,60,2,0,MR%(0,0),DR$+A$,DV%:RETURN
+	dr=3:a$="e.i.modem":p=.:mt$="0":if lk%then p=(peek(57092)and 15)
+	gosub 4:on-(e%>0)goto 999:x=p+1:gosub 1
+	&,2,2:mt$=a$:&,2,2:in$=a$:close 2:a$="e.modem":if lk%then a$=a$+str$(p)
+	dim mr%(15,50):&,60,2,0,mr%(0,0),dr$+a$,dv%:return
+	rem&,60,2,0,mr%(0,0),dr$+a$,dv%:return
 {:60135}
-	T=0:A$="":&,4:A=PEEK(780)AND 127:IF A=0 THEN RETURN
+	t=0:a$="":&,4:a=peek(780)and 127:if a=0 then return
 {:60140}
-	A$=RIGHT$(A$+CHR$(A),3):T=0:IF A=13 THEN B=VAL(A$):ON-(B=2)GOTO{:60165}:GOTO{:60150}
+	a$=right$(a$+chr$(a),3):t=0:if a=13 then b=val(a$):on-(b=2)goto{:60165}:goto{:60150}
 {:60145}
-	&,4:A=PEEK(780)AND 127:ON-(A<>0)GOTO{:60140}:T=T+1:ON-(T<100)GOTO{:60145}:RETURN
+	&,4:a=peek(780)and 127:on-(a<>0)goto{:60140}:t=t+1:on-(t<100)goto{:60145}:return
 {:60150}
-	A=.:FOR I=1 TO MR%(0,0):IF MR%(1,I)=B THEN A=I:I=MR%(0,0)+1
-	NEXT:B=.:ON-(A=.)GOTO{:60160}:&,60,1,26,MR%(3,A),A$:QB$=QB$+"{f6}-"+A$:B=MR%(2,A)
+	a=.:for i=1 to mr%(0,0):if mr%(1,i)=b then a=i:i=mr%(0,0)+1
+	next:b=.:on-(a=.)goto{:60160}:&,60,1,26,mr%(3,a),a$:qb$=qb$+"{f6}-"+a$:b=mr%(2,a)
 {:60160}
-	A=1:ON B GOTO{:60170},{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:GOTO{:60175}
+	a=1:on b goto{:60170},{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:goto{:60175}
 {:60165}
-	&,52,43,3:ON-(MID$(MT$,3,1)="M"AND A%=0)GOSUB{:60180}:A=2:QB$="-":RETURN
+	&,52,43,3:on-(mid$(mt$,3,1)="M"and a%=0)gosub{:60180}:a=2:qb$="-":return
 {:60170}
-	A=.:RETURN
+	a=.:return
 {:60175}
-	QB$="":A=3:RETURN
+	qb$="":a=3:return
 {:60180}
-	PRINT# 131,"ATA":RETURN
+	print# 131,"ata":return
 {:60185}
-	A=SGN(PEEK(2033)AND 128):RETURN
+	a=sgn(peek(2033)and 128):return
 {:60190}
-	DR=3:GOSUB 3:A$=DR$+"E.MODEM"
-	IF LK%THEN A$=A$+STR$(PEEK(57092)AND 15)
-	&,60,2,0,MR%(0,0),A$,DV%:CLOSE 2:T=MR%(0,0)
-	&,52,16,1:X=B:D=B:GOSUB{:60390}:&"{f6}{lt. blue}DIALING {pound}$B: {pound}$C{f6}":A$="DT"+C$:GOSUB{:60325}
+	dr=3:gosub 3:a$=dr$+"e.modem"
+	if lk%then a$=a$+str$(peek(57092)and 15)
+	&,60,2,0,mr%(0,0),a$,dv%:close 2:t=mr%(0,0)
+	&,52,16,1:x=b:d=b:gosub{:60390}:&"{f6}{lt. blue}dialing {pound}$b: {pound}$c{f6}":a$="dt"+c$:gosub{:60325}
 {:60210}
-	IF PEEK(653)AND 2 THEN{:60290}
-	ON A GOTO{:60275}:ON-(B=0 OR B=4)-2*(B=2)-3*(B=3)-4*(B=6)GOTO{:60255},{:60245},{:60250},{:60265}
-	ON-(B=7)-2*(B=8)GOTO{:60270},{:60275}
-	A=.:FOR I=1 TO T:IF MR%(1,I)=B THEN A=I:I=T+1
-	NEXT:ON-(A<1)GOTO{:60260}:&,60,1,26,MR%(3,A),A$:QB$=LEFT$(QB$+"{f6}-"+A$,215)
-	A=MR%(2,A):X=D:ON A+1 GOTO{:60260},{:60240}:X=A-1:GOTO{:60280}
+	if peek(653)and 2 then{:60290}
+	on a goto{:60275}:on-(b=0 or b=4)-2*(b=2)-3*(b=3)-4*(b=6)goto{:60255},{:60245},{:60250},{:60265}
+	on-(b=7)-2*(b=8)goto{:60270},{:60275}
+	a=.:for i=1 to t:if mr%(1,i)=b then a=i:i=t+1
+	next:on-(a<1)goto{:60260}:&,60,1,26,mr%(3,a),a$:qb$=left$(qb$+"{f6}-"+a$,215)
+	a=mr%(2,a):x=d:on a+1 goto{:60260},{:60240}:x=a-1:goto{:60280}
 {:60240}
-	GOSUB{:60330}:GOTO{:60210}
+	gosub{:60330}:goto{:60210}
 {:60245}
-	&"RING...":GOTO{:60240}
+	&"ring...":goto{:60240}
 {:60250}
-	&"NO CARRIER{f6}":GOTO{:60285}
+	&"no carrier{f6}":goto{:60285}
 {:60255}
-	&"ERROR{f6}":GOTO{:60285}
+	&"error{f6}":goto{:60285}
 {:60260}
-	&"ERROR (RC#{pound}!B){f6}":GOTO{:60285}
+	&"error (rc#{pound}!b){f6}":goto{:60285}
 {:60265}
-	&"NO DIALTONE{f6}":&,22,100:GOTO{:60285}
+	&"no dialtone{f6}":&,22,100:goto{:60285}
 {:60270}
-	&"BUSY{f6}":GOTO{:60285}
+	&"busy{f6}":goto{:60285}
 {:60275}
-	&"NO CONNECTION{f6}":GOTO{:60285}
+	&"no connection{f6}":goto{:60285}
 {:60280}
-	&,22,10:GOSUB{:60390}:AN$=QB$:&,15,1:&"{f6}"+AN$+"{f6}CONNECT"+STR$(QB):&,22,10:A=1:RETURN
+	&,22,10:gosub{:60390}:an$=qb$:&,15,1:&"{f6}"+an$+"{f6}connect"+str$(qb):&,22,10:a=1:return
 {:60285}
-	GOSUB{:60075}:&,22,30:A=0:QB$="":RETURN
+	gosub{:60075}:&,22,30:a=0:qb$="":return
 {:60290}
-	&"ABORTED{f6}":A=2:QB$="":RETURN
+	&"aborted{f6}":a=2:qb$="":return
 {:60295}
-	A=254:B=255:IF MID$(MT$,9,1)="R"THEN A=255:B=254
-	&,41,A:&,22,7:&,41,B:&,22,3:GOTO{:60395}
+	a=254:b=255:if mid$(mt$,9,1)="r"then a=255:b=254
+	&,41,a:&,22,7:&,41,b:&,22,3:goto{:60395}
 {:60305}
-	IF(PEEK(2033)AND 128)=0 THEN PRINT# 131,"AT"
-	&,69,31,20,STR$(QB),$8C:QB$=MID$(QB$,2)
-	&,22,5:GOTO{:60395}
+	if(peek(2033)and 128)=0 then print# 131,"at"
+	&,69,31,20,str$(qb),$8c:qb$=mid$(qb$,2)
+	&,22,5:goto{:60395}
 {:60320}
-	Z=PEEK(53248):POKE 53248,1:&"{pound}$C: {pound}$A{f6}":POKE 53248,Z:RETURN
+	z=peek(53248):poke 53248,1:&"{pound}$c: {pound}$a{f6}":poke 53248,z:return
 {:60325}
-	POKE 667,.:POKE 668,.:C$="{f6}SENT":A$="AT"+A$:PRINT# 131,A$:GOSUB{:60320}
+	poke 667,.:poke 668,.:c$="{f6}sent":a$="at"+a$:print# 131,a$:gosub{:60320}
 {:60330}
-	A$="":T=250
+	a$="":t=250
 {:60335}
-	&,4:A=PEEK(780)AND 127:IF A THEN T=200:A$=RIGHT$(A$+CHR$(A),32)
-	IF PEEK(653)=2 THEN{:60350}
-	T=T-1:ON-(T<1 AND A$="")GOTO{:60350}:ON-(A<>13 AND T>0)GOTO{:60335}:B=VAL(A$):A=0:RETURN
+	&,4:a=peek(780)and 127:if a then t=200:a$=right$(a$+chr$(a),32)
+	if peek(653)=2 then{:60350}
+	t=t-1:on-(t<1 and a$="")goto{:60350}:on-(a<>13 and t>0)goto{:60335}:b=val(a$):a=0:return
 {:60350}
-	B=0:A=1:RETURN
+	b=0:a=1:return
 {:60355}
-	QB=300:&,41,0:GOTO{:60305}
+	qb=300:&,41,0:goto{:60305}
 {:60360}
-	QB=1200:&,41,2:GOTO{:60305}
+	qb=1200:&,41,2:goto{:60305}
 {:60365}
-	QB=2400:&,41,3:GOTO{:60305}
+	qb=2400:&,41,3:goto{:60305}
 {:60370}
-	QB=4800:&,41,4:GOTO{:60305}
+	qb=4800:&,41,4:goto{:60305}
 {:60375}
-	QB=9600:&,41,5:GOTO{:60305}
+	qb=9600:&,41,5:goto{:60305}
 {:60380}
-	QB=19200:&,41,6:GOTO{:60305}
+	qb=19200:&,41,6:goto{:60305}
 {:60385}
-	QB=38400:&,41,7:GOTO{:60305}
+	qb=38400:&,41,7:goto{:60305}
 {:60390}
-	ON X GOTO{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:GOTO{:60355}
+	on x goto{:60355},{:60360},{:60365},{:60370},{:60375},{:60380},{:60385}:goto{:60355}
 {:60395}
-	&,4:ON-(PEEK(668)<>PEEK(667))GOTO{:60395}:A$="":RETURN
-	COPYRIGHT 1995 NEW IMAGE 1/24/95
-	AND
+	&,4:on-(peek(668)<>peek(667))goto{:60395}:a$="":return
+	copyright 1995 new image 1/24/95

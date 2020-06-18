@@ -3,7 +3,7 @@ orig $c000
 ; for pass=1 to 3:org $c000,-(pass=3),8,"@:ml.rs232"
 ; print pass
 
-; get &,16,x parameter:
+; get &,16,x parameter (im 3082):
 ; &,16,0: init user port
 ; &,16,1: init SwiftLink
 
@@ -44,7 +44,7 @@ rs232b:
 	{info:INFO: Embedding "rs232-swift.bin"}
 	embed "rs232-swift.bin"
 
-; FIXME: since load addresses ($00 $08) are part of the binaries,
+; FIXED: since load addresses ($00 $08) are part of the binaries,
 ; the program is JMPing there and hitting a BRK instruction
 
 ; in monitor (to skip load address):
