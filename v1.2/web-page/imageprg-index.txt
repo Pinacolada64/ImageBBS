@@ -1,0 +1,109 @@
+File date: 10/10/2001
+  Updated:  8/31/2002, 9/9/2004, 10/26/2006, 07/20/2020
+   Typist: Ryan Sherwood (Pinacolada)
+
+Index
+
+Preface
+
+Chapter I: General Information
+
+	The Function Keys
+	
+	The Drive Designators
+	
+	Time and Date Format
+	
+	Carrier Loss
+	
+	Access Levels
+	
+	Plus Files (+.*)
+	
+	ML Modules (++ *)
+	
+	Mini Plus Files
+
+Chapter II: BASIC Subroutines
+
+Chapter III: Machine Language Subroutines
+
+	Jump Table (& commands)
+	
+	Memory Map
+	
+	Using Modules
+	
+	Using ML Modules
+	
+	RS232 Routines
+	
+	Swapper
+	
+	The Light Bar
+	
+	The System Editor
+	
+Chapter IV: Disk File Formats
+
+	The User File
+	
+	The System Data File
+	
+	Statistics
+	
+	Boot Files
+	
+	U/D Directories
+	
+	Sub-Board Directories
+	
+	Sub-Board/Library Data
+	
+	E-Mail
+	
+Chapter V: Variable Usage
+
+	Temporary Storage Variables
+	
+	Reserved String Variables
+	
+	Reserved Integer Variables
+	
+	Reserved Floating Point Variables
+	
+	Arrays
+	
+Preface
+
+This manual assumes the [user has a good working knowledge of] the BASIC programming language. If you find that you have trouble with areas on BASIC, it is recommended that you refer to a good programming book, such as the Commodore 64 Programmer's Reference Guide, published by Howard W. Sams & Company.
+
+The main purpose of this manual is to familiarize the reader with areas of Image that may be accessed in order for the reader to write modifications or modules to enhance their systems.
+
+The scope of this book is intended to include: BASIC subroutines, reserved system variables, important areas of memory in use, disk file handling, execution and use of "mini plus-files" and data formats of various disk files.
+
+This manual was made with every intent to provide a readable, accurate, and exciting way to program Image like never before. Enjoy the manual.
+
+New Image Software
+
+Welcome to the world of programming IMAGE BBS! This manual is designed to allow both the novice and advanced programmer the ability to program IMAGE BBS modules. We will cover five major areas of IMAGE BBS: general information, the BASIC program, machine language routines, disk file formats, and variable usage charts. Also included you will find a special question and answer section of the most often asked questions and the answers to those questions. [Note: I never saw that section.]
+
+IMAGE BBS will support virtually all hardware available for the C64, including the Lt. Kernal (c) hard drives and the CMD HD series hard drives. Also, the SwiftLink (c) RS-232 cartridge by Dr. Evil. [Note: SwiftLinks have been replaced by Turbo232 cartridges]
+
+IMAGE BBS is a modular type program consisting of both BASIC and machine language modules. A main BASIC module ("im") and a main machine language module ("ml 1.2") both reside in main memory at all times. Also used are BASIC modules (+.*) and machine language (++*) modules.
+
+The purpose of this manual is to provide you with necessary subroutines and variable considerations to make your own modules or modify the existing system to suit your needs.
+
+I would like to thank all of those who worked hard in taking NEW IMAGE SOFTWARE to where it stands today.
+
+DON GLADDEN (C Tuna) for the original BASIC program.
+
+RAY KELM (The Professor) the ML whiz-kid, for the ML.
+
+FRED DART (The Chief) for hours upon hours of work and always being available for support.
+
+JOHN MOORE (Little John) for continuous sleepless nights spent to better the software and its subsystems. Also for the much awaited 128 version.
+
+BOB LEARY (Dr. Bob) for countless hours of work wracking my brains trying to get this manual done.
+
+NISSA for providing undue support to all those sysops in their time of need.
