@@ -9,14 +9,10 @@ IMAGE BBS uses function keys to represent specific ASCII characters which:
 
 * avoids the pitfall of truncating lines, or the necessity of using custom I/O routines to read SEQuential data files.
 
-F1: Comma          (,)
-F5: Quotation mark    (")
-F2: Question mark (?)
-F6: RETURN [CHR$(13)]
-F3: Colon (:)
-F7: Asterisk          (*)
-F4: Equal sign (=)
-F8: Up-arrow          (^)
+F1: Comma           (,)     F5: Quotation mark  (")
+F2: Question mark   (?)     F6: RETURN          [CHR$(13)]
+F3: Colon           (:)     F7: Asterisk        (*)
+F4: Equal sign      (=)     F8: Up-arrow        (^)
 
 The Drive Designators:
 

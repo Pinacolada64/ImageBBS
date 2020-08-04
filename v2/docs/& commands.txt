@@ -152,7 +152,8 @@ $f409	&,54,x	useeditr
 	&,54,2	re-enter, not command
 $a7a0	&,55	output
 $f803	&,56	chatmode
-$fc06	&,57	relread
+$fc06	&,57,lfn#
+		relread
 		Reads until EOF! Nice.
 
 $b29f	&,58,x,y

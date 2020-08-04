@@ -447,6 +447,10 @@ Outputs a character to the IMAGE window.
 	
 	Described in the section "The Editor."
 
+Notes:
+
+&,1
+
 The flags that can be used for the input routine are in the form of bits. Each value turns one option on or off:
 
  1 Allow graphics characters
@@ -456,6 +460,10 @@ The flags that can be used for the input routine are in the form of bits. Each v
 16 Word wrap on
 32 Edit mode on
 64 Ignore timeout
+
+&,9   &,29   &,30   &,45   &,46
+
+The variables that can be accessed through these functions are:
 
 Variable Table:
 

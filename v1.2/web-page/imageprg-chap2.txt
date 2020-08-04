@@ -1,72 +1,70 @@
 Chapter II: BASIC Subroutines
 The purpose of this chapter is to provide you with all existing subroutines available for your use. All routines are shown being accessed through their recommended entry points. Some routines may be accessed through several entry points; others may not. Failure to use the proper entry points of the routines provided may cause undue garbage on the CPU stack or other problems with your programs.
 
-1001
+1001	Position record of relative file currently open as logical file #2. 
+	The variable X should be set to the number of the record desired prior 
+	to calling this routine.
 
-Position record of relative file currently open as logical file #2.
+	Expects:
 
-Expects:
+		X: Record desired.
 
-X: Record desired.
+	Returns:
+
+		E%: Error number.
+		E$: DOS error message.
+		T%: Track number.
+		S%: Sector number.
+
+1004    Checks status of user flags 1-15.
+
+	Expects:
+
+		A: flag number.
+
+	Returns:
+
+		A=0: Not accessible
+		A=1: Access allowed
+
+	User Flags
+	Each user has a total of 15 flags which decide whether or not they have 
+	access to a particular function or area of the system. These flags are 
+	held in a fifteen digit string, each digit representing a seperate flag 
+	which can be checked by setting the variable A to the flag number (1-15) 
+	and issuing a GOSUB 1004 command. If A returns with a value of zero, 
+	access is denied. The values of each flag are as follows:
+
+	1 Non-Weed Access	 6 Editor Lines		11 BAR/Log Access
+	2 Credit Ratio		 7 Unlimited Credits	12 Sub Maint
+	3 Local Maint		 8 Remote Maint		13 Files Maint
+	4 Post/Respond		 9 E-Mail Access	14 MCI Access
+	5 U/D Access		10 User List Access	15 Prime Time U/D Access
+
+1005	Upper/lowercase input.
+
+	Expects:
+		P$	Displays prompt
+		53252	Number of characters allowed in input is governed by 
+			POKEing	this location, 0-255
+
+	Returns:
+
+		AN$	User input
+
+1006	Uppercase input - accepts a line of text, delimited by the RETURN key.
+
+	Expects:
+
+		Same as 1005.
 
 Returns:
 
-E%: Error number.
-E$: Error message.
-T%: Track number.
-S%: Sector number.
+	AN$	User input
+	U$	Duplicate of AN$, for command stacking
 
-1004
-
-Checks status of user flags 1-15.
-
-Expects:
-
-A: flag number.
-
-Returns:
-
-A=0: Not accessible
-A=1: Access allowed
-
-User Flags
-Each user has a total of 15 flags which decide whether or not they have access to a particular function or area of the system. These flags are held in a fifteen digit string, each digit representing a seperate flag which can be checked by setting the variable A to the flag number (1-15) and issuing a GOSUB 1004 command. If A returns with a value of zero, access is denied. The values of each flag are as follows:
-
- 1 Non-Weed Access	 6 Editor Lines		11 BAR/Log Access
- 2 Credit Ratio		 7 Unlimited Credits	12 Sub Maint
- 3 Local Maint		 8 Remote Maint		13 Files Maint
- 4 Post/Respond		 9 E-Mail Access	14 MCI Access
- 5 U/D Access		10 User List Access	15 Prime Time U/D Access
-
-1005
-
-Upper/lowercase input.
-
-Expects:
-
-P$: Displays prompt
-Number of characters allowed in input is governed by POKEing location 53252: 0-255
-
-Returns:
-
-AN$: User input
-
-1006
-
-Uppercase input - accepts a line of text, delimited by the RETURN key.
-
-Expects:
-
-Same as above
-
-Returns:
-
-AN$: User input
-U$: Duplicate of AN$, for command stacking
-
-1007
-
-'Hotkey' input - waits for a single key. RETURN doesn't need to be pressed.
+1007	'Hotkey' input - waits for a single key. RETURN doesn't need to be 
+	pressed.
 
 Returns:
 
@@ -87,7 +85,7 @@ DR$: "<active device>:"
 
 1010
 
-Closes and then (re)opens the command channel—logical file #15—on the device and drive requested, as above
+Closes and then (re)opens the command channel, logical file #15—on the device and drive requested, as above
 
 Expects:
 
@@ -170,12 +168,12 @@ Update BAR stats. This routine will update the ST() array of the Board Activity 
 
 Expects:
 
-X: Set to the number in 4.        Access group name of user currently online. (Also .
+X: Set to the number in 
 I: Value to be added to ST(X)
 
 1026
 
-Outputs the value of ST(X) to record X of RELative file currently open on logical file number 2. Note: "e.stats" should be opened before calling this routine.
+Outputs the value of ST(X) to record X of RELative file currently open on logical file number 2. Note: "e.stats" should be opened (gosub 1060) before calling this routine.
 
 Expects:
 

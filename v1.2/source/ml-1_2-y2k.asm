@@ -644,7 +644,7 @@ loopa15a:
 	lda d1mon1	; a166:0168	ad 35 a2
 	and #$0f	; a169:016b	29 0f
 	tax		; a16b:016d	aa
-	lda $a234	; a16c:016e	ad 34 a2
+	lda d1mon10	; a16c:016e	ad 34 a2
 	and #$0f	; a16f:0171	29 0f
 	beq skipa178	; a171:0173	f0 05
 	txa		; a173:0175	8a
@@ -672,7 +672,7 @@ gotoa18e:
 	sta date_10	; a191:0193	8d 13 ce
 	lda d1date1	; a194:0196	ad 37 a2
 	sta date_1	; a197:0199	8d 14 ce
-	lda $a232	; a19a:019c	ad 32 a2
+	lda d1year10	; a19a:019c	ad 32 a2
 	sta year_10	; a19d:019f	8d 19 ce
 	lda d1year1	; a1a0:01a2	ad 33 a2
 	sta year_1	; a1a3:01a5	8d 1a ce
@@ -731,7 +731,7 @@ days:
 	ascii "Sat "	; a22d:022f
 
 	; holds d1$, 11-digit representation of time/date
-	; "11803248415" -> "Sun May 18, 2018  4:15 PM"
+	; "11505188425" -> "Sun May 18, 2015  4:25 PM"
 d1day:
 	byte $20	; a231:0233 ; d1$ day (1-7)
 
@@ -765,6 +765,8 @@ d1min10:
 d1min1:
 	byte $20  	; a23b:023d ; d1$ minute, 1s digit
 
+; TODO: this looks like a few un-referenced bytes, for a date delta 
+; patch?
 tbl_a23c:
 	byte $20,$20	; a23c:023e
 
@@ -773,6 +775,8 @@ tbl_a23c:
 	and #$01	; a242:0244	29 01
 	beq skipa255	; a244:0246	f0 0f
 	pla		; a246:0248	68
+; end patch?
+
 sub_a247:
 	jsr sub_a26e	; a247:0249	20 6e a2
 	bcc skipa26a	; a24a:024c	90 1e

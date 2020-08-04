@@ -54,3 +54,15 @@ Image 2.0: Turn MN mode on, then go into GF files, then Z for maint
 lp
 I've seen it sprinkled around, but it's now in the master variable 
 list. 1.3/2.0's text output is more sophisticated; obviously 1.2 didn't do this.
+
+Larry:
+Reverse on does not get carried over to the next line in 1.3 and above.
+Also, reverse off at the end of a line will force a word wrap to the next line
+regardless of how much room is left in the line.
+
+But by the same token, if there is still room in a line that begins with a reverse off, however much from the next line that will fit, will appear in reverse in the line above. Make sense?
+
+Ray:
+did some digging on the differences between &,60 and &,68 though
+&,60 was the older version with less features
+for any x > 1 (&,60,x,...) it just calls &,68
