@@ -7,19 +7,24 @@
 {step:2}
 {:sub.check_for_duplicate}
 ' FIXME
-' returns ok=id# if no duplicate name found in playerlog, 0=no duplicate
+' returns ok=id# if duplicate name found in playerlog, 0=no duplicate
 	&"Checking for duplicate profile {f5}"+nn$+"{f5}...":ok=.
-' skip player's profile (g3):
+' skip player's profile (g3) so false match not triggered:
 	for x=1 to 24:&".":if x=g3 then {:cfd}
 	gosub 1001:&,2,2:if a$=dt$(1) then ok=x:&"{f6}Duplicate at #"+str(x):x=24
 {:cfd}
 	next:return
 
+{:sub.empty_record}
+' create empty player record
+	w$="empty"+r$:for x=1 to 15:w$=w$+"0"+r$:next:return
+
+{nice:10}
 {:start}
 	&"{clear}{cyan} Empire 6 Maintenance{f6}{pound}vj"
 '	&" {pound}k1Call Utopia ][ 702-735-6787 24 Hours{pound}k0"
 	&"{purple}Options:{white}{f6:2}"
-	&"(D) Auto-Reset & Credit/Money Exchange{f6}"
+	&"(C)onfig Auto-Reset & Credit/Money Exchange{f6}"
 	&"(E)dit Player's Profile{f6}"
 	&"(L)ist Players{f6}"
 '	&"(P)lay Empire{f6}"
@@ -28,12 +33,12 @@
 	&"(Q)uit to Empire{f6:2}"
 {:prompt}
 	&"{lt. red}Choice? {pound}i1":if tr%<1 then 1811
-	on-(an$="E")-2*(an$="R")-3*(an$="S")-4*(an$="D") goto {:530},{:730}, {:875}, {:600}
+	on-(an$="E")-2*(an$="R")-3*(an$="S")-4*(an$="C") goto {:edit_profile}, {:reset_empire}, {:scratch_news}, {:config}
 	if an$="Q" then return ' returns back to main module
 	if an$="L" then gosub {:sub.other_rulers}
 	goto {:prompt}
 
-{:530}
+{:edit_profile}
 ' edit profile
 	x=.:kk=.:gosub {:sub.open_playerlog}:gosub 1012
 
@@ -56,15 +61,15 @@
 {:edit_by_number}
 ' search by player number
 	if an>1 or an<24 then:&"Out of range.{pound}w2":goto {:532}
-	&,2,2:if a$="empty" then:&"This player has been deleted.{pound}w2":goto {:530}
+	&,2,2:if a$="empty" then:&"This player has been deleted.{pound}w2":goto {:edit_profile}
 
 {:550}
 ' g3=player #
 	g3=x:for j=1 to 16:input# 2,dt$(j):next
 
 {:profile}
-	n$=nn$:if n$="empty" then n$="(Deleted)"
-	&"{clear} Profile of #"+str$(x):if kk then:&" (Modified)"
+	a%=g3:n$=nn$:if n$="empty" then n$="(Deleted)"
+	&"{clear} Profile of #{pound}%a":if kk then:&" (Modified)"
 	&"{f6:2} 0) Name     : {pound}$n"
 	&"{f6} 1) Land     : "+dt$(1)
 	&"{f6} 2) Soldiers : "+dt$(2)
@@ -107,30 +112,31 @@
 	&"{f6}{f5}{up arrow}{f5} deletes player.{f6}Player ID# or name is accepted.{f6:2}"
 	w$=nn$:p$="Name":&,1,32:on tr%+1 goto 1811
 	if an$<>"{up arrow}" then {:edit_name}
-	&"Delete this player? ":a=.:gosub 1902:if a=. then {:profile}
-	w$="empty"+r$:for x=1 to 15:w$=w$+"0"+r$:next
-	x=g3:gosub 1001:print# 2,w$:goto {:profile}
+	&"Delete this player? ":a=.:gosub 1902
+	if a then gosub {:sub.empty_record}:x=g3:gosub 1001:print# 2,w$
+	goto {:profile}
 
 {:edit_name}
 	if an$<>w$ then gosub {:sub.check_for_duplicate}:if ok=. then nn$=an$:kk=1
 	goto {:profile}
 
-{:600}
+{:config}
 	&"{clear}{f6:2}Set both to {f5}No{f5} to disable auto-reset."
 ' new: change to yes/no
-	&"{f6:2}Emperor status? ":gosub 1902:if tr%<1 then 1811
-	mp$=str$(a):if a=. then ln$="0":goto {:609}
+	&"{f6:2}Reset on Emperor status? ":gosub 1902:if tr%<1 then 1811
+	mp$=str$(a):if a=. then ln$="0":goto {:config_2}
 	&"{f6}How many acres? {pound}i1":gosub {:sub.str_to_int}:if tr%<1 then 1811
-	ln$=str$(an)' :gosub {:609}
+' TODO: range checking: if an=0...?
+	ln$=str$(an)
 
-{:609}
+{:config_2}
 ' new: change to yes/no
 	&"{f6:2}Allow BBS credit/money exchange? ":gosub 1902:if tr%<1 then 1811
-	en$=str$(a):if a=. then nn$="0":goto {:maint_700}
-{:credit}
+	en$=str$(a):if a=. then nn$="0":goto {:config_4}
+{:config_3}
 	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.str_to_int}:on -(an<1 or an>100) goto {:credit}:nn$=str$(an)
 '	return
-{:maint_700}
+{:config_4}
 ' ln$ - auto-reset acres requirement:
 '	0=disabled
 '	x=# of acres
@@ -165,17 +171,13 @@
 '	mw=1:a$="":&:if rc then&"{f6}(Aborted.){f6}":x=25
 '	x=x+1:on-(x<24)goto {:725}:close 2:&"{f6}Hit a Key.{pound}g1":goto {:start}
 
-{:730}
-	&"{f6:2}{yellow}Reset Empire, ":gosub 1901:on tr%<1 goto 1811:if a=. then {:start}
-{:732}
+{:reset_empire}
+	&"{f6:2}{yellow}Reset Empire, ":gosub 1901:on -(tr%<1)-2*(a=.) goto 1811, {:start}
+' FIXME: if e%=62 (file not found) then offer to start new game, don't just quit
 	gosub {:sub.open_playerlog}:if e% then:&:goto {:start}
-{:900}
-	gosub 1012:if e% then:&
-	lp=1:return
-
+	&"Resetting Empire... ":gosub {:sub.empty_record}
 	for x=1 to 24:x%=x:&"{pound}#3{pound}%x":gosub 1001
-	print# 2,"empty"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"
-	&"{pound}h3":next:&"Done.":goto {:start}
+	print# 2,w$:&"{pound}h3":next:&"Done.":goto {:start}
 
 ' from Empire6.lbl (reset empire)
 ' {:38}
@@ -196,7 +198,7 @@
 '	a$="e.empire6,l,"+chr$(100)
 '{:850}
 '	dr=3:goto 1011
-{:875}
+{:scratch_news}
 	dr=3:a$="e.empnews6":gosub 1023:close 2:goto {:start}
 
 ' this probably won't work anymore since LMPs have to RETURN

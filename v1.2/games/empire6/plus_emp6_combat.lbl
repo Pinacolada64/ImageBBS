@@ -71,7 +71,7 @@
 
 {:60}
 	gosub {:160}:on ae goto {:34}:gosub {:610}:a=(wa+la)/(ew+ez)
-' todo: consider repeating this heading every 23 lines?
+' TODO: consider repeating this heading every 23 lines?
 	&"{f6:2}{white}Your Army     {yellow}Enemy Army{f6}"
 	ff=1:pv=.:sr=ew:sg=wa:a=0:a2=20:b2=20
 {:76}
@@ -115,7 +115,7 @@
 	wa=wa-sl:goto {:34}
 {:124}
 ' load tourney module:
-' todo: should make it just once per play
+' TODO: should make it just once per play
 	a$="tourney":gosub {:sub.load_lmp}:goto {:combat_start}
 
 {:144}
@@ -176,7 +176,7 @@
 	gosub {:sub.log_event}:return
 
 {:378}
-	&"{pound}f1{red}{f6:2}Fight Menu{f6}{white}{$af:12}{f6:2}"
+	&"{clear}{red}{f6:2}Fight Menu{f6}{white}{$af:12}{f6:2}"
 	&"{cyan}{rvrs on}[1]{rvrs off} {yellow}Attack Army{f6}"
 	&"{cyan}{rvrs on}[2]{rvrs off} {yellow}Attack Palace{f6}"
 	&"{cyan}{rvrs on}[3]{rvrs off} {yellow}Attack Nobles{f6}"
@@ -187,10 +187,10 @@
 
 {:600}
 	rem donate
-	&"{pound}f1{f6:2}{white}{rvrs on}<<< Cyclone's Natural Disaster Bank >>>{pound}q0{f6:2}"
+	&"{clear}{f6:2}{white}{rvrs on}<<< Cyclone's Natural Disaster Bank >>>{pound}q0{f6:2}"
 	&"Money --> ":x=pn:gosub {:sub.comma_value}
 	&"{f6:2}Give him how much money --> {pound}i1":if tr%<1 then {:combat_164}
-	gosub {:sub.normalize}:if an=. then {:36}
+	gosub {:sub.str_to_int}:if an=. then {:36}
 {:607}
 	if an>pn or an<1 then:&"{f6:2}Get lost!":goto {:36}
 	pn=pn-an:ep=ep+an:&"{f6:2}Done!{f6:2}"
@@ -198,7 +198,7 @@
 	tt$="{green}"+na$+" donated {lt. green}$"+an$+"{green} to "+en$+"!":gosub {:sub.log_event}
 	goto {:combat_164}
 {:610}
-	&"{pound}f1{f6}{white}  Naval Battle{f6:2}     Your Navy    Opponent Navy{f6:2}"
+	&"{clear}{f6}{white}  Naval Battle{f6:2}     Your Navy    Opponent Navy{f6:2}"
 {:612}
 ' NEW: add "/" retreat option:
 	if sh or rc then:&"Retreat from battle? ":gosub 1902:if a then {:retreat}
@@ -217,7 +217,7 @@
 	if yc>1 then wa=wa-(e7*fn r(7)):return
 	ew=ew-(yc*fn r(7)):return
 {:625}
-	&"{pound}f1{purple}{f6:2}Lord Randall is furious at you! Watch{pound}$lout!{f6:2}"
+	&"{clear}{purple}{f6:2}Lord Randall is furious at you! Watch{pound}$lout!{f6:2}"
 	z8=1:ez=fn r(50000)+100000:ew=fn r(wa/2)+wa:en=100
 	en$="RANDALL":ef=10000:e1=10:e2=1000:e3=1000:e4=1000:e5=1000:og=30
 	e7=fn r(yc/2)+yc:goto {:60}

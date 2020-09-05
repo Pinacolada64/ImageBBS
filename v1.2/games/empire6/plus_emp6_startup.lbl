@@ -9,13 +9,13 @@
 	close 2
 ' moved empire wall here:
 {:604}
-	sh=.:&"{pound}q0{pound}f1{f6:2}{yellow}Read Empire wall?: ":gosub 1902
+	sh=.:&"{pound}q0{clear}{f6:2}{yellow}Read Empire wall?: ":gosub 1902
 	on -(tr%<1)-2*(a=.) goto 1811,{:648}
 	b%=.:z$="":m$="{space:40}":a=ll%/2-14
 	if a>.then z$=left$(m$,a)
 ' fixme: why not modify ak$ instead of defining a$?
 	a$="{$c0:40}":g$=" "+left$(a$+a$,ll%-2)
-	&"{pound}f1{f6}{pound}$x       {lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}Wall{lt. green}Writer{f6}{pound}$z{cyan}           v1.0{f6}{pound}$x{f6}{orange}{pound}$g{f6:2}"
+	&"{clear}{f6}{pound}$x       {lt. blue}{rvrs on} {$a5}{$b4}{$b5}{lt. red}Wall{lt. green}Writer{f6}{pound}$z{cyan}           v1.0{f6}{pound}$x{f6}{orange}{pound}$g{f6:2}"
 	dr=3:a$="e.emp6.wall,s,r":gosub 1011:if e% then:&"{orange}The wall is blank!{f6}":goto {:636}
 	f$="new writings":m$=m$+m$:&"Scanning for {pound}$f...":sh=.
 {:618}

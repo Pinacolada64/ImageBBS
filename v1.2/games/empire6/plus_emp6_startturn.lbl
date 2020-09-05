@@ -4,7 +4,7 @@
 	goto {:begin}
 
 {:sub.main_menu}
-	&"{yellow}{pound}f1{f6:2}Empire Menu{f6}{white}{$af:13}{f6:2}"
+	&"{yellow}{clear}{f6:2}Empire Menu{f6}{white}{$af:13}{f6:2}"
 	&"{cyan}{rvrs on}[I]{rvrs off} {lt. green}Instructions{f6}"
 	if e9 then:&"{cyan}{rvrs on}[M]{rvrs off} {lt. green}Maintenance{f6}"
 ' "Empire Records," perhaps? :)

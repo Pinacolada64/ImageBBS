@@ -46,13 +46,12 @@
 	x=fn r(gr/3):gr=gr-x:&"{f6:3}Eeek! {green}Rats eat ":gosub {:sub.comma_value}
 	&" bushels of grain.{f6:2}":goto {:continue_turn}
 {:156}
-' fixme: correct message if last palace destroyed:
+' FIXME: correct message if last palace destroyed:
 	if fn r(100)<85 and f%(1)=0 and nb=0 then {:continue_turn}
 	f%(1)=f%(1)-1:nb=nb-1:&"{f6:2}{pound}s1{rvrs on}{pound}p4{brown}EARTHQUAKE!{pound}p0{f6}"
 	&"{orange}One of your Palace(s) was destroyed!{pound}$l1 noble was killed."
-
-' orphan line:
-'	&"{orange}10% of your Palace was destroyed!{f6}1 noble was killed.{f6}" ':return
+' FIXME: orphan line?
+	&"{orange}10% of your Palace was destroyed!{f6}1 noble was killed.{f6}":return
 
 {:continue_turn}
 	&"{f6:2}{green}You have {lt. green}":x=la:gosub {:sub.comma_value}:& " {green}acres of land.":gosub {:276}:if tr%<1 then {:save_stats_quit}
@@ -60,9 +59,9 @@
 	wb=wc*3+12:on-(an$="B")-(an$="S")*2-(an$="C")*3 goto {:166}, {:176}, {:188}:gosub {:sub.request_your_status}:goto {:continue_turn}
 {:166}
 	gosub {:sub.barbarians_will}:&"sell their land for{white}"+str$(wb)+" {green}dollars an acre.":gosub {:272}:if tr%<1 then {:save_stats_quit}
-	bl=val(an$):if bl<1 then {:continue_turn}
-	if pn<(bl*wb)then gosub {:sub.you_only_have}:& str$(pn)+" dollars!":goto {:166}
-	pn=pn-(bl*wb):la=la+bl:&"{f6}{yellow}Bought!":goto {:188}
+	gosub {:sub.str_to_int}:if an<1 then {:continue_turn}
+	a%=pn:b%=an*wb:if a%<b% then gosub {:sub.you_only_have}:&"{pound}%a dollars!":goto {:166}
+	pn=pn-b%:la=la+an:&"{f6}{yellow}Bought!":goto {:188}
 {:176}
 	wb=int(wb/(int(la/875)+1))
 {:178}
@@ -72,6 +71,7 @@
 	if sl>la-1 then gosub {:sub.you_only_have}:& str$(la)+" acres!":goto {:178}
 	la=la-sl:pn=pn+(wb*sl):&"{f6}{yellow}Sold!"
 {:188}
+' FIXME: find where wc is defined
 	&"{f6:2}{green}You have{white}"+str$(gr)+" {green}Bushels of grain.":gosub {:276}:if tr%<1 then {:save_stats_quit}
 	wb=int(6/wc):on-(an$="B")-(an$="S")*2-(an$="C")*3 goto {:192},{:204},{:214}:gosub {:sub.request_your_status}:goto {:188}
 {:192}
@@ -189,7 +189,7 @@
 	in$(9)="Ship":in(1)=10:in(2)=1000:in(3)=2000:gosub {:sub.price_adjust}:in(5)=7000:in(6)=8000:in(7)=25000:in(8)=50000:in(9)=5000
 {:296}
 	&"{f6:2}{cyan}Which investment?{pound}$l(0=None  ?=List  Y=Your Stats){f6}{lt. green}>>{lt. blue}{pound}i1":if tr%<1 then {:save_stats_quit}
-	gosub {:sub.normalize}:gosub {:sub.request_your_status}:if an$="{f2}" then gosub {:sub.invest_menu}
+	gosub {:sub.str_to_int}:gosub {:sub.request_your_status}:if an$="{f2}" then gosub {:sub.invest_menu}
 	on -(an$="0" or an$="")-2*(an<1 or an>9) goto {:351},{:296}
 
 {:306}
@@ -230,7 +230,7 @@
 	a%=sf/3-wa:&"{gray2}":gosub {:sub.you_only_have}:&" {pound}%a more male serfs of{pound}$lfighting age!{lt. blue}":goto {:296}
 
 {:sub.invest_menu}
-	&"{lt. green}{pound}f1{f6:2}  Investment Options{f6} {white}{pound}o{$af}{$af}{f6:2}":&"{yellow}{rvrs on}[1]{rvrs off}{white} Soldier{pound}{back arrow}20{green}$10{f6}"
+	&"{lt. green}{clear}{f6:2}  Investment Options{f6} {white}{pound}o{$af}{$af}{f6:2}":&"{yellow}{rvrs on}[1]{rvrs off}{white} Soldier{pound}{back arrow}20{green}$10{f6}"
 	&"{yellow}{rvrs on}[2]{rvrs off}{white} Marketplace  {green}$1,000{f6}":&"{yellow}{rvrs on}[3]{rvrs off}{white} Grain Mill   {green}$2,000{f6}":gosub {:sub.price_adjust}
 	&"{yellow}{rvrs on}[4]{rvrs off}{white} Palace{pound}{back arrow}20{green}${pound}v6{f6}":&"{yellow}{rvrs on}[5]{rvrs off}{white} Foundry{pound}{back arrow}20{green}$7,000{f6}"
 	&"{yellow}{rvrs on}[6]{rvrs off}{white} Shipyard{pound}{back arrow}20{green}$8,000{f6}":&"{yellow}{rvrs on}[7]{rvrs off}{white} Noble{pound}{back arrow}20{green}$25,000{f6}"

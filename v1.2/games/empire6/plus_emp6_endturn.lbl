@@ -7,7 +7,7 @@
 	gosub {:320} ':goto {:226}
 {:226}
 	if la<1 then:&"{f6:2}{lt. green}You've lost all your land!{f6}":goto {:234}
-' todo: use subroutine in +.empire6:
+' TODO: use subroutine in +.empire6:
 '	&"{f6:2}{rvrs on}Press any key{rvrs off}{pound}g1"
 	gosub {:sub.any_key}
 	if sf>99 then {:236}
@@ -49,7 +49,7 @@
 '	:lp=1:gosub {:sub.any_key}
 	&"{f6:2}{lt. green}PAYABLES{white}"
 	&"{f6:2} Soldiers Pay:"+str$(wa*(ff+2))+"{f6} Palace Rent :"
-	&str$(tr*f%(1)*10)+"{f6} Nobles Gifts:"+str$(x)
+	&str$(tr*f%(1)*10)+"{f6} Nobles Gifts:"+str$(xx)
 	lp=1:gosub {:sub.any_key} ':gosub {:298}
 {:298}
 	tz=0

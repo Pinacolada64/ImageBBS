@@ -29,7 +29,7 @@
 	& mid$(z$,y,3):next:return
 
 {nice:5}
-{:sub.normalize}
+{:sub.str_to_int}
 	an=abs(int(val(an$))):return
 
 {nice:5}
@@ -76,13 +76,13 @@
 ' j is for justifying acres value with {:sub.comma_value}
 	gosub {:sub.open_playerlog}:x=1:j=1
 {:58}
-' get player name (n$), acres (z$):
+' get player name (n$), acres (b$):
 ' can't use z$ a j l x y since the REL pointer sub uses 'em
-	x%=x:gosub 1001:input# 2,n$,z$:if n$="empty" or n$=na$ or left$(n$,1)="0" then {:64}
+	x%=x:gosub 1001:input# 2,n$,b$:if n$="empty" or n$=na$ or left$(n$,1)="0" then {:64}
 	&"{f6}{lt. blue}{pound}# {pound}#2{pound}%x. {lt. green}"+left$(n$+"......................",22)+"{cyan}"
 ' sub uses x:
 ' - use temp "an" to hold REL record #, restore afterwards:
-	an=x:x=val(z$):gosub {:sub.comma_value}:x=an
+	an=x:x=val(b$):gosub {:sub.comma_value}:x=an
 {:64}
 ' sh=47? what does that mean? 'if sh' = 'if spacebar hit'...
 ' sh=47: %00101111
@@ -98,14 +98,14 @@
 	if tz=3 then d2$="EMPEROR "
 	return
 {:sub.rank_2}
-	' todo: tz=1: goto {:sub.rank}
+	' TODO: tz=1: goto {:sub.rank}
 	d2$="PRINCE ":tz=1:return
 {:484}
-	' todo: tz=2: goto {:sub.rank}
+	' TODO: tz=2: goto {:sub.rank}
 	d2$="KING ":tz=2:return
 {:486}
 	if la<ln then return
-	' todo: tz=3: goto {:sub.rank}
+	' TODO: tz=3: goto {:sub.rank}
 	d2$="EMPEROR ":tz=3:return
 
 {nice:5}
@@ -116,7 +116,7 @@
 {:sub.your_status}
 ' wish: different displays for 40/80 columns?
 ' player name and id#
-	&"{f6:2}{cyan}{pound}v2 (#"+str$(g3)+"{f6}{lt. green}":j=.
+	a%=g3:&"{f6:2}{cyan}{pound}v2 (#{pound}%a{f6}{lt. green}":j=.
 	&"{f6}Land     : ":x=la:gosub {:sub.comma_value}:&" acres"
 	&"{f6}Money    :$":x=pn:gosub {:sub.comma_value}
 	&"{f6}Grain    : ":x=gr:gosub {:sub.comma_value}:&" bushels"
@@ -167,7 +167,7 @@
 	a=3:gosub 1004:e9=a+zz
 
 ' enable error trapping: &,37:
-	&"{pound}f1":bn=.:ty=.:z9=.:def fn r(x)=int(rnd(1)*x)+1
+	&"{clear}":bn=.:ty=.:z9=.:def fn r(x)=int(rnd(1)*x)+1
 	k$="Return":if co%>2 then k$="Enter"
 
 ' this will format things roughly for 40/80 columns, just &"{pound}$l"

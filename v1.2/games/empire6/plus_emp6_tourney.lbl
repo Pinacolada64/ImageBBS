@@ -3,7 +3,7 @@
 	rem adapted from "empire deluxe" on centipede 128
 	{uses:.\includes.lbl}
 
-' todo: check for horse
+' TODO: check for horse
 	&"{f6:2}{lt. blue}Your Noble mounts his mighty steed and{pound}$laims his lance...{f6}":goto {:combat_140}
 {:126}
 	if en*2<nb then {:combat_132}

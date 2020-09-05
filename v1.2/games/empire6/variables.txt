@@ -1,7 +1,6 @@
 		Variables:
 
 e9	maintenance flag
-en	BBS credit/money exchange active
 
 f%(1)	palace
 f%(2)	markets
@@ -16,12 +15,8 @@ gr	grain
 i8	colonies
 
 la	land
-ln	auto-reset land requirement
-
-mp	auto-reset emperor status
 
 nb	nobles
-nn	bbs credit/money exchange rate
 
 pn	cash
 
@@ -32,6 +27,7 @@ ty	previous rank
 tz	current rank
 
 wa	soldiers
+wc	not defined?
 
 x8	navigators
 
@@ -69,3 +65,9 @@ f%(6)	diplomats
 yc	ships
 i8	colonies
 z9	training
+
+"e.emp 6 config":
+ln	1=auto-reset when player reaches land requirement
+mp	1=auto-reset when player reaches emperor status
+en	1=BBS credit/Empire money exchange active
+nn	  BBS credit/Empire money exchange rate (1:nn)
