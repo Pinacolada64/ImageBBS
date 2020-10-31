@@ -1,0 +1,44 @@
+;++ 4.docs ++ 4 (indexer) functions:
+
+FIND      &,16
+ Uses a binary search to find the string AN$ in the REL file.
+   Entry: AN$=sting to find
+          File 2 must be open to the REL file
+          File 15 must be open to the command channel
+   Exit:  if found then A%=value found, B%=position found
+          if not found then A%=0, B%=position to insert
+
+LOADINDX  &,16,1
+ Load an index into the index buffer.
+   Entry: A$=drive#+filename, DV%=device
+   Exit:  A%=# of entries in index
+
+SAVEINDX  &,16,2
+ Save an index to disk.
+   Entry: A$=drive#+filename, DV%=device
+
+MAKEINDX  &,16,3
+ This will clear the index buffer.
+
+INSTINDX  &,16,4
+ This will insert a value into the index buffer.
+   Entry: A%=value, B%=position
+
+DELTINDX  &,16,5
+ This will delete a value from the index buffer.
+   Entry: B%=position
+
+NEXTINDX  &,16,6
+ This will return the next value from the index buffer.
+   Entry: B%=current position
+   Exit:  A%=value at new position, B%=new position
+
+SETCRSKP  &,16,7
+ This will set the # of Carriage Returns to skip when reading data. This 
+ allows fields other than the first one to be indexed.
+   Entry: A%=# of CRs
+
+FINDINDX  &,16,8
+ This will find the first occurance of the value given.
+   Entry: A%=value to find
+   Exit:  B%=position found at, or 0 if not found.
