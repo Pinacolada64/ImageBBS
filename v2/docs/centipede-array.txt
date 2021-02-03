@@ -1,0 +1,157 @@
+                     The C() ARRAY Definitions
+-------------------------------------------------------------------
+
+sysc(0)      Output contents of a$, with a carriage return
+sysc(1)      Output contents of a$
+peek(c(2))   The 'p' variable.
+             p -> 0=okay,  1=CONTROL-P,  2=CONTROL-V,
+                  3=paused (HOME), 4=CONTROL-X,  255=carrier lost
+peek(c(3))   The 'a$' variable. Returned char from a sysc(4)
+sysc(4)      Get a character in upper case only. Doesn't wait for
+             a char; returns a 0 of nothing pressed. Value returned
+             in c(3)
+sysc(4)+3    Same as sysc(4), but lower case also accepted
+sysc(5)      Input line from disk. Read from file ID in c(35),
+             up to a char in c(6), if the c(36) flag is set
+             Results in left$(tx$,peek(142)). EOL char is in
+             c(3); a zero if ran out of space in tx$ or EOF
+sysc(5)+3    Same as c(5) but attaches the terminating char to string.
+sysc(5):=v$, Same as sysc(5), but left$(tx$,peek(142)) is copied
+sysc(5)+3:=v$into v$; where v$ is any string variable
+pokec(6)     EOL character for string input. Default=13
+pokec(7)     Maximum columns for line input. Default=78
+sysc(8)      Start of line input from keyboard or modem
+sysc(8):=v$  Same as sysc(8), but left$(tx$,peek(142)) is copied
+             into v$; where v$ is any string variable
+sysc(8)+3,x  Start of line input
+             where x=0 -fully free input
+                     1 -no cursor or color
+                     2 -upper case only - no cursor or color
+                     3 -formatted upper/lower case - no crsr or colr
+                    >3 -numbers and uppercase char in chr$(x) only
+                    255-repeat last input style. works if last input
+                         was a normal sysc(8) or sysc(9) too
+sysc(9)      ReEntry for line input of sysc(8)
+sysc(10),d,x Load a BASIC module. File name in a$. Where 'd' is
+             the device number to load from; 'x' is the module level
+             where the level is normally 0,1,2 or 3.
+             If level = 0, then it will just update the file name
+             table for the View Panel and error trapping.
+             If level > 3, then the code is just loaded, without
+             being added to list of programs in memory.
+             In the event of a disk error, a RETURN is performed.
+sysc(11)     Pop a RETURN command off the BASIC stack
+pokec(12)    Carrier lost value
+sysc(13)     Compare filenames in a$ and tx$. Usage: sysc(13):rreg a
+             Where returned result 'a' is:
+                0 = exact match
+                1 = a$>tx$   with leading non-alpha characters stripped off
+               255= a$<tx$    " ...
+sysc(14),s,d Copy a file from file ID #s to ID #d. File opening and
+             closing handled in BASIC.
+peek(c(15))  Where last keypress was from. 0=modem, >0=local
+pokec(15)+1  Term mode local echo. 0=no echo
+pokec(15)+2  ANSI mode flag (needed now that we have mlc.ansi?)
+pokec(16)    Word Wrap mode flag. 0=off, 1=on
+peek(c(16)+1)Level number of last module loaded
+sysc(17),x,y Move cursor on screen and over modem to column 'x'
+             (0-79), line 'y' (0-24)
+sysc(18),a,x Scan file, ID #x, for the character, chr$(a), or EOF
+sysc(19)     Hide all modules in memory. New level 1 and above
+             modules can then be loaded in.
+sysc(20)     Restore hidden modules.
+pokec(21)    Password flag. 0=off, >0=char to output
+peek(c(21)+1)Origin of last input. 0=?, >0=?
+pokec(22)    Commodore graphics, and limited input flags.
+             0=ASCII or ANSI,  1=C/G
+             2=No color changing or cursoring allowed
+pokec(23)-1,x
+             Digits only flag. 0=off
+             >0=only input digits and chr$(x)
+pokec(23)    Uppercase input only flag. 0=off, 1=active
+             255=force lower case unless start of word, then
+                 force upper
+sysc(24)     Enter terminal mode. Exits on F-key press
+sysc(25)     Output contents of a$, with a carriage return
+             and convert to uppercase if in upper/gfx mode
+sysc(26)     Output contents of a$
+             and convert to uppercase if in upper/gfx mode
+pokec(27)    Printer flag. 0=off
+             >0=send output to file ID of this flag as well
+             as screen and modem
+pokec(28)    Check for carrier lost flag.
+             0=don't check.  255=carrier has been lost
+sysc(29),x   Convert the contents of a$ to:
+             when x=0 - All UPPER case
+                   =1 - All lower case
+                   =2 - Mixed Upper/Lower Formatted
+pokec(30)    Chat-Mode flags. Any bit set=on.
+             bits 0-3: Corresponds to d%(6). Used by ML
+              bit #4: Auto color changing flag. 16=on
+              bit #5: Word wrapping flag. 32=on
+              bit #6: Split-Screen mode flag. 64=on
+pokec(31)    Output to modem flag. 0=enabled, 1=local only
+sysc(32),x   Wedge in the BBS ML code.
+             where x=0 - Don't trap basic errors or run/stop key
+                   x>0 - Trap basic errors and run/stop key
+sysc(33)     Disengage BBS ML wedges
+peek(c(34))  Timeout flag. 0=all okay, 1=timed out!
+pokec(35)    Line input (sysc(5)) file ID to input from.
+             Normally = 8
+pokec(36)    Line input (sysc(5)) EOL check flag.
+             0=don't check, 1=check for char in c(6)
+sysc(37)     Save Local Buffer. Dumps data to file ID in c(35)
+sysc(38)     Load Local Buffer. Reads data from file ID in c(35)
+sysc(39)     Display file from ID in c(35)
+sysc(40),x   Prepare for Killer. Can have up to 8 layers of killers
+             where x=0 - none. Just adds a useless layer
+                    =1 - Dim (arrays) Killer
+                    =2 - Variable (all variable types) Killer
+sysc(41),x   Execute Killer(s), where x is the number of layers
+             to kill. Normally x=1, for one layer at a time.
+             Setting >=8 will insure that all layers are removed
+sysc(42)     Evaluate value of BASIC expression in a$. Results are
+             returned in left$(tx$,peek(142)). May use
+             sysc(42):=i$ format
+sysc(43)     Play Digitation loaded at address (peek(4625)+1)*256
+sysc(44),... Load and Save memory ranges
+              a$=dr$+"filename":
+              sysc(44),dv,b,0:s   - load starting at address s in bank b
+              sysc(44),dv,b,1     - load to bank b at address was saved from
+              sysc(44),dv,b,2:s,e - save memory s through e from bank b
+
+sysc(45),y   Line Snapshot of line #y. Result returned in tx$.
+             May use sysc(45),y:=i$ format
+sysc(46),x   Sim40c Setting - where x=4 - 40c, or x=8 - 80c)
+sysc(47),l,h Count Messages
+             poke 139/140 with number of index's to count
+             'l' and 'h' are low and high bytes of pointer into
+             ca%() to start at.
+             Returns # of messages in each category at:
+              $200+cat# = low byte of count
+              $21A+cat# = high byte of count
+             Returns total # of msgs in ALL cats in 139/140
+sysc(48),a,x,y
+             Output a$ at line 'y', column 'x' with VDC attribute
+             value in 'a'. Does not effect cursor position.
+             View Panel is in lines 25-49.
+sysc(49)     Lt.Kernal File size and disk space.
+             If a$="", returns space free on disk and tx$="b"
+             Otherwise, returns file size of filename in a$ and
+                        tx$ has dir entry in format: ' "filename" seq' 
+             Sizes returned in Acc and X registers (low/high).
+sysc(50),a,x Clear string array named by ascii values of 'a' and 'x',
+          ,y starting at array index 'y'.
+             Ex: sysc(50),65,0,1    clears a$() starting with a$(1)
+                 sysc(50),76,71,0   clears all of lg$()
+             Works on multi-dimensional arrays too.
+sysc(51),m,s LtK dual-port message passing. 'm' is the mode: 0=read, 1=write
+             's' is the sector to read or write. Data to write is passed
+             in a$. Data read (255 bytes) is returned in tx$.
+               Sector: nd    = Cross-port user messages
+                       nd+2  = Current menu command
+                       nd+4  = BBS area lockout
+                       nd+6  = Name of caller
+             (May work with 64Net in the future.)
+sysc(52)     Reset CPU and BASIC stacks
+
