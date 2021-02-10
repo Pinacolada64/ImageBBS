@@ -40,7 +40,7 @@ ys	serfs
 yw	nobles
 
 z8	0: wall read flag in +.emp6.startup
-	1: 
+	1:
 	2: max turns taken today?
 
 z9	maintenance mode flag (0 or 1) [deprecated]
@@ -71,3 +71,7 @@ ln	1=auto-reset when player reaches land requirement
 mp	1=auto-reset when player reaches emperor status
 en	1=BBS credit/Empire money exchange active
 nn	  BBS credit/Empire money exchange rate (1:nn)
+
+During combat:
+og	opponent training units
+z9	training units
