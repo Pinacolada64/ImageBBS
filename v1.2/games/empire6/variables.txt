@@ -47,24 +47,25 @@ z9	maintenance mode flag (0 or 1) [deprecated]
 
 peek(899)	# of plays taken
 
-Player file format:
-na$	handle
-la	land
-wa	soldiers
-sf	serfs
-nb	nobles
-gr	grain
-tr	tax rate
-pn	money
-f%(1)	palaces
-f%(2)	markets
-f%(3)	mills
-f%(4)	foundries
-f%(5)	shipyards
-f%(6)	diplomats
-yc	ships
-i8	colonies
-z9	training
+Player file format
+PC			Opponent
+na$	handle		en$
+la	land		ez
+wa	soldiers	ew
+sf	serfs		ef
+nb	nobles		en
+gr	grain		eg
+tr	tax rate	et
+pn	money		ep
+f%(1)	palaces		e1
+f%(2)	markets		e2
+f%(3)	mills		e3
+f%(4)	foundries	e4
+f%(5)	shipyards	e5
+f%(6)	diplomats	e6
+yc	ships		e7
+i8	colonies	e8
+z9	training	og
 
 "e.emp 6 config":
 ln	1=auto-reset when player reaches land requirement
