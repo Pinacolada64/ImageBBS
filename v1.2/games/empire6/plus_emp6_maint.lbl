@@ -7,7 +7,7 @@
 {step:2}
 {:sub.check_for_duplicate}
 ' FIXME
-' returns ok=id# if duplicate name found in playerlog, 0=no duplicate
+' returns ok=id# if duplicate name [dt$(1)] found in playerlog, 0=no duplicate
 	&"Checking for duplicate profile {f5}"+nn$+"{f5}...":ok=.
 ' skip player's profile (g3) so false match not triggered:
 	for x=1 to 24:&".":if x=g3 then {:cfd}
@@ -60,7 +60,7 @@
 
 {:edit_by_number}
 ' search by player number
-	if an>1 or an<24 then:&"Out of range.{pound}w2":goto {:532}
+	if an<1 and an>24 then:&"Out of range.{pound}w2":goto {:532}
 	&,2,2:if a$="empty" then:&"This player has been deleted.{pound}w2":goto {:edit_profile}
 
 {:550}
@@ -130,12 +130,11 @@
 	ln$=str$(an)
 
 {:config_2}
-' new: change to yes/no
+' new: change inputting "0" or "1" to "yes/no" prompts
 	&"{f6:2}Allow BBS credit/money exchange? ":gosub 1902:if tr%<1 then 1811
 	en$=str$(a):if a=. then nn$="0":goto {:config_4}
 {:config_3}
-	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.str_to_int}:on -(an<1 or an>100) goto {:credit}:nn$=str$(an)
-'	return
+	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.str_to_int}:on -(an<1 or an>100) goto {:config_3}:nn$=an$
 {:config_4}
 ' ln$ - auto-reset acres requirement:
 '	0=disabled
@@ -178,32 +177,8 @@
 	&"Resetting Empire... ":gosub {:sub.empty_record}
 	for x=1 to 24:x%=x:&"{pound}#3{pound}%x":gosub 1001
 	print# 2,w$:&"{pound}h3":next:&"Done.":goto {:start}
-
-' from Empire6.lbl (reset empire)
-' {:38}
-' check for sysop access:
-' why not load +.emp6.maint instead?
-'	&"{f6:2}{yellow}Reset game?: ":gosub 1902:if a=0 then {:106}
-' ask are you sure:
-'	gosub 1901:if a=0 then {:106}
-'{:41}
-'	w$="empty"+r$+"0"
-' TODO: log to e.errlog:
-' TODO: check if it exists first:
-'	a$="e.empire6,l,"+chr$(100):dr=3:gosub 1011:if e% then close 2:&"Disk status: "+a$:lp=1:goto 1812
-'{:46}
-'	for x=1 to 24:gosub 1001:print# 2,w$:next:close 2:goto 1812
-
-'{:800}
-'	a$="e.empire6,l,"+chr$(100)
-'{:850}
-'	dr=3:goto 1011
 {:scratch_news}
 	dr=3:a$="e.empnews6":gosub 1023:close 2:goto {:start}
-
-' this probably won't work anymore since LMPs have to RETURN
-' {:880}
-'	&"{f6:2}{cyan}Heading to the Empire....":&,28:dr=5:a$="emp6.startup":goto 1067
 
 {number:999}
 	rem empire 6 maintenance module - mercilessly hacked by pinacolada
