@@ -586,7 +586,7 @@ feelings of anticipation when there was a new plus file or mod
 to download.
 
 > As of 2014, Larry "X-Tec" Hedman is the NISSA and network
-> administration guy. We have 13 notes as of July 2018.
+> administration guy. We have 13 nodes as of July 2018.
 
 <span id="anchor-44"></span>Anyway, drop me a line—I want to hear from
 you! plzkthx.
