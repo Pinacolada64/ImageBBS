@@ -1,355 +1,359 @@
-	GOSUB{:3044}:ON MM GOTO{:3200},{:3150},{:3092}:GOTO{:3100}
+{number:3000}
+	gosub{:3044}:on mm goto{:3200},{:3150},{:3092}:goto{:3100}
 {:3002}
-	&,15,6,133:R=ABS(INT(VAL(A$))):RETURN
+	&,15,6,133:r=abs(int(val(a$))):return
 {:3004}
-	DR=BN+6:RETURN
+	dr=bn+6:return
 {:3006}
-	IF VAL(A$)THEN IF VAL(A$)<1 THEN A$=MID$(A$,4)
-	RETURN
+	if val(a$)then if val(a$)<1 then a$=mid$(a$,4)
+	return
 {:3010}
-	A=ABS(INT(VAL(MID$(AN$,2,4)))):RETURN
+	a=abs(int(val(mid$(an$,2,4)))):return
 {:3012}
-	A=ABS(INT(VAL(AN$))):RETURN
+	a=abs(int(val(an$))):return
 {:3014}
-	RETURN
-	&"{f6} ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {$d4}O {$cb}EEP {$d3}AME){f6:2}":RETURN
-	&"{pound}$JNAME?: {pound}I0":RETURN
-	&"{clear}{f6}{pound}Q0{$c5}ND {$cf}F {$d4}RANSFER.{f6}":IM=1:GOTO 443
-	&"{f6}{$d3}ORRY, {$ce}O {$d3}UCH {$c6}ILE.{f6}":RETURN
+	return
+	&"{f6} (RETURN To Keep Same){f6:2}":return
+	&"{pound}$jname?: {pound}i0":return
+	&"{clear}{f6}{pound}q0End Of Transfer.{f6}":im=1:goto 443
+	&"{f6}Sorry, No Such File.{f6}":return
 {:3024}
-	&"{f6}{orange}{$d3}ORRY, {$ce}OT {$c5}NOUGH {$c3}REDITS!{f6}":RETURN
-	&"{f6}{$c7}O {$d4}O {pound}V7 {pound}$JS {$cd}ODE!{f6}":RETURN
-	&"{f6} {$c1}BORTED!{f6}":IM=1:GOTO 443
+	&"{f6}{orange}Sorry, Not Enough Credits!{f6}":return
+	&"{f6}Go To {pound}v7 {pound}$js Mode!{f6}":return
+	&"{f6} Aborted!{f6}":im=1:goto 443
 {:3030}
-	B=ABS(VAL(A$)):B=INT(-10*B*(B<1)):RETURN
-	PRINT# 15,"S"DR$B$:GOTO 62
-	CLOSE 2:CLOSE 3:CLOSE 14:CLOSE 15:RETURN
-	ON-(S$=D2$)GOTO{:3060}:A$="  "+D2$:GOSUB 50:S$=D2$:GOTO{:3060}
-	CLOSE 15:OPEN 15,A,15:CLOSE 15:A=ST:RETURN
-	ON-(A%=1)GOTO{:3014}:&"S":RETURN
-	&"{f6}{$d3}ORRY, {pound}$KS {$cf}NLY{f6}":RETURN
+	b=abs(val(a$)):b=int(-10*b*(b<1)):return
+	print# 15,"s"dr$b$:goto 62
+	close 2:close 3:close 14:close 15:return
+	on-(s$=d2$)goto{:3060}:a$="  "+d2$:gosub 50:s$=d2$:goto{:3060}
+	close 15:open 15,a,15:close 15:a=st:return
+	on-(a%=1)goto{:3014}:&"s":return
+	&"{f6}Sorry, {pound}$ks Only{f6}":return
 {:3044}
-	LC=9:YY%=0:H$="{$cc}IBRARY":J$="{$c6}ILE":K$="{$c4}OWNLOAD":L$="{$d5}PLOAD":M$="{$cd}ULTI-"
-	I$=" {$d3}UBOP ":R$=CHR$(13):RETURN
-	B$=F$+","+T$:RETURN
-	X=-((PEEK(2033)AND 127=1)AND((PEEK(2036)AND 4)=.)):RETURN
-	Y%=A%:FOR I=1 TO A%:A$=" "+C$+": {f5}"+TT$(I)+"{f5}":PRINT# 2,A$:A%=Y%:NEXT
-	CLOSE 2:RETURN
-	&"{f6:2}{$c3}ORRECT?: ":GOTO 8
-	&"{f6:2} [{$d9}]ES [{$ce}]O [{$c5}]VERY [{$d3}]TART [{$c1}]BORT{f6:2}":RETURN
+	lc=9:yy%=0:h$="Library":j$="File":k$="Download":l$="Upload":m$="Multi-"
+	i$=" Subop ":r$=chr$(13):return
+	b$=f$+","+t$:return
+	x=-((peek(2033)and 127=1)and((peek(2036)and 4)=.)):return
+	y%=a%:for i=1 to a%:a$=" "+c$+": {f5}"+tt$(i)+"{f5}":print# 2,a$:a%=y%:next
+	close 2:return
+	&"{f6:2}Correct?: ":goto 8
+	&"{f6:2} [Y]es [N]o [E]very [S]tart [A]bort{f6:2}":return
 {:3060}
-	A$="A":GOTO 34
-	&"{clear}{down:14}":RETURN
-	B=-(RC<>0)*INT(RC/254+.999):RETURN
-	B=.:FOR I=.TO 9:A%=I:&"{$c7}ROUP #{pound}%A?: ":GOSUB 8:B=B+2^I*A:NEXT:A=B:RETURN
-	FL=1:X=1000/QB/85/60:A=B%*254*X:V$="{f6}{$d3}ORRY, {$ce}OT {$c5}NOUGH "
-	D$="{$c2}LOCKS":IF CO%>2 THEN D$="{$cb}BYTES":B%=B%*254/1024
-	A%=A:C%=(A-A%)*60:&"{pound}%B {pound}$D {$d4}OTAL, {$d4}RANSFER {$d4}IME: {pound}#2{pound}%A:{pound}%C{f6}"
-	IF A%>TR%AND TR%<100 THEN:&"{pound}$V{$d4}IME!{f6}":RETURN
-	A=7:GOSUB 11:IF A+(F2 AND 2)=.AND B%>L THEN:&"{pound}$V{$c3}REDITS!{f6}":RETURN
-	IF DC%<DA%OR DA%=.THEN FL=.:RETURN
-	&"{f6}{$d3}ORRY, {$d9}OU {$c8}AVE {pound}$KED {$d9}OUR {$cc}IMIT.{f6}":RETURN
-	LP=1:&"{$d3}ORRY, NOT ENOUGH DIRECTORY SPACE HERE.{f6}":RETURN
-	LP=1:&"{$d3}ORRY, NOT ENOUGH DISK SPACE HERE.{f6}":RETURN
-	LP=1:&"{$d3}ORRY, {$c2}ATCH {pound}$KS {$d5}SING {pound}VL {$c1}RE {$ce}OT {$c3}URRENTLY {$d3}UPPORTED.{f6}":RETURN
+	a$="a":goto 34
+	&"{clear}{down:14}":return
+	b=-(rc<>0)*int(rc/254+.999):return
+	b=.:for i=.to 9:a%=i:&"Group #{pound}%a?: ":gosub 8:b=b+2^i*a:next:a=b:return
+	fl=1:x=1000/qb/85/60:a=b%*254*x:v$="{f6}Sorry, Not Enough "
+	d$="Blocks":if co%>2 then d$="Kbytes":b%=b%*254/1024
+	a%=a:c%=(a-a%)*60:&"{pound}%b {pound}$d Total, Transfer Time: {pound}#2{pound}%a:{pound}%c{f6}"
+	if a%>tr%and tr%<100 then:&"{pound}$vTime!{f6}":return
+	a=7:gosub 11:if a+(f2 and 2)=.and b%>l then:&"{pound}$vCredits!{f6}":return
+	if dc%<da%or da%=.then fl=.:return
+	&"{f6}Sorry, You Have {pound}$ked Your Limit.{f6}":return
+	lp=1:&"Sorry, not enough directory space here.{f6}":return
+	lp=1:&"Sorry, not enough disk space here.{f6}":return
+	lp=1:&"Sorry, Batch {pound}$ks Using {pound}vl Are Not Currently Supported.{f6}":return
 {:3090}
-	UD%(0,0)=0:GOSUB{:3094}:&,60,2,0,UD%(0,0),A$,DV%:RN=UD%(0,0):CF=0:GOTO 5
+	ud%(0,0)=0:gosub{:3094}:&,60,2,0,ud%(0,0),a$,dv%:rn=ud%(0,0):cf=0:goto 5
 {:3092}
-	ON-(BN>0 AND CF>0)GOTO{:3096}:RETURN
+	on-(bn>0 and cf>0)goto{:3096}:return
 {:3094}
-	DR=4:GOSUB 3:A$=DR$+"D.{$d5}{$c4}"+STR$(E%(BN)):RETURN
+	dr=4:gosub 3:a$=dr$+"d.UD"+str$(e%(bn)):return
 {:3096}
-	GOSUB{:3094}:PRINT# 15,"S"A$:&,60,3,0,UD%(0,0),60*UD%(0,0)+60,A$,DV%:CF=0:GOTO 5
+	gosub{:3094}:print# 15,"s"a$:&,60,3,0,ud%(0,0),60*ud%(0,0)+60,a$,dv%:cf=0:goto 5
 {:3098}
-	A$="{up arrow}":IF X THEN GOSUB 35:GOSUB 1:&,2,2:CLOSE 2
-	RETURN
+	a$="{up arrow}":if x then gosub 35:gosub 1:&,2,2:close 2
+	return
 {:3100}
-	&,28,1:DIM BB$(31),E%(31),AC%(31),SO%(31),UD%(29,61),F%(61)
-	SY$="{$d5}/{$c4}"+"":SG$="":BA$="":OC$="":BZ=0:AN$=MID$(AN$,3)
-	Q=0:A=8:GOSUB 11:IF A THEN Q=1
+	&,28,1:dim bb$(31),e%(31),ac%(31),so%(31),ud%(29,61),f%(61)
+	sy$="U/D"+"":sg$="":ba$="":oc$="":bz=0:an$=mid$(an$,3)
+	q=0:a=8:gosub 11:if a then q=1
 {:3106}
-	GOSUB{:3002}:MM=1:GOSUB{:3990}:ON LM GOTO{:3118}
-	ON-(BZ=0)GOTO{:3118}:IF R=0 THEN GOSUB{:3002}
-	BN=0:GOSUB{:3900}:IF A AND SG<>0 AND BN=0 THEN SG=0:BZ=0:GOTO{:3106}
-	ON-(BN=0)GOTO{:3118}:IM=2:GOSUB 442
+	gosub{:3002}:mm=1:gosub{:3990}:on lm goto{:3118}
+	on-(bz=0)goto{:3118}:if r=0 then gosub{:3002}
+	bn=0:gosub{:3900}:if a and sg<>0 and bn=0 then sg=0:bz=0:goto{:3106}
+	on-(bn=0)goto{:3118}:im=2:gosub 442
 {:3114}
-	ON-(BZ=0)GOTO{:3118}:GOTO 200
+	on-(bz=0)goto{:3118}:goto 200
 {:3116}
-	GOSUB{:3092}:LD$=LT$:GOTO 302
+	gosub{:3092}:ld$=lt$:goto 302
 {:3118}
-	GOSUB{:3092}:LM$="":S$="":SG=.:OS=.:SB$="":GOTO 300
+	gosub{:3092}:lm$="":s$="":sg=.:os=.:sb$="":goto 300
 {:3150}
-	AN$=STR$(CR):SB$="{$d5}"+"{$d8}":OS=SG:A=7:GOSUB 11:IF A THEN AN$=" {$d5}NLIMITED"
-	GOSUB{:3004}:GOSUB 61:D$="{$c2}LOCKS":IF CO%>2 THEN A=INT(A*254/1024):D$="{$cb}BYTES"
-	IF ID>0 AND ID=SO%(BN)OR ID=SO%THEN Q=1
-	&"{f6} - {$d0}ROTOCOL   : {pound}VL{f6} - {$c3}REDIT {$d0}TS :{pound}V7{f6} - {pound}$D {$c6}REE: {pound}!A{f6}"
-	IF PM$<>ML$THEN IM=2:GOSUB 442
-	A$=BB$(BN):GOSUB{:3006}:CM$="{$d5}{$c4}#"+MID$(STR$(BN),2):P$=CM$+": "+A$
-	IF SG THEN P$=SG$+" {$d3}{$c9}{$c7}, "+CM$+"{f6}"+A$
-	RETURN
+	an$=str$(cr):sb$="U"+"X":os=sg:a=7:gosub 11:if a then an$=" Unlimited"
+	gosub{:3004}:gosub 61:d$="Blocks":if co%>2 then a=int(a*254/1024):d$="Kbytes"
+	if id>0 and id=so%(bn)or id=so%then q=1
+	&"{f6} - Protocol   : {pound}vl{f6} - Credit Pts :{pound}v7{f6} - {pound}$d Free: {pound}!a{f6}"
+	if pm$<>ml$then im=2:gosub 442
+	a$=bb$(bn):gosub{:3006}:cm$="UD#"+mid$(str$(bn),2):p$=cm$+": "+a$
+	if sg then p$=sg$+" SIG, "+cm$+"{f6}"+a$
+	return
 {:3200}
-	G$=RIGHT$(AN$,1):IF TR%<1 OR A$="{$d1}"THEN{:3118}
-	GOSUB{:3210}:ON 1-JM GOTO{:3208}
-	&"{f6}{$c1}UTO-{$cc}OGOFF IN 10 SECONDS{f6:2}{$d0}RESS {$d3}{$d0}{$c1}{$c3}{$c5} TO ABORT.{f6}":X=10
+	g$=right$(an$,1):if tr%<1 or a$="Q"then{:3118}
+	gosub{:3210}:on 1-jm goto{:3208}
+	&"{f6}Auto-Logoff in 10 seconds{f6:2}Press SPACE to abort.{f6}":x=10
 {:3206}
-	&"{pound}!X ":&,22,10:&,23:IF PEEK(780)<>32 THEN ON X GOTO{:3116}:X=X-1:GOTO{:3206}
+	&"{pound}!x ":&,22,10:&,23:if peek(780)<>32 then on x goto{:3116}:x=x-1:goto{:3206}
 {:3208}
-	GOTO{:3114}
+	goto{:3114}
 {:3210}
-	GOSUB{:3012}:IF A THEN R=A:GOTO{:3900}
-	B$=MID$(AN$,2,1):GOSUB{:3288}:XN=ABS(INT(VAL(MID$(AN$,2,4))))
-	IF XN<1 OR XN>RN THEN XN=0
-	MM=-(Z$="{$c1}{$d3}")-2*(Z$="{$cd}{$d3}")-3*(Z$="{$c1}{$c3}")-4*(Z$="{$c9}{$c4}")-5*(Z$="{$d6}{$d3}"):IF MM THEN{:3994}
-	IF Z$="{$d3}{$c7}"THEN R=VAL(MID$(AN$,3)):MM=2:GOTO{:3990}
-	D=(A$="<")-(A$=">"):IF D THEN{:3920}
-	ON-(A$="{$ce}")-2*(A$="{$cc}")-3*(A$="{$cd}")GOTO{:3836},{:3820},{:3800}
-	ON-(A$="{$d3}")-2*(A$="{$d2}")-3*(A$="{$c4}")-4*(A$="{$d6}")GOTO{:3300},{:3400},{:3500},{:3600}
-	ON-(A$="{$d4}")-2*(A$="{$c1}")-3*(A$="{$da}"AND Q=1)GOTO{:3250},{:3700},{:3992}
-	&"{$d5}NKNOWN COMMAND. {$d4}YPE {f5}?{f5} FOR HELP.{f6}":RETURN
+	gosub{:3012}:if a then r=a:goto{:3900}
+	b$=mid$(an$,2,1):gosub{:3288}:xn=abs(int(val(mid$(an$,2,4))))
+	if xn<1 or xn>rn then xn=0
+	mm=-(z$="AS")-2*(z$="MS")-3*(z$="AC")-4*(z$="ID")-5*(z$="VS"):if mm then{:3994}
+	if z$="SG"then r=val(mid$(an$,3)):mm=2:goto{:3990}
+	d=(a$="<")-(a$=">"):if d then{:3920}
+	on-(a$="N")-2*(a$="L")-3*(a$="M")goto{:3836},{:3820},{:3800}
+	on-(a$="S")-2*(a$="R")-3*(a$="D")-4*(a$="V")goto{:3300},{:3400},{:3500},{:3600}
+	on-(a$="T")-2*(a$="A")-3*(a$="Z"and q=1)goto{:3250},{:3700},{:3992}
+	&"Unknown command. Type {f5}?{f5} for help.{f6}":return
 {:3250}
-	&"{f6}":IF RN=0 THEN:&"{red}{$ce}O FILES TO TAG.{f6}":RETURN
-	ON-(A<>0)GOTO{:3262}:IF XN THEN{:3258}
-	A$="{$d4}AG":GOSUB{:3280}:ON SGN(A)GOTO{:3262}:IF AN$=""THEN RETURN
-	IF XN<1 OR XN>RN THEN RETURN
+	&"{f6}":if rn=0 then:&"{red}No files to tag.{f6}":return
+	on-(a<>0)goto{:3262}:if xn then{:3258}
+	a$="Tag":gosub{:3280}:on sgn(a)goto{:3262}:if an$=""then return
+	if xn<1 or xn>rn then return
 {:3258}
-	A=UD%(0,XN):UD%(0,XN)=(2 AND NOT A)OR(A AND NOT 2):CF=1:A$="":IF A AND 2 THEN A$="UN"
-	GOSUB{:3292}:&"{f6}{lt. blue}{f5}{white}{pound}$F,{pound}$T{lt. blue}{f5} {cyan}IS NOW {pound}$ATAGGED.{f6}":RETURN
+	a=ud%(0,xn):ud%(0,xn)=(2 and not a)or(a and not 2):cf=1:a$="":if a and 2 then a$="un"
+	gosub{:3292}:&"{f6}{lt. blue}{f5}{white}{pound}$f,{pound}$t{lt. blue}{f5} {cyan}is now {pound}$atagged.{f6}":return
 {:3262}
-	&,60,6,RN,$80,UD%(0,1),UD%(0,1),60,2,A
-	S$=MID$("S",2+(A%<>1)):&"{f6}{cyan}{pound}%A FILE{pound}$S TAGGED.{f6}":RETURN
+	&,60,6,rn,$80,ud%(0,1),ud%(0,1),60,2,a
+	s$=mid$("s",2+(a%<>1)):&"{f6}{cyan}{pound}%a file{pound}$s tagged.{f6}":return
 {:3280}
-	B$="#":C$="TO ABORT":GOTO{:3284}
+	b$="#":c$="to abort":goto{:3284}
 {:3282}
-	B$="STARTING AT ":C$="FOR 1"
+	b$="starting at ":c$="for 1"
 {:3284}
-	LP=1:&"{cyan}{pound}$A [{$d4}]AGGED, [{$ce}]EW, [{$d5}]NV, OR {pound}$B: ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} {pound}$C)"
-	POKE 53252,3:P$=">":GOSUB 6:XN=ABS(INT(VAL(AN$))):B$=AN$
+	lp=1:&"{cyan}{pound}$a [T]agged, [N]ew, [U]nv, or {pound}$b: (RETURN {pound}$c)"
+	poke 53252,3:p$=">":gosub 6:xn=abs(int(val(an$))):b$=an$
 {:3288}
-	A=-(B$="{$d5}")-2*(B$="{$d4}")-4*(B$="{$ce}")-8*(B$="{$d2}")-16*(B$="{$cf}"):RETURN
+	a=-(b$="U")-2*(b$="T")-4*(b$="N")-8*(b$="R")-16*(b$="O"):return
 {:3290}
-	GOSUB{:3292}:DR=BN+6:A$=F$+","+T$+",R":GOTO 4
+	gosub{:3292}:dr=bn+6:a$=f$+","+t$+",r":goto 4
 {:3292}
-	&,60,1,16,UD%(21,XN),F$:T$=MID$("SP",1+(UD%(29,XN)AND 1),1):RETURN
+	&,60,1,16,ud%(21,xn),f$:t$=mid$("sp",1+(ud%(29,xn)and 1),1):return
 {:3300}
-	&"{f6}":IF RN=0 THEN:&"{red}{$ce}O FILES TO SCAN.{f6}":RETURN
-	ON-(A<>0)GOTO{:3310}:IF XN THEN{:3308}
-	A$="{$d3}CAN":GOSUB{:3282}:ON SGN(A)GOTO{:3310}:IF AN$=""THEN XN=1
-	IF XN<1 OR XN>RN THEN RETURN
+	&"{f6}":if rn=0 then:&"{red}No files to scan.{f6}":return
+	on-(a<>0)goto{:3310}:if xn then{:3308}
+	a$="Scan":gosub{:3282}:on sgn(a)goto{:3310}:if an$=""then xn=1
+	if xn<1 or xn>rn then return
 {:3308}
-	FOR XN=XN TO RN:GOSUB{:3350}:XN=XN+RC*RN:NEXT:RETURN
+	for xn=xn to rn:gosub{:3350}:xn=xn+rc*rn:next:return
 {:3310}
-	&,60,8,RN,60,A,UD%(0,1),F%(1),1:F%(0)=A%
-	IF A%=0 THEN:&"{red}{$ce}O FILES FOUND.{f6}":RETURN
-	FOR I=1 TO A%:XN=F%(I):GOSUB{:3350}:I=I+RC*F%(0):NEXT:RETURN
+	&,60,8,rn,60,a,ud%(0,1),f%(1),1:f%(0)=a%
+	if a%=0 then:&"{red}No files found.{f6}":return
+	for i=1 to a%:xn=f%(i):gosub{:3350}:i=i+rc*f%(0):next:return
 {:3350}
-	B%=UD%(1,XN):IF CO%>2 THEN B%=B%*254/1024
-	GOSUB{:3292}:C$=" ":IF UD%(0,XN)AND 2 THEN C$="{green}>"
-	A%=XN:&"{pound}$C{cyan}{pound}#2{pound}# {pound}%A {lt. blue}[{yellow}{pound}#4{pound}%B{lt. blue}] {f5}{white}{pound}$F,{pound}$T{lt. blue}{f5}{f6}":RETURN
+	b%=ud%(1,xn):if co%>2 then b%=b%*254/1024
+	gosub{:3292}:c$=" ":if ud%(0,xn)and 2 then c$="{green}>"
+	a%=xn:&"{pound}$c{cyan}{pound}#2{pound}# {pound}%a {lt. blue}[{yellow}{pound}#4{pound}%b{lt. blue}] {f5}{white}{pound}$f,{pound}$t{lt. blue}{f5}{f6}":return
 {:3360}
-	&"{lt. blue}{clear}{pound}VJ":GOSUB{:3350}
-	&,60,1,20,UD%(11,XN),AN$:A%=UD%(10,XN):&,15,1:&,60,5,0,UD%(3,XN),A$
-	&"{f6} {cyan}{$c6}ROM {lt. green}#{pound}%A, {white}{pound}V7{f6} {cyan}{$cf}N   {yellow}{$04}"+A$+"{f6}"
-	&,60,5,0,UD%(6,XN),A$:A%=UD%(2,XN):S$="":IF A%<>1 THEN S$="S"
-	IF A%THEN:&" {cyan}{$c4}{$cc}'D {yellow}{$04}"+A$+"{f6} {white}{pound}%A {cyan}TOTAL DOWNLOAD{pound}$S{f6}"
-	&"{f6}{cyan}":X=UD%(9,XN):ON-(X=0)GOTO{:3376}:DR=3:A$="E.{$d5}{$c4}.DESC":GOSUB 4:IF E%THEN{:3376}
-	X=X+1:GOSUB 1:&,2,2:&,2,2:&,2,2:CLOSE 2
-	LP=1:&" {$c4}ESCRIPTION:{yellow}{pound}M<2{f6}{pound}$A{pound}M<0":GOTO{:3378}
+	&"{lt. blue}{clear}{pound}vj":gosub{:3350}
+	&,60,1,20,ud%(11,xn),an$:a%=ud%(10,xn):&,15,1:&,60,5,0,ud%(3,xn),a$
+	&"{f6} {cyan}From {lt. green}#{pound}%a, {white}{pound}v7{f6} {cyan}On   {yellow}{$04}"+a$+"{f6}"
+	&,60,5,0,ud%(6,xn),a$:a%=ud%(2,xn):s$="":if a%<>1 then s$="s"
+	if a%then:&" {cyan}DL'd {yellow}{$04}"+a$+"{f6} {white}{pound}%a {cyan}total download{pound}$s{f6}"
+	&"{f6}{cyan}":x=ud%(9,xn):on-(x=0)goto{:3376}:dr=3:a$="e.UD.desc":gosub 4:if e%then{:3376}
+	x=x+1:gosub 1:&,2,2:&,2,2:&,2,2:close 2
+	lp=1:&" Description:{yellow}{pound}m<2{f6}{pound}$a{pound}m<0":goto{:3378}
 {:3376}
-	CLOSE 2:&" {$ce}O DESCRIPTION AVAILABLE.{f6}"
+	close 2:&" No description available.{f6}"
 {:3378}
-	&"{lt. blue}{pound}VJ":RETURN
+	&"{lt. blue}{pound}vj":return
 {:3400}
-	&"{f6}":IF RN=0 THEN:&"{red}{$ce}O FILES TO READ.{f6}":RETURN
-	ON-(A<>0)GOTO{:3408}:IF XN THEN{:3406}
-	A$="{$d2}EAD":GOSUB{:3280}:ON SGN(A)GOTO{:3408}:IF AN$=""THEN RETURN
+	&"{f6}":if rn=0 then:&"{red}No files to read.{f6}":return
+	on-(a<>0)goto{:3408}:if xn then{:3406}
+	a$="Read":gosub{:3280}:on sgn(a)goto{:3408}:if an$=""then return
 {:3406}
-	ON-(XN>0 AND XN<=RN)GOTO{:3450}:RETURN
+	on-(xn>0 and xn<=rn)goto{:3450}:return
 {:3408}
-	&,60,8,RN,60,A,UD%(0,1),F%(1),1:F%(0)=A%
-	IF A%=0 THEN:&"{red}{$ce}O FILES FOUND.{f6}":RETURN
-	GOTO{:3452}
+	&,60,8,rn,60,a,ud%(0,1),f%(1),1:f%(0)=a%
+	if a%=0 then:&"{red}No files found.{f6}":return
+	goto{:3452}
 {:3450}
-	GOSUB{:3454}:IM=2:GOTO 442
+	gosub{:3454}:im=2:goto 442
 {:3452}
-	FOR I=1 TO A%:XN=F%(I):GOSUB{:3454}:NEXT:IM=2:GOTO 442
+	for i=1 to a%:xn=f%(i):gosub{:3454}:next:im=2:goto 442
 {:3454}
-	GOSUB{:3290}:CLOSE 2:&"{$d2}EADING {f5}{pound}$F,{pound}$T{f5}: {pound}$E{f6:2}":IF E%THEN RETURN
-	B%=UD%(1,XN):Y%=0:A=7:GOSUB 11:IF A+Q+(F2 AND 2)=.THEN ON-(CR<B%)GOTO{:3024}:Y%=YY%
-	IF(UD%(29,XN)AND 1)=0 THEN A$=F$:GOSUB{:3004}:GOSUB 13:CR=CR+(S>0)*Y%*B%:RETURN
-	A$="READ":GOSUB 28:D4$="{$d2}EADER"
-	GOSUB{:3290}:&"{lt. blue}":&,16,0,LL%:CLOSE 2:CR=CR-Y%*A%:RETURN
+	gosub{:3290}:close 2:&"Reading {f5}{pound}$f,{pound}$t{f5}: {pound}$e{f6:2}":if e%then return
+' flag 7: unlimited credits
+	b%=ud%(1,xn):y%=0:a=7:gosub 11:if a+q+(f2 and 2)=.then on-(cr<b%)goto{:3024}:y%=yy%
+' filetype:
+	if(ud%(29,xn)and 1)=0 then a$=f$:gosub{:3004}:gosub 13:cr=cr+(s>0)*y%*b%:return
+	a$="read":gosub 28:d4$="Reader"
+	gosub{:3290}:&"{lt. blue}":&,16,0,ll%:close 2:cr=cr-y%*a%:return
 {:3500}
-	&"{f6}":IF RN=0 THEN:&"{red}{$ce}O FILES TO DOWNLOAD.{f6}":RETURN
-	ON-(A<>0)GOTO{:3508}:IF XN THEN{:3550}
-	A$="{$c4}OWNLOAD":GOSUB{:3280}:ON SGN(A)GOTO{:3508}:IF AN$=""THEN RETURN
-	ON-(XN>0 AND XN<=RN)GOTO{:3550}:RETURN
+	&"{f6}":if rn=0 then:&"{red}No files to download.{f6}":return
+	on-(a<>0)goto{:3508}:if xn then{:3550}
+	a$="Download":gosub{:3280}:on sgn(a)goto{:3508}:if an$=""then return
+	on-(xn>0 and xn<=rn)goto{:3550}:return
 {:3508}
-	&,60,8,RN,60,A,UD%(0,1),F%(1),1:F%(0)=A%
-	IF A%=0 THEN:&"{red}{$ce}O FILES FOUND.{f6}":RETURN
-	GOTO{:3552}
+	&,60,8,rn,60,a,ud%(0,1),f%(1),1:f%(0)=a%
+	if a%=0 then:&"{red}No files found.{f6}":return
+	goto{:3552}
 {:3550}
-	GOTO{:3564}
+	goto{:3564}
 {:3552}
-	ON NB GOTO{:3558}:&"{$d0}REPARE TO RECEIVE FILES{f6}"
-	IF PM$="PUNTER"THEN:&"{$d4}RANSFER WILL START IN 20 SECONDS{f6}":&,22,200
-	FOR I=1 TO A%:XN=F%(I):GOSUB{:3560}:I=I+RC*F%(0):NEXT:AN$="":&,16,2:RETURN
+	on nb goto{:3558}:&"Prepare to receive files{f6}"
+	if pm$="punter"then:&"Transfer will start in 20 seconds{f6}":&,22,200
+	for i=1 to a%:xn=f%(i):gosub{:3560}:i=i+rc*f%(0):next:an$="":&,16,2:return
 {:3558}
-	FOR I=1 TO A%:XN=F%(I):GOSUB{:3564}:I=I+RC*F%(0):NEXT:RETURN
+	for i=1 to a%:xn=f%(i):gosub{:3564}:i=i+rc*f%(0):next:return
 {:3560}
-	GOSUB{:3290}:IF E%THEN PRINT# 131,"{$18:5}{$08:5}":GOTO{:3574}
-	X=1:AN$=F$+","+T$:&,15,2:GOSUB{:3996}:&,15,2:&,16,2:&,22,10:GOTO{:3570}
+	gosub{:3290}:if e%then print# 131,"{$18:5}{$08:5}":goto{:3574}
+	x=1:an$=f$+","+t$:&,15,2:gosub{:3996}:&,15,2:&,16,2:&,22,10:goto{:3570}
 {:3564}
-	GOSUB{:3290}:IF E%THEN:&"{f5}{pound}$F,{pound}$T{f5}: {pound}$E{f6}":GOTO{:3574}
-	&"{$c4}OWNLOAD {f5}{pound}$F,{pound}$T{f5}? ":GOSUB 8:IF A=0 THEN{:3574}
-	&"{f6}{$d0}REPARE TO RECEIVE FILE{f6:2}"
+	gosub{:3290}:if e%then:&"{f5}{pound}$f,{pound}$t{f5}: {pound}$e{f6}":goto{:3574}
+	&"Download {f5}{pound}$f,{pound}$t{f5}? ":gosub 8:if a=0 then{:3574}
+	&"{f6}Prepare to receive file{f6:2}"
 {:3570}
-	POKE 2043,UD%(29,XN)AND 1:X=1:AN$=F$+","+T$:GOSUB{:3996}:GOSUB{:3290}:&,16
-	IF RC=0 THEN RC=1:&"{$c1}BORTED!{f6}":CLOSE 2:RETURN
+	poke 2043,ud%(29,xn)and 1:x=1:an$=f$+","+t$:gosub{:3996}:gosub{:3290}:&,16
+	if rc=0 then rc=1:&"Aborted!{f6}":close 2:return
 {:3574}
-	RC=0:CLOSE 2:RETURN
+	rc=0:close 2:return
 {:3600}
-	ON-(XN=0)GOTO{:3610}:&,60,8,RN,60,1,UD%(0,1),F%(1),1:F%(0)=A%
-	&"{f6}":IF A%=0 THEN:&"{red}{$ce}O FILES TO VALIDATE.{f6}":RETURN
+	on-(xn=0)goto{:3610}:&,60,8,rn,60,1,ud%(0,1),f%(1),1:f%(0)=a%
+	&"{f6}":if a%=0 then:&"{red}No files to validate.{f6}":return
 {:3604}
-	IF XN<1 OR XN>RN THEN RETURN
-	IF(UD%(0,XN)AND 1)THEN GOSUB{:3650}
-	XN=XN+1:GOTO{:3604}
+	if xn<1 or xn>rn then return
+	if(ud%(0,xn)and 1)then gosub{:3650}
+	xn=xn+1:goto{:3604}
 {:3610}
-	B$="{$d0}RESENTLY {$ce}O":GOSUB{:3616}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3614}
-	B$=" {$d5}SER #"+STR$(SO%(BN))+", "+AN$+" {$c9}S {$d4}HE"
+	b$="Presently No":gosub{:3616}:if a$="{up arrow}"or a$="RES"then{:3614}
+	b$=" User #"+str$(so%(bn))+", "+an$+" Is The"
 {:3614}
-	LP=1:&"{f6}{pound}$B{pound}$I{$c8}ERE.":RETURN
+	lp=1:&"{f6}{pound}$b{pound}$iHere.":return
 {:3616}
-	X=SO%(BN):GOSUB{:3098}
-	TT$=A$:AN$=A$:&,15,1:RETURN
+	x=so%(bn):gosub{:3098}
+	tt$=a$:an$=a$:&,15,1:return
 {:3650}
-	GOSUB{:3292}:&"{$d6}ALIDATE {f5}{pound}$F{f5}? ":GOSUB 8:IF A=0 THEN RETURN
-	UD%(0,XN)=UD%(0,XN)AND NOT 1:CF=1:RETURN
+	gosub{:3292}:&"Validate {f5}{pound}$f{f5}? ":gosub 8:if a=0 then return
+	ud%(0,xn)=ud%(0,xn)and not 1:cf=1:return
 {:3700}
-	&"{f6}":IF RN=0 THEN:&"{red}{$ce}O FILES TO CHECK.{f6}":RETURN
-	IF XN THEN{:3708}
-	LP=1:&"{cyan}{$c3}HECK WHICH FILE #: ({$d2}{$c5}{$d4}{$d5}{$d2}{$ce} TO {$c1}BORT)"
-	POKE 53252,3:P$=">":GOSUB 6:XN=ABS(INT(VAL(AN$)))
+	&"{f6}":if rn=0 then:&"{red}No files to check.{f6}":return
+	if xn then{:3708}
+	lp=1:&"{cyan}Check which file #: (RETURN to Abort)"
+	poke 53252,3:p$=">":gosub 6:xn=abs(int(val(an$)))
 {:3708}
-	IF XN<1 OR XN>RN THEN RETURN
+	if xn<1 or xn>rn then return
 {:3710}
-	GOSUB{:3360}:AA=0:B$="{$ce},{$d0}":X=UD%(10,XN):GOSUB{:3098}:&,60,1,20,UD%(11,XN),C$
-	IF(Q OR(UD%(0,XN)AND 1)=0)AND A$=C$THEN B$="{$cd},"+B$:AA=AA OR 4
-	IF UD%(0,XN)AND 1 THEN GOSUB{:3768}:IF A=0 AND Q=0 THEN{:3726}
-	IF Q=1 OR A=1 THEN B$="{$c5},"+B$:AA=AA OR 2
-	B$="{$c4},"+B$:AA=AA OR 1
-	B$=B$+",{$d2}":AA=AA OR 8
-	IF Q>0 AND(UD%(0,XN)AND 1)=0 THEN B$=B$+",{$d5}":AA=AA OR 16
-	IF Q>0 AND(UD%(0,XN)AND 1)=1 THEN B$=B$+",{$d6}":AA=AA OR 32
+' build menu options
+	gosub{:3360}:aa=0:b$="N,P":x=ud%(10,xn):gosub{:3098}:&,60,1,20,ud%(11,xn),c$
+	if(q or(ud%(0,xn)and 1)=0)and a$=c$then b$="M,"+b$:aa=aa or 4
+	if ud%(0,xn)and 1 then gosub{:3768}:if a=0 and q=0 then{:3726}
+	if q=1 or a=1 then b$="E,"+b$:aa=aa or 2
+	b$="D,"+b$:aa=aa or 1
+	b$=b$+",R":aa=aa or 8
+	if q>0 and(ud%(0,xn)and 1)=0 then b$=b$+",U":aa=aa or 16
+	if q>0 and(ud%(0,xn)and 1)=1 then b$=b$+",V":aa=aa or 32
 {:3726}
-	&"{$cf}PTIONS: ({cyan}{pound}$B) {white}{pound}G1":A$=AN$:IF TR%<1 THEN RETURN
-	ON-(A$="{$ce}")-2*(A$="{$d0}")-3*(A$="{$d4}")-4*(A$="{f2}")GOTO{:3744},{:3746},{:3748},{:3750}
-	X=-(A$="{$c4}")-2*(A$="{$c5}")-3*(A$="{$cd}")-4*(A$="{$d2}")-5*(A$="{$d5}")-6*(A$="{$d6}")
-	IF X=0 THEN RETURN
-	IF(AA AND 2^(X-1))=0 THEN RETURN
-	ON X GOSUB{:3550},{:3738},{:3742},{:3450},{:3740},{:3650}:GOTO{:3710}
+	&"Options: ({cyan}{pound}$b) {white}{pound}g1":a$=an$:if tr%<1 then return
+	on-(a$="N")-2*(a$="P")-3*(a$="T")-4*(a$="{f2}")goto{:3744},{:3746},{:3748},{:3750}
+	x=-(a$="D")-2*(a$="E")-3*(a$="M")-4*(a$="R")-5*(a$="U")-6*(a$="V")
+	if x=0 then return
+	if(aa and 2^(x-1))=0 then return
+	on x gosub{:3550},{:3738},{:3742},{:3450},{:3740},{:3650}:goto{:3710}
 {:3738}
-	RETURN
+	return
 {:3740}
-	UD%(0,XN)=UD%(0,XN)OR 1:CF=1:RETURN
+	ud%(0,xn)=ud%(0,xn)or 1:cf=1:return
 {:3742}
-	&,60,1,20,UD%(11,XN),TT$:AN$=TT$:&,15,1:GOTO{:3802}
+	&,60,1,20,ud%(11,xn),tt$:an$=tt$:&,15,1:goto{:3802}
 {:3744}
-	&"{$ce}EXT{f6:2}":XN=XN+1+RN*(XN=RN):GOTO{:3710}
+	&"Next{f6:2}":xn=xn+1+rn*(xn=rn):goto{:3710}
 {:3746}
-	&"{$d0}REVIOUS{f6:2}":XN=XN-1-RN*(XN=1):GOTO{:3710}
+	&"Previous{f6:2}":xn=xn-1-rn*(xn=1):goto{:3710}
 {:3748}
-	UD%(0,XN)=(NOT UD%(0,XN)AND 2)OR(UD%(0,XN)AND 2):CF=1:GOTO{:3710}
+	ud%(0,xn)=(not ud%(0,xn)and 2)or(ud%(0,xn)and 2):cf=1:goto{:3710}
 {:3750}
-	&"{$c8}ELP{f6:2}":IF AA AND 1 THEN:&"{white} {$c4} {lt. blue}- {cyan}{$c4}OWNLOAD THIS FILE{f6}"
-	IF AA AND 2 THEN:&"{white} {$c5} {lt. blue}- {cyan}{$c5}DIT THIS FILE{f6}"
-	IF AA AND 4 THEN:&"{white} {$cd} {lt. blue}- {cyan}{$cd}AIL UPLOADER{f6}"
-	&"{white} {$ce} {lt. blue}- {cyan}{$ce}EXT FILE{f6}{white} {$d0} {lt. blue}- {cyan}{$d0}REVIOUS FILE{f6}"
-	IF AA AND 8 THEN:&"{white} {$d2} {lt. blue}- {cyan}{$d2}EAD THIS FILE{f6}"
-	&"{white} {$d4} {lt. blue}- {cyan}{$d4}AG FILE{f6}"
-	IF AA AND 16 THEN:&"{white} {$d5} {lt. blue}- {cyan}{$d5}NVALIDATE THIS FILE{f6}"
-	IF AA AND 32 THEN:&"{white} {$d6} {lt. blue}- {cyan}{$d6}ALIDATE THIS FILE{f6}"
-	&"{f6}":GOTO{:3726}
+	&"Help{f6:2}":if aa and 1 then:&"{white} D {lt. blue}- {cyan}Download this file{f6}"
+	if aa and 2 then:&"{white} E {lt. blue}- {cyan}Edit this file{f6}"
+	if aa and 4 then:&"{white} M {lt. blue}- {cyan}Mail uploader{f6}"
+	&"{white} N {lt. blue}- {cyan}Next file{f6}{white} P {lt. blue}- {cyan}Previous file{f6}"
+	if aa and 8 then:&"{white} R {lt. blue}- {cyan}Read this file{f6}"
+	&"{white} T {lt. blue}- {cyan}Tag file{f6}"
+	if aa and 16 then:&"{white} U {lt. blue}- {cyan}Unvalidate this file{f6}"
+	if aa and 32 then:&"{white} V {lt. blue}- {cyan}Validate this file{f6}"
+	&"{f6}":goto{:3726}
 {:3768}
-	&,60,1,20,UD%(11,XN),A$:A=-(A$=NA$AND ID=UD%(10,X)):RETURN
+	&,60,1,20,ud%(11,xn),a$:a=-(a$=na$and id=ud%(10,x)):return
 {:3800}
-	GOSUB{:3616}:IF A$="{up arrow}"OR A$="{$d2}{$c5}{$d3}"THEN{:3818}
+	gosub{:3616}:if a$="{up arrow}"or a$="RES"then{:3818}
 {:3802}
-	&"{f6}{$d3}END MAIL TO {pound}V7?: ":GOSUB 8:IF A=0 THEN RETURN
-	IM=1:GOSUB 440:IF KK=0 THEN RETURN
-	A$="{$c6}EEDBACK:":&"{f6}{$c6}ILING{pound}$I{pound}$A":C$=A$+P$
-	Z=1:A$="W":GOSUB 32:IF E%THEN Z=0:A$="A":GOSUB 32
-	PRINT# 2,NA$R$ID;R$D1$R$C$:&,14,2,KK-1:PRINT# 2,"{up arrow}":CLOSE 2
-	GOSUB 30:I=1:X=3:GOSUB 16:X=14:GOSUB 16:X=32:GOSUB 16:X=25:ON Z GOSUB 16
-	IF Y=1 THEN FOR X=2 TO 24 STEP 11:GOSUB 16:NEXT:X=31:GOSUB 16
-	CLOSE 2:RETURN
+	&"{f6}Send mail to {pound}v7?: ":gosub 8:if a=0 then return
+	im=1:gosub 440:if kk=0 then return
+	a$="Feedback:":&"{f6}Filing{pound}$i{pound}$a":c$=a$+p$
+	z=1:a$="w":gosub 32:if e%then z=0:a$="a":gosub 32
+	print# 2,na$r$id;r$d1$r$c$:&,14,2,kk-1:print# 2,"{up arrow}":close 2
+	gosub 30:i=1:x=3:gosub 16:x=14:gosub 16:x=32:gosub 16:x=25:on z gosub 16
+	if y=1 then for x=2 to 24 step 11:gosub 16:next:x=31:gosub 16
+	close 2:return
 {:3818}
-	&"{$d4}HERE IS NO{pound}$IHERE.{f6}":RETURN
+	&"There is no{pound}$ihere.{f6}":return
 {:3820}
-	GOSUB{:3822}:&"{cyan} {rvrs on} {$d4}O {$c3}HANGE, {$c5}NTER {$ce}EW {pound}$H {$ce}UMBER. {f6}":RETURN
+	gosub{:3822}:&"{cyan} {rvrs on} To Change, Enter New {pound}$h Number. {f6}":return
 {:3822}
-	GOSUB{:3010}:R%=A AND 1:IF A<1 OR A>BZ THEN A=1:R%=1
-	&"{f6}{purple}{$c1}VAILABLE {$cc}IBRARIES:{f6:2}{orange}{pound}VJ"
-	FOR X=A TO BZ:A$=BB$(X):A%=X:GOSUB{:3030}:C$=" ":IF ID>0 AND SO%(X)=ID THEN C$=">"
-	B$=MID$("{lt. blue}{$c3}RED{green}{$c4}{$cf}-{$c3}{purple}{$c6}REE{yellow}{$c4}{$cf}-{$c6}{purple}{$d0}W{$c3}R{lt. red}{$d0}W{$c4}{$c3}{lt. green}{$d0}W{$c6}R{blue}{$d0}W{$c4}{$c6}",B*5+1,5)
-	A$=BB$(X):GOSUB{:3006}:&" {white}{rvrs on}{pound}#2{pound}# {pound}%A{lt. red}{pound}$C{pound}$B {pound}$A{pound}{back arrow}38 {rvrs off}":IF RC THEN X=BZ
-	IF X<>BZ THEN:&MID$(" {f6}",2+((X AND 1)=R%),1)
-	NEXT:&"{f6}{orange}{pound}VJ":RETURN
+	gosub{:3010}:r%=a and 1:if a<1 or a>bz then a=1:r%=1
+	&"{f6}{purple}Available Libraries:{f6:2}{orange}{pound}vj"
+	for x=a to bz:a$=bb$(x):a%=x:gosub{:3030}:c$=" ":if id>0 and so%(x)=id then c$=">"
+	b$=mid$("{lt. blue}Cred{green}DO-C{purple}Free{yellow}DO-F{purple}PwCr{lt. red}PwDC{lt. green}PwFr{blue}PwDF",b*5+1,5)
+	a$=bb$(x):gosub{:3006}:&" {white}{rvrs on}{pound}#2{pound}# {pound}%a{lt. red}{pound}$c{pound}$b {pound}$a{pound}{back arrow}38 {rvrs off}":if rc then x=bz
+	if x<>bz then:&mid$(" {f6}",2+((x and 1)=r%),1)
+	next:&"{f6}{orange}{pound}vj":return
 {:3836}
-	GOSUB{:3010}:IF A<1 OR A>BZ THEN A=BN
-	A%=A:&"{f6}{pound}$H #{pound}%A ":A$=BB$(A):GOSUB{:3006}:LP=1:&:RETURN
+	gosub{:3010}:if a<1 or a>bz then a=bn
+	a%=a:&"{f6}{pound}$h #{pound}%a ":a$=bb$(a):gosub{:3006}:lp=1:&:return
 {:3900}
-	GOSUB{:3092}:IF R=0 THEN AN$="":GOSUB{:3822}:P$="{f6}{lt. green}{$d7}HICH {$d5}{$c4}?":GOSUB 6:GOSUB{:3002}
-	A=0:IF R<1 OR R>BZ THEN GOSUB{:3924}:GOTO{:3914}
-	F2=0:A$=BB$(R):IF LEFT$(A$,1)="."AND MID$(A$,3,1)="."THEN F2=VAL(MID$(A$,2,1))
-	IF(F2 AND 4)=4 THEN GOSUB{:3926}:IF A THEN RETURN
-	ON-(MID$(OC$,R,1)="0")GOTO{:3916}:&"{f6}":A$=BB$(R):GOSUB{:3006}:LP=1:&
-	&"{$d3}ORRY, THAT AREA IS PRESENTLY CLOSED.{f6}"
-	IF ID>.AND ID=SO%(R)OR ID=SO%OR Q THEN{:3916}
+	gosub{:3092}:if r=0 then an$="":gosub{:3822}:p$="{f6}{lt. green}Which UD?":gosub 6:gosub{:3002}
+	a=0:if r<1 or r>bz then gosub{:3924}:goto{:3914}
+	f2=0:a$=bb$(r):if left$(a$,1)="."and mid$(a$,3,1)="."then f2=val(mid$(a$,2,1))
+	if(f2 and 4)=4 then gosub{:3926}:if a then return
+	on-(mid$(oc$,r,1)="0")goto{:3916}:&"{f6}":a$=bb$(r):gosub{:3006}:lp=1:&
+	&"Sorry, that area is presently closed.{f6}"
+	if id>.and id=so%(r)or id=so%or q then{:3916}
 {:3914}
-	A=1:RETURN
+	a=1:return
 {:3916}
-	IF R<>BN THEN BN=R:BR=1:GOSUB{:3940}
-	A=0:RETURN
+	if r<>bn then bn=r:br=1:gosub{:3940}
+	a=0:return
 {:3920}
-	R=BN
+	r=bn
 {:3922}
-	R=R+D:IF R>=1 AND R<=BZ THEN GOSUB{:3900}:ON A GOTO{:3922}:RETURN
+	r=r+d:if r>=1 and r<=bz then gosub{:3900}:on a goto{:3922}:return
 {:3924}
-	&"{f6} {$d5}NKNOWN BOARD NUMBER.{f6}":RETURN
+	&"{f6} Unknown board number.{f6}":return
 {:3926}
-	IF MID$(BA$,R,1)="1"THEN A=0:RETURN
-	A$=BB$(R):GOSUB{:3006}:B$=A$
-	A$="E.{$d5}/{$c4}":DR=3:GOSUB 4:X=E%(R)+1:GOSUB 1:&,2,2:C$=A$
+	if mid$(ba$,r,1)="1"then a=0:return
+	a$=bb$(r):gosub{:3006}:b$=a$
+	a$="e.U/D":dr=3:gosub 4:x=e%(r)+1:gosub 1:&,2,2:c$=a$
 {:3932}
-	&"{f6}{white}{$d3}UB {pound}$H #{pound}#0{pound}%A: {yellow}{pound}$B{f6:2}  {$d0}ASSWORD?{f6:2}  {$d0}{$d7}: ":PL=1:&,6:&"{f6:2}"
-	IF AN$=C$THEN A=0:&" {$c3}ORRECT!{f6}":BA$=LEFT$(BA$,R-1)+"0"+MID$(BA$,R+1):RETURN
-	&" {$d3}ORRY, THAT IS NOT CORRECT.{f6:2}  {$d4}RY {$c1}GAIN?: ":GOSUB 8:GOTO{:3932}
-	A=1:RETURN
+	&"{f6}{white}Sub {pound}$h #{pound}#0{pound}%a: {yellow}{pound}$b{f6:2}  Password?{f6:2}  PW: ":pl=1:&,6:&"{f6:2}"
+	if an$=c$then a=0:&" Correct!{f6}":ba$=left$(ba$,r-1)+"0"+mid$(ba$,r+1):return
+	&" Sorry, that is not correct.{f6:2}  Try Again?: ":gosub 8:goto{:3932}
+	a=1:return
 {:3940}
-	A%=BN:&"{f6}{$d5}/{$c4} {pound}$H #{pound}%A: ":A$=BB$(BN):GOSUB{:3006}:LP=1:&:D2$=A$
-	IF EM=0 THEN DR=1:GOSUB 3:A$="S.{$d5}/{$c4}"+STR$(E%(BN)):GOSUB 14
-	Q=.:A=12:GOSUB 11:B=A:A=8:GOSUB 11:IF A+B THEN Q=1
-	IF ID>.AND ID=SO%(BN)OR ID=SO%THEN Q=1:&"{f6} - {$d9}OU {$c8}AVE{pound}$I{$c1}CCESS {$c8}ERE.{f6}"
-	GOSUB{:3004}:GOSUB 62:GOSUB{:3090}:IF RN=0 THEN RETURN
-	&,60,6,RN,$4F,UD%(0,1),UD%(3,1),60,4,LD$:B%=A%
-	&,60,6,RN,$4F,UD%(0,1),UD%(6,1),60,8,LD$
-	&,60,6,RN,$4E,UD%(0,1),UD%(3,1),60,16,LD$
-	IF ID<>UD%(1,0)THEN:&,60,6,RN,0,UD%(0,1),UD%(0,1),60,2,2
-	&,60,6,RN,$80,UD%(0,1),UD%(0,1),60,2,2:C%=A%
-	&,60,6,RN,$80,UD%(0,1),UD%(0,1),60,1,1:D%=A%*Q
-	A%=RN:&"{f6}{lt. blue} {$c6}ILES: {cyan}{pound}#2{pound}# {pound}%A {$d4}OTAL{f6}"
-	IF B%THEN:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%B {$ce}EW{f6}"
-	IF C%THEN:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%C {$d4}AGGED{f6}"
-	IF D%THEN:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%D {$d5}NVALIDATED{f6}"
-	RETURN
-	A$="{$d5}{$c4}.EDIT":GOTO 72
+	a%=bn:&"{f6}U/D {pound}$h #{pound}%a: ":a$=bb$(bn):gosub{:3006}:lp=1:&:d2$=a$
+	if em=0 then dr=1:gosub 3:a$="s.U/D"+str$(e%(bn)):gosub 14
+	q=.:a=12:gosub 11:b=a:a=8:gosub 11:if a+b then q=1
+	if id>.and id=so%(bn)or id=so%then q=1:&"{f6} - You Have{pound}$iAccess Here.{f6}"
+	gosub{:3004}:gosub 62:gosub{:3090}:if rn=0 then return
+	&,60,6,rn,$4f,ud%(0,1),ud%(3,1),60,4,ld$:b%=a%
+	&,60,6,rn,$4f,ud%(0,1),ud%(6,1),60,8,ld$
+	&,60,6,rn,$4e,ud%(0,1),ud%(3,1),60,16,ld$
+	if id<>ud%(1,0)then:&,60,6,rn,0,ud%(0,1),ud%(0,1),60,2,2
+	&,60,6,rn,$80,ud%(0,1),ud%(0,1),60,2,2:c%=a%
+	&,60,6,rn,$80,ud%(0,1),ud%(0,1),60,1,1:d%=a%*q
+	a%=rn:&"{f6}{lt. blue} Files: {cyan}{pound}#2{pound}# {pound}%a Total{f6}"
+	if b%then:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%b New{f6}"
+	if c%then:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%c Tagged{f6}"
+	if d%then:&"{pound}{back arrow}07{cyan}{pound}#2{pound}# {pound}%d Unvalidated{f6}"
+	return
+	a$="UD.edit":goto 72
 {:3990}
-	A$="{$cd:2}.LOAD":GOTO 72
+	a$="{$cd:2}.load":goto 72
 {:3992}
-	A$="{$cd:2}.MAINT":LM=1:GOTO 72
+	a$="{$cd:2}.maint":lm=1:goto 72
 {:3994}
-	A$="{$cd:2}.SUBOP":GOTO 72
+	a$="{$cd:2}.subop":goto 72
 {:3996}
-	IM=4:GOTO 443
-	COPR.1991 NEW IMAGE 08/21/91
+	im=4:goto 443
+	copr.1991 new image 08/21/91
