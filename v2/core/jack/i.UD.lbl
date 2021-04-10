@@ -349,11 +349,11 @@
 	return
 	a$="UD.edit":goto 72
 {:3990}
-	a$="{$cd:2}.load":goto 72
+	a$="MM.load":goto 72
 {:3992}
-	a$="{$cd:2}.maint":lm=1:goto 72
+	a$="MM.maint":lm=1:goto 72
 {:3994}
-	a$="{$cd:2}.subop":goto 72
+	a$="MM.subop":goto 72
 {:3996}
 	im=4:goto 443
 	copr.1991 new image 08/21/91

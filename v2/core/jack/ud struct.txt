@@ -1,0 +1,37 @@
+U/D directory struct:
+
+(Jack's 2.0 version)
+
+Each struct is 60 bytes:
+SaveStruct:
+&,60,3,0,ud%(0,0),60*ud%(0,0)+60,a$,dv%
+
+Configuration information:
+
+Element		Bytes	Type	Purpose
+ud%( 0, 0)	2	Integer rn: # of files in directory
+ud%( 0, 1)	?	?	?
+ud%( 0,xn)	2?	Integer	Bit 2: 1=Tagged file
+
+				c%: # of Tagged files
+				d%: # of Unvalidated files
+
+Directory information:
+
+Element		Bytes	Type	Purpose
+ud%( 1, 0)	2?	Integer	SubOp ID
+
+ud%( 1,xn)	2	Integer	Size in blocks
+ud%( 2,xn)	2	Integer	# of downloads
+ud%( 3,xn)	11?	Date	Upload date
+				b%: # of new files
+ud%( 6,xn)	?	Date	Last download date
+ud%( 9,xn)	2	Integer	<>0: Description record # in e.UD.desc
+ud%(10,xn)	2	Integer	Uploader ID
+ud%(11,xn)	20	String	Uploader handle
+ud%(29,xn)	2	String	File type
+				Bit 1: 0=SEQ, 1=PRG
+
+Line	Var	Purpose
+3090	rn	# of files in U/D directory
+3310	f%()	?

@@ -1,0 +1,6 @@
+{number:4000}
+{step:2}
+	&,60,1,20,ud%(11,xn),a$:if q=1 or(a$=na$ and id=ud%(10,xn) then {:4004}
+	&"Sorry, you cannot edit that entry.{f6}":return
+{:4004}
+	return
