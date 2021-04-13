@@ -35,3 +35,16 @@ ud%(29,xn)	2	String	File type
 Line	Var	Purpose
 3090	rn	# of files in U/D directory
 3310	f%()	?
+
+
+Binary Coded Decimal
+
+Two decimal digits are stored in a single byte, using the high and low nybbles (i.e., 4-bit halves of an 8-bit number).
+
+Struct storing an 11-digit date in 3 bytes of BCD format:
+
+an$="10412208234"
+
+Element |            u%(0,1)        |          u%(0,2)          |          u%(0,3)    unused
+Binary  | %0001 %0000 | %0100 %0001 | %0010 %0010 | %0000 %1000 | %0010 %0011 | %0100 %xxxx
+Decimal |     1     0 |     4     1 |     2     2 |     0     8 |     2     3 |     4     x
