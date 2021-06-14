@@ -13,7 +13,7 @@ Updated by PINACOLADA from documentation by DR. BOB, LITTLE JOHN, and others.
 
 Handle: ___________________________   Network Identifier: __________
 
-_Last Updated: {revdate}_
+_Last Updated: 6/14/2021_
 
 ====
 This is just a plain text version of the OCRed sysop guide, to remind me which sections belong where.
