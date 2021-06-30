@@ -1,0 +1,360 @@
+== Getting Things Going
+
+Now that you are ready to set up Image BBS, we recommend you first back up your original disk images (both sides if you are using a 1541 type disk), then store it in a safe place.
+_Never_ work with the original, just in case something goes wrong.
+
+None of the disk files are copy-protected, so there is no worry about anything not working correctly with a backup disk.
+
+If you are copying with more than one drive, Copy-all, a great public-domain program by Jim Butterfield, is included on the disk to assist you in doing this.
+Copy-all will copy PRG, SEQ, and REL files with no problems whatsoever on any type of Commodore compatible drives using two drives.
+
+If you need to copy REL files using a single 1541 drive, you can use a program by Jim McAndrew called "`Rel-Copy`" specifically designed for that purpose.
+
+=== Designating Drives
+
+Image BBS is designed to use up to eight drives, and possibly use even more with limited functions.
+It supports:
+
+* single or dual drives
+* Lt. Kernal logical units (LUs) 0 through 10 (the DOS LU, a side effect of applying the "`CMD Mods`" in Image BBS v1.2a--which, among other things,
+let the BBS access partitions numbered 1-254)
+
+You will want to plan your setup on what space you have available, so read the following information carefully to help you in this regard.
+
+Although it is possible to run Image BBS using only one 1581 disk drive, we highly recommend you use at least two, since you will find that disk and directory space gets used quickly.
+
+////
+Trust the documentation when it says this.
+I suffered with one 1541 for years, then broke down and got a second one.
+It still wasn't very useful without having 30 sets of floppy disks, because I ran a huge BBS.
+////
+
+When referring to _device_, we mean the device number assigned to the particular drive (_i.e._, one drive online is usually set to device 8, two to 8 and 9, etc.).
+
+When referring to _drive_, we mean the drive number (or partition if using a hard drive):
+
+* 0/1 on a dual drive such as the MSD-2 dual floppy drive
+
+* Logical Unit 0-10 on a Lt. Kernal hard drive
+* partition 1-255 on a Creative Micro Designs hard drive (0 refers to
+the current partition)
+* If you have two physical drives, there may either be a switch somewhere on the drives to change device numbers, or—as with older 1541 drives—you must cut a solder pad (the drive manual should describe how).
+
+You may also "`software change`" the device number with the BASIC program
+`dv change` included on your Image BBS disk, or online with the <<cd-command>>.
+If you only have single drives on your system, then the drive numbers will always be zero.
+
+_Directory space_ refers to the number of directory entries available on the drive, which is usually limited, depending on the type of disk drive.
+A 1541 drive allows 144 directory entries, while an SFD allows 244, etc.
+Check your drive manual to see what the limitation is.
+
+_Drive space_ refers to blocks used, while _blocks free_ refers to blocks unused on the drive.
+
+Now you will want to plan out which disks you want to use for which functions on the BBS.
+There are six designated Image "`system disks`" for BBS functions.
+These can be combined in any form on any drive or number of drives.
+They are described as follows:
+
+1: The System disk
+
+Contains mostly SEQuential (text) files that do __not__ change often.
+Menu files, sub-board entry files, and other text/graphics files are all included on this disk.
+Also, BBS news files are located here.
+Will not use too much directory or drive space.
+
+System filenames on this disk start with `s.`.
+
+News filenames start with `n.`.
+
+2: The E-Mail disk
+
+Contains all user E-Mail and Forced E-Mail files.
+Will use much more directory space than disk space.
+
+E-mail filenames start with `m.`.
+Forced e-mail filenames start with `f.`.
+
+Refer to <<forced-mail-files>> for more information.
+
+If your BBS is part of a network, the NetMail files are stored here.
+These may take up a significant amount of drive space, but not too much directory space.
+
+NetMail filenames start with `nm`.
+
+3: The Etcetera disk
+
+Contains miscellaneous files used to supply BBS information.
+Many online games and functions use one or more of these files to store their data.
+Some of these files are RELative files, and most of them change frequently.
+Storage depends on the number and type of online games and programs you are using.
+If no online programs use the etcetera disk, it will not use too much disk or directory space.
+
+Etcetera filenames start with `e.`.
+
+4: The Directory disk
+
+Contains all directories used on the BBS, whether for sub-boards, U/D libraries, text file libraries, or similar.
+These files change often, and this disk will use a fair amount of directory space, but not too much disk space.
+
+Directory filenames start with `d.`.
+
+5: The Plus File disk
+
+Contains all BASIC or ML modules needed to run the BBS.
+They load when needed to execute various functions.
+None of these files will change, unless modified offline.
+
+Plus file filenames start with several different prefixes based on these categories:
+
+`+.` BASIC modules
+
+`++` ML modules
+
+`scn.` top and bottom sysop screen displays (idle screen, online user screens, Image Terminal screens)
+
+In this revision of Image BBS, the Extended Command Set extension is enabled by default.
+This gives the sysop more flexibility in several areas.
+For more information on the ECS system, refer to <<ecs-commands>>.
+
+The initial `ml.ecsdefs` definition file which the ECS system needs should be copied here also.
+
+6: The User disk
+
+Contains all user data files, which are expanded as new users sign on.
+There are two files that keep all user information available to the BBS.
+Two directory entries, a little over one block per user total.
+
+User data filenames are `u.config` (REL) and `u.index` (PRG).
+
+Different devices and drives can also be assigned to each of the
+following:
+
+* Sub-board in the message base subsystem
+* Upload/Download or user exchange library in the file transfer subsystem
+* Plus file in the online programs subsystem
+* Movie file in the movie file subsystem
+* Text file in the text files subsystem
+
+These need not be the same as any of the six pre-defined system drives, but the above types of files may also be stored on those drives if so desired.
+
+=== Copying Files
+
+Now, format a new or usable fresh disk (or partition if using a mass-storage device) for each system drive you will have online, and copy over the files from the disk that you backed up.
+
+If using a floppy-based setup, we also suggest that you label each floppy disk with the device and drive number so that you will not get confused as to its purpose.
+
+====
+Unfortunately, Image is somewhat hobbled by a "`flat file structure`"—-_i.e._, there is no provision for using subdirectories (or even partitions with 1581 drives) on mass-storage devices which support them (the CMD devices are a good example).
+All files must reside in the root directory to be accessible.
+This is a shortcoming I plan on addressing in Image BBS 2.0 with the additions of CMD hardware detection (plus any other hardware sysops give me reference material for) and the ability to
+issue DOS commands where appropriate in what is called the "`General Files`" section (which can have message bases, text and plus-file subdirectories in a single GF directory!).
+
+A similar modification would be possible for Image 1.2b, I just haven't gotten much further than the planning stage; which is to say, just a bit further than the BBS editor quoting... sigh.
+====
+
+=== Setting Up Your Image BBS
+
+We'll start by copying the files, which the BBS needs to function, to their proper system disks.
+
+=== Boot Disk
+
+====
+NOTE: When you boot your BBS, any device can be used, but you _must_ use drive #0.
+If you wish to use a different drive number to boot, you must change `setup` to reflect the proper drive.
+====
+
+If you are using a floppy-based setup, you need to make a "`boot disk,`" from which you will load your Image BBS.
+This disk is used whenever you are re-loading (booting) your BBS.
+Just use a blank disk, and copy the following files onto it.
+
+====
+TIP: Whether you're using a floppy disk or hard drive partition, copy the
+following files to the device you want to boot from:
+====
+
+|===
+|`image 1.2b` |Boot file (`load"image 1.2b",_device_,1`)
+
+|`im` |Core BBS routines, written in BASIC
+
+|`ml 1.2` |Core machine language routines
+
+|`ml.editor.loader` |Swaps BBS text editor into place from RAM
+underneath ROM when needed
+
+|`ml.editor` |BBS text editor routines
+
+|`ml.extra` |Fast garbage collect; most are two seconds in length
+
+|`ml.pmodes` |Print mode definitions (Refer to <<mci-print-modes>>)
+
+|`ml.rs232` |RS232 communication ML, renamed as above
+
+|`screen 1.2` |Title screen graphic file
+
+|`setup` |Initialization routines, written in BASIC
+|===
+
+////
+* {blank}
+** {blank}
+*** {blank}
+**** {blank}
+////
+
+* Copy to the System disk all files beginning with `s`.
+* Copy to the Etcetera disk all files beginning with `e`.
+
+====
+NOTE: The REL `e.say` file is optional.
+This file contains "`sayings`" displayed to the user both at logon and when `SY` is entered at the main prompt.
+Due to the size of this file, some sysops with smaller systems may wish to copy over `e.say-smaller` as `e.say`, or not use this feature at all by omitting the file entirely.)
+====
+
+* Copy to the Plus File disk all files beginning with `+.` (don't forget `+.modem`), `++ *`, and `scn.*`.
+Also, `ml.ecsdefs` should be copied here in order for the default Extended Command Set definitions to work properly upon bootup.
+
+* The user files are written during the first-time configuration process, directory and e-mail files after your BBS is up and running.
+
+====
+If you are using a user port modem, copy ``ml.rs232/user`` as ``ml.rs232``.
+If you are using a high-speed modem or telnet bridge program, copy ``ml.rs232/swift`` as ``ml.rs232``.
+`config`  may be modified in the future to make this procedure automatic.
+====
+
+It is fine to put these boot files on your System disk, assuming you have sufficient drive space.
+
+.Required Plus File disk files
+[%header="no"]
+|==========
+| `+.er`    | Error-handling module
+| `+.lo` | Idle screen (waiting for call) plus-file
+| `+.modem` | Modem communication routines; rename as necessary
+| `ml.ecsdefs` | Extended Command Set definitions (Refer to <<the-ecs-system>> for more information.)
+|==========
+
+Now you are ready to configure Image BBS!
+
+
+== Modem Configuration
+
+You can run a dial-up BBS (and in fact some people still do), but for convenience's sake, and to get the most callers possible, you'll probably want to have incoming connections via the Internet.
+
+If you're using a real Commodore 64, you'll be using an interface which plugs in to either the user port (for example, an Omnitronix RS232 interface), or expansion port (a Turbo232 or Glink interface).
+
+* A serial cable connects to a PC which runs TCP/IP to RS232 "`bridge`" software, allowing the BBS to send and receive modem commands and BBS data even though there's not a real modem connected
+
+* A wireless modem
+
+* You could host your BBS via VICE, in which case you'll connect to the aforementioned "`bridge`" software (BBS Server, VSPE, or tcpser) to connect to the outside world
+
+=== modemconfig 19.2
+
+This program configures the modem to be used with the BBS through a series of questions, which are outlined in the following section.
+
+First, a preview of what it looks like:
+
+```
+Image 1.2 Modem Configuration
+
+ 1 -- 1670  (Old Model)
+ 2 -- 1670a (New Model)
+ 3 -- Hayes 1200 (ATA)
+ 4 -- Hayes 1200 (DTR)
+ 5 -- Hayes 1200 (ATA/DTR)
+ 6 -- Hayes 1200 (ATA/Reverse DTR)
+ 7 -- Hayes 2400 (ATA/DTR)
+ 8 -- Hayes 2400 (ATA/Reverse DTR)
+ 9 -- Supra 2400
+10 -- Aprotek 2400
+11 -- Hayes 9600 (ATA/DTR)
+12 -- Hayes 9600 (ATA/Reverse DTR)
+13 -- Supra 9600 (ATA/DTR/X4)
+14 -- Hayes 19.2k(ATA/DTR)
+15 -- Hayes 19.2k(ATA/DTR/X4)
+16 -- Customized
+
+Modem Type? []
+```
+
+`Type 16 -- Customized` is the one you'll want for operation with a telnet bridge program.
+
+Here is a summary of options presented when that choice is made:
+
+{empty}1. Baud rate 0 = 300 ... 5 = 19200
+
+ Pick the highest rate your modem or telnet bridge supports.
+
+{empty}2. 0 = Escape codes (+++) 1 = Data Terminal Ready (DTR) hangup
+
+====
+`+++` escape codes are used mostly on older modems such as the Commodore 1670.
+Hayes-compatible modems usually support the DTR line with the Commodore user port or an RS232 interface in the expansion port.
+====
+
+{empty}3. 0 = Auto answer (_ATS0=1_) 1 = Manual answer (`ATA`)
+
+{empty}4. 0 = ATH 1 = No ATH
+
+This refers to whether your modem includes `ATH` in its command set.
+
+{empty}5. 0 = Local off-hook 1 = Not
+
+When you are logged on to the BBS from the local console, should the
+modem be taken off-hook so people trying to call in get a busy signal?
+
+{empty}6. 0 = ATH0 1 = ATH
+
+This is just a matter of semantics: does your modem use `ATH` or _ATH0_ to hang up?
+
+{empty}7. 0 = Hang-up in modem reset 1 = Not
+
+Choose whether to hang up when resetting the modem.
+
+{empty}8. Value for `ATX`
+
+This controls the number of error reporting (1-4) codes used by the modem (_VOICE`, `ERROR_, etc.) It is usually left at 4.
+
+.Typical modem result codes
+[%header]
+[%autowidth]
+|===
+|Numeric |Verbose |Description
+
+|`0` |`OK` |The last command sent to the modem was processed correctly.
+
+|`1` |`CONNECT` |The modem achieved a connection at 300 bps.
+
+|`2` |`RING` |The modem detected an incoming call.
+
+|`3` |`NO CARRIER` |The modem could not make a connection or lost a connection due to the absence of the carrier signal.
+
+|`4` |`ERROR` |An error has occurred; usually a bad command.
+
+|`5` |`CONNECT 1200` |The modem has achieved a connection at 1200bps.
+
+|`6` |`NO DIAL TONE` |The modem did not detect a dialtone.
+
+|`7` |`BUSY` |The modem dialed but got a busy signal.
+|===
+
+[%header]
+[%autowidth]
+|===
+|X1 |Usually adds connection speed to basic result codes (e.g. `CONNECT 1200`)
+
+|X2 |Usually adds dial tone detection (preventing blind dial, and sometimes preventing `ATO`)
+
+|X3 |Usually adds busy signal detection.
+
+|X4 |Usually adds both busy signal and dial tone detection
+|===
+
+---
+
+[start=9]
+9. DTR: 0 = Normal 1 = Reversed
+
+DTR (Data Terminal Ready) is a connection that tells the DCE (Data Communication Equipment, typically a modem) that the DTE (Data Terminal Equipment, typically a computer or terminal) is ready to transmit and receive data.
+
+Some modems have the logic reversed; if bringing DTR high (toggling it on) signals a disconnect, then select "`Reversed.`"

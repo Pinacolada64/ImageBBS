@@ -1,0 +1,205 @@
+:experimental:
+== General Commands
+
+When you first log on to your BBS, after it checks for your mail, and goes through normal logon procedures, you will be at the "`main command level.`"
+You will see your main prompt that you defined in the configuration editor.
+You are now at the area where you have many options as to what you will do next.
+
+This chapter will deal with the commands needed to get to certain functions of the BBS, and how to use them.
+
+The following commands are considered "`general`" commands because they are not specific to a particular subsystem.
+They may be typed at the main prompt, or most subsystem prompts as well.
+A few commands (mostly maintenance in nature) are available _only_ from the main prompt, or using local or pseudo-local mode.
+These commands are discussed in the "`Maintenance`" chapter.
+
+The nice thing about general commands is the BBS remembers which subsystem you came from, so you can return to it when done with the current subsystem.
+
+For example, you have just finished viewing a directory listing of files in the U/D subsystem, and wish to go to the Voting Booth.
+You type _VB_ at the U/D subsystem prompt listing directory information, and when you type kbd:[Q] to quit the Voting Booth, you will be returned to the U/D subsystem.
+
+Most general commands consist of two letters, sometimes followed by an argument (parameter) of one or more numbers.
+
+Examples:
+
+SB Enter the message bases.
+The BBS prompts the user which Special Interest Group or message area they would like to enter, depending on what places they have access to.
+
+SB1 Enter the message bases, but immediately go to the first Special Interest Group they have access to.
+They are prompted for the message base to enter after that.
+
+SB1,2 Enter the message bases, go to the first Special Interest Group, and the second message base in that SIG with no further prompting.
+
+====
+If you're a Trekkie, this reminds me of Klingon programmers:
+Their programs do not _have_ parameters, they have _arguments_, and they always _win_ them...
+====
+
+A few commands consist of only one letter.
+Here are the descriptions of the general commands and how to use them.
+
+=== Chat Request/Chat Mode
+
+`C` requests a chat with the sysop.
+A short (38 character) reason for chat is requested; the first 16 characters of that is displayed at the programmable window at the bottom of the screen.
+This reason is also recorded in the call log on disk and printer (if used).
+
+If the left side of `Sys` is checked, the user is given a message informing them that the sysop is being paged, and the BBS monitor sounds three sirens.
+
+If there is no checkmark, the user is told that you are not available.
+The `s.chat _x_` file is shown, and they are asked if they want to leave feedback instead.
+
+The "`reason for request`" continues to flash until they log off or you answer the chat page.
+If the user requests chat more than once without you answering the first chat request, they are told that the page is already on, discouraging them from continuing to type `C`.
+
+=== Feedback
+
+Feedback is "`mail`" left on the BBS to the sysop(s), that any user with local or remote maintenance access may read.
+It is left to the sysop(s) by entering `F` at most prompts, or when logging off.
+The user is placed into the editor to write their message.
+
+Any user, including a new user, is allowed to leave up to three feedback messages per call.
+If they try to leave more, they are informed they have left their limit of feedback for that call.
+
+Feedback, along with new user information and error messages, are read by the sysop by typing `VF` at the main command prompt.
+(Refer to <<the-vf-system>> for more details.)
+
+=== Help
+
+`?` reads a menu of commands available at whichever command level the user happens to be.
+Depending on how much information is in the menu, a "`More?`" prompt for additional command information may appear (although this is put in the menu file itself, and is not always necessary, depending on the file's length).
+At this prompt, Y (meaning yes) continues, most others mean no and stop reading the file.
+
+If the user is not at the main prompt, the main menu is then read.
+
+=== BBS Information
+
+`CF` shows the file `s.config`.
+This file should contain general information about your BBS, perhaps the hardware and software it runs on, its hours (if not 24 hours a day) and anything else interesting about it.
+
+=== Change/View Last Call Date/Time
+
+`LD` The _last call date_ is used to determine which messages on the BBS are new and which are old.
+If a user is logged off before they have a chance to see all new messages, they can use this command to move their last call date back the next time they call.
+
+=== Log Off
+
+`O` will ask if the user really wants to log off (type `Y` to do so), asking if they want to leave feedback first.
+
+`O%` saves the last call date, in case they did not read all the new messages in the message bases.
+
+`O!` logs off more quickly, without prompting for feedback.
+
+`O%` and `O!` may be combined: `O%!` logs off more quickly _and_ saves the last call date.
+
+=== Quit
+
+From most prompts (and in some subsystems, just pressing `Return`) gets the user to the main prompt.
+
+If `Q` is entered at the main prompt, the user is asked whether they wish to log off, as above.
+
+=== Time/Date
+
+`T` displays the current time, the time the user logged on, and the amount of time remaining on the BBS this call.
+
+=== Edit Terminal Parameters
+
+`EP` enters a menu which allows a user to change their:
+
+* computer type
+* graphics translation mode
+* terminal line length
+* whether linefeeds are required
+* toggle their expert mode
+* change their account password
+
+=== Prompt Mode
+
+`PM` toggles Prompt Mode on or off.
+
+When on, when a user reads new messages in the message base (using kbd:[RN] or kbd:[RA] commands), they do not receive the "`end-of-bulletin`" prompt between message threads, or the `[P]ost [N]ext [Q]uit`	 prompt between sub-boards.
+Useful for callers who want to speed-read or buffer messages.
+
+It also eliminates the prompt after the `A` (About this file) command in the U/D subsystem.
+
+=== Status
+
+`ST` allows users to see their status on the BBS, including:
+
+* Their handle, plus real first and last name
+* Last call date and time
+* Their login ID
+* Their access level
+* Number of lines in the editor
+* Calls to the BBS, today and total
+* Downloads allowed (0=unlimited)
+* Number of uploads and downloads made
+* Number of blocks uploaded and downloaded
+* Credit points and credit ratio
+* Total posts and responses
+* User flags (refer to <<user-flags>>)
+
+Then the user is asked if they wish to view this information again.
+If not, they are returned to the BBS.
+
+=== Saying
+
+kbd:[SY] reads a random "`saying`" or "`fortune,`" such as the one read at logon, from the RELative file `e.say`.
+
+=== Activity Log
+
+`LG` Users who have the permission flag set may read the daily log, listing what activities callers have done on the BBS.
+
+=== BAR Stats
+
+`BA` Users who have the permission flag set may view the Board Activity Register stats as shown between calls.
+Refer to <<board-activity-register>> for more details.
+
+=== C/G, ASCII, ANSI Mode Toggle
+
+kbd:[AT] chooses between Commodore Color/Graphics, plain ASCII, and ANSI graphics.
+This option is saved to the user file when logging out.
+
+=== Expert Mode
+
+kbd:[XP] Toggles Expert Mode.
+When on, subsystem and sub-board entry screens are skipped.
+This option is saved to the user file when logging out.
+
+=== New User Message
+
+kbd:[NU] re-reads the `s.new user` file, read when a new user logs on to the BBS for the first time.
+
+=== Local Mode
+
+kbd:[ZZ] allows users with local mode access to enter pseudo-local mode so they can do maintenance functions remotely.
+These functions include copying files, reading directories, sending DOS commands, etc.
+This is very powerful, and should be given to only the most trusted users on your BBS.
+
+=== Command Stacking
+
+_Command stacking_ is when a sequence of commands to be executed are entered all on one line, with individual commands separated with the up arrow key (kbd:[^]) between the commands.
+If the following command were entered at the main prompt:
+
+ SB9^RN^<^R3^UD^SA
+
+Then the BBS would:
+
+[%header]
+[%autowidth]
+|===
+| Command | Purpose
+| `SB9` | Take you to sub-board 9
+| `RN`  | Read the new messages there
+| `<`   | Move backwards, to sub-board 8
+| `R3`  | Read post #3
+| `UD`  | Enter the U/D subsystem
+| `SA`  | Scan for all new uploads
+|===
+
+Certain places, such as choosing "`quit`" in the End of Bulletin prompt, usually clear stacked commands--if a user realizes they need to do something in the middle of executing the stacked commands, their only recourse is to hold down the spacebar to stop the rest of the command stack from executing.
+
+Refer to <<macs>> on how to automate command stacking.
+
+=== MACS [[macs]]
+
+#FIXME#

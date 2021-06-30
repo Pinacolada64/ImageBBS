@@ -1,0 +1,135 @@
+
+== Telnet Bridge Software
+
+=== Jim Brain's `tcpser`
+
+`tcpser` is a telnet bridge program which can interface with either a real Commodore 64 via a serial cable, or an emulator.
+It can be downloaded from:
+
+https://github.com/go4retro/tcpser/
+
+The latest version as of November 2020 is :tcpser_version:. // 1.1.4
+
+==== Using a Physical Serial Port
+
+Even if you're using Windows, its COM`x`: nomenclature is replaced by Linux's `/dev/tty`_x_.
+`COM1` is equivalent to `/dev/ttys0`.
+
+ tcpser -d /dev/ttyS0 -p 6400 -s 19200 -i"e0v0h0x4&C1&D2&K3" -l7 -tSsIi
+
+This suggested command line for tcpser means:
+
+.tcpser command line switches
+|====
+| Parameter | Purpose
+| -d /dev/ttys0 | use serial port 0
+| -p 6400 |  use incoming port 6400
+| -s 19200 | report the modem connect rate at 19200kBPS
+| -i "..." | initialize the modem with the following string
+| -l7 | log events at level 7
+| -tSsIi | show incoming and outgoing RS232 and TCP/IP traffic.
+|====
+
+==== Using the VICE Emulator
+
+NOTE: VICE doesn't emulate the CD (carrier detect) line if you're using a user port modem.
+So while the BBS will answer, it won't necessarily hang up properly if a user should disconnect midway through their call.
+
+Here, the `-d` parameter is replaced by `-v`, which is the port VICE is listening on in its RS232 settings.
+Here is a command line to try:
+
+`tcpser -i "e0v0" -s 2400 -v 25232 -p 6400`
+
+If you're using a high-speed expansion port interface, you can increase the `-s` value to something more appropriate.
+
+=== tcpser4j
+
+This is the same thing as tcpser, except written in Java. You configure
+it via an XML file (there is a well-documented sample file included),
+then have the included .bat (Windows batch) or .sh (Linux shell script)
+file reference that XML configuration file.
+
+The advantages are:
+
+* you can emulate more than one virtual modem using the same instance of `tcpser4j`
+* you can play modem DTMF and connect sounds
+* there is a simple chat room function for when users are waiting to connect to an otherwise busy BBS.
+
+=== Leif Bloomquist's _BBS Server_
+
+This is a Windows program designed to allow a real Commodore 64 to run Image BBS.
+
+If you use this program and you have trouble getting the BBS to answer,
+here's some information from Larry “X-TEC” Hedman:
+
+Jeff, I experienced the same problems you described when I started using BBS Server with an Omnitronix RS232 interface plugged into the modem port.
+
+I never could get it to work at any of the 2400 baud settings but 1200 baud works fine and connections stay connected at 1200 baud but in actuality, the speed is much faster.
+
+On my Image 1.0 version, I am using the Avatex 1200 `+.modem` file.
+If using 1.2a I think I used the 1670 modem file but you can try any of the 1200 baud modem files until you find one that works.
+
+In BBS Server, you must build and use the TelBBS Standard Cable as described in the docs.
+
+On the Comms page, set for `1200,N,8,1`.
+Set the serial cable type to option 1 and click on `Set Defaults`.
+You should have check marks for `Enable hardware flow control` and `ATE1 (local Echo)` set by default.
+
+On the Connecting page set checkmarks on `Raise DTR when caller connects` and `Send RING to BBS when Telnet caller connects`.
+
+On the Disconnecting page, check `Disconnect if BBS drops DCD`, `Disconnect if BBS drops DSR`, `Send NO CARRIER to BBS on disconnect`, `and Lower DTR when caller disconnects`.
+
+On the Diagnostics page, check mark `Detailed RS-232 Diagnostics Logging` and `Detailed Hayes Emulation Logging`.
+This will give you much information about what is going on with your RS232 communication between the PC and the BBS in the Activity Log.
+
+On the Emulation page, checkmark `Allow Outgoing Calls`, `Send this string when Telnet session connects: CONNECT`, `Send Winsock error messages to Terminal Program` and `Enable Hayes Emulation`.
+
+Click on btn:[Save Changes] which will take you back to BBS Server's status page.
+Make sure the IP address is set for the IP of your PC running BBS Server and type in the Telnet Port you will be using.
+
+The standard port is 23 but using port 23, you will experience hundreds of spurious connect attempts all from Asian IP addresses.
+
+You're better off to use a different port but for now just use 23 until you can make connections successfully.
+
+If all that is set up and Image is booted to the call waiting screen, you should see red blocks for CTS and DCD and a green block for RTS.
+At that point you should be ready to receive calls.
+Try connecting to the BBS using whatever method you are using, and watch the RX and TX blocks.
+
+If it doesn't work use a different 1200 baud `+.modem` file until you find one that works.
+Hope this helps.
+
+=== __Telnet bridge hardware__
+
+====
+Since telnet bridges don't support BPS rate changes over telnet,
+you need to rename a custom version of `+.modem` called `+.modem/telnet`.
+This is locked at 14.4 kBPS instead of how the original `+.modem` file stepped through its BPS rates, issuing initialization commands at each speed.
+====
+
+These interfaces plug into the Commodore 64:
+
+=== Link232
+
+Expansion port; plans are available at http://www.go4retro.com/projects/link232/
+
+=== Lantronix UDS-10
+
+* sends ATA immediately upon answer
+
+////
+=== CometBBS
+
+* User port; available soon from http://www.commodoreserver.com/
+////
+
+=== GLink232 interface
+
+* A SwiftLink clone available from http://gglabs.us/.
+
+X-TEC mentions:
+
+Tell the seller it's for hooking up to an Image BBS. This makes sure all the control lines are wired correctly.
+
+=== Daniel Mackey's SwiftLink clone
+
+#FIXME# contact info

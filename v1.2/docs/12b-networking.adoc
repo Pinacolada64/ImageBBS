@@ -1,0 +1,414 @@
+== Networking
+
+=== About NetMail
+
+IMAGE NETMAIL V1.2.4 DOCUMENTATION
+
+Copyright 1990, New Image Software
+
+UPDATED 7-1-90
+
+NetMail 1.0 is a system which allows files to be transferred between BBSes automatically. In this version of NetMail, it supports E-Mail transfers among users, and general file transfers among sysops.
+Also, if the TurboREL SIGs are used, Network Sub-Boards are available.
+
+All of this is accomplished by means of a program called _+.NMauto_. This program is run automatically by the system at regular intervals.
+(Usually one hour apart.) The program checks for the existence of files that need to be transferred to other systems.
+If any exist, the necessary phone calls are made, and the files are transferred.
+
+Each node in the network will need to pick a node ID. This is just a 3 character identifier that will represent that node.
+We suggest that an abbreviation of the BBS name be used so that it will be familiar.
+
+==== NetMail Paths
+
+To avoid the problems of having your BBS call _all_ of the other nodes on your network, the number of connections that can be made to any node is four. At first, this may seem like a small number.
+However, in our
+testing, we have found that it keeps the traffic through any one node
+low enough, and limits the number of calls that any one node has to make.
+
+Node IDs are used in paths. For example, say you had a network with 6 nodes in it. The path from, say LDE to GFD might be *_/LDE/WZK/GFD/_*, whereas the path from JMS to PGN might be *_/JMS/LDE/PGN/_*.
+The path describes how to send files from one place to the other. For the most part, you will not need to worry about paths.
+You just need to know that they are there.
+
+One other restriction is placed on the layout of the network. That is that there can only be one path between any two nodes in the network.
+If
+the network is planned with _any_ loops in it (places where files could be sent in circles) then the network will have problems.
+
+==== Network Maintenance
+
+One BBS on the network will be responsible for network maintenance. It is the sysop of this BBS who will set up the paths that were described above.
+It is not up to this sysop to plan all of the paths, just to configure them into the network.
+
+The sysop in charge of the network also has the ability to send "`NetNews.`"
+This is a news file that will be automatically installed on all of the nodes in the network.
+The purpose of this is to provide a way to relay current information about the network to all of its users.
+Such information might include new nodes that have been added, or local news that is of interest to everyone.
+
+==== Network Planning
+
+Planning a network is not as difficult as it may seem. There is a simple method of planning a network of any size. You get a piece of paper, and write the node ID of your BBS in the middle of it.
+Then draw four long lines, one going up, down, right, and left. These are places where you can add nodes. Write the IDs of the nodes at the ends of the lines.
+Then draw three short lines from each of these. (See link:#anchor-722[Figure 1: Simple network].) Add nodes on the end of each line.
+The process can be continued indefinitely.
+
+Note that you could not connect PCM to JMS because that would cause a loop, as mentioned above.
+
+```
+_ |_
+
+_ -PCM-_
+
+_ |_
+
+_ |_
+
+_ | | |_
+
+_-WZK---LDE---JMS-_
+
+_ | | |_
+
+_ |_
+
+_ |_
+
+_ -PGN-_
+
+_ |_
+```
+
+Figure 1: Simple network
+
+=== General Setup
+
+==== Where to Put the Files
+
+These files should be put on your Plus Files disk:
+
+.Networking Plus Files
+|===
+|`+.NM/file` |`+.NMextra` | ``++ net``
+|`+.NMauto` |`+.NM.mail` |``++ path``
+|`+.NM.update` |`+.NM.sort` |
+|`+.NM.walls` |`+.NW` |
+|`+.NW.grf` |`+.NW.netwall` |
+|===
+
+These files should be put on the System Disk:
+
+|===
+|`s.netmenu` |`s.netmenuzz` |
+|===
+
+==== Installing NetMail
+
+You will need to make two small changes to Image in order to make NetMail run on your system. Line 1 of the program _+.lo_ has _nf=._ or _nf=0_ in it. It needs to be changed to read _nf=1_.
+The same is true of the program _+.EM_.
+
+If you have a very busy BBS, you may also want to change the _rs=._ (or _rs=0_) in line 1 of _+.lo_, to read _rs=1_.
+This will reserve your system from 3-4 AM each night, so that NetMail will get through.
+
+==== Getting Ready to Go!
+
+This is the most important part. You need to find someone to network with. Once you find someone, or a group, you need to decide who is going to be the network operator.
+At this point you would skip forward to the appropriate section.
+If you are the network operator, read <<creating-new-network>>, and if you are not, then read <<joining-existing-network>>.
+If you want to join the
+existing Image Network that we are running, contact THE CHIEF on Port Commodore (THE CHIEF @ PCM, in Net-Lingo).
+
+=== Creating a New Network [[creating-new-network]]
+
+==== Network Planning
+
+Plan your network. Get out paper and a pencil, and draw a map. Try to avoid long distance calls by "`chaining`" nodes together.
+You will need to get all of the available information about the BBSes that will be in your network.
+It's not hard to add new nodes later, but it is hard to remove them once they are there. One of the easiest ways to plan the network is to first find 4 nodes to connect to your node.
+Then work on finding 4 to connect to each of those. However, it is not necessary to fill up all of the connections.
+You can leave some open so that you can later expand.
+See link:#anchor-729[Figure 2: NetMap 6-20-90] which has the current map of the network that we are running.
+
+Note that we have left plenty of room left to expand, and welcome anyone to join.
+
+Assign each of your nodes a number. Start with 1, which will be your node, and then number the rest. This will be important later.
+
+```
+_ABC-REG WZK SCJ RRT-TNS  +
+| | | | _
+
+_STF-JMS GFD-CHF-DAG-GOC FII-SBD _
+
+_ | | | _
+
+_SSF-PGN-LDE---------PCM-TCN-SOK-ECY_
+
+_ | | _
+
+_EFB-GJ2-PAD RHQ-FRW-LDW _
+
+_ | | | _
+
+_TRN | SWD TFD TYP CRO-LOZ _
+
+_ | | | | _
+
+_LKR-CMR-LWR-WN2-TWB _
+
+_| | | | _
+
+_TTC | TGD | TBB TER SPT D38 _
+
+_| | | | | | _
+
+_CST-DRC-INI | INS DII-MMA-ALD _
+
+_| | | | | | | _
+
+_CSP MIA TCB-WN3-TWZ-ASN CDX SOM _
+
+_| | _
+
+_TPO-TAH-TTS-SSW-TGI HCL _
+
+_| | | _
+
+_CIA-TST WOL TOS _
+```
+
+Figure 2: NetMap 6-20-90
+
+==== Configuring Your Network
+
+Now comes the fun part. From within Image, run the + file _+.NM/utils_. Since you have never configured a network on your system, it will ask you if you want to create a network.
+Say Yes.
+
+Then, you will be taken to the Utilities menu. There are several options available. You will need to edit the nodes, using option A.
+
+You need to edit node 1, and put your info into it. Make sure to set _everything_. Then, add the other nodes in the same way.
+
+Note that you need to change the connections while in the node editor. When changing a connection, you need to make sure that you edit _both_ nodes to make the connection complete.
+Leave any empty connections as `0`. When you are done, press _kbd:[Return]_ to get back to the utilities menu, and select the option to *_Make 'nm.create'_*.
+This will make the file that you must give to each of the sysops in your network so they can configure themselves in.
+You must also tell each sysop what his/her node # will be.
+
+You will also have to tell the sysop of each node who will be connected to them.
+They will all need to make up passwords for their nodes, and
+each one will need to give their passwords to the sysops of the nodes that are connected to them.
+
+When you are done, run the program _+.NM/config_. You need to set _all_ of the different options, so just go through each of the menu items.
+
+Everything in the section *Joining an Existing Network* will apply to you as well, so you should read that section also.
+
+==== Adding a New Node
+
+When you need to add new nodes, just enter the Node List Editor again, and add them in. Make sure to edit the nodes they are connected to so that they will be connected in both directions.
+When you are finished, make the _nm.create_ file again, and be sure to give this to the new network members.
+They will configure just as the original members did. Don't forget to give them their node numbers.
+
+Next, you _must_ send a Node Update. This will send a file out to the other BBSes in your network to tell them what changes have been made.
+It will automatically install the changes in their system.
+
+=== Joining an Existing Network [[joining-existing-network]]
+
+==== Configuring Your System
+
+You will need to get a copy of the file _nm.create_ from your network operator. Put this file on your Email disk. Also, you need to find out what your node number is, and what BBSes are connected to you.
+You will need to make up a password, and give it to each of the sysops of the BBSes who are connected to you.
+They will have to give you their passwords as well.
+Be sure to go through each of the options in the configuration menu to make sure that they are set correctly.
+
+If you wish to have the modem be off hook while NetMail is doing its work, turn the "`Off Hook`" flag on. Note that this will not work with _all_ modems.
+Also note that NetMail will not work with modems that do not accept Hayes-type commands.
+
+An explanation is needed for the connection editor. What you must first do is decided when you want calls to be made by the BBS, based on what "`type`" of day it is.
+For example, perhaps on weekends you want to allow 24 hour calling, while on weekdays you only want calling at night. The 24 hour type is pre-defined as "+".
+So you must configure another type to have the hours you want for the weekends.
+
+The option "`Change call times`" is what you use to edit the types. You would set the first call type 0 to the hours you want to allow.
+If you want to define other types, you have the 1 to 9 to work with as well.
+
+After defining the types, you should use the option to "`Edit connections`". That will bring you to another menu. Choose "`Normal Connections`".
+(The other option, "`Shortcuts`" is not yet fully implemented, but will be in future versions.)
+
+When editing the nodes, you can enter the passwords, define the type of
+day for each day of the week (for calling hours) and set the number of calls per day for each day of the week.) When setting the calls/day, `+` means infinite calls.
+When setting the types of days, `+` means 24 hours and `-` means no calls that day.
+
+Once you finish configuring, you are all set! NetMail is up and running on your system.
+Any time more nodes are added, it will automatically add them into your system.
+
+=== E-Mail Forwarding
+
+E-mail forwarding lets you pick a few people whose E-mail will be automatically sent from your BBS, though the network, and end up on some other BBS.
+For example, it might be nice to forward E-mail for the sysops of the other BBSes on the network. There is an option on the configuration menu for this.
+You need to specify what their handle is on
+your BBS, and what it is on the destination BBS, and, of course, what the destination BBS is.
+
+=== NetMail Online Functions
+
+NetMail adds several commands into the e-mail section of Image BBS.
+Those commands are listed here, along with descriptions of what they do:
+
+.User Commands
+[cols=",,",]
+|===
+
+|_NA_ |List all nodes |This will display a list of all the nodes that are in your network.
+
+|_LN_ |List active nodes |This will list only the active nodes. Nodes can be marked as inactive by the network operator.
+
+|_NI_ |Node Information |This requests information about a specific node. For example, _NI1_ will display info about node #1.
+
+|_NM_ |View Net Map |This will display the file _nm.map_. Note that this
+file is _not_ automatically created and someone _must_ hand-draw the map which you will put on your system.
+
+|_NS_ |Net Send |This is the command to send NetMail.
+
+|__ a|
+
+Sysop Commands
+
+|===
+
+|_VL_ |View Log |This will view the log of Network calls. The log
+displays when calls were made or received, and what files were transferred.
+
+|_SL_ |View Sysop Log |This will display the log of NetMail sent. This is useful in case someone is abusing the network.
+|===
+
+Table 56: NetMail Commands
+
+=== Network File Transfers
+
+Files may be transferred between sysops through the network. There is a separate program to do this, it is called `+.NM/file`. When files are transferred, they are put into a special `nm.F` file.
+This allows multiple files to be sent at one time, by just sending a single file. When you receive files, it will notify you in your e-mail.
+You should then run this program.
+
+When you run the program, it will scan to see if any of these `nm.F` files are waiting for you. If any are, it will ask you if you want to extract the files.
+Extracting the files will put them on the Email disk, so be sure you have enough room. The program will tell you the length of the `nm.F` file.
+The extracted files will have approximately the same number of blocks total.
+
+When that is finished, or if there were no files received, it will ask you if you want to send files. The prompts are self-explanatory here.
+
+Keep in mind that some of the Nodes that you send files though may not have enough disk space to hold the file (even temporarily) while it is waiting to be sent on to the next node.
+It is not generally a good idea to send a _lot_ of files at a time for this reason, or very large files.
+Also, since some of the connections may be long distance, you may be running up someone's phone bill considerably.
+(And yes, they will know exactly who did it because they will know where the files came from, and where they were going.
+You don't want to get your fellow network members
+mad at you!)
+
+=== NetGrf/NetWall
+
+Two versions of the Network "`Wallwriter`" are supplied with the Network. One is the _normal_ Wallwriter with network abilities added. The other is a 10-line version that allows a lot more text.
+MCI commands are _not_ allowed on the wall, but color codes and graphics are.
+Both versions can be accessed by the program `+.NW`.
+
+The easiest way to install NetWall is by adding it into your `PF` section. Or, you could add it in as a command in your `im` file.
+(This is only suggested if you are familiar with doing such things.) The other
+option, and some people have already done so, is to merge it into your `+.on` file, so that it can be used during the logon sequence, just as Wallwriter is.
+
+There is one important thing to know about the NetWall. It will get _big! Very big!_ As responses come in from all over the network, they will accumulate. It is up to you to keep it to a useable amount.
+When you run `+.NW` while in Local Mode, it will ask you if you want to edit the wall.
+This will allow you to selectively delete messages from the wall.
+Deleting them on your system _will not_ delete them from other systems, so you are free to keep as many as you like, or as few as you like.
+We suggest that you check the size of the file at least once a week.
+
+There is also a Weed option that will do this for you. You only need to
+tell it how many days back to set the cutoff point, then it will delete the messages older than that day.
+
+If you do _not_ want to use the NetWall, then you should change the `g1=1` in line 801 of `+.NW.walls` to `g1=0`.
+This will turn the 10-line version off.
+
+If you do _not_ want to use the Network WallWriter, then you should change the `g2=1` in line 801 of `+.NW.walls_ to `g2=0`.
+This will turn the 1-line version off.
+
+=== NetMail Support/Information
+
+If you wish to have any further information about netmail, you can contact PROFESSOR, on Lyon's Den East.
+The phone number is (313) 453-2576.
+
+=== Compatibility Notes
+
+This software has been tested on the following list of equipment:
+
+COMPUTERS
+
+Commodore 64
+
+Commodore 128 in 64 mode
+
+MODEMS
+
+Commodore 1670 (old and new)
+
+Supra 2400
+
+Transcom 1200H
+
+Aprotek 2400 (minimodem)
+
+DISK DRIVES
+
+Commodore 1541, 1571, and 1581
+
+Commodore SFD 1001 W/IEEE Flash
+
+Lt. Kernal Hard Drives
+
+Please note that we cannot guarantee that it will work with anything that is not on this list. However, most modems are compatible with those tested, as are most disk drives.
+As a general rule, most equipment that will work with Image BBS, will work with NetMail.
+
+=== The IMAGE Network
+
+As we have mentioned in several places in this manual, we are running this network software on our Image Support BBSes. This network is growing fast, and any who have bought the NetMail software are welcome to join it.
+There is only one catch.
+In order to join our network, you have to find someone who is already on our network who is willing to sponsor you.
+If you are local to one of our nodes, then this is usually not a problem.
+But if you are not local, then you must find someone who is willing to connect you _long distance_ to their BBS.
+
+This is not usually a problem. A typical long distance network call lasts about 3-4 minutes, and they do not necessarily occur every night.
+Using 2400 baud helps a lot for the phone bill, as it will take only half the time to send the same files.
+Estimates are at about $30 a month for a long distance connection.
+
+In the future, we may request that sysops who do not have long distance
+connections on their nodes to voluntarily contribute $15 - $25 per month, which would be given to those sysops that do have long distance connections.
+The idea being to share the costs a bit, so no one has to bear the whole burden.
+
+=== Programming Notes
+
+==== E-Mail System
+
+The e-mail system for Image 1.2 was written while the Network was in the planning stages, over a year ago. Several "`hooks`" were put into it so that when the Network was available, E-Mail would be ready.
+The file `+.NMextra` is a mini-module that E-Mail loads when NetMail is active.
+The routines in `+.NMextra` handle all of the network functions that the users can access.
+
+==== Configuration Editors
+
+The file `+.NM/config` is a stand-alone module that handles all of the network configuration that a sysop would need to be able to do.
+
+The file `+.NM/utils` is a stand-alone module that handles the Network Administrator's functions.
+
+==== Network Maintenance
+
+The file `+.NMauto` is loaded by the `+.lo` program whenever Network Maintenance needs to be done. It is this module that handles incoming and outgoing calls.
+In addition to `+.NMauto` there are several mini-modules that process files as they are received. These include processors for Mail, the Netwall, NetNews, Updates, and so on.
+Also, when the TurboREL Sigs are used, there are processors for NetSubs.
+
+==== ML Support
+
+There are a few `++` files that do a lot of the "`dirty work`" for the network.
+
+.NetMail Plus Files
+[cols=",",]
+|===
+|`++ 2` |A replacement for the normal Image copier. This file handles the work for the network sysop-to-sysop file transfers.
+
+|`++ path` |A fast ML pathfinder which is used to route files. (In previous versions, a BASIC routine was used, which was _much_ slower.)
+
+|`++ net` |A proprietary file transfer protocol that is used when one BBS calls another.
+It is based on the standard "`Punter 10`" protocol, but
+implements a much more reliable multi-file transfer, and adds some options which make Net transfers much simpler.
+|===
+
+==== Future Changes
+
+More additions are planned for the network system. A few online games that send results via the net are planned, and some new features are going to be added to e-mail.
+Updates will be available on Lyon's Den East, and other Image Support BBSes.

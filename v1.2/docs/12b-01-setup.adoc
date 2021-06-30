@@ -1,0 +1,102 @@
+== Setting Up Your Image BBS
+
+Setting up should be very simple.
+We suggest you read this chapter carefully, following the instructions step by step.
+The configuration editor also has built-in documentation to help you out.
+
+=== Hardware Considerations
+
+Image BBS has been tested with many different types of peripherals, and usually has no problem running with any Commodore compatible equipment.
+
+If you have any problems, please contact us at one of our support methods listed in this manual for help, and we will do all we can to help you to make Image BBS work with your system.
+
+Some modems and drives deviate from the Commodore standard enough to cause some problems, but this is usually fixable with some patches into the program(s).
+
+Some of the peripherals tested with Image BBS and found to work well are:
+
+==== Disk Drives
+
+* All Commodore drives (1541, 1571, 1581, and IEEE drives)
+* Xetec Lt. Kernal hard drives
+* Creative Micro Designs hard drives
+* ICT Datachief and Minichief hard drives (see notes below)
+
+==== Lt. Kernal Hard Drives
+
+IMAGE was completely developed using a Lt. Kernal drive, using LUs 0 to 9, so is completely compatible with this drive in all respects.
+
+==== CMD Hard Drives
+
+They work.  CMD mods. #FIXME#
+
+==== ICT Hard Drives
+
+This drive has a problem in chain mode that will not allow more than one file to be open at a time.
+IMAGE does use more than one file at once in some areas, so we suggest not using the ICT drive for the E-mail or Etcetera disk, or for sub-boards.
+
+Any other system function should work fine with the ICT drive.
+
+==== Modems
+
+.Supported Modems
+[cols=",",]
+|===
+|Commodore 1660 with CD |Commodore 1670 (both models)
+|MPP 1604 |Avatex 1200hc
+|Total-Tel |Aprotek Trans-Com TCM 1200H & 1200H jr.
+|Westridge |Supra 2400 baud
+|Mitey-Mo |Most Hayes-compatible modems
+|===
+
+Refer to <<modems-and-telnet-bridges>> for more information on setting the BBS up for your particular modem or telnet bridge.
+
+////
+NOTE: The modem routines in Image BBS are contained in individual modules, so if a modem is not supported, it is very likely that a module will be written for it that will allow its use soon.)
+////
+
+==== RAM Expansion Units
+
+Image BBS has been tested successfully on systems using REUs in conjunction with other peripherals.
+Version 071487 of Commodore's RAMDOS is provided.
+It is set to define your RAMdisk as device 7, which is how it is supported by Image BBS.
+
+[cols=",",]
+|===
+|`f` |file copier, copies any file with a two or more character long
+filename to a disk
+
+|`r` |BBS setup file, modified by Jay Levitt
+
+|`s` |RAMDOS binary
+|===
+
+Table 2: RAMDOS files
+
+==== Printers
+
+Most Commodore compatible printers should work with Image BBS.
+Standard Commodore routines are used by the program; using logical file #4, device #4, with a secondary address of 7 to allow for upper- and lower-case.
+
+==== Other Interfaces
+
+Some IEEE or printer interfaces could feasibly cause some problems due to memory conflicts, and would need some customization of the program to allow use.
+Two IEEE interfaces commonly used and tested with Image BBS are the _IEEE Flash!_ by Skyles Electric Works, and the _BusCard II_ by Batteries Included, both of which perform well.
+
+==== RS232 (EIA232) Interfaces
+
+There are two files: `ml.rs232/user` and `ml.rs232/swift`-—depending on the type of modem or telnet bridge you'll be using, rename one to `ml.rs232` in order to achieve the proper setup.
+
+==== Fastload Cartridges
+
+At the present time, we recommend that no fastloader cartridges be used with Image BBS, they may only cause problems.
+
+////
+Please give any information about other fastload solutions you have success with using.
+1541 fastload routines are present in the as-yet-unreleased Image 2.0!
+////
+
+==== Creative Micro Designs SuperCPU
+
+There are patches to make the BBS run at 20 mHz.
+During file transfers, the BBS must be slowed down to 1 mHz with a `poke` to the SuperCPU speed register.
+

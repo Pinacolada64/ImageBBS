@@ -1,0 +1,258 @@
+:experimental:
+== The Configuration Editor
+
+For many this is a new experience.
+You will not be reconfiguring an existing system nor be converting a system over, but rather are starting from scratch.
+For those that want or need to start fresh, the Configuration Editor will do the job.
+If you are converting an existing system from CNet 12.0/12.1, there are also convert routines in this program.
+
+==== Configuring a New System
+
+You begin by loading the configuration program from your back-up disk.
+Use the standard Commodore `load` command (assuming 8 is the device number you're booting from):
+
+ load"config",8
+
+After it is loaded, type kbd:[run] kbd:[Return].
+The configuration editor is very complete and self-documenting.
+You should follow each step in sequence just as they are listed in the configuration menu.
+
+=== Device/Drive Assignments
+
+The first menu selection helps define the devices and drives you have to run your BBS on.
+Selecting the DEVICE/DRIVE menu option will bring up a sub-menu of options.
+The system of sub-menus will take you completely through your device and drive setup, defining each of the six required system drives, identifying which device and drive they are set to, as decided earlier.
+
+The default values are for device 8, drive 0.
+To select an option, use the kbd:[crsr up] and kbd:[crsr down] keys.
+To change the value the highlight bar is on, hit kbd:[Return].
+Use this procedure with any menu item in the configuration editor.
+
+=== Message Base, Upload/Download / Exchange Setup [[ud-setup]]
+
+====
+Since this configuration editor was written, New Image Software developed improved handling regarding message bases and file transfer libraries.
+Called the TurboRELs, they can be configured while on the BBS via the “RELedit” system.
+(If you'd like to join the BBS network, you must use the TurboRELs, since the messages are passed around in the upgraded format.)
+Refer to xref:the-reledit-system.adoc for more information.
+====
+
+=== Access Levels
+
+You must then assign access to each of your boards or libraries.
+Access is calculated using the following method, which is used throughout the BBS.
+To determine which groups can access a given sub-board or library, add the group’s access value:
+
+.Access Groups and Values
+[%autowidth]
+[%header]
+[cols="^1,>2,^3,>4"]
+|====================
+| Group # | Value | Group # | Value
+| Group 0 |     1 | Group 5 |    32
+| Group 1 |     2 | Group 6 |    64
+| Group 2 |     4 | Group 7 |   128
+| Group 3 |     8 | Group 8 |   256
+| Group 4 |    16 | Group 9 |   512
+|====================
+
+====
+.An Access Group Example
+
+If you wished groups 3, 5, 7, and 9 to access a given board, you would add:
+
+[%autowidth]
+[%header]
+[%footer]
+[cols="^1,>2"]
+|====================
+| Group # | Add
+| Group 3 | 8
+| Group 5 | 32
+| Group 7 | 128
+| Group 9 | 512
+| _Total:_ | 680
+|====================
+
+kbd:[680] is what you would enter for the access code value.
+====
+
+====
+NOTE: You may type kbd:[?] at most prompts that ask for access levels and the BBS will go through groups 0-9, asking you if that group gets access (type Y for yes, other keys mean no).
+It then calculates (but doesn’t immediately display) the value for you.
+You may do this in the configuration editor, or any part of the BBS that defines an access level.
+====
+
+You also enter a _subop_ (sub-board operator; a user given an area of the BBS to maintain) for each sub-board/library.
+This is done by typing the ID number of the user desired.
+If you are configuring a new BBS, you have no users yet.
+Therefore, assign the subop duties to either yourself (user 1) or to no-one (user -1).
+Of course, you may change this later.
+
+Each sub-board/library must be defined as to which device and drive to put the files on (posts, responses, U/D files).
+The device and drive menu options allow you to set these.
+
+When you're done with your selections, select the last option, "`Keep Parameters`" and you are returned to the prompt to assign another sub-board/library.
+When you're done, simply select the "`Main Menu`" option.
+
+=== Editing Access Groups
+
+You should now define your access groups.
+There are ten groups, zero through nine.
+Each one can have different capabilities as you wish.
+
+All new users signing on to the BBS are automatically placed into group zero.
+The parameters for each group consist of:
+
+* Group name
+* Number of calls permitted per day (1-254 or infinite [0])
+* Time in minutes permitted per call (1-99  or infinite [0])
+* Amount of time permitted idling (no activity at a command prompt) (1-9
+minutes)
+* Number of downloads per call  (1-255 or infinite [0])
+
+=== User Flags
+
+Each group has a set of “flags” assigned to users placed in that group.
+These flags may be customized for individual users at a later time if desired.
+With this editor, you set the flags as you wish them assigned when first entering the particular group.
+The flags usually toggle between “Yes” or “No,” but a few require numeric input.
+
+.User flags
+[cols=",,",]
+|===
+|Non-Weed Status |Yes/No |Yes: Group is not deleted from the user log after not having called within a specified number of months.
+(Refer to <<autoweed>>.)
+)
+
+|Credit Ratio |Numeric |The number of credits awarded per lines made in a post or file block uploaded.  The ratio is usually 1:1.
+
+|Local Maintenance |Yes/No |Yes: Group has access to BBS maintenance commands.  Only give _very_ trusted users access to this.
+
+|Post/Respond Capability |Yes/No |Yes: Group can post messages in message bases.
+
+|UD/UX Access |Yes/No |Yes: Group can use upload/download or user exchange subsystems.
+
+|Maximum Editor Lines |Numeric |Lines of text (10-100, in multiples of 10: 0=10, 1=20...
+) group has available to post messages, e-mail, or feedback.
+
+|Unlimited DL Credit |Yes/No |Yes: no credit is deducted when files are downloaded.
+
+|Remote Maintenance |Yes/No |Similar to Local Maintenance.  Can write/remove forced e-mail, feedback, view system logs.
+
+|E-mail Access |Yes/No |Yes: group can send/receive e-mail.
+
+|User List Access |Yes/No |Yes: group can list BBS users.
+
+|B.A.R./Log Access |Yes/No |Yes: group can view various logs.
+
+|Sub-board Maintenance |Yes/No |Yes: group can edit or re-configure SIGs or sub-boards, and edit or delete other users' posts.
+
+|Files Maintenance |Yes/No |Yes: group can edit, validate, award credit to users in the U/D section.
+
+|MCI Access |Yes/No |Yes: group has access to the Message Command Interpreter (Refer to <<mci>>).
+
+|UD/UX at Prime Time |Yes/No |Yes: group can upload or download from U/Ds or U/Xs during prime time.
+
+|===
+
+We also suggest that, at least to start, you define group 9 as the most powerful group.
+When you first log on to your BBS as sysop, you are assigned group 9 access.
+You may change your access group after logging on for the first time.
+
+When you have completed all assignments for a group, select the _Keep Parameters_ option and move on to another group.
+When all groups are assigned satisfactorily, choose _Return to Main Menu_.
+
+NOTE: Any changes in access group information, either with the offline `config` editor or the online `+.reconfig` editor, require a reboot before the changes take effect.
+
+=== BBS Information
+
+Now you get to identify your BBS.
+Select the _BBS Info_ option from the main menu.
+It has several specific questions about you and your BBS to help personalize it.
+
+First, the sysop's information:
+
+You are asked for the handle you have chosen to use on your BBS.
+This information is assigned to user #1, the sysop account.
+
+You are also asked to provide a password.
+Choose it carefully since this is usually the most powerful account on the BBS, and you will not want it compromised.
+
+Then you are asked a few other questions that are added to the data in your account to start the user file.
+
+#FIXME#
+
+This information can be changed inside the BBS later, if you desire (using the `ED` or `EP` commands).
+
+.BBS setup information
+[cols=",",]
+|===
+|Board Name |Should be self-explanatory.
+
+|Board Identifier |A two-character abbreviation used to identify your BBS.
+  For example, a board named “Lyon's Den” might use an identifier of `LD`.
+
+|#FIXME# | #FIXME#
+|===
+
+=== Prime Time
+
+A period where everyone is limited to being online a certain number of minutes, and U/D access is limited to users with the “U/D at Prime Time” flag set.
+If you are just starting out, you may wish to wait to see how busy your BBS is before setting up Prime Time.
+
+If you decide to set it up, you are asked for:
+
+* The time to start
+* The time to end
+* The number of minutes you will permit users to stay online
+
+This information may be changed later if you wish.
+
+When you are finished with the Prime Time option, choose _Keep Parameters_ to return to the _BBS Info_ menu.
+
+=== Main Prompt
+
+This is a message users see when they are not in any particular subsystem.
+It can be anything you want, but should be short.
+The default prompt is _IMAGE:_
+
+After establishing your prompt, return to the _BBS Info_ menu.
+
+=== Credit Points
+
+Credits are points that users accrue or lose depending on their actions on the BBS.
+They earn more by uploading files, posting bulletins in the message bases, playing games, the Credit Exchange and possibly by other methods.
+They can also be awarded by the sysop for no good reason!
+
+The final selection here is to set the number of credit points new users receive when first signing up to your BBS.
+This can be from 0 to 65,000, but we assume most sysops will not want to assign that many to new users.
+
+This completes the _BBS Info_ section of your configuration!
+
+=== Loading Configuration Files
+
+You may load configuration files at any time to make changes to them as you desire.
+This can also be done online with the `+.reconfig` program, but the option is included here for any that may wish to reconfigure their BBS off-line.
+
+=== Saving Configuration Files
+
+The last option is to save the configuration files to disk.
+You are first prompted to insert all system disks into their proper drives, and then the files are saved to the disks.
+
+=== All Done
+
+This completes the configuration of the BBS!
+You can now select `Exit Configuration Editor` and choose the appropriate option:
+
+```
+Return to BASIC
+Cold start the machine
+Boot Image BBS
+```
+
+(If you change your mind, you can still escape with kbd:[←].)
+
+You are notified if any file(s) have not been written to disk, or if re-writing a particular file will re-start the user log, before exiting the configuration editor.
+
+For now, let's select `Return to BASIC` and continue with setting up the modem.

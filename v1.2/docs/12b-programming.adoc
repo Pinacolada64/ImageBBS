@@ -1,0 +1,1062 @@
+== Programming and Troubleshooting
+
+This chapter provides programming information for those interested in
+the programming details of Image BBS, and troubleshooting information for those that may be having problems.
+
+=== Overall Description
+
+Image BBS is a modular program, consisting of both BASIC and machine
+language files interchanged by the program to add the capability of
+never running out of memory for program space!  It performs this miracle by loading modules (overlays) when needed to perform specific tasks.
+Using this technique, you may do about anything you wish to on the BBS, not worrying about memory constraints.
+
+Of course, every great concept has its drawbacks, and this one is no exception.  The price we have to pay for it is the fact that loading
+these modules takes time, slowing down the BBS somewhat, since you must wait for them to load.  However, we feel the trade-off is well worth
+it!  If you have a RAM Expansion Unit, CMD RAMLink, or faster disk drive (IEEE, Lt. Kernal, CMD HD, etc.), the load process is speeded up
+considerably _or is in some cases instantaneous_, and helps quite a
+bit!  Those that do not experience more waiting, but no loss of capabilities on the BBS.
+
+The BBS was written with the programmer in mind.  Special attention was given to making it easy to modify and customize.  Several custom
+features can be added without even changing the program, but if you can
+program in BASIC a little, you'll be surprised at how easy it is to add your own ideas.
+
+=== Modules
+
+IMAGE uses a main BASIC program (`im`), and several machine language modules (the _ml.*_ files) which remain in memory at all times.  It also uses BASIC modules (_+.*_ files), and machine language modules (_++*_ files).  You may write as many of your own modules as you'd like, adding them at any time.  The main consideration is to know which variables and subroutines to use, and how to use them.  Be careful when modifying the
+main program (`im`) so you do not add too much, or you will find
+yourself running short on memory, slowing down or possibly crashing due to being short on free memory.
+
+Adding to a plus-file cannot hurt, as long as you do not go over 56 CBM disk blocks for any individual module.  However, defining new
+variables—especially arrays—can eat up memory and cause the same problems mentioned above, so be selective in your variable usage.
+There are many routines in the program which are available for you to use.  We will describe a few of the most commonly used here.  This is
+_not_ meant to be a detailed guide to programming, only a brief description so you may get the idea.
+
+====
+I have HTMLized the programmer's reference guide, and am working on continuing to improve it.
+====
+
+=== Common Subroutines
+
+[cols=",,",]
+|===
+|`1001` |Position pointer on relative file. |x=number of record
+
+|`1005` |Input routine (upper/lower case) |returned in an$
+
+|`1006` |Input routine (uppercase only) |returned in an$
+
+|`1007` |Get routine (uppercase only) |returned in an$ and a$
+
+|`1011` |Open file |a$=filename, dr= system disk# to use (1-6)
+
+|`1012` |Read error channel |e%=error e$=error name t%=track s%=sector
+
+|`1013` a|
+Load plusfile from plusfile disk
+
+a$=filename
+
+|
+
+|`1023` |Scratch and reopen SEQ file to write +
+a$=filename dr=system disk# |
+
+|`1024` a|
+Scratch a file
+
+a$=filename dr=system disk
+
+|
+
+|`1029` |Output a$ |
+
+|`1030` a|
+Read open file until `_^ `_encountered
+
+hh=logical file#
+
+|
+
+|`1062` |Open e-mail file |tt$=user handle, a$=`"r`" or "w" (read/write)
+
+|`1070` |Write all user stats to disk |
+
+|`1075` |Clear screen, fall through to... |
+
+|`1076` |Read SEQ file |a$=filename dr=system disk#
+
+|`1081` |Update blocks free |dr=system disk#
+
+|`1085` |Check for directory error |dr=system disk# a=1 if error
+occurred
+
+|`1089` |Get disk directory |
+
+|`1093` |Clear all arrays |
+
+|`1096` |Print a$ to printer |
+
+|`1360` |Display CM$ in "`area`" window |
+
+|`1372` |Update free memory |
+
+|`1490` |Print A$ to log |
+
+|`1500` |"`Untranslate`" IMAGE translated characters in AN$ |
+
+|`1530` |Sound beeps |x=number of beeps
+
+|`1604` |Enter IMAGE editor |
+
+|`1694` |Logoff |
+
+|`1736` |Load ML protocol a|
+A=protocol number:
+
+(0=Punter, 1=XModem, 2=Copier, 3=Editor, 4=Clock)
+
+|`1812` |Main command level |
+
+|`1914` |Reset print modes to default |
+
+|`1915` |Detect local mode |
+
+|`2000` |Error trapping routine |
+|===
+
+Table 29: Common subroutines
+
+===
+
+=== Variable Handling in Modules (Plus-Files)
+
+IMAGE variable usage in programming modifications and modules should be done carefully.  If you were to change any variables that the BBS uses
+for particular functions, you could be in serious trouble!  This could
+corrupt your user files, or do any number of nasty things!  Because of
+this, we are giving you a list here of all system variables that you should _never_ use.  Even if you are using "`temporary`" variables, make
+sure any subroutines in the main program or program module you are
+modifying do not change these variables and wreak havoc!  Most
+one-letter variables, integer variables, and string variables are usually OK to use (with a few exceptions noted below).
+
+Variables not in this list are cleared when the main prompt is reached,
+so don't use one to count the number of times a game is played per call in that manner; the BBS will not permanently remember it.  However, the
+same routine allows you to DIMension variables and arrays in modules without worrying about a "?redim'd array error".  Be careful not to
+waste memory with excess variables, or your modules will run slowly, and possibly even crash the BBS.
+
+Here is a list of reserved system variables that you should NEVER use,
+except for their intended system functions:
+
+Since I think it's sort of important to know what the variables are
+actually _used_ for, and not just their names, I'm going to steal a page
+from the _Image BBS Programmer's Reference Guide_ and explain their meanings to the best of my ability.  Feel free to set the record
+straight if you know otherwise, 'k?
+
+==== Reserved String Variables
+
+.Reserved string variables
+[cols=",",]
+|===
+|`a$` |Reserved for output to screen and modem.
+
+|`ag$` |Access group name of user currently online. (Also £vm)
+
+|`ak$` |Separator line: " " + ("-" * LL% -2) + R$. (Also £vj)
+
+|`an$` |Last user input. (Also £v7)
+
+|`bn$` |Current name of your BBS. (Also £v5)
+
+|`c1$` |Chat mode entry message.
+
+|`c2$` |Chat mode exit message.
+
+|`c3$` |"Returning To The Editor" message.
+
+|`cc$` |2 character system identifier (Also £vn)
+
+|`cm$` |Current location in AREA window.
+
+|`d1$` |Current time and date information in 11 digit format. (Also £v0)
+
+|`d2$` |Time and date of last logoff, also Library name at entry. (Also
+£v8)
+
+|`d3$` |Handle of last user on the system. (Also £v9)
+
+|`d4$` |Current ML protocol in memory. (Also £vl)
+
+|`d5$` |True last call date of user online in 11 digit format. (Also
+£vk)
+
+|`d6$` |Logoff time of last user.
+
+|`dd$` |System identifier + user ID number.
+
+|`dr$` |Currently active drive/LU number + ":".
+
+|`ff$` |Real first name of user online.
+
+|`fl$` |15 character string which determines the user's online flags.
+
+|`i1$` |Access level + handle of the sysop.
+
+|`i2$` |Expert flag + phone number + first name + " " + last name of
+sysop
+
+|`i3$` |Access group name of sysop
+
+|`ld$` |Last call date of user online in 11 digit format. Used for new message reads.
+
+|`ll$` |Real last name of user online.
+
+|`lt$` |Logon time of user online.
+
+|`na$` |Handle of current user online. (Also £v2)
+
+|`nl$` |Null character [CHR$(0)].
+
+|`nm$` |Last network sort in 11 digit format.
+
+|`p$` |Current prompt text.
+
+|`ph$` |Phone number of current user online. (Also £v4)
+
+|`po$` |Text for system main level prompt.
+
+|`pp$` |System password (change with PC command).
+
+|`pr$` |Name of current plus file in memory.
+
+|`pw$` |Password of current online user.
+
+|`qt$` |Quotation mark [CHR$(34)].
+
+|`r$` |Return [CHR$(13)].
+
+|`rn$` |Real name of user online (FF$ + " " + LL$, also £v3)
+
+|`sy$` |Current subsystem active.
+
+|`ti$` |C= Time-Of-Day clock.
+
+|`u$` |Reserved for command stack.
+
+|`x$` |System drive/LU designators.
+|===
+
+==== Reserved Integer Variables
+
+The current reserved integer variables for Image v1.2 are as follows:
+
+[cols=",",]
+|===
+|`ac%` |Access level (0-9) of user online. (if _ao%<>ac%_, access level
+was changed)
+
+|`ao%` |Access level of user at login.
+
+|`co%` |Computer type of user online (1-9)
+
+|`ct%` |Number of calls today by the user online.
+
+|`d1%` |Currently active device number.
+
+|`d2%` |Currently active drive/LU number.
+
+|`d3%` |Currently active drive/LU number.
+
+|`da%` |Number of downloads allowed per call (0=unlimited).
+
+|`dc%` |Number of downloads this call by user online.
+
+|`dv%` |Active device number.
+
+|`i%` |Instant mode flag.
+
+|`kp%` |Last key pressed.
+
+|`ll%` |Line length (38-80) of user online.
+
+|`p1%` |Time allowed during prime time.
+
+|`p2%` |Time that prime time begins.
+
+|`p3%` |Time that prime time ends.
+
+|`pt%` |Prime time flag (1=active).
+
+|`tc%` |Total calls to the system by the user online.
+
+|`tr%` |Time remaining on system, in minutes.
+|===
+
+Table 31: Reserved integer variables
+
+==== Reserved Floating Point Variables
+
+The current reserved floating point variables for Image v1.2 are as
+follows:
+
+.Reserved floating point variables
+[cols=",",]
+|===
+|`bd` |Total number of CBM blocks downloaded by user online.
+|`bu` |Total number of CBM blocks uploaded by user online.
+|`ca` |Total number of calls since system start.
+|`cn` |Total number of calls since last reboot.
+|`cr` |Total credit points of user online.
+|`dc` |Total number of files downloaded by user online.
+|`dr` |Currently active system device (1-6).
+|`el` |Reserved for future expansion.
+|`em` |Expert mode flag.
+|`f1` |System flag.
+|`f2` |System flag.
+|`f3` |System flag.
+|`f4` |System flag.
+|`id` |ID number of user online.
+|`i1` |Next available user account.
+|`i2` |Flag for reserved system.
+|`i3` |Flag for reserved system.
+|`lc` |Flag for active subsystem menu.
+|`le` |Editor lines allowed for user online.
+|`lf` |Linefeed flag.
+|`lp` |Output control flag. (fixme: what does this do?)
+|`mf` |Reserved for ML use.
+|`nl` |C/G mode flag.
+|`nm` |Network flag.
+|`pl ` |Input control flag.
+|`pm` |Prompt mode flag.
+|`pr` |Active ML protocol in memory.
+|`ps` |Total posts by user online.
+|`qb` |Modem speed (BPS rate: "`current baud`").
+|`qe` |Reserved for ML use.
+|`rc` |Abort flag.
+|`rq` |Reserved for ML use.
+|`sh` |Checks whether spacebar hit (0=no, 1=yes).
+|`sr` |Reserved for ML use (usually current logical file number).
+|`st` |Commodore BASIC reserved variable; I/O status.
+|`uc` |Total files uploaded by user online.
+|`uh` |Number of active user accounts.
+|`ul` |Upper/lowercase flag (default protocol for TurboRel subs).
+|`ur` |Highest user ID +1.
+|===
+
+=== Arrays
+
+The following arrays are dimensioned by the BBS.  Most can be used for your own programs, except where noted.
+
+.Reserved Arrays
+[cols=",",]
+|===
+|_ac%(31)_ |Can be used for any plus file outside of UD/UX/SB.
+|_bf(x,y)_ |Blocks free on system drives.  Should never be used.
+|_co$(9)_ |Text for computer types supported.  Should never be used.
+|_dv%(x)_ |Device numbers for system drives.  Should never be used.
+|_fl$(9)_ |Default flags for access groups 0-9.  Should never be used.
+|_so%(31)_ |Can be used for any plus file outside of UD, UX, SB.
+|_st(60)_ |Status.  Should never be used.
+|_tt$(254)_ |Can be used anywhere that does not use the editor.
+|===
+(from programmer’s ref guide)
+
+   AC% User's current access level
+
+   AC%(
+
+   AG$ Access group name
+
+   AK$ "`Line divider;`" space, LL%-2 "-"'s, kbd:[Return] character
+
+   AN$ Last user input
+
+   AO% User's old access level (used in access level change situations)
+
+   BD
+
+   BF( Number of blocks free on the six system disks
+
+   BN$ BBS name
+
+   BU
+
+   CL$ I think this is C1$ instead; "Entering chat" message
+
+   C2$ "Exiting chat" message
+
+   C3$ "Returning to editor" message (fixme: pretty sure anyway)
+
+   CA
+
+   CC$ 2-character BBS identifier
+
+   CM$ Displayed in the "Area" section [when the top screen mask is
+enabled]
+
+   CN
+
+   CO$( User's computer type name array
+
+   CO% User's computer type number array
+
+   CR
+
+   CT
+
+   CT% BBS calls today?
+
+D1$ 11-digit current date/time
+
+   DL$ Again, D1$? bad ocr?
+
+   DL% Again, D1%? bad ocr?
+
+   D2$
+
+   D2%
+
+   D3$ Last user on BBS
+
+   D4$ Current ML protocol
+
+   D5$ True last call (date? fixme: more info)
+
+   D6$
+
+   DA%
+
+   DC
+
+   DC%
+
+   DD$
+
+   DR Set 1-6 to designate system drive #
+
+   DR$
+
+   DV%
+
+   DV%(
+
+   EL
+
+   EM User's expert mode: 0=off, 1=on
+
+   F1
+
+   F2
+
+   F3
+
+   FF$ User's real first name
+
+   FL
+
+   FL$
+
+   F1$(
+
+   GS
+
+   I1$
+
+   I2$
+
+   I3$
+
+   ID User's ID number
+
+   KK Lines of text in BBS editor; if 0, aborted or time limit expired
+
+   L1
+
+   LC
+
+LD$ User's last call date (11 digits, like D1$)
+
+   LE
+
+   LF User's linefeed flag?
+
+   LL$ User's last name
+
+   LL% User's line length
+
+   LP
+
+   LT$
+
+   MF 11-digit date format of user's last call
+
+   MW
+
+   NA$ User's handle
+
+   NC
+
+   ND
+
+   NL User's current graphics mode: 0=ASCII, 1=Commodore C/G
+
+   NL$ CHR$(0), a null character
+
+   NP
+
+   NR
+
+   NV
+
+   OC$
+
+   P$
+
+   PL% P1%?
+
+   P2%
+
+   P3%
+
+   PH$ User's phone number
+
+   PL
+
+   PM
+
+   PO$ Main prompt string
+
+   PP$
+
+   PQ
+
+   PR
+
+   PR$
+
+   PS # of posts?
+
+   PT% Probably a prime time flag
+
+   PU$
+
+   PW$ some password
+
+   QB bits per second rate ("`current baud`")
+
+   QE
+
+   QT$ CHR$(34), a quote character
+
+   R$ CHR$(13), a kbd:[Return] character
+
+   RC
+
+   RN$  User's real name (FF$ + " " + LL$)
+
+   RP   # of responses
+
+   RQ
+
+   RS
+
+   SH   Updated by ML routines; "`spacebar hit`": 0=no, 1=yes
+
+   SO%( Subop array, used in SB, UD, UX subsystems
+
+   SR Logical file number in certain routines
+
+   ST   Commodore BASIC reserved variable; serial status
+
+   ST(
+
+   SY$
+
+   T1
+
+   TC%  Total calls to system (grand total?)
+
+   TF
+
+   TI   Commodore BASIC reserved variable; jiffy clock
+
+   TI$  Commodore BASIC reserved variable; 24-hour clock
+
+   TR%  User's time remaining, in minutes
+
+   TT$( Lines of text stored in editor
+
+   U$ Stacked commands
+
+   UC
+
+   UH   Highest user account # in user file?
+
+   UL
+
+   UR
+
+   X$
+
+=== Image Output Routine
+
+In order to send text to the modem and screen (`print`, for you BASIC people) as easily as possible, we have developed a routine that works very similar to the BASIC `print` statement.
+Used properly, this routine also eliminates much of the garbage collection that the C64 is notorious for.
+Just as many are used to using the question mark as a shortcut to `print` something in BASIC:
+
+ ?"Hello There!"
+
+You may use the ampersand (`&`), IMAGE's "`print`" character, to do the job:
+
+ &"Hello There!"
+
+will have the desired effect in the BBS environment!
+Well, almost.
+By default, Image displays the above like using `print` with a semicolon on the end.
+(That does not move down to the next line when finished ``print``ing the current line.)
+If you want a carriage return to separate lines, add one anywhere inside quotations by typing function key kbd:[f6], which displays kbd:[K].
+
+`&"Hello There!kbd:[K]`
+
+You may also:
+
+`&an$` or `&tt$(x)` (anything using a string variable)
+
+- BUT -
+
+`&str$(i)` (`&i` to output a numeric variable is not supported yet.)
+
+Some oddities in syntax:
+
+* You must follow a `then` clause with a colon before using the ampersand.
+In other words:
+
+`if b then &"hello"` (will not work)
+
+`if b then:&"hello"` (must be used instead)
+
+* If the ampersand is used all by itself:
+
+`b=b+l:&:if b then ...` (`&` outputs the contents of `a$`)
+
+=== Other & Calls
+
+The ampersand is also used with arguments to call all of the machine language routines in Image BBS.
+The table of arguments that are useful in BASIC and a brief description follow:
+
+.& calls
+[cols=",,",]
+|===
+|`& or &,0` |output a$ |
+
+|`&,1` |input an$ |
+
+|`&,2,x` |input a$ from disk |x=logical file #
+
+|`&,3,x` |read file from disk |x=logical file #
+
+|`&,4` |get character from modem |a$=character
+
+|`&,5` |enter chat mode |
+
+|`&,6` |masked (password) input routine |
+
+|`&,7,x` |load plus file |x=device#
+
+|`&,8,x,y` |disk directory |x=logical file #; y=1: 1 line, 0=entire directory
+
+|`&,9` |print an$ at bottom of screen |
+
+|`&,10` |enter terminal mode |
+
+|`&,11,x` |clear array |x=number of array in order of definition
+
+|`&,12,x` |non-abortable file read |x=logical file #
+
+|`&,13` |get char to an$ |
+
+|`&,14` |sound bell |
+
+|`&,15` |convert 11 digit date in an$ to English |
+
+|`&,16` |Do a `sys 49152` (useful for calling protocols) |
+
+|`&,18,x` |load protocol file x=device # |
+
+|`&,19` |display online top of screen |
+
+|`&,20` |display offline top of screen |
+
+|`&,21` |display bottom of screen |
+
+|`&,22,_x_` |wait _x_ tenths of a second |
+
+|`&,25` |sound beep |
+
+|`&,25` | #FIXME# |
+|`&,27` | save variable pointers |
+
+|`&,28` |restore variable pointers |
+
+|`&,37` |enable error trapping |
+
+|`&,38` |disable error trapping |
+
+|`&,39,x` |output tt$(x) |
+|===
+
+=== POKEs
+
+This is a list of some of the memory locations used by IMAGE that can be usefully POKEd:
+
+.Useful POKE locations
+[%header]
+[%autowidth]
+|===
+| Hexadecimal | Decimal | Purpose
+| $07ef | 2031 |MCI on/off (1 = on)
+
+| $d000 | 53248 |Flag for local mode (1 = on)
+
+| $d001 | 53249 |Case lock (1 = uppercase only)
+
+| $d003 | 53251 |Time allowed (1-99 minutes; 100+: unlimited)
+
+| $d004 | 53252 |Number of characters allowed for input, 0-255
+
+| $d008 |53258 |Modem carrier invert (either 0 or 16 depending on
+modem type)
+
+| $d020 | 53280 |Uppercase mode (1 = on)
+|===
+
+=== Common Modifications
+
+==== Hidden LtK User
+
+In `setup`, line 93 has a `rem`med out line that Lt. Kernal SysOps might be interested in. If you un`rem` this line and move your boot disk files to another user on your drive, you can boot from that user and the BBS automatically switches back to user 0 during initialization.
+This lets Lt. Kernal SysOps "`hide`" their boot files on a normally unseen user and boot the BBS as normal.
+
+==== LtK Fast Blocks Free Read
+
+In line 1081 of `im`, about ¼ of the way through the line, there is a statement that looks like this:
+
+ on -(dv%<>0) goto 1083
+
+Changing the `dv%<>0` to `dv%<>8` tells the BBS you have a Lt. Kernal running DOS v7.2 or higher set up as device 8.
+This mod allows the Lt. Kernal fast blocks free reads to be done on just the Lt. Kernal and the standard routines for all other drives, thus allowing you to easily mix a Lt. Kernal and standard serial drives without losing the fast blocks free read on the Kernal.
+
+For users of Lt. Kernal DOS v7.1 and earlier, do _not_ change this line.
+You can still access all of the LUs, but the fast blocks free read routines will not work and will lock up your system.
+
+==== Automatic CMD Device Clock Set
+
+In `setup`, line 117 is `rem`ed out.
+It contains the hook for routines to set the Image BBS system clock based on the CMD's internal clock.
+
+////
+==== Blocks Free Array Usage Change
+
+The use of the _bf()_ array has been changed.
+There is no longer a need to change the number of devices or drives when you add new drives to your system.
+With CMD systems, someone defining large numbers of partitions would end up with almost no RAM free, so the array was cut down to only include the system disks.
+////
+
+==== Enabling Macros
+
+If you have Macros defined and would like them to come up automatically, simply add the following to the end of line 82 in ``setup``:
+
+ :&,52,21,1
+
+==== Removing Extra Login Security Checks
+
+From Marc Honey:
+
+One thing that really annoys me is the extra security checks after entering your login id and password.
+To get rid of those extra checks all you have to do is remove the following lines from the +.lo file on the Plus File Disk.
+
+```
+673 &"Additional Information:":a=int(rnd(1)*5)+1:on a goto 675,676,677,678
+674 p$="FIRST name ":t$=ff$:goto679
+675 p$="LAST name ":t$=ll$:goto679
+676 p$="AREA CODE (???)XXX-YYYY ":t$=mid$(ph$,2,3):goto679
+677 p$="DIALING PREFIX (XXX)/???-YYYY ":t$=mid$(ph$,7,3):goto679
+678 p$="LAST FOUR DIGITS (XXX)/YYY-???? ":t$=right$(ph$,4)
+```
+
+Change line 679 from : _679 gosub1006:c$=an$:goto156_
+
+to : _679 goto156_
+
+Change line 157
+
+from : _157 ifpw$=z$andt$=c$andz$<>""andc$<>""then160_
+
+to : `157 ifpw$=z$andz$<>`"`"then160`
+
+That’s all there is to it!
+As an added bonus, removing those few lines will drop your +.lo file size from 40 blocks to 39 blocks and every
+little bit helps on space and speed ;)
+
+=== Troubleshooting / Q & A
+
+Here are some of the most common questions and problems that people
+have:
+
+**Q:** I load the program, and it never gets to the idle screen.  What is wrong?
+
+*A:* There are several things that could cause this.  Check all the
+following:
+
+[arabic]
+. Has your BBS been properly and completely configured using the instructions in the setup chapter under `config`?
+. Is each system disk in the correct device/drive?
+. Are all the files copied to the correct system disks, especially the plus-file disk?
+If an error light is flashing on any of the drives, it usually means that it cannot find a needed file.
+. Are all disk units in proper alignment?
+. Is everything connected to the computer (printers, drives, etc.) turned on?
+Problems can arise if they aren’t, even if the BBS is not using them.
+. The disk or disk image could be faulty.
+Try re-copying or re-downloading it.
+
+=== The Boot Process
+
+_*************************************** +
+* The following article appeared in * +
+* the May issue of * +
+* "The Reflection" * +
+* * +
+* It is reproduced here for the * +
+* benefit of any that may have * +
+* missed it. It may be used as a * +
+* text file on other boards provided * +
+* it is used in it's entirety. * +
+* * +
+* "The Reflection" is available by * +
+* subscription for $15.00 per year * +
+* from: * +
+* Reflection * +
+* P.O. Box 525 * +
+* Salem, UT 84653 * +
+* * +
+* NOTE: Subscription price is subject * +
+* to change without notice. * +
+*************************************** _
+
+_IN THE BEGINNING: +
+By: Fred Dart (THE CHIEF)_
+
+This month we'll take a look at the 'boot up' process and show what files are accessed and in what order.
+
+There has been a lot of confusion and thus a lot of questions about what was happening and when, this should help a bit.
+
+IMAGE is loaded by a "`loader`" program called `image`, `image 1.1`, or `image 1.2` as appropriate.
+This loader program then loads the machine language portion of the program, called simply "ml", or "ml" plus the appropriate version number.
+We will not continue to indicate the various versions unless such designation is essential.
+
+After the "ml" is loaded program control and execution is turned over to that portion of the program, which in turn loads the file called "screen", "`im", and finally, "setup" (these files vary from version to version with some additional "ml" routines loaded both before and after "setup") and then program control is turned over to the BASIC portion of the program by RUNning the "setup" program.
+
+setup will "`set up`" all of the system variables, `dim` all variables that the system needs to operate and load additional files, if necessary, and will then look for a file called `bd.data` which contains all of the device and drive information for the system.
+
+`bd.data` is a SEQuential file and can be on the boot disk, if there is a separate boot disk, or on the disk that the system is booted from.
+If the `bd.data` file is not found there will be a prompt to `INSERT ALL SYSTEM DISKS`.
+
+If `bd.data` is found, the program will next open the `u.config` file and read the information from record 1, the sysop information, which is stored in the variables i1$ and i2$.
+On later versions the `u.index` is then opened and the actual number of users is read.
+(Note that the index is manipulated and read with the file `++ 4`).
+
+Next, `e.data`, a RELative file that contains 31 or 32 records of 31 bytes each is accessed.
+The information that is read in from `e.data` at this time is the total number of calls to the system (record 1), the total number of users (record 12), the total number of HANDLES in version 1.0, from record 16, the last user on the system (d3$) from record 17, the system password for password subs (pp$) from record 18,
+the last date/time the system was accessed in record 19, whether there is a prime time and what the time limits are in
+record 20, the information for the user FLAGS is read in from records 21
+to 30, and the next id number to be assigned to a new user in record 31 (l1).
+
+If the `bd.data`, `u.config` or `e.data` files are not found on the
+device and drive that they are assigned the system will prompt with the same message, `INSERT ALL SYSTEM DISKS AND PRESS RETURN`.
+
+After the information has been read from `e.data` the RELative file `e.stats` is opened and the first 30 records are read. `e.stats` contains the information shown on the BAR STATS and is a file consisting of 38 records of 10 bytes each.
+
+The program file `+.lo` is then loaded and program control is turned over to that file. The `+.lo` file is a smaller file and cannot exceed 40 blocks, since it must load another file, the `+.modem` file, into a protected area of memory reserved for "`Little Modem Programs`" (LMPs).
+The LMPs are finding much more widespread use in the system than just as modem files and are now being used in on-line games, such as "`Wallstreet`" and in other areas of the board.
+
+After the modem file is loaded it will send the proper set of commands to the modem to prepare it to answer a call and then the board will go to the "`System Idle`" screen and the load sequence will be completed.
+
+Some additional information about a couple of the files here may be in order.
+`bd.data` contains several important board parameters in addition to the device/drive designations for all of the assigned system drives.
+The information is stored sequentially, with the first 12 entries being the devices/drives for the six system drives, (dr=1 through dr=6), followed by the board identifier that you use on your board (LD, CH, TN or whatever).
+
+That is followed by the number of credits you give to new users when they sign on the system.
+
+////
+, then by a number that represents the highest device number you have attached to your system minus 7.
+For example, if you are using devices 8, 9, 10, and 11 the number in field 15 would be a 4 (11-7). For a Lt. Kernal system using device 8 only the number is a 1.
+
+The following number in field 16 is the number of DRIVES attached to your system. If you have all 1541/71/81 types it would be a 1 since they are all SINGLE drive units, if you had a Lt. Kernal with 9 LUs accessed it would be a 9.
+////
+
+The next field, number 17 contains your board name.
+This is the information that is printed out with the MCI variable `£v5` or the string bn$.
+
+The last information to be accessed is the prompt information, which is read in and stored in po$.
+The final line of _bd.data_ contains the copyright information.
+
+The information contained in `e.data` is detailed above for the most part, since most of it is accessed.
+There is some that is not accessed by `setup` though and is not read in until it is needed.
+We'll examine, briefly, some of the other information in `e.data`.
+Record one, as stated, is the total number of calls to the system.
+Records two through 11 are the names of the access groups, from "`New User`" to "`Sysop`" or whatever names you have on yours.
+In addition to the name of the group there is a bit of information attached to the very beginning of the name.
+The first character of the name of each group contains some access information that is stored in bytes.
+
+This information is the calls per day, time per call, minutes allowed to idle and so on.
+If you simply TYPE `e.data` on a Lt. Kernal, the first character could appear as a color or some other strange character.
+The program `edata edit` properly interprets the characters and can be used to view the entries.
+`+.access` or the off-line `config` program should be used for editing.
+
+Record 12 is the total number of users plus 1.
+
+////
+Records 13, 14 and 15 contain the flags for whether your individual message bases, UD libraries, or UX libraries are open or closed.
+If all are open then the three records would contain 30 zeros each, if any were closed there would be a one in the position corresponding to the closed board.
+
+Record 16 is not used on the enhanced versions.
+////
+
+Record 17 is the handle of the last user on the system.
+
+Record 18 the password for the password subs if the RELedit system is not used.
+
+Record 19 is the date/time the last user signed off.
+
+Record 20 is for prime time: whether you have a prime time and, if so, the start and end times.
+The information is stored as three numbers separated by commas.
+For example: `0, 0, 0` is no prime time, of course.
+If the first number is not a 0 it would indicate that you had a prime time.
+The second number would be the start time and the third number would be the end time.
+The variables pt%, p1%, p2% and p3% are used.
+
+Records 21 through 31 have been covered previously.
+
+Record 32 is used to hold the modem string, a string of seven characters with the information for each individual modem on version 1.2.
+
+In addition version 1.3 will contain some new data in the `e.data` file.
+More information will be available later.
+
+`u.config` contains all of the user data and will not be covered here.
+
+There is one additional bit of information that is worth mentioning in the `setup` file.
+Many people have asked where the message `Entering Chat Mode` or `Exiting Chat Mode` is stored.
+The information is put in `c1$`, `c2$` and `c3$` during the boot process and remains there.
+It can be changed in `setup` if desired.
+
+An additional "`tidbit`" for the enhanced version is the location of the password mask.
+The location is 17138 and can be `poke`d with about any printable character.
+Just decide what character you want (say a "?" for example).
+Use the statement `print asc("?")` and it would print out the number `63`.
+You would then `poke` that value into `17138` and change the password mask from an `X` to a `?`.
+
+Note that you could also use this: `poke 17138,asc("?")` and achieve the same results.
+It is even possible to 'randomize' the password mask by adding the `poke` in `+.lo` and having it `poke` a random value from a string of acceptable characters.
+
+(C) May 1990 FandF Products
+
+// Permission to reprint is granted provided the file is printed in its entirety.
+
+////
+Ain't happenin':
+If you want physical 1541/1571/1581 disks sent through postal mail, please send an e-mail to sym_rsherwood@yahoo.com, specifying the format(s).
+We'll make arrangements regarding shipping cost—not that it'll be much.
+My goal is not to make money off this—unless you want to donate some—but see a revival of one of the top Commodore 64 BBSes into
+common usage again.
+////
+
+Q: As reported by Ray "The Wiz" LeJuez: the bootup process seems to
+freeze with his C128D in C64 mode, after the message
+
+ Reading System Configuration...
+
+The internal 1571 drive is set to device #8, his Lt. Kernal HD is device #10.
+
+`bd.data` devices/drives were set for device 10, drive 0.
+
+A: There is some speculation that a modification to the Lt. Kernal
+HD for burst mode in 128 mode may have caused the problem; it boots to
+the "waiting for call" screen just fine on his C64.
+
+Q: My users cannot log on or send e-mail using the handle.
+Using the ID number works fine.
+Why?
+
+A: Files can sometimes get corrupted by what we call an "act of God" (why does He always get blamed for this stuff?).
+A power brownout/blackout, surge, etc. during a write can do nasty things like this.
+
+This particular problem is caused by the _u.config_ file being corrupted.
+Run _+.alpha/ind_, and it should clear things up.
+(This program can take quite a while to run, especially if you have a lot of users, so be patient here!)
+
+Select the options in the following order: LOAD, CLEAR, MAKE, SAVE.
+The _u.index_ file will be re-generated.
+
+NOTE: As the list is created, it shows what alphabetical position the user is in the `u.index` file; this has no bearing on the user's BBS ID number.
+Also, a bit of debugging information (the a% and b% values, used in the call to the indexer) is shown.
+
+=== u.config Corruption
+
+From Marc Honey:
+
+If for some reason you find yourself with a corrupted _u.config_ file (where the users are stored) and have to re-create one from scratch, don’t forget to edit the _e.data_ file to reset both the user count and the next available user #.
+If you don’t do this, then someone can login and type a user # that was previously assigned but no longer exists.
+When this happens the person logging in will get a password prompt but once they type in a password and hit kbd:[Return], the BBS will lock up.
+
+Another odd side effect of not updating the _e.data_ file is that should someone login as NEW they will get id 0 for their login ID, which is invalid.
+There is a BASIC program called `edata edit` which is on disk #2 of the Image 1.2a BBS distro.
+
+////
+If this still does not remedy the situation, go into ED and see if user
+information is still correct.  If not, contact Pinacolada for help.  He
+is working on (as of 1/2008) a user file backup/restore program; after
+losing half his users' information due to random binary garbage in the
+user file, he vowed that would never happen again.
+////
+
+*Q:* My BBS has started to do (any number of strange things) it was not
+doing before.  What is wrong? This question gets asked frequently
+during beta-testing.
+
+*A:* This is usually caused by _some_ modification that has been made to
+the BBS or a plus-file module.  It may not show up for _days_ after a
+modification has been made, so the problem may not be readily apparent.
+The fix is to:
+
+* Copy the original file in question over from your back-up copy of
+Image BBS, or previous system file(s) you were running
+* Isolate which file the problem is in, perhaps using the "IMAGE Mod
+Maker"
+* Correct the error, or notify the program maintainer, if there is one.
+
+Also, have you added anything new (hardware, a new game plus file) to your BBS recently?
+What has changed since the problem started?
+Many times some of the smallest changes can create the largest problems.
+
+**Q:** My modem (or telnet bridge device) will not work correctly.  What can I do?
+
+*A:* First of all, _don't panic_. (Apologies to the late, great Douglas Adams.)  Seriously...
+since the advent of Rascal's `e.modrc` fix which adds a configurable modem initialization string and the ability to
+customize modem response codes, there are many more options to consider than in the old days.
+
+Plus, if you're running a telnet BBS with a bridge program, there are
+additional things to consider, some of which I will touch upon:
+
+* DCD carrier detect options in tcpser
+
+////
+If you have a Supra 2400 baud modem, you will need to set it up specially before you put it on line.
+Run the `2400 setup` program on the IMAGE disk with the modem on-line and turned on, and then boot your Image BBS!
+////
+
+Thanks again for trying Image BBS!
+We plan on supplying all of our customers with the best of quality in our products, support, and service!
+If you have any problems at all, or want to comment on the program or offer suggestions, feel free to contact us at any time!
+
+====
+That holds as true for Pinacolada and other Image sysops as it did for the original Image crew.
+Please: feedback, flames, kudos, suggestions, amen.
+====

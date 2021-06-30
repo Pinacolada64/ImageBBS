@@ -1,0 +1,327 @@
+== Introduction
+
+In 2007, Dave “Metal Mage” Hartman and I found ourselves pondering why there wasn't an updated version of the manual available to go along with all the fixes and updates which had come out since Image 1.2a was released.
+
+To get all “the good stuff” (as we call it) required reading even _more_ documentation, merging “mods” into core BBS files (sometimes needing to start over with stock files, trumping any mods the sysop had already made).
+////
+, or setting up an altar to Fred Dart.
+
+(Believe me, I thought about it. For those of you not in the know, he was one of the best Image programmers around; sadly, he's gone on to that great BBS in the sky, where there surely must be an active user base of a few billion people.
+At least he can party on with Ron Fick, a Lt. Kernal guru, and Jim Butterfield...
+Imagine: Q-Link, with no plus charges... oh, wait. Another Jim B.'s been there, done that.
+:)
+////
+
+Metal Mage and I decided this simply wouldn't do; it's a horrible new sysop experience.
+We hacked together what we called “Image 1.2b” which had what we considered to be the best new changes already put in.
+
+For example: There were a few things changed by Bob “Iron Axe” Sisco with his “Year 2000” fix which I changed back for aesthetic reasons (blue lightbar and chat window colors don't fit in with the default grey scheme IMHOfootnote:[In My Humble Opinion]), and updated the console clock to the year 2000.
+
+Overall, we figure we've got it mostly licked.
+
+This version of the manual includes expanded coverage, reorganized sections, documentation of new (at the time) features which were once available as separate add-on disks (some slated for Image 1.3):
+
+* a few games and BBS utilities
+* “AutoWeed,” which lets you remove callers who haven't called in a specified amount of time
+* the “Extended Command Set,” configurable BBS commands
+* the “TurboREL” system, faster access to message sub-boards and “RELedit,” the sysop-side editor
+* Image BBS networking
+
+Web links to the "`new`" (released long after the original manual was completed) Image BBS programmer's reference guide, a list of every Image BBS "`mod`" and add-on I possess (including games), a wish list, and much, much more await you in these pages.
+
+Please note that I've tried to introduce each new section in a sensible way, but if you don't understand something because it hasn't been explained yet, or it's unclear—that's a sign of bad documentation.
+
+Let me know about it; I'll have myself flogged (let me start the noodles cooking).
+
+Having previous experience with the software, I've tried not to fall into the trap of “it's obvious to _me_, not necessarily everyone else.
+
+And while I do try to define possibly unfamiliar terms, you won't find a glossary with “upload” and “download” in it, at least not here.
+
+Already being familiar with BBS basics (perhaps having called an Image BBS as a user before?) is extremely helpful.
+However, don't let my pseudo-gruffness stop you from contacting me if you run into something you don't understand!
+
+99% of the following work is either the New Image crew, Joe Commodore, or someone else.
+I just ran it all through a blender, baked until golden brown, _voilà_!
+It _must_ be true: Anyone can cook.
+
+Many thanks go to Larry “Joe Commodore” Anderson for OCR'ing the 1.0 manual plus the updates! Also thanks to Rascal, Iron Axe, Metal Mage, Fred Kreuger, and anyone else I forgot.
+
+I just want this to be the bestest, most comprehensive manual available, given all the great fixes that have come out since the first version came out.
+
+Who knows, maybe you've got the next hot modification or suggestion—or an answer to some burning Image BBS question which kept me up nights.
+
+=== Surgeon General's Warning
+
+By no means must you read through this documentation in one sitting, or a day, or a week.
+Take it in bite-sized (byte-sized?) chunks; I sure remember the intimidation I felt when I saw the original manual...
+Just take a deep breath, have some milk and cookies, and come back to it later.
+Scribble stuff in the margins.
+
+Tune in, turn on, boot up!
+
+////
+=== Blatant Begging (On Hands and Knees Even)
+
+Also, I would like to collect any information about Image BBS you or your friends and colleagues have.
+Back in the 1990's there were _hundreds_ of Image sysops—they can't all have died _yet_.
+:)
+
+Any plus-files, programming information, “Reflections” or NISSA (New Image Sysop Support Association) e-zines you've got—in short, __anything Image-related—__please forward it to me.
+
+* Reflections issues are on Bombjack.
+
+My goal is to revive Image BBS and its network, to re-kindle the feelings of anticipation when there was a new plus file or modification to download.
+
+Anyway, drop me a line—-I want to hear from you! plzkthx.
+
+PinaDox (^tm^ & pat. pend.—I've never patted a pend. before but I'm willing to try anything): The only user-friendly documentation with a built-in sense of humor.
+
+Well, okay, I amuse myself, and that's what's important.
+////
+
+== Text Styling Notes
+
+////
+This version of the manual has some enhanced typographical features. Firstly, by and large a proportional font, DejaVu Serif, is used.
+I have nothing against monospaced text—after all, it's what a BBS is made of—but in the long run it really makes my eyes bug out looking at pages upon pages of it.
+Text is spaced one-and-a-half lines apart.
+
+Visually, I think it helps make the page look less crowded, and reduce eyestrain.
+////
+
+ Text output by the BBS looks like this.
+
+_User input or filenames look like this._
+
+====
+Additional sections and information, or changes from the original manual, are set apart in a sidebar like this.
+====
+
+Keys you need to press, like kbd:[Return], are on a gray background.
+
+There are cross-references to where sections are now. I'm just starting this, so be patient, and if you see a missing cross-reference, please let me know.
+
+--Ryan “Pinacolada” Sherwood
+
+== Larry Anderson’s Introduction
+
+Dear Reader:
+
+Here it is, the much-needed documentation of Image 1.2a BBS.
+This is an OCR of the original documentation, which included the Image 1.0 manual and addendum sheets for Image 1.1 and 1.2.
+If you are setting up 1.2, make sure to read the 1.2 addendum as well as the 1.0 manual.
+
+Notes:
+
+I have indicated the original document's page breaks to make finding sections with the table of contents or index easier.
+
+If you are setting up Image, use the 1.0 diskette, and copy over the 1.2 files on to a copy of the 1.0 diskette (overwriting the outdated 1.0 files).
+
+====
+Even better: Save yourself the hassle—use Image 1.2b!
+====
+
+There are special notes if you are using a Supra 2400 baud modem as well as using a CMD or Lt. Kernal hard drive.
+
+The modification diskettes for TurboRELs and BBS-to-BBS networking contain their own install/usage documentation on the disk image.
+
+====
+NOTE: Using TurboREL message bases on a 1581 drive may be problematic.
+
+This is probably because of the "`secondary address #1`" bug.
+I have included the BASIC program `81bug.bas` to demonstrate it, if you're interested.
+====
+
+In its' time, Image BBS was one of the top-of-the line Commodore 64 BBSes, even compared to PC counterparts of the day.
+Image held its own in features and adaptability.
+
+====
+NOTE: The BBS numbers in the following documentation are all long gone, please do not try calling them.
+====
+
+Enjoy! +
+Larry Anderson +
+Sysop - Silicon Realms BBS +
+
+== Package intro letter
+
+New Image Software +
+P.O.  Box 525 +
+Salem, UT 84653 +
+801-423-1966
+
+Dear Customer and Friend:
+
+We thank you very much for ordering Image BBS v1.0!!
+We think that you will be very happy with your purchase, and intend to fully support our customers in any way that we can.
+If you need any help whatsoever in setting up your BBS or maintaining it, please feel free to contact us by mail, phone, or BBS, and we will do what we can.
+
+This version was "`supposed`" to be released long ago, but due to problems in relocating our offices and other things, it is late.
+(Ever have 5,000 screaming sysops on YOUR phone line?!?)
+We apologize immensely for this, but feel that the quality of the program will make you forget about this very soon!
+Read the manual through and see the options that you have with this BBS program!
+
+Please also notice that we have added a few things that are not documented in the manual.
+The kbd:[L]ist function in the subsystems now shows to the user if the sub-board/library is a "`special`" one, highlighting the library in color, and also showing an abbreviation at the beginning:
+
+`N-An` means a non-anonymous sub-board.
+
+`Anon` means anonymous sub-board.
+
+`Pass` means password-protected sub-board, and
+
+`Free` means a free UD/UX library.
+
+See the manual for more information on these.
+
+Also, please note that the support BBS and voice numbers for the northern (Michigan) region are no longer valid.
+The new BBS support line for the north (Lyon's Den BBS) is 313-453-2576: 24 hrs—300-1200 baud.
+
+The new main voice support line will be located in Utah, as listed in the manual, 801-423-1966.
+
+The new southern (Florida) support lines are: voice: 904-756-1206—Ron Fitch, and the Tec-Net BBS is 904-756-2700.
+
+Night Flight BBS listed in the manual is no longer associated with us; the rest of the numbers are all still valid.
+
+Add these variables to the list on page 53: BF, CH$, PO$, KP%, MM.
+
+Our plans for the future:
+
+There is no programmer's manual for the software available yet, but we DO plan to write one in the near future.
+You will be seeing many modules available for IMAGE soon, both translated from old popular
+winners, and brand new!
+You will also see utilities for running your BBS, both in module form, and runnable in BASIC to make things easier for you.
+We plan to write a terminal program that will interact with IMAGE to allow full sound, high-res graphics and sprites for the user, and will have the same module routines as the BBS does.
+This will allow you to write a module (plus file) for BOTH the term and the BBS that will interact.
+A 128 version of IMAGE is also planned.
+As is our policy, NO release announcements will be made until the new products are ready.
+As always, we welcome comments, suggestions, and criticism at any time, so please let us know what you think!
+Looking forward to a long, happy, and mutually satisfying relationship with you!
+Keep in touch!
+
+Don Gladden +
+New Image Software
+
+== Addenda for Image 1.2a, page 1
+
+Congratulations on your purchase of Image BBS V1.2a.
+
+We believe that you have purchased the finest BBS program available today for the Commodore 64.  The program is continually being updated and refined and some of the latest updates have not yet made it into the manual.  For that reason we are including this short addendum.
+
+Version 1.2a differs only slightly from 1.2.
+It includes the “CMD Mods,” or the changes necessary to allow the use of partitions from 1 to 255 on that particular drive.
+It can still be used on any other system, including the Lt. Kernal.
+Caution should be taken however, as it is now possible to address LU 10, the DOS LU.
+All of the “mods” are installed so there is no need to download any “CMD Mod” packages.
+
+Some of the features from 1.2 that are not clear in the manual include the selection of the proper modem file.
+The manual states, incorrectly, that you should choose a modem file that matches your modem and rename
+it to `+.modem`.
+That has been changed.
+There is now a `+.modem` file on the disk that is universal.
+Be SURE to use that file, and use the `modemconfig` file to select your proper modem type.
+
+====
+NOTE: If you are using ANY 2400 baud modem, you must run the `2400 setup` file first _before booting the BBS.
+====
+
+The `u.alpha` file has been replaced by `u.index` that is maintained and manipulated by a file called `+.alpha/ind`.
+Should your index become corrupted, one common complaint is that users can sign on with their ID number but not their handle.
+If that should occur, run `+.alpha/ind` from the main prompt and choose the options LOAD, CLEAR,
+MAKE and SAVE in that order.
+It is very important that you follow those steps; saving is required, since the program will not save for you.
+
+The “macros” are installed in 1.2a.
+There are “mods” out that call for lines to be added to `setup` and `im` but they are already in, all you need is `+.ME` (macro editor) that is available on the PlusFile disk #4.
+
+After you have the macro editor, you can define your macros and then turn them on by putting the check mark on the right side of `Exp` on the second page of the lightbar (press kbd:[f8]).
+
+The support numbers in the manual are wrong.
+The one voice support line is 801-423-2209.
+The BBS numbers are:
+
+Port Commodore 801-423-2734
+
+Lyon's Den East 313-453-2576
+
+GearJammer's II 215-487-0463
+
+We hope you enjoy your IMAGE and if you need help don't hesitate to call.
+
+[.text-right]
+—New Image Software
+
+== Addenda for Image 1.2a, page 2
+
+Here are some changes that have been made since the manual was printed.
+Please note them carefully.
+
+Pg 1  DISK DRIVES
+
+Since the release of the CMD hard drive, IMAGE was updated to version 1.2A, which includes the "`CMD Mods.`"
+IMAGE now has the ability to address partitions 1 through 254.
+
+Pg 4  DESIGNATING DRIVES
+
+IMAGE 1.2 added some new files called `scn._xx_` (where _xx_ is `t1 t2 t3 t4`, `c1 c2 c3 c4`) files.
+This consists of eight "`screen`" files.
+These files must be placed on the plus file drive for proper operation.
+They are text and color, respectively, of the screen masks displayed at system idle, or other areas on the BBS.
+
+Pg 5  COPYING FILES
+
+In this section you are told to choose the modem file that matches your modem and rename it to `+.modem`.
+That is no longer necessary.
+There is now only _one_ modem file for all 1200 and 2400 baud modems, and it is `+.modem`.
+After you have completed the configuration of your board, run the `modemconfig` file and select the modem type you are using.
+It will then write the parameters to the etcetera disk.
+Any time you change modems it is only necessary to run `modemconfig` or `+.modemconfig` to re-select your modem type.
+
+NOTE: If you are using _any_ 2400 baud modem, it is necessary to run the `2400 setup` file which sets the modem up to respond to IMAGE.
+With the Aprotek "`MiniModem C24`" it is necessary to run `2400 setup` any time the computer is turned off for more than a few seconds.
+
+Pg 16 THE LIGHTBAR
+
+There are now two pages to the lightbar.
+The first page remains the same, the second page has only three functions that are used immediately.
+
+The first is `Asc` which is:
+
+{empty} (Left) ASCII on/off
+
+{empty} (Right) linefeeds on/off
+
+The second is `Ans` which is:
+
+{empty} (Left) ANSI on/off
+
+{empty} (Right) IBM Graphics on/off.
+
+The third is `Exp` which is:
+
+{empty} (Left) Expert Mode on/off
+
+{empty} (Right) Macros on/off (note that they are already installed)
+
+In addition, the Turbo-RELs use `Fn5` for:
+
+{empty} (Left) Credit when file is uploaded or when validated
+
+{empty} (Right) Log off after file transfer is complete
+
+The CMD mods (1.2a) also introduced the right side of `Fn1` which turns MCI off when checked.
+
+Pg 29  COMMANDS
+
+There is no longer a `BC` (baud change) option.
+
+////
+The heck there isn't!
+I put it back for historical preservation, even though it's unlikely to do anything useful!
+Yay me.
+////
+
+Pg 55 THE IMAGE EDITOR
+
+Some commands have been changed and some print modes have been added or changed.
+Check the menu in the editor for current commands/modes.

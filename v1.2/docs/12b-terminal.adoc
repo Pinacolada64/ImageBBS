@@ -1,0 +1,56 @@
+== Image Terminal Program
+
+Image BBS has a built in Commodore 1670/Hayes-compatible terminal program for dialing out to other BBSes without having to take your BBS off-line.  It is equipped with several features, including:
+
+* a phone book
+* auto dialer
+* X-modem and Punter file transfer
+* full Commodore C/G capabilities
++
+
+For the most part it is self-documenting, with several on-line menus to help you.
+
+=== Using the Terminal Program
+
+To load and use the term program, press kbd:[←] at BBS idle mode, and the term will load and display the opening menu, along with several parameters displayed on the top right window of the screen.
+To change any of these parameters, select the "Term Parameters" option from the main menu.
+
+From here, you are able to change
+
+* ASCII or C/G mode
+* baud rate
+* U/D protocol
+* dial mode (tone or pulse)
+
+Other options on the main menu include terminal mode, file operations, phone book, disconnect, and return to the BBS environment.
+
+=== The Phone Book
+
+Here is where you may dial numbers entered into your `s.phonebook` file, or any other number that you wish.
+When you choose the phone book option from the main menu, you see the first five numbers (if you have the file), along with "dial number not shown."
+
+#FIXME#
+
+When saving the phone book, your current phonebook is renamed to `s.phonebackup` and the new version is saved as `s.phonebook`.
+
+#FIXME# Update info about built in phone book, no need to manually edit entries anymore
+
+Simply hitting kbd:[Return] at the prompt will take you back to the main menu.
+Selecting Next or previous page will go on through the list in your phonebook.
+Selecting any of the numbers, or "Dial number not shown", and entering the number when prompted, will then prompt you for the autodial (repeat) option.
+
+If the autodial option is selected, it will keep track of how many tries for that number (press kbd:[/] to abort the autodialer).
+
+Once a connection is made, you are put into term mode for the connection.
+
+To go back to the main menu, press kbd:[Ctrl+C=].
+
+=== File Operations
+
+You can change communication parameters or use file operation functions here, which include:
+
+* getting a disk directory
+* sending a disk command
+* changing device/drive
+* read/send a SEQ file
+* upload/download functions (including multi-upload & download)

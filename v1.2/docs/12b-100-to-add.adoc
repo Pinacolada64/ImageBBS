@@ -1,0 +1,2246 @@
+
+== Entering/Changing Subsystems
+
+Additional commands available at all major levels of the BBS include those which go to any other subsystem.
+In other words, a user need not exit to the main command level from the sub-boards before going to U/Ds or Plus Files, but can enter that area directly by typing the command.
+
+Commands which behave this way include:
+
+BB Bulletin Board listings
+
+EM E-mail subsystem
+
+MF Movie Files subsystem
+
+NF News Files subsystem
+
+PF PlusFiles subsystem
+
+SB Message base subsystem
+
+TF Text Files subsystem
+
+UD Upload/Download subsystem
+
+UL User Listings
+
+UX User Exchange subsystem
+
+VB Voting Booth
+
+Each of these commands take the user to a separate subsystem of the BBS, which will be discussed in an upcoming chapter.
+
+== Common Subsystem Features and Commands
+
+Since several subsystems share similar commands and usage, this section outlines them.
+
+When a user enters the subsystem or a SIG, only the sub-boards/SIGs that their access group can go to are loaded into memory.
+
+So, if you have five sub-boards, but a user logs on with an access group which can only access boards one and five, they'll see only two boards, renumbered as 1 and 2.
+In this way, they aren't aware of other areas they can't access.
+
+=== Listing Sub-Boards
+
+kbd:[L] (optionally followed by the board number to start the listing from) lists which sub-boards they have access to when they first enter the SIG.
+
+If they are subop of a particular sub-board, the board name is preceded with a `>`.
+
+If you have set up Special Interest Groups, only SIGs the user has access to are displayed.
+In this way, they are not aware of areas they cannot access.
+When they get the `What SIG?` prompt, they may type either:
+
+* The SIG number by itself
+* The SIG number, a comma, and the board number within that SIG (this works for SB, UD, and UX subsystems)
+
+For example, if a user responded to the `What SIG?` prompt with kbd:[4,10], they are taken into SIG #4, Sub #10 (or U/D #10, etc.), assuming they have access to it.
+
+When a user enters a SIG number that is too high, the available SIGs are re-listed, instead of exiting to the main prompt.
+
+When a user enters a sub-board/library number that is too high, available boards are re-listed.
+
+Pressing kbd:[Return]/kbd:[Enter] at the `Which Sub _(or U/D or U/X)_?` prompts return the user to the list of available SIGs.
+(If SIGs are not active, they exit to the main prompt.)
+
+=== Sub-Board Name
+
+kbd:[N] displays the current sub-board's name.
+
+=== Moving To Other Sub-Boards
+
+A user can change the current sub-board by:
+
+* Entering the new sub-board number at the "Sub #x: " prompt
+
+* kbd:[<] or kbd:[;] takes then to the previous sub-board
+
+* kbd:[>] or kbd:[=] takes them to the next sub-board
+
+=== Moving To Other SIGs
+
+If a number is typed after the previous two commands, (ie, `>>4` or `<<5`), the user is taken to the previous/next SIG, plus the specified board number.
+
+If a user moves to a board they are subop of, they are informed of this.
+
+If a move cannot be made, the user is told the board number they requested does not exist.
+
+== Sub-Boards (Message Bases)
+
+This is Image BBS's public message base, where users can write messages about anything they want, replying to other users in "`threads`" which keep responses organized.
+Users access message bases by typing _SB_ at most prompts.
+
+If the user knows which SIG they want, they can combine the SB command and the SIG number:
+
+* kbd:[SB3] takes the user to SIG 3, assuming they have access to it
+
+If the user knows which SIG and sub-board they want, they can combine the SB command, the SIG number, a comma, and the sub-board number:
+
+* kbd:[SB3,2] takes the user to SIG 3, sub-board 2, assuming they have access to it.
+
+Upon entering the message bases, the file `s.SB` is read, regardless of their Expert Mode setting.
+
+If SIGs are set up, the SIG list is shown.
+They get a "Which SIG?:" prompt.
+As above, if the user knows which SIG and sub-board number they want, they can enter them here, as above (example: `3` or `3,2`).
+
+Upon entering the board, they are told:
+
+* How many bulletins there are
+* How many have new responses since their last call date
+* Total number of responses
+
+[start=8]
+8. The [Q]uit function (in the [P]ost [N]ext [Q]uit prompt) now clears any stacked commands.
+This is for the people who have stacked commands and then in the middle of reading the posts remembered they had to do something (_i.e._, kill a post, weed the Subs, etc.) but were locked into a command stack.
+Now they are not.
+
+9. Response titles are now available in the Subs.
+Setting the variable RT to 1 in line 901 of `+.MM.sb-post` will turn the ability to title responses on (it comes with RT set to 1).
+The response system is 100% compatible with older posts and NO CONVERSION IS NECESSARY.
+
+A new version of the `+.NM.netsub` files will soon be available that allows the response titles to be transferred to other NetSub boards as well as to allow "`overflow`" NetSubs to be defined.
+
+Setting RT to 0 will NOT prevent any existing response titles from being displayed, nor will it block NetSub response titles from being shown once the new `+.NM.netsub` files are released.
+
+The `rt` variable only controls the user's ability to title responses on your board.
+
+=== Scanning Bulletins
+
+This means to display
+
+* The number of the bulletin
+* How many responses have been made, if any
+* The bulletin's status:
+
+.Bulletin status indicators
+[cols=",",]
+|===
+|`---` |Normal bulletin, no new replies
+|`FZN` |Frozen bulletin, no response possible
+|`NEW` |New bulletin since last call date
+|`NRB` |New response to bulletin since last call date
+|===
+
+* The bulletin's title (in quotes)
+
+Typing kbd:[S] begins scanning at either the first bulletin, or after the bulletin most recently read on the sub-board.
+
+kbd:[S] followed by a bulletin number starts scanning at that bulletin (_e.g._, kbd:[S3]).
+
+The kbd:[/] key or the spacebar abort a scan at any time.
+
+=== About
+
+This displays the:
+
+* Subject
+* Author (and node number if in a NetSub)
+* Date and time of creation
+* Number of responses to a bulletin
+* Date and time of the latest response
+
+Typing kbd:[A] tells a user about the bulletin following the one most recently read or manipulated.
+
+kbd:[A] followed by a number finds out about that specific bulletin.
+
+=== Reading Bulletins
+
+This displays the same information as the "`about`" function, but reads the text body of the message, followed by each response until the end of the _thread_ (group of bulletins under that title).
+
+Typing kbd:[R] (or just pressing kbd:[Return]) reads the next bulletin in the sub.
+
+kbd:[R] followed by a number reads that specific bulletin.
+
+While reading a bulletin, a user can:
+
+* Press the space bar to skip to the next response in the thread
+
+* Press kbd:[/] to skip directly to the end of the bulletin.
+
+=== End of Bulletin Prompt
+
+Once at the end of a bulletin, a user has several options in, appropriately enough, the "`end-of-bulletin`" prompt.
+(This prompt is only displayed if the user's Prompt Mode is enabled.)
+Options available are:
+
+* kbd:[Return] continues to the next message in the sub-board
+
+* kbd:[P] sends a private e-mail message to the user that posted the original message
+
+* kbd:[R] responds to the post
+
+* kbd:[O] reads the post over from the beginning
+
+* kbd:[Q] or kbd:[/] stops the `RN` or `RA` function
+
+* kbd:[K] lets a subop or sysop kill the post.
+The original poster may also kill the post, if there are no responses to it.
+
+* kbd:[?] brings up a menu of these options.
+
+=== New Messages
+
+The following commands work on the current sub-board, with messages considered new since the user's last call.  To do the following:
+
+Scan .............. SN
+
+Find out about .... AN
+
+Read new .......... RN or *
+
+To stop an `RN` in progress, press kbd:[/] key while reading a message.
+
+To scan or read new messages on the current sub-board, plus all higher-numbered sub-boards, type _RA_ or _SA_, respectively.
+
+To stop an `RA` or `SA` at the current sub-board, press the kbd:[/] key.
+
+During an `RA`, if the user reaches the last board and has any stacked commands remaining (for example, `RA^UD`), the `[P]ost [N]ext [Q]uit` prompt is displayed to allow the user to post to the last sub before executing the next stacked command.
+
+=== Posting New Bulletins
+
+If a user types kbd:[P] and there is room in the directory (a limit of 60 posts per sub-board exists), the user is asked for the post's title.
+If this title is unique to the directory, the user is asked:
+
+If they wish to post anonymously, if the board is not set up to be non-anonymous.  If they elect to post anonymously, the author will appear as:
+
+* `Anonymous` to normal users.
+
+* `*` followed by the user's handle, to users with subop, sysop, or sub-board maintenance access.
+
+The user is then placed into the BBS text editor subsystem to write their message.
+kbd:[.S] on a blank line exits, as usual.
+
+=== Killing Entire Threads
+
+This removes the original post concerned, along with all its responses, from the sub-board and its message directory.
+
+kbd:[K] begins listing all bulletins starting with the first one
+
+kbd:[K_x_] starts with bulletin #_x_
+
+The user is asked whether they want to kill the bulletin:
+
+ Y)es N)o A)bort or S)tart
+
+kbd:[K] followed by a number begins the listing with that number, offering the same choices.
+Once the end of the list is reached (or kbd:[S]tart is typed), the directory is re-written to disk.
+
+A regular user can kill their bulletin only if there are no responses to it.
+Once responses are added, only a subop can kill it.
+
+==== KO and KA
+
+There are two more commands available to persons with SubOp access (SubOps, Sub-board Maintenance and SIGOp access users).
+
+KO Lists any messages in the SB section older than the maintainer's last call date, giving them the option to kill them.
+
+KA The same as KO, but is automatic - it will _not_ ask if you want to
+keep the post(s) killed, so be _very careful_ with this command!
+
+Remember, these commands are keyed to your last call date, so use LD to set the cutoff date for deleting old messages _first_.
+
+=== Editing Bulletins
+
+To edit a previously written bulletin, enter E followed by the post number to edit.  The bulletin is opened, and the BBS searches through the bulletin for messages that the user can edit (if they are the author, or sub-board operator).
+
+If such a message is encountered, the user is prompted with:
+
+ K)eep, D)elete, R)ead, E)dit, or A)bort:
+
+K)eep Keeps the message with the thread
+
+D)elete Removes the message from the thread
+
+R)ead Reads the current message
+
+E)dit Take the user to the editor subsystem to edit the message
+
+A)bort Return the user to the sub-board prompt.
+
+In the Edit function, SubOp access users have an added command: (K)ill Old Resp.
+This function first asks if you want to auto delete old responses:
+
+_No_ asks for confirmation before deleting each response.  (kbd:[A] aborts
+the operation, but any deleted responses _stay_ deleted!)
+
+`Yes` deletes any responses made before your last call date.
+
+Both functions stop when they reach responses posted on or after your last call date.  Remember, this function is tied to your last call date, so use LD to set the cutoff date first.
+
+Also remember, the Auto Delete function _cannot be aborted_ once started and is _only_ available to SubOp access users!
+
+=== Frozen Bulletins
+
+If a user does not want responses added to a post, begin the title with an up arrow (^) character.
+The BBS reports this bulletin as frozen during a scan or About, and will not allow responses to be made to it.
+
+Bulletins can be un-frozen by the original poster reading the message with Prompt Mode enabled, so you get the end-of-bulletin prompt.
+There, type F, which toggles the bulletin's Frozen status.
+The current status is then reported, and the user is returned to the end-of-bulletin prompt.
+
+=== Sub-Board Operators
+
+V views the current sub-board's operator
+
+M sends a private e-mail message to them
+
+=== Maintenance Mode
+
+Only sub-board or users with general sub-board maintenance can access this function.  Type Z.  The sub-board maintenance menu has two options:
+
+[start=1]
+. Edit the entry file
+
+You have a choice between ASCII and C/G.
+A sub-board's _entry file_ is displayed upon entering the sub-board.
+If there is an entry file already, it is loaded into the BBS text editor.
+Use the usual editor commands, and type kbd:[.S] to save.
+
+[start=2]
+. Edit board detail.
+
+The user can change
+
+* Sub-board title
+* Sub-board type
+* Open/closed status
+* Access level required to enter the sub-board
+
+If the user is in local or pseudo-local mode, they also have the option to change the current sub-board operator and device/drive assignment.
+
+While defining sub-boards using the +.reledit program, you may specify
+any of your sub-boards to be:
+
+==== Message Bases
+
+.Message base abbreviations
+[cols=",,",]
+|===
+|Anon |Anonymous |All posts are completely anonymous
+
+|N-AN |Non-Anonymous |Users are never allowed to make anonymous posts
+
+|P-An |Password, Anonymous |A password is required to access the
+sub-board where anonymous posts are allowed
+
+|P-NA |Password, Non-Anonymous |A password is required to access the
+sub-board, where anonymous posts are never allowed
+
+|Pswd |Password-protected |A password must be entered to access the
+sub-board
+
+|Std |Standard |Users are asked whether they wish to post anonymously
+each time they write or respond
+
+|+ |Networked sub-board |Able to transfer messages to/from other BBSes
+|===
+
+.Bulletin Status Indicators
+[cols=",",]
+|===
+|NRB | New Response to Bulletin
+|===
+
+#FIXME# this is somewhere else, too
+
+==== Upload/Download/Exchange:
+
+.U/D and U/X types
+[cols=",,",]
+|===
+|Abbreviation |Meaning |Purpose
+
+|Upld |Uploads only |No downloads possible
+
+|Dnld |Downloads only |No uploads possible
+
+|DO-C |Downloads only, credit deducted |No uploads possible, credits
+deducted for downloads
+
+|DO-F |Downloads only, free| Downloads cost no credits
+
+|Free |Free downloads |Credit is never deducted for downloads
+
+| PW |
+|Password protected |User must enter a password to gain entry to the U/D or U/X.
+|===
+
+#fixme#: more
+
+EITHER:
+
+``>`` You’re the subop User has ability to edit/delete posts and generally maintain the sub-board.
+
+  * A "password" board:
+
+This requires a password to enter.  The BBS asks any user that has access to that board for the password upon entering it.  If they get the password wrong, they are asked if they want to try again.
+
+If they guess wrong three times in the same call, they are not allowed to guess again.  This can be used either for fun, by putting hints to a password up other places in the BBS, or to add a measure of security for certain boards that you do not want all users to access.
+
+  * An "`anonymous`" board:
+
+All bulletins and responses will show as anonymous, even to the sub-board operator and sysops.  Great for those "`war boards.`"
+
+  * A "`non-anonymous`" board:
+
+No anonymous messages are permitted, and users are not asked if they would like the post/response to be anonymous.
+
+bla #FIXME#
+
+Toggling `Fn5`'s right check on, you activate the "`no credit until validated`" feature of the BBS.  This check mark can be toggled on or off any time a user is online and uploading, until the point the `End Of Transfer` message appears.
+
+* If the check is off, the number of times downloaded is set to 0, and credits awarded to the user according to their credit ratio.
+
+* If the check is on, the times downloaded is set to -1, but no credits awarded until the file is validated by the subop or SIGop.
+
+Toggling `Fn5`'s left check on activates the `Log off after file transfer complete?` prompt.
+
+==== The "`About`" Option
+
+A, Ax When this option is selected, the user sees information about the file, including:
+
+* the date and time it was first uploaded
+* the date and time it was last downloaded
+* the type of computer it's for
+
+(If a C128 user views a file meant for the C64, they are told it is for the C128 in 64 mode.)
+
+* approximate download time
+
+* if any user-submitted comments exist for the file _and if so, the first one is displayed; a quick mod by Pinacolada_.
+
+After that information is displayed, the user is prompted with the
+following options:
+
+kbd:[C] Comments read/add.
+
+****
+This feature was written by `DER DEUTSCHER`.
+****
+
+If the user would like to add a comment, they may.
+
+kbd:[D] Download the file.  If the user has selected a multi-file transfer protocol, this adds the file to the download queue.  (#fixme#: correct?)
+
+kbd:[N] Move to the next file in the directory; if they are on the last file, they wrap around to the first file.
+
+kbd:[L] Move to the previous file in the directory; if they are on the first file, they wrap around to the last file.
+
+kbd:[M] E-mail the file uploader.
+
+kbd:[R] Read any file, whether SEQuential or PRoGram.
+
+* A program with a hexadecimal load addresses of:
+** $0401 (CBM PET)
+** $0801 (The Commodore 64's BASIC 2.0)
+** $C101
+** $4001 (The Commodore 128's BASIC 7.0 #fixme#)
+
+display the program just as if `list`ed with that computer's respective version of BASIC.
+
+* You can also opt to display "`control characters`" such as Clear/Home,
+delete, or color codes in quotes in an expanded, easy-to-read format:
+
+ [Clear/Home]  [Delete]  [Red]
+
+* A program with any other load address (or a BASIC "`head`" and machine language "tail") produces a "hex dump" like a machine language monitor would:
+
+ MMMM  HH HH HH HH HH HH HH HH  PPPPPPPP
+
+`MMMM`: Memory address
+
+`HH`: Hex value of each byte
+
+`P`: PETSCII code of each byte
+
+====
+TIP: This also works in 80 columns!
+====
+
+* As previously mentioned in the setup of the U/D system, credits can be charged for reading programs online by setting the variable `yy%` to the number of credits you want subtracted per block read.
+
+For users with maintenance access:
+
+kbd:[U] Unvalidate a file, taking back credit for the upload.
+
+kbd:[V] Validate new uploads.
+
+For the user who uploaded the file:
+
+kbd:[E] Edit the file (computer it's for, and filename)
+
+All commands selected here, including Download, return you to the same file in the listing you were on before selecting the command.
+
+Hitting kbd:[Return] (or any key not listed/not applicable to the user) aborts the About function.
+
+== Scanning Files
+
+=== S Scan Files Normally
+
+This has been enhanced to use both 40- and 80-column screens.
+A normal file scan will list files in this format:
+
+```
+### Bk’s  Dl’d  Name_
+----------------------------------------
+001 [200] [001] "file.txt,s"
+----------------------------------------
+```
+
+From left to right, the columns represent:
+
+`### 001`: The number of the listing in the directory
+
+`Bk's [200]`: The number of Commodore 254-byte blocks (or Kilobytes if using another computer type)
+
+`Dl'd [001]`: The number of times the file has been downloaded
+
+`Name "file.txt,s"`: The filename and file type.
+Unvalidated files have a `*` in front of the name, if the user is the uploader or subop.
+
+After all files have been selected, the total estimated download time is displayed to the screen with a new prompt allowing you to:
+
+kbd:[S]can selected files
+
+kbd:[D]ownload selected files
+
+kbd:[C]lear list and restart
+
+kbd:[K]ill a file from the list
+
+(All other user features are the same except having been moved into mini-plus files to make the system easily expandable.)
+
+kbd:[SS] Sorted scan
+
+The scanned files can be sorted by:
+
+  * Size
+
+  * Number of times downloaded
+
+  * Alphabetically
+
+kbd:[DM] Download Multiple Files
+
+As with the kbd:[D] command above, this command now shows a complete
+description of each file:
+
+#FIXME#
+
+=== Sysop Commands
+
+UM Upload multiple files
+
+With the Copier protocol loaded, the BBS gives you a directory of the designated drive of the current U/D board.
+You are prompted to select either:
+
+ [Y]es [N]o [A]bort
+
+(This is similar to downloading multiple files in the U/X base.)
+
+After all files have been selected, you are prompted:
+
+ Manual or Auto descriptions?
+
+  * Auto descriptions:
+
+Asks you for one description to add it to all files selected before writing the directory.
+
+    * Manual:
+
+  Asks for a description of each file selected.
+
+Sysop commands are now active whenever the Copier is loaded as a protocol, not when local or psuedo-local modes are on.  In addition, if you are logged onto the BBS from console mode, you are forced to use the copier.  Anyone accessing the BBS as a sysop must turn on pseudo-local mode to use the copier with the PR command.
+
+Vx, VN The Validate or Validate New commands allow you to validate all uploads to the current U/D library.
+
+If the "no credit" option is active:
+
+#fixme#: until validated?
+
+* You may type % to award a percentage of credits to the user for uploading the file.
+
+* Otherwise, the full amount of credits is added to the uploader's account.
+
+UM If the copier protocol is loaded, to Upload Multiple files you are prompted for a pattern.  (kbd:[Return] defaults to *).  You are prompted with
+each filename matching the pattern, and have the ability to reply:
+
+[Y]es [N]o [S]tart or [A]bort the upload.
+
+When all files have been selected, you are given a list of files selected, then an "Are You Sure?" prompt.
+
+  * [Y]es continues with the multi-upload.
+
+  * [N]o aborts.
+
+DM Just like the Upload Multiple command, you can also Download Multiple files from the current library to the destination drive of your choice.
+
+AS Users can apply for access as the subop of the current board if there is not currently one assigned.
+
+AC Any user with subop or remote maintenance access may add up to 500 credits to any user's account.
+
+IDx Displays user information just like a UL user list.  Posts, responses, uploads and downloads are shown to subops and SIGops.
+
+A few notes:
+
+* The current protocol is saved to the user's stats by using the variable UL (which was previously used for upper/lowercase flag—not needed but still supported in the user file).
+
+* Any C-64 or C-128 user who currently has this flag set to 1 will have a default protocol of Xmodem.  Be sure to inform your users of this when you put the system up.  Once they change their protocol to Punter, it will remain Punter unless they change it.
+
+== UD Upload/Download System
+
+This is the Image BBS "file transfer base."  All users read the file `s.UD` when entering the U/D section, regardless of whether they are in "Expert Mode" or not.
+
+=== Moving To Another Library
+
+=== Main U/D prompt
+
+The user is shown the
+
+* Total number of files in the directory
+* Number of new files uploaded since his last call
+* Total number of credit points they have
+* Current protocol in memory
+* Blocks free if in local/pseudo-local mode (fixme?)
+
+If they are the library's subop, they are informed of this.
+
+If a move cannot be made, they are told the requested library number does not exist.
+
+Typing N displays the name of the current library.
+
+Libraries which a user can access are listed by typing L.
+
+=== Changing protocols
+
+New Punter, Slow Punter (for noisy telephone lines) and Xmodem-CRC/1K protocols are available for use with Image BBS.  Commodore 64/128 and Amiga users default to Punter; all others use Xmodem.
+
+// Starlink let BBSes dial into a local phone number which acted as a bridge to a long-distance BBS. That's about all I know.
+
+"Slow Punter" has relaxed timing that works very well with Starlink. If
+your BBS is reachable by Starlink, people will be able to use the "Slow Punter" for file transfer, or you can use it to call boards using Starlink.
+
+NOTE: These protocols have been updated for IMAGE v1.2a, and are very efficient.  We think you'll be very happy with them.
+
+=== Single file upload
+
+Each library allows a maximum of 60 files.  The user is asked for
+information describing the file, which is saved along with their handle, ID number, and the current date and time.  They receive credit points at the ratio of whatever his access group or flag allows per block uploaded.
+
+There is also an option to add a file comment, used to describe what the file is for.  Other users can view this comment, and add their own.
+
+=== Multi File Upload
+
+(The user must be using the Multi-Punter protocol.)  The BBS prompts:
+
+*_Go to multi-send mode!_*
+
+The BBS records filenames as they are received, entering them into the
+directory, along with the:
+
+* Uploader's handle
+* BBS ID number
+* Current date and time
+* A description which says "Multi-Upload" (fixme: wasn't this changed?)
+
+Users may edit the entry to provide descriptions.  Credit is given just as with a single file upload.
+
+(NOTE: Occasionally, noise on the phone line will cause multi-uploaded file titles to be corrupted.  While impossible to prevent, it is a rare occurrence, and should not cause much trouble.  You could just use the E option afterward to edit the filename.)
+
+=== D, Dx Single File Download
+
+Type D followed by the file number, from the main U/D prompt
+
+Type D at the "About" prompt.
+
+Note that a user can download a file if:
+
+The files downloaded that call are less than the number of files allowed per call, as dictated by their access group settings, unless the user's status includes unlimited downloads per call.
+
+The time remaining is sufficient (to begin with; errors causing delays during transfers are ignored, since they can't be known in advance).
+
+They must have at least as many credit points as the number of blocks that the file contains, unless their status includes unlimited downloads (in this case, no credits are subtracted for a download).
+
+=== Multi File Downloads
+
+The user is asked for a starting file number, then shown each file in
+the directory from that file number, and prompted
+
+ [Y]es [N]o [S]tart [A]bort
+
+Each `[Y]es` selection: the approximate download time is shown for their baud rate.  All the requirements to add the file to the download queue are the same as for downloading a single file.  If everything is okay, they can continue adding files until they reach the maximum number of files, or choose as many files as they want to.
+
+`[S]tart`: The BBS shows the list of files chosen, asking them to confirm the list. If they do so, they are given 20 seconds to go to receive mode, and the files will be transferred.
+
+NOTE: Users can abort any file transfer in any mode and any protocol by sending kbd:[Ctrl-X] three times: that is, holding down the kbd:[Ctrl] key and then typing the letter kbd:[X] three times.
+
+=== Listing Files
+
+Scanning the file directory shows:
+
+The directory file number
+
+Number of blocks (or kilobytes, blocks divided by four) depending on the
+user's computer type)
+
+Number of times downloaded
+
+Filename and file type (PRG or SEQ)
+
+Several scanning variations exist:
+
+S, Sx ......... Scan titles from first entry, or starting from entry #x
+
+SA ............ Scan titles uploaded after last call date (all libraries
+in current SIG)
+
+SN ............ Scan titles uploaded after last call date (current
+library only)
+
+SS ............ Scan titles sorted by:
+
+* Number of blocks
+* Number of times downloaded
+* Alphabetically
+
+SU ............ Scan for unvalidated files
+
+Spacebar or / aborts.
+
+==== Other Commands
+
+A, Ax ......... About first file, or file #x. This shows, in addition to
+information displayed by the "scan" command above:
+
+* The uploader's user ID and handle
+* The date and time it was uploaded
+* The date and time it was last downloaded
+* The computer type it's meant for
+* Comments about the file
+
+=== Killing Files
+
+A sysop, subop, or the user that uploaded the file may enter K followed by the file number to delete it from the file directory.
+They are also asked if the file should be scratched from the disk.
+
+If they answer `No` to this prompt, an entry to the daily activity log titled Kill: plus the filename is made.  If a printer is online, the same notation is printed there also.  This shows a file on disk is not in the file directory.
+
+When a file is killed, credit points are deducted equal to the number of points they were given when they uploaded the file.
+
+=== Editing Files
+
+A sysop, subop, or the user who uploaded the file may type E followed by the file number to change information about it.
+
+#fixme#
+
+=== Reading a File
+
+A user may enter R followed by the number of the file to display a SEQ or PRG file.  They may also select R when doing an "About" on a file.
+
+#fixme#: dupe
+
+=== Validating Files
+
+Sysops, subops, and the user who uploaded the file can "see" all unvalidated (ie, not downloaded and/or tested) files.  When downloaded and verified to be working files, they are validated, available for other users to download and add comments to.
+In the process of
+downloading a file to validate, subops:
+
+* Will not have credit deducted
+* The download does not count against the number of downloads per day
+(if not unlimited)
+* The time remaining is not checked when subops download in their own libraries.
+
+Subops or sysops validate files by typing:
+
+* V, Vx to validate either the first unvalidated file (or file #x)
+* VN to validate new files since their last call
+* VA to validate all files in the library
+
+Unvalidated files will have a leading asterisk in the filename, and show zero for times downloaded:
+
+```
+### Bk’s  Dl’d  Name
+
+----------------------------------------
+001 [200] [000] *"file,s"
+----------------------------------------
+```
+
+When a file is validated, the number of downloads changes to one.
+
+A user who uploaded a file that is not yet validated has full access to read or download it, but will _not_ have the power to validate it (unless they happen to be the library's subop).
+
+=== Copying Files
+
+If a user is in true local mode (from the console), when they enter the U/D subsystem, the "copier" protocol is loaded.  To copy a file, type Dx (where x is the file number).  The BBS tells them the approximate copy time, allowing a filename change, or to be copied to a different device/drive.
+
+If no destination device is specified, it defaults to one number higher than the source device.  (NOTE: Any device may be the target device, but this function will ONLY copy files to drive #0.)
+
+=== Mx Moving Files
+
+If a user is in local or pseudo-local mode, type M and the file number.
+They are prompted for the new directory to move the file to.
+
+  * L lists all available boards.
+
+  * If the directory is to a different device/drive, the file is copied to that device/drive, otherwise only the directory entry is moved.
+
+  * If the file is moved, an option is given to scratch the file from its source device/drive after the move is completed.
+
+== UX Full Disk Exchange
+
+Full disk exchange operates very similarly to the U/D section, except files are not placed in directories, but directly read from the device itself (a floppy drive, for example).
+
+UX is sub-divided into libraries just as UD is.  Each can have its own subop, entry file, access and configuration.  Multi upload and download functions the same as in the UD section.
+
+Users may enter UX at most prompts to enter the full disk exchange area.
+
+The file s.UX will be read regardless of Expert Mode status. (fixme:
+correct?)
+
+=== $, S Listing Files
+
+A listing of files may be obtained by entering $ or S. The user is prompted for a pattern (if none is given, the default is * for all files).
+
+=== Free UD/UX Library
+
+While defining libraries using the +.reledit program, you may specify
+any of your libraries in the U/D or U/X to be FREE libraries; that is, no credit is deducted from the user when he downloads from these areas.
+To specify a FREE board, use the +.reledit program or the Z command for local maintenance.
+
+In a FREE download board, the number of files per call and credit points are not checked prior to starting a download.
+
+== EM Electronic Mail Subsystem
+
+This is Image BBS's private mail section.  If a user has access to this section, on logon they will be informed if they have mail waiting, and given the option to enter the e-mail subsystem at this time.  Upon entering the mail system, they are told how many messages they have waiting.
+
+A user may also enter the e-mail subsystem by entering _EM_ at any major prompt.  The prompt for this section is "E-Mail: ".
+
+=== L, Lx Listing E-mail
+
+To obtain a list of the e-mail a user has waiting in the order they were received, type L (or L followed by a number to begin listing at a specific message) at the "E-Mail: " prompt.  This lists all messages,
+reporting
+
+* Handle of the sender
+* Date and time it was sent
+* Message subject
+
+=== Rx READING E-MAIL
+
+Press kbd:[Return] to begin reading (or read the next message in a series).
+
+Once the last message is read, they are told "No more mail."
+
+To read a specific message, type R and that message's number.
+
+To read all messages, type A.  All messages are displayed in succession.
+
+Typing N reads any new messages since their last call.
+
+=== Responding To a Message
+
+This replies privately to the user who sent the message being read.
+After reading a message, the user is presented with several options:
+
+ Reply to <sender's handle>:
+
+  * [Y]es:
+
+This replies to the author.
+
+#FIXME#
+
+To respond to a specific message from the list of messages received, a user may type R followed by the number of the message to respond to.
+
+=== Sending Private E-Mail
+
+The BBS prompts for the handle or user ID number who will receive this message.  If the ID number is entered, the user log is searched, and the handle (if found) is shown.  The sender confirms this is the user they intended to send the message to, and are placed in the BBS text editor.
+
+=== Deleting E-Mail Files
+
+(This option also appears when they leave the e-mail subsystem, if there are messages left in their mailbox.  This encourages users to keep their mailboxes tidy and not use un-necessary disk space.)
+
+When a user deletes their e-mail, they get the following prompt:
+
+  Delete [A]ll, [S]ome or [N]one of your mail?
+
+  * [A]ll
+
+Deletes every message held in their mailbox, after confirming an "Are you sure" prompt with [Y]es.
+
+  * [N]one
+
+Keeps every message held in their mailbox.
+
+  * [S]ome
+
+Goes through all messages in the user's mailbox, prompting them:
+
+  [D]elete, [K]eep, [R]ead, [F]ile away:
+
+  * [D]elete Exactly as described above.
+
+  * [K]eep Holds the message in the user's mailbox.
+
+  * [R]ead Views the message to help decide whether they wish to keep or delete it.
+
+  * [F]ile away Removes the message from the user's mailbox, but places it in a separate file on the e-mail disk.  These stored messages can be later accessed with the FR (File Retrieval) command at the e-mail prompt.
+
+=== Personal File Storage
+
+Using kbd:[FR], users can
+
+* Read previously "filed away" e-mail messages
+* Get a directory of their personal e-mail files with $
+* #FIXME# is there a delete option?
+
+== Verifying E-Mail
+
+Type kbd:[V] (and the user's handle when prompted) to see how many e-mail messages they have, and how many are from you.
+
+== Editing E-Mail
+
+Type kbd:[VE] (and the user's handle when prompted) to edit any e-mail you have already sent to that user.
+
+== Forced E-Mail
+
+By typing kbd:[FM] user with remote maintenance access may send "forced e-mail," that is, e-mail which is displayed to a user when they log on to the BBS.  It is unabortable, and cannot be deleted by the user.
+
+The user creating this e-mail is asked whether they want to create or remove a "forced e-mail" file, and prompted for the user's handle the forced e-mail is for.
+
+When reading a forced e-mail file, if either of the last two lines
+contain the single word
+
+|===
+| ERASE | the forced e-mail file is erased.
+| OFF | the user is logged off immediately after reading the forced e-mail.
+|===
+
+Note that `ERASE` and/or `OFF` must both be entered with all capital letters.
+
+=== Leaving the E-Mail Subsystem
+
+Type kbd:[Q] or a command that takes you to any other subsystem.
+
+If the user has any messages left in their e-mail inbox, they are prompted whether they want to delete them.
+
+== News Files Subsystem
+
+The news files are structurally different from the other file areas of the BBS--such as Movie Files or Program Files--and for that reason they are covered separately here.
+
+Typing kbd:[NF] at most prompts takes you to the News File library. Here, users can re-read BBS news files they see at login, and you can write new ones.
+
+If you have "File Maint Access" you will be placed in News-Maint:
+Otherwise, the prompt users see is
+
+ News:
+
+=== Adding a News Item
+
+To add a file to a directory, you are asked for the title.  This is what the user will see when they list news items; it also names the file on disk where the news text is stored.
+
+If the filename begins with a `$` (dollar sign), it becomes a "repeating" news file, shown to users each time they log on to the BBS.
+
+All News files are non-abortable the first time they are shown to a user.
+
+=== Reading News
+
+Type the number of a news file (see `List`) to read that item.
+
+=== `Kx` Killing a News File
+
+A maintenance operation, type kbd:[K] followed by the number of the news file you wish to kill.  (#fixme#: confirmation?)
+
+`E_x_` EDITING A FILE
+
+If you have maintenance access, type E followed by the number of the entry to edit.  You may then change the information you entered using A: (fixme: news file name, whether it's a repeating news item) and the file will be loaded into the editor for editing.
+When the file is re-saved, you are given the opportunity to update the date of the file so it again appears as a new file.
+
+== Listing News Files
+
+Type L or Lx (x is the starting number to list from) at the prompt to list all news files available to that access level.  Each is given a number, and if you have News-Maint access, you can also see access information for that file.
+
+== Leaving
+
+Entering Q will return a user to the main command level.  A user may also go to any other section of the board by entering the appropriate command.
+
+== The File Libraries (Movie, Plus, RLE, Text)
+
+There are three sections of the Image BBS that provide very different functions but the sections themselves are functionally identical.  They use the same routines and all of the same commands.
+
+=== Explanation of Subsystems
+
+There are four separate types of files handled by the same program:
+
+* Movie files Files containing cursor movement, color, and uppercase/graphics characters, displayed if the user is in Commodore C/G mode).
+* Plus files Sysops can add games or BBS utilities in this section.
+* Text files Plain Commodore PETSCII or ASCII text files.
+* RLE files
+
+====
+NOTE: Short for "Run-Length Encoded," this is a black-and-white high-resolution file format which requires certain telecommunications or viewer programs.
+Graphics data is represented by ASCII text.
+Control sequences begin and end the file, telling the terminal or viewer to switch into or out of high-resolution modes.
+====
+
+We describe the Movie File Library here, but the same principles apply to other libraries.
+
+=== MF Movie File Library
+
+Type this at any prompt to enter the Movie-File library.
+
+If you have "File Maint Access," you are placed in "Movie-Maint 1".
+
+Since the Movie File libraries may have sub-directories and sub-directories under those sub-directories, the number following the prompt refers to the directory level you are at.  When you first enter the Movie Files section, you are placed in directory level 1.
+
+=== Adding Sub-Directories
+
+To add a sub-directory, you must have Movie-File Maint access.  Select A at the "Movie-Maint" prompt.
+
+  * You are asked for the Title.
+
+This is the title the user sees when listing the directory.  It has no relation to the actual filename about to be created.
+
+. Next, you are asked for the filename.
+
+.. To create a directory, type kbd:[d.] followed by the sub-directory filename you want to have on the Directory disk.
+
+For example, if you enter kbd:[d.movies], the BBS adds `m.` to the name, and the sub-directory is saved as `d.m.movies`.
+
+The letter added depends on the subsystem used:
+
+m. movie files
+
+p. plus files
+
+r. RLE files
+
+t. text files
+
+* Next, enter the access level(s) which see that sub-directory when listing the files available.  Access is determined in the usual way; either from the chart shown earlier, or by typing "?" and answering Y or N for each group.
+* Finally, you are asked for how many credits to charge users to enter this sub-directory.  You can charge credits for:
+** entering the sub-directory, but make accessing the files free
+** viewing the files within, but not entering the directory itself
+** both entering the sub-directory and viewing the files within
+
+Or you need charge nothing if you wish.  It's up to you! The credits charged here are put into the BBS-wide credit pool.
+Refer to section #FIXME# to learn how to set that up.
+
+==== Adding a File
+
+To add a file to a directory or sub-directory, enter the directory or sub- directory where you wish to add the file, type A at the prompt.
+
+Here is a discussion of the following prompts:
+
+  * Title: As above.  Again, this is just what the user sees, and has no relation to the actual filename viewed when the item is selected.
+
+  * Filename: Type the filename as it appears on disk.  (In the PlusFile area, there is no need to type the leading "+.", the program adds that automatically.)
+
+  * Device: Type the device number where the item can be found.
+
+  * Drive: Type the drive number where the file can be found.
+
+If you do not have a dual drive (or the file is not on a dual drive), just press kbd:[Return].
+
+  * Access: Type the access level you will allow to view this file.
+(Remember, you can enter a ? at the access   prompt to let the BBS help calculate it.)
+
+  * Credits: Type the number of credits (if any) you will charge users for viewing this file.
+
+=== Entering a Sub-Directory/Running a File
+
+Type the number (see LIST) of a file to read/run it, or sub-directory to enter it.
+
+If you wish to go back one level when in a sub-directory (for example: you are at "Movie-Maint 2" and wish to return to "Movie-Maint 1"), type B or "<" at the prompt.
+
+Type M to return you to "Movie-Maint 1" (the Main Directory) from any sub-directory level.
+
+=== Kx Killing a File/Sub-Directory
+
+A maintenance only operation, type K followed by the number of the file or sub-directory you wish to kill.  You will also have the option of scratching the file referenced by the directory entry off the disk.
+Killing a sub-directory is not possible if there are files present in that directory.
+
+=== Ex Editing a File/Sub-Directory
+
+If you are have Movie-Maint access, type E and the number of the entry to edit.  You can change any of the information you entered originally.
+
+=== List
+
+Typing kbd:[L] lists all files and/or sub-directories available at that level.  Each is listed by number.  If you have "File-Maint" access, you can see the filename, access, credit, device and drive information for that file or sub-directory.
+
+=== QuickList
+
+QL lists the items in the directory like List does, but #FIXME#
+
+=== Q Leaving
+
+To leave the file areas, kbd:[Q] takes users to the main command level, or type a command taking you to any other area of the BBS.
+
+== BBS Database Subsystem
+
+`BB` takes users to a bulletin board listing program that allows users to add, list, or delete the numbers for other bulletin board systems.
+
+When first entering the system they are presented with a menu of options
+and arrive at the BBS database prompt:
+
+ dBASE:
+
+=== Commands
+
+The active commands for this module are:
+
+```
+L)ist BBS Numbers
+Q)uit To Main Menu
+D)isplay Notes
+A)dd A Number
+R)emove An Entry
+E)dit An Entry
+```
+
+The last three options only appear if the user has post and respond capabilities.
+
+=== Listing a Number
+
+kbd:[L] brings up another menu of options which allow users to narrow down
+the scope of the listing they would like:
+
+.Bulletin board listing options
+[cols=",",]
+|===
+|B)aud rate |Prompts for the minimum baud rate they want to search for.
+BBSes listed support that baud rate or less.
+
+|A)rea code |Prompts for the area code they want to search for.
+Telephone numbers of BBSes listed have that area code.
+
+|C)omplete listing |Lists all BBSes entered in the database.
+|===
+
+The spacebar or kbd:[/] key aborts any of the listings.
+
+=== Adding a Number
+
+Typing kbd:[A] at the `dBASE:` prompt allows users with post/respond capabilities to add a BBS number to the listing.  They are prompted for
+the complete information on the board they wish to add, including
+
+* The BBS name
+* Phone number
+* Baud rate
+* Hours of operation
+
+Several characteristics of the BBS are asked about (and listed when a
+user lists that BBS):
+
+* {blank}
+** If it charges a fee
+** Has U/D areas
+** Has online dating, games or role-playing games
+** Is PC Pursuitable, networked, etc.
+
+The database is checked for a duplicate under this phone number.  If there is one, the user is notified, and returned to the _dBase_ prompt.
+
+After all prompts have been answered, the results are shown, and they
+can
+
+* change any answers they've given
+* continue and write the entry to the database
+* or abort back to the _dBASE_ prompt
+
+Adding an entry first uses any previously deleted entries, otherwise adds to the end of the list.
+
+=== Removing an Entry
+
+kbd:[R] Only the sysop, a user with maintenance access, or the user that posted a number may remove it.  Anyone else attempting to remove a number is told the entry can only be removed by the original poster.
+
+A BBS name is prompted for.
+The list will be searched and if the entry was posted by the same user, it will be deleted.
+
+=== Editing Information
+
+kbd:[E] A sysop or the user who posted a BBS number may edit the information.
+The program asks for the entry number to edit, checking to make sure the user has access.  If so, they may change any information in the entry,
+and re-file it.
+
+=== D Display Notes
+
+This brings up a listing of abbreviations used in the BBS listings.
+These include CBM for Commodore, etc.
+
+=== Q All Done
+
+To leave the BBS Lister, type Q (which takes users to the main command level), or a command taking you to any other area of the BBS.
+
+VB VOTING BOOTH
+
+This takes you to the Voting Booth.  If you have Remote Maint Access, you see the prompt `Vote-Maint-\>`, otherwise you will see `Vote-\>`.
+
+If there are no topics available and you do not have `Vote-Maint` access, you are returned to the main command level.
+
+== Add a Topic
+
+kbd:[A] Only available in Vote-Maint.  This allows you to add a new vote topic.
+
+An explanation of the prompts:
+
+* `Subject`: Enter a short but descriptive title of the vote topic.
+
+* `Access`: Enter the access level this topic may be seen by.  This is set as with other areas of the BBS.
+
+Now you are placed in the IMAGE text editor.  Type the question text.
+
+(Do not include the answers, these are entered separately after you save
+
+the question text.)  When done, enter kbd:[.S] on the first column to save
+
+the text and continue to the next section.
+
+Now enter the choices a user has for this topic, and a short amount of text which better describes this option.
+
+There is a limit of 9 choices, after which the voting booth automatically saves the topic.
+If you have fewer choices, hit kbd:[Return] at the last one, and you save the choices then.
+
+== Kill a Topic
+
+kbd:[Kx] This function is only available to users with `Vote-Maint` access.
+Type kbd:[K] and the topic number (see `List` below) to be killed.
+You are asked to verify killing the topic.
+If you answer kbd:[Y], the topic is killed from the Voting Booth topic directory, and erased from the disk.
+
+== Vote/View Results
+
+Available to all users, typing the topic number allows you to vote on it (if you have not yet voted on that topic) and/or view the results.
+
+The voting booth uses ID numbers and handles to keep track of who voted, so a user cannot vote twice on the same topic.
+
+== List Topics
+
+Available to all users, kbd:[L] lists all topics available to that user's access level and the date each topic was created.
+
+If you have Vote-Maint access, the access level for each topic is also listed.
+
+== Leaving
+
+kbd:[Q] Users may leave the voting area by typing Q to return to the main command level, or type a command which takes them to any other area of the BBS.
+
+== User List
+
+Available to those who have their User List flag set, kbd:[UL] lists either all users, or a subset of users according to specific attributes.
+
+=== Quick Listing
+
+* kbd:[Q] A "quick list" displays the user list sorted one of two ways:
+
+** Numerically
+
+** Alphabetically
+
+This list shows you only the handle and ID numbers.
+You can start listing at any number or alphabetic character(s) depending on the type of sort you select.
+
+== Regular Listing
+
+kbd:[R] To search for a particular user or attribute (or if you want more information than just the handle and ID), use this option.
+
+Type the number of attribute(s) to search for, then fill in the information to narrow down the search.
+
+When you are done, or if you wish to list all users, hit kbd:[Return].
+
+Next, type the number to start the listing from.
+The program continues from that point to the end of the user file.
+
+The space bar or slash key aborts the list at any time.
+
+If a user has remote maintenance access, the list shows all information
+
+about a user:
+
+* handle
+* ID number
+* last call date
+* computer type
+* area code and phone number
+* access group
+* real name
+
+Otherwise, the list only shows:
+
+* handle
+* ID number
+* last call date
+* computer type
+* area code
+
+=== Leaving
+
+To leave the user list, type Q or hit kbd:[Return] (which takes users to the main command level), or a command taking you to any other area of the BBS.
+
+
+== Maintenance Functions
+
+There are several maintenance commands available, with differing
+availability:
+
+* only at the main prompt
+* at all prompts
+* from local or pseudo-local mode
+* to users with remote maintenance access
+
+Each type of command is described in this chapter.  Here is a brief synopsis of each command, followed by a more complete description.
+Commands marked with * are available only from local/pseudo local mode.
+
+[cols=",,",]
+|===
+|Command |Purpose |Reference
+|CD |Change a device number |Page link:#CD command[21]
+|* CP |Online file copier |
+|DC |DOS Command |
+|ECS |Extended Command Set editor |Page link:#anchor-185[59]
+|* ED |Edit a user's stats |
+|* R |Run a plus file (which must be on the plus file disk) |
+|  RS |Reserve a new account |
+|  VF |View feedback, new user feedback, error log |
+|* WF |Online "word processor" |Page link:#anchor-353[62]
+|===
+
+Table 23: Maintenance functions
+
+=== Local Maintenance Commands
+
+==== Extended Command Set Editor
+
+The Extended Command Set, or ECS, allows you to add, delete or change commands for your BBS without needing to modify your `im` module or re-boot the BBS.
+It also gives you flexibility to:
+
+* enable or disable commands
+* password-protect access
+* restrict availability of sysop-only commands to local or
+pseudo-local mode
+* restrict certain commands to specific security levels
+* configure whether a command calls a plus-file module on disk or a specific line in the memory-resident `im` module (and whether that call requires a GOTO or GOSUB)
+
+However, it will _not_ allow you to make changes to the BASIC program.
+The ECS will allow you to add both main level and all level commands, either by loading a module or calling a line number in your `im` module.
+Each command has several flags attached to it:
+
+[cols=",",]
+|===
+|Access |Allows you to adjust which access level(s) are allowed to access this command.
+
+|File/Line |Tells ECS to either load a +.module or call a specified line number in your im module.
+
+|GOTO/GOSUB |Tells ECS whether the command is a main level command (_e.g._, SB, UD, VB) or an all level command (_e.g._, XP, EP, F, C).
+
+|Credits |Allows you to charge _x_ credits each time the user enters this command.
+If the user has insufficient credits, they are not able to access it.
+
+|Password |Allows you to password-protect a command. If left blank, the command is unprotected.
+
+|ZZ Lock |Allows you to lock the command so that only a console or pseudo-local user can access it.
+
+|Ignore a|
+Tell the ECS whether it should ignore extra characters on a command (ie; SB2,1, BF4).
+
+On: extra characters are ignored and can be used as flags such as with SB.
+
+Off: it is assumed the entire string is a command.
+
+|===
+
+Table 47: Extended Command Set flags
+
+===== Using The ECS Editor
+
+Using the ECS command editor is really very simple—there are just a few things that you should know.
+
+[arabic]
+. If you Add or Edit _any_ commands while you are in the editor, you should first (S)ave the new configuration then (M)ake it active.
+. A pre-configured ml.ecsdefs has been included with this package that contains all the standard IMAGE v1.2 commands plus the commands MA (macro toggle) and ECS which loads the ECS editor (+.ecs).
+
+Re-boot your BBS and add or edit any commands that you wish using +.ecs by entering ECS at the main prompt.
+
+NOTE: ml.ecsdefs is a ML file and must be COPIED. Also if you plan to use the MACS (also included on this diskette) you must install the ECS prior to installing MACS.
+
+=== ED User Edit
+
+Edit your users' information whenever needed.  Type the handle or ID number of the user to edit.
+
+* If entering the ID number, do not enter the BBS identifier (if your
+identifier is `SS`, and you want to edit user number 50, you would enter
+`50`, not _SS50_)
+
+The BBS then loads the user's stats into memory.  Anyone with pseudo-local maintenance access may change anything they wish.
+
+* One exception to this is the password, which can only be seen or changed by the sysop (ID#1).
+
+The first page of user information is shown.  If you wish to change anything, type its number at the prompt, or kbd:[N] to view the next page of information.
+
+Then enter the new information.  Don't worry if you make a mistake: you can change it again if you wish, nothing is permanently changed until you answer kbd:[Y] to the *_Save changes?_* prompt when you are done.
+
+If the information you wish to change concerns the user's "flags`"—that
+is, certain functions the user can access—then you get a list like in the BBS configuration editor (page link:#anchor-356[Error: Reference source not found]).
+
+_No matter how much I read and re-read this next paragraph, it never made much sense to me.  So I'm re-writing it, hopefully keeping the spirit and intent of the original wording...  hurty head bad..._
+
+These flags reflect the default settings whenever you first change the access group you gave the user.  Afterwards, they may be customized on a per-user basis.  Changing one flag will not affect any other flags for that user.
+
+You may also delete an account or reserve an account with this function by changing the user's handle.
+
+* To delete the account, change their handle to an ^ (up arrow). The BBS prompts with "Delete this user?" before any action is taken.  If "yes"
+is selected, the account is considered deleted, and it is now available
+for a NEW or REServed user (although it is not overwritten, making it
+possible to "resurrect" a deleted user by changing the handle back, before another new user takes that account).
+
+* REServed users get prompted for a password, number of credits, and access level.  (More on this in the "RS" function below.)
+
+=== CP File Copier
+
+This command allows you to access the online file copier, patterned after the popular "Copy-All" program by Jim Butterfield.  Our thanks go to him for supplying us with the source code to help us write this version.  The online copier will copy PRG, SEQ, and USR files from one device or drive to another with little effort.
+
+NOTES:  _CP_ will NOT copy files to the same device and drive.  Use the "DC" command for this, with standard Commodore DOS commands [ex. _C0:FILE2=FILE1_].
+
+CP will also not copy REL files.
+
+TIP: Use `+.CP-rel` online, or Jim Butterfield's "Copy-All" or Jim McAndrew's `rel copy` offline to do this.
+
+=== Write File
+
+You may access the Image BBS editor as a mini word-processor, to write or edit any sequential (SEQ) file.
+When you type the kbd:[WF] command at the main prompt, the editor will load, and you are able to use it to kbd:[.G]et (load) and kbd:[.P]ut (save) files from any device and drive you have online.
+This makes it easy to write, edit, or--in the case of "`putting`" to a file which already exists, append to--a file.
+
+==== Additional Dot Commands
+
+There are also additional editor commands built into the `WF` function not normally available from the editor subsystem:
+
+.WF Editor Dot Commands
+[cols=",",]
+|===
+|kbd:[.G] | Get File
+|kbd:[.P] | Put File
+|kbd:[.Q] | Query
+|kbd:[.U] | Unborder
+|kbd:[.$] | View Directory
+|kbd:[.&] | Read Text File
+|kbd:[.!] | DOS Command
+|===
+
+.Get
+
+You are prompted for a filename, then the device and drive the file is on.  The file will be loaded (assuming no errors occur) and you can edit it as necessary or create a new file if you wish.
+(#fixme#: correct?)
+
+When finished, you have two choices:
+
+kbd:[.S]ave
+
+Saves the file (prompting for a filename if one hasn't been established with the Put command).  It checks for the presence of an existing file
+under the given name, and if one is found, it prompts:
+
+ [A]ppend [R]eplace [Q]uit:
+
+Here, you can:
+
+* kbd:[A]ppend the text in the editor to the existing file
+* kbd:[R]eplace the file on disk with the text in the editor
+* [Q]uit to the editor (keeping existing text intact) without saving
+changes
+
+kbd:[.P]ut
+
+Allows you to save the file wherever you wish, returning to where you left off in the editor to continue working.
+You are prompted for a filename in the same way as above (if you used kbd:[.G]et, the filename you got is displayed serving as a reminder and the default filename).
+You are prompted for the device and drive to save to (the default is 8:0).
+
+kbd:[.Q]uery
+
+Re-displays the editor's opening message, showing how many lines used so far, remaining, and bytes of free memory.
+
+kbd:[.U]nborder
+
+Removes a border or partial border that you have done.
+It removes the first and last lines, and first and last characters from each line _if_ they are the same character.
+
+=== Run a Plus File
+// R
+Run any Plus File you have on your Plus File disk from the main prompt.
+You are prompted:
+
+ Run +.
+
+Type the filename after that.
+(Pressing kbd:[Return] by itself exits to the main command level.)
+
+=== Remote Maintenance Commands
+
+==== View Feedback
+// VF
+Only those with remote maintenance access may use the VF function. When
+first entered, it counts the number of messages which fall into the
+following categories:
+
+* Feedback
+* Error log
+* New user log
+* Telecheck
+* Canned messages
+
+This month we are going to look at one of the truly outstanding features of IMAGE 1.2, the enhanced "+.VF" program.
+
+The basic `+.VF` from the version 1.0 has been expanded and enhanced by Dr.Bob of the "Enchanted Forest BBS" in Philadelphia.
+Bob has worked very closely with Little John and has really done a tremendous job with the "+.VF".
+
+Some of the new features include "canned" messages and selective deletion of feedback, new user feedback, etc.  We'll look at all of the different commands.
+
+The feature that seems to cause the most questions is the "canned message" feature.  A "canned message" is simply a pre-written message or "form letter" that you may wish to send to a user, much like the "new user welcome".
+
+From the initial VF: prompt, selecting kbd:[C] will bring up an option menu consisting of A/dd, E/dit, K/ill, L/ist, or S/end.
+
+Selecting the Add option will ask you for a title for the message, and then put you in the editor to write your message.  Your message can be as brief or as long as you'd like and can contain any MCI or color just as any message entered in the editor.
+
+The Edit option will ask which message to edit.  A numeric input is required.  If you don't remember which one you want to edit, simply entering the kbd:[?] will bring up a list of titles and numbers, enter the number of the message you wish to edit and it will be loaded into the editor for whatever editing you desire.
+
+The Kill option works the same way, the number of the message you want killed.  Better be sure here as there is no safety check: if you say kill, it is gone.
+
+List does just that, it will provide a list of available "canned messages".  You can have up to 60 of them if you desire.
+
+The final option is Send, which simply asks which one to send.  Again, if you don't know a question mark will bring up the list.  Very neat.
+
+When reading any of the feedback, new user feedback, telecheck log or error log you have several other options available as well, they are:
+
+. #FIXME#
+
+The ones that are new or changed include the Can/CRed/Del and View. The others are unchanged, or have minor changes.
+
+Selecting kbd:[C]an will give you the option of sending the user any of the "canned messages."
+You might even have one that you want to send to people that continually have trouble with the telecheck or you might have one that you send to anyone that runs into an error on your system (though he should have gotten error e-mail).
+When you select kbd:[C] you will be asked "which one" and a kbd:[?] will bring up the list of those you have available.
+
+kbd:[CR]ed is very handy for giving credit points to users.
+I'm sure you have all had occasion to need to restore some credit to a user for a bad download or as a reward for something, now you can do it from here, no need to go into `ED` just to give him credit.
+
+kbd:[D]el is one of my own favorites.
+The user that signs on with an obviously fake account or the irate user that says "just delete me from your system if I can't..." whatever.
+The kbd:[D] works _wonders_... and really feels _good_ afterwards.
+May not get a lot of use but when it does it is worth having.
+
+Finally, kbd:[V]iew.
+You can View the person's account to see what his status is, if he has been given access or if he wants some credit or whatever.
+View is particularly useful on systems where more than one person may give access.
+
+In addition to these great features there has also been added the "Selective delete" option so you can delete all or any part of your feedback or other messages.  When Delete is selected from the VF: prompt, you select which to delete then have an option of selective or auto delete.
+
+_Selective delete picks which messages you want to retain through a menu
+of options:_
+
+__
+
+_[D]elete [K]eep [A]bort_
+
+__
+
+__The options should be self-explanatory, I hope.__
+
+__
+
+All in all the VF is now about anything a busy sysop could want to maintain his daily message traffic from his users.  This is really one of the better "hidden" features of 1.2.  Well done Dr. Bob.
+
+(A late note here, someone that just converted to IMAGE from 12.0 said that the "+.VF" was one of the best features he had noticed since his conversion.)
+
+{empty}(c) January 1990 FandF Products
+
+Permission to reprint is granted provided the file is printed in its entirety.
+
+==
+
+If the user is in "Local" or "pseudo-local" mode, they are given an option to delete the entries.
+
+Entering N, E, or F will allow them to read the entries beginning with
+the first entry or with any entry number he may wish to enter (Example:
+if there were 10 feedback messages, they could start reading number 5 by
+entering a 5 at the prompt, or enter N to begin reading those entries that are NEW since his last call, if the feedback was not deleted previously).
+
+After each message he has several options, including:
+
+* advancing to any message by typing the message number
+* N or kbd:[Return] continues on to the next message
+* R responds to the message
+* A changes the user's access
+* F forwards the message to any other user as e-mail
+* Q quits back to the options menu
+
+After all messages have been read, the user is returned to the options menu.  If access is assigned to a new user the Sysop is given the option of sending the new user a "New User Welcome" that consists of the file s.nu welcome.  (This can be created using the WF command shown above.)
+
+New user feedback may also be archived if desired.  This copies your new user feedback to a file called e.nark (which could be backed up from time to time, as many sysops like to do).  This eliminates the search through older messages each time VF starts up.
+
+=== RS Reserve Account
+
+A reserved account (an account with a pre-assigned password, number of credits and access level) can be established using this command.  A reserved account is useful for a new user who may sign up when you are not available to validate them.
+
+The RS command establishes any deleted account (where the handle is ^) as a reserved account. When first entered, you are prompted to enter the starting account number.
+
+* Typing a number starts searching at that account number
+* If E is typed, or no deleted accounts are found in the user file, the next valid account is assigned as the reserved account.
+
+A password, access level, and number of credits will be prompted for.
+
+After this information is entered, the BBS reserves that account.
+
+=== +.weed
+
+The weed program allows you to automatically go through your user files, and delete users who have not called within a specified amount of time.
+
+To use it, run +.weed.  You are asked if you would like auto-weed, or selective weed.
+
+* "Selective weed" prompts whether you want to delete each user that it finds before deleting them.
+
+It also includes users with non-weed status, since you will be prompted.
+
+* Auto-weed doesn't prompt, but deletes each user it finds that has not called since the cut-off date.  (Non-weed status users are ignored in this mode.)  You are asked for the cut-off date, which will be the date that is checked against the last call date.
+
+Enter it in the format shown, then tell the program which ID number to start from.  Everything else works automatically, and you hear a beep when the program is finished.
+
+=== AutoWeed system
+
+==== +.access
+
+This is used to edit your access groups. You must reboot in order for the access information to take effect.
+
+==== +.reconfig
+
+This program allows you to re-define such things as number of calls to the system, board name, prime time, etc.  Simply run it and follow the prompts to use.
+
+
+=== Nightly AutoMaint
+
+The "AutoMaint" feature in +.lo is designed as a building block to add
+nightly maintenance functions—you may add any sort of functions you wish.
+
+As it now stands, it will rotate the caller and AutoMaintenance logs
+every night at midnight (or as soon as possible thereafter, if a user
+happens to be online at around that time, AutoMaintenance is delayed until after they log off).
+
+A week's worth of logs are maintained under the filenames e.log x (where x is the day of the week: 1=Sun...7=Sat, like setting the weekday when changing the BBS clock manually).  They may be viewed with the LG command online.
+
+Anyone with limited disk space who does not wish to use this feature can set the variable am to 0 in line 1 of +.lo, and use +.NL (New Log) whenever the log reaches a certain size.
+
+---
+
+Changelog:
+
+2018-07-29: Fixed lightbar page 2 table. Right Fn2 is not MCI disable. Right Fn1 is.
+
+Added `DC` to local mode command table.
+
+[appendix]
+bla
+
+////
+
+[index]
+
+- A -
+
+Access codes.................................................6, 17
+
+Access groups................................................7, 18
+
+changing................................................12
+
+AutoMaint.......................................................
+
+  - B -
+
+B.A.R. screen...........................................11, 19, 21
+
+BBS listings.................................................35-36
+
+Bells, local....................................................13
+
+Booting.....................................................10, 55
+
+boot disk................................................4
+
+- C -
+
+Cartridges.......................................................2
+
+Chat....................................................12, 13, 20
+
+message.............................................14, 20
+
+Check line..........................................See "lightbar"
+
+Clock...........................................................11
+
+Color/Graphics mode.....................................12, 14, 22
+
+Command stacking................................................22
+
+Configuring..............................................5, 17, 50
+
+Conversion, 12.0-12.1.........................................8, 9
+
+Copier..........................................................48
+
+offline ("copy-all" or "rel copy")........................
+
+on-line ("CP" command)....................................
+
+protocol..................................................
+
+Copyright message...............................................14
+
+Credits..........................................................8
+
+adding to a user..........................................
+
+ratios..................................................18
+
+unlimited...............................................19
+
+when validating/unvalidating files........................
+
+- D -
+
+Debugging.......................................................12
+
+Deleting users..............................................48, 50
+
+Devices/drives...................................1, 2, 4, 5, 6, 10
+
+blocks free.........................................11, 14
+
+changing number..........................................2
+
+hard drives.......................................1, 5, 56
+
+directories..............................................3
+
+- E -
+
+Editing parameters..............................................21
+
+Editing users...................................................47
+
+Editor (see also MCI)........................................39-45
+
+commands.............................................39-41
+
+abort...................................................39
+
+border..................................................41
+
+columns.................................................41
+
+clear text..............................................41
+
+delete..................................................40
+
+edit....................................................40
+
+Editor (see also MCI)........................................39-45
+
+exit....................................................40
+
+get files...............................................41
+
+find....................................................41
+
+help....................................................41
+
+insert..................................................40
+
+justify.................................................40
+
+line numbering..........................................40
+
+PAGE 58 * INDEX ==
+
+list....................................................40
+
+  MCI read................................................40
+
+put file................................................41
+
+read....................................................40
+
+save....................................................39
+
+view disk directory.....................................41
+
+control keys............................................41
+
+line ranges.............................................39
+
+MCI commands.........................................42-45
+
+number of lines available...............................18
+
+e-mail....................................................16, 30-31
+
+access to...............................................19
+
+forced e-mail.............................................31
+
+reading email...........................................30
+
+sending email...........................................30
+
+Error log.......................................................49
+
+Expert mode.....................................................22
+
+- F -
+
+Feedback........................................................20
+
+viewing.................................................49
+
+- G -
+
+Garbage collection..............................................14
+
+Graffiti........................................................16
+
+- H -
+
+Handles......................................................8, 55
+
+Help menus......................................................20
+
+Hotkeys.........................................................
+
+- I -
+
+Idle screen.....................................................10
+
+commands................................................
+
+bottom screen...........................................13
+
+  top screen..............................................11
+
+Instant logon...................................................14
+
+Interfaces.......................................................2
+
+Printer..................................................
+
+RS232....................................................
+
+- K -
+
+Keeping e-mail
+
+in selective delete.......................................
+
+Killing
+
+files in transfer libraries...............................
+
+news files................................................
+
+old posts.................................................
+
+- L -
+
+Last call date change..........................................21
+
+Lightbar (listed in order of appearance)
+
+Sys....................................................12
+
+Acs....................................................12
+
+Loc....................................................12
+
+Tsr....................................................
+
+Cht....................................................
+
+New....................................................
+
+Prt....................................................
+
+U/D....................................................
+
+Asc....................................................
+
+Ans....................................................
+
+Exp....................................................
+
+Fn5....................................................
+
+Fn4....................................................
+
+Fn3....................................................
+
+Fn2....................................................
+
+Fn1....................................................
+
+Local mode..................................................12, 22
+
+Log of callers..............................................19, 21
+
+    printing....................................................13
+
+    restarting..................................................50
+
+Logical files....................................................2
+
+Login indentifier................................................8
+
+Logoff..........................................................20
+
+Logon...........................................................14
+
+instant.................................................14
+
+restricting.............................................12
+
+- M -
+
+Machine language routines.......................................54
+
+Main command level..........................................16, 20
+
+  prompt.........................................................8
+
+maintenance..................................................47-50
+
+  file..........................................................19
+
+  remote........................................................19
+
+  sub-board.................................................19, 25
+
+PAGE 59 * INDEX ==
+
+memory...................................................11, 3, 51
+
+MCI commands.................................................42-45
+
+access to...............................................19
+
+commands.............................................42-45
+
+abort...................................................45
+
+about...................................................42
+
+backspace...............................................43
+
+bells...................................................42
+
+clear screen............................................42
+
+color...................................................42
+
+numeric digit formatting................................45
+
+get character...........................................42
+
+input...................................................43
+
+integer variable........................................45
+
+jump on equal...........................................43
+
+jump on not equal.......................................42
+
+  "kolorific".............................................43
+
+  leading characters......................................45
+
+  new lines...............................................43
+
+  "over" (repeat character)...............................43
+
+  printer mode............................................43
+
+  print modes.........................................43, 44
+
+  print speed.............................................44
+
+  reset defaults..........................................44
+
+  reverse mode............................................44
+
+  string variables........................................45
+
+  tab.....................................................45
+
+  test variables..........................................44
+
+  variables...............................................44
+
+  wait....................................................44
+
+Modems........................................................1, 4
+
+answering manually......................................11
+
+carrier detect..........................................12
+
+carrier invert..........................................11
+
+files (modules).......................................1, 4
+
+resetting...............................................11
+
+speaker on/off..........................................11
+
+supported...............................................
+
+Supra 2400..............................................56
+
+troubleshooting/setup...................................56
+
+Movie files...............................................3, 33-34
+
+- N -
+
+NetMaint..........................................................
+
+Networking........................................................
+
+planning a network........................................
+
+utilities.................................................
+
+New users................................................7, 12, 15
+
+credits..................................................8
+
+viewing information.....................................49
+
+New user
+
+message.................................................22
+
+restrictions..............................................
+
+viewing in VF.............................................
+
+News files......................................................32
+
+At login..................................................
+
+Adding....................................................
+
+Editing...................................................
+
+Killing...................................................
+
+- O -
+
+Output routine.................................................53
+
+- P -
+
+Passwords...................................................8, 22
+
+Plus files.................................3, 4, 33-34, 49, 51-53
+
+Prime time................................................8,13,19
+
+Printers........................................................2
+
+MCI command............................................43
+
+printing log...........................................13
+
+printing on-line.......................................13
+
+routines used............................................
+
+supported types..........................................
+
+private system.................................................13
+
+programming................................................51, 54
+
+prompt mode....................................................21
+
+pseudo-local mode..........................................12, 18
+
+- Q -
+
+Quitting to main command prompt................................21
+
+- R -
+
+Reconfiguring................................................9, 50
+
+RAM Expansion Units..............................................2
+
+RES accounts............................................15, 48, 50
+
+- S -
+
+Screen
+
+files (scn.*).............................................
+
+files (user text).........................................
+
+logon...................................................15
+
+Screen blanking.................................................13
+
+Serial number...................................................14
+
+changing....................................................
+
+Setting time....................................................10
+
+manually..................................................
+
+reading real-time clocks..................................
+
+Status report...................................................21
+
+Subsystems, changing............................................22
+
+Sub-boards.............................................5, 6, 23-25
+
+ability to post/respond.................................18
+
+anonymous boards.....................................6, 25
+
+defining sub-boards..................................6, 17
+
+editing/killing bulletins...............................24
+
+frozen bulletins........................................25
+
+non-anonymous boards.................................6, 25
+
+password boards..................................6, 25, 48
+
+posting bulletins.......................................24
+
+reading bulletins....................................23,24
+
+Subops/co-sysops..........................................6, 7, 25
+
+Subroutines..................................................51-52
+
+Sysop account....................................................7
+
+System files..................................................2, 3
+
+d.* files................................................3
+
+e.* files................................................3
+
+m.* files................................................3
+
+s.* files........................................3, 16, 17
+
+u.* files................................................3
+
++.* files.............................................3, 4
+
+System information..............................................20
+
+Sayings (SY)....................................................21
+
+- T -
+
+Telnet bridges
+
+BBS Server................................................
+
+defined...................................................
+
+tcpser :tcpser_version:.............................................
+
+tcpser4j..................................................
+
+Terminal program............................................11, 46
+
+phonebook...........................................16, 46
+
+Text files...............................................4, 33, 34
+
+Time on system..............................................13, 21
+
+Total calls.................................................... 14
+
+Trace.......................................................... 12
+
+- U -
+
+Upload/download........................................5, 6, 26-29
+
+copying/moving files................................28, 29
+
+defining libraries...................................6, 17
+
+exchange libraries......................................29
+
+file transfers......................................26, 27
+
+free download libraries..............................6, 29
+
+killing files...........................................28
+
+protocols...............................................26
+
+reading files...........................................28
+
+restricting......................................3, 17, 19
+
+subops..................................................28
+
+validating/unvalidating files...........................28
+
+User flags............................................7, 18, 47-48
+
+User information................................................15
+
+User list...................................................19, 38
+
+- V -
+
+Validating files................................................28
+
+Variables....................................................51-53
+
+variable list...................................................53
+
+Voting booth....................................................37
+
+- W -
+
+Weeding old users.................................................
+
+non-weed flag...........................................18
+
+Windows (transmit/receive)......................................14
+
+WF (SEQ file editor).....................................17, 48-49
+////

@@ -1,0 +1,189 @@
+include::12b-preface.adoc[]
+== Preface
+
+We feel that the program you have just received, Image BBS version 1.2b, is the most versatile and elaborate BBS program for the Commodore 64 computer available today!
+It is the result of over five years of work and many hours of programming time, has taken ideas from modem users and BBS sysops all over the world for its design, and offers many hours of pleasure for both BBS callers and sysops.
+
+If you are a programmer, or even a novice programmer, Image BBS is designed to be easy to modify to suit your own tastes, and even to add modules to do any type of function on the BBS that you may wish to have!
+With some practice, and knowledge of IMAGE programming techniques, virtually anything is possible to add to your BBS.
+We have included some basic information on technique to get you started, and plan on releasing a more comprehensive programmer's manual in the near future.
+
+Thanks go out to all who have supported us in the past with our programs, and for all the suggestions and ideas that have been shared with us.
+If you need to contact us for anything at all, please feel free to at any of the voice or BBS numbers supplied on page v of this preface.
+
+=== Special Thanks To:
+
+Peggy::
+For being an understanding wife while this program was being developed, taking over the business end of things at a time when it was needed, and helping to make decisions, some of which were really tough.
+I don't believe this program would be possible without her.
+
+Jamie, Christy, Billy, and Kim::
+For their support, patience and understanding in giving Dad (and sometimes Mom) up for all the extended programming and business sessions.
+
+Ray Kelm (PROFESSOR)::
+For being the sharpest ML whiz-kid in the world, and all the quality work.
+
+Fred Dart (THE CHIEF)::
+For the _extensive_ beta-testing and bug reports.
+(Not sure why I'm _thanking_ him for bugs, but...)
+Also, for his enormous phone bills in getting this thing done as soon as possible.
+And for many other things too numerous to detail.
+
+Jay Levitt::
+For representing us on QuantumLink for so long, and the work he has helped with on the program, especially the e-mail routines.
+
+Bob DiLorenzo (BLINKY)::
+For beta-testing, the vacation and tour of Opryland in Tennessee when I needed that break so bad, and for being such a good friend.
+
+Jim Flinn (MUZAK MAN)::
+For designing the awesome title screen and beta testing.
+
+Mark Verellen (KING TRENT)::
+For bringing over the Cokes when I was broke, and being official IEEE beta tester.
+
+Mike Coley (THE HAPPY HACKER)::
+For the voting booth, and so many great ideas!
+(Where are you, Mike, haven't heard from you!)
+
+Julie Rhodes (BLUE ADEPT)::
+For the new BBS List program, and all her support.
+
+John Moore (LITTLE JOHN)::
+For joining up with us, and starting work on the 128 version of IMAGE.
+Also for the graffiti routines in the logon.
+
+Rich Matteo (SHADOW WARRIOR)::
+For the use of his modifications for the multi U/D and full disk exchange routines, to make it so much easier for us to add.
+
+Tony DeLiberato (ULTRA LORD)::
+For his help on the production of this manual and advertising layouts.
+
+John and Paul at QuantumLink::
+For their help and support on Q.
+
+Fiscal, Xetec, Trans-Comm, InConTrol, and the many other companies who were so cooperative in helping us develop the program to allow their products to be used.
+
+And finally, to YOU, for trying Image BBS out!
+We're sure you won't be sorry you did!
+
+[.text-right]
+Don Gladden +
+New Image Software
+
+== Product Information
+
+This section contains all warranty, program usage, and support information.
+
+////
+=== Usage Agreement
+
+You have the non-exclusive right to use the enclosed program.
+Copying the program with the intention of distributing it to others, whether or not for personal gain is illegal and not in accordance with this agreement.
+Modifications of this program may be made for personal use, and to share with other REGISTERED owners; however, the modifications should be shared as modules.
+Do not distribute the program in its entirety.
+////
+
+=== Back-up and Transfer
+
+Backups may be made of this program.
+
+////
+however, you must include the copyright notice and serial number on any back-up copies.
+Transfer of registration may be done by sending signed written notice from the original purchaser, releasing his registration rights.
+Contact New Image Software for further instructions regarding transfer.
+
+=== Copyright
+
+This program and documentation manual are copyrighted under the laws of the United States _and Canadian_ government__s__.
+You may not copy the program for distribution purposes at any time, whether for personal gain or not.
+You may NOT remove the copyright notice or serial number at any time.
+////
+
+=== Limited Warranty On Disk
+
+New Image Software warrants the DISK on which the program is furnished to be free from defects in materials and workmanship under normal use for a period of 90 days from the date of purchase on your receipt.
+To obtain service or replacement, you must deliver the disk prepaid to New Image Software.
+The responsibility of New Image software is limited to repair or replacement of the original disk and/or documentation manual.
+
+The program and the manual ("`software`") are provided without warranty of any kind, either express or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose.
+New Image Software does not warrant, guarantee, or make any representations regarding the use of, or the results of use of, the program in terms of quality, correctness, accuracy, reliability, currentness, or otherwise, and you rely on the program and results solely at your own risk.
+New Image Software also does not warrant that the program or manual will meet your requirements, or that the program will be uninterrupted or error-free.
+
+EXCEPT TO THE EXTENT PROHIBITED BY APPLICABLE LAW, ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE ON THE DISK IS LIMITED TO THE DURATION OF THIS LIMITED WARRANTY.
+
+=== Limitations of Remedies
+
+In no event will New Image Software be liable to you for any damage in excess of your license fee paid, including, without limitations, any lost profits, business goodwill or other special incidental or
+consequential damages arising out of the use or inability to use the program, or for any claim made by any other party, even if New Image Software or the dealer had been advised of the possibility of such claims or damages.
+
+This warranty gives you specific legal rights and you may also have other rights which vary from state to state.
+
+=== Update and Support Policy
+
+////
+In order to be able to obtain any customer support or updates of the program, you _must_ complete and return the enclosed registration card to New Image Software.
+If this registration card has not been received by New Image Software, or New Image Software is aware of breach of any part of this agreement by you, New Image Software is under no obligation to make available to you any customer support or updates of the program even though you have made payment of the applicable update fee.
+
+=== Acknowledgment
+
+You acknowledge that you have read this agreement, understand it, and agree to be bound by its terms and provisions by filling out and returning the enclosed registration card.
+You also agree that this agreement is the complete and exclusive statement or agreement between the parties and supersedes all proposals or prior agreements, verbal or written, and any other communications between the parties relating to the subject matter of this agreement.
+
+Should you have any questions concerning this agreement, please contact _in writing_:
+
+New Image Software +
+Customer Sales and Support +
+P.O. Box 525, Salem, UT 84653
+////
+
+=== User Support
+
+THANK YOU VERY MUCH FOR DOWNLOADING Image BBS!
+This manual is a very detailed description of the features and capabilities of the program.
+
+However, if you have any questions left unanswered, or if you discover any problem with any part of the program, please feel free to contact us at any of the following BBSes, or support forums:
+
+////
+LYON'S DEN BBS (Central Region: Michigan) +
+BBS: 313-453-2576  24 hrs.  300-2400 baud. +
+System Operator: Ray Kelm (Professor)
+
+PORT COMMODORE BBS (Western Region: Utah) +
+BBS: 801-423-2734  24 hrs.  300-2400 baud. +
+9:00AM to 5:00PM MST +
+Voice Tech line: 801-423-1966 +
+System Operator: Fred Dart (The Chief)
+////
+
+.NISSA Sysop Support Boards
+#FIXME#
+Larry Hedman
+Wrong Number I | duckdns.com:6400 | Al DeRosa
+
+////
+For support, call any of the support boards listed.
+
+These locations are set up for your convenience, you may call any of them but you might want to call the one nearest to you; they are located in the states shown.
+////
+
+The bulletin boards listed all have many users that are Image BBS owners; they love to share modifications and ideas!
+You can benefit greatly by being a member of any of these BBSes.
+
+////
+Additional support can be found on QuantumLink.
+Each of the above listed support personnel are available on QLink as: IMAGE Don, IMAGE
+Fred, and IMAGE Jay and will make every attempt to assist you in any way.
+////
+
+NOTE: Until further notice, this manual covers all current versions of Image BBS: 1.0, 1.1 and 1.2.
+
+NOTE: There is a Facebook group #FIXME#
+
+////
+and the beginnings of a support web site, “Pinacolada's Projects,” located at https://sites.google.com/site/pinacoladasprojects/ .
++
+
+Also, stop by Jeff Ledger's "`Commodore TelBBS forum,`" where there is
+some archived information about Qlink and telnet BBSes:
+<___http://jledger.proboards19.com/jledger.proboards.com[__http://jledger.proboards19.com/__]http://jledger.proboards19.com/jledger.proboards.com[__jledger.proboards.com__]___>___
+////
