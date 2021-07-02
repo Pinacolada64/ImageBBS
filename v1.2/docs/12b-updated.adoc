@@ -26,6 +26,7 @@ I added commands before each section, but I think that makes it too cluttered.
 Better to have a command summary appendix.
 ====
 
+////
 // Roman numbering
 
 ## Preface
@@ -526,6 +527,7 @@ L  Lx
 ## 28 Appendix: Versatile Commodore Emulator Settings
 
 ## 29 Appendix: Command Summary
+////
 
 // just include one file at a time: verify toc entries
 

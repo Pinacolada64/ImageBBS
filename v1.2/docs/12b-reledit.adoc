@@ -1,17 +1,19 @@
 :experimental:
+:toc:
+
 == `+.reledit`
 
-====
+////
 This documentation was modified slightly from the text files on the RELedit and Networking plus-file disks.
 I in no way take credit for the original documentation, just the cleanup and integration into these more current, streamlined documentation.
-====
+////
 
 RELedit is a program which eases the setup and administration of message and file transfer bases.
 Just run `+.reledit` from the main prompt.
 
 After a short delay as RELedit reads the system configuration, you see the main menu.
 Across the top is the title of the program and a copyright message.
-Below that is data on your BBS that includes the number of Subs, U/Ds, etc. that are defined, as well as your node number if you are on the network.
+Below that is data on your BBS that includes the number of Subs, U/Ds, U/Xs, SIGs (Special Interest Groups), and NetSubs that are defined, as well as your node number if you are on the network.
 Below that are 5 options:
 
 ```
@@ -22,7 +24,8 @@ G - SIG
 N - NetSubs
 ```
 
-Select S, U, X, G or N.
+Select kbd:[S], kbd:[U], kbd:[X], kbd:[G] or kbd:[N].
+kbd:[Return] quits the RELedit system.
 
 ====
 NOTE: If you are not part of a network, the NetSubs option will not appear.
@@ -53,8 +56,9 @@ To add a Sub, type kbd:[A] and hit kbd:[Return].
 Typing ranges of sub-boards to add, delete, move, or insert works similar to BASIC's `list` command.
 
 [%autowidth]
-[%header="no"]
+[%header]
 |===
+|Parameter | Purpose
 |kbd:[L] |To list all the Subs.
 
 |kbd:[L3] |Optionally, follow that by a number to start listing the Subs at.
@@ -71,7 +75,6 @@ Type the board number you want to edit, then press kbd:[Return].
 
 A menu appears with 9 options:
 
-
 .RELedit sub-board definitions
 
 [%autowidth]
@@ -82,9 +85,9 @@ A menu appears with 9 options:
 
 |2 Access |The Access levels that can see this Sub.
 
-Entering kbd:[?] when prompted for the access level calculates access values (refer to #FIXME#).
+Typing kbd:[?] when prompted for the access level calculates access values (refer to #FIXME link to access level calculation#).
 
-If the access level is left at 0 when you exit the editor, any other changes are deleted and the board is not added.
+If the access level is left at `0` when you exit the editor, any other changes are deleted and the board is not added.
 
 |3 SubOp |The handle and ID of the SubOp.
 When editing, you can enter the ID number or handle.
@@ -103,8 +106,10 @@ You are presented with Yes and No questions which help select the type of board 
 The questions are:
 
 Upload/Download Boards::
+question
 
-Message Bases
+Message Bases::
+question
 
 #fixme#
 
@@ -120,10 +125,13 @@ Any pre-existing screen will be loaded into the editor, and you may use all the 
 These 9 options are the same for the U/D and U/X editors as well.
 The only difference is the `Type` question which asks `Downloads Only?` and `Free Downloads?` as well as Password.
 
-If the access is 0 or the title is `---`, the data will not be saved (or deleted if editing an existing record).
+If the access is `0` or the title is `---`, the data will not be saved (or deleted if editing an existing record).
 The BBS also goes through the SIGs (if defined) and removes the board from any SIGs it is on.
 
 === The SIG Editor
+
+_SIG_ is short for _Special Interest Group_, and is a way of grouping related message bases or file transfer areas together.
+For example, you could have a message base SIG about astronomy or video games, or file transfer SIGs devoted to SID music or utilities.
 
 This is much like the Sub, U/D and U/X editors.
 The list displays:
@@ -142,7 +150,7 @@ When you type the number of the SIG you wish to edit, the following
 options appear:
 
 .RELedit SIG Editing Options
-[cols=",",]
+[%autowidth]
 |===
 | |SIG title.
 
@@ -223,7 +231,8 @@ This editor lets you list all of the NetSub IDs you have (you can have up to 60)
 To define a networked sub, first set it up
 (refer to <<editing-sub-boards>>).
 
-When you hit N at the main prompt, the BBS looks on your disk for the NetSub data files.  These files are program files that are loaded into memory using one of the new protocol files written for the NetSubs.
+When you hit kbd:[N] at the main prompt, the BBS looks on your disk for the NetSub data files.
+These files are program files that are loaded into memory using one of the new protocol files written for the NetSubs.
 
 ====
 TIP: If you have a Lt. Kernal, have the Autoload feature turned on, and have a floppy drive with the same device number as the Lt. Kernal, you get a flashing error light on the floppy drive when you enter the NetSub editor as well as every time the new `+.NM.netsub` files are executed during Network Maint.
@@ -238,17 +247,17 @@ You will now see 18 options:
 
 Option #1 lets you modify the NetSub ID.
 
-Options #2 through #17 are Network IDs of the boards that this NetSub is linked to.  This list should only contain the IDs of boards that you
-send NetSubs directly to, not every board that is linked to that NetSub anywhere on the network.
+Options #2 through #17 are Network IDs of the boards that this NetSub is linked to.
+This list should only contain the IDs of boards that you send NetSubs directly to, not every board that is linked to that NetSub anywhere on the network.
 
-The board IDs are _not_ verified.  This is inline with the new network
-design and the reasons for this will be explained when the Image Network is reorganized to make use of the new network features.
+The board IDs are _not_ verified.
+This is inline with the new network design and the reasons for this will be explained when the Image Network is reorganized to make use of the new network features.
 
 Option #18 lets you define which boards on your BBS are parts of this particular NetSub.
 
-The editor that is entered when you select option #18 is very much like the SIG list editor.  (As a matter of fact, both the SIG editor and
-NetSub editor use the same routines!)  The only differences are as
-follows:
+The editor that is entered when you select option #18 is very much like the SIG list editor.
+(As a matter of fact, both the SIG editor and NetSub editor use the same routines!)
+The only differences are as follows:
 
 * Up to 60 boards can be defined as being part of a particular NetSub.
 * You can only add boards that are not already identified as being Networked.

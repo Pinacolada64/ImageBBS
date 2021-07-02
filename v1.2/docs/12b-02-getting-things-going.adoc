@@ -1,3 +1,4 @@
+:experimental:
 == Getting Things Going
 
 Now that you are ready to set up Image BBS, we recommend you first back up your original disk images (both sides if you are using a 1541 type disk), then store it in a safe place.
@@ -5,7 +6,7 @@ _Never_ work with the original, just in case something goes wrong.
 
 None of the disk files are copy-protected, so there is no worry about anything not working correctly with a backup disk.
 
-If you are copying with more than one drive, Copy-all, a great public-domain program by Jim Butterfield, is included on the disk to assist you in doing this.
+If you are copying with more than one drive, Copy-all, a great public-domain program by Jim Butterfield, is included on the disk to assis2t you in doing this.
 Copy-all will copy PRG, SEQ, and REL files with no problems whatsoever on any type of Commodore compatible drives using two drives.
 
 If you need to copy REL files using a single 1541 drive, you can use a program by Jim McAndrew called "`Rel-Copy`" specifically designed for that purpose.
@@ -36,9 +37,9 @@ When referring to _drive_, we mean the drive number (or partition if using a har
 * 0/1 on a dual drive such as the MSD-2 dual floppy drive
 
 * Logical Unit 0-10 on a Lt. Kernal hard drive
-* partition 1-255 on a Creative Micro Designs hard drive (0 refers to
+* partition 1-254 on a Creative Micro Designs hard drive (0 refers to
 the current partition)
-* If you have two physical drives, there may either be a switch somewhere on the drives to change device numbers, or—as with older 1541 drives—you must cut a solder pad (the drive manual should describe how).
+* If you have two physical drives, there may either be a switch somewhere on the drives to change device numbers, or--as with older 1541 drives—you must cut a solder pad (the drive manual should describe how).
 
 You may also "`software change`" the device number with the BASIC program
 `dv change` included on your Image BBS disk, or online with the <<cd-command>>.
@@ -146,10 +147,11 @@ If using a floppy-based setup, we also suggest that you label each floppy disk w
 ====
 Unfortunately, Image is somewhat hobbled by a "`flat file structure`"—-_i.e._, there is no provision for using subdirectories (or even partitions with 1581 drives) on mass-storage devices which support them (the CMD devices are a good example).
 All files must reside in the root directory to be accessible.
-This is a shortcoming I plan on addressing in Image BBS 2.0 with the additions of CMD hardware detection (plus any other hardware sysops give me reference material for) and the ability to
-issue DOS commands where appropriate in what is called the "`General Files`" section (which can have message bases, text and plus-file subdirectories in a single GF directory!).
+This is a shortcoming I plan on addressing in Image BBS 2.0 with the additions of CMD hardware detection.
+// (plus any other hardware sysops give me reference material for)
+and the ability to issue DOS commands where appropriate in what is called the "`General Files`" section (which can have message bases, text and plus-file subdirectories in a single GF directory!).
 
-A similar modification would be possible for Image 1.2b, I just haven't gotten much further than the planning stage; which is to say, just a bit further than the BBS editor quoting... sigh.
+// A similar modification would be possible for Image 1.2b, I just haven't gotten much further than the planning stage; which is to say, just a bit further than the BBS editor quoting... sigh.
 ====
 
 === Setting Up Your Image BBS
@@ -168,19 +170,21 @@ This disk is used whenever you are re-loading (booting) your BBS.
 Just use a blank disk, and copy the following files onto it.
 
 ====
-TIP: Whether you're using a floppy disk or hard drive partition, copy the
-following files to the device you want to boot from:
+TIP: Whether you're using a floppy disk or hard drive partition, copy the following files to the device you want to boot from:
 ====
 
+.Boot Files
+[%header]
+[%autowidth]
 |===
+| File | Purpose
 |`image 1.2b` |Boot file (`load"image 1.2b",_device_,1`)
 
 |`im` |Core BBS routines, written in BASIC
 
 |`ml 1.2` |Core machine language routines
 
-|`ml.editor.loader` |Swaps BBS text editor into place from RAM
-underneath ROM when needed
+|`ml.editor.loader` |Swaps BBS text editor into place from RAM underneath ROM when needed
 
 |`ml.editor` |BBS text editor routines
 
@@ -207,7 +211,8 @@ underneath ROM when needed
 
 ====
 NOTE: The REL `e.say` file is optional.
-This file contains "`sayings`" displayed to the user both at logon and when `SY` is entered at the main prompt.
+This file contains "`sayings`" displayed to the user both at logon and when kbd:[SY] is entered at the main prompt.
+
 Due to the size of this file, some sysops with smaller systems may wish to copy over `e.say-smaller` as `e.say`, or not use this feature at all by omitting the file entirely.)
 ====
 
@@ -217,14 +222,14 @@ Also, `ml.ecsdefs` should be copied here in order for the default Extended Comma
 * The user files are written during the first-time configuration process, directory and e-mail files after your BBS is up and running.
 
 ====
-If you are using a user port modem, copy ``ml.rs232/user`` as ``ml.rs232``.
+TIP: If you are using a user port modem, copy ``ml.rs232/user`` as ``ml.rs232``.
 If you are using a high-speed modem or telnet bridge program, copy ``ml.rs232/swift`` as ``ml.rs232``.
 `config`  may be modified in the future to make this procedure automatic.
 ====
 
 It is fine to put these boot files on your System disk, assuming you have sufficient drive space.
 
-.Required Plus File disk files
+.Required Plus File Disk Files
 [%header="no"]
 |==========
 | `+.er`    | Error-handling module
@@ -234,7 +239,6 @@ It is fine to put these boot files on your System disk, assuming you have suffic
 |==========
 
 Now you are ready to configure Image BBS!
-
 
 == Modem Configuration
 
@@ -281,41 +285,62 @@ Modem Type? []
 
 Here is a summary of options presented when that choice is made:
 
-{empty}1. Baud rate 0 = 300 ... 5 = 19200
+[start=1]
+. Baud rate 0 = 300 ... 5 = 19200
 
  Pick the highest rate your modem or telnet bridge supports.
 
-{empty}2. 0 = Escape codes (+++) 1 = Data Terminal Ready (DTR) hangup
+[start=2]
+. 0 = Escape codes (``+++``) 1 = Data Terminal Ready (DTR) hangup
 
 ====
-`+++` escape codes are used mostly on older modems such as the Commodore 1670.
+``+++`` escape codes are used mostly on older modems such as the Commodore 1670.
 Hayes-compatible modems usually support the DTR line with the Commodore user port or an RS232 interface in the expansion port.
 ====
 
-{empty}3. 0 = Auto answer (_ATS0=1_) 1 = Manual answer (`ATA`)
+[start=3]
+. 0 = Auto answer (_ATS0=1_) 1 = Manual answer (`ATA`)
 
-{empty}4. 0 = ATH 1 = No ATH
+[start=4]
+. 0 = ATH 1 = No ATH
 
 This refers to whether your modem includes `ATH` in its command set.
 
-{empty}5. 0 = Local off-hook 1 = Not
+[start=5]
+. `0` = Local off-hook, `1` = Not off-hook
 
-When you are logged on to the BBS from the local console, should the
-modem be taken off-hook so people trying to call in get a busy signal?
+When you are logged on to the BBS from the local console, should the modem be taken off-hook so people trying to call in get a busy signal?
 
-{empty}6. 0 = ATH0 1 = ATH
+[start=6]
+. 0 = ATH0 1 = ATH
 
 This is just a matter of semantics: does your modem use `ATH` or _ATH0_ to hang up?
 
-{empty}7. 0 = Hang-up in modem reset 1 = Not
+[start=7]
+. `0` = Hang-up in modem reset, `1` = Not
 
 Choose whether to hang up when resetting the modem.
 
-{empty}8. Value for `ATX`
+[start=8]
+. Value for `ATX`
 
-This controls the number of error reporting (1-4) codes used by the modem (_VOICE`, `ERROR_, etc.) It is usually left at 4.
+This controls the level of error reporting (1-4) codes used by the modem (`VOICE`, `ERROR`, etc.)
+It is usually left at 4.
 
-.Typical modem result codes
+[%header]
+[%autowidth]
+|===
+| Level | Purpose
+|`X1` |Usually adds connection speed to basic result codes (e.g. `CONNECT 1200`)
+
+|`X2` |Usually adds dial tone detection (preventing blind dial, and sometimes preventing `ATO`)
+
+|`X3` |Usually adds busy signal detection.
+
+|`X4` |Usually adds both busy signal and dial tone detection
+|===
+
+.Typical Hayes modem result codes
 [%header]
 [%autowidth]
 |===
@@ -331,30 +356,20 @@ This controls the number of error reporting (1-4) codes used by the modem (_VOIC
 
 |`4` |`ERROR` |An error has occurred; usually a bad command.
 
-|`5` |`CONNECT 1200` |The modem has achieved a connection at 1200bps.
+|`5` |`CONNECT 1200` |The modem has achieved a connection at 1200 BPS.
 
-|`6` |`NO DIAL TONE` |The modem did not detect a dialtone.
+|`6` |`NO DIAL TONE` |The modem did not detect a dial tone.
 
 |`7` |`BUSY` |The modem dialed but got a busy signal.
 |===
 
-[%header]
-[%autowidth]
-|===
-|X1 |Usually adds connection speed to basic result codes (e.g. `CONNECT 1200`)
-
-|X2 |Usually adds dial tone detection (preventing blind dial, and sometimes preventing `ATO`)
-
-|X3 |Usually adds busy signal detection.
-
-|X4 |Usually adds both busy signal and dial tone detection
-|===
+#TODO#: expand this table to include up to 19.2k responses
 
 ---
 
 [start=9]
-9. DTR: 0 = Normal 1 = Reversed
+. DTR: `0` = Normal, `1` = Reversed
 
-DTR (Data Terminal Ready) is a connection that tells the DCE (Data Communication Equipment, typically a modem) that the DTE (Data Terminal Equipment, typically a computer or terminal) is ready to transmit and receive data.
+DTR (Data Terminal Ready) is a connection that tells the DCE (Data Communication Equipment, typically a modem) that the DTE (Data Terminal Equipment, typically a computer or terminal) is ready to transmit and receive data.
 
 Some modems have the logic reversed; if bringing DTR high (toggling it on) signals a disconnect, then select "`Reversed.`"

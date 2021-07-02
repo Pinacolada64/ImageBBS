@@ -337,17 +337,19 @@ These check marks tell the BBS to do various things.
 The following descriptions assume each check mark described is selected.
 
 .Lightbar, page 1
-[cols=",,",]
+[%autowidth]
+[%header]
 |===
-|`Sys`
-|The sysop is available for chat, and will hear three sirens when kbd:[C] is typed at any major prompt by the user.
-|Turns on a tracing feature that shows, in the left half of the "`Receive`" window, the BASIC line number currently executing.
+| Label | Left | Right
+| `Sys`
+| The sysop is available for chat, and will hear three sirens when kbd:[C] is typed at any major prompt by the user.
+| Turns on a tracing feature that shows, in the left half of the "`Receive`" window, the BASIC line number currently executing.
 Execution can be slowed down with the kbd:[Shift] or kbd:[Shift-Lock] keys to read line numbers more easily.
 
 This is only a debugging tool, normally left off.
 
-|`Acs` a|
-Change the access group of the user who is online.
+| `Acs`
+| Change the access group of the user who is online.
 
 kbd:[f3] raises access one group (wraps around 0-9)
 
@@ -355,22 +357,21 @@ kbd:[f5] lowers access one group (wraps around 9-0)
 
 kbd:[f7] gives the user the selected access level, exiting this function.
 
-|Restricts logons to 1200 baud and over.
+| Restricts logons to 1200 baud and over.
 300 baud callers are told the BBS is not accepting 300 baud calls at this time.
 
-| |The access group is shown using a different screen mask when a user logs on, in an area titled `Accs`.
+The access group is shown using a different screen mask when a user logs on, in an area titled `Accs`.
 Access data is read into memory as soon as the user gets to a prompt.
 However, any U/D libraries or sub-boards that their new group can access are not shown on the menu until they re-enter that subsystem.
-|
 
-|`Loc`
-|Used to "`log on`" from the C64 keyboard, to make a "`call`" to the BBS while you're sitting in front of it.
+| `Loc`
+| Used to "`log on`" from the C64 keyboard, to make a "`call`" to the BBS while you're sitting in front of it.
 This is referred to as "`local mode.`"
-|Shows that a remote user is in "`pseudo-local`" mode.
+| Shows that a remote user is in "`pseudo-local`" mode.
 This gives them access to certain maintenance commands which require "`local mode`" to be enabled, but the user isn't (or can't be) at the console.
 
-|`Tsr` a|
-Add or subtract time remaining for the user online:
+| `Tsr`
+| Add or subtract time remaining for the user online:
 
 kbd:[f1] zero time (cause an immediate logoff)
 
@@ -386,13 +387,12 @@ kbd:[f6] subtract ten minutes
 
 kbd:[f7] exit this function
 
-a|
-Toggle Prime Time for every user:
+| Toggle Prime Time for every user:
 
 If no Prime Time is designated for your BBS, this has no effect.
 
-|`Cht` a|
-Enters chat mode when a user is on-line.
+| `Cht`
+| Enters chat mode when a user is on-line.
 It first displays the message
 
 `* Entering Chat Mode *`
@@ -401,21 +401,25 @@ then allows the sysop and user to type anything they wish back and forth to each
 
 Pressing kbd:[f7] again ends chat mode, displaying
 
-`* Exiting Chat Mode *`
+``\* Exiting Chat Mode \*``
 
 and returns the user either to the prompt they were at, or the BBS text editor, depending on where they were before entering chat mode.
 
-|Toggles local bells, so you hear all the bells the user on-line hears.
+| Toggles local bells, so you hear all the bells the user on-line hears.
 
-|`New` |Makes the BBS private, and will not allow new users to sign up.
+| `New`
+| Makes the BBS private, and will not allow new users to sign up.
 They are told that the BBS is not accepting new users at this time.
-|Turns off the screen blanking mode.  The screen remains on between calls.
+| Turns off the screen blanking mode.
+The screen remains on between calls.
 
-|`Prt` |Sends all text output to the printer and the screen. |Prints all log entries to the printer as well as the disk log.
+|`Prt`
+| Sends all text output to the printer and the screen. |Prints all log entries to the printer as well as the disk log.
 
-|`U/D` |Users cannot access the UD/UX area.
+| `U/D`
+| Users cannot access the UD/UX area.
 They are told the area is closed temporarily.
-|300 baud users cannot access the UD/UX area.
+| 300 baud users cannot access the UD/UX area.
 They are told that they do not have access to that area at this time.
 |===
 
@@ -424,38 +428,49 @@ The second page of lightbar options is as follows:
  Asc  Ans  Exp  Fn5  Fn4  Fn3  Fn2  Fn1
 
 .Lightbar, page 2
-[cols=",,",]
+[%autowidth]
+[%header]
 |===
-|`Asc` |Enables ASCII footnote:[American Standard for Computer Information Interchange] translation for the user.
+| Label | Left | Right
+| `Asc`
+| Enables ASCII footnote:[American Standard for Computer Information Interchange] translation for the user.
 Character layout differs between Commodore and ASCII standards, most notably by reversing the position of upper- and lowercase letters.
-|Turns on linefeeds for the user.
+| Turns on linefeeds for the user.
 In ASCII mode, terminals need a carriage return (CR) to move the cursor to the beginning of the current line.
 However, they may also need a linefeed character to move the cursor down a line.
 (Without one, the user may complain "`everything displays on one line.`"
 Once online, the kbd:[EP] command [option 3] resolves this problem.)
 
-|`Ans` |Instead of Commodore control codes, outputs ANSIfootnote:[shorthand for the American National Standards Institute Standard X3.64] escape sequences.
+| `Ans`
+| Instead of Commodore control codes, outputs ANSIfootnote:[shorthand for the American National Standards Institute Standard X3.64] escape sequences.
 These are a standardized way to set character colors, plus "`screen management`" things like scrolling, windowing, clearing to end-of-line, and more.
-a|
-Turns IBM graphics (line-building characters, many of which have similarities with the Commodore character set) and other special symbols for the user.
+| Turns IBM graphics (line-building characters, many of which have similarities with the Commodore character set) and other special symbols for the user.
 
-|`Exp` |Turns expert mode on for the user, which skips many entry screens seen when entering subsystems or changing areas within that subsystem.
-|Users see a "`macro`"--a short saying presented before the main prompt.
+| `Exp`
+| Turns expert mode on for the user, which skips many entry screens seen when entering subsystems or changing areas within that subsystem.
+| Users see a "`macro`"--a short saying presented before the main prompt.
 (Users can toggle them with the kbd:[MA] command, or add their own with the kbd:[ME] command.)
 
-|`Fn5` |User receives credit when an upload is validated.  Otherwise, credit is received after the completion of the upload.
-|User is asked whether they wish to log off after a file transfer is complete.
+| `Fn5`
+| User receives credit when an upload is validated.
+Otherwise, credit is received after the completion of the upload.
+| User is asked whether they wish to log off after a file transfer is complete.
 
-a|
-`Fn4`
+| `Fn4`
+| Undefined.
+| Undefined.
 
-`Fn3`
+| `Fn3`
+| Undefined.
+| Undefined.
 
-|Undefined. |Undefined.
+| `Fn2`
+| Undefined.
+| Undefined.
 
-|`Fn2` |Undefined. |Undefined.
-
-|`Fn1` |Undefined. |Text prefaced with a `£` (or `\` if using an ASCII terminal) is not interpreted as an MCI command.
+| `Fn1`
+| Undefined.
+| Text prefaced with a `£` (or `\` if using an ASCII terminal) is not interpreted as an MCI command.
 Refer to <<message-command-interpreter>>.
 |===
 
