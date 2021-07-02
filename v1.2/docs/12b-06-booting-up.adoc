@@ -17,7 +17,7 @@ Most likely you will want to explore and/or continue its configuration, using in
 
 |Configure/add upload/download or "`user exchange`" libraries |x
 
-|Learn to use the IMAGE text editor] | <<the-image-text-editor>>
+|Learn to use the IMAGE text editor | xref:12b-text-editor.adoc[The Image Text Editor]
 
 |Learn about system files | x
 
@@ -26,20 +26,27 @@ Most likely you will want to explore and/or continue its configuration, using in
 
 If necessary, insert your boot disk into the proper device.
 (We assume device #8 here.)
-Type:
 
- load"image 1.2b",8,1
+[%autowidth]
+[%header]
+|===
+|Hardware | Command
+| Standard Commodore DOS | `load"image 1.2b",8,1`
+| JiffyDOS | `%image 1.2b`
+| Lt. Kernal | `image 1.2b`
+|===
+
+Type kbd:[Return] after each command.
 
 === Autobooting Systems
 
 Sysops with Lt. Kernal hard drives may rename `image 1.2b` to `autostart` and have an auto-booting BBS.
 
-#TODO#: must set config option to do this in LtK software.
+#TODO#: must also set config option to do this in LtK software.
 
 ////
 Sysops with Commodore 128s and CMD hard drives may rename _image 1.2b_
 to _copyright cmd 89_, if the partition selected at power-on contains this file, and you have a program to go to 64 mode available.
-
 ////
 
 == First Boot
@@ -48,31 +55,39 @@ Now, sit back and let your BBS load up.
 After you see the title screen, the program does a bit of work, loading various files:
 
 .Startup files
-[cols=",",]
+[%autowidth]
 |===
-|Revision and startup messages display |
+|Task | Filename
 
-|An RS232 handler loads | `ml.rs232`
+|Revision and startup messages display
+|
 
-a|
-"`Print mode`" definitions load
+|An RS232 handler loads
+| `ml.rs232`
 
-(Refer to <<message-command-interpreter>>)
+| "`Print mode`" definitions load
+
+(Refer to xref:12b-mci-commands.adoc[Message Command Interpreter])
 
 | `ml.pmodes`
 
-|System configuration data is read | `bd.data`
+| System configuration data is read
+| `bd.data`
 
-a|
-Extended Command Set definitions load
+| Extended Command Set definitions load
 
-(Refer to "`link:#anchor-185[Extended Command Set Editor])
+(Refer to #Extended Command Set Editor#)
 
 | `ml.ecsdefs`
 
-|System information will be read, and the number of users in the user log is displayed | `u.config`
+|System information will be read
+|`e.data`
 
-|Blocks free on each system disk are displayed |
+| The number of users in the user log is displayed
+| `u.config`
+
+|Blocks free on each system disk are displayed
+| 
 |===
 
 If your system files are on a different disk than your boot disk, you
@@ -86,7 +101,7 @@ If all goes well, you should reach the "`idle screen.`"
 ====
 TIP: System won't start?
 Need troubleshooting help?
-Refer to <<the-boot-process>> for information about the files needed.
+Refer to xref:12b-programming-adoc#the-boot-process[The Boot Process] for information about the files needed.
 ====
 
 === The Idle Screen
@@ -120,6 +135,8 @@ Type the time and date at the following prompts:
 
 For the day of the week, type one of the following numbers:
 
+[%autowidth]
+[%header]
 |===
 |Number| Day
 |kbd:[1]| Sunday
@@ -133,7 +150,7 @@ For the day of the week, type one of the following numbers:
 
 Type the month, date, and last two digits of the year at each separate prompt.
 
-Enter the hour (don't use military or 24-hour time), minute, and kbd:[A] or kbd:[P} for AM/PM for each following prompt.
+Enter the hour (don't use military or 24-hour time), minute, and kbd:[A] or kbd:[P] for AM/PM for each following prompt.
 
 The top status line changes to reflect the entered date and time.
 If the information is correct, respond to the `OK?` prompt by typing kbd:[y] (and press kbd:[Return]).
@@ -152,8 +169,12 @@ It shows, from left to right:
 
 Depending on conditions on the BBS and what you or the user online is doing, four different letters can appear next:
 
-[cols=",",]
+[%autowidth]
+[%header]
+
 |===
+| Letter | Meaning
+
 |`P` |Text output is paused, usually with the kbd:[Ctrl+S] or kbd:[Home] key combinations on the local console or by the user currently connected to the BBS.
 
 |`G` |A garbage collection is currently in progress.
@@ -186,19 +207,24 @@ When a user logs on, these displays will change to show additional information. 
 You may toggle this "`screen mask`" on or off using kbd:[f1], or a programming command (refer to <<other-&-calls>>).
 
 Several functions are available at this screen from the console, which are outlined in a menu if you press any key aside from a "`command`" key.
+
+#### Idle Screen Keys
+
 The functions are as follows:
 
 .Idle screen keys
-[cols=",,",]
+[%autowidth]
+[%header]
+
 |===
 |Key |Function |Reference
 
-|kbd:[1] |Set the time
-|"`link:#Setting the Time[]link:#Setting the Time[Setting the Time],`"
-page link:#Setting the Time[39]
+|kbd:[1] |Set the time and date
+|<<set-time-and-date>>
 
-|kbd:[2] |Board Activity Register |"`link:#anchor-315[Board Activity
-Register],`" page link:#anchor-315[1]
+|kbd:[2]
+| Board Activity Register
+| Board Activity Register
 
 |kbd:[3] |System disk blocks free |
 
@@ -218,19 +244,19 @@ Register],`" page link:#anchor-315[1]
 
 |kbd:[-] |Turn modem speaker off |
 
-|kbd:[Shift-A] |Start nightly AutoMaintenance |"`link:#anchor-317[Nightly
+|kbd:[Shift+A] |Start nightly AutoMaintenance |"`link:#anchor-317[Nightly
 AutoMaint],`" page link:#anchor-317[73]
 
-|kbd:[Shift-N] |Start nightly NetMail processing |
+|kbd:[Shift+N] |Start nightly NetMail processing |
 
-|kbd:[Shift-T] |Invert carrier detect |
+|kbd:[Shift+T] |Invert carrier detect |
 
 |kbd:[Space] |Redisplay current screen |
 
 |kbd:[£] |Manual answer |
 |===
 
-==== Set Time
+==== Set Time and Date [[set-time-and-date]]
 
 Allows you to set or reset the date and time as outlined above.
 
@@ -238,6 +264,8 @@ Allows you to set or reset the date and time as outlined above.
 
 The Board Activity Register (or BAR) screen displays
 current data for the BBS in four columns, which cover
+
+#FIXME# missing table
 
 The rows on the screen report for each column category:
 
@@ -247,7 +275,7 @@ The rows on the screen report for each column category:
 
 A garbage collect is forced, displaying the true amount of memory free in the `M=` display, at the bottom left corner of the screen.
 
-#### System Reservation
+#### System Reservation [[bbs-reservation]]
 The BBS can be reserved (the user signing on must know the reservation
 password to access the BBS) for:
 
@@ -255,10 +283,10 @@ password to access the BBS) for:
 
 * kbd:[N]o calls: Clears the reservation
 
-* kbd:[A]ll calls: All users are prompted for a password
+* kbd:[A]ll calls: All users are prompted for a password to sign on to the BBS
 
 ====
-NOTE: This is different than `RES`erved accounts, discussed on page link:#anchor-319[8], or network reservations, discussed on page #FIXME#.)
+NOTE: This is different than ``RES``erved accounts (refer to #REServed Accounts#), or reserving time for transferring NetMail (refer to #NetMail Reservations#.)
 ====
 
 #### Daily Log
@@ -270,19 +298,23 @@ View the daily caller activity log.  This lists:
 #### Image Terminal
 
 IMAGE Term allows you to call other systems without taking your BBS down.
-Refer to <<image-terminal>>.
+(Refer to xref:12b-image-terminal.adoc[The Image Terminal].)
 
 ==== The Lightbar
 
-The fifth screen line is referred to as the "`lightbar.`"  This line monitors and changes many features of the BBS.  All are toggled by the sysop at the console.
+The fifth screen line is referred to as the "`lightbar.`"
+This line monitors and changes many features of the BBS.
+All are toggled by the sysop at the console.
 
 ====
-TIP: or through a utility program (`+.lb move`, discussed in <<miscellaneous-plus-files>>; this is handy for remote maintenance when you can't be at the console.
+TIP: Also, a utility program (`+.lb move`, discussed in <<miscellaneous-plus-files>>; this is handy for remote maintenance when you can't be at the console.
 ====
 
-[cols=",",]
+[%autowidth]
+[%header]
 |===
-|kbd:[f2] and kbd:[f4] |switch to the opposite lightbar page.
+|Key | Purpose
+|kbd:[f2] and kbd:[f4] |switch to the opposite lightbar page
 
 |kbd:[f3] |moves the white highlighted portion to the left (switching to the
 opposite page if you move it "`off the edge`")
@@ -307,14 +339,14 @@ The following descriptions assume each check mark described is selected.
 .Lightbar, page 1
 [cols=",,",]
 |===
-|Sys
+|`Sys`
 |The sysop is available for chat, and will hear three sirens when kbd:[C] is typed at any major prompt by the user.
 |Turns on a tracing feature that shows, in the left half of the "`Receive`" window, the BASIC line number currently executing.
 Execution can be slowed down with the kbd:[Shift] or kbd:[Shift-Lock] keys to read line numbers more easily.
 
 This is only a debugging tool, normally left off.
 
-|Acs a|
+|`Acs` a|
 Change the access group of the user who is online.
 
 kbd:[f3] raises access one group (wraps around 0-9)
@@ -331,20 +363,18 @@ Access data is read into memory as soon as the user gets to a prompt.
 However, any U/D libraries or sub-boards that their new group can access are not shown on the menu until they re-enter that subsystem.
 |
 
-|Loc |Used to "`log on`" from the C64 keyboard, to make a "`call`" to the BBS while you're sitting in front of it.  This is referred to as "`local mode.`" |Shows that a remote user is in "`pseudo-local`" mode.  This gives
-them access to certain maintenance commands which require "`local mode`"
-to be enabled, but the user isn't (or can't be) at the console.
+|`Loc`
+|Used to "`log on`" from the C64 keyboard, to make a "`call`" to the BBS while you're sitting in front of it.
+This is referred to as "`local mode.`"
+|Shows that a remote user is in "`pseudo-local`" mode.
+This gives them access to certain maintenance commands which require "`local mode`" to be enabled, but the user isn't (or can't be) at the console.
 
-|Tsr a|
+|`Tsr` a|
 Add or subtract time remaining for the user online:
 
-kbd:[f1] zero time
+kbd:[f1] zero time (cause an immediate logoff)
 
-(cause an immediate logoff)
-
-kbd:[f2] unlimited time
-
-(displays `-–:00` in top right)
+kbd:[f2] unlimited time (displays `-–:00` in top right)
 
 kbd:[f3] add one minute
 
@@ -361,7 +391,7 @@ Toggle Prime Time for every user:
 
 If no Prime Time is designated for your BBS, this has no effect.
 
-|Cht a|
+|`Cht` a|
 Enters chat mode when a user is on-line.
 It first displays the message
 
@@ -377,13 +407,13 @@ and returns the user either to the prompt they were at, or the BBS text editor, 
 
 |Toggles local bells, so you hear all the bells the user on-line hears.
 
-|New |Makes the BBS private, and will not allow new users to sign up.
+|`New` |Makes the BBS private, and will not allow new users to sign up.
 They are told that the BBS is not accepting new users at this time.
 |Turns off the screen blanking mode.  The screen remains on between calls.
 
-|Prt |Sends all text output to the printer and the screen. |Prints all log entries to the printer as well as the disk log.
+|`Prt` |Sends all text output to the printer and the screen. |Prints all log entries to the printer as well as the disk log.
 
-|U/D |Users cannot access the UD/UX area.
+|`U/D` |Users cannot access the UD/UX area.
 They are told the area is closed temporarily.
 |300 baud users cannot access the UD/UX area.
 They are told that they do not have access to that area at this time.
@@ -396,7 +426,7 @@ The second page of lightbar options is as follows:
 .Lightbar, page 2
 [cols=",,",]
 |===
-|Asc |Enables ASCII footnote:[American Standard for Computer Information Interchange] translation for the user.
+|`Asc` |Enables ASCII footnote:[American Standard for Computer Information Interchange] translation for the user.
 Character layout differs between Commodore and ASCII standards, most notably by reversing the position of upper- and lowercase letters.
 |Turns on linefeeds for the user.
 In ASCII mode, terminals need a carriage return (CR) to move the cursor to the beginning of the current line.
@@ -404,28 +434,28 @@ However, they may also need a linefeed character to move the cursor down a line.
 (Without one, the user may complain "`everything displays on one line.`"
 Once online, the kbd:[EP] command [option 3] resolves this problem.)
 
-|Ans |Instead of Commodore control codes, outputs ANSIfootnote:[shorthand for the American National Standards Institute Standard X3.64] escape sequences.
+|`Ans` |Instead of Commodore control codes, outputs ANSIfootnote:[shorthand for the American National Standards Institute Standard X3.64] escape sequences.
 These are a standardized way to set character colors, plus "`screen management`" things like scrolling, windowing, clearing to end-of-line, and more.
 a|
 Turns IBM graphics (line-building characters, many of which have similarities with the Commodore character set) and other special symbols for the user.
 
-|Exp |Turns expert mode on for the user, which skips many entry screens seen when entering subsystems or changing areas within that subsystem.
+|`Exp` |Turns expert mode on for the user, which skips many entry screens seen when entering subsystems or changing areas within that subsystem.
 |Users see a "`macro`"--a short saying presented before the main prompt.
 (Users can toggle them with the kbd:[MA] command, or add their own with the kbd:[ME] command.)
 
-|Fn5 |User receives credit when an upload is validated.  Otherwise, credit is received after the completion of the upload.
+|`Fn5` |User receives credit when an upload is validated.  Otherwise, credit is received after the completion of the upload.
 |User is asked whether they wish to log off after a file transfer is complete.
 
 a|
-Fn4
+`Fn4`
 
-Fn3
+`Fn3`
 
 |Undefined. |Undefined.
 
-|Fn2 |Undefined. |Undefined.
+|`Fn2` |Undefined. |Undefined.
 
-|Fn1 |Undefined. |Text prefaced with a `£` (or `\` if using an ASCII terminal) is not interpreted as an MCI command.
+|`Fn1` |Undefined. |Text prefaced with a `£` (or `\` if using an ASCII terminal) is not interpreted as an MCI command.
 Refer to <<message-command-interpreter>>.
 |===
 
@@ -435,22 +465,26 @@ Along the bottom two lines of the screen is yet more useful information.  The l
 operating information in this order:
 
 .Bottom two screen line display
-[cols=",",]
+[%autowidth]
+[%header]
 |===
+| #FIXME# | Purpose
 |`M=xxxxx` a|
-`M`emory free.
+``M``emory free.
 This is constantly updated by machine language as memory is allocated by the BBS, allowing the sysop to see any areas
-which are causing a build-up of "`garbage,`" which is when BASIC strings or variables are no longer needed.
+which are causing a build-up of "`garbage,`" which is when BASIC strings  are no longer needed.
 
 When "`garbage collection`" (freeing up memory which unused variables occupy) happens, `M=` drops near or to zero bytes.
 `G` appears in the right half of the top status line, indicating garbage collection is in progress.
 The BBS pauses for about half a second, `M=` is updated as string memory is reclaimed, and `G` disappears.
 
-NOTE: There is a separate utility available to show (and optionally clear) garbage on the processor stack in the form of unclosed `for-next` loops and un-``RETURN``ed ``GOSUB``s; it is available as an add-on called "`System Functions.`"
+====
+NOTE: There is a separate utility available to show (and optionally clear) garbage on the processor stack in the form of unclosed `for-next` loops and un-``return``ed ``gosub``s; it is available as an add-on called "`System Functions.`"
+====
 
-|`TC=xxxxx` |`T`otal number of `C`alls to the BBS since it was originally configured.
+|`TC=xxxxx` |``T``otal number of ``C``alls to the BBS since it was originally configured.
 
-|`CN=xxx` |`C`all `N`umber since the BBS was last re-booted.
+|`CN=xxx` |``C``all ``N``umber since the BBS was last re-booted.
 
 | `(dv:drv)=bbbbb` a|
 The last-checked device (`dv`) and drive, partition or LU (`drv`) blocks free (`bbbbb`) count.
@@ -490,8 +524,8 @@ You may log on either normally or use the "`instant`" logon feature.
 
 ==== Normal Logon
 
-* Use the kbd:[f3] and kbd:[f5] keys to highlight the `Loc` position on the lightbar.
-* Press kbd:[f7], which puts a check mark on the left side of `Loc`.
+. Use the kbd:[f3] and kbd:[f5] keys to highlight the `Loc` position on the lightbar.
+. Press kbd:[f7], which puts a check mark on the left side of `Loc`.
 
 This starts logging in from the console, and is called a "`local login.`"
 We suggest that if you have a telephone connected to your modem, take it off the hook at this time.  That way, if an incoming call connects with your modem but not the BBS (since you're on locally), the caller won't assume something is wrong with the BBS.
@@ -578,14 +612,18 @@ they are asked a random security question:
 prefix, or 4-digit suffix
 
 ====
-`xxx-yyy-zzzz` is a format used in the USA and Canada; other countries have differing formats.
+NOTE: `xxx-yyy-zzzz` is a format used in the USA and Canada; other countries have differing formats.
 For now, foreign callers can just make up a phone number: 000-000-0000 works.
-In Image BBS v2.0, this will change: perhaps be made optional, or at the very least more configurable.
+
+In Image BBS v2.0 and above, this second security question is made optional, and the phone number prompt is replaced with the user's e-mail address.
+////
+change: perhaps be made optional, or at the very least more configurable.
 It knows whether the sysop is using the PAL or NTSC TV standard, plus does timezone offsets, so maybe that will figure in the equation.
+////
 ====
 
-This is used as an extra security measure.  If this question is missed,
-the same procedure regarding the `s.errmail_ and _e.telecheck` files above is taken.
+This is used as an extra security measure.
+If this question is answered incorrectly, the same procedure regarding the `s.errmail` and `e.telecheck` files above is taken.
 
 === The Top Screen After Logon
 
@@ -603,10 +641,10 @@ five flags--the first four are single digits--which include:
 *** Expert mode (0=off, 1=on)
 *** Color/graphics mode (0=ASCII, 1=Commodore)
 *** Linefeeds (0=off, 1=on)
-*** Default file transfer protocol (fixme...)
+*** Default file transfer protocol? (#fixme#)
 *** Column width (between 22 and 80 characters wide)
 
-Once a user has successfully logged on to the BBS, either remotely or locally, as either a new user or a user with a login ID and password already, the BBS reads the file entitled s.welcome x, and informs them
+Once a user has successfully logged on to the BBS, either remotely or locally, as either a new user or a user with a login ID and password already, the BBS reads the file entitled `s.welcome _x_`, and informs them
 of:
 
 * what their access group is
@@ -616,15 +654,30 @@ infinite number)
 
 Then it will check for:
 
-[cols=",",]
+.Table 1: Login activities
+
+[%autowidth]
+[%header]
 |===
-| |new news files to read
-| |wanting to view the Graffiti wall
-| |"`forced`" electronic e-mail
-| |normal electronic e-mail
+| Feature | Refer to
+| Read new News Files | kbd:[NF]
+| View Graffiti wall | Graffiti wall
+| Forced E-Mail | FM
+| Normal E-Mail | EM
 |===
 
-Table 1: Login activities
+
+Read new News Files::
+explanation
+
+View Graffiti wall::
+explanation
+
+Forced E-Mail::
+explanation
+
+Normal E-Mail::
+explanation
 
 Once all of this has been completed, the user is placed at the main command level.
 
@@ -648,7 +701,11 @@ an offline C/G screen editor such as _Kaleidoscope_, _Digital Paint_, _Tyron Pai
 
 Here is a summary of the files discussed in this section. Remember, the suffix `x` stands for the digits 0 or 1, for ASCII or Commodore Color/Graphics files, respectively.
 
-[cols=",",]
+.Miscellaneous editable files
+
+[%autowidth]
+[%header]
+
 |===
 |Filename |Purpose
 
@@ -677,8 +734,6 @@ Here is a summary of the files discussed in this section. Remember, the suffix `
 
 |`s.UX` |The entry file shown whenever a user enters the U/X subsystem.
 |===
-
-Table 14: Miscellaneous editable files
 
 To create or edit these files, use the WF option (Refer to <<the-wf-editor>>) at the main command level.
 You can also use the .Put and .Get options (refer to <<sysop-dot-commands>>) in the editor.
@@ -715,6 +770,7 @@ New users logging on are put in group 0.
 For each of the group numbers that you choose to use, you can select a title for it.
 You should choose one of the access groups to be the system operator group, for you with highest BBS privileges.
 For each group you are using, you can select a specific amount of:
+
 * calls per day that that group can make
 * how many minutes per call is allowed
 * how many minutes at idle is allowed (how many minutes may pass without pressing any keys before the BBS automatically hangs up)
@@ -722,7 +778,7 @@ For each group you are using, you can select a specific amount of:
 
 === Done!
 
-Now your Image BBS v1.2b is ready to go on-line for calls!
+Now your Image BBS is ready to go online for calls!
 You may wish to post a few bulletins and news files to get the BBS started.
 
 We hope you like Image BBS, and welcome your comments and suggestions.

@@ -1,31 +1,39 @@
-== +.reledit
+:experimental:
+== `+.reledit`
 
 ====
 This documentation was modified slightly from the text files on the RELedit and Networking plus-file disks.
 I in no way take credit for the original documentation, just the cleanup and integration into these more current, streamlined documentation.
 ====
 
-RELedit is a program which eases the setup and administration of message and file transfer bases.  Just run _+.reledit_ from the main prompt.
+RELedit is a program which eases the setup and administration of message and file transfer bases.
+Just run `+.reledit` from the main prompt.
 
-After a short delay as RELedit reads the system configuration, you see the main menu.  Across the top is the title of the program and a copyright message.  Below that is data on your BBS that includes the number of Subs, U/Ds, etc. that are defined, as well as your node number if you are on the network.  Below that are 5 options:
+After a short delay as RELedit reads the system configuration, you see the main menu.
+Across the top is the title of the program and a copyright message.
+Below that is data on your BBS that includes the number of Subs, U/Ds, etc. that are defined, as well as your node number if you are on the network.
+Below that are 5 options:
 
-*_S – Sub_*
-
-*_U - U/D_*
-
-*_X - U/X_*
-
-*_G – SIG_*
-
-*_N - NetSubs_*
+```
+S – Sub
+U - U/D
+X - U/X
+G - SIG
+N - NetSubs
+```
 
 Select S, U, X, G or N.
 
-NOTE: If you are not part of a network, the NetSubs option will not appear.  This documentation assumes you are networked.  If not, operation is exactly the same, you just can't use the NetSub option.
+====
+NOTE: If you are not part of a network, the NetSubs option will not appear.
+This documentation assumes you are networked.
+If not, operation is exactly the same, you just can't use the NetSub option.
+====
 
-=== Editing Sub-Boards
+=== Editing Sub-Boards [[editing-sub-boards]]
 
-If you select S, the BBS enters the Sub-board list editor's first screen.  It consists of a listing of the Subs (if any) you have defined.
+If you select S, the BBS enters the Sub-board list editor's first screen.
+It consists of a listing of the Subs (if any) you have defined.
 
 The list of Subs show:
 
@@ -35,51 +43,70 @@ The list of Subs show:
 * The device and drive the messages are saved to
 * The ID number of the SubOp (ID# 0 means no SubOp)
 * The password (if any)
-* The access level required to see/enter it * If it is a NetSub, a small n will appear after the access level.
+* The access level required to see/enter it
+* If it is a NetSub, #a small n will appear after the access level#.
 
-To add a Sub, type A and hit kbd:[Return].
+To add a Sub, type kbd:[A] and hit kbd:[Return].
 
 ==== Ranges
 
-Typing ranges of sub-boards to add, delete, move, or insert works similar to BASIC's LIST command.
+Typing ranges of sub-boards to add, delete, move, or insert works similar to BASIC's `list` command.
 
-[cols=",",]
+[%autowidth]
+[%header="no"]
 |===
-|kbd:[L] |To list all the Subs
+|kbd:[L] |To list all the Subs.
 
-|_L3_ |Optionally, follow that by a number to start listing the Subs at.
+|kbd:[L3] |Optionally, follow that by a number to start listing the Subs at.
 
-|_L3-_ |You can follow this with a comma or dash to list from this number to the end of the list.
+|kbd:[L3-] |You can follow this with a comma or dash to list from this number to the end of the list.
 
-|_L3-19_ |You can follow this with a final number to list to.
+|kbd:[L3-19] |You can follow this with a final number to list to.
 |===
 
-Type the board number you want to edit, then press _kbd:[Return]_. (Pressing _kbd:[Return]_ by itself exits to the main RELedit menu.)
+Type the board number you want to edit, then press kbd:[Return].
+(Pressing kbd:[Return] by itself exits to the main RELedit menu.)
 
 === Editing Sub-Board Options
 
 A menu appears with 9 options:
 
-[cols=",",]
+
+.RELedit sub-board definitions
+
+[%autowidth]
 |===
-|1 Title |The title of the sub-board.  --- deletes a Sub when entered as the title, and does not add it if you are adding a sub).
+|1 Title |The title of the sub-board.
 
-|2 Access |The Access levels that can see this Sub.  Entering ? when prompted for the access level calculates access values as described on page link:#anchor-356[Error: Reference source not found].  If the access level is left at 0 when you exit the editor, any other changes are deleted and the board is not added.
+`---` deletes a Sub when entered as the title, and does not add it if you are adding a sub.
 
-|3 SubOp |The handle and ID of the SubOp.  When editing, you can enter the ID number or handle.
+|2 Access |The Access levels that can see this Sub.
+
+Entering kbd:[?] when prompted for the access level calculates access values (refer to #FIXME#).
+
+If the access level is left at 0 when you exit the editor, any other changes are deleted and the board is not added.
+
+|3 SubOp |The handle and ID of the SubOp.
+When editing, you can enter the ID number or handle.
 
 |4 Device |The device number where the messages are saved.
 
-|5 Drive |The drive number (for dual drive, Lt. Kernal and other multi-drive devices) where the messages are saved.  (Serial drive owners normally put 0 here.)  The drive number can be 3 digits long to accommodate CMD hard drives.
+|5 Drive |The drive number (for dual drive, Lt. Kernal and other multi-drive devices) where the messages are saved.
+(Serial drive owners normally put 0 here.)
+The drive number can be 3 digits long to accommodate CMD hard drives.
 
-|6 Status |Toggles between opening and closing the sub-board.  A
-sub-board can be closed for maintenance if necessary; users do not see the sub-board listed when first entering the sub-system.
+|6 Status |Toggles between opening and closing the sub-board.
+A sub-board can be closed for maintenance if necessary; users do not see the sub-board listed when first entering the sub-system.
 
-|7 Type a| Std, N-An, etc.  You are presented with Yes and No questions which help select the type of board it will be.  The questions are:
+|7 Type a| `Std`, `N-An`, etc.
+You are presented with Yes and No questions which help select the type of board it will be.
+The questions are:
 
-Upload/Download Boards:
+Upload/Download Boards::
 
 Message Bases
+
+#fixme#
 
 |8 Passwd |The password needed to enter the sub-board if the sub-board type requires a password.
 
@@ -90,38 +117,39 @@ Any pre-existing screen will be loaded into the editor, and you may use all the 
 
 |===
 
-Table 26: RELedit sub-board definitions
+These 9 options are the same for the U/D and U/X editors as well.
+The only difference is the `Type` question which asks `Downloads Only?` and `Free Downloads?` as well as Password.
 
-These 9 options are the same for the U/D and U/X editors as well.  The
-only difference is the *_Type_* question which asks *_Downloads Only?_* and *_Free Downloads?_* as well as Password.
-
-If the access is 0 or the title is ---, the data will not be saved (or deleted if editing an existing record).  The BBS also goes through the SIGs (if defined) and removes the board from any SIGs it is on.
+If the access is 0 or the title is `---`, the data will not be saved (or deleted if editing an existing record).
+The BBS also goes through the SIGs (if defined) and removes the board from any SIGs it is on.
 
 === The SIG Editor
 
-This is much like the Sub, U/D and U/X editors.  The list displays:
+This is much like the Sub, U/D and U/X editors.
+The list displays:
 
 * the SIG title
 * access
 * the SIGop ID
 * whether the Subs, U/Ds and U/Xs are open in that SIG
 
-Another new feature found in this version of RELedit (when coupled with
-the newest version of the TurboRELs) is the ability to "close" a section of the board to a SIG.  What this does is prevent the SIG from being listed when the user enters the "closed" section.
+Another new feature found in this version of RELedit (when coupled with the newest version of the TurboRELs) is the ability to "`close`" a section of the board to a SIG.
+What this does is prevent the SIG from being listed when the user enters the "`closed`" section.
 
-For example, if you have a SIG that shows the U/X section closed, when a
-user types "UX", the SIG will not display, appearing as if the SIG does not exist in that area.
+For example, if you have a SIG that shows the U/X section closed, when a user types kbd:[UX], the SIG will not display, appearing as if the SIG does not exist in that area.
 
 When you type the number of the SIG you wish to edit, the following
 options appear:
 
+.RELedit SIG Editing Options
 [cols=",",]
 |===
 | |SIG title.
 
 | |Access levels that can use this SIG.
 
-| |The SIGop for this SIG.  Like SubOp in the Sub, U/D or U/X editors, you can enter either the ID number or handle of the user.
+| |The SIGop for this SIG.
+Like SubOp in the Sub, U/D or U/X editors, you can enter either the ID number or handle of the user.
 
 | |Toggles Subs open or closed.
 
@@ -138,67 +166,69 @@ options appear:
 | |Edit the entry screens for this SIG (ASCII or C/G).
 |===
 
-Table 27: RELedit SIG editing options
+#FIXME#: fix numbering
 
 ==== Editing Lists
 
-Using options 7 through 9, you are presented with a list of the Subs,
-U/Ds or U/Xs (depending on what option you select) that looks very much like the one users see when listing the available boards in SB/UD/UX.
+Using options 7 through 9, you are presented with a list of the Subs, U/Ds or U/Xs (depending on what option you select) that looks very much like the one users see when listing the available boards in SB/UD/UX.
 
-Everything is keyed off of the position of the board in that list.  For
-example, if you enter _D5_ it will delete the 5th board in the list of boards for that SIG.
+Everything is keyed off of the position of the board in that list.
+For example, if you enter kbd:[D5] it will delete the 5th board in the list of boards for that SIG.
 
 The commands are as follows:
 
-_[A]dd board_
-
-__
-
-Add a board to the end of the list of boards for this SIG.  This command
-accepts ranges, or type just A and you are asked for the board number (which is the record number you saw in the Sub, U/D and U/X editors).
-
-Typing kbd:[L] at the main *_Edit_* prompt or the *_Add Which_* prompt lists the defined Subs/UDs/UXs (depending on which type you are editing).
-
-The Add command also allows multiple adds by giving it a range to add. For example, A5-10 will add Subs 5 to 10.
-Range commands also work at the "Add Which" prompt.
-
-_[I]nsert board_
-
-__
-
-Identify the number _before_ the board(s) you want inserted. Typing kbd:[S]
-at the edit prompt or the *_Insert Before Which_* prompt lists the boards in that SIG (again, you can enter a range here as well).  You can
-give the board number you want the new boards inserted before by typing kbd:[I] followed by the number.
-
-[cols=",",]
+[%autowidth]
+[%header]
 |===
-|[M]ove boards a| You are asked which boards you want to move in the list of boards for that SIG. Type kbd:[M] and the range at the "Edit" prompt.
+| Option | Purpose
+| kbd:[A]dd board
+
+| Add a board to the end of the list of boards for this SIG.
+This command accepts ranges, or type just kbd:[A] and you are asked for the board number (which is the record number you saw in the Sub, U/D and U/X editors).
+
+Typing kbd:[L] at the main `Edit` prompt or the `Add Which` prompt lists the defined Subs/UDs/UXs (depending on which type you are editing).
+
+The Add command also allows multiple adds by giving it a range to add.
+For example, kbd:[A5-10] will add Subs 5 to 10.
+Range commands also work at the `Add Which` prompt.
+
+| kbd:[I]nsert board
+
+| Identify the number _before_ the board(s) you want inserted. 
+Typing kbd:[S] at the edit prompt or the `Insert Before Which` prompt lists the boards in that SIG (again, you can enter a range here as well).
+You can give the board number you want the new boards inserted before by typing kbd:[I] followed by the number.
+
+|kbd:[M]ove boards
+|You are asked which boards you want to move in the list of boards for that SIG.
+Type kbd:[M] and the range at the `Edit` prompt.
 Next, you are asked which board you want the selected boards to be moved after.
 
-|[D]elete boards |You are asked which boards you wish to delete.  Again, ranges work here, in the same way.  This _only_ deletes the boards from the SIG list, not from the main Sub/UD/UX lists.
-As before, L lists Subs/UDs/UXs, S scans the list of boards selected for that SIG list.
+|kbd:[D]elete boards 
+|You are asked which boards you wish to delete.
+Again, ranges work here, in the same way.
+This _only_ deletes the boards from the SIG list, not from the main Sub/UD/UX lists.
+As before, kbd:[L] lists Subs/UDs/UXs, kbd:[S] scans the list of boards selected for that SIG list.
 |===
 
-Pressing _kbd:[Return]_ saves the list, returning you to the editing screen for the SIG information.
+Pressing kbd:[Return] saves the list, returning you to the editing screen for the SIG information.
 
-When you hit kbd:[Return] at the SIG Edit prompt, the data is saved unless the title is _---_ or the access is 0.
+When you hit kbd:[Return] at the SIG Edit prompt, the data is saved unless the title is `---` or the access is `0`.
 
 If a SIG is deleted, the SIG list for that SIG is also deleted.
 
 === Netsub Editor
 
-This editor lets you list all of the NetSub IDs you have (you can have
-up to 60) and edit the lists of boards they are linked to as well as what sub-boards on your BBS are part of that NetSub.
+This editor lets you list all of the NetSub IDs you have (you can have up to 60) and edit the lists of boards they are linked to as well as what sub-boards on your BBS are part of that NetSub.
 
 To define a networked sub, first set it up
-(link:#Editing Sub-Boards[Editing Sub-Boards], page link:#Editing Sub-Boards[67]).
+(refer to <<editing-sub-boards>>).
 
 When you hit N at the main prompt, the BBS looks on your disk for the NetSub data files.  These files are program files that are loaded into memory using one of the new protocol files written for the NetSubs.
 
-NOTE: If you have a Lt. Kernal, have the Autoload feature turned on, and have a floppy drive with the same device number as the Lt.
-Kernal, you
-get a flashing error light on the floppy drive when you enter the NetSub editor as well as every time the new _+.NM.netsub_ files are executed during Network Maint.  You might want to remove the floppy drive from
-your system if this bugs you, but it will not hurt the operation of RELedit or the BBS.
+====
+TIP: If you have a Lt. Kernal, have the Autoload feature turned on, and have a floppy drive with the same device number as the Lt. Kernal, you get a flashing error light on the floppy drive when you enter the NetSub editor as well as every time the new `+.NM.netsub` files are executed during Network Maint.
+You might want to remove the floppy drive from your system if this bugs you, but it will not hurt the operation of RELedit or the BBS.
+====
 
 The list only displays the NetSub IDs you have defined on your BBS.
 
@@ -222,19 +252,30 @@ follows:
 
 * Up to 60 boards can be defined as being part of a particular NetSub.
 * You can only add boards that are not already identified as being Networked.
+
+====
 NOTE: To remove Network status from a particular sub-board, it must be deleted and re-added using the Subs editor.
+====
+
 * The "Multi-Add" and "Multi-Insert" functions skip not only deleted records, but already networked boards.
 
-While the order of the subs in this list does not in any way affect the order in which they are listed to users, it does affect the order in which they are scanned when _+.NM.netsub_ is run.
+While the order of the subs in this list does not in any way affect the order in which they are listed to users, it does affect the order in which they are scanned when `+.NM.netsub` is run.
 When a message comes
 in to a board, the boards are searched for a post of the same name in the order defined in this section.  If none are found, the boards are scanned in the same order again for a place to post a new message.
 
-You may want to rearrange the order of the Subs to speed up NetSub operation.  For example: if you have a sub containing older posts not responded to as often as a sub found later in the list, you might want to switch their order so the board with more activity comes first.
+You may want to rearrange the order of the Subs to speed up NetSub operation.
+
+====
+.Example
+
+If you have a sub containing older posts not responded to as often as a sub found later in the list, you might want to switch their order so the board with more activity comes first.
 This way the BBS does not read through older posts for no reason.
+====
 
 ==== Overflow Subs
 
-This is a system allowing you to set multiple boards as being part of a particular NetSub ID.  When a network message comes in, all subs part of
-a particular NetSub ID are searched, and the response (or new post) is added where appropriate.
+This is a system allowing you to set multiple boards as being part of a particular NetSub ID.
+When a network message comes in, all subs part of a particular NetSub ID are searched, and the response (or new post) is added where appropriate.
 
-That should just about cover the options available to you in the new RELedit.  I hope you enjoy it and find it useful in maintaining your BBS.
+That should just about cover the options available to you in the new RELedit.
+I hope you enjoy it and find it useful in maintaining your BBS.
