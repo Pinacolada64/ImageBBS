@@ -1,31 +1,37 @@
-=== Message Command Interpreter [[message-command-interpreter]]
+:toc:
+:experimental:
 
-The Message Command Interpreter (MCI) allows you to do a variety of things within messages you type.  Each MCI command consists of:
+== Message Command Interpreter [[message-command-interpreter]]
+
+The Message Command Interpreter (MCI) allows you to do a variety of things within messages you type.
+Each MCI command consists of:
 
 * the British pound character (£) for Commodore users, or backslash (\)
 for other computers
 * a command letter (can be either upper- or lowercase)
-* a number or letter * any arguments/parameters.
+* a number or letter
+* any arguments/parameters.
 
-Numbers must be entered in a certain way.  Since the parameter after a
-command letter may only be one character, letters are substituted in
-some cases, as follows:
+Numbers must be entered in a certain way.
+Since the parameter after a command letter may only be one character, letters are substituted in some cases, as follows:
 
 .MCI numbering system
-[cols=",,,",]
+[%autowidth]
+[%header]
 |===
-|1 |1 or A |9 |9 or I
-|2 |2 or B |10 |J
-|3 |3 or C |11 |K
-|4 |4 or D |12 |L
-|5 |5 or E |13 |M
-|6 |6 or F |14 |N
-|7 |7 or G |15 |O
-|8 |8 or H | |
+| Num | Equals | Num | Equals
+| ``1`` |``1`` or ``A`` |``9`` |``9`` or ``I``
+| ``2`` |``2`` or ``B`` |``10`` |``J``
+| ``3`` |``3`` or ``C`` |``11`` |``K``
+| ``4`` |``4`` or ``D`` |``12`` |``L``
+| ``5`` |``5`` or ``E`` |``13`` |``M``
+| ``6`` |``6`` or ``F`` |``14`` |``N``
+| ``7`` |``7`` or ``G`` |``15`` |``O``
+| ``8`` |``8`` or ``H`` | |
 |===
 
 ====
-ADMONITION: Think of it as "`extended hexadecimal.`"
+TIP: Think of it as "`extended hexadecimal.`"
 And by the way, this next good-sized chunk was pretty extensively reworked; I think the examples in the original manual don't always explain themselves very well.
 
 TIP: If ever you need to output a British pound sign, type two of them.
@@ -38,22 +44,26 @@ In general, MCI is what "`spices up`" an Image BBS.
 It allows you to add color, cursor movement, and a "`personal touch`" to your BBS and messages.
 The MCI commands available in Image BBS are:
 
-**_£AnTEXT£ About_**
+### `£AnTEXT£` About
 
-Compare MCI variable £Vn to TEXT.  Notice the ending pound sign which delimits the comparison.  (For a list of MCI variables, see the £V command.)  The comparison result can be used with £D or £T.
+Compare MCI variable £Vn to TEXT.
+Notice the ending pound sign which delimits the comparison.
+(For a list of MCI variables, see the £V command.)
+The comparison result can be used with £D or £T.
 
 _£A2SYSOP£_ Compares the user's handle (`£V2`) to _SYSOP_.
 
-**_£Bx Bells_**
+### `£Bx` Bells
 
-Send x bell characters [CHR$(7)] to the user; if the user's terminal supports bells, they hear them.
+Send _x_ bell characters [CHR$(7)] to the user; if the user's terminal supports bells, they hear them.
 
+====
 TIP: Speed up or slow down by using the £Sx command!
+====
 
-**_£Cx Color_**
+### `£Cx` Color
 
-Set the current display color to _x_, where _x_ is from the following
-table:
+Set the current display color to _x_, where _x_ is from the following table:
 
 [cols=",,,,,",]
 |===
@@ -344,11 +354,15 @@ If a%=23,  this displays "23"
 
 If a%=789, this displays "89", the _rightmost_ two digits.
 
-  Example 3: £#0£%a If a%=l,   this displays l
+.Example 3
 
-If a%=42, this displays "42"
+`£#0£%a`
 
-=== £$x Display string variable
+If a%=l, this displays `1`
+
+If a%=42, this displays `42`
+
+=== `£$x` Display string variable
 
 Display any one-letter string variable (A$, for example).
 
@@ -356,13 +370,14 @@ Display any one-letter string variable (A$, for example).
 
 Display the contents of the string variable A$.
 
-=== £←xx Tab
+=== `£←xx` Tab
 
-This command tabs the cursor from the left column, to column #xx.
+This command moves the cursor from the left column to column `#_xx_`.
 
-Notes: * Use the back-arrow key to the left of the 1 key.
+To tab over less than ten columns, use a leading zero (_e.g._, `£←05`, `£←08`).
 
-* To tab over less than ten columns, use a leading zero (£←05, £←08).
+NOTE: The kbd:[←] is to the left of the kbd:[1] key.
 
-If the tab-to column specified is less than the column where the cursor is now, any text after the tab command is displayed as normal.
-
+====
+NOTE: If the tab-to column specified is less than the column where the cursor is now, any text after the tab command is displayed directly at the cursor position.
+====

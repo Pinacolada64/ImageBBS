@@ -1,7 +1,7 @@
 :experimental:
 :toc:
 
-== `+.reledit`
+== The RELedit System [[reledit-system]]
 
 ////
 This documentation was modified slightly from the text files on the RELedit and Networking plus-file disks.

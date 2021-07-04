@@ -16,17 +16,15 @@ Modifications by RASCAL, X-TEC, BUCKO, PINACOLADA, METAL MAGE and many others.
 Manual OCRed by JOE COMMODORE.
 Updated by PINACOLADA from documentation by DR. BOB, LITTLE JOHN, and others.
 
-Handle: ___________________________   Network Identifier: __________
+ Handle: ___________________________   Network Node: __________
 
-_Last Updated: 6/14/2021_
+---
 
-====
+////
 This is just a plain text version of the OCRed sysop guide, to remind me which sections belong where.
 I added commands before each section, but I think that makes it too cluttered.
 Better to have a command summary appendix.
-====
 
-////
 // Roman numbering
 
 ## Preface

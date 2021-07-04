@@ -34,12 +34,13 @@ Use this procedure with any menu item in the configuration editor.
 Since this configuration editor was written, New Image Software developed improved handling regarding message bases and file transfer libraries.
 Called the TurboRELs, they can be configured while on the BBS via the “RELedit” system.
 (If you'd like to join the BBS network, you must use the TurboRELs, since the messages are passed around in the upgraded format.)
-Refer to xref:the-reledit-system.adoc for more information.
+
+Refer to xref:12b-reledit-system.adoc#reledit-system[The RELedit System] for more information.
 ====
 
-=== Access Levels
+=== Access Groups
 
-You must then assign access to each of your boards or libraries.
+You must then assign which access groups may use each of your boards or libraries.
 Access is calculated using the following method, which is used throughout the BBS.
 To determine which groups can access a given sub-board or library, add the group’s access value:
 
@@ -78,7 +79,7 @@ kbd:[680] is what you would enter for the access code value.
 ====
 
 ====
-NOTE: You may type kbd:[?] at most prompts that ask for access levels and the BBS will go through groups 0-9, asking you if that group gets access (type Y for yes, other keys mean no).
+NOTE: You may type kbd:[?] at most prompts that ask for access levels and the BBS will go through groups 0-9, asking you if that group gets access (type kbd:[Y] for yes, other keys mean no).
 It then calculates (but doesn’t immediately display) the value for you.
 You may do this in the configuration editor, or any part of the BBS that defines an access level.
 ====
@@ -86,7 +87,7 @@ You may do this in the configuration editor, or any part of the BBS that defines
 You also enter a _subop_ (sub-board operator; a user given an area of the BBS to maintain) for each sub-board/library.
 This is done by typing the ID number of the user desired.
 If you are configuring a new BBS, you have no users yet.
-Therefore, assign the subop duties to either yourself (user 1) or to no-one (user -1).
+Therefore, assign the subop duties to either yourself (user `1`) or to no-one (user `-1`).
 Of course, you may change this later.
 
 Each sub-board/library must be defined as to which device and drive to put the files on (posts, responses, U/D files).
@@ -106,51 +107,54 @@ The parameters for each group consist of:
 
 * Group name
 * Number of calls permitted per day (1-254 or infinite [0])
-* Time in minutes permitted per call (1-99  or infinite [0])
+* Time in minutes permitted per call (1-99 or infinite [0])
 * Amount of time permitted idling (no activity at a command prompt) (1-9
 minutes)
-* Number of downloads per call  (1-255 or infinite [0])
+* Number of downloads per call (1-255 or infinite [0])
 
 === User Flags
 
-Each group has a set of “flags” assigned to users placed in that group.
+Each group has a set of "`flags`" assigned to users placed in that group.
 These flags may be customized for individual users at a later time if desired.
 With this editor, you set the flags as you wish them assigned when first entering the particular group.
 The flags usually toggle between “Yes” or “No,” but a few require numeric input.
 
 .User flags
-[cols=",,",]
+[%header]
+[%autowidth]
 |===
+| Flag | Type | Purpose
 |Non-Weed Status |Yes/No |Yes: Group is not deleted from the user log after not having called within a specified number of months.
 (Refer to <<autoweed>>.)
-)
 
-|Credit Ratio |Numeric |The number of credits awarded per lines made in a post or file block uploaded.  The ratio is usually 1:1.
+|Credit Ratio |Numeric |The number of credits awarded per lines made in a post or file block uploaded.
+The ratio is usually 1:1.
 
-|Local Maintenance |Yes/No |Yes: Group has access to BBS maintenance commands.  Only give _very_ trusted users access to this.
+|Local Maintenance |Yes/No |Yes: Group has access to BBS maintenance commands.
+Only give _very_ trusted users access to this.
 
 |Post/Respond Capability |Yes/No |Yes: Group can post messages in message bases.
 
 |UD/UX Access |Yes/No |Yes: Group can use upload/download or user exchange subsystems.
 
-|Maximum Editor Lines |Numeric |Lines of text (10-100, in multiples of 10: 0=10, 1=20...
-) group has available to post messages, e-mail, or feedback.
+|Maximum Editor Lines |Numeric |Lines of text (10-100, in multiples of 10: `0`=10, `1`=20...) an access group has available to post messages, e-mail, or feedback.
 
 |Unlimited DL Credit |Yes/No |Yes: no credit is deducted when files are downloaded.
 
-|Remote Maintenance |Yes/No |Similar to Local Maintenance.  Can write/remove forced e-mail, feedback, view system logs.
+|Remote Maintenance |Yes/No |Similar to Local Maintenance.
+Can write/remove forced e-mail, feedback, view system logs.
 
 |E-mail Access |Yes/No |Yes: group can send/receive e-mail.
 
 |User List Access |Yes/No |Yes: group can list BBS users.
 
-|B.A.R./Log Access |Yes/No |Yes: group can view various logs.
+|B.A.R./Log Access |Yes/No |Yes: group can view the Board Activity Register, or daily activity logs.
 
 |Sub-board Maintenance |Yes/No |Yes: group can edit or re-configure SIGs or sub-boards, and edit or delete other users' posts.
 
-|Files Maintenance |Yes/No |Yes: group can edit, validate, award credit to users in the U/D section.
+|Files Maintenance |Yes/No |Yes: group can edit, delete, (un-)validate, or award credits to a user for uploading a file, in the U/D section.
 
-|MCI Access |Yes/No |Yes: group has access to the Message Command Interpreter (Refer to <<mci>>).
+|MCI Access |Yes/No |Yes: group has access to the Message Command Interpreter (Refer to xref:12b-mci-commands.adoc[Message Command Interpreter]).
 
 |UD/UX at Prime Time |Yes/No |Yes: group can upload or download from U/Ds or U/Xs during prime time.
 
@@ -160,15 +164,17 @@ We also suggest that, at least to start, you define group 9 as the most powerful
 When you first log on to your BBS as sysop, you are assigned group 9 access.
 You may change your access group after logging on for the first time.
 
-When you have completed all assignments for a group, select the _Keep Parameters_ option and move on to another group.
-When all groups are assigned satisfactorily, choose _Return to Main Menu_.
+When you have completed all assignments for a group, select the `Keep Parameters` option and move on to another group.
+When all groups are assigned satisfactorily, choose `Return to Main Menu`.
 
+====
 NOTE: Any changes in access group information, either with the offline `config` editor or the online `+.reconfig` editor, require a reboot before the changes take effect.
+====
 
 === BBS Information
 
 Now you get to identify your BBS.
-Select the _BBS Info_ option from the main menu.
+Select the `BBS Info` option from the main menu.
 It has several specific questions about you and your BBS to help personalize it.
 
 First, the sysop's information:
@@ -181,24 +187,26 @@ Choose it carefully since this is usually the most powerful account on the BBS, 
 
 Then you are asked a few other questions that are added to the data in your account to start the user file.
 
-#FIXME#
+#FIXME#: tell exactly which prompts are asked.
 
-This information can be changed inside the BBS later, if you desire (using the `ED` or `EP` commands).
+This information can be changed inside the BBS later, if you desire (using the kbd:[ED] or kbd:[EP] commands).
 
 .BBS setup information
-[cols=",",]
+[%header]
+[%autowidth]
 |===
-|Board Name |Should be self-explanatory.
+| Option | Meaning
+|Board Name |Name of the BBS
 
 |Board Identifier |A two-character abbreviation used to identify your BBS.
-  For example, a board named “Lyon's Den” might use an identifier of `LD`.
+For example, a board named “Lyon's Den” might use an identifier of `LD`.
 
 |#FIXME# | #FIXME#
 |===
 
 === Prime Time
 
-A period where everyone is limited to being online a certain number of minutes, and U/D access is limited to users with the “U/D at Prime Time” flag set.
+_Prime Time_ is a period of time where everyone is limited to being online a certain number of minutes, and U/D access is limited to users with the “U/D at Prime Time” flag set.
 If you are just starting out, you may wish to wait to see how busy your BBS is before setting up Prime Time.
 
 If you decide to set it up, you are asked for:
@@ -209,26 +217,30 @@ If you decide to set it up, you are asked for:
 
 This information may be changed later if you wish.
 
-When you are finished with the Prime Time option, choose _Keep Parameters_ to return to the _BBS Info_ menu.
+When you are finished with the Prime Time option, choose `Keep Parameters` to return to the `BBS Info` menu.
 
 === Main Prompt
 
 This is a message users see when they are not in any particular subsystem.
 It can be anything you want, but should be short.
-The default prompt is _IMAGE:_
+The default prompt is `IMAGE:`
 
-After establishing your prompt, return to the _BBS Info_ menu.
+After establishing your prompt, return to the `BBS Info` menu.
 
 === Credit Points
 
-Credits are points that users accrue or lose depending on their actions on the BBS.
-They earn more by uploading files, posting bulletins in the message bases, playing games, the Credit Exchange and possibly by other methods.
+The final selection here is to set the number of credit points new users receive when first signing up to your BBS.
+
+Credits are like currency that users accrue or lose depending on their actions on the BBS.
+
+Users earn more credits by uploading files, posting bulletins in the message bases, playing games, using the Credit Exchange (where they can exchange the minutes on unused calls for more credits, and other options), and possibly by other methods.
 They can also be awarded by the sysop for no good reason!
 
-The final selection here is to set the number of credit points new users receive when first signing up to your BBS.
-This can be from 0 to 65,000, but we assume most sysops will not want to assign that many to new users.
+Users can spend credits by downloading files, or some games may be configured to deduct credits as an entrance fee (such as the Credit Pool).
 
-This completes the _BBS Info_ section of your configuration!
+A new user can be given from 0 to 65,000 credits, but we assume most sysops will not want to assign that many to new users.
+
+This completes the `BBS Info` section of your configuration!
 
 === Loading Configuration Files
 
@@ -253,6 +265,13 @@ Boot Image BBS
 
 (If you change your mind, you can still escape with kbd:[←].)
 
+`Return to BASIC` ``end``s the program, where you can re-``run`` the program, or do something else, but the program will still be in memory.
+
+`Cold start the machine` resets the C64 back to BASIC's sign-on screen, losing any unsaved configuration changes and removing the `config` program from memory.
+
+`Boot Image BBS` will boot your BBS, if the file `image 1.2b` is on your boot disk or current partition/LU.
+
 You are notified if any file(s) have not been written to disk, or if re-writing a particular file will re-start the user log, before exiting the configuration editor.
 
-For now, let's select `Return to BASIC` and continue with setting up the modem.
+For now, let's select `Return to BASIC` and continue with setting up the modem, discussed in the next chapter.
+

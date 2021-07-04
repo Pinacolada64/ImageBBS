@@ -1,4 +1,4 @@
-
+:experimental:
 == Telnet Bridge Software
 
 === Jim Brain's `tcpser`
@@ -8,26 +8,29 @@ It can be downloaded from:
 
 https://github.com/go4retro/tcpser/
 
-The latest version as of November 2020 is :tcpser_version:. // 1.1.4
+The latest version as of November 2020 is 1.1.4.
+// :tcpser_version: 
 
 ==== Using a Physical Serial Port
 
-Even if you're using Windows, its COM`x`: nomenclature is replaced by Linux's `/dev/tty`_x_.
-`COM1` is equivalent to `/dev/ttys0`.
+Even if you're using Windows, its `COM__x__:` nomenclature is replaced by Linux's ``/dev/tty__x__``.
+`COM1:` is equivalent to `/dev/ttys0`.
 
  tcpser -d /dev/ttyS0 -p 6400 -s 19200 -i"e0v0h0x4&C1&D2&K3" -l7 -tSsIi
 
 This suggested command line for tcpser means:
 
 .tcpser command line switches
+[%header]
+[%autowidth]
 |====
 | Parameter | Purpose
-| -d /dev/ttys0 | use serial port 0
-| -p 6400 |  use incoming port 6400
-| -s 19200 | report the modem connect rate at 19200kBPS
-| -i "..." | initialize the modem with the following string
-| -l7 | log events at level 7
-| -tSsIi | show incoming and outgoing RS232 and TCP/IP traffic.
+| `-d /dev/ttys0` | use serial port 0
+| `-p 6400` |  use incoming port 6400
+| `-s 19200` | report the modem connect rate at 19200 kBPS
+| `-i "..."` | initialize the modem with the following string
+| `-l7` | log events at level 7
+| `-tSsIi` | show incoming and outgoing RS232 and TCP/IP traffic
 |====
 
 ==== Using the VICE Emulator
@@ -40,7 +43,11 @@ Here is a command line to try:
 
 `tcpser -i "e0v0" -s 2400 -v 25232 -p 6400`
 
-If you're using a high-speed expansion port interface, you can increase the `-s` value to something more appropriate.
+If you're using a high-speed RS232 interface, you can increase the `-s` value to something more appropriate.
+
+==== Multiple Emulated Modems
+
+Multiple modems can be emulated within one instance of `tcpser`. #FIXME#
 
 === tcpser4j
 
@@ -59,9 +66,11 @@ The advantages are:
 
 This is a Windows program designed to allow a real Commodore 64 to run Image BBS.
 
+====
 If you use this program and you have trouble getting the BBS to answer,
 here's some information from Larry “X-TEC” Hedman:
 
+____
 Jeff, I experienced the same problems you described when I started using BBS Server with an Omnitronix RS232 interface plugged into the modem port.
 
 I never could get it to work at any of the 2400 baud settings but 1200 baud works fine and connections stay connected at 1200 baud but in actuality, the speed is much faster.
@@ -97,8 +106,10 @@ Try connecting to the BBS using whatever method you are using, and watch the RX 
 
 If it doesn't work use a different 1200 baud `+.modem` file until you find one that works.
 Hope this helps.
+____
+====
 
-=== __Telnet bridge hardware__
+=== Telnet bridge hardware
 
 ====
 Since telnet bridges don't support BPS rate changes over telnet,
@@ -114,7 +125,7 @@ Expansion port; plans are available at http://www.go4retro.com/projects/link232/
 
 === Lantronix UDS-10
 
-* sends ATA immediately upon answer
+* sends `ATA` immediately upon answer
 
 ////
 === CometBBS
@@ -128,7 +139,9 @@ Expansion port; plans are available at http://www.go4retro.com/projects/link232/
 
 X-TEC mentions:
 
+____
 Tell the seller it's for hooking up to an Image BBS. This makes sure all the control lines are wired correctly.
+____
 
 === Daniel Mackey's SwiftLink clone
 
