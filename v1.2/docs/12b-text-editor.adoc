@@ -15,7 +15,8 @@ To enter text, simply type it into the editor.
 
 kbd:[DELete] works as usual, but kbd:[`INSerT`] does not.
 
-There is no need to press kbd:[Return] at the end of each line; the editor "`wraps`" words, so they aren't chopped in half.
+There is no need to press kbd:[Return] at the end of each line. 
+The editor uses _word-wrap_, so words which extend past the edge of the screen will be erased and put at the beginning of the next line.
 
 As the sysop, you can define how many lines of text (in multiples of ten) a user can type into the editor.
 (Refer to <<user-flags>> for more information.)
@@ -41,7 +42,7 @@ This displays `Command:` and waits for you to press another key (called a "`dot 
 This is _Command Mode_.
 
 ====
-TIP: When you reach the end of the text buffer, you are automatically put into Command Mode.
+TIP: When you reach the end of the text buffer, you are automatically put into Command Mode in order to edit your existing text or save it.
 ====
 
 * If you press kbd:[DELete] or kbd:[Return] keys, the `Command:` prompt is removed, and you are returned to the editor.
@@ -179,11 +180,11 @@ The Justify commands are:
 |Command | Purpose
 |kbd:[C]enter |Center text
 
-|kbd:[E]xpand |Insert spaces between words to fill out lines
+|kbd:[E]xpand |Insert spaces between words to the limit of your kbd:[.C]olumns setting
 
 |kbd:[I]ndent |Move text right by one column, if possible
 
-|kbd:[P]acked |Remove all extra spaces put in by Justify
+|kbd:[P]acked |Remove all extra spaces added by Expand
 
 |kbd:[L]eft |Remove leading spaces
 

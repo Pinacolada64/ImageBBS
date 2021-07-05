@@ -7,7 +7,7 @@
 
 # Image BBS v1.2b Sysop Guide
 Ryan Sherwood <sym.rsherwood@gmail.com>
-v0.1, 6/16/2021
+v0.1, 7/4/2021
 
 Copyright (C) 1991 New Image Software
 

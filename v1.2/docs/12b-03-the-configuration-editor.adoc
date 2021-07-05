@@ -6,7 +6,7 @@ You will not be reconfiguring an existing system nor be converting a system over
 For those that want or need to start fresh, the Configuration Editor will do the job.
 If you are converting an existing system from CNet 12.0/12.1, there are also convert routines in this program.
 
-==== Configuring a New System
+=== Configuring a New System
 
 You begin by loading the configuration program from your back-up disk.
 Use the standard Commodore `load` command (assuming 8 is the device number you're booting from):
@@ -93,8 +93,9 @@ Of course, you may change this later.
 Each sub-board/library must be defined as to which device and drive to put the files on (posts, responses, U/D files).
 The device and drive menu options allow you to set these.
 
-When you're done with your selections, select the last option, "`Keep Parameters`" and you are returned to the prompt to assign another sub-board/library.
-When you're done, simply select the "`Main Menu`" option.
+When you're done with your selections, select the last option, `Keep Parameters` and you are returned to the prompt to assign another sub-board/library.
+
+When you're done, simply select the `Main Menu` option.
 
 === Editing Access Groups
 
@@ -108,11 +109,10 @@ The parameters for each group consist of:
 * Group name
 * Number of calls permitted per day (1-254 or infinite [0])
 * Time in minutes permitted per call (1-99 or infinite [0])
-* Amount of time permitted idling (no activity at a command prompt) (1-9
-minutes)
+* Amount of time permitted idling (no activity at a command prompt) (1-9 minutes)
 * Number of downloads per call (1-255 or infinite [0])
 
-=== User Flags
+=== User Flags [[user-flags]]
 
 Each group has a set of "`flags`" assigned to users placed in that group.
 These flags may be customized for individual users at a later time if desired.
@@ -154,9 +154,11 @@ Can write/remove forced e-mail, feedback, view system logs.
 
 |Files Maintenance |Yes/No |Yes: group can edit, delete, (un-)validate, or award credits to a user for uploading a file, in the U/D section.
 
-|MCI Access |Yes/No |Yes: group has access to the Message Command Interpreter (Refer to xref:12b-mci-commands.adoc[Message Command Interpreter]).
+|MCI Access |Yes/No |Yes: group has access to the Message Command Interpreter.
+(Refer to xref:12b-mci-commands.adoc#message-command-interpreter.)
 
 |UD/UX at Prime Time |Yes/No |Yes: group can upload or download from U/Ds or U/Xs during prime time.
+(Refer to <<prime-time>>.)
 
 |===
 
@@ -204,7 +206,7 @@ For example, a board named “Lyon's Den” might use an identifier of `LD`.
 |#FIXME# | #FIXME#
 |===
 
-=== Prime Time
+=== Prime Time [[prime-time]]
 
 _Prime Time_ is a period of time where everyone is limited to being online a certain number of minutes, and U/D access is limited to users with the “U/D at Prime Time” flag set.
 If you are just starting out, you may wish to wait to see how busy your BBS is before setting up Prime Time.
@@ -247,10 +249,24 @@ This completes the `BBS Info` section of your configuration!
 You may load configuration files at any time to make changes to them as you desire.
 This can also be done online with the `+.reconfig` program, but the option is included here for any that may wish to reconfigure their BBS off-line.
 
+You may load individual configuration files, or load all files at once.
+
+#FIXME#: more info
+
 === Saving Configuration Files
 
 The last option is to save the configuration files to disk.
 You are first prompted to insert all system disks into their proper drives, and then the files are saved to the disks.
+
+====
+WARNING: If you have not loaded them first, do not re-write the `u.config` (user log) file, or `e.data` (system configuration information) files.
+This could fool the system into thinking you only have one user!
+
+There is confirmation that you want to start the user file over.
+
+A utility, `edata edit`, has been included to recover from this possibility occuring.
+Refer to "`BASIC Utilities`" for instructions on how to use it. #FIXME#
+====
 
 === All Done
 

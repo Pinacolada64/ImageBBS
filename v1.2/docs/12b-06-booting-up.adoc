@@ -6,7 +6,8 @@
 You are now ready to boot up your new Image BBS and make your first "`call!`"
 Most likely you will want to explore and/or continue its configuration, using included tools to:
 
-[cols=",",]
+[%header]
+[%autowidth]
 |===
 |Activity | Section
 |Log in locally |x
@@ -21,11 +22,15 @@ Most likely you will want to explore and/or continue its configuration, using in
 
 |Learn about system files | x
 
-|View Feedback messages | link:#anchor-292[63]
+|View Feedback messages | link:#anchor-292[VF]
 |===
 
 If necessary, insert your boot disk into the proper device.
 (We assume device #8 here.)
+
+:filename: image 1.2b
+
+[:filename:]
 
 [%autowidth]
 [%header]
@@ -220,111 +225,152 @@ The functions are as follows:
 |Key |Function |Reference
 
 |kbd:[1] |Set the time and date
-|<<set-time-and-date>>
+|<<idle-set-time-and-date>>
 
 |kbd:[2]
-| Board Activity Register
-| Board Activity Register
+| B.A.R. screen
+| <<idle-bar>>
 
-|kbd:[3] |System disk blocks free |
+|kbd:[3] |System disk blocks free | <<idle-blocks-free>>
 
-|kbd:[4] |Large clock |
+|kbd:[4] |Large clock | <<idle-large-clock>>
 
-|kbd:[5] |Update memory |
+|kbd:[5] |Update memory | <<idle-update-memory>>
 
-|kbd:[6] |Reset modem |
+|kbd:[6] |Reset modem | <<idle-reset-modem>>
 
-|kbd:[7] |Reserve BBS |
+|kbd:[7] |Reserve BBS | <<idle-reserve-bbs>>
 
-|kbd:[8] |View today's BBS log |
+|kbd:[8] |View today's BBS log | <<idle-view-log>>
 
-|kbd:[←] |Load IMAGE terminal | <<image-terminal>>
+|kbd:[←] |Load IMAGE terminal | <<idle-image-terminal>>
 
-|kbd:[+] |Turn modem speaker on |
+|kbd:[+] |Turn modem speaker on | <<idle-modem-speaker-on>>
 
-|kbd:[-] |Turn modem speaker off |
+|kbd:[-] |Turn modem speaker off | <<idle-modem-speaker-off>>
 
-|kbd:[Shift+A] |Start nightly AutoMaintenance |"`link:#anchor-317[Nightly
-AutoMaint],`" page link:#anchor-317[73]
+|kbd:[Shift+A] |Start nightly AutoMaintenance | <<idle-nightly-automaint>>
 
-|kbd:[Shift+N] |Start nightly NetMail processing |
+|kbd:[Shift+N] |Start nightly NetMail processing | <<idle-nightly-netmail>>
 
-|kbd:[Shift+T] |Invert carrier detect |
+|kbd:[Shift+T] |Invert carrier detect | <<idle-invert-cd>>
 
-|kbd:[Space] |Redisplay current screen |
+|kbd:[Space] |Redisplay current screen | <<idle-redisplay-screen>>
 
-|kbd:[£] |Manual answer |
+|kbd:[£] |Manual answer | <<idle-manual-answer>>
 |===
 
-==== Set Time and Date [[set-time-and-date]]
+==== 1 Set Time and Date [[idle-set-time-and-date]]
 
 Allows you to set or reset the date and time as outlined above.
 
-=== Board Activity Register
+==== 2 Board Activity Register [[idle-bar]]
 
-The Board Activity Register (or BAR) screen displays
-current data for the BBS in four columns, which cover
+The Board Activity Register (or BAR) screen displays current data for the BBS in four columns, which cover the last call, total since the log was restarted, current total, and system grand total.
 
-#FIXME# missing table
+The rows on the screen report how many feedback messages, sysop mail, user mail, posts, responses to posts, uploads, downloads, new users, calls, time used and time idle in minutes for each category.
+(The first column will show the idle time between the two previous calls.)
 
-The rows on the screen report for each column category:
+==== 3 Blocks free [[idle-blocks-free]]
 
-(The first column shows the idle time between the two previous calls.)
+The blocks free screen shows the blocks free on all six Image system disks.
 
-#### Garbage Collect
+==== 4 Large Clock [[idle-large-clock]]
 
-A garbage collect is forced, displaying the true amount of memory free in the `M=` display, at the bottom left corner of the screen.
+The clock screen shows the current time in a large display.
 
-#### System Reservation [[bbs-reservation]]
-The BBS can be reserved (the user signing on must know the reservation
-password to access the BBS) for:
+==== 5 Update Memory [[idle-update-memory]]
+
+A garbage collect is forced, which frees unused strings and displays the true amount of free memory in the `M=` display at the bottom left corner of the screen.
+
+==== 6 Reset Modem [[idle-reset-modem]]
+
+Send a sequence of commands to the modem to reset it to Image BBS`'s requirements.
+
+==== 7 Reserve BBS [[idle-reserve-bbs]]
+
+The BBS can be reserved (the user signing on must know the reservation password as well as their own account password to access the BBS) for:
 
 * kbd:[O]ne call: Reserves the BBS for the next call only
 
-* kbd:[N]o calls: Clears the reservation
-
 * kbd:[A]ll calls: All users are prompted for a password to sign on to the BBS
+
+* kbd:[N]o calls: Clears the reservation
 
 ====
 NOTE: This is different than ``RES``erved accounts (refer to #REServed Accounts#), or reserving time for transferring NetMail (refer to #NetMail Reservations#.)
 ====
 
-#### Daily Log
+#### 8 Daily Log [[idle-view-log]]
 
-View the daily caller activity log.  This lists:
+View the daily caller activity log.
+This lists:
 
-#FIXME#
+* The date and time the log was restarted
 
-#### Image Terminal
+#FIXME# add information that is in log
 
-IMAGE Term allows you to call other systems without taking your BBS down.
+Refer to kbd:[LG] section for more information.
+
+#### Image Terminal [[idle-image-terminal]]
+
+Image Terminal allows you to call other systems without taking your BBS down.
 (Refer to xref:12b-image-terminal.adoc[The Image Terminal].)
+
+#### Turn Modem Speaker On [[idle-modem-speaker-on]]
+
+kbd:[+] turns the modem speaker on (for compatible modems).
+
+#### Turn Modem Speaker Off [[idle-modem-speaker-off]]
+
+kbd:[-] turns the modem speaker off (for compatible modems).
+
+#### Start Nightly AutoMaintenance [[idle-nightly-automaint]]
+
+#### Start Nightly NetMail processing [[idle-nightly-netmail]]
+
+#### Invert Carrier Detect [[idle-invert-cd]]
+
+Some modems use a "`regular`" Carrier Detect signal (when a call is connected, CD is high).
+Other modems reverse this logic: when a call is connected, CD is low.
+Depending on your modem, you may need to use this option to toggle between normal and inverted CD signals.
+
+The carrier checkmark in the lower #FIXME# corner reflects the current carrier detect state: a checkmark indicates active CD, whether that's considered high or low.
+
+#### Redisplay Current Screen [[idle-redisplay-screen]]
+
+Pressing the spacebar will redisplay the current screen
+display (if the screen blanked due to inactivity, for example).
+
+#### Manual Answer [[idle-manual-answer]]
+
+kbd:[£] manually answers an incoming call by sending `ATA` to the modem.
 
 ==== The Lightbar
 
 The fifth screen line is referred to as the "`lightbar.`"
 This line monitors and changes many features of the BBS.
-All are toggled by the sysop at the console.
+A lot of these options can be toggled by the sysop at the console.
+Others reflect options which have been chosen by the user.
 
 ====
-TIP: Also, a utility program (`+.lb move`, discussed in <<miscellaneous-plus-files>>; this is handy for remote maintenance when you can't be at the console.
+TIP: A utility program (`+.lb move`, discussed in <<miscellaneous-plus-files>>) is handy for remotely moving the lightbar highlight position when you can't be at the console.
 ====
 
 [%autowidth]
 [%header]
 |===
 |Key | Purpose
+|kbd:[f1] | toggle the screen mask on and off
 |kbd:[f2] and kbd:[f4] |switch to the opposite lightbar page
 
-|kbd:[f3] |moves the white highlighted portion to the left (switching to the
-opposite page if you move it "`off the edge`")
+|kbd:[f3] |move the white highlighted portion to the left (switching to the opposite page if you move it "`off the edge`")
 
-|kbd:[f5] |moves the white highlighted portion to the right
+|kbd:[f5] |move the white highlighted portion to the right (switching to the opposite page if you move it "`off the edge`")
 
-|kbd:[f7] |places a check mark to the left of the option highlighted
-in white
+|kbd:[f7] |place a check mark to the left of the option highlighted in white
 
-|kbd:[f8] |places a check mark to the right of the option highlighted in white
+|kbd:[f8] |place a check mark to the right of the option highlighted in white
 |===
 
 (If the screen has blanked itself due to inactivity, it is restored when you receive a call or hit a key on the keyboard.)
@@ -344,6 +390,8 @@ The following descriptions assume each check mark described is selected.
 | `Sys`
 | The sysop is available for chat, and will hear three sirens when kbd:[C] is typed at any major prompt by the user.
 | Turns on a tracing feature that shows, in the left half of the "`Receive`" window, the BASIC line number currently executing.
+(There is also a reverse video character representation of the _token_, or statement that BASIC is interpreting.)
+
 Execution can be slowed down with the kbd:[Shift] or kbd:[Shift-Lock] keys to read line numbers more easily.
 
 This is only a debugging tool, normally left off.
@@ -750,8 +798,8 @@ Here is a summary of the files discussed in this section. Remember, the suffix `
 |`s.UX` |The entry file shown whenever a user enters the U/X subsystem.
 |===
 
-To create or edit these files, use the WF option (Refer to <<the-wf-editor>>) at the main command level.
-You can also use the .Put and .Get options (refer to <<sysop-dot-commands>>) in the editor.
+To create or edit these files, use the kbd:[WF] command at the main command level (refer to <<the-wf-editor>>) .
+You can also use the kbd:[.P]ut and kbd:[.G]et options (refer to <<sysop-dot-commands>>) in the editor.
 (Refer to <<the-image-text-editor>> for more information.)
 
 // --- 8< --- (snip)
@@ -760,7 +808,7 @@ You can also use the .Put and .Get options (refer to <<sysop-dot-commands>>) in 
 NOTE: The next two sections don't need to be done if you have already configured your sub-boards, libraries, and access groups with the `config` program.
 ====
 
-== Bulletin Boards and Libraries:
+=== Sub-Boards and Libraries
 
 After editing these files, you will want to set up your sub-boards and U/D libraries if they have not yet been configured.
 You can create up to 30 sub-boards, 30 U/D libraries, and 30 U/X libraries.
@@ -769,6 +817,8 @@ To do this and to change them at any time after, you can run the `+.reledit` pro
 Type kbd:[R] at the main prompt, then enter:
 
 ``+.**reledit**`` kbd:[Return].
+
+(Refer to The RELedit System for more information.)
 
 == Access Groups
 

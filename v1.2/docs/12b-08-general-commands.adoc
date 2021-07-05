@@ -15,19 +15,19 @@ These commands are discussed in the "`Maintenance`" chapter.
 The nice thing about general commands is the BBS remembers which subsystem you came from, so you can return to it when done with the current subsystem.
 
 For example, you have just finished viewing a directory listing of files in the U/D subsystem, and wish to go to the Voting Booth.
-You type _VB_ at the U/D subsystem prompt listing directory information, and when you type kbd:[Q] to quit the Voting Booth, you will be returned to the U/D subsystem.
+You type kbd:[VB] at the U/D subsystem prompt listing directory information, and when you type kbd:[Q] to quit the Voting Booth, you will be returned to the U/D subsystem.
 
 Most general commands consist of two letters, sometimes followed by an argument (parameter) of one or more numbers.
 
 Examples:
 
-SB Enter the message bases.
+`SB` Enter the message bases.
 The BBS prompts the user which Special Interest Group or message area they would like to enter, depending on what places they have access to.
 
-SB1 Enter the message bases, but immediately go to the first Special Interest Group they have access to.
+`SB1` Enter the message bases, but immediately go to the first Special Interest Group they have access to.
 They are prompted for the message base to enter after that.
 
-SB1,2 Enter the message bases, go to the first Special Interest Group, and the second message base in that SIG with no further prompting.
+`SB1,2` Enter the message bases, go to the first Special Interest Group, and the second message base in that SIG with no further prompting.
 
 ====
 If you're a Trekkie, this reminds me of Klingon programmers:
@@ -39,7 +39,7 @@ Here are the descriptions of the general commands and how to use them.
 
 === Chat Request/Chat Mode
 
-`C` requests a chat with the sysop.
+kbd:[C] requests a chat with the sysop.
 A short (38 character) reason for chat is requested; the first 16 characters of that is displayed at the programmable window at the bottom of the screen.
 This reason is also recorded in the call log on disk and printer (if used).
 
@@ -54,56 +54,63 @@ If the user requests chat more than once without you answering the first chat re
 === Feedback
 
 Feedback is "`mail`" left on the BBS to the sysop(s), that any user with local or remote maintenance access may read.
-It is left to the sysop(s) by entering `F` at most prompts, or when logging off.
+It is left to the sysop(s) by entering kbd:[F] at most prompts, or when logging off.
 The user is placed into the editor to write their message.
 
 Any user, including a new user, is allowed to leave up to three feedback messages per call.
 If they try to leave more, they are informed they have left their limit of feedback for that call.
 
-Feedback, along with new user information and error messages, are read by the sysop by typing `VF` at the main command prompt.
-(Refer to <<the-vf-system>> for more details.)
+Feedback, along with new user information and error messages, are read by the sysop by typing kbd:[VF] at the main command prompt.
+(Refer to <<the-vf-system>>.)
 
 === Help
 
-`?` reads a menu of commands available at whichever command level the user happens to be.
-Depending on how much information is in the menu, a "`More?`" prompt for additional command information may appear (although this is put in the menu file itself, and is not always necessary, depending on the file's length).
-At this prompt, Y (meaning yes) continues, most others mean no and stop reading the file.
+kbd:[?] reads a menu of commands available at whichever command level the user happens to be.
+Depending on how much information is in the menu, a `More?` prompt for additional command information may appear (although this is put in the menu file itself, and is not always necessary, depending on the file's length).
+At this prompt, kbd:[Y] (meaning `Yes`) continues; most other keys mean `No` and stop reading the file.
 
 If the user is not at the main prompt, the main menu is then read.
 
 === BBS Information
 
-`CF` shows the file `s.config`.
+kbd:[CF] shows the file `s.config`.
 This file should contain general information about your BBS, perhaps the hardware and software it runs on, its hours (if not 24 hours a day) and anything else interesting about it.
 
 === Change/View Last Call Date/Time
 
-`LD` The _last call date_ is used to determine which messages on the BBS are new and which are old.
+kbd:[LD] The _last call date_ determines which messages on the BBS are new, and which are old.
 If a user is logged off before they have a chance to see all new messages, they can use this command to move their last call date back the next time they call.
+
+kbd:[LD] prompts how many days to add or subtract (`1-999` in either direction), displays the effective last date, then prompts if they'd like to change the time.
+Once everything is satisfactory, messages newer than that date are considered new, using kbd:[RN] (`Read New`) or kbd:[RA] (`Read All`).
 
 === Log Off
 
-`O` will ask if the user really wants to log off (type `Y` to do so), asking if they want to leave feedback first.
+There are three separate ways to log off the system:
 
-`O%` saves the last call date, in case they did not read all the new messages in the message bases.
+kbd:[O] or kbd:[Q] will ask if the user really wants to log off (type kbd:[Y]es to confirm).
+They are asked if they want to leave feedback first.
+(type kbd:[Y]es to confirm).
 
-`O!` logs off more quickly, without prompting for feedback.
+kbd:[O%] saves the last call date, in case they did not read all the new messages in the message bases.
 
-`O%` and `O!` may be combined: `O%!` logs off more quickly _and_ saves the last call date.
+kbd:[O!] logs off more quickly, without prompting for feedback.
+
+kbd:[O%] and kbd:[O!] may be combined: kbd:[O%!] logs off more quickly _and_ saves the last call date.
 
 === Quit
 
-From most prompts (and in some subsystems, just pressing `Return`) gets the user to the main prompt.
+From most prompts (and in some subsystems, just pressing kbd:[Return]) gets the user to the main prompt.
 
-If `Q` is entered at the main prompt, the user is asked whether they wish to log off, as above.
+If kbd:[Q] is entered at the main prompt, the user is asked whether they wish to log off, as above.
 
 === Time/Date
 
-`T` displays the current time, the time the user logged on, and the amount of time remaining on the BBS this call.
+kbd:[T] displays the current time, the time the user logged on, and the amount of time remaining on the BBS this call.
 
 === Edit Terminal Parameters
 
-`EP` enters a menu which allows a user to change their:
+kbd:[EP] enters a menu which allows a user to change their:
 
 * computer type
 * graphics translation mode
@@ -114,16 +121,16 @@ If `Q` is entered at the main prompt, the user is asked whether they wish to log
 
 === Prompt Mode
 
-`PM` toggles Prompt Mode on or off.
+kbd:[PM] toggles Prompt Mode on or off.
 
-When on, when a user reads new messages in the message base (using kbd:[RN] or kbd:[RA] commands), they do not receive the "`end-of-bulletin`" prompt between message threads, or the `[P]ost [N]ext [Q]uit`	 prompt between sub-boards.
+When on, when a user reads new messages in the message base (using kbd:[RN] or kbd:[RA] commands), they do not receive the "`end-of-bulletin`" prompt between message threads, or the `[P]ost [N]ext [Q]uit` prompt between sub-boards.
 Useful for callers who want to speed-read or buffer messages.
 
-It also eliminates the prompt after the `A` (About this file) command in the U/D subsystem.
+It also eliminates the prompt after the kbd:[A] (About this file) command in the U/D subsystem.
 
 === Status
 
-`ST` allows users to see their status on the BBS, including:
+kbd:[ST] allows users to see their status on the BBS, including:
 
 * Their handle, plus real first and last name
 * Last call date and time
@@ -136,7 +143,7 @@ It also eliminates the prompt after the `A` (About this file) command in the U/D
 * Number of blocks uploaded and downloaded
 * Credit points and credit ratio
 * Total posts and responses
-* User flags (refer to <<user-flags>>)
+* User flags (refer to xref:12b-03-the-configuration-editor.adoc#user-flags)
 
 Then the user is asked if they wish to view this information again.
 If not, they are returned to the BBS.
