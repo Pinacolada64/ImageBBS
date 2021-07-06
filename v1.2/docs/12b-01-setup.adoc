@@ -39,7 +39,7 @@ Any other system function should work fine with the ICT drive.
 ==== Modems
 
 .Supported Modems
-[cols=",",]
+[%autowidth]
 |===
 |Commodore 1660 with CD |Commodore 1670 (both models)
 |MPP 1604 |Avatex 1200hc
@@ -60,17 +60,20 @@ Image BBS has been tested successfully on systems using REUs in conjunction with
 Version 071487 of Commodore's RAMDOS is provided.
 It is set to define your RAMdisk as device 7, which is how it is supported by Image BBS.
 
-[cols=",",]
+.RAMDOS files
+
+[%header]
+[%autowidth]
 |===
-|`f` |file copier, copies any file with a two or more character long
+| File| Purpose
+|`f` | File copier, copies any file with a two or more character long
 filename to a disk
 
-|`r` |BBS setup file, modified by Jay Levitt
+|`r` | BBS setup file, modified by Jay Levitt
 
-|`s` |RAMDOS binary
+|`s` | RAMDOS binary
 |===
 
-Table 2: RAMDOS files
 
 ==== Printers
 
@@ -98,5 +101,4 @@ Please give any information about other fastload solutions you have success with
 ==== Creative Micro Designs SuperCPU
 
 There are patches to make the BBS run at 20 mHz.
-During file transfers, the BBS must be slowed down to 1 mHz with a `poke` to the SuperCPU speed register.
-
+During file transfers or disk access, the BBS must be slowed down to 1 mHz with a `poke` to the SuperCPU speed register.

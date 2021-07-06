@@ -107,11 +107,15 @@ None of these files will change, unless modified offline.
 
 Plus file filenames start with several different prefixes based on these categories:
 
-`+.` BASIC modules
-
-`++` ML modules
-
-`scn.` top and bottom sysop screen displays (idle screen, online user screens, Image Terminal screens)
+.Plus File Prefixes
+[%header]
+[%autowidth]
+|===
+| Prefix | Purpose
+| `+.` | BASIC modules
+| `++` | ML modules
+| `scn.` | top and bottom sysop screen displays (idle screen, online user screens, Image Terminal screens)
+|===
 
 In this revision of Image BBS, the Extended Command Set extension is enabled by default.
 This gives the sysop more flexibility in several areas.
@@ -147,9 +151,10 @@ If using a floppy-based setup, we also suggest that you label each floppy disk w
 ====
 Unfortunately, Image is somewhat hobbled by a "`flat file structure`"—-_i.e._, there is no provision for using subdirectories (or even partitions with 1581 drives) on mass-storage devices which support them (the CMD devices are a good example).
 All files must reside in the root directory to be accessible.
-This is a shortcoming I plan on addressing in Image BBS 2.0 with the additions of CMD hardware detection.
+
+This is a shortcoming, and it would be nice if it were addressed in later versions of Image BBS with the additions of CMD hardware detection.
 // (plus any other hardware sysops give me reference material for)
-and the ability to issue DOS commands where appropriate in what is called the "`General Files`" section (which can have message bases, text and plus-file subdirectories in a single GF directory!).
+The ability to issue DOS commands where appropriate in the "`General Files`" section (which can have message bases, text files and modules, and subdirectories all in a single kbd:[GF] directory!).
 
 // A similar modification would be possible for Image 1.2b, I just haven't gotten much further than the planning stage; which is to say, just a bit further than the BBS editor quoting... sigh.
 ====

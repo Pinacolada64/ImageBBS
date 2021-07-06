@@ -116,7 +116,7 @@ If no keys are pressed for about ten seconds after the idle screen shows, the sc
 
 ====
 TIP: You may disable the screen blanking.
-Refer to "link:#anchor-304[The Lightbar]," for more information.
+Refer to <<the-lightbar>> for more information.
 ====
 
 Press almost any key, or receive an incoming call, and the screen will turn back on.
@@ -346,7 +346,7 @@ display (if the screen blanked due to inactivity, for example).
 
 kbd:[£] manually answers an incoming call by sending `ATA` to the modem.
 
-==== The Lightbar
+==== The Lightbar [[the-lightbar]]
 
 The fifth screen line is referred to as the "`lightbar.`"
 This line monitors and changes many features of the BBS.

@@ -58,49 +58,74 @@ _£A2SYSOP£_ Compares the user's handle (`£V2`) to _SYSOP_.
 Send _x_ bell characters [CHR$(7)] to the user; if the user's terminal supports bells, they hear them.
 
 ====
-TIP: Speed up or slow down by using the £Sx command!
+TIP: Speed up or slow down by using the `£S__x__` command!
 ====
 
 ### `£Cx` Color
 
 Set the current display color to _x_, where _x_ is from the following table:
 
-[cols=",,,,,",]
+.MCI color codes
+
+[%autowidth]
 |===
-|_a/1_ |_white_ |_f/6_ |_dark blue_ |_k_ |_dark grayfootnote:[ in ANSI
-graphics or Commodore 128 80-column mode: £C8: dark purple, £CK: dark
-cyan] (+)_
+| kbd:[Ctrl+2-8] | Color | kbd:[C= + 1-8] | Color  
+| _unused_ | black        
+| `£c8` | orange ^1^
 
-|_b/2_ |_red_ |_g/7_ |_yellow_ |_l_ |_medium gray_
+| `£c1` | white
+| `£c9` | brown
 
-|_c/3_ |_cyan_ |_h/8_ |_orange (+)_ |_m_ |_light green_
+| `£c2` | red
+| `£cj` | light red
 
-|_d/4_ |_purple_ |_i/9_ |_brown_ |_n_ |_light blue_
+| `£c3` | cyan
+| `£ck` | dark gray ^2^
 
-|_e/5_ |_dark green_ |_j_ |_light red_ |_o_ |_light gray_
+| `£c4` | purple
+| `£cl` | medium gray
+
+| `£c5` | dark green
+| `£cm` | light green
+
+| `£c6` | dark blue
+| `£cn` | light blue
+
+| `£c7` | yellow
+| `£co` | light gray 
 |===
 
-Table 21: MCI color codes
+In ANSI graphics or Commodore 128 80-column mode:
 
-* 0, black, is omitted since that is usually the color choice for terminal backgrounds.
-* Commodore users can use _CTRL_- or _C=_ _1-8_ instead of _£Cx_.
+^1^ `£c8`: dark purple
 
-£Dx Jump if not equal
+^2^ `£ck`: dark cyan 
 
-Skips _x_ lines when the result of the last compare command (£A or £T) was _not_ equal.
+* `£c0` (black) is omitted since that is usually the color choice for terminal backgrounds.
+* Commodore users can use kbd:[Ctrl] or kbd:[C=] kbd:[1-8] instead of `£c__x__`.
 
-___Display an appropriate message based on whether the user's handle is
-or is not __SYSOP_:__
+### £Dx Jump if not equal
 
-__£A2SYSOP££D1 __Compare user's handle to SYSOP, skip next line if not
+Skips _x_ lines when the result of the last compare command (`£A` or `£T`) was _not_ equal.
 
-__Hello, Sysop!£D1 __Output "`Hello, Sysop!`", skip next line
+Display an appropriate message based on whether the user's handle is or is not `SYSOP`:
 
-_Hey, you can't read this! _Output message, continue__
+----
+£a2SYSOP££d1 <1>
+Hello, Sysop!£D1` <2>
+Hey, you can't read this!
+
+<1> Compare user's handle to `SYSOP`, skip line 2 if not equal
+
+_Output message, continue__
 
 _£X1 _Abort the file or message__
 
-£Ex Jump if equal
+
+<2> Output `Hello, Sysop!`, skip line 3
+----
+
+### £Ex Jump if equal
 
 Skip _x_ lines if the result of the last compare command (£A or £T) _was_ equal.
 
@@ -114,11 +139,11 @@ _Too bad your handle isn't USER!_
 
 _£X1 _Abort the file or message__
 
-£F1 Form feed
+### £F1 Form feed
 
 This command sends a "`clear screen`" character to the user. [CHR$(147) on Commodore equipment, or CHR$(12)--a form feed -- in ASCII mode].
 
-£Gx Get character
+### £Gx Get character
 
 Wait until the user presses a key.  The keypress is stored in an$ (MCI variable £v7).
 
@@ -128,17 +153,15 @@ __Press a key: £G1 __Prompts the user and waits for one
 
 keypress (only uppercase input is accepted).
 
-£Hx Backspaces
+### £Hx Backspaces
 
-Display _x_ backspaces/deletes (depending on the user's terminal requirements).
+Display _x_ backspaces/deletes (depending on the user's terminal translation mode)
 
-_Apple£H5Banana_ This displays Apple, immediately erases it with five
+Apple£h5Banana
 
-backspace/delete characters, then Banana
+This displays `Apple`, immediately erases it with five backspace/delete characters, then `Banana` is displayed in its place.
 
-is displayed in its place.
-
-£Ix Line input
+### £Ix Line input
 
 Pauses output, allowing the user to input a line of text. The input is stored in AN$ (MCI variable £V7).
 
@@ -151,9 +174,7 @@ in all uppercase characters.
 
 _Hello, £V7!_ Echo the user's input.
 
-==
-
-=== £Jx Jump
+### £Jx Jump
 
 Do not display the next x lines of the message or file.
 
@@ -163,7 +184,7 @@ _Not displayed_
 
 _Displayed again_
 
-£Kx Kolorific mode
+### £Kx Kolorific mode
 
 Changes the color of each character output.
 
@@ -172,9 +193,9 @@ Changes the color of each character output.
 
 _£K2This is a test£K0_ Turn Kolorific mode on, starting with the color red.
 
-Displays `This is a test,` then turns Kolorific mode off.
+Displays `This is a test` using Kolorific mode, then turns Kolorific mode off.
 
-£Lx Printer
+### £Lx Printer
 
 Control the printer attached to the BBS, if online.
 
@@ -185,11 +206,11 @@ _Note:_ Printed output stops at the end of each line; you must include £L1 on e
 
 _£LlHello_ Print _Hello_ on the printer.
 
-£Nx New line
+### £Nx New line
 
 Display _x_ carriage returns.
 
-£Ox "Over"
+### £Ox "Over"
 
 This command repeats a character 19 times.  It is useful for making menus, etc.
 
@@ -199,9 +220,9 @@ Parameters: Replace x with the character wanted.
 
 Displays the following:
 
-_*--------------------------------------*_
+ *--------------------------------------*
 
-£Px Print mode [[mci-print-modes]]
+### £Px Print mode [[mci-print-modes]]
 
 Sometimes referred to as "`cursor dancing,`" print modes allow each character output to be displayed in a variety of ways, usually to move the cursor, or perform "`special effects.`"
 Replace _x_ with the print mode number.  The print mode is set back to 0 at the end of each line.
@@ -239,7 +260,7 @@ _==============_
 
 (fixme: add the rest, 4 diagonals)
 
-£Qx Reset MCI defaults
+### £Qx Reset MCI defaults
 
 Turns off the following features:
 
@@ -251,13 +272,15 @@ Turns off the following features:
 
 The current print mode (see £Px) and print speed (see £Sx) are set to 0 for normal output at the fastest speed.
 
-Parameters: * If x=0, then the current color is set to the default color.
+Parameters:
+
+* If x=0, then the current color is set to the default color.
 
 * Otherwise, the default color and current color is set to x.
 
-(fixme)
+#fixme#
 
-£Rx Reverse mode
+### £Rx Reverse mode
 
 Controls displaying text in normal or reverse modes.
 
@@ -271,29 +294,44 @@ Notes:
 
 * Reverse mode turns off at the end of every line.
 
-* Commodore users can also use CTRL-9 / CTRL-0.
+* Commodore 64/128 users can also use kbd:[Ctrl-9] (`RVS ON`) / kbd:[Ctrl+0] (`RVS OFF`).
 
-£Sx Print speed
+### £Sx Print speed
 
 Delay character output by a multiple of tenths of a second.
 
-Parameters: * x ranges from 1-J (.1 to 1 second)
+Parameters:
 
-£TxTEXT£ Test variables
+* x ranges from 1-J (.1 to 1 second)
 
-Used in conjunction with £D and £E.  Compares a variable to TEXT (similar to £A).
+### £TxTEXT£ Test variables
 
-If x=1, tests user input (AN$).
+Used in conjunction with £D and £E.
+Compares a variable to TEXT (similar to £A).
 
-If x=2, tests access group (AC%).
+If x=1, tests user input (`an$`).
 
-£T29££D1 Compare the user's access level to 9;
+If x=2, tests access group (`ac%`).
 
-Hi, sysop! Welcome!£X1 display an appropriate message.
+----
+£t29££d1 <1>
+Hi, sysop! Welcome!£x1 <2>
+£v2, this message is only for sysops. <3>
+----
+<1> Test (`£t`) the user's access level (`2`), comparing it to `9`.
+`£` marks the end of the comparison.
+`£d1` skips to line 3 if the comparison fails.
 
-£V2, this function is only for sysops.
+<2> Display `Hi, sysop! Welcome!`.
+`£x1`: abort message so line 3 is not displayed.
 
-£Vx MCI variables
+<3> Display user's handle (`£v2`) and `, this function is only for sysops.`
+
+### £Ux Screen case
+
+#fixme#
+
+### £Vx MCI variables
 
 Display the desired MCI variable.
 
@@ -312,19 +350,21 @@ Parameters: x is MCI variable number:
 |_7 an$_ |Last user input |_o dd$_ |Login identifier + user ID
 |===
 
-£Wx Wait
+### £Wx Wait
 
 Delay x seconds before proceeding, similar to £Sx.
 
 Parameters: * x ranges from 1-J (1 to 15 seconds)
 
-£X1 ........................................... Abort file
+### £X1 Abort file
 
 Skips the rest of the lines in a file/message, not displaying anything contained in those lines.
 
-{empty}[The number of lines skipped is actually limited to 255; I discovered this while re-writing the BBS editor help menu file.]
+====
+NOTE: The number of lines skipped is actually limited to 255; I discovered this while re-writing the BBS editor help menu file.
+====
 
-x .................................... Leading characters
+### £#x Leading characters
 
 When you use £%v (below), this specifies either:
 
@@ -340,44 +380,50 @@ Parameters: * When x is a number [#FIXME# between 1 and 5?], x sets the number o
 
 See the examples for £%v, below.
 
-=== £%v .............................. Display integer variable
+=== `£%v` Display integer variable
 
 Display the value of any one-letter integer variable with or without leading characters.
 
-{empty}[The periods in the examples are not shown in actual use of this command; they only illustrate how many leading spaces are used.]
+====
+NOTE: The periods in the examples are not shown in actual use of this command; they only illustrate how many leading spaces are used.
+====
 
-Example 1: _£#4£# £%a_ If a%=l,   this displays "...1"
+.Example 1
 
-Example 2: _£#2£%a_ If a%=l,   this displays "01"
+`£\#4£# £%a` If `a%=l`, this displays `...1`.
 
-If a%=23,  this displays "23"
+.Example 2
 
-If a%=789, this displays "89", the _rightmost_ two digits.
+`£#2£%a` If `a%=l`, this displays `01`
+
+If `a%=23`, this displays `23`.
+
+If `a%=789`, this displays `89`, the _rightmost_ two digits.
 
 .Example 3
 
 `£#0£%a`
 
-If a%=l, this displays `1`
+If `a%=l`, this displays `1`.
 
-If a%=42, this displays `42`
+If `a%=42`, this displays `42`.
 
 === `£$x` Display string variable
 
-Display any one-letter string variable (A$, for example).
+Display any one-letter string variable (`a$`, for example).
 
-£$a
+ £$a
 
-Display the contents of the string variable A$.
+Display the contents of the string variable `a$`.
 
 === `£←xx` Tab
 
-This command moves the cursor from the left column to column `#_xx_`.
+This command moves the cursor `#_xx_` spaces from the left column.
 
 To tab over less than ten columns, use a leading zero (_e.g._, `£←05`, `£←08`).
 
+====
 NOTE: The kbd:[←] is to the left of the kbd:[1] key.
 
-====
 NOTE: If the tab-to column specified is less than the column where the cursor is now, any text after the tab command is displayed directly at the cursor position.
 ====
