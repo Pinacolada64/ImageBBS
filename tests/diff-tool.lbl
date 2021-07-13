@@ -26,7 +26,7 @@
 '                      ^      1      ^        2     ^
 '             0123456789abcdef0123456789abcdef0123456
 	gosub {:sector_frame}
-	rem sys{sym:reset_buffers}
+	sys{sym:reset_buffers}
 	sys{sym:incLinkDiffs}:sys{sym:incDiffCount}:sys{sym:incByteCount}
 	end
 
@@ -35,7 +35,7 @@
 ' bytes: max 174848 per disk
 
 {:sector_frame}
-	print"{$c0:40}{down:6}"tab(15)"{176}{$c0:39}{189}"
+	print"{$c0:40}{down:6}"tab(16)"{176}{$c0:39}{189}"
 ' {:test_fill}
 '	print"{up:8}";:for x=1 to 255:print ".";:next:print
 	return

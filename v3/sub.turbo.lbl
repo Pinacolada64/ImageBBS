@@ -1,0 +1,20 @@
+	goto{:60016}
+{:60002}
+	&"{f6}Turbo Changer. This Program Will Allow you to turn Turbo Mode ON/OFF"
+	a=peek(53432)and192:rem:a%=int(a):&"‹\%a"
+	ifa=192then:&"{f6}{white}(Turbo is currently OFF){f6}"
+	ifa<100then:&"{f6}{white}(Turbo is currently ON){f6}"
+{:60010}
+	&"{f6:2}{yellow}Enter 1 to turn Turbo OFF{f6}Enter 2 to turn Turbo ON{f6:2}{green}Enter 1 or 2 :{pound}g1"
+	c=val(an$):ifc<1orc>2then{:60010}
+	oncgoto{:60020},{:60022}
+{:60016}
+	&,52,$34,3:ona%goto{:60002}
+	&"{f6}This computer is not SuperCPU equiped{f6}":goto{:60024}
+{:60020}
+	poke(53370),0:&"{f6}{cyan}Turbo: {lt. red}Off":&,52,$35,.:tm=.:goto{:60024}
+{:60022}
+	poke(53371),0:&"{f6}{cyan}Turbo: {green}On":&,52,$35,1:tm=1:goto{:60024}
+{:60024}
+	return
+	rem:"sub.turbo (c)nissa 200306 lh"

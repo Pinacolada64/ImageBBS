@@ -2728,9 +2728,9 @@ access.
 Upon entering the message bases, the file `s.SB` is read, regardless of
 their expert mode setting.
 
-If SIGs are set up, the SIG list is shown. They get a "Which SIG?: "
-prompt.  As above, if the user knows which SIG and sub-board number they
-want, they can enter them here, as above (example: 3 or 3,2).
+If SIGs are set up, the SIG list is shown. They get a `Which SIG?:`
+prompt. As above, if the user knows which SIG and sub-board number they
+want, they can enter them here, as above (example: `3` or `3,2`).
 
 Upon entering the board, they are told:
 
@@ -2738,51 +2738,69 @@ Upon entering the board, they are told:
 -   How many have new responses since their last call date
 -   Total number of responses
 
-     8. The \[Q\]uit function (in the \[P\]ost \[N\]ext \[Q\]uit prompt)
+The kbd:[Q]uit function (in the `[P]ost [N]ext [Q]uit` prompt)
 now clears any stacked commands. This is for the people who have stacked
 commands and then in the middle of reading the posts remembered they had
 to do something (i.e., kill a post, weed the Subs, etc.) but were locked
 into a command stack. Now they are not.
 
-     9. Response titles are now available in the Subs.  Setting the
+-   Response titles are now available in the Subs. Setting the
 variable RT to 1 in line 901 of `+.MM.sb-post` will turn the ability to
-title responses on (it comes with RT set to 1).  The response system is
-100% compatible with older posts and NO CONVERSION IS NECESSARY.
+title responses on (it comes with RT set to 1). The response system is
+100% compatible with older posts and _no conversion is necessary_.
 
-     A new version of the `+.NM.netsub` files will soon be available
+****
+A new version of the `+.NM.netsub` files will soon be available
 that allows the response titles to be transferred to other NetSub boards
 as well as to allow "overflow" NetSubs to be defined.
+****
 
-Setting RT to 0 will NOT prevent any existing response titles from being
+Setting RT to 0 will _not_ prevent any existing response titles from being
 displayed, nor will it block NetSub response titles from being shown
-once the new *+.NM.netsub* files are released.
+once the new `+.NM.netsub` files are released.
 
 The RT variable only controls the user's ability to title responses on
 your board.
 
-Scanning Bulletins
+### Scanning Bulletins
 
+_Scanning bulletins_ lists information about each bulletin in the following
+format:
 
-This means to display
+----
+[Num] [Rsp] [Stat] "Post Title" <1> <2>
+
+get '/hi' do <2> <3>
+  "Hello World!"
+end
+----
+<1> Number
+<2> URL mapping
+<3> Response block
 
 
 -   The number of the bulletin
 -   How many responses have been made, if any
 -   The bulletin's status:
 
-
-Table : Bulletin status indicators
+.Bulletin status indicators
+|====================
+| `\*NEW\*`| New bulletin since last call date
+| `\*NRB\*`| New response to bulletin
+| `\*FZN\*`| Bulletin is frozen, no response possible
+| ` ---  ` | Regular bulletin 
+|====================
 
 -   The bulletin's title (in quotes)
 
-Typing *S* begins scanning at either the first bulletin, or after the
+Typing kbd:[S] begins scanning at either the first bulletin, or after the
 bulletin most recently read on the sub-board.
 
-S followed by a bulletin number starts scanning at that bulletin.
+kbd:[S _x_] starts scanning at bulletin #_x_.
 
-The slash (/) key or the space bar abort a scan at any time.
+kbd:[/] or kbd:[Space] abort a scan at any time.
 
-About Bulletins
+### About Bulletins
 
 This displays the
 
@@ -2792,205 +2810,217 @@ This displays the
 -   Number of responses to a bulletin
 -   Date and time of the latest response
 
-Typing tells a user about the bulletin following the one most recently
+Typing kbd:[A] tells a user about the bulletin following the one most recently
 read or manipulated.
 
 A followed by a number finds out about that specific bulletin.
 
-Reading Bulletins
+### Reading Bulletins
 
-
-This displays the same information as the "about" function, but reads
+This displays the same information as the "`About`" function, but reads
 the text body of the message, followed by each response until the end of
-the *thread* (group of bulletins under that title).
+the _thread_ (group of bulletins under that title).
 
-Typing R (or just pressing RETURN) reads the next bulletin in the sub.
+Typing kbd:[R] (or just pressing kbd:[Return]) reads the next bulletin in the sub.
 
-R followed by a number reads that specific bulletin.
+kbd:[R _x_] reads bulletin #_x_.
 
 While reading a bulletin, a user can:
 
-Press the space bar to skip to the next response in the thread
+-   Press kbd:[Space] to skip to the next response in the thread
 
-Press `/` to skip directly to the end of the bulletin.
+-   Press kbd:[/] to skip directly to the end of the bulletin.
+
+### End-of-Bulletin Prompt [[end-of-bulletin]]
 
 Once at the end of a bulletin, a user has several options in,
-appropriately enough, the "end-of-bulletin" prompt.  (This prompt is
-only displayed if the user's Prompt Mode is enabled.)
+appropriately enough, the "`end-of-bulletin`" prompt (only displayed if the
+user's Prompt Mode is enabled):
 
-Press RETURN to continue to the next message in the sub-board
+-   Press kbd:[Return] to continue to the next message in the sub-board
 
-P sends a private e-mail message to the user that posted the original
-message
+-   kbd:[P] sends a private e-mail message to the user that posted the
+original message
 
-R responds to the post
+-   kbd:[R] responds to the post
 
-O reads the post over from the beginning
+-   kbd:[O] reads the post over from the beginning
 
-Q or "/" stops the RN or *RA* function
+-   kbd:[Q] or kbd:[/] stops the `RN` or `RA` function
 
-K lets a subop or sysop kill the post.  The original poster may also
+-   kbd:[K] lets a SubOp or Sysop kill the post. The original poster may also
 kill the post, if there are no responses.
 
-A question mark at this prompt brings up a menu of these options.
+-   kbd:[F] toggles the bulletin's "`frozen`" status (if the user is the original poster, or the user is a SubOp or Sysop)
 
-New Messages
+-   kbd:[?] brings up a menu of these options.
 
+### New Messages
 
 The following commands work on the current sub-board, with messages
-considered new since the user's last call.  To do the following:
+considered new since the user's last call:
 
-Scan .............. SN
+.New message commands
+[width="100%",options="header"]
+|====================
+| Command | Purpose 
+| `SN` | Scan for new messages
+| `A` _x_ | About message #_x_
+| `RN` or `*` | Read new messages
+|====================
 
-Find out about .... AN
+To stop an `RN` in progress, press kbd:[/] while reading a message.
 
-Read new .......... RN or \*
+To read or scan new messages on the current sub-board, plus all
+higher-numbered sub-boards, type `RA` or `SA`, respectively.
 
-To stop an RN in progress, press the "/" key while reading a message.
+To stop an `RA` or `SA` at the current sub-board, press kbd:[/].
 
-To scan or read new messages on the current sub-board, plus all
-higher-numbered sub-boards, type *RA* or *SA*, respectively.
-
-To stop an *RA* or *SA* at the current sub-board, press the "/" key.
-
-During an RA, if the user reaches the last board and has any stacked
-commands remaining (for example, RA\^UD), the \[P\]ost \[N\]ext \[Q\]uit
-prompt is displayed to allow the user to post to the last sub before
+During an `RA`, if the user reaches the last sub-board and has any stacked
+commands remaining (for example, `RA^UD`), the `[P]ost [N]ext [Q]uit:`
+prompt is displayed to allow the user to post to the last sub-board before
 executing the next stacked command.
 
-Posting New Bulletins
+### Posting New Bulletins
 
 
-If a user types P and there is room in the directory (a limit of 60
+If a user types kbd:[P] and there is room in the directory (a limit of 60
 posts per sub-board exists), the user is asked for the post's title. If
 this title is unique to the directory, the user is asked:
 
 If they wish to post anonymously, if the board is not set up to be
 non-anonymous.  If they elect to post anonymously, the author will
-appear as
+appear as:
 
-Anonymous to normal users.
-
-\* followed by the user's handle, to users with subop, sysop, or
+- `Anonymous` to normal users.
+- `*` followed by the user's handle (_e.g._ `*PINACOLADA`, to users with subop, sysop, or
 sub-board maintenance access.
 
 The user is then placed into the BBS text editor subsystem to write
-their message.  .S on a blank line exits, as usual.
+their message.  kbd:[.S] on a blank line exits, as usual.
 
-Killing Entire Threads
+### Killing Entire Threads
 
 
 This removes the original post concerned, along with all its responses,
 from the sub-board and its message directory.
 
-K begins listing all bulletins starting with the first one
+kbd:[K] begins listing all bulletins starting with the first one
 
-*Kx* starts with bulletin \#x
+kbd:[K _x_] starts with bulletin #x
 
 The user is asked whether they want to kill the bulletin:
 
  Y)es N)o A)bort or S)tart
 
-K followed by a number begins the listing with that number, offering the
-same choices.  Once the end of the list is reached (or S is typed), the
+kbd:[K] followed by a number begins the listing with that number, offering the
+same choices.  Once the end of the list is reached (or kbd:[S] is typed), the
 directory is re-written to disk.
 
 A regular user can kill their bulletin only if there are no responses to
 it.  Once responses are added, only a subop can kill it.
 
-### KO and KA
+#### KO and KA
 
 There are two more commands available to persons with SubOp access
 (SubOps, Sub-board Maintenance and SIGOp access users).
 
-KO Lists any messages in the SB section older than the maintainer's last
+`KO` Lists any messages in the SB section older than the maintainer's last
 call date, giving them the option to kill them.
 
-KA The same as KO, but is automatic - it will *not* ask if you want to
-keep the post(s) killed, so be *very careful* with this command!
+`KA` The same as `KO`, but is automatic--it will _not_ ask if you want to
+keep the post(s) killed, so be _very careful_ with this command!
 
 Remember, these commands are keyed to your last call date, so use LD to
-set the cutoff date for deleting old messages *first*.
+set the cutoff date for deleting old messages _first_.
 
-Editing Bulletins
+### Editing Bulletins
 
-
-To edit a previously written bulletin, enter E followed by the post
-number to edit.  The bulletin is opened, and the BBS searches through
-the bulletin for messages that the user can edit (if they are the
+To edit a previously written bulletin, type kbd:[E _x_] (_x_ is the bulletin
+number to edit). The bulletin is opened, and the BBS searches through
+the thread for messages that the user can edit (if they are the
 author, or sub-board operator).
 
 If such a message is encountered, the user is prompted with:
 
-K)eep, D)elete, R)ead, E)dit, or A)bort:
+ K)eep, D)elete, R)ead, E)dit, or A)bort:
 
-K)eepKeeps the message with the thread
+.Bulletin editing commands
+[width="auto",options="header"]
+|====================
+| Command      | Purpose 
+| kbd:[K]eep   | Keeps the message with the thread
+| kbd:[D]elete | Removes the message from the thread
+| kbd:[R]ead   | Re-reads the current message
+| kbd:[E]dit   | Take the user to the editor subsystem to edit the message
+| kbd:[A]bort  | Return the user to the sub-board prompt.
+|====================
 
-D)eleteRemoves the message from the thread
-
-R)eadReads the current message
-
-E)editTake the user to the editor subsystem to edit the message
-
-A)bortReturn the user to the sub-board prompt.
-
-In the Edit function, SubOp access users have an added command: (K)ill
-Old Resp.  This function first asks if you want to auto delete old
+In the kbd:[E]dit function, SubOp access users have an added command: `(K)ill
+Old Resp.` This function first asks if you want to auto delete old
 responses:
 
-*No* asks for confirmation before deleting each response.  (*A* aborts
-the operation, but any deleted responses *stay* deleted!)
+-   kbd:[N]o asks for confirmation before deleting each response. (kbd:[A] aborts
+the operation, but any deleted responses _stay_ deleted!)
 
-*Yes* deletes any responses made before your last call date.
+-   kbd:[Y]es deletes any responses made before your last call date.
 
 Both functions stop when they reach responses posted on or after your
-last call date.  Remember, this function is tied to your last call date,
-so use LD to set the cutoff date first.
+last call date. Remember, this function is tied to your last call date,
+so use `LD` to set the cutoff date first.
 
-Also remember, the Auto Delete function *cannot be aborted* once started
-and is *only* available to SubOp access users!
+Also remember, the Auto Delete function _cannot be aborted_ once started
+and is _only_ available to SubOp access users!
 
-Frozen Bulletins
+### Freezing a Bulletin [[freezing-a-bulletin]]
 
-If a user does not want responses added to a post, begin the title with
-an up arrow (\^) character.  The BBS reports this bulletin as frozen
+To _freeze_ a bulletin means to not allow further responses to be made to it.
+A bulletin can be frozen either when:
+
+-   The user first posts the bulletin
+-   The original poster, SubOp or Sysop can freeze the bulletin later (using the <<end-of-bulletin>>)
+
+To prevent bulletin responses when the post is first
+written, begin the title with an up arrow (kbd:[^]) (_e.g._ type `^Frozen Post`).
+
+The BBS reports this bulletin as frozen
 during a scan or About, and will not allow responses to be made to it.
 
-Bulletins can be un-frozen by the original poster reading the message
+Bulletins can be un-frozen by the original poster or a SubOp or sysop reading the message
 with Prompt Mode enabled, so you get the end-of-bulletin prompt.  There,
-type F, which toggles the bulletin's Frozen status.  The current status
+type kbd:[F], which toggles the bulletin's Frozen status.  The current status
 is then reported, and the user is returned to the end-of-bulletin
 prompt.
 
-Sub-Board Operators
+### Sub-Board Operators
 
-V views the current sub-board's operator
+kbd:[V] views the current sub-board's operator
 
-M sends a private e-mail message to them
+kbd:[M] sends a private e-mail message to them
 
-Maintenance Mode
+### Maintenance Mode
 
 Only sub-board or users with general sub-board maintenance can access
-this function.  Type Z.  The sub-board maintenance menu has two options:
+this function.  Type kbd:[Z].  The sub-board maintenance menu has two options:
 
-1\) Edit the entry file.
+1. Edit the entry file.
 
-You have a choice between ASCII and C/G.  A sub-board's entry file is
+- You have a choice between ASCII and C/G.  A sub-board's entry file is
 displayed upon entering the sub-board.  If there is an entry file
 already, it is loaded into the BBS text editor. Use the usual editor
-commands, and type .S to save.
+commands, and type kbd:[.S] to save.
 
-2\) Edit board detail.
+2. Edit board detail.
 
 The user can change
 
-Sub-board title
+- Sub-board title
 
-Sub-board type
+- Sub-board type
 
-Open/closed status
+- Open/closed status
 
-Access level required to enter the sub-board
+- Access level required to enter the sub-board
 
 If the user is in local or pseudo-local mode, they also have the option
 to change the current sub-board operator and device/drive assignment.
@@ -2998,29 +3028,36 @@ to change the current sub-board operator and device/drive assignment.
 While defining sub-boards using the `+.reledit` program, you may specify
 any of your sub-boards to be:
 
-### Message Bases:
+### Message Bases
 
-Table : Message base abbreviations
+.Message base types
+[width="100%",options="header,autowidth"]
+|====================
+| Type   | Meaning | Purpose 
+| `Anon` | Anonymous | Posts/responses are anonymous to other users
+| `N-AN` | Non-Anonymous | Users cannot make anonymous posts
+| `P-An` | Password, Anonymous | Password required to access, anonymous posts are allowed 
+| `P-NA` | Password, Non-Anonymous | Password required to access, anonymous posts are not allowed
+| `Pswd` | Password-Protected | A password is required to access the sub-board 
+| `Std`  | Standard | Users are asked if they wish to post anonymously
+| `+`    | Networked sub-board | Able to transfer messages to/from other BBSes
+|====================
 
-  -- --
-  -- --
-
-Table : _fixme_
-
-### Upload/Download/Exchange:
+#### Upload/Download/Exchange
 
 Table : U/D and U/X types
 
 EITHER:
 
+`>` You’re the subop
 
-&gt; You’re the subop User has ability to edit/delete posts and
+User has ability to edit/delete posts and
 generally maintain the sub-board.
 
 . A "password" board::
 
-This requires a password to enter.  The BBS asks any user that has
-access to that board for the password upon entering it.  If they get the
+This requires a password to enter. The BBS asks any user that has
+access to that board for the password upon entering it. If they get the
 password wrong, they are asked if they want to try again.
 
 If they guess wrong three times in the same call, they are not allowed
@@ -3028,12 +3065,12 @@ to guess again.  This can be used either for fun, by putting hints to a
 password up other places in the BBS, or to add a measure of security for
 certain boards that you do not want all users to access.
 
-. An "anonymous" board::
+An "`anonymous`" board::
 
 All bulletins and responses will show as anonymous, even to the
-sub-board operator and sysops.  Great for those "war boards."
+sub-board operator and sysops.  Great for those "`war boards.`"
 
-. A "non-anonymous" board::
+A "`non-anonymous`" board::
 
 No anonymous messages are permitted, and users are not asked if they
 would like the post/response to be anonymous.

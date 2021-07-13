@@ -43,7 +43,7 @@ xx00:	jmp setup
 xx03:	jmp inabl
 xx06:	jmp disab
 xx09:	jmp >@rsget	; forward search local label @rsget
-xx0c:	jmp >@rsout	; FIXME: infinite loop
+xx0c:	jmp >@rsout
 xx0f:	jmp setbaud
 ;
 ;	word 0300,0600,1200,2400
@@ -116,13 +116,13 @@ nmi64:	pha
 	pha
 nmi128: cld
 	lda CI2PRB	; $dd01
-	and #{%:00010000}
-	sta carrier
+	and #{%:00010000};bit 4=DCD
+	sta carrier	; $d009
 	ldx TI2BHI	; $dd07
-	lda #$7f
+	lda #$7f	; %0111 1111: 0=clear bits 6-0
 	sta CI2ICR	; $dd0d
 	lda CI2ICR	; $dd0d
-	bpl notcia
+	bpl notcia	; branch if N=0: CIA #2 did not cause IRQ
 	cpx TI2BHI	; $dd07
 	ldy CI2PRB	; $dd01
 	bcs >@mask	; forward search local label @mask

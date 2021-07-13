@@ -96,8 +96,8 @@
 	insrt	= $d8
 	ldtb1	= $d9
 
-;	ribuf	= $f7
-;	robuf	= $f9
+;	ribuf	= $f7 ; vector to rs232 input buffer address
+;	robuf	= $f9 ; vector to rs232 output buffer address
 	free_fb	= $fb
 	free_fc	= $fc
 	free_fd	= $fd

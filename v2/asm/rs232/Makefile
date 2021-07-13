@@ -1,21 +1,18 @@
 DISKIMAGE = test-disk.d64
-DISKHEADER = swiftlink/t232
+DISKHEADER = "diff tool"
 DISKID = rs
 
-C64LIST		= wine c64list4_00.exe
-	# c64list 4.0 now includes former casm functionality
+C64LIST		= wine c64list4_02.exe
+	# c64list 4.02 now includes former casm functionality
 C64LISTFLAGS	= -ovr -verbose
 C1541		= c1541
+	# for formatting a new disk during "make clean" and
+	# showing directory at the end of the "make" script
 
-# must use reverse case in c64list to import as "ml.rs232"
-C64_FILENAME	= ML.RS232
+# must use reverse case in c64list to import as "diff-tool"
+C64_FILENAME	= DIFF-TOOL
 
-# $(basename names...)
-# Extracts all but the suffix of each file name in names.
-
-# input_file = $<
-# c64_disk_filename = (`echo $input_file | sed s/.prg//`) # remove .prg file extension
-
+# "make" placeholders:
 # % is a wildcard
 # $< is the first dependency
 # $@ is the target
@@ -23,29 +20,26 @@ C64_FILENAME	= ML.RS232
 
 all: $(DISKIMAGE)
 
-# I want to generate "ml.rs232" on disk which includes ml.rs232-user and ml.rs232-swift
-# 1) wine c64list4_00.exe rs232-user.asm -bin
-# 2) wine c64list4_00.exe rs232-swift.asm -bin
-# 3) wine c64list4_00.exe rs232.asm -prg # this includes both rs232-{user,swift}.bin
-# for debugging, generate symbols for Vice:
-# 4) wine c64list4_00.exe rs232-swift.asm -sym -ovr | dos2unix
+diff-tool.prg: diff-tool.lbl
 
-rs232.prg: rs232-user.bin rs232-swift.bin rs232-swift.sym rs232.asm
+%.lbl:
+	echo "bla"
 
-%.bin: %.asm
-	$(C64LIST) $< -bin:$@ $(C64LISTFLAGS)
-
-%.sym: %.asm
+%.sym: %.lbl
+	# wine c64list4_02.exe rs232-swift.asm -sym -ovr | dos2unix
 	$(C64LIST) $< -sym:$@ $(C64LISTFLAGS)
 
-%.prg: %.asm
+%.prg: %.lbl
 	$(C64LIST) $< -prg:$@ $(C64LISTFLAGS)
 
-$(DISKIMAGE): rs232.prg
-	# import rs232.prg into $(DISKIMAGE) as "ml.rs232", show contents
-	$(C1541) $(DISKIMAGE) -write rs232.prg "ml.rs232" -dir
+$(DISKIMAGE): diff-tool.prg
+	# import diff-tool.prg into $(DISKIMAGE) as "diff-tool"
+	# -d64:d64file[.d64]::"C64 FILE NAME"
+	$(C64LIST) -d64:$(DISKIMAGE)::$(C64_FILENAME)
+	# show contents
+	$(C1541) $(DISKIMAGE) -dir
 
 clean:
-	rm -f *.bin *.prg *.sym $(DISKIMAGE)
+	rm -f *.prg *.sym $(DISKIMAGE)
 	# format a fresh disk image
 	$(C1541) -format $(DISKHEADER),$(DISKID) d64 $(DISKIMAGE)
