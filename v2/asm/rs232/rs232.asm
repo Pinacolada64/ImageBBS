@@ -36,7 +36,6 @@ rslow:
 	byte <rs232a,<rs232b ; $2d $1f
 rshigh:
 	byte >rs232a,>rs232b ; $c0 $c3
-
 rs232a:
 	{info:INFO: Embedding "rs232-user.bin"}
 	embed "rs232-user.bin"
