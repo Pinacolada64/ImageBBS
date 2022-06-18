@@ -120,7 +120,7 @@ ml20.prg: $(PREREQS) build.asm
 
 clean:
 	# "-" prefix allows 'clean' to continue despite possible missing files
-	-rm -f *.bin *.prg *.lst $(DISKIMAGE)
+	-rm -f build.sym *.bin *.prg *.lst $(DISKIMAGE)
 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 
 # FIXME: not sure this really works

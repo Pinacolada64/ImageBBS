@@ -3,12 +3,17 @@ FROM ubuntu:latest
 RUN apt-get update \
         && apt install -y --no-install-recommends \
             apt-transport-https \
-            ca-certificates \
+            bison \
             build-essential \
-            wget \
+            ca-certificates \
+            flex \
+            git \
             gnupg \
             gpg-agent \
-            unzip
+            libreadline-dev \
+            libxaw7-dev \
+            unzip \
+            wget
 
 # Adapted from https://github.com/scottyhardy/docker-wine/blob/master/Dockerfile
 # Install wine
@@ -23,4 +28,11 @@ RUN apt install -y libwine --install-recommends \
     && apt update \
     && apt install -y wine32 --no-install-recommends
 
+
+# Configure locale for unicode
+#RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+
 COPY files/C64List${C64LIST_VER}/Win32/C64List.exe /bin/C64List.exe
+
+RUN apt install -y vice
