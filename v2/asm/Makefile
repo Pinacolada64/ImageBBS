@@ -5,8 +5,8 @@
 
 WINE = wine
 C1541 = c1541
-C64LIST4BETAA = $(WINE) c64list4_00-beta-a.exe # needed for .bin generation/inclusion
-C64LIST4BETAC = $(WINE) c64list4_00-beta-c.exe # latest version
+C64LIST4BETAA = $(WINE) /bin/C64List.exe # needed for .bin generation/inclusion
+C64LIST4BETAC = $(WINE) /bin/C64List.exe # latest version
 DISKIMAGE = test-ml20.d64
 C64_FILENAME = "ml 2.0"
 	# c64list: petscii translation results in "ml 2.0", but it can't output both .prg and to .d64 in a single command line
@@ -120,7 +120,7 @@ ml20.prg: $(PREREQS) build.asm
 
 clean:
 	# "-" prefix allows 'clean' to continue despite possible missing files
-	-rm *.bin *.prg *.lst $(DISKIMAGE)
+	-rm -f *.bin *.prg *.lst $(DISKIMAGE)
 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 
 # FIXME: not sure this really works
