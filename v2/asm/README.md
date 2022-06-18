@@ -19,3 +19,5 @@ The ./v2/asm directory can be built inside a Docker container to ease environmen
 Prerequisites:
 * Ensure you have Docker installed on your system.
 * Ensure your user account is part of the `docker` group. Sample command: `sudo usermod -G docker -a $(whoami)`
+
+Execute `./build.sh` to execute the build. Once the build completes, note the `*.bin` files in the current directory.
