@@ -119,7 +119,7 @@ movie1:
 	pha
 	jsr clrchn
 	ldx movdly
-	ldy#0
+	ldy #0
 dl1:
 	dey
 	bne dl1
