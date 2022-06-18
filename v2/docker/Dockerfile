@@ -19,4 +19,8 @@ RUN wget -nv -O- https://dl.winehq.org/wine-builds/winehq.key | APT_KEY_DONT_WAR
     && dpkg --add-architecture i386 \
     && DEBIAN_FRONTEND="noninteractive" apt-get install -y --install-recommends wine-${WINE_BRANCH}
 
+RUN apt install -y libwine --install-recommends \
+    && apt update \
+    && apt install -y wine32 --no-install-recommends
+
 COPY files/C64List${C64LIST_VER}/Win32/C64List.exe /bin/C64List.exe
