@@ -252,3 +252,11 @@ newmai:
 			; This routine tests for the STOP key, updates the pointer to the
 			; current line number, and positions the text pointer to read the
 			; beginning of the statement.
+
+; FIXME: CPU JAM at $ab1d under Image v3.0
+; (C:$ab1d) bt
+; (0) a44e
+; (1) a7a2
+; (2) a9a5
+; (4) a7e7
+; (7) a677
