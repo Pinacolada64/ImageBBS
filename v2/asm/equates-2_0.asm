@@ -2,6 +2,12 @@
 ; Image BBS v2.0 equates
 ;
 
+;
+; printable characters
+;
+
+	comma	= $2c
+	
 ; [1.2]: labels/memory address is the same as 1.2
 ; [?]  : not certain of purpose of routine
 ; ($xx): Indirect addressing: $xx *256+ ($xx+1)
@@ -24,7 +30,6 @@
 	zp_index= $22 ; official name is "index", named so as not to conflict with BBS flag @ $d00f
 	resho	= $26
 	txttab	= $2b
-	commachr= $2c
 	vartab	= $2d	; start of BASIC variables
 	arytab	= $2f
 	strend	= $31
@@ -346,8 +351,7 @@
 	frmevl	= $ad9e ; evaluate string/math expressions
 	eval1	= $ae8d
 	parchk	= $aef1 ; parentheses check: '('
-	comma	= $aefd ; check next character is comma, ...
-	chkcom	= $aefd ; ...return "?syntax  error" if not
+	chkcom	= $aefd ; check if next character is comma, return "?syntax  error" if not
 	synerr	= $af08 ; emit "?syntax  error"
 
 	ptrget1	= $b0e7	; set up descriptor stored in ($45) [varname],
