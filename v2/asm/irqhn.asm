@@ -312,7 +312,7 @@ dispd3:
 	jsr dispdt
 	lda d1str+6
 	jsr dispdt
-	lda #commachr
+	lda #comma
 	jsr dispdt
 	lda #' '
 	jsr dispdt
