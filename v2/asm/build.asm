@@ -19,7 +19,7 @@ orig $6c00
 
 ;	wedge: load addr $0c00, reloc $0c00
 	{info:embedding wedge.bin}
-	embed wedge.bin
+	embed "wedge.bin"
 ; orig:  the individual .bin file's load address
 ; embed: where in RAM the .bin file gets put
 ; reloc: where in RAM the module gets relocated to after "ml 2.0" loads
@@ -28,44 +28,44 @@ orig $6c00
 {info:Aligning to $7000.}
 orig $7000
 	{info:embedding editor.bin}
-	embed editor.bin
+	embed "editor.bin"
 
 {info:Aligning to $8000.}
 orig $8000
 
 ; orig $c000, embed $8000, reloc $e000: garbage collect
 	{info:embedding garbage-collect.bin}
-	embed garbage-collect.bin
+	embed "garbage-collect.bin"
 
 {info:Aligning to $8400.}
 orig $8400
 ; orig $c000, embed $8400, reloc $e400: e.c.s. checker
 	{info:embedding ecs.bin}
-	embed ecs.bin
+	embed "ecs.bin"
 
 {info:Aligning to $8e00.}
 orig $8e00
 ; orig $c000, embed $8e00, reloc $ee00: struct
 	{info:embedding struct.bin}
-	embed struct.bin
+	embed "struct.bin"
 
 {info:Aligning to $9400.}
 orig $9400
 ; orig $c000, embed $9400, reloc $f400: swap1
 	{info:embedding swap1.bin}
-	embed swap1.bin
+	embed "swap1.bin"
 
 {info:Aligning to $9800.}
 orig $9800
 ; orig $c000, embed $9800, reloc $f800: swap2
 	{info:embedding swap2.bin}
-	embed swap2.bin
+	embed "swap2.bin"
 
 {info:Aligning to $9c00.}
 orig $9c00
 ; orig $c000, embed $9c00, reloc $fc00: swap3
 	{info:embedding swap3.bin}
-	embed swap3.bin
+	embed "swap3.bin"
 
 {info:Aligning to $a000.}
 orig $a000

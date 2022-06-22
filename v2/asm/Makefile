@@ -5,8 +5,7 @@
 
 WINE = wine
 C1541 = c1541
-C64LIST4BETAA = $(WINE) c64list4_00-beta-a.exe # needed for .bin generation/inclusion
-C64LIST4BETAC = $(WINE) c64list4_00-beta-c.exe # latest version
+C64LIST = $(WINE) /bin/C64List.exe # needed for .bin generation/inclusion
 DISKIMAGE = test-ml20.d64
 C64_FILENAME = "ml 2.0"
 	# c64list: petscii translation results in "ml 2.0", but it can't output both .prg and to .d64 in a single command line
@@ -23,8 +22,8 @@ all: ml20.prg
 #	@rm $@.in
 
 #	(foreach variable,list,text)
-#	$(foreach O,$(basename $(OBJECTS)),$(echo "wine $(C64LIST4BETAC) @$@.asm -prg" $O))
-#	echo wine $(C64LIST4BETAC) @$@ -prg
+#	$(foreach O,$(basename $(OBJECTS)),$(echo "wine $(C64LIST) @$@.asm -prg" $O))
+#	echo wine $(C64LIST) @$@ -prg
 #	@rm $@.in
 
 # *.lbl files are being kept as BASIC programs.
@@ -37,28 +36,26 @@ PREREQS = wedge.bin editor.bin garbage-collect.bin ecs.bin struct.bin \
 	swap1.bin swap2.bin swap3.bin
 
 %.bin: %.asm
-	# this must stay beta a for now; this version outputs and includes .bin files
-	$(C64LIST4BETAA) $< -bin:$@
+	$(C64LIST) $< -bin:$@
 
 # 2) call build.asm, include *.asm files not listed in $(PREREQS)
 ml20.prg: $(PREREQS) build.asm
-	# need beta a since it embeds .bin files
-	$(C64LIST4BETAA) build.asm -verbose -prg:ml20.prg
+	$(C64LIST) build.asm -verbose -prg:ml20.prg
 # output symbols
-	$(C64LIST4BETAA) build.asm -sym
+	$(C64LIST) build.asm -sym
 # TODO: make one-byte zp symbols ($61) two bytes ($0061) for purposes of sorting and ease of diff'ing
 
 # sort symbols
 	$(shell sort build.sym -t $ --key 2)
 # output disassembly
-	$(C64LIST4BETAA) build.asm -lst
+	$(C64LIST) build.asm -lst
 # write ml 2.0 to disk
 	$(C1541) $(DISKIMAGE) -write $@ $(C64_FILENAME) -dir
 
 # $(DISKIMAGE): ml20.prg
 # 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 # 	# import ml20.prg into $(DISKIMAGE) as "ml 2.0"
-# 	$(C64LIST4BETAC) $< -d64:$@::$(C64_FILENAME)
+# 	$(C64LIST) $< -d64:$@::$(C64_FILENAME)
 # 	# show contents
 # 	$(C1541) $(DISKIMAGE) -dir
 
@@ -100,7 +97,7 @@ ml20.prg: $(PREREQS) build.asm
 #	                $(C1541) $(OUTPUT_PATH)/$(OUTPUT_DISK) -del ml.$(basename $@) -write $(OUTPUT_PATH)/$(basename $@).prg ml.$(basename $@)
 
 # Include build date of module
-# C64LIST4BETAC does this with build revision tracking
+# C64LIST does this with build revision tracking
 # Example usage: bd$={usedef:__BuildDate}:bt$={usedef:__BuildTime}
 
 # The "make disk" target will add all the *.prg files to a .d81 at once
@@ -120,7 +117,7 @@ ml20.prg: $(PREREQS) build.asm
 
 clean:
 	# "-" prefix allows 'clean' to continue despite possible missing files
-	-rm *.bin *.prg *.lst $(DISKIMAGE)
+	-rm -f build.sym *.bin *.prg *.lst $(DISKIMAGE)
 	$(C1541) -format "test,rs" d64 $(DISKIMAGE)
 
 # FIXME: not sure this really works
