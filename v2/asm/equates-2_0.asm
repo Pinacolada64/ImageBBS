@@ -24,6 +24,7 @@
 	zp_index= $22 ; official name is "index", named so as not to conflict with BBS flag @ $d00f
 	resho	= $26
 	txttab	= $2b
+	commachr= $2c
 	vartab	= $2d	; start of BASIC variables
 	arytab	= $2f
 	strend	= $31
