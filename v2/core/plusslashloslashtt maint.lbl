@@ -4,7 +4,7 @@
 {alpha:alt}
 	a$=" Restart Top Ten List":gosub 1095:&,27,2:gosub {:4002}:&,28,2:return
 {:4002}
-	&,11:n=20:dim a$(n,8):gosub 1065:x=0:p=n:m=mn%:ct=.
+	&,11:n=20:dim a$(n,8):gosub 1065:x=0:p=n:m=mn%
 {:4004}
 	&"{f6}Reading    "
 {:4006}
@@ -17,17 +17,33 @@
 	for i=1 to 8:&".":&,60,7,0,a$(p+1,i),n-p:next:p=n-10
 	on-(x=<ur)goto {:4004}:m=mn%-m:if m<0 then m=m+1440
 	&"{f6}Elapsed Time: {pound}!m Minutes{f6}"
-' scratch old file:
-	a$="e.top ten":dr=3:gosub 1010:print#15,"s"dr$a$:gosub 1012
 ' not enough users? log it, quit:
-	if ct<10 then close 2:a$="{lt. red} Not enough users!{f6}":gosub 1095:return
-' otherwise, create new file:
-	&"{f6}{cyan}Creating {$d4:2} File...":a$="w":b$="e.top ten":gosub 1027
+	if x<10 then close 2:a$="{lt. red} Not enough users!{f6}":gosub 1095:return
+' otherwise, scratch old file:
+	a$="e.top ten":dr=3:gosub 1010:print#15,"s"dr$a$:gosub 1012
+' create new file:
+	&"{f6}{cyan}Creating Top Ten File...":a$="w":b$="e.top ten":gosub 1027
 	print# 2,"Top Ten Users"r$"{$04}"d1$r$:for i=1 to 8
 	on i gosub {:4101},{:4102},{:4103},{:4104},{:4105},{:4106},{:4107},{:4108}
 	print# 2,"{f6}Hit A Key > {pound}g1{clear}{f6}{lt. blue} Total "b$"{f6}  #{pound}{back arrow}09User{f6} {pound}vj"
+' take the last 10 items and work backwards
 	for j=n to n-9 step-1:print# 2,a$(j,i):next:next:close 2:return
 {:4030}
+' this preserves the sign (+/-) of up to a six-digit number (-123456 ... 123456):
+' 10 i=1:a$="-123456":gosub100:gosub200
+' 20 i=2:a$=" 123456":gosub100:gosub200
+' 30 end
+' 100 a$(i)=right$("       "+mid$(str$(val(a$)),2),7):print100a$(i):return
+' 200 a$(i)=right$("       "+a$,7):print200a$(i):return
+'
+' ready.
+' run
+'  100  123456
+'  200 -123456
+'  100  123456
+'  200  123456
+
+' p=page, i=item?
 	a$(p,i)=right$("       "+mid$(str$(val(a$)),2),7)+"{pound}{back arrow}10"+an$:return
 {:4101}
 	b$="Calls":return
