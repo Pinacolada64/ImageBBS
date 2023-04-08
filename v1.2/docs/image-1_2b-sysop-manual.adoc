@@ -2004,7 +2004,9 @@ The second page of lightbar options is as follows:
 | Enable main prompt macros footnote:[A misleading name, since it doesn't automate anything as the MX or MACS user commands do].
 
 | `Fn5`
-| Enabled: user receives credit when upload is validated. Disabled: credit awarded after file uploaded.
+| *Enabled:* user receives credit when upload is validated.
+
+*Disabled:* credit awarded after file uploaded.
 | Enabled: user asked whether to `Auto-Logoff After Transfer Complete` in U/Ds.
 
 | `Fn4`
@@ -2264,7 +2266,7 @@ disks you would like to use, you can import them into the text editor
 using a "`get file`" dot command (type kbd:[.G] at the left margin).
 
 TIP: Be sure to type kbd:[.C] kbd:[80] kbd:[Return] to set the editor line length to 80
-characters before `kbd:[.G]`etting a file. Otherwise, lines with color/graphics
+characters before kbd:[.G]etting a file. Otherwise, lines with color/graphics
 characters in them may exceed the 40-column line length, causing
 word-wrap and ruining the file.
 
@@ -2305,7 +2307,9 @@ to 30 sub-boards, 30 UD libraries, and 30 UX libraries.  To do this and
 to change them at any time after, you can run the `+.reledit` program from
 the main command level:
 
-Type `R` at the main prompt, then after the `+.` prompt, type `reledit`.
+. Type `R` at the main prompt.
+. At the `Run: +.` prompt, type kbd:[reledit].
+. Hit kbd:[Return] to run the specified module.
 
 # Access Groups
 
@@ -6524,15 +6528,18 @@ your own programs, except where noted.
 .Reserved arrays
 [width="100%",options="header"]
 |====================
-| Name | Purpose 
+| Variable | Purpose 
 | ac%(31) | Can be used for any plus file outside of UD/UX/SB.
 | bf(x,y) | Blocks free on system drives. _Should never be used._
 | co$(9)  | Text for computer types supported. _Should never be used._
 |====================
 
-.Variables from programmer’s ref guide)
-[width="100%",options="header"]
+.Variables from programmer’s ref guide
+[%autowidth]
+[%header]
+[cols="1m,2"]
 |====================
+| Variable | Purpose
 |AC%( |
 |AG$|Access group name
 |AK$|"Line divider;" space, LL%-2 "-"'s, RETURN character
@@ -6570,12 +6577,12 @@ enabled)
 |dv%|device number
 |dv%()|
 |el | Error line, reported by `+.er`
-|em |User's expert mode: 0=off, 1=on
+|em | User's expert mode: 0=off, 1=on
 |f1 | 
 |f2 |
 |f3 |
 |ff$| User's real first name
-|fl|
+|fl |
 |fl$|User's <<user-flags>>
 |f1$()|
 |gs |
@@ -6607,8 +6614,8 @@ enabled)
 |NV|
 |OC$|
 |P$|
-|PL%|
-|P1%?|
+|pt%| prime Time enabled flag
+|P1%|
 |P2%|
 |P3%|
 |PH$|User's phone number
@@ -6616,36 +6623,36 @@ enabled)
 |PM|Prompt mode
 |PO$| Main prompt string
 |PP$|
- PQ
- PR|Protocol loaded
- PR$
- PS \# of posts?
- PT% Probably a prime time flag
- PU$
- PW$ some password
- QB bits per second rate ("current baud")
- QE
- QT$ CHR$(34), a quote character
- R$ CHR$(13), a kbd:[Return] character
- RC
- RN$  User's real name (FF$ + " " + LL$)
- RP   \# of responses
- RQ
- RS
- SH   Updated by ML routines; "spacebar hit": 0=no, 1=yes
- SO%( Subop array, used in SB, UD, UX subsystems
- SR Logical file number in certain routines
- ST   Commodore BASIC reserved variable; serial status
- ST(
- SY$
- T1
- TC%  Total calls to system (grand total?)
- TF
- TI   Commodore BASIC reserved variable; jiffy clock
- TI$  Commodore BASIC reserved variable; 24-hour clock
- TR%  User's time remaining, in minutes
+|  PQ
+|  PR|Protocol loaded
+|  PR$
+|  PS | \# of posts?
+|  PT% |  prime time flag
+|  PU$| 
+|  PW$ | some password
+|  QB | bits per second rate ("current baud")
+|  QE| 
+|  QT$|  CHR$(34), a quote character
+|  R$ | CHR$(13), a kbd:[Return] character
+|  RC| 
+|  RN$|  User's real name (FF$ + " " + LL$)
+|  RP| \# of responses
+|  RQ| 
+|  RS| 
+|  SH| Updated by ML routines; "spacebar hit": 0=no, 1=yes
+|  SO%( | Subop array, used in SB, UD, UX subsystems
+|  SR | Logical file number in certain routines
+|  ST |  Commodore BASIC reserved variable; serial status
+|  ST(| 
+|  SY$| 
+|  T1| 
+|  TC%| Total calls to system (grand total?)
+|   TF | 
+|TI | Commodore BASIC reserved variable; jiffy clock
+|TI$| Commodore BASIC reserved variable; 24-hour clock
+|TR%| User's time remaining, in minutes
 |tt$(254)|Lines of text stored in editor
- U$ Stacked commands
+|U$|Stacked commands
 |UC|
 |UH|Highest user account number in user file
 |UL|
@@ -6685,7 +6692,7 @@ You may also:
 
 _but_
 
-`&str$(i)` (numeric variable output, as in `&i`, is not supported yet.)
+`&str$(i)` (numeric variable output--`&i` is not supported yet).
 
 Some oddities in syntax:
 
@@ -6745,7 +6752,7 @@ boot the BBS as normal.
 In line 1081 of im, about ¼ of the way through the line, there is a
 statement that looks like this:
 
-`on-(dv%<>0)goto1083`
+ on-(dv%<>0)goto1083
 
 Changing the `dv%<>0` to `dv%<>8` tells the BBS you have a Lt.Kernal running DOS v7.2 or higher set up as device 8.  This mod allows
 the Lt. Kernal fast blocks free reads to be done on just the Lt. Kernal
@@ -6785,14 +6792,15 @@ ____
 NOTE: Spaces not present in the BASIC code on disk were added here for clarity.
 
 .+.lo:
-```
-673 &"Additional Information:":a=int(rnd(1)*5)+1:on a goto 75,676,677,678
+[source,basic]
+----
+673 &"Additional Information:":a=int(rnd(1)*5)+1:on a goto 675,676,677,678
 674 p$="FIRST name ":t$=ff$:goto 679
 675 p$="LAST name ":t$=ll$:goto 679
 676 p$="AREA CODE (???)XXX-YYYY ":t$=mid$(ph$,2,3):goto 679
 677 p$="DIALING PREFIX (XXX)/???-YYYY":t$=mid$(ph$,7,3):goto 679
 678 p$="LAST FOUR DIGITS (XXX)/YYY-???? ":t$=right$(ph$,4)
-```
+----
 
 Change line 679 from:
 
@@ -7128,10 +7136,11 @@ additional things to consider, some of which are discussed in
 -   DCD carrier detect options in `tcpser`
 -   file transfer issues with `tcpser`
 
-If you have a Supra 2400 baud modem, you will need to set it up
-specially before you put it on line.  Run the `2400 setup` (((Utilities,2400 setup))) program on
-the IMAGE disk with the modem on-line and turned on, and then boot your
-IMAGE BBS!
+If you have a Supra 2400 baud modem, you will need to set it up specially before you put it on line.
+Run the `2400 setup` (((Utilities,2400 setup))) program on the IMAGE disk with the modem on-line and turned on, and then boot your IMAGE BBS!
 
 [index]
 ## Index
+
+[appendix]
+## Footnotes
