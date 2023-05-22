@@ -153,9 +153,9 @@ name:
 	ascii "chatfile"
 
 chatmode:
-	lda blmilo+0
+	lda blmilo+0	; block list (middle & low order bytes)
 	sta blknum+0
-	lda blmilo+1
+	lda blmilo+1	; block list (middle & low order bytes)
 	sta blknum+1
 chat0:
 	lda 198		; check for keypress
