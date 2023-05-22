@@ -1,0 +1,18 @@
+{def:v2} ' which version is built -- currently this crashes under Image v3
+{alpha:alt}
+{ifdef:v2}
+	{number:1}
+	{assign:load_protocol	=1750	}	' load protocol a$
+	{assign:main_prompt	=1811	}	' main prompt
+	rem "+.test remote" {usedef:__BuildDate} {usedef:__BuildTime} pinacolada
+{else}
+	{number:3000}
+	{assign:load_protocol	=28	}	' load protocol a$
+	{assign:main_prompt	=300	}	' main prompt
+	rem "i.test remote" {usedef:__BuildDate} {usedef:__BuildTime} pinacolada
+{endif}
+' common code:
+	a$="remote":gosub {:load_protocol}:if e% then:&:return
+	&,16:&"{f5}++ remote{f5} is now hooked into system.{f6}"
+	goto {:main_prompt}
+' FIXME: "> d018 14" in monitor to reset VIC screen mode after this runs
