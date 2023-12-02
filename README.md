@@ -22,7 +22,7 @@ There is a `bash` shell script which converts `{$c1-$da}` to `{A-Z}` (which are 
 
 Check out our [wiki in progress](https://github.com/Pinacolada64/ImageBBS/wiki).
 
-Need a modem emulator? Here's [tcpser source](https://github.com/FozzTexx/tcpser).
+Need a modem emulator? Here's [tcpser source](https://github.com/go4retro/tcpser).
 
 Want to telnet to some Image BBSes? Our network has 13 nodes! Check out the [Commodore BBS Outpost](http://cbbsoutpost.servebbs.com/index.php)!
 
