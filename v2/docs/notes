@@ -1,0 +1,71 @@
+Files needed:
+
+Thought being since Subs haven't been converted to structs,
+we need separate modules for now.
+
+2.0 filename	1.3 filename	C64List filename	Status
+=========================================================================
+i.UD		+.UD		plus_UD.lbl
+i/UD.edit	+/UD.edit	plusslashUD_edit.lbl	(unfinished)
+i/MM.load	+/UD.load	plusslashUD_load.lbl
+i/MM.maint	+/UD.maint	plusslashUD_maint.lbl
+i/MM.ud-sort	+/UD.ud-sort	plusslashUD_ud-sort.lbl	(no struct sorting)
+i/MM.subop	+/UD.subop	plusslashUD_subop.lbl	(work in progress)
+
+Run +.reledit, create a U/D, create a SIG containing that U/D.
+This creates:
+"e.Sig,r"
+"e.Sig 1,s"
+"e.Sig 2,s"
+for example.
+
+Run "+.convert sigs" to convert "e.Sig,r" to "e.Siglist,p" (the struct format)
+Should return "00:ok:00:00" status.
+
+Now you have:
+"e.Sig"
+"e.Siglist"
+"e.Sig 1"
+
+Run +.sigedit - Should see 1 SIG defined.
+List doesn't display the name of the U/D.
+
+If you need to add/remove a SIG:
+1) scratch "e.Siglist*" 
+3) re-run "+.convert sigs", then "+.convert sigs2".
+
+"+.convert sigs2" will go through the other SIGs in the list, creating
+    "e.Sig 1,s"
+through
+    "e.Sig xx,s"
+and create
+    "e.Siglist xx,p"
+
+"contains" flags are reversed, Like X-Tec mentioned
+
+ud%(29,60)	struct for holding U/D info (60 entries of 30 bytes)
+ud%( 0, 0)	# of files in directory
+ud%( 0, 1)	files tagged
+
+ud%( 0,xn)	bits:
+		7 | 6 | 5 | 4 | 3 | 2 | 1 | 0
+		0=validation status: 0=not validated
+		1=tagged?
+		
+ud%( 1,xn)	block/kbyte size
+ud%( 2,xn)	# of times downloaded
+ud%( 3,xn)	Date first uploaded
+ud%( 6,xn)	Date last downloaded
+ud%( 9,xn)	1=Commented
+ud%(10,xn)	Uploader's UID#
+ud%(11,xn)	Handle of uploader
+ud%(21,xn)	Filename
+ud%(29,xn)	Filetype: 0=SEQ, 1=PRG
+
+ud%( 1, 0)	subop?
+
+rn	# of files in directory [copy of ud%(0,0)]
+xn	current file in directory doing an About, Read, etc.
+q=1	subop status
+
+Maybe +/lo/filelist should be converted to use structs too
