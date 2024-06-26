@@ -291,7 +291,7 @@
 	yg=yg+int(ar):return
 
 {:sub.ship_menu}
-	&"{pound}f1{lt. blue}{f6:2}  Load onto ship{f6} {white}{pound}o{175}":z$="{46:17}" ' 17 .'s
+	&"{clear}{lt. blue}{f6:2}  Load onto ship{f6} {white}{pound}o{175}":z$="{46:17}" ' 17 .'s
 	&"{f6}{yellow}{rvrs on}[1]{rvrs off}{white} Grain{pound}$z"+str$(yg)+"{f6}{yellow}{rvrs on}[2]{rvrs off}{white} Serf.{pound}$z"+str$(ys)
 	&"{f6}{yellow}{rvrs on}[3]{rvrs off}{white} Noble{pound}$z"+str$(yw)+"{f6}{yellow}{rvrs on}[4]{rvrs off}{white} Navigator ($500/ea)..."+str$(x8)
 	&"{f6}{yellow}{rvrs on}[Y]{rvrs off}{white} Your Status{f6:2}":return

@@ -1,36 +1,9 @@
--------------------------------------------------------------------------------
-                C64List (v3.03) Copyright 2012 by Jeff Hoag
--------------------------------------------------------------------------------
-Reading file Empire6.lbl
-Loading C64 BASIC file from lbl formatted file: Empire6.lbl
-Auto line renumbering initiated at {:1}.
-Including BUILD-DATE_BASIC.LBL
-Warning: Line 1010 was referenced but it does not exist
-Warning: Line 1012 was referenced but it does not exist
-Warning: Line 801 was referenced but it does not exist
-Warning: Line 1011 was referenced but it does not exist
-Warning: Line 1001 was referenced but it does not exist
-Warning: Line 1001 was referenced but it does not exist
-Warning: Line 1812 was referenced but it does not exist
-Warning: Line 1001 was referenced but it does not exist
-Warning: Line 1027 was referenced but it does not exist
-Warning: Line 1027 was referenced but it does not exist
-Warning: Line 1011 was referenced but it does not exist
-Warning: Line 1360 was referenced but it does not exist
-Warning: Line 1004 was referenced but it does not exist
-Warning: Line 1902 was referenced but it does not exist
-Warning: Line 1011 was referenced but it does not exist
-Warning: Line 1011 was referenced but it does not exist
-Load successful
-Saving in prg format: Empire6.prg
-File already exists: Empire6.prg ...replacing it
-
-----------line label assignments-----------------
+' ----------line label assignments-----------------
 {assign:1=1}
 {assign:sub.load_lmp=5}
 {assign:sub.comma_value=10}
 {assign:2852=12}
-{assign:sub.normalize=15}
+{assign:sub.str_to_int=15}
 {assign:sub.any_key=20}
 {assign:sub.open_playerlog=25}
 {assign:save_stats_quit=30}
@@ -61,8 +34,22 @@ File already exists: Empire6.prg ...replacing it
 {assign:420=123}
 {assign:422=124}
 {assign:700=125}
--------------------------------------------------
-35 found label assignments
 
-Encountered: 0 Errors; 16 Warnings
-C64List finished.
+' Image BBS line numbers
+{assign:1001=1001}
+{assign:1012=1012}
+{assign:1023=1023}
+{assign:1027=1027}
+{assign:1811=1811}
+{assign:sub.yes_no=1902}
+
+' encoded characters represented by function keys
+' (in quoted strings and disk files/filenames):
+{quoter:comma	=133} ' f1 ,
+{quoter:question=137} ' f2 ?
+{quoter:colon	=134} ' f3 :
+{quoter:equal	=138} ' f4 =
+{quoter:quote	=135} ' f5 "
+{quoter:return	=139} ' f6 [K]
+{quoter:asterisk=136} ' f7 *
+{quoter:uparrow	=140} ' f8 ^

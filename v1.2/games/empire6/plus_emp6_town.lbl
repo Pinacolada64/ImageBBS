@@ -21,15 +21,18 @@
 	&"{f6}{lt. green}Sold!{f6}":return
 
 {:sub.inventory}
-	&"{f6}{lt. green}You have ":if a%=. then:&"no":goto {:sub.inventory.2}
-	&"{pound}%a"
-{:sub.inventory.2}
-	&" {pound}$b":if a%<>1 then:&"s"
-	&".":if a%=. then gosub {:sub.none}:return
+' a%=count, b$=item
+' output e.g.,
+' "You have no Shipyards. You have none to sell!"
+' "You have 1 Shipyard."
+' "You have 2 Shipyards."
+	a$="{pound}%a":if a%=. then a$="no"
+	&"{f6}{lt. green}You have {pound}$a {pound}$b":if a%<>1 then:&"s"
+	&".":if a%=. then:&" ":gosub {:sub.none}
+	return
 
 {:sub.none}
-	&" {yellow}You have none to sell!{f6}":return
-'	&"{f6}":return
+	&"{yellow}You have none to sell!{f6}":return
 
 {:sub.show_number}
 ' setup:
@@ -40,23 +43,24 @@
 
 {:sub.buy}
 	&"{f6:2}{white}The Barbarians will buy your {pound}$b":if a%>1 then:&"s"
-	&"{f6}for {pound}%b dollars each.{f6}" ':gosub {:sub.sell}:if an<1 then {:40}
+	&"{f6}for ${pound}%b each.{f6}":return
 	
 {:sub.sell}
 	an$="":&"{f6}{cyan}Sell how many {yellow}[{pound}$k={pound}%a}]{lt. green}: {pound}i1":if tr%<1 then {:8}
-	if an$="" then an$=str$(a%):& "{pound}{back arrow}10({pound}v7 chosen.){f6}"
-	gosub {:sub.normalize}:if an>a% then:&"{lt. red}{pound}{back arrow}10You don't have that many!{f6}":goto {:sub.sell}
+' if Return pressed, set default:
+	if an$="" then an$=str$(a%):&"{pound}{back arrow}10({pound}v7 chosen.){f6}"
+	gosub {:sub.str_to_int}:if an>a% then:&"{lt. red}{pound}{back arrow}10You don't have that many!{f6}":goto {:sub.sell}
 ' input value of zero can still be caught after returning
 	return
 
 {:26}
-	&"{pound}f1{f6:2}{pound}{back arrow}19{rvrs on}{lt. blue}: Hood's Real Deals! :"
+	&"{clear}{f6:2}{pound}{back arrow}19{rvrs on}{lt. blue}: Hood's Real Deals! :"
 '	&"{f6}{lt. green}You have "+str$(f%(5))+" shipyards."
 	a%=f%(5):b$="shipyard":b%=a%/2+2500:gosub {:sub.inventory}:if a%=. then {:40}
 '	if f%(5)<1 then gosub {:sub.none}:goto {:40}
 
 {:32}
-' todo: change all these one-time variables to a, make {:sub.sell} do more work:
+' TODO: change all these one-time variables to a, make {:sub.sell} do more work:
 '	&"{f6}{white}The Barbarians will buy your {pound}$bs{f6}for "+str$(wb)+" dollars each.":gosub {:sub.sell}:if an<1 then {:40}
 '	if an>f%(5)then:&"{f6}You only have "+str$(f%(5))+" shipyards.":goto {:32}
 	if an>a% then gosub {:sub.show_number}:goto {:32}
@@ -110,7 +114,7 @@
 {:104}
 	pn=pn+(x*og):sf=sf-50:&"{f6:2}{cyan}You win"+str$(x*og)+" dollars!":goto {:170}
 {:106}
-	&"{pound}f1{f6:2}{lt. blue}{rvrs on}: Shockers' Slaves :{rvrs off}{f6:2}"
+	&"{clear}{f6:2}{lt. blue}{rvrs on}: Shockers' Slaves :{rvrs off}{f6:2}"
 	if sf<1000 and la>10000 and pn>85000 then {:112}
 ' Sorry, xxxxxxxxxx, you're not bad
 	&"{f6}{cyan}Sorry, {pound}v2, you're not bad{pound}$lenough off to need any slaves yet.{f6}":goto {:154}
@@ -127,7 +131,7 @@
 	&" For now, anyway. {pound}s1HA! HA! HA!{pound}s0{f6}":return
 
 {:sub.town_menu}
-	&"{pound}f1{f6:3}{lt. blue}{pound}{back arrow}15Town Menu{f6:2}"
+	&"{clear}{f6:3}{lt. blue}{pound}{back arrow}15Town Menu{f6:2}"
 	if ln=1 then:&"{cyan}    [C] {lt. green}Cyclone's ND Teller{f6}"
 	&"{cyan}    [L] {lt. green}Lucifer's Den{f6}"
 	&"{cyan}    [P] {lt. green}Warrior Promotion{f6}"
@@ -164,7 +168,7 @@
 	&"{f6:2}{cyan}Will you agree to this? [Y/N] >>":gosub 1902
 '	if an$<>"Y"then {:184}
 '	return
-	if an=. then:&"{f6:2}{lt. green}Maybe some other time then.{f6}":return
+	if a=. then:&"{f6:2}{lt. green}Maybe some other time then.{f6}":return
 {:186}
 ' laughter repeated:
 	&"{f6:2}{white}{pound}S1Ha! Ha! Ha! Ha! Ha!{pound}s0 I think you{pound}$lhad better check your stats.{f6}"
@@ -213,7 +217,7 @@
 '	goto {:231}
 {:231}
 	wb=fn r(4)-1:if wb<1 then {:254}
-	&"{pound}f1{f6:2}{lt. green}{rvrs on}: Warrior Promotions :{rvrs off}{pound}q0{f6}"
+	&"{clear}{f6:2}{lt. green}{rvrs on}: Warrior Promotions :{rvrs off}{pound}q0{f6}"
 	&"{f6}{yellow}Good day, I take it that you are here to{pound}$l"
 	&"see if any of your warriors are eligible for promotion{f6}"
 	&"to the status of Noble.{f6:2}"
@@ -244,7 +248,7 @@
 	if sf<1500 or wb<1 then {:290}
 	wb=int(nb*20-wa):if wb>(sf/2)then {:290}
 '	if wb<1 then {:290}
-	&"{pound}f1{f6:2}{lt. blue}{rvrs on}: Warrior Training :{rvrs off}{pound}q1{f6}"
+	&"{clear}{f6:2}{lt. blue}{rvrs on}: Warrior Training :{rvrs off}{pound}q1{f6}"
 	&"{f6}{white}You have"+str$(wb)+" serfs that meet the requirement to be trained"
 	&" as warriors.{f6:2}Training cost is one acre per serf.{f6}"
 	&"{f6}{lt. green}Do you want them trained (Y/N) >> ":gosub 1902
@@ -267,7 +271,7 @@
 '	gosub {:304}:x=g3:gosub 1001:print# 2,w$:close 2:return
 
 {:400}
-	&"{pound}f1{f6:2}{lt. green}{rvrs on}: Utopia's Auction :{rvrs off}{pound}q1{f6:2}"
+	&"{clear}{f6:2}{lt. green}{rvrs on}: Utopia's Auction :{rvrs off}{pound}q1{f6:2}"
 	if wz>2 then {:415}
 	wz=wz+1:wb=fn r((250-100)+100)
 	&"{green}I'll auction off my serfs to you for{pound}$l{white}"+str$(wb)+" {green}dollars each."
@@ -280,7 +284,7 @@
 {:415}
 	&"{red}Utopia hates greed and calls the town{pound}$lguards to boot you out!{f6}":goto {:8}
 {:420}
-	&"{blue}{pound}f1{f6:2}  Train Warriors{f6:2}  This is where you buy the necessary{pound}$l"
+	&"{blue}{clear}{f6:2}  Train Warriors{f6:2}  This is where you buy the necessary{pound}$l"
 	&"materials and trainers for your men{f6}to have a high training rating,{pound}$l"
 	&"boosting their abilities in combat.{f6:2}{white}You have"+str$(z9)+" training units."
 	x=z9*5000
@@ -291,7 +295,7 @@
 	pn=pn-a:z9=z9+1:return
 
 {:500}
-	&"{pound}f1{f6:2}{white}{rvrs on}<<< Cyclone's Natural Disaster Bank >>>{rvrs off}{pound}q1{f6:2}":j=.
+	&"{clear}{f6:2}{white}{rvrs on}<<< Cyclone's Natural Disaster Bank >>>{rvrs off}{pound}q1{f6:2}":j=.
 	&"Credits -->  ":x=cr:gosub {:sub.comma_value}:&"{f6}"
 	&"  Money --> $":x=pn:gosub {:sub.comma_value}:&"{f6:2}"
 	&"Current exchange rate --> ":x=mp:gosub {:sub.comma_value}:& " dollars per credit.{f6:2}"

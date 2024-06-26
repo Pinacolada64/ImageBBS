@@ -1,38 +1,76 @@
 {number:800}
-	rem +.emp6.maint
-{:512}
+{step:1}
 	{uses:.\includes.lbl}
+	rem +.emp6.maint
+	goto {:start}
 
-	&"{pound}f1{cyan} Empire 6 Maintenance {f6}{pound}vj"
+{step:2}
+{:sub.check_for_duplicate}
+' FIXME
+' returns ok=id# if duplicate name [dt$(1)] found in playerlog, 0=no duplicate
+	&"Checking for duplicate profile {f5}"+nn$+"{f5}...":ok=.
+' skip player's profile (g3) so false match not triggered:
+	for x=1 to 24:&".":if x=g3 then {:cfd}
+	gosub 1001:&,2,2:if a$=dt$(1) then ok=x:&"{f6}Duplicate at #"+str(x):x=24
+{:cfd}
+	next:return
+
+{:sub.empty_record}
+' create empty player record
+	w$="empty"+r$:for x=1 to 15:w$=w$+"0"+r$:next:return
+
+{nice:10}
+{:start}
+	&"{clear}{cyan} Empire 6 Maintenance{f6}{pound}vj"
 '	&" {pound}k1Call Utopia ][ 702-735-6787 24 Hours{pound}k0"
 	&"{purple}Options:{white}{f6:2}"
-	&"(D) Auto-Reset & Credit/Money Exchange{f6}"
+	&"(C)onfig Auto-Reset & Credit/Money Exchange{f6}"
 	&"(E)dit Player's Profile{f6}"
 	&"(L)ist Players{f6}"
 '	&"(P)lay Empire{f6}"
 	&"(R)eset Empire{f6}"
 	&"(S)cratch News{f6:2}"
-	&"(Q)uit{f6:2}"
+	&"(Q)uit to Empire{f6:2}"
 {:prompt}
 	&"{lt. red}Choice? {pound}i1":if tr%<1 then 1811
-	on-(an$="E")-2*(an$="R")-3*(an$="S")-4*(an$="D") goto {:530},{:730}, {:875}, {:600}
+	on-(an$="E")-2*(an$="R")-3*(an$="S")-4*(an$="C") goto {:edit_profile}, {:reset_empire}, {:scratch_news}, {:config}
 	if an$="Q" then return ' returns back to main module
 	if an$="L" then gosub {:sub.other_rulers}
 	goto {:prompt}
-{:530}
-	x=.:gosub {:sub.open_playerlog}
-	gosub 1012:&"{f6}Type lowercase {f5}empty[f5} to ADD player,{pound}$lotherwise type name in CAPITALS.{f6:2}Player's Name? {pound}i0":if tr%<1 then 1811
-	nn$=an$:j=0:if an$=""then {:512}
-{:535}
-	x=x+1:gosub 1001:&".":&,2,2:on -(a$=nn$)-2*(x<24) goto {:550},{:535}
-	&"{f6}Player not found.{pound}w2":goto {:512}
+
+{:edit_profile}
+' edit profile
+	x=.:kk=.:gosub {:sub.open_playerlog}:gosub 1012
+
+{:532}
+' ----+----+----+----+----+----+----+----+
+' "^" adds player.
+' Handle or ID# searches for that player.
+	&"{f6}{f5}{^}{f5} adds player.{f6}Handle or ID# searches for that player.{f6:2}"
+	&"Player's name/ID? {pound}i0":on -(an$="")-2*(tr%<1) goto {:start}, 1811
+	gosub {:sub.str_to_int}:if an then {:edit_by_number}
+' TODO: search for empty slot: should g3=0, nn$="^"?
+{:536}
+' search for nn$ in player log:
+	nn$=an$:&"Searching...":ok=.
+	for x=1 to 24:gosub 1001:&".":&,2,2:if a$=nn$ then ok=x:x=24
+	next:if ok then {:550}
+
+	&"{f6}Player not found.{pound}w2":goto {:start}
+
+{:edit_by_number}
+' search by player number
+	if an<1 and an>24 then:&"Out of range.{pound}w2":goto {:532}
+	&,2,2:if a$="empty" then:&"This player has been deleted.{pound}w2":goto {:edit_profile}
+
 {:550}
-	g3=x:j=j+1:on -(j>16) goto {:551}:input# 2,dt$(j):goto {:550}
-{:551}
-	close 2:kk=.
-{:572}
-	&"{pound}f1 Profile of #"+str$(x):if kk then:&" (Modified)"
-	&"{f6:2} 0) Name     : "+nn$
+' g3=player #
+	g3=x:for j=1 to 16:input# 2,dt$(j):next
+
+{:profile}
+	a%=g3:n$=nn$:if n$="empty" then n$="(Deleted)"
+	&"{clear} Profile of #{pound}%a":if kk then:&" (Modified)"
+	&"{f6:2} 0) Name     : {pound}$n"
 	&"{f6} 1) Land     : "+dt$(1)
 	&"{f6} 2) Soldiers : "+dt$(2)
 	&"{f6} 3) Serfs    : "+dt$(3)
@@ -51,41 +89,53 @@
 	&"{f6}16) Training : "+dt$(16)
 {:585}
 ' kk=modified flag
-	&"{f6:2}Edit which #? {pound}i1":on -(tr%<1)-2*(an$<>"") goto 1811:if an$="" and kk=0 then {:512}
+	&"{f6:2}Edit which #? {pound}i1":gosub {:sub.str_to_int}:on -(tr%<1)-2*(an<1 and an>16) goto 1811, {:profile}:if an$="" and kk=0 then {:start}
 ' improving editor a bit:
-	if an$="" then:&"{f6}Save changes? ":gosub 1902:on -(tr%<1)-2*(a=.)-3*(a=1) goto 1811,{:512},{:716}
-	r=val(an$):if r>16 then {:585}
-	if r=. {:593}
-'	kk=1:&"{f6}Enter new value for "+an$+":":gosub 1006:on tr%<1 goto 1811:dt$(r)=an$:goto {:572}
+	if an$="" then:&"{f6}Save changes? ":gosub {:sub.yes_no}:on -(tr%<1)-2*(a=.)-3*(a=1) goto 1811, {:start}, {:716}
+	if an>16 then {:585}
+' edit name:
+	if an=. then {:change_name}
+'	kk=1:&"{f6}Enter new value for "+an$+":":gosub 1006:on tr%<1 goto 1811:dt$(r)=an$:goto {:profile}
 ' new: see previous value
 ' new: only set kk if value actually changed:
 
 ' w$=na$:p$="handle":&,1,32:if an$<>"" then na$=an$
 
-	w$=dt$(an):p$="New value":&,1,32:on tr%+1 goto 1811:if an$<>"" then dt$(r)=an$:kk=1
-	goto {:572}
-{:593}
-' fix modification status, check for duplicate:
-	&"{f6}Type 'empty' lowercase and zero stats{f6}to DELETE player, otherwise use shift{f6}key.{f6:2}"
-	w$=nn$:p$="Name":&,1,32:on tr%+1 goto 1811:if an$<>"" then nn$=an$:kk=1
-	goto {:572}
+	w$=dt$(an):p$="Value":&,1,32:on tr%+1 goto 1811:if an$<>"" then dt$(r)=an$:kk=1
+	goto {:profile}
 
-{:600}
-	&"{pound}f1{f6:2}Set both to {f5}No{f5} to disable auto-reset."
-' new: change to yes/no
-	&"{f6:2}Emperor status? ":gosub 1902:if tr%<1 then 1811
-	mp$=str$(a):if a=. then ln$="0":goto {:609}
-	&"{f6}How many acres? {pound}i1":gosub {:sub.normalize}:if tr%<1 then 1811
-	ln$=str$(an)' :gosub {:609}
+{:change_name}
+' fix modification status, check for duplicate player name:
+' ----+----+----+----+----+----+----+----+
+' "^" deletes player.
+' Player ID# or name is accepted.
+	&"{f6}{f5}{up arrow}{f5} deletes player.{f6}Player ID# or name is accepted.{f6:2}"
+	w$=nn$:p$="Name":&,1,32:on tr%+1 goto 1811
+	if an$<>"{up arrow}" then {:edit_name}
+	&"Delete this player? ":a=.:gosub 1902
+	if a then gosub {:sub.empty_record}:x=g3:gosub 1001:print# 2,w$
+	goto {:profile}
 
-{:609}
+{:edit_name}
+	if an$<>w$ then gosub {:sub.check_for_duplicate}:if ok=. then nn$=an$:kk=1
+	goto {:profile}
+
+{:config}
+	&"{clear}{f6:2}Set both to {f5}No{f5} to disable auto-reset."
 ' new: change to yes/no
+	&"{f6:2}Reset on Emperor status? ":gosub 1902:if tr%<1 then 1811
+	mp$=str$(a):if a=. then ln$="0":goto {:config_2}
+	&"{f6}How many acres? {pound}i1":gosub {:sub.str_to_int}:if tr%<1 then 1811
+' TODO: range checking: if an=0...?
+	ln$=str$(an)
+
+{:config_2}
+' new: change inputting "0" or "1" to "yes/no" prompts
 	&"{f6:2}Allow BBS credit/money exchange? ":gosub 1902:if tr%<1 then 1811
-	en$=str$(a):if a=. then nn$="0":goto {:maint_700}
-{:credit}
-	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.normalize}:on -(an<1 or an>100) goto {:credit}:nn$=str$(an)
-'	return
-{:maint_700}
+	en$=str$(a):if a=. then nn$="0":goto {:config_4}
+{:config_3}
+	&"{f6}How much money per BBS credit (1-100)? {pound}i1":gosub {:sub.str_to_int}:on -(an<1 or an>100) goto {:config_3}:nn$=an$
+{:config_4}
 ' ln$ - auto-reset acres requirement:
 '	0=disabled
 '	x=# of acres
@@ -98,63 +148,37 @@
 
 	a$="e.emp6 config":dr=3:gosub 1023
 	print# 2,ln$+r$+mp$+r$+en$+r$+nn$
-	close 2:close 15:goto {:512}
+	close 2:close 15:goto {:start}
 
 {:716}
 ' write player account:
+' g3=player number
 '	c$=chr$(13): r$ is defined in IM already
 	w$=nn$+r$+dt$(1)+r$+dt$(2)+r$+dt$(3)+r$+dt$(4)
 	w$=w$+r$+dt$(5)+r$+dt$(6)+r$+dt$(7)+r$+dt$(8)+r$+dt$(9)
 	w$=w$+r$+dt$(10)+r$+dt$(11)+r$+dt$(12)+r$+dt$(13)+r$+dt$(14)+r$+dt$(15)
 	w$=w$+r$+dt$(16)
-	x=1:gosub {:sub.open_playerlog}:x=g3:gosub 1001:print# 2,w$:close 2:goto {:512}
+	x=1:gosub {:sub.open_playerlog}:x=g3:gosub 1001:print# 2,w$:goto {:start}
 
+' List Players is now in +.Empire6
 '{:724}
-'	&"{pound}f1(Space=abort){f6}Players/Acres{f6:2}":x=1:gosub {:sub.open_playerlog}:x=1
+'	&"{clear}(Space=abort){f6}Players/Acres{f6:2}":x=1:gosub {:sub.open_playerlog}:x=1
 '{:725}
 '	gosub 1001:input# 2,c$,b$:if c$="empty"then {:727}
 '	&"{f6}#"+right$(" "+str$(x),2)+" "+c$+"/"+b$+"{f6}"
 '{:727}
 '	mw=1:a$="":&:if rc then&"{f6}(Aborted.){f6}":x=25
-'	x=x+1:on-(x<24)goto {:725}:close 2:&"{f6}Hit a Key.{pound}g1":goto {:512}
+'	x=x+1:on-(x<24)goto {:725}:close 2:&"{f6}Hit a Key.{pound}g1":goto {:start}
 
-{:730}
-	&"{f6:2}{yellow}Reset Empire, ":gosub 1901:on tr%<1 goto 1811:if a=. then {:512}
-{:732}
-	gosub {:sub.open_playerlog}:if e% then:&:goto {:512}
-{:900}
-	gosub 1012:if e% then:&
-	lp=1:return
-
+{:reset_empire}
+	&"{f6:2}{yellow}Reset Empire, ":gosub 1901:on -(tr%<1)-2*(a=.) goto 1811, {:start}
+' FIXME: if e%=62 (file not found) then offer to start new game, don't just quit
+	gosub {:sub.open_playerlog}:if e% then:&:goto {:start}
+	&"Resetting Empire... ":gosub {:sub.empty_record}
 	for x=1 to 24:x%=x:&"{pound}#3{pound}%x":gosub 1001
-	print# 2,"empty"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"+r$+"0"
-	&"{pound}h3":next:close 2:&"Done.":goto {:512}
-
-' from Empire6.lbl (reset empire)
-' {:38}
-' check for sysop access:
-' why not load +.emp6.maint instead?
-'	&"{f6:2}{yellow}Reset game?: ":gosub 1902:if a=0 then {:106}
-' ask are you sure:
-'	gosub 1901:if a=0 then {:106}
-'{:41}
-'	w$="empty"+r$+"0"
-' todo: log to e.errlog:
-' todo: check if it exists first:
-'	a$="e.empire6,l,"+chr$(100):dr=3:gosub 1011:if e% then close 2:&"Disk status: "+a$:lp=1:goto 1812
-'{:46}
-'	for x=1 to 24:gosub 1001:print# 2,w$:next:close 2:goto 1812
-
-'{:800}
-'	a$="e.empire6,l,"+chr$(100)
-'{:850}
-'	dr=3:goto 1011
-{:875}
-	dr=3:a$="e.empnews6":gosub 1023:close 2:goto {:512}
-
-' this probably won't work anymore since LMPs have to RETURN
-' {:880}
-'	&"{f6:2}{cyan}Heading to the Empire....":&,28:dr=5:a$="emp6.startup":goto 1067
+	print# 2,w$:&"{pound}h3":next:&"Done.":goto {:start}
+{:scratch_news}
+	dr=3:a$="e.empnews6":gosub 1023:close 2:goto {:start}
 
 {number:999}
 	rem empire 6 maintenance module - mercilessly hacked by pinacolada
