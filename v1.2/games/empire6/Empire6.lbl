@@ -84,8 +84,7 @@
 ' - use temp "an" to hold REL record #, restore afterwards:
 	an=x:x=val(z$):gosub {:sub.comma_value}:x=an
 {:64}
-' sh=47? what does that mean? 'if sh' = 'if spacebar hit'...
-' sh=47: %00101111
+' sh=47: ascii value of '/'. (was noted in 1.2 programming guide as 'Checks for spacebar hit.')
 ' rc is abort character ("/", I'm guessing)
 	if rc or sh=47 then:&"{f6}{red}(Aborted.){f6}":x=25
 	x=x+1:on -(x<25) goto {:58}:close 2:return
